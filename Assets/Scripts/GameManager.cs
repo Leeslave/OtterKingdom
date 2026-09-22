@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     [Header("Save")]
     [SerializeField] private float autoSaveIntervalSec = 30f;
 
+    [Header("Currency")]
+    [SerializeField] private Currency goldCurrency;
+
     private const string DefaultOtterId = "otter_001";
     private const string PlotId = "plot_1";
     private const string DefaultCropId = "crop_carrot";
@@ -32,7 +35,6 @@ public class GameManager : MonoBehaviour
     private SaveService saveService;
     private FarmService farmService;
     private InventoryService inventoryService;
-    private EconomyService economyService;
 
     private float autoSaveTimer;
     private float pendingOfflineElapsedSec;
@@ -53,7 +55,8 @@ public class GameManager : MonoBehaviour
 
         ComputePendingOfflineElapsed();
 
-        economyService = new EconomyService(save);
+        CurrencyManager.Instance.LoadFromSave(save, new[] { goldCurrency });
+        CurrencyHud.Show(goldCurrency);
         inventoryService = new InventoryService(save.inventory);
         farmService = new FarmService(save, cropDefinitions, farmBalance);
     }
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour
             var carrot = ScriptableObject.CreateInstance<CropDefinition>();
             carrot.cropId = DefaultCropId;
             carrot.displayName = "당근";
-            carrot.baseDurationSec = 60f;
+            carrot.baseDurationSec = 10f;
             carrot.yieldCount = 5;
             carrot.sellPrice = 2;
             carrot.seedType = SeedType.Permanent;
@@ -153,7 +156,25 @@ public class GameManager : MonoBehaviour
 
     private void SaveNow()
     {
+        CurrencyManager.Instance.SaveToSave(save);
         saveService.Save(save);
+    }
+
+    private void SellAllForGold()
+    {
+        int total = 0;
+        foreach (var stack in inventoryService.Items)
+        {
+            var crop = farmService.GetCrop(stack.itemId);
+            total += (crop != null ? crop.sellPrice : 0) * stack.quantity;
+        }
+
+        if (total <= 0) return;
+
+        CurrencyManager.Instance.Add(goldCurrency, total, TransactionSource.CropSale);
+        save.lifetimeSales += total;
+        inventoryService.Clear();
+        Debug.Log($"[GameManager] 판매 완료: +{total} 코인");
     }
 
     public void ToggleDebugPanel()
@@ -167,7 +188,7 @@ public class GameManager : MonoBehaviour
 
         GUILayout.BeginArea(DebugPanelRect, GUI.skin.box);
 
-        GUILayout.Label($"코인: {economyService.Coins}");
+        GUILayout.Label($"코인: {CurrencyManager.Instance.GetCurrency(goldCurrency)}");
         GUILayout.Label($"농사 레벨: {save.farmLevel}");
 
         GUILayout.Space(10);
@@ -223,12 +244,7 @@ public class GameManager : MonoBehaviour
         GUI.enabled = inventoryService.Items.Count > 0;
         if (GUILayout.Button("전체 판매"))
         {
-            int total = economyService.SellAll(inventoryService, id =>
-            {
-                var c = farmService.GetCrop(id);
-                return c != null ? c.sellPrice : 0;
-            });
-            Debug.Log($"[GameManager] 판매 완료: +{total} 코인");
+            SellAllForGold();
             SaveNow();
         }
         GUI.enabled = true;
@@ -237,10 +253,10 @@ public class GameManager : MonoBehaviour
         GUILayout.Label("=== 강화 ===");
         if (farmService.CanUpgrade)
         {
-            GUI.enabled = economyService.Coins >= farmService.NextUpgradeCost;
+            GUI.enabled = CurrencyManager.Instance.GetCurrency(goldCurrency) >= farmService.NextUpgradeCost;
             if (GUILayout.Button($"농사 강화 ({farmService.NextUpgradeCost} 코인)"))
             {
-                if (farmService.TryUpgrade(economyService))
+                if (farmService.TryUpgrade(CurrencyManager.Instance, goldCurrency))
                 {
                     SaveNow();
                 }

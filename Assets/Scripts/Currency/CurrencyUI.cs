@@ -4,15 +4,15 @@ using TMPro;
 using System.Collections;
 public class CurrencyUI : MonoBehaviour
 {
-    [Header("¼³Á¤")]
+    [Header("ì„¤ì •")]
     [SerializeField] private Currency _targetCurrency;
     [SerializeField] private TextMeshProUGUI _uIText;
     [SerializeField] private Image _currencyIcon;
 
-    [Header("¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤")]
-    [SerializeField] private float _animationDuration = 0.5f; // È¿°ú Áö¼Ó ½Ã°£
+    [Header("ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •")]
+    [SerializeField] private float _animationDuration = 0.5f; // íš¨ê³¼ ì§€ì† ì‹œê°„
 
-    private int _currentDisplayValue = 0; 
+    private int _currentDisplayValue = 0;
     private Coroutine _iconCoroutine;
     private Coroutine _textCoroutine;
 
@@ -24,7 +24,7 @@ public class CurrencyUI : MonoBehaviour
 
     private void Start()
     {
-        if (CurrencyManager.Instance != null)
+        if (CurrencyManager.Exists)
         {
             CurrencyManager.Instance.OnCurrencyChanged += UpdateUI;
             RefreshUI();
@@ -33,7 +33,7 @@ public class CurrencyUI : MonoBehaviour
 
     private void OnDisable()
     {
-        if (CurrencyManager.Instance != null)
+        if (CurrencyManager.Exists)
             CurrencyManager.Instance.OnCurrencyChanged -= UpdateUI;
     }
 
@@ -60,7 +60,7 @@ public class CurrencyUI : MonoBehaviour
         _textCoroutine = StartCoroutine(AnimateText(targetValue));
     }
 
-    // ÅØ½ºÆ® Ä«¿îÆ® ¾÷ È¿°ú
+    // í…ìŠ¤íŠ¸ ì¹´ìš´íŠ¸ ì—… íš¨ê³¼
     private IEnumerator AnimateText(int targetValue)
     {
         int startValue = _currentDisplayValue;
@@ -71,7 +71,7 @@ public class CurrencyUI : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = elapsed / _animationDuration;
 
-            // ¼ıÀÚ°¡ ¼­¼­È÷ Áõ°¡ÇÏµµ·Ï º¸°£
+            // ìˆ«ìê°€ ì„œì„œíˆ ì¦ê°€í•˜ë„ë¡ ë³´ê°„
             int val = Mathf.RoundToInt(Mathf.Lerp(startValue, targetValue, t));
             _uIText.text = val.ToString();
             yield return null;

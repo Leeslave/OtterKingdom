@@ -38,14 +38,21 @@ public class OtterSaveData
 }
 
 [Serializable]
+public class CurrencyBalance
+{
+    public string currencyId;
+    public int amount;
+}
+
+[Serializable]
 public class SaveData
 {
     public int schemaVersion = 1;
-    public int coins;
     public int lifetimeSales;
     public int farmLevel = 1;
     public string lastSaveUtc;
     public List<PlotSaveData> plots = new List<PlotSaveData>();
     public List<ItemStack> inventory = new List<ItemStack>();
     public List<OtterSaveData> otters = new List<OtterSaveData>();
+    public List<CurrencyBalance> currencies = new List<CurrencyBalance>();
 }

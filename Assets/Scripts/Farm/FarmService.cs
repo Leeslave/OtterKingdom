@@ -55,12 +55,12 @@ public class FarmService
         plots[plotIndex].AssignWorker(workerId, CurrentDurationMultiplier);
     }
 
-    public bool TryUpgrade(EconomyService economy)
+    public bool TryUpgrade(CurrencyManager currencyManager, Currency currency)
     {
         if (!CanUpgrade) return false;
 
         int cost = NextUpgradeCost;
-        if (!economy.TrySpend(cost)) return false;
+        if (!currencyManager.TrySpend(currency, cost, TransactionSource.FarmUpgrade)) return false;
 
         save.farmLevel++;
         return true;

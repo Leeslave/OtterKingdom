@@ -243,6 +243,7 @@ MonoBehaviour:
   cropDefinitions: []
   farmBalance: {fileID: 0}
   autoSaveIntervalSec: 30
+  goldCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
 --- !u!4 &550646496
 Transform:
   m_ObjectHideFlags: 0

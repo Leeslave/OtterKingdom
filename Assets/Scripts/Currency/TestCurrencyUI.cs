@@ -4,12 +4,12 @@ using TMPro;
 
 public class TestCurrencyUI : MonoBehaviour
 {
-    [Header("¼³Á¤")]
+    [Header("ì„¤ì •")]
     [SerializeField] private Currency _goldData;
 
-    [Header("UI ¿ä¼Ò")]
-    [SerializeField] private TMP_InputField _inputField; 
-    [SerializeField] private Button _submitButton;      
+    [Header("UI ìš”ì†Œ")]
+    [SerializeField] private TMP_InputField _inputField;
+    [SerializeField] private Button _submitButton;
 
     private void Start()
     {
@@ -25,9 +25,9 @@ public class TestCurrencyUI : MonoBehaviour
             CurrencyManager.Instance.ProcessTransaction(tx);
 
             _inputField.text = "";
-            Debug.Log($"Å×½ºÆ®: {amount} °ñµå ¿äÃ» ¿Ï·á!");
+            Debug.Log($"í…ŒìŠ¤íŠ¸: {amount} ê³¨ë“œ ìš”ì²­ ì™„ë£Œ!");
         }
         else
-            Debug.LogWarning("ÀÔ·ÂÇÑ °ªÀÌ ¼ıÀÚ°¡ ¾Æ´Õ´Ï´Ù!");
+            Debug.LogWarning("ì…ë ¥í•œ ê°’ì´ ìˆ«ìê°€ ì•„ë‹™ë‹ˆë‹¤!");
     }
 }
