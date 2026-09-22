@@ -1,0 +1,1183 @@
+fileFormatVersion: 2
+guid: f8561b0352d50bd4db1f29ad70fdf377
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3024157714208862959
+    second: FarmerOtter_Sheet_0
+  - first:
+      213: 4828934129262506747
+    second: FarmerOtter_Sheet_1
+  - first:
+      213: 5202379275030671051
+    second: FarmerOtter_Sheet_2
+  - first:
+      213: 7117894168877352794
+    second: FarmerOtter_Sheet_3
+  - first:
+      213: -8048899756794345457
+    second: FarmerOtter_Sheet_4
+  - first:
+      213: 3634265613962474589
+    second: FarmerOtter_Sheet_5
+  - first:
+      213: -280214206464258309
+    second: FarmerOtter_Sheet_6
+  - first:
+      213: 4144630312521524013
+    second: FarmerOtter_Sheet_7
+  - first:
+      213: 5483585664246535174
+    second: FarmerOtter_Sheet_8
+  - first:
+      213: -6488777958436338140
+    second: FarmerOtter_Sheet_9
+  - first:
+      213: -6941900975111948878
+    second: FarmerOtter_Sheet_10
+  - first:
+      213: 5946551645000581971
+    second: FarmerOtter_Sheet_11
+  - first:
+      213: 8021718199897397643
+    second: FarmerOtter_Sheet_12
+  - first:
+      213: 232630445200325776
+    second: FarmerOtter_Sheet_13
+  - first:
+      213: 8955145988535817394
+    second: FarmerOtter_Sheet_14
+  - first:
+      213: -1373276111739862028
+    second: FarmerOtter_Sheet_15
+  - first:
+      213: -4263152041868315334
+    second: FarmerOtter_Sheet_16
+  - first:
+      213: 6342603619480505111
+    second: FarmerOtter_Sheet_17
+  - first:
+      213: -6127877123084500231
+    second: FarmerOtter_Sheet_18
+  - first:
+      213: 8665073825889603170
+    second: FarmerOtter_Sheet_19
+  - first:
+      213: 4894122383080918957
+    second: FarmerOtter_Sheet_20
+  - first:
+      213: 39582363388351301
+    second: FarmerOtter_Sheet_21
+  - first:
+      213: -2950500977608290472
+    second: FarmerOtter_Sheet_22
+  - first:
+      213: -7691567437815127292
+    second: FarmerOtter_Sheet_23
+  - first:
+      213: 7660918327684395249
+    second: FarmerOtter_Sheet_24
+  - first:
+      213: 4361307470440462947
+    second: FarmerOtter_Sheet_25
+  - first:
+      213: -745340134076922429
+    second: FarmerOtter_Sheet_26
+  - first:
+      213: 5930303661342823785
+    second: FarmerOtter_Sheet_27
+  - first:
+      213: 4349878130999829631
+    second: FarmerOtter_Sheet_28
+  - first:
+      213: 7518051985291988229
+    second: FarmerOtter_Sheet_29
+  - first:
+      213: -2997116301157700969
+    second: FarmerOtter_Sheet_30
+  - first:
+      213: 3795316527882877448
+    second: FarmerOtter_Sheet_31
+  - first:
+      213: 7253420699870930725
+    second: FarmerOtter_Sheet_32
+  - first:
+      213: -1021313637789593712
+    second: FarmerOtter_Sheet_33
+  - first:
+      213: 7702815705086318652
+    second: FarmerOtter_Sheet_34
+  - first:
+      213: -2455070914507684329
+    second: FarmerOtter_Sheet_35
+  - first:
+      213: -3482902430744884389
+    second: FarmerOtter_Sheet_36
+  - first:
+      213: 6652458865896652565
+    second: FarmerOtter_Sheet_37
+  - first:
+      213: -9087364284028667187
+    second: FarmerOtter_Sheet_38
+  - first:
+      213: -5207282607837635913
+    second: FarmerOtter_Sheet_39
+  - first:
+      213: 7619426075735221733
+    second: FarmerOtter_Sheet_40
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 842
+        width: 162
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe23d2c1b67f7f920800000000000000
+      internalID: 3024157714208862959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 844
+        width: 158
+        height: 195
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf2b37a7102d30340800000000000000
+      internalID: 4828934129262506747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 842
+        width: 159
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bceae032360923840800000000000000
+      internalID: 5202379275030671051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 844
+        width: 160
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5742ccc807d7c260800000000000000
+      internalID: 7117894168877352794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 842
+        width: 165
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f088b8be0509c4090800000000000000
+      internalID: -8048899756794345457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 843
+        width: 158
+        height: 196
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5476ab12518f6230800000000000000
+      internalID: 3634265613962474589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 838
+        width: 166
+        height: 195
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfe0ea2f9aa7c1cf0800000000000000
+      internalID: -280214206464258309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 839
+        width: 160
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d23692f5f4fa48930800000000000000
+      internalID: 4144630312521524013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 645
+        width: 174
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 604d6dcbb1c991c40800000000000000
+      internalID: 5483585664246535174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 645
+        width: 165
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 426840963da33f5a0800000000000000
+      internalID: -6488777958436338140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 643
+        width: 164
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b5b388c7d969af90800000000000000
+      internalID: -6941900975111948878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 647
+        width: 167
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35346c60735668250800000000000000
+      internalID: 5946551645000581971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 751
+        y: 647
+        width: 163
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b899b21b33ed25f60800000000000000
+      internalID: 8021718199897397643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 647
+        width: 166
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09c3b1a48287a3300800000000000000
+      internalID: 232630445200325776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 651
+        width: 167
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b4117684d1174c70800000000000000
+      internalID: 8955145988535817394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 647
+        width: 162
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f3473df6a421fce0800000000000000
+      internalID: -1373276111739862028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 449
+        width: 164
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3535f81ecd36d4c0800000000000000
+      internalID: -4263152041868315334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 449
+        width: 164
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71b0e3a2364750850800000000000000
+      internalID: 6342603619480505111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 451
+        width: 161
+        height: 185
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f24e43393865faa0800000000000000
+      internalID: -6127877123084500231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 451
+        width: 160
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26e4fa03cb6804870800000000000000
+      internalID: 8665073825889603170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 441
+        width: 165
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daf83d2906a6be340800000000000000
+      internalID: 4894122383080918957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 451
+        width: 172
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 543122523ff9c8000800000000000000
+      internalID: 39582363388351301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 1052
+        y: 443
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85f07384ef6bd07d0800000000000000
+      internalID: -2950500977608290472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 445
+        width: 172
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 403611fba20124590800000000000000
+      internalID: -7691567437815127292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 451
+        width: 164
+        height: 185
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f078e631ac015a60800000000000000
+      internalID: 7660918327684395249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 242
+        width: 163
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36a7cd3890a768c30800000000000000
+      internalID: 4361307470440462947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 226
+        width: 184
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c5c087d81508a5f0800000000000000
+      internalID: -745340134076922429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 241
+        width: 182
+        height: 203
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 965998882cbac4250800000000000000
+      internalID: 5930303661342823785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 266
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f742c7e0d1fdd5c30800000000000000
+      internalID: 4349878130999829631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 234
+        width: 166
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50dcf32c27c755860800000000000000
+      internalID: 7518051985291988229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 240
+        width: 161
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79a66fe7a9a1866d0800000000000000
+      internalID: -2997116301157700969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 242
+        width: 162
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80ab0ae064caba430800000000000000
+      internalID: 3795316527882877448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 246
+        width: 179
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 527a54e32b359a460800000000000000
+      internalID: 7253420699870930725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 1276
+        y: 244
+        width: 157
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09f0a4758a093d1f0800000000000000
+      internalID: -1021313637789593712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 39
+        width: 186
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3858ff8216e5ea60800000000000000
+      internalID: 7702815705086318652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 41
+        width: 197
+        height: 178
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7164062c206ddedd0800000000000000
+      internalID: -2455070914507684329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 31
+        width: 371
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5b4b1441be3aafc0800000000000000
+      internalID: -3482902430744884389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 41
+        width: 185
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51ffaa0a718425c50800000000000000
+      internalID: 6652458865896652565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 39
+        width: 190
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dca36e1a45233e180800000000000000
+      internalID: -9087364284028667187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_39
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 41
+        width: 188
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ba94cabe040cb7b0800000000000000
+      internalID: -5207282607837635913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_Sheet_40
+      rect:
+        serializedVersion: 2
+        x: 1253
+        y: 41
+        width: 183
+        height: 176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e5eb8c75a3adb960800000000000000
+      internalID: 7619426075735221733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FarmerOtter_Sheet_0: 3024157714208862959
+      FarmerOtter_Sheet_1: 4828934129262506747
+      FarmerOtter_Sheet_10: -6941900975111948878
+      FarmerOtter_Sheet_11: 5946551645000581971
+      FarmerOtter_Sheet_12: 8021718199897397643
+      FarmerOtter_Sheet_13: 232630445200325776
+      FarmerOtter_Sheet_14: 8955145988535817394
+      FarmerOtter_Sheet_15: -1373276111739862028
+      FarmerOtter_Sheet_16: -4263152041868315334
+      FarmerOtter_Sheet_17: 6342603619480505111
+      FarmerOtter_Sheet_18: -6127877123084500231
+      FarmerOtter_Sheet_19: 8665073825889603170
+      FarmerOtter_Sheet_2: 5202379275030671051
+      FarmerOtter_Sheet_20: 4894122383080918957
+      FarmerOtter_Sheet_21: 39582363388351301
+      FarmerOtter_Sheet_22: -2950500977608290472
+      FarmerOtter_Sheet_23: -7691567437815127292
+      FarmerOtter_Sheet_24: 7660918327684395249
+      FarmerOtter_Sheet_25: 4361307470440462947
+      FarmerOtter_Sheet_26: -745340134076922429
+      FarmerOtter_Sheet_27: 5930303661342823785
+      FarmerOtter_Sheet_28: 4349878130999829631
+      FarmerOtter_Sheet_29: 7518051985291988229
+      FarmerOtter_Sheet_3: 7117894168877352794
+      FarmerOtter_Sheet_30: -2997116301157700969
+      FarmerOtter_Sheet_31: 3795316527882877448
+      FarmerOtter_Sheet_32: 7253420699870930725
+      FarmerOtter_Sheet_33: -1021313637789593712
+      FarmerOtter_Sheet_34: 7702815705086318652
+      FarmerOtter_Sheet_35: -2455070914507684329
+      FarmerOtter_Sheet_36: -3482902430744884389
+      FarmerOtter_Sheet_37: 6652458865896652565
+      FarmerOtter_Sheet_38: -9087364284028667187
+      FarmerOtter_Sheet_39: -5207282607837635913
+      FarmerOtter_Sheet_4: -8048899756794345457
+      FarmerOtter_Sheet_40: 7619426075735221733
+      FarmerOtter_Sheet_5: 3634265613962474589
+      FarmerOtter_Sheet_6: -280214206464258309
+      FarmerOtter_Sheet_7: 4144630312521524013
+      FarmerOtter_Sheet_8: 5483585664246535174
+      FarmerOtter_Sheet_9: -6488777958436338140
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
