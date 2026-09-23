@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c519f86bc213e49a99df581246e373, type: 3}
+  m_Name: CropDefinition_Carrot
+  m_EditorClassIdentifier: Assembly-CSharp::CropDefinition
+  cropId: crop_carrot
+  displayName: "당근"
+  baseDurationSec: 30
+  yieldCount: 5
+  sellPrice: 2
+  seedType: 0
+  seedSprites:
+  - {fileID: 21300000, guid: 9be87a17cc6142469dd514f5ba4a87a4, type: 3}
+  - {fileID: 21300000, guid: e581b1ca1ba34f41baaa10e50d0c8bee, type: 3}
+  - {fileID: 21300000, guid: 504f464ebe3e4942a318056323cafcb9, type: 3}
+  sproutSprites:
+  - {fileID: 21300000, guid: d87d9a01a05d4f09b4104d7fa8c165a4, type: 3}
+  - {fileID: 21300000, guid: 10189fee35ea44e8b57b2d9ab0239db2, type: 3}
+  - {fileID: 21300000, guid: 5c80a1a7ff04442fbc51a7d2f49f5e2c, type: 3}
+  grownSprites:
+  - {fileID: 21300000, guid: c34e3c427ad64e2c93fed4e7b223c639, type: 3}
+  - {fileID: 21300000, guid: 1eb2a817473d42e49fa56e43c63bf2dd, type: 3}
+  - {fileID: 21300000, guid: 5ae70794cb1f466aac2cb96e7497f212, type: 3}

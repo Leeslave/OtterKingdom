@@ -17,16 +17,32 @@ public class ItemStack
 }
 
 [Serializable]
+public class FurrowSlotSaveData
+{
+    public string cropId;
+    public FurrowSlotState state;
+    public float remainingSec;
+}
+
+[Serializable]
 public class PlotSaveData
 {
+    public const int SlotCount = 3;
+
     public string plotId;
     public bool unlocked;
-    public string activeCropId;
-    public PlotState state;
-    public float remainingSec;
-    public int storedCompletedCycles;
-    public List<ItemStack> storedItems = new List<ItemStack>();
     public string workerId;
+    public List<FurrowSlotSaveData> slots = new List<FurrowSlotSaveData>();
+
+    public static List<FurrowSlotSaveData> CreateEmptySlots()
+    {
+        var slots = new List<FurrowSlotSaveData>(SlotCount);
+        for (int i = 0; i < SlotCount; i++)
+        {
+            slots.Add(new FurrowSlotSaveData { state = FurrowSlotState.Empty });
+        }
+        return slots;
+    }
 }
 
 [Serializable]

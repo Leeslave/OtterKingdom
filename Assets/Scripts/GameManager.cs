@@ -4,7 +4,7 @@ using UnityEngine;
 
 // M1 vertical-slice bootstrap: loads/creates the save, wires the plain-C#
 // services, drives the farm production tick, and exposes a temporary OnGUI
-// debug UI so the loop (plant -> produce -> harvest -> sell -> upgrade) can
+// debug UI so the loop (plant -> grow -> harvest -> sell -> upgrade) can
 // be verified with zero scene/prefab setup. Replace the OnGUI block with real
 // uGUI views in M4; the services underneath should not need to change.
 public class GameManager : MonoBehaviour
@@ -12,10 +12,15 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public static readonly Rect DebugPanelRect = new Rect(20, 20, 440, 560);
+    public static readonly Rect SeedPromptRect = new Rect(480, 20, 320, 220);
 
     public bool IsDebugPanelOpen => showDebugPanel;
+    public bool IsSeedPromptOpen => pendingPlotIndex >= 0;
+    public FarmService FarmService => farmService;
 
     private bool showDebugPanel;
+    private int pendingPlotIndex = -1;
+    private int pendingSlotIndex = -1;
 
     [Header("Data (optional — falls back to built-in defaults if empty)")]
     [SerializeField] private CropDefinition[] cropDefinitions;
@@ -100,7 +105,7 @@ public class GameManager : MonoBehaviour
             var carrot = ScriptableObject.CreateInstance<CropDefinition>();
             carrot.cropId = DefaultCropId;
             carrot.displayName = "당근";
-            carrot.baseDurationSec = 10f;
+            carrot.baseDurationSec = 30f;
             carrot.yieldCount = 5;
             carrot.sellPrice = 2;
             carrot.seedType = SeedType.Permanent;
@@ -122,8 +127,8 @@ public class GameManager : MonoBehaviour
         {
             plotId = PlotId,
             unlocked = true,
-            state = PlotState.Idle,
-            workerId = DefaultOtterId
+            workerId = DefaultOtterId,
+            slots = PlotSaveData.CreateEmptySlots()
         });
         data.otters.Add(new OtterSaveData
         {
@@ -182,8 +187,43 @@ public class GameManager : MonoBehaviour
         showDebugPanel = !showDebugPanel;
     }
 
+    // Called by FurrowSlotView when the player taps an empty slot — opens the
+    // crop-selection prompt for that slot instead of planting directly.
+    public void RequestPlantPrompt(int plotIndex, int slotIndex)
+    {
+        pendingPlotIndex = plotIndex;
+        pendingSlotIndex = slotIndex;
+    }
+
+    // Shared harvest entry point — used by the debug-panel button and by
+    // FarmerOtterController once its harvest animation finishes.
+    public void HarvestSlot(int plotIndex, int slotIndex)
+    {
+        var harvested = farmService.Harvest(plotIndex, slotIndex);
+        if (harvested.Count == 0) return;
+
+        inventoryService.AddRange(harvested);
+        SaveNow();
+    }
+
+    // A slot is "covered" by a screen point if that point lands inside any
+    // currently-open OnGUI panel — used by FurrowSlotView so clicking a panel
+    // button doesn't also register as a click on whatever slot is underneath.
+    public bool IsScreenPointOverUI(Vector2 screenPos)
+    {
+        Vector2 guiPos = new Vector2(screenPos.x, Screen.height - screenPos.y);
+        if (showDebugPanel && DebugPanelRect.Contains(guiPos)) return true;
+        if (IsSeedPromptOpen && SeedPromptRect.Contains(guiPos)) return true;
+        return false;
+    }
+
     private void OnGUI()
     {
+        if (IsSeedPromptOpen)
+        {
+            DrawSeedPrompt();
+        }
+
         if (!showDebugPanel) return;
 
         GUILayout.BeginArea(DebugPanelRect, GUI.skin.box);
@@ -195,35 +235,10 @@ public class GameManager : MonoBehaviour
         GUILayout.Label("=== 밭 1 ===");
 
         var plot = farmService.Plots[0];
-        var data = plot.Data;
-        GUILayout.Label($"상태: {data.state}");
-
-        if (string.IsNullOrEmpty(data.activeCropId))
+        for (int slotIndex = 0; slotIndex < plot.SlotCount; slotIndex++)
         {
-            if (GUILayout.Button("당근 심기"))
-            {
-                farmService.SelectCrop(0, DefaultCropId);
-            }
+            DrawSlotDebugRow(0, slotIndex);
         }
-        else
-        {
-            var crop = farmService.GetCrop(data.activeCropId);
-            GUILayout.Label($"작물: {(crop != null ? crop.displayName : data.activeCropId)}");
-            if (data.state == PlotState.Producing)
-            {
-                GUILayout.Label($"남은 시간: {data.remainingSec:F1}초");
-            }
-            GUILayout.Label($"완료 회차: {data.storedCompletedCycles}");
-        }
-
-        GUI.enabled = data.storedItems.Count > 0;
-        if (GUILayout.Button("수확하기"))
-        {
-            var harvested = farmService.Harvest(0);
-            inventoryService.AddRange(harvested);
-            SaveNow();
-        }
-        GUI.enabled = true;
 
         GUILayout.Space(10);
         GUILayout.Label("=== 가방 ===");
@@ -272,6 +287,60 @@ public class GameManager : MonoBehaviour
         if (GUILayout.Button("지금 저장"))
         {
             SaveNow();
+        }
+
+        GUILayout.EndArea();
+    }
+
+    private void DrawSlotDebugRow(int plotIndex, int slotIndex)
+    {
+        var state = farmService.GetSlotState(plotIndex, slotIndex);
+        var crop = farmService.GetSlotCrop(plotIndex, slotIndex);
+        string cropName = crop != null ? crop.displayName : "-";
+
+        switch (state)
+        {
+            case FurrowSlotState.Empty:
+                GUILayout.Label($"슬롯 {slotIndex + 1}: 비어있음");
+                break;
+            case FurrowSlotState.Growing:
+                float remaining = farmService.GetSlotRemainingSec(plotIndex, slotIndex);
+                GUILayout.Label($"슬롯 {slotIndex + 1}: {cropName} 성장 중 (남은 시간 {remaining:F1}초)");
+                break;
+            case FurrowSlotState.AwaitingHarvest:
+                GUILayout.BeginHorizontal();
+                GUILayout.Label($"슬롯 {slotIndex + 1}: {cropName} 수확 대기");
+                // Manual override — FarmerOtterController normally does this.
+                if (GUILayout.Button("수확 (수동)", GUILayout.Width(140)))
+                {
+                    HarvestSlot(plotIndex, slotIndex);
+                }
+                GUILayout.EndHorizontal();
+                break;
+        }
+    }
+
+    private void DrawSeedPrompt()
+    {
+        GUILayout.BeginArea(SeedPromptRect, GUI.skin.box);
+        GUILayout.Label("심을 작물을 선택하세요");
+
+        foreach (var crop in cropDefinitions)
+        {
+            if (crop == null) continue;
+            if (GUILayout.Button(crop.displayName))
+            {
+                farmService.Plant(pendingPlotIndex, pendingSlotIndex, crop.cropId);
+                pendingPlotIndex = -1;
+                pendingSlotIndex = -1;
+                SaveNow();
+            }
+        }
+
+        if (GUILayout.Button("취소"))
+        {
+            pendingPlotIndex = -1;
+            pendingSlotIndex = -1;
         }
 
         GUILayout.EndArea();

@@ -1,112 +1,101 @@
 using System;
 using System.Collections.Generic;
 
-// Wraps one PlotSaveData with production logic. Tick() accepts arbitrarily
-// large deltaSeconds so the same method drives both per-frame updates and
-// offline catch-up on load.
+// Wraps one PlotSaveData (a furrow with up to SlotCount independent crop
+// slots). Tick() accepts arbitrarily large deltaSeconds so the same method
+// drives both per-frame updates and offline catch-up on load. Unlike the old
+// single-crop-per-plot model, a slot only ever runs one grow cycle: once it
+// reaches AwaitingHarvest it stays there until something calls Harvest() —
+// there is no auto-restart, so no multi-cycle loop is needed here.
 public class PlotRuntime
 {
     public readonly PlotSaveData Data;
     private readonly Func<string, CropDefinition> cropLookup;
-    private readonly int storageCapacityCycles;
 
-    public PlotRuntime(PlotSaveData data, Func<string, CropDefinition> cropLookup, int storageCapacityCycles)
+    public PlotRuntime(PlotSaveData data, Func<string, CropDefinition> cropLookup)
     {
         Data = data;
         this.cropLookup = cropLookup;
-        this.storageCapacityCycles = storageCapacityCycles;
     }
 
-    public CropDefinition ActiveCrop =>
-        string.IsNullOrEmpty(Data.activeCropId) ? null : cropLookup(Data.activeCropId);
+    public int SlotCount => Data.slots.Count;
 
-    public bool HasWorker => !string.IsNullOrEmpty(Data.workerId);
+    public FurrowSlotState GetSlotState(int slotIndex) => Data.slots[slotIndex].state;
 
-    public bool SelectCrop(string cropId, float levelDurationMultiplier)
+    public CropDefinition GetSlotCrop(int slotIndex)
     {
-        if (!Data.unlocked || cropLookup(cropId) == null) return false;
+        string cropId = Data.slots[slotIndex].cropId;
+        return string.IsNullOrEmpty(cropId) ? null : cropLookup(cropId);
+    }
 
-        Data.activeCropId = cropId;
-        TryStartProduction(levelDurationMultiplier);
+    public float GetSlotRemainingSec(int slotIndex) => Data.slots[slotIndex].remainingSec;
+
+    public SlotGrowthStage GetGrowthStage(int slotIndex, float levelDurationMultiplier)
+    {
+        var slot = Data.slots[slotIndex];
+        if (slot.state == FurrowSlotState.Empty) return SlotGrowthStage.None;
+        if (slot.state == FurrowSlotState.AwaitingHarvest) return SlotGrowthStage.Grown;
+
+        var crop = cropLookup(slot.cropId);
+        float duration = crop != null ? ComputeDuration(crop, levelDurationMultiplier) : slot.remainingSec;
+        if (duration <= 0f) return SlotGrowthStage.Grown;
+
+        float elapsed = duration - slot.remainingSec;
+        if (elapsed < duration / 3f) return SlotGrowthStage.Seed;
+        if (elapsed < duration * 2f / 3f) return SlotGrowthStage.Sprout;
+        return SlotGrowthStage.Grown;
+    }
+
+    public bool Plant(int slotIndex, string cropId, float levelDurationMultiplier)
+    {
+        if (!Data.unlocked) return false;
+        if (slotIndex < 0 || slotIndex >= Data.slots.Count) return false;
+
+        var slot = Data.slots[slotIndex];
+        if (slot.state != FurrowSlotState.Empty) return false;
+
+        var crop = cropLookup(cropId);
+        if (crop == null) return false;
+
+        slot.cropId = cropId;
+        slot.state = FurrowSlotState.Growing;
+        slot.remainingSec = ComputeDuration(crop, levelDurationMultiplier);
         return true;
     }
 
-    public void AssignWorker(string workerId, float levelDurationMultiplier)
+    public void Tick(float deltaSeconds)
     {
-        Data.workerId = workerId;
-        TryStartProduction(levelDurationMultiplier);
-    }
-
-    public void Tick(float deltaSeconds, float levelDurationMultiplier)
-    {
-        while (deltaSeconds > 0f && Data.state == PlotState.Producing)
+        foreach (var slot in Data.slots)
         {
-            if (deltaSeconds < Data.remainingSec)
+            if (slot.state != FurrowSlotState.Growing) continue;
+
+            slot.remainingSec -= deltaSeconds;
+            if (slot.remainingSec <= 0f)
             {
-                Data.remainingSec -= deltaSeconds;
-                return;
+                slot.remainingSec = 0f;
+                slot.state = FurrowSlotState.AwaitingHarvest;
             }
-
-            deltaSeconds -= Data.remainingSec;
-            CompleteCycle(levelDurationMultiplier);
         }
     }
 
-    // Takes the whole plot storage at once (no partial harvest, per design doc 5.2)
-    // and leaves any in-progress cycle untouched.
-    public List<ItemStack> Harvest(float levelDurationMultiplier)
+    // Called by whatever performs the harvest (currently a debug-panel button
+    // standing in for the future otter NPC trigger). Empties the slot so it
+    // can be replanted.
+    public List<ItemStack> Harvest(int slotIndex)
     {
-        var harvested = new List<ItemStack>(Data.storedItems);
-        Data.storedItems.Clear();
-        Data.storedCompletedCycles = 0;
+        if (slotIndex < 0 || slotIndex >= Data.slots.Count) return new List<ItemStack>();
 
-        if (Data.state == PlotState.Full)
-        {
-            Data.state = PlotState.Idle;
-            TryStartProduction(levelDurationMultiplier);
-        }
+        var slot = Data.slots[slotIndex];
+        if (slot.state != FurrowSlotState.AwaitingHarvest) return new List<ItemStack>();
 
-        return harvested;
-    }
+        var crop = cropLookup(slot.cropId);
+        var result = new List<ItemStack>();
+        if (crop != null) result.Add(new ItemStack(crop.cropId, crop.yieldCount));
 
-    private void TryStartProduction(float levelDurationMultiplier)
-    {
-        if (Data.state == PlotState.Full || Data.state == PlotState.Producing) return;
-        if (!HasWorker || ActiveCrop == null) return;
-
-        Data.remainingSec = ComputeDuration(ActiveCrop, levelDurationMultiplier);
-        Data.state = PlotState.Producing;
-    }
-
-    private void CompleteCycle(float levelDurationMultiplier)
-    {
-        var crop = ActiveCrop;
-        if (crop == null)
-        {
-            Data.state = PlotState.Idle;
-            return;
-        }
-
-        AddToStorage(crop.cropId, crop.yieldCount);
-        Data.storedCompletedCycles++;
-
-        if (Data.storedCompletedCycles >= storageCapacityCycles)
-        {
-            Data.state = PlotState.Full;
-            Data.remainingSec = 0f;
-            return;
-        }
-
-        // Duration is recomputed fresh for each new cycle, so a level-up mid-cycle
-        // only takes effect starting next cycle (design doc 7.2).
-        Data.remainingSec = ComputeDuration(crop, levelDurationMultiplier);
-    }
-
-    private void AddToStorage(string itemId, int quantity)
-    {
-        var stack = Data.storedItems.Find(s => s.itemId == itemId);
-        if (stack != null) stack.quantity += quantity;
-        else Data.storedItems.Add(new ItemStack(itemId, quantity));
+        slot.cropId = null;
+        slot.state = FurrowSlotState.Empty;
+        slot.remainingSec = 0f;
+        return result;
     }
 
     private static float ComputeDuration(CropDefinition crop, float multiplier)

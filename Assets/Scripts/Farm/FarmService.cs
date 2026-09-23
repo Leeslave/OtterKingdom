@@ -16,7 +16,21 @@ public class FarmService
 
         foreach (var plotData in save.plots)
         {
-            plots.Add(new PlotRuntime(plotData, LookupCrop, balance.storageCapacityCycles));
+            NormalizeSlots(plotData);
+            plots.Add(new PlotRuntime(plotData, LookupCrop));
+        }
+    }
+
+    // Saves written before the furrow/slot split (or any future slot-count
+    // change) may have a mismatched slots list — JsonUtility just leaves it
+    // at whatever the field initializer gave it. Pad it out so every plot
+    // always has exactly PlotSaveData.SlotCount entries.
+    private static void NormalizeSlots(PlotSaveData plotData)
+    {
+        plotData.slots ??= new List<FurrowSlotSaveData>();
+        while (plotData.slots.Count < PlotSaveData.SlotCount)
+        {
+            plotData.slots.Add(new FurrowSlotSaveData { state = FurrowSlotState.Empty });
         }
     }
 
@@ -30,30 +44,32 @@ public class FarmService
 
     public void Tick(float deltaSeconds)
     {
-        float multiplier = CurrentDurationMultiplier;
         foreach (var plot in plots)
         {
-            plot.Tick(deltaSeconds, multiplier);
+            plot.Tick(deltaSeconds);
         }
     }
 
-    public bool SelectCrop(int plotIndex, string cropId)
+    public bool Plant(int plotIndex, int slotIndex, string cropId)
     {
         if (plotIndex < 0 || plotIndex >= plots.Count) return false;
-        return plots[plotIndex].SelectCrop(cropId, CurrentDurationMultiplier);
+        return plots[plotIndex].Plant(slotIndex, cropId, CurrentDurationMultiplier);
     }
 
-    public List<ItemStack> Harvest(int plotIndex)
+    public List<ItemStack> Harvest(int plotIndex, int slotIndex)
     {
         if (plotIndex < 0 || plotIndex >= plots.Count) return new List<ItemStack>();
-        return plots[plotIndex].Harvest(CurrentDurationMultiplier);
+        return plots[plotIndex].Harvest(slotIndex);
     }
 
-    public void AssignWorker(int plotIndex, string workerId)
-    {
-        if (plotIndex < 0 || plotIndex >= plots.Count) return;
-        plots[plotIndex].AssignWorker(workerId, CurrentDurationMultiplier);
-    }
+    public FurrowSlotState GetSlotState(int plotIndex, int slotIndex) => plots[plotIndex].GetSlotState(slotIndex);
+
+    public CropDefinition GetSlotCrop(int plotIndex, int slotIndex) => plots[plotIndex].GetSlotCrop(slotIndex);
+
+    public float GetSlotRemainingSec(int plotIndex, int slotIndex) => plots[plotIndex].GetSlotRemainingSec(slotIndex);
+
+    public SlotGrowthStage GetSlotStage(int plotIndex, int slotIndex) =>
+        plots[plotIndex].GetGrowthStage(slotIndex, CurrentDurationMultiplier);
 
     public bool TryUpgrade(CurrencyManager currencyManager, Currency currency)
     {

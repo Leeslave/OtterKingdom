@@ -1,0 +1,1037 @@
+fileFormatVersion: 2
+guid: ade8c1440e0d40b419c41b9add0e4626
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4662884655204659277
+    second: FarmerOtter_IdleAction_Stretch_0
+  - first:
+      213: 9192873813865467434
+    second: FarmerOtter_IdleAction_Stretch_1
+  - first:
+      213: -7944833247631815290
+    second: FarmerOtter_IdleAction_Stretch_2
+  - first:
+      213: 491539264816259505
+    second: FarmerOtter_IdleAction_Stretch_3
+  - first:
+      213: -3279539395343805025
+    second: FarmerOtter_IdleAction_Stretch_4
+  - first:
+      213: -1547942111041390066
+    second: FarmerOtter_IdleAction_Stretch_5
+  - first:
+      213: 8676160127536955785
+    second: FarmerOtter_IdleAction_Stretch_6
+  - first:
+      213: 5450127494199407414
+    second: FarmerOtter_IdleAction_Stretch_7
+  - first:
+      213: 733061393419333993
+    second: FarmerOtter_IdleAction_Stretch_8
+  - first:
+      213: -8347343936525881272
+    second: FarmerOtter_IdleAction_Stretch_9
+  - first:
+      213: 4641839801718677360
+    second: FarmerOtter_IdleAction_Stretch_10
+  - first:
+      213: -4699980669658115796
+    second: FarmerOtter_IdleAction_Stretch_11
+  - first:
+      213: -3258233539550211906
+    second: FarmerOtter_IdleAction_Stretch_12
+  - first:
+      213: 680895678800321708
+    second: FarmerOtter_IdleAction_Stretch_13
+  - first:
+      213: -6865435229397897439
+    second: FarmerOtter_IdleAction_Stretch_14
+  - first:
+      213: 54148713567242404
+    second: FarmerOtter_IdleAction_Stretch_15
+  - first:
+      213: -8657248863877203016
+    second: FarmerOtter_IdleAction_Stretch_16
+  - first:
+      213: 1381968782028573714
+    second: FarmerOtter_IdleAction_Stretch_17
+  - first:
+      213: 310259256173786145
+    second: FarmerOtter_IdleAction_Stretch_18
+  - first:
+      213: 4318673374301819270
+    second: FarmerOtter_IdleAction_Stretch_19
+  - first:
+      213: 2647406153378803759
+    second: FarmerOtter_IdleAction_Stretch_20
+  - first:
+      213: -1923617336303224140
+    second: FarmerOtter_IdleAction_Stretch_21
+  - first:
+      213: 5716564509980251554
+    second: FarmerOtter_IdleAction_Stretch_0_0
+  - first:
+      213: 6353926806322859585
+    second: FarmerOtter_IdleAction_Stretch_0_1
+  - first:
+      213: 8108585002126983648
+    second: FarmerOtter_IdleAction_Stretch_0_2
+  - first:
+      213: 8129154802851760324
+    second: FarmerOtter_IdleAction_Stretch_0_3
+  - first:
+      213: 8925179192429983491
+    second: FarmerOtter_IdleAction_Stretch_0_4
+  - first:
+      213: -3338153542787496485
+    second: FarmerOtter_IdleAction_Stretch_0_5
+  - first:
+      213: -9149014418030673712
+    second: FarmerOtter_IdleAction_Stretch_0_6
+  - first:
+      213: -5804569007300771614
+    second: FarmerOtter_IdleAction_Stretch_0_7
+  - first:
+      213: -3027103893179769727
+    second: FarmerOtter_IdleAction_Stretch_1_0
+  - first:
+      213: -1701275376002047907
+    second: FarmerOtter_IdleAction_Stretch_1_1
+  - first:
+      213: 3637331815941873432
+    second: FarmerOtter_IdleAction_Stretch_1_2
+  - first:
+      213: 5496821554761724903
+    second: FarmerOtter_IdleAction_Stretch_1_3
+  - first:
+      213: 2539388313326135299
+    second: FarmerOtter_IdleAction_Stretch_1_4
+  - first:
+      213: -4791134677783952785
+    second: FarmerOtter_IdleAction_Stretch_1_5
+  - first:
+      213: -5988478614732719060
+    second: FarmerOtter_IdleAction_Stretch_1_6
+  - first:
+      213: -6344759140957583973
+    second: FarmerOtter_IdleAction_Stretch_1_7
+  - first:
+      213: -4368968076943625041
+    second: FarmerOtter_IdleAction_Stretch_2_0
+  - first:
+      213: 4361350829004112323
+    second: FarmerOtter_IdleAction_Stretch_2_1
+  - first:
+      213: -2118311677704943941
+    second: FarmerOtter_IdleAction_Stretch_2_2
+  - first:
+      213: -5428138238429410483
+    second: FarmerOtter_IdleAction_Stretch_2_3
+  - first:
+      213: -7392418624094981941
+    second: FarmerOtter_IdleAction_Stretch_2_4
+  - first:
+      213: -1437310085704399537
+    second: FarmerOtter_IdleAction_Stretch_2_5
+  - first:
+      213: -4104725195003515996
+    second: FarmerOtter_IdleAction_Stretch_2_6
+  - first:
+      213: -4820168281311418495
+    second: FarmerOtter_IdleAction_Stretch_2_7
+  - first:
+      213: -187931956198160118
+    second: FarmerOtter_IdleAction_Stretch_3_0
+  - first:
+      213: -5227005021379971399
+    second: FarmerOtter_IdleAction_Stretch_3_1
+  - first:
+      213: 225852990824055059
+    second: FarmerOtter_IdleAction_Stretch_3_2
+  - first:
+      213: 2962086567194002702
+    second: FarmerOtter_IdleAction_Stretch_3_3
+  - first:
+      213: -336364025929626882
+    second: FarmerOtter_IdleAction_Stretch_3_4
+  - first:
+      213: -5962697969785877234
+    second: FarmerOtter_IdleAction_Stretch_3_5
+  - first:
+      213: -9023034865265677083
+    second: FarmerOtter_IdleAction_Stretch_3_6
+  - first:
+      213: -7372389272537574950
+    second: FarmerOtter_IdleAction_Stretch_3_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_0_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 666.25
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a55af85221555f40800000000000000
+      internalID: 5716564509980251554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_0_1
+      rect:
+        serializedVersion: 2
+        x: 223.75
+        y: 666.25
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14ec4bb04cead2850800000000000000
+      internalID: 6353926806322859585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_0_2
+      rect:
+        serializedVersion: 2
+        x: 445.5
+        y: 666.25
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e1c6da291b778070800000000000000
+      internalID: 8108585002126983648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_0_3
+      rect:
+        serializedVersion: 2
+        x: 667.25
+        y: 666.25
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c8c32c193f80d070800000000000000
+      internalID: 8129154802851760324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_0_4
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 666.25
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3073f79103b9cdb70800000000000000
+      internalID: 8925179192429983491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_0_5
+      rect:
+        serializedVersion: 2
+        x: 1110.75
+        y: 666.25
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd580740a0f7ca1d0800000000000000
+      internalID: -3338153542787496485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_0_6
+      rect:
+        serializedVersion: 2
+        x: 1332.5
+        y: 666.25
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d0ca504cdb280180800000000000000
+      internalID: -9149014418030673712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_0_7
+      rect:
+        serializedVersion: 2
+        x: 1554.25
+        y: 666.25
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e08895ed37027fa0800000000000000
+      internalID: -5804569007300771614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_1_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 444.5
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18c51d42c019df5d0800000000000000
+      internalID: -3027103893179769727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_1_1
+      rect:
+        serializedVersion: 2
+        x: 223.75
+        y: 444.5
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d50674c2f0bd368e0800000000000000
+      internalID: -1701275376002047907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_1_2
+      rect:
+        serializedVersion: 2
+        x: 445.5
+        y: 444.5
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81f1173e3066a7230800000000000000
+      internalID: 3637331815941873432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_1_3
+      rect:
+        serializedVersion: 2
+        x: 667.25
+        y: 444.5
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e37845a412a84c40800000000000000
+      internalID: 5496821554761724903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_1_4
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 444.5
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 308259a7738bd3320800000000000000
+      internalID: 2539388313326135299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_1_5
+      rect:
+        serializedVersion: 2
+        x: 1110.75
+        y: 444.5
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f62c1a32568728db0800000000000000
+      internalID: -4791134677783952785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_1_6
+      rect:
+        serializedVersion: 2
+        x: 1332.5
+        y: 444.5
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2c35df9d66a4eca0800000000000000
+      internalID: -5988478614732719060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_1_7
+      rect:
+        serializedVersion: 2
+        x: 1554.25
+        y: 444.5
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b958fc16d23e2f7a0800000000000000
+      internalID: -6344759140957583973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_2_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 222.75
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa4f0ca8eae4e53c0800000000000000
+      internalID: -4368968076943625041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_2_1
+      rect:
+        serializedVersion: 2
+        x: 223.75
+        y: 222.75
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c145a7b871a68c30800000000000000
+      internalID: 4361350829004112323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_2_2
+      rect:
+        serializedVersion: 2
+        x: 445.5
+        y: 222.75
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb6c5de90ce3a92e0800000000000000
+      internalID: -2118311677704943941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_2_3
+      rect:
+        serializedVersion: 2
+        x: 667.25
+        y: 222.75
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4b43ba18016ba4b0800000000000000
+      internalID: -5428138238429410483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_2_4
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 222.75
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc036d79d6ad86990800000000000000
+      internalID: -7392418624094981941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_2_5
+      rect:
+        serializedVersion: 2
+        x: 1110.75
+        y: 222.75
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f45c08d9716ad0ce0800000000000000
+      internalID: -1437310085704399537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_2_6
+      rect:
+        serializedVersion: 2
+        x: 1332.5
+        y: 222.75
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ab2833de261907c0800000000000000
+      internalID: -4104725195003515996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_2_7
+      rect:
+        serializedVersion: 2
+        x: 1554.25
+        y: 222.75
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 187e3da8c725b1db0800000000000000
+      internalID: -4820168281311418495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_3_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a094ddca1e4546df0800000000000000
+      internalID: -187931956198160118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_3_1
+      rect:
+        serializedVersion: 2
+        x: 223.75
+        y: 1
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b6b67d70a2f577b0800000000000000
+      internalID: -5227005021379971399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_3_2
+      rect:
+        serializedVersion: 2
+        x: 445.5
+        y: 1
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31107893914622300800000000000000
+      internalID: 225852990824055059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_3_3
+      rect:
+        serializedVersion: 2
+        x: 667.25
+        y: 1
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e050e8ff9027b1920800000000000000
+      internalID: 2962086567194002702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_3_4
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 1
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efa8e3753bef45bf0800000000000000
+      internalID: -336364025929626882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_3_5
+      rect:
+        serializedVersion: 2
+        x: 1110.75
+        y: 1
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0d48f7c9cd304da0800000000000000
+      internalID: -5962697969785877234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_3_6
+      rect:
+        serializedVersion: 2
+        x: 1332.5
+        y: 1
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ecefdb989db7c280800000000000000
+      internalID: -9023034865265677083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Stretch_3_7
+      rect:
+        serializedVersion: 2
+        x: 1554.25
+        y: 1
+        width: 217.75
+        height: 219.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad15f78640300b990800000000000000
+      internalID: -7372389272537574950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FarmerOtter_IdleAction_Stretch_0: 4662884655204659277
+      FarmerOtter_IdleAction_Stretch_0_0: 5716564509980251554
+      FarmerOtter_IdleAction_Stretch_0_1: 6353926806322859585
+      FarmerOtter_IdleAction_Stretch_0_2: 8108585002126983648
+      FarmerOtter_IdleAction_Stretch_0_3: 8129154802851760324
+      FarmerOtter_IdleAction_Stretch_0_4: 8925179192429983491
+      FarmerOtter_IdleAction_Stretch_0_5: -3338153542787496485
+      FarmerOtter_IdleAction_Stretch_0_6: -9149014418030673712
+      FarmerOtter_IdleAction_Stretch_0_7: -5804569007300771614
+      FarmerOtter_IdleAction_Stretch_1: 9192873813865467434
+      FarmerOtter_IdleAction_Stretch_10: 4641839801718677360
+      FarmerOtter_IdleAction_Stretch_11: -4699980669658115796
+      FarmerOtter_IdleAction_Stretch_12: -3258233539550211906
+      FarmerOtter_IdleAction_Stretch_13: 680895678800321708
+      FarmerOtter_IdleAction_Stretch_14: -6865435229397897439
+      FarmerOtter_IdleAction_Stretch_15: 54148713567242404
+      FarmerOtter_IdleAction_Stretch_16: -8657248863877203016
+      FarmerOtter_IdleAction_Stretch_17: 1381968782028573714
+      FarmerOtter_IdleAction_Stretch_18: 310259256173786145
+      FarmerOtter_IdleAction_Stretch_19: 4318673374301819270
+      FarmerOtter_IdleAction_Stretch_1_0: -3027103893179769727
+      FarmerOtter_IdleAction_Stretch_1_1: -1701275376002047907
+      FarmerOtter_IdleAction_Stretch_1_2: 3637331815941873432
+      FarmerOtter_IdleAction_Stretch_1_3: 5496821554761724903
+      FarmerOtter_IdleAction_Stretch_1_4: 2539388313326135299
+      FarmerOtter_IdleAction_Stretch_1_5: -4791134677783952785
+      FarmerOtter_IdleAction_Stretch_1_6: -5988478614732719060
+      FarmerOtter_IdleAction_Stretch_1_7: -6344759140957583973
+      FarmerOtter_IdleAction_Stretch_2: -7944833247631815290
+      FarmerOtter_IdleAction_Stretch_20: 2647406153378803759
+      FarmerOtter_IdleAction_Stretch_21: -1923617336303224140
+      FarmerOtter_IdleAction_Stretch_2_0: -4368968076943625041
+      FarmerOtter_IdleAction_Stretch_2_1: 4361350829004112323
+      FarmerOtter_IdleAction_Stretch_2_2: -2118311677704943941
+      FarmerOtter_IdleAction_Stretch_2_3: -5428138238429410483
+      FarmerOtter_IdleAction_Stretch_2_4: -7392418624094981941
+      FarmerOtter_IdleAction_Stretch_2_5: -1437310085704399537
+      FarmerOtter_IdleAction_Stretch_2_6: -4104725195003515996
+      FarmerOtter_IdleAction_Stretch_2_7: -4820168281311418495
+      FarmerOtter_IdleAction_Stretch_3: 491539264816259505
+      FarmerOtter_IdleAction_Stretch_3_0: -187931956198160118
+      FarmerOtter_IdleAction_Stretch_3_1: -5227005021379971399
+      FarmerOtter_IdleAction_Stretch_3_2: 225852990824055059
+      FarmerOtter_IdleAction_Stretch_3_3: 2962086567194002702
+      FarmerOtter_IdleAction_Stretch_3_4: -336364025929626882
+      FarmerOtter_IdleAction_Stretch_3_5: -5962697969785877234
+      FarmerOtter_IdleAction_Stretch_3_6: -9023034865265677083
+      FarmerOtter_IdleAction_Stretch_3_7: -7372389272537574950
+      FarmerOtter_IdleAction_Stretch_4: -3279539395343805025
+      FarmerOtter_IdleAction_Stretch_5: -1547942111041390066
+      FarmerOtter_IdleAction_Stretch_6: 8676160127536955785
+      FarmerOtter_IdleAction_Stretch_7: 5450127494199407414
+      FarmerOtter_IdleAction_Stretch_8: 733061393419333993
+      FarmerOtter_IdleAction_Stretch_9: -8347343936525881272
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

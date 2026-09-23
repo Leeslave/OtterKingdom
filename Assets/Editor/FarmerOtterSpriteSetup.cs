@@ -15,6 +15,15 @@ public static class FarmerOtterSpriteSetup
     private const string PrefabDir = "Assets/Prefabs";
     private const int Cols = 8;
 
+    // Frames sit edge-to-edge in the sheet with zero gap between them, so
+    // slicing at the exact naive column boundary lets bilinear filtering
+    // sample a sliver of the neighboring frame at render time (shows up as a
+    // faint "ghost" of the next pose beside the character, worst on Harvest
+    // since its pose reaches closest to the frame edge). Insetting each
+    // sliced rect moves the sampled texture away from that boundary.
+    private const float ColumnInsetPx = 2f;
+    private const float RowInsetPx = 1f;
+
     private static readonly (int row, string name)[] RowDefs =
     {
         (0, "Walk"),
@@ -24,9 +33,35 @@ public static class FarmerOtterSpriteSetup
         (4, "Harvest"),
     };
 
+    // Random idle flavor actions played while wandering (see
+    // FarmerOtterController.randomActionTriggers). Each sheet is its own
+    // 8-col x 4-row grid: row 0 = side-facing (same framing as Walk/Harvest),
+    // row 1 = side alt, row 2 = front close-up bust, row 3 = back view. Only
+    // row 0 is wired up for now, same as Walk_Alt/Idle_Back being left unused
+    // on the main sheet — the others are available if a future scene needs
+    // front/back facing.
+    private const string IdleActionDir = "Assets/Sprites/Characters/FarmerOtter";
+    private const int IdleActionCols = 8;
+    private const int IdleActionRows = 4;
+    private const int IdleActionUsedRow = 0;
+
+    private static readonly (string path, string trigger)[] IdleActionSheets =
+    {
+        ($"{IdleActionDir}/FarmerOtter_IdleAction_Net.png", "Net"),
+        ($"{IdleActionDir}/FarmerOtter_IdleAction_Stretch.png", "Stretch"),
+        ($"{IdleActionDir}/FarmerOtter_IdleAction_Eat.png", "Eat"),
+    };
+
     [MenuItem("OtterKingdom/Tools/Setup Farmer Otter Animations")]
     public static void Run()
     {
+        // Safe to re-run: wipe previously generated clips/controller/prefab
+        // first so CreateAsset doesn't fail against paths that already exist.
+        if (AssetDatabase.IsValidFolder(AnimDir)) AssetDatabase.DeleteAsset(AnimDir);
+        string prefabPath = $"{PrefabDir}/FarmerOtter.prefab";
+        if (AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath) != null) AssetDatabase.DeleteAsset(prefabPath);
+        AssetDatabase.Refresh();
+
         SliceSheet();
 
         var spritesByRow = LoadSlicedSprites();
@@ -38,7 +73,14 @@ public static class FarmerOtterSpriteSetup
             clips[rowDef.name] = BuildClip(rowDef.name, spritesByRow[rowDef.name]);
         }
 
-        var controller = BuildController(clips);
+        var idleActionClips = new Dictionary<string, AnimationClip>();
+        foreach (var sheet in IdleActionSheets)
+        {
+            var frames = SliceIdleActionSheetRow(sheet.path, IdleActionUsedRow);
+            idleActionClips[sheet.trigger] = BuildClip($"IdleAction_{sheet.trigger}", frames);
+        }
+
+        var controller = BuildController(clips, idleActionClips);
         BuildPrefab(controller, spritesByRow["Idle"][0]);
 
         AssetDatabase.SaveAssets();
@@ -55,6 +97,7 @@ public static class FarmerOtterSpriteSetup
         importer.mipmapEnabled = false;
         importer.alphaIsTransparency = true;
         importer.filterMode = FilterMode.Bilinear;
+        importer.textureCompression = TextureImporterCompression.Uncompressed;
 
         var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(SheetPath);
         float cw = tex.width / (float)Cols;
@@ -68,7 +111,11 @@ public static class FarmerOtterSpriteSetup
                 metas.Add(new SpriteMetaData
                 {
                     name = $"FarmerOtter_{rowDef.name}_{col}",
-                    rect = new Rect(col * cw, tex.height - (rowDef.row + 1) * ch, cw, ch),
+                    rect = new Rect(
+                        col * cw + ColumnInsetPx,
+                        tex.height - (rowDef.row + 1) * ch + RowInsetPx,
+                        cw - ColumnInsetPx * 2f,
+                        ch - RowInsetPx * 2f),
                     alignment = (int)SpriteAlignment.Center,
                     pivot = new Vector2(0.5f, 0.5f)
                 });
@@ -77,6 +124,57 @@ public static class FarmerOtterSpriteSetup
         importer.spritesheet = metas.ToArray();
         EditorUtility.SetDirty(importer);
         importer.SaveAndReimport();
+    }
+
+    // Slices one idle-action sheet (8x4) and returns just the requested row's
+    // 8 frames, in order. All 4 rows are sliced (not just the used one) so
+    // the other framings stay available as sprite sub-assets if needed later.
+    private static List<Sprite> SliceIdleActionSheetRow(string path, int usedRow)
+    {
+        var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Multiple;
+        importer.spritePixelsPerUnit = 100f;
+        importer.mipmapEnabled = false;
+        importer.alphaIsTransparency = true;
+        importer.filterMode = FilterMode.Bilinear;
+        importer.textureCompression = TextureImporterCompression.Uncompressed;
+
+        var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+        float cw = tex.width / (float)IdleActionCols;
+        float ch = tex.height / (float)IdleActionRows;
+        string baseName = Path.GetFileNameWithoutExtension(path);
+
+        var metas = new List<SpriteMetaData>();
+        for (int row = 0; row < IdleActionRows; row++)
+        {
+            for (int col = 0; col < IdleActionCols; col++)
+            {
+                metas.Add(new SpriteMetaData
+                {
+                    name = $"{baseName}_{row}_{col}",
+                    rect = new Rect(
+                        col * cw + ColumnInsetPx,
+                        tex.height - (row + 1) * ch + RowInsetPx,
+                        cw - ColumnInsetPx * 2f,
+                        ch - RowInsetPx * 2f),
+                    alignment = (int)SpriteAlignment.Center,
+                    pivot = new Vector2(0.5f, 0.5f)
+                });
+            }
+        }
+        importer.spritesheet = metas.ToArray();
+        EditorUtility.SetDirty(importer);
+        importer.SaveAndReimport();
+
+        var all = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().ToList();
+        var frames = new List<Sprite>();
+        for (int col = 0; col < IdleActionCols; col++)
+        {
+            string name = $"{baseName}_{usedRow}_{col}";
+            frames.Add(all.First(s => s.name == name));
+        }
+        return frames;
     }
 
     private static Dictionary<string, List<Sprite>> LoadSlicedSprites()
@@ -122,7 +220,9 @@ public static class FarmerOtterSpriteSetup
         return clip;
     }
 
-    private static AnimatorController BuildController(Dictionary<string, AnimationClip> clips)
+    private static AnimatorController BuildController(
+        Dictionary<string, AnimationClip> clips,
+        Dictionary<string, AnimationClip> idleActionClips)
     {
         string path = $"{AnimDir}/FarmerOtter.controller";
         var controller = AnimatorController.CreateAnimatorControllerAtPath(path);
@@ -160,6 +260,31 @@ public static class FarmerOtterSpriteSetup
         harvestToIdle.hasExitTime = true;
         harvestToIdle.exitTime = 1f;
         harvestToIdle.duration = 0.1f;
+
+        // Random idle flavor actions (Net/Stretch/Eat) — same Any State ->
+        // trigger -> clip -> exit time 1 -> Idle pattern as Harvest, so
+        // FarmerOtterController.PlayRandomActionOrWait's generic "wait until
+        // back in Idle" logic works unchanged for these too.
+        foreach (var kvp in idleActionClips)
+        {
+            string trigger = kvp.Key;
+            var clip = kvp.Value;
+
+            controller.AddParameter(trigger, AnimatorControllerParameterType.Trigger);
+
+            var state = sm.AddState(trigger);
+            state.motion = clip;
+
+            var anyToState = sm.AddAnyStateTransition(state);
+            anyToState.hasExitTime = false;
+            anyToState.duration = 0.05f;
+            anyToState.AddCondition(AnimatorConditionMode.If, 0, trigger);
+
+            var stateToIdle = state.AddTransition(idleState);
+            stateToIdle.hasExitTime = true;
+            stateToIdle.exitTime = 1f;
+            stateToIdle.duration = 0.1f;
+        }
 
         EditorUtility.SetDirty(controller);
         return controller;

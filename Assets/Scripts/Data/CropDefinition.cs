@@ -9,4 +9,9 @@ public class CropDefinition : ScriptableObject
     public int yieldCount;
     public int sellPrice;
     public SeedType seedType;
+
+    [Header("Growth stage sprites (one per furrow slot index, 0-2)")]
+    public Sprite[] seedSprites;
+    public Sprite[] sproutSprites;
+    public Sprite[] grownSprites;
 }
