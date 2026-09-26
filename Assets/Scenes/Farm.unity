@@ -1021,12 +1021,16 @@ MonoBehaviour:
   - Net
   - Stretch
   - Eat
+  - Squat
   slotAnchors:
   - {fileID: 1693847360}
   - {fileID: 1262058033}
   - {fileID: 1964572513}
-  moveSpeed: 1.5
+  moveSpeed: 1
   arriveThreshold: 0.05
+  walkAnimSpeed: 0.1
+  harvestAnimSpeed: 0.1
+  idleActionAnimSpeed: 0.1
   spriteSortingOrder: 2
 --- !u!1 &1262058032
 GameObject:

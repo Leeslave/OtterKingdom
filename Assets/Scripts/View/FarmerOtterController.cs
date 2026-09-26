@@ -10,7 +10,7 @@ using UnityEngine;
 // (see 농부해달_애니메이션_작업기록.md).
 //
 // Relies on FarmerOtter.controller's exact parameter/state names: bool
-// "IsMoving", trigger "Harvest", state "Harvest" auto-returning to "Idle"
+// "IsMoving", int "WalkDir" (see WalkDir below), trigger "Harvest", state "Harvest" auto-returning to "Idle"
 // after one loop (hasExitTime, exitTime = 1). `randomActionTriggers` expects
 // any additional action clips to be wired the same way (Any State -> trigger
 // -> clip state -> exit time 1 -> Idle) once those sprites exist.
@@ -28,16 +28,25 @@ public class FarmerOtterController : MonoBehaviour
     [Header("Random action at each waypoint")]
     [Tooltip("Animator trigger names for idle flavor animations. Each must be wired " +
              "Any State -> trigger -> clip -> exit time 1 -> Idle, same as Harvest " +
-             "(FarmerOtterSpriteSetup wires Net/Stretch/Eat this way already). " +
+             "(FarmerOtterSpriteSetup wires Net/Stretch/Eat/Squat this way already). " +
              "Leave empty to just wait in Idle instead.")]
-    [SerializeField] private string[] randomActionTriggers = { "Net", "Stretch", "Eat" };
+    [SerializeField] private string[] randomActionTriggers = { "Net", "Stretch", "Eat", "Squat" };
 
     [Header("Harvest slot anchors (index-matched to slot 0/1/2)")]
     [SerializeField] private Transform[] slotAnchors;
 
     [Header("Movement")]
+    [Tooltip("Walking speed in world units per second.")]
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float arriveThreshold = 0.05f;
+
+    [Header("Animation playback speed (1 = 10fps as authored, lower = slower)")]
+    [Tooltip("Walk_* clips. Lower this together with moveSpeed so the feet don't slide.")]
+    [SerializeField, Range(0.1f, 3f)] private float walkAnimSpeed = 1f;
+    [Tooltip("Harvest clip. Slower = the otter spends longer harvesting each slot.")]
+    [SerializeField, Range(0.1f, 3f)] private float harvestAnimSpeed = 1f;
+    [Tooltip("Random idle actions (Net/Stretch/Eat/Squat).")]
+    [SerializeField, Range(0.1f, 3f)] private float idleActionAnimSpeed = 1f;
 
     [Header("Render order")]
     // Furrow plots are sortingOrder 0 and their crop slots are sortingOrder 1
@@ -46,7 +55,14 @@ public class FarmerOtterController : MonoBehaviour
     [SerializeField] private int spriteSortingOrder = 2;
 
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
+    private static readonly int WalkDirHash = Animator.StringToHash("WalkDir");
     private static readonly int HarvestHash = Animator.StringToHash("Harvest");
+    private static readonly int WalkSpeedHash = Animator.StringToHash("WalkAnimSpeed");
+    private static readonly int HarvestSpeedHash = Animator.StringToHash("HarvestAnimSpeed");
+    private static readonly int IdleActionSpeedHash = Animator.StringToHash("IdleActionAnimSpeed");
+
+    // Values of the Animator's "WalkDir" int — must match FarmerOtterSpriteSetup.
+    private enum WalkDir { Side = 0, Down = 1, Up = 2 }
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -58,6 +74,20 @@ public class FarmerOtterController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = spriteSortingOrder;
+        ApplyAnimSpeeds();
+    }
+
+    // Lets the speed sliders be tuned live in Play Mode.
+    private void OnValidate()
+    {
+        if (animator != null) ApplyAnimSpeeds();
+    }
+
+    private void ApplyAnimSpeeds()
+    {
+        animator.SetFloat(WalkSpeedHash, walkAnimSpeed);
+        animator.SetFloat(HarvestSpeedHash, harvestAnimSpeed);
+        animator.SetFloat(IdleActionSpeedHash, idleActionAnimSpeed);
     }
 
     private void Start()
@@ -189,6 +219,7 @@ public class FarmerOtterController : MonoBehaviour
             yield break;
         }
 
+        SetWalkDir(destination);
         SetMoving(true);
         FaceTowards(destination);
 
@@ -203,6 +234,17 @@ public class FarmerOtterController : MonoBehaviour
     }
 
     private void SetMoving(bool moving) => animator.SetBool(IsMovingHash, moving);
+
+    // MoveTo walks one axis at a time, so each leg is either purely vertical
+    // (front/back walk) or purely horizontal (side walk, mirrored by flipX).
+    private void SetWalkDir(Vector3 destination)
+    {
+        Vector2 delta = destination - transform.position;
+        WalkDir dir = Mathf.Abs(delta.y) > Mathf.Abs(delta.x)
+            ? (delta.y < 0f ? WalkDir.Down : WalkDir.Up)
+            : WalkDir.Side;
+        animator.SetInteger(WalkDirHash, (int)dir);
+    }
 
     private void FaceTowards(Vector3 destination)
     {

@@ -210,7 +210,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 120
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -231,7 +231,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -255,6 +255,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -262,10 +275,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_0_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 666.25
-        width: 217.75
-        height: 219.75
+        x: 0
+        y: 720
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,10 +297,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_0_1
       rect:
         serializedVersion: 2
-        x: 223.75
-        y: 666.25
-        width: 217.75
-        height: 219.75
+        x: 416
+        y: 720
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -306,10 +319,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_0_2
       rect:
         serializedVersion: 2
-        x: 445.5
-        y: 666.25
-        width: 217.75
-        height: 219.75
+        x: 832
+        y: 720
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -328,10 +341,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_0_3
       rect:
         serializedVersion: 2
-        x: 667.25
-        y: 666.25
-        width: 217.75
-        height: 219.75
+        x: 1248
+        y: 720
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -350,10 +363,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_0_4
       rect:
         serializedVersion: 2
-        x: 889
-        y: 666.25
-        width: 217.75
-        height: 219.75
+        x: 1664
+        y: 720
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -372,10 +385,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_0_5
       rect:
         serializedVersion: 2
-        x: 1110.75
-        y: 666.25
-        width: 217.75
-        height: 219.75
+        x: 2080
+        y: 720
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -394,10 +407,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_0_6
       rect:
         serializedVersion: 2
-        x: 1332.5
-        y: 666.25
-        width: 217.75
-        height: 219.75
+        x: 2496
+        y: 720
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -416,10 +429,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_0_7
       rect:
         serializedVersion: 2
-        x: 1554.25
-        y: 666.25
-        width: 217.75
-        height: 219.75
+        x: 2912
+        y: 720
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -438,10 +451,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_1_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 444.5
-        width: 217.75
-        height: 219.75
+        x: 0
+        y: 480
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -460,10 +473,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_1_1
       rect:
         serializedVersion: 2
-        x: 223.75
-        y: 444.5
-        width: 217.75
-        height: 219.75
+        x: 416
+        y: 480
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -482,10 +495,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_1_2
       rect:
         serializedVersion: 2
-        x: 445.5
-        y: 444.5
-        width: 217.75
-        height: 219.75
+        x: 832
+        y: 480
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -504,10 +517,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_1_3
       rect:
         serializedVersion: 2
-        x: 667.25
-        y: 444.5
-        width: 217.75
-        height: 219.75
+        x: 1248
+        y: 480
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -526,10 +539,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_1_4
       rect:
         serializedVersion: 2
-        x: 889
-        y: 444.5
-        width: 217.75
-        height: 219.75
+        x: 1664
+        y: 480
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -548,10 +561,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_1_5
       rect:
         serializedVersion: 2
-        x: 1110.75
-        y: 444.5
-        width: 217.75
-        height: 219.75
+        x: 2080
+        y: 480
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -570,10 +583,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_1_6
       rect:
         serializedVersion: 2
-        x: 1332.5
-        y: 444.5
-        width: 217.75
-        height: 219.75
+        x: 2496
+        y: 480
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -592,10 +605,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_1_7
       rect:
         serializedVersion: 2
-        x: 1554.25
-        y: 444.5
-        width: 217.75
-        height: 219.75
+        x: 2912
+        y: 480
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -614,10 +627,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_2_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 222.75
-        width: 217.75
-        height: 219.75
+        x: 0
+        y: 240
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -636,10 +649,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_2_1
       rect:
         serializedVersion: 2
-        x: 223.75
-        y: 222.75
-        width: 217.75
-        height: 219.75
+        x: 416
+        y: 240
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -658,10 +671,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_2_2
       rect:
         serializedVersion: 2
-        x: 445.5
-        y: 222.75
-        width: 217.75
-        height: 219.75
+        x: 832
+        y: 240
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -680,10 +693,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_2_3
       rect:
         serializedVersion: 2
-        x: 667.25
-        y: 222.75
-        width: 217.75
-        height: 219.75
+        x: 1248
+        y: 240
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -702,10 +715,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_2_4
       rect:
         serializedVersion: 2
-        x: 889
-        y: 222.75
-        width: 217.75
-        height: 219.75
+        x: 1664
+        y: 240
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -724,10 +737,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_2_5
       rect:
         serializedVersion: 2
-        x: 1110.75
-        y: 222.75
-        width: 217.75
-        height: 219.75
+        x: 2080
+        y: 240
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -746,10 +759,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_2_6
       rect:
         serializedVersion: 2
-        x: 1332.5
-        y: 222.75
-        width: 217.75
-        height: 219.75
+        x: 2496
+        y: 240
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -768,10 +781,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_2_7
       rect:
         serializedVersion: 2
-        x: 1554.25
-        y: 222.75
-        width: 217.75
-        height: 219.75
+        x: 2912
+        y: 240
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -790,10 +803,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_3_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 1
-        width: 217.75
-        height: 219.75
+        x: 0
+        y: 0
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -812,10 +825,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_3_1
       rect:
         serializedVersion: 2
-        x: 223.75
-        y: 1
-        width: 217.75
-        height: 219.75
+        x: 416
+        y: 0
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -834,10 +847,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_3_2
       rect:
         serializedVersion: 2
-        x: 445.5
-        y: 1
-        width: 217.75
-        height: 219.75
+        x: 832
+        y: 0
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -856,10 +869,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_3_3
       rect:
         serializedVersion: 2
-        x: 667.25
-        y: 1
-        width: 217.75
-        height: 219.75
+        x: 1248
+        y: 0
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -878,10 +891,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_3_4
       rect:
         serializedVersion: 2
-        x: 889
-        y: 1
-        width: 217.75
-        height: 219.75
+        x: 1664
+        y: 0
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -900,10 +913,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_3_5
       rect:
         serializedVersion: 2
-        x: 1110.75
-        y: 1
-        width: 217.75
-        height: 219.75
+        x: 2080
+        y: 0
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -922,10 +935,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_3_6
       rect:
         serializedVersion: 2
-        x: 1332.5
-        y: 1
-        width: 217.75
-        height: 219.75
+        x: 2496
+        y: 0
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -944,10 +957,10 @@ TextureImporter:
       name: FarmerOtter_IdleAction_Stretch_3_7
       rect:
         serializedVersion: 2
-        x: 1554.25
-        y: 1
-        width: 217.75
-        height: 219.75
+        x: 2912
+        y: 0
+        width: 416
+        height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

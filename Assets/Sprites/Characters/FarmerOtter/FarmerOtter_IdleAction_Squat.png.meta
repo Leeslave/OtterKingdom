@@ -1,163 +1,205 @@
 fileFormatVersion: 2
-guid: c087e325575bfc544858c1a0e3f71bbd
+guid: d2ce658d85f3eac4cb05c283e7e04027
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2509898408428161497
-    second: FarmerOtter_IdleAction_Eat_0
+      213: -2005550527724946274
+    second: FarmerOtter_IdleAction_Squat_0
   - first:
-      213: 6545129702471769422
-    second: FarmerOtter_IdleAction_Eat_1
+      213: -2092351511530342121
+    second: FarmerOtter_IdleAction_Squat_1
   - first:
-      213: -4705474613336560974
-    second: FarmerOtter_IdleAction_Eat_2
+      213: 8405509269009693858
+    second: FarmerOtter_IdleAction_Squat_2
   - first:
-      213: -2650861363370653196
-    second: FarmerOtter_IdleAction_Eat_3
+      213: -7537677834028448104
+    second: FarmerOtter_IdleAction_Squat_3
   - first:
-      213: -9076273385699194587
-    second: FarmerOtter_IdleAction_Eat_4
+      213: 5180375141695709229
+    second: FarmerOtter_IdleAction_Squat_4
   - first:
-      213: 4440185353264367455
-    second: FarmerOtter_IdleAction_Eat_5
+      213: 6509992885354021515
+    second: FarmerOtter_IdleAction_Squat_5
   - first:
-      213: -2980839286529660195
-    second: FarmerOtter_IdleAction_Eat_6
+      213: 845348646945988039
+    second: FarmerOtter_IdleAction_Squat_6
   - first:
-      213: 593697006469076903
-    second: FarmerOtter_IdleAction_Eat_7
+      213: 7746806493803610052
+    second: FarmerOtter_IdleAction_Squat_7
   - first:
-      213: 7867119645328138217
-    second: FarmerOtter_IdleAction_Eat_8
+      213: -7071990502643230636
+    second: FarmerOtter_IdleAction_Squat_8
   - first:
-      213: -6847638881089829280
-    second: FarmerOtter_IdleAction_Eat_9
+      213: -3054437032641790811
+    second: FarmerOtter_IdleAction_Squat_9
   - first:
-      213: 3668610646577296569
-    second: FarmerOtter_IdleAction_Eat_10
+      213: -4476920161352675210
+    second: FarmerOtter_IdleAction_Squat_10
   - first:
-      213: 2893292354313342837
-    second: FarmerOtter_IdleAction_Eat_11
+      213: -5654978696214328091
+    second: FarmerOtter_IdleAction_Squat_11
   - first:
-      213: -6443331430512185745
-    second: FarmerOtter_IdleAction_Eat_12
+      213: 5426884273906868176
+    second: FarmerOtter_IdleAction_Squat_12
   - first:
-      213: 2384450150125935620
-    second: FarmerOtter_IdleAction_Eat_13
+      213: -6783238476586345081
+    second: FarmerOtter_IdleAction_Squat_13
   - first:
-      213: 8728470238836712847
-    second: FarmerOtter_IdleAction_Eat_14
+      213: -831412169410869924
+    second: FarmerOtter_IdleAction_Squat_14
   - first:
-      213: -944045161435266101
-    second: FarmerOtter_IdleAction_Eat_15
+      213: -3270730682157485209
+    second: FarmerOtter_IdleAction_Squat_15
   - first:
-      213: 7149164152394129274
-    second: FarmerOtter_IdleAction_Eat_16
+      213: -4936230503388266744
+    second: FarmerOtter_IdleAction_Squat_16
   - first:
-      213: -4545189066891287079
-    second: FarmerOtter_IdleAction_Eat_17
+      213: -6302749536204718205
+    second: FarmerOtter_IdleAction_Squat_17
   - first:
-      213: 496371429664508694
-    second: FarmerOtter_IdleAction_Eat_18
+      213: -4840764316140764530
+    second: FarmerOtter_IdleAction_Squat_18
   - first:
-      213: 6876153632457594960
-    second: FarmerOtter_IdleAction_Eat_19
+      213: -621715128442130004
+    second: FarmerOtter_IdleAction_Squat_19
   - first:
-      213: -1392974781478742094
-    second: FarmerOtter_IdleAction_Eat_0_0
+      213: -8256410195876169429
+    second: FarmerOtter_IdleAction_Squat_20
   - first:
-      213: -1733630004578080207
-    second: FarmerOtter_IdleAction_Eat_0_1
+      213: -2904214775074951555
+    second: FarmerOtter_IdleAction_Squat_21
   - first:
-      213: -1558222465505592506
-    second: FarmerOtter_IdleAction_Eat_0_2
+      213: -8530714847724127833
+    second: FarmerOtter_IdleAction_Squat_22
   - first:
-      213: 353507877503172646
-    second: FarmerOtter_IdleAction_Eat_0_3
+      213: -4970271646300878801
+    second: FarmerOtter_IdleAction_Squat_23
   - first:
-      213: -4737002753156031051
-    second: FarmerOtter_IdleAction_Eat_0_4
+      213: 5934376660041736034
+    second: FarmerOtter_IdleAction_Squat_24
   - first:
-      213: -2581558662103514467
-    second: FarmerOtter_IdleAction_Eat_0_5
+      213: -6998069149901754946
+    second: FarmerOtter_IdleAction_Squat_25
   - first:
-      213: 5398121572260118692
-    second: FarmerOtter_IdleAction_Eat_0_6
+      213: -9198682539643451607
+    second: FarmerOtter_IdleAction_Squat_26
   - first:
-      213: 6806850976133244957
-    second: FarmerOtter_IdleAction_Eat_0_7
+      213: 3372973807516232281
+    second: FarmerOtter_IdleAction_Squat_27
   - first:
-      213: -3960741685015774894
-    second: FarmerOtter_IdleAction_Eat_1_0
+      213: 8941609328566564489
+    second: FarmerOtter_IdleAction_Squat_28
   - first:
-      213: -6883924428368097742
-    second: FarmerOtter_IdleAction_Eat_1_1
+      213: 3564820302835571498
+    second: FarmerOtter_IdleAction_Squat_29
   - first:
-      213: 4600801100394520260
-    second: FarmerOtter_IdleAction_Eat_1_2
+      213: -6157136516718572904
+    second: FarmerOtter_IdleAction_Squat_30
   - first:
-      213: -4774516741515381301
-    second: FarmerOtter_IdleAction_Eat_1_3
+      213: -7429975261874738131
+    second: FarmerOtter_IdleAction_Squat_31
   - first:
-      213: -7282904825178131394
-    second: FarmerOtter_IdleAction_Eat_1_4
+      213: -7371989383559658405
+    second: FarmerOtter_IdleAction_Squat_32
   - first:
-      213: -6002062410488715367
-    second: FarmerOtter_IdleAction_Eat_1_5
+      213: -3300493704140506983
+    second: FarmerOtter_IdleAction_Squat_33
   - first:
-      213: -8923781546397353531
-    second: FarmerOtter_IdleAction_Eat_1_6
+      213: -1331189988533129377
+    second: FarmerOtter_IdleAction_Squat_0_0
   - first:
-      213: -2604783933755111400
-    second: FarmerOtter_IdleAction_Eat_1_7
+      213: -8976158490372119426
+    second: FarmerOtter_IdleAction_Squat_0_1
   - first:
-      213: 8361120192786535066
-    second: FarmerOtter_IdleAction_Eat_2_0
+      213: 9212016538972353797
+    second: FarmerOtter_IdleAction_Squat_0_2
   - first:
-      213: -5579899990942417729
-    second: FarmerOtter_IdleAction_Eat_2_1
+      213: 5731684477033882976
+    second: FarmerOtter_IdleAction_Squat_0_3
   - first:
-      213: -1829848264696345997
-    second: FarmerOtter_IdleAction_Eat_2_2
+      213: -8912648077749868033
+    second: FarmerOtter_IdleAction_Squat_0_4
   - first:
-      213: -4773905773091984528
-    second: FarmerOtter_IdleAction_Eat_2_3
+      213: -3662139594136361090
+    second: FarmerOtter_IdleAction_Squat_0_5
   - first:
-      213: 3065797008170721583
-    second: FarmerOtter_IdleAction_Eat_2_4
+      213: -8404869926278015355
+    second: FarmerOtter_IdleAction_Squat_0_6
   - first:
-      213: -1644687231025723650
-    second: FarmerOtter_IdleAction_Eat_2_5
+      213: -8136111272353031593
+    second: FarmerOtter_IdleAction_Squat_0_7
   - first:
-      213: -628972814327600069
-    second: FarmerOtter_IdleAction_Eat_2_6
+      213: 3177362628499389696
+    second: FarmerOtter_IdleAction_Squat_1_0
   - first:
-      213: -8437848851359867948
-    second: FarmerOtter_IdleAction_Eat_2_7
+      213: 3480459324219534362
+    second: FarmerOtter_IdleAction_Squat_1_1
   - first:
-      213: 5354465180187533132
-    second: FarmerOtter_IdleAction_Eat_3_0
+      213: 4278612798804005697
+    second: FarmerOtter_IdleAction_Squat_1_2
   - first:
-      213: 1072832843921730934
-    second: FarmerOtter_IdleAction_Eat_3_1
+      213: -3765677134126582737
+    second: FarmerOtter_IdleAction_Squat_1_3
   - first:
-      213: 1498513805543174009
-    second: FarmerOtter_IdleAction_Eat_3_2
+      213: -9043399913999793322
+    second: FarmerOtter_IdleAction_Squat_1_4
   - first:
-      213: 3479607754922929491
-    second: FarmerOtter_IdleAction_Eat_3_3
+      213: -8329685199372589207
+    second: FarmerOtter_IdleAction_Squat_1_5
   - first:
-      213: 5055848352453418975
-    second: FarmerOtter_IdleAction_Eat_3_4
+      213: -7618928884041035888
+    second: FarmerOtter_IdleAction_Squat_1_6
   - first:
-      213: 7131211626189899280
-    second: FarmerOtter_IdleAction_Eat_3_5
+      213: -2712609618819572229
+    second: FarmerOtter_IdleAction_Squat_1_7
   - first:
-      213: 2781276463883448401
-    second: FarmerOtter_IdleAction_Eat_3_6
+      213: -3822540661923140109
+    second: FarmerOtter_IdleAction_Squat_2_0
   - first:
-      213: -6731582636360530290
-    second: FarmerOtter_IdleAction_Eat_3_7
+      213: 4821130041452025185
+    second: FarmerOtter_IdleAction_Squat_2_1
+  - first:
+      213: 6783276533465447179
+    second: FarmerOtter_IdleAction_Squat_2_2
+  - first:
+      213: -8851607166062337096
+    second: FarmerOtter_IdleAction_Squat_2_3
+  - first:
+      213: -6738524122623244813
+    second: FarmerOtter_IdleAction_Squat_2_4
+  - first:
+      213: 4909495529154498640
+    second: FarmerOtter_IdleAction_Squat_2_5
+  - first:
+      213: 5973289382365352999
+    second: FarmerOtter_IdleAction_Squat_2_6
+  - first:
+      213: -851454482067616834
+    second: FarmerOtter_IdleAction_Squat_2_7
+  - first:
+      213: 7467551901398112615
+    second: FarmerOtter_IdleAction_Squat_3_0
+  - first:
+      213: 8899009792522149574
+    second: FarmerOtter_IdleAction_Squat_3_1
+  - first:
+      213: -485271635848776943
+    second: FarmerOtter_IdleAction_Squat_3_2
+  - first:
+      213: 1236189617101253613
+    second: FarmerOtter_IdleAction_Squat_3_3
+  - first:
+      213: -4757529268703924830
+    second: FarmerOtter_IdleAction_Squat_3_4
+  - first:
+      213: 5350334975551819574
+    second: FarmerOtter_IdleAction_Squat_3_5
+  - first:
+      213: 8419627517691637480
+    second: FarmerOtter_IdleAction_Squat_3_6
+  - first:
+      213: 787301505418642390
+    second: FarmerOtter_IdleAction_Squat_3_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -254,7 +296,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -266,7 +308,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_0_0
+      name: FarmerOtter_IdleAction_Squat_0_0
       rect:
         serializedVersion: 2
         x: 0
@@ -281,14 +323,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2b7d1e801d82bace0800000000000000
-      internalID: -1392974781478742094
+      spriteID: f5f2de422c9a68de0800000000000000
+      internalID: -1331189988533129377
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_0_1
+      name: FarmerOtter_IdleAction_Squat_0_1
       rect:
         serializedVersion: 2
         x: 416
@@ -303,14 +345,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 13a2a2d22b8e0f7e0800000000000000
-      internalID: -1733630004578080207
+      spriteID: e7463c529674e6380800000000000000
+      internalID: -8976158490372119426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_0_2
+      name: FarmerOtter_IdleAction_Squat_0_2
       rect:
         serializedVersion: 2
         x: 832
@@ -325,14 +367,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64b71866ce4106ae0800000000000000
-      internalID: -1558222465505592506
+      spriteID: 505787e1c38a7df70800000000000000
+      internalID: 9212016538972353797
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_0_3
+      name: FarmerOtter_IdleAction_Squat_0_3
       rect:
         serializedVersion: 2
         x: 1248
@@ -347,14 +389,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 62001e7aa89e7e400800000000000000
-      internalID: 353507877503172646
+      spriteID: 065a9320aa80b8f40800000000000000
+      internalID: 5731684477033882976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_0_4
+      name: FarmerOtter_IdleAction_Squat_0_4
       rect:
         serializedVersion: 2
         x: 1664
@@ -369,14 +411,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5bd561ef719c24eb0800000000000000
-      internalID: -4737002753156031051
+      spriteID: ff9a6a56bc9ef4480800000000000000
+      internalID: -8912648077749868033
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_0_5
+      name: FarmerOtter_IdleAction_Squat_0_5
       rect:
         serializedVersion: 2
         x: 2080
@@ -391,14 +433,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d92cc7213167c2cd0800000000000000
-      internalID: -2581558662103514467
+      spriteID: e77eb9521777d2dc0800000000000000
+      internalID: -3662139594136361090
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_0_6
+      name: FarmerOtter_IdleAction_Squat_0_6
       rect:
         serializedVersion: 2
         x: 2496
@@ -413,14 +455,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4a000f038faf9ea40800000000000000
-      internalID: 5398121572260118692
+      spriteID: 586d5dc3557eb5b80800000000000000
+      internalID: -8404869926278015355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_0_7
+      name: FarmerOtter_IdleAction_Squat_0_7
       rect:
         serializedVersion: 2
         x: 2912
@@ -435,14 +477,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d18617706eac67e50800000000000000
-      internalID: 6806850976133244957
+      spriteID: 75a985e97e9b61f80800000000000000
+      internalID: -8136111272353031593
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_1_0
+      name: FarmerOtter_IdleAction_Squat_1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -457,14 +499,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2597d812c6e9809c0800000000000000
-      internalID: -3960741685015774894
+      spriteID: 00dbe4ae972481c20800000000000000
+      internalID: 3177362628499389696
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_1_1
+      name: FarmerOtter_IdleAction_Squat_1_1
       rect:
         serializedVersion: 2
         x: 416
@@ -479,14 +521,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 23e4c7a74336770a0800000000000000
-      internalID: -6883924428368097742
+      spriteID: a1c2d4ba0531d4030800000000000000
+      internalID: 3480459324219534362
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_1_2
+      name: FarmerOtter_IdleAction_Squat_1_2
       rect:
         serializedVersion: 2
         x: 832
@@ -501,14 +543,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4cedd37893459df30800000000000000
-      internalID: 4600801100394520260
+      spriteID: 1431724ebafa06b30800000000000000
+      internalID: 4278612798804005697
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_1_3
+      name: FarmerOtter_IdleAction_Squat_1_3
       rect:
         serializedVersion: 2
         x: 1248
@@ -523,14 +565,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bc5f1dfe1528dbdb0800000000000000
-      internalID: -4774516741515381301
+      spriteID: f24f2911990adbbc0800000000000000
+      internalID: -3765677134126582737
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_1_4
+      name: FarmerOtter_IdleAction_Squat_1_4
       rect:
         serializedVersion: 2
         x: 1664
@@ -545,14 +587,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e347742e5acedea90800000000000000
-      internalID: -7282904825178131394
+      spriteID: 6538e3431b36f7280800000000000000
+      internalID: -9043399913999793322
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_1_5
+      name: FarmerOtter_IdleAction_Squat_1_5
       rect:
         serializedVersion: 2
         x: 2080
@@ -567,14 +609,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9976817b90464bca0800000000000000
-      internalID: -6002062410488715367
+      spriteID: 96761989173076c80800000000000000
+      internalID: -8329685199372589207
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_1_6
+      name: FarmerOtter_IdleAction_Squat_1_6
       rect:
         serializedVersion: 2
         x: 2496
@@ -589,14 +631,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5c9bcc9b6fb582480800000000000000
-      internalID: -8923781546397353531
+      spriteID: 09f45c9fb80244690800000000000000
+      internalID: -7618928884041035888
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_1_7
+      name: FarmerOtter_IdleAction_Squat_1_7
       rect:
         serializedVersion: 2
         x: 2912
@@ -611,14 +653,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 818c1ef10d2f9dbd0800000000000000
-      internalID: -2604783933755111400
+      spriteID: bfd93f77cefda5ad0800000000000000
+      internalID: -2712609618819572229
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_2_0
+      name: FarmerOtter_IdleAction_Squat_2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -633,14 +675,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a921367248aa80470800000000000000
-      internalID: 8361120192786535066
+      spriteID: 3fda59a458b93fac0800000000000000
+      internalID: -3822540661923140109
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_2_1
+      name: FarmerOtter_IdleAction_Squat_2_1
       rect:
         serializedVersion: 2
         x: 416
@@ -655,14 +697,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fbcfba595863092b0800000000000000
-      internalID: -5579899990942417729
+      spriteID: 16556b0ba3818e240800000000000000
+      internalID: 4821130041452025185
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_2_2
+      name: FarmerOtter_IdleAction_Squat_2_2
       rect:
         serializedVersion: 2
         x: 832
@@ -677,14 +719,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 37ac8edb2b21b96e0800000000000000
-      internalID: -1829848264696345997
+      spriteID: b0b737e511a032e50800000000000000
+      internalID: 6783276533465447179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_2_3
+      name: FarmerOtter_IdleAction_Squat_2_3
       rect:
         serializedVersion: 2
         x: 1248
@@ -699,14 +741,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 07b6aab1efdafbdb0800000000000000
-      internalID: -4773905773091984528
+      spriteID: 8b36d872e26c82580800000000000000
+      internalID: -8851607166062337096
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_2_4
+      name: FarmerOtter_IdleAction_Squat_2_4
       rect:
         serializedVersion: 2
         x: 1664
@@ -721,14 +763,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f21a879b226eb8a20800000000000000
-      internalID: 3065797008170721583
+      spriteID: 3f504a04304fb72a0800000000000000
+      internalID: -6738524122623244813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_2_5
+      name: FarmerOtter_IdleAction_Squat_2_5
       rect:
         serializedVersion: 2
         x: 2080
@@ -743,14 +785,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef647146da5ec29e0800000000000000
-      internalID: -1644687231025723650
+      spriteID: 0505f911c28022440800000000000000
+      internalID: 4909495529154498640
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_2_6
+      name: FarmerOtter_IdleAction_Squat_2_6
       rect:
         serializedVersion: 2
         x: 2496
@@ -765,14 +807,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b3c20acce807547f0800000000000000
-      internalID: -628972814327600069
+      spriteID: 724df70ab0365e250800000000000000
+      internalID: 5973289382365352999
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_2_7
+      name: FarmerOtter_IdleAction_Squat_2_7
       rect:
         serializedVersion: 2
         x: 2912
@@ -787,14 +829,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4dbd142ec2db6ea80800000000000000
-      internalID: -8437848851359867948
+      spriteID: ebb02f5e8a60f24f0800000000000000
+      internalID: -851454482067616834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_3_0
+      name: FarmerOtter_IdleAction_Squat_3_0
       rect:
         serializedVersion: 2
         x: 0
@@ -809,14 +851,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c4f964356b1ee4a40800000000000000
-      internalID: 5354465180187533132
+      spriteID: 76990a8b3e212a760800000000000000
+      internalID: 7467551901398112615
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_3_1
+      name: FarmerOtter_IdleAction_Squat_3_1
       rect:
         serializedVersion: 2
         x: 416
@@ -831,14 +873,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 67da35599c773ee00800000000000000
-      internalID: 1072832843921730934
+      spriteID: 6ce5100e142af7b70800000000000000
+      internalID: 8899009792522149574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_3_2
+      name: FarmerOtter_IdleAction_Squat_3_2
       rect:
         serializedVersion: 2
         x: 832
@@ -853,14 +895,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 97f6b6edd5acbc410800000000000000
-      internalID: 1498513805543174009
+      spriteID: 11339ada408f349f0800000000000000
+      internalID: -485271635848776943
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_3_3
+      name: FarmerOtter_IdleAction_Squat_3_3
       rect:
         serializedVersion: 2
         x: 1248
@@ -875,14 +917,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35d20ed31dc0a4030800000000000000
-      internalID: 3479607754922929491
+      spriteID: deba85a38e3d72110800000000000000
+      internalID: 1236189617101253613
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_3_4
+      name: FarmerOtter_IdleAction_Squat_3_4
       rect:
         serializedVersion: 2
         x: 1664
@@ -897,14 +939,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fdfda3e1a4bf92640800000000000000
-      internalID: 5055848352453418975
+      spriteID: 2ade06a265cd9fdb0800000000000000
+      internalID: -4757529268703924830
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_3_5
+      name: FarmerOtter_IdleAction_Squat_3_5
       rect:
         serializedVersion: 2
         x: 2080
@@ -919,14 +961,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0164f25f03727f260800000000000000
-      internalID: 7131211626189899280
+      spriteID: 63f4d1f1055304a40800000000000000
+      internalID: 5350334975551819574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_3_6
+      name: FarmerOtter_IdleAction_Squat_3_6
       rect:
         serializedVersion: 2
         x: 2496
@@ -941,14 +983,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1507de34534199620800000000000000
-      internalID: 2781276463883448401
+      spriteID: 8ee2d154e9688d470800000000000000
+      internalID: 8419627517691637480
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmerOtter_IdleAction_Eat_3_7
+      name: FarmerOtter_IdleAction_Squat_3_7
       rect:
         serializedVersion: 2
         x: 2912
@@ -963,8 +1005,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e860b87f14d9492a0800000000000000
-      internalID: -6731582636360530290
+      spriteID: 6d3cb914c8e0dea00800000000000000
+      internalID: 787301505418642390
       vertices: []
       indices: 
       edges: []
@@ -983,58 +1025,72 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FarmerOtter_IdleAction_Eat_0: 2509898408428161497
-      FarmerOtter_IdleAction_Eat_0_0: -1392974781478742094
-      FarmerOtter_IdleAction_Eat_0_1: -1733630004578080207
-      FarmerOtter_IdleAction_Eat_0_2: -1558222465505592506
-      FarmerOtter_IdleAction_Eat_0_3: 353507877503172646
-      FarmerOtter_IdleAction_Eat_0_4: -4737002753156031051
-      FarmerOtter_IdleAction_Eat_0_5: -2581558662103514467
-      FarmerOtter_IdleAction_Eat_0_6: 5398121572260118692
-      FarmerOtter_IdleAction_Eat_0_7: 6806850976133244957
-      FarmerOtter_IdleAction_Eat_1: 6545129702471769422
-      FarmerOtter_IdleAction_Eat_10: 3668610646577296569
-      FarmerOtter_IdleAction_Eat_11: 2893292354313342837
-      FarmerOtter_IdleAction_Eat_12: -6443331430512185745
-      FarmerOtter_IdleAction_Eat_13: 2384450150125935620
-      FarmerOtter_IdleAction_Eat_14: 8728470238836712847
-      FarmerOtter_IdleAction_Eat_15: -944045161435266101
-      FarmerOtter_IdleAction_Eat_16: 7149164152394129274
-      FarmerOtter_IdleAction_Eat_17: -4545189066891287079
-      FarmerOtter_IdleAction_Eat_18: 496371429664508694
-      FarmerOtter_IdleAction_Eat_19: 6876153632457594960
-      FarmerOtter_IdleAction_Eat_1_0: -3960741685015774894
-      FarmerOtter_IdleAction_Eat_1_1: -6883924428368097742
-      FarmerOtter_IdleAction_Eat_1_2: 4600801100394520260
-      FarmerOtter_IdleAction_Eat_1_3: -4774516741515381301
-      FarmerOtter_IdleAction_Eat_1_4: -7282904825178131394
-      FarmerOtter_IdleAction_Eat_1_5: -6002062410488715367
-      FarmerOtter_IdleAction_Eat_1_6: -8923781546397353531
-      FarmerOtter_IdleAction_Eat_1_7: -2604783933755111400
-      FarmerOtter_IdleAction_Eat_2: -4705474613336560974
-      FarmerOtter_IdleAction_Eat_2_0: 8361120192786535066
-      FarmerOtter_IdleAction_Eat_2_1: -5579899990942417729
-      FarmerOtter_IdleAction_Eat_2_2: -1829848264696345997
-      FarmerOtter_IdleAction_Eat_2_3: -4773905773091984528
-      FarmerOtter_IdleAction_Eat_2_4: 3065797008170721583
-      FarmerOtter_IdleAction_Eat_2_5: -1644687231025723650
-      FarmerOtter_IdleAction_Eat_2_6: -628972814327600069
-      FarmerOtter_IdleAction_Eat_2_7: -8437848851359867948
-      FarmerOtter_IdleAction_Eat_3: -2650861363370653196
-      FarmerOtter_IdleAction_Eat_3_0: 5354465180187533132
-      FarmerOtter_IdleAction_Eat_3_1: 1072832843921730934
-      FarmerOtter_IdleAction_Eat_3_2: 1498513805543174009
-      FarmerOtter_IdleAction_Eat_3_3: 3479607754922929491
-      FarmerOtter_IdleAction_Eat_3_4: 5055848352453418975
-      FarmerOtter_IdleAction_Eat_3_5: 7131211626189899280
-      FarmerOtter_IdleAction_Eat_3_6: 2781276463883448401
-      FarmerOtter_IdleAction_Eat_3_7: -6731582636360530290
-      FarmerOtter_IdleAction_Eat_4: -9076273385699194587
-      FarmerOtter_IdleAction_Eat_5: 4440185353264367455
-      FarmerOtter_IdleAction_Eat_6: -2980839286529660195
-      FarmerOtter_IdleAction_Eat_7: 593697006469076903
-      FarmerOtter_IdleAction_Eat_8: 7867119645328138217
-      FarmerOtter_IdleAction_Eat_9: -6847638881089829280
+      FarmerOtter_IdleAction_Squat_0: -2005550527724946274
+      FarmerOtter_IdleAction_Squat_0_0: -1331189988533129377
+      FarmerOtter_IdleAction_Squat_0_1: -8976158490372119426
+      FarmerOtter_IdleAction_Squat_0_2: 9212016538972353797
+      FarmerOtter_IdleAction_Squat_0_3: 5731684477033882976
+      FarmerOtter_IdleAction_Squat_0_4: -8912648077749868033
+      FarmerOtter_IdleAction_Squat_0_5: -3662139594136361090
+      FarmerOtter_IdleAction_Squat_0_6: -8404869926278015355
+      FarmerOtter_IdleAction_Squat_0_7: -8136111272353031593
+      FarmerOtter_IdleAction_Squat_1: -2092351511530342121
+      FarmerOtter_IdleAction_Squat_10: -4476920161352675210
+      FarmerOtter_IdleAction_Squat_11: -5654978696214328091
+      FarmerOtter_IdleAction_Squat_12: 5426884273906868176
+      FarmerOtter_IdleAction_Squat_13: -6783238476586345081
+      FarmerOtter_IdleAction_Squat_14: -831412169410869924
+      FarmerOtter_IdleAction_Squat_15: -3270730682157485209
+      FarmerOtter_IdleAction_Squat_16: -4936230503388266744
+      FarmerOtter_IdleAction_Squat_17: -6302749536204718205
+      FarmerOtter_IdleAction_Squat_18: -4840764316140764530
+      FarmerOtter_IdleAction_Squat_19: -621715128442130004
+      FarmerOtter_IdleAction_Squat_1_0: 3177362628499389696
+      FarmerOtter_IdleAction_Squat_1_1: 3480459324219534362
+      FarmerOtter_IdleAction_Squat_1_2: 4278612798804005697
+      FarmerOtter_IdleAction_Squat_1_3: -3765677134126582737
+      FarmerOtter_IdleAction_Squat_1_4: -9043399913999793322
+      FarmerOtter_IdleAction_Squat_1_5: -8329685199372589207
+      FarmerOtter_IdleAction_Squat_1_6: -7618928884041035888
+      FarmerOtter_IdleAction_Squat_1_7: -2712609618819572229
+      FarmerOtter_IdleAction_Squat_2: 8405509269009693858
+      FarmerOtter_IdleAction_Squat_20: -8256410195876169429
+      FarmerOtter_IdleAction_Squat_21: -2904214775074951555
+      FarmerOtter_IdleAction_Squat_22: -8530714847724127833
+      FarmerOtter_IdleAction_Squat_23: -4970271646300878801
+      FarmerOtter_IdleAction_Squat_24: 5934376660041736034
+      FarmerOtter_IdleAction_Squat_25: -6998069149901754946
+      FarmerOtter_IdleAction_Squat_26: -9198682539643451607
+      FarmerOtter_IdleAction_Squat_27: 3372973807516232281
+      FarmerOtter_IdleAction_Squat_28: 8941609328566564489
+      FarmerOtter_IdleAction_Squat_29: 3564820302835571498
+      FarmerOtter_IdleAction_Squat_2_0: -3822540661923140109
+      FarmerOtter_IdleAction_Squat_2_1: 4821130041452025185
+      FarmerOtter_IdleAction_Squat_2_2: 6783276533465447179
+      FarmerOtter_IdleAction_Squat_2_3: -8851607166062337096
+      FarmerOtter_IdleAction_Squat_2_4: -6738524122623244813
+      FarmerOtter_IdleAction_Squat_2_5: 4909495529154498640
+      FarmerOtter_IdleAction_Squat_2_6: 5973289382365352999
+      FarmerOtter_IdleAction_Squat_2_7: -851454482067616834
+      FarmerOtter_IdleAction_Squat_3: -7537677834028448104
+      FarmerOtter_IdleAction_Squat_30: -6157136516718572904
+      FarmerOtter_IdleAction_Squat_31: -7429975261874738131
+      FarmerOtter_IdleAction_Squat_32: -7371989383559658405
+      FarmerOtter_IdleAction_Squat_33: -3300493704140506983
+      FarmerOtter_IdleAction_Squat_3_0: 7467551901398112615
+      FarmerOtter_IdleAction_Squat_3_1: 8899009792522149574
+      FarmerOtter_IdleAction_Squat_3_2: -485271635848776943
+      FarmerOtter_IdleAction_Squat_3_3: 1236189617101253613
+      FarmerOtter_IdleAction_Squat_3_4: -4757529268703924830
+      FarmerOtter_IdleAction_Squat_3_5: 5350334975551819574
+      FarmerOtter_IdleAction_Squat_3_6: 8419627517691637480
+      FarmerOtter_IdleAction_Squat_3_7: 787301505418642390
+      FarmerOtter_IdleAction_Squat_4: 5180375141695709229
+      FarmerOtter_IdleAction_Squat_5: 6509992885354021515
+      FarmerOtter_IdleAction_Squat_6: 845348646945988039
+      FarmerOtter_IdleAction_Squat_7: 7746806493803610052
+      FarmerOtter_IdleAction_Squat_8: -7071990502643230636
+      FarmerOtter_IdleAction_Squat_9: -3054437032641790811
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
