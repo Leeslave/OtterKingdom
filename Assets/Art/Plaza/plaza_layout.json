@@ -1,0 +1,46 @@
+{
+  "comment": "Plaza layout, all coordinates in Plaza_Ground.png pixels (origin top-left). Read by PlazaSceneSetup.cs and Tools/PlazaProps/preview_layout.py. Prop footprints are in the prop's own cropped-PNG pixels; points are flat [x0, y0, x1, y1, ...].",
+  "groundPixelsPerUnit": 40,
+  "initialFocus": [512, 640],
+  "walkable": [
+    30, 30, 994, 30, 994, 800, 940, 820, 862, 845, 852, 905, 885, 940, 880, 1060, 840, 1110, 790, 1130,
+    720, 1160, 690, 1210, 600, 1250, 530, 1290, 460, 1320, 380, 1340, 280, 1345,
+    150, 1340, 30, 1330
+  ],
+  "blocked": [],
+  "spawnPoints": [400, 600, 620, 600, 510, 760, 350, 860, 660, 860, 300, 480, 700, 480],
+  "props": [
+    { "name": "Tree",          "scale": 0.72, "flat": false, "footprint": [110, 345, 235, 345, 250, 405, 95, 405] },
+    { "name": "House_Red",     "scale": 0.75, "flat": false, "footprint": [5, 200, 370, 170, 376, 300, 230, 385, 5, 330] },
+    { "name": "House_Blue",    "scale": 0.75, "flat": false, "footprint": [0, 170, 297, 140, 297, 270, 180, 327, 0, 290] },
+    { "name": "Bench",         "scale": 0.45, "flat": false, "footprint": [5, 120, 160, 95, 230, 150, 210, 185, 80, 207, 10, 185] },
+    { "name": "Fence_Rising",  "scale": 0.40, "flat": false, "footprint": [-20, 95, 246, 95, 246, 215, -20, 215] },
+    { "name": "Fence_Falling", "scale": 0.40, "flat": false, "footprint": [-20, 100, 253, 100, 253, 218, -20, 218] },
+    { "name": "Lamp",          "scale": 0.50, "flat": false, "footprint": [65, 240, 130, 240, 130, 271, 65, 271] },
+    { "name": "Bush",          "scale": 0.35, "flat": false, "footprint": [20, 150, 150, 110, 285, 150, 285, 215, 150, 236, 20, 215] },
+    { "name": "Rock",          "scale": 0.35, "flat": false, "footprint": [5, 90, 150, 60, 295, 100, 295, 175, 180, 185, 5, 165] },
+    { "name": "Picnic",        "scale": 0.45, "flat": true,  "footprint": [190, 5, 382, 110, 190, 253, 0, 115] },
+    { "name": "Log",           "scale": 0.30, "flat": false, "footprint": [0, 120, 200, 10, 245, 70, 50, 191] },
+    { "name": "Stump",         "scale": 0.30, "flat": false, "footprint": [5, 90, 190, 90, 190, 165, 95, 173, 5, 165] }
+  ],
+  "placements": [
+    { "prop": "Tree",          "x": 150, "y": 250, "flipX": false },
+    { "prop": "Bench",         "x": 240, "y": 320, "flipX": false },
+    { "prop": "House_Red",     "x": 905, "y": 240, "flipX": false },
+    { "prop": "House_Blue",    "x": 965, "y": 400, "flipX": false },
+    { "prop": "Lamp",          "x": 990, "y": 520, "flipX": false },
+    { "prop": "Fence_Rising",  "x": 40,  "y": 690, "flipX": false },
+    { "prop": "Picnic",        "x": 140, "y": 1000, "flipX": false },
+    { "prop": "Log",           "x": 235, "y": 960, "flipX": false },
+    { "prop": "Stump",         "x": 240, "y": 1055, "flipX": false },
+    { "prop": "Fence_Falling", "x": 180, "y": 1220, "flipX": false },
+    { "prop": "Fence_Falling", "x": 253, "y": 1256, "flipX": false },
+    { "prop": "Bush",          "x": 40,  "y": 430, "flipX": false },
+    { "prop": "Bush",          "x": 470, "y": 45,  "flipX": false },
+    { "prop": "Bush",          "x": 620, "y": 50,  "flipX": true },
+    { "prop": "Bush",          "x": 985, "y": 780, "flipX": false },
+    { "prop": "Bush",          "x": 70,  "y": 1160, "flipX": true },
+    { "prop": "Rock",          "x": 40,  "y": 520, "flipX": false },
+    { "prop": "Rock",          "x": 60,  "y": 870, "flipX": true }
+  ]
+}
