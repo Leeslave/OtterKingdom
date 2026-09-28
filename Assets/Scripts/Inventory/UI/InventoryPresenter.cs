@@ -63,12 +63,17 @@ public class InventoryPresenter : MonoBehaviour
 
         // 꺼져 있던 동안 바뀐 내용 반영
         RefreshAll();
+
+        // 가방을 열었으니 새 아이템은 확인한 것으로 (가방 버튼 N 해제)
+        _inventory.MarkAllSeen();
     }
 
     private void OnDisable()
     {
         if (_inventory != null)
         {
+            // 열려 있는 동안 들어온 아이템도 화면에 보였으므로 닫을 때 확인 처리
+            _inventory.MarkAllSeen();
             _inventory.OnItemChanged -= HandleItemChanged;
             _inventory.OnCapacityChanged -= HandleCapacityChanged;
         }

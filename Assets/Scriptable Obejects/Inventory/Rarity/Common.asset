@@ -15,4 +15,4 @@ MonoBehaviour:
   _rarityId: Common
   _displayName: "\uD754\uD568"
   _tier: 0
-  _color: {r: 0, g: 0, b: 0, a: 0}
+  _color: {r: 0.8039216, g: 0.73333335, b: 0.6666667, a: 1}

@@ -15,4 +15,4 @@ MonoBehaviour:
   _rarityId: Epic
   _displayName: "\uC5D0\uD53D"
   _tier: 2
-  _color: {r: 0, g: 0, b: 0, a: 0}
+  _color: {r: 0.7882353, g: 0.7137255, b: 0.9411765, a: 1}

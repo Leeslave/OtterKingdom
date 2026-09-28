@@ -15,6 +15,13 @@ public class Inventory
     private readonly Dictionary<ItemDefinition, long> _acquiredOrder =
         new Dictionary<ItemDefinition, long>();
 
+    // 가방을 열어 확인하기 전의 새 종류 (가방 버튼 N 표시용). 이미 가진 종류를 더 얻는 건 새 것이 아님
+    private readonly HashSet<ItemDefinition> _unseenItems = new HashSet<ItemDefinition>();
+
+    /// <summary>새 종류가 있는지 여부가 바뀔 때 (false → true, true → false)</summary>
+    public event Action<bool> OnHasNewItemsChanged;
+    public bool HasNewItems => _unseenItems.Count > 0;
+
     public event Action<int> OnCapacityChanged;
 
     private int _capacity;
@@ -59,6 +66,24 @@ public class Inventory
         return _acquiredOrder.TryGetValue(item, out long order) ? order : 0;
     }
 
+    public bool IsNew(ItemDefinition item)
+    {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+
+        return _unseenItems.Contains(item);
+    }
+
+    /// <summary>가방을 열어 봤을 때 호출 → 모든 새 표시 해제</summary>
+    public void MarkAllSeen()
+    {
+        if (_unseenItems.Count == 0)
+            return;
+
+        _unseenItems.Clear();
+        OnHasNewItemsChanged?.Invoke(false);
+    }
+
     /// <returns> 실제로 추가된 개수 (MaxStack에 걸리면 요청보다 적을 수 있음) </returns>
     public int Add(ItemDefinition item, int amount, ItemChangeReason reason)
     {
@@ -86,7 +111,12 @@ public class Inventory
         // 이미 가진 아이템도 갱신 (마지막 획득 순). 이벤트 전에 기록해야 받는 쪽이 새 순서로 정렬함
         _acquiredOrder[item] = ++_acquireSequence;
 
+        bool hadNewItems = HasNewItems;
+        if (oldCount == 0)
+            _unseenItems.Add(item);
+
         OnItemChanged?.Invoke(new ItemChangedEvent(item, oldCount, newCount, reason));
+        NotifyIfHasNewItemsChanged(hadNewItems);
         return added;
     }
 
@@ -116,16 +146,26 @@ public class Inventory
 
         int newCount = oldCount - amount;
 
+        bool hadNewItems = HasNewItems;
         if (newCount == 0)
         {
             _counts.Remove(item);
             _acquiredOrder.Remove(item);
+            _unseenItems.Remove(item); // 확인하기 전에 다 써버린 새 아이템은 표시할 필요 없음
         }
         else
             _counts[item] = newCount;
 
         OnItemChanged?.Invoke(new ItemChangedEvent(item, oldCount, newCount, reason));
+        NotifyIfHasNewItemsChanged(hadNewItems);
         return true;
+    }
+
+    // OnItemChanged를 받은 쪽(열려 있는 가방)이 MarkAllSeen을 불렀을 수도 있으므로 지금 상태와 비교
+    private void NotifyIfHasNewItemsChanged(bool hadNewItems)
+    {
+        if (hadNewItems != HasNewItems)
+            OnHasNewItemsChanged?.Invoke(HasNewItems);
     }
 
     /// <returns>실제로 늘어난 칸 수 (MaxCapacity에 걸리면 요청보다 적을 수 있음)</returns>

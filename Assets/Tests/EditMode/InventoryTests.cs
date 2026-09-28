@@ -293,4 +293,88 @@ public class InventoryTests
     }
 
     #endregion
+
+    #region 새 아이템 (N 표시)
+
+    [Test]
+    public void Add_NewKind_IsNewAndFiresEvent()
+    {
+        // Arrange
+        bool? received = null;
+        _inventory.OnHasNewItemsChanged += has => received = has;
+
+        // Act
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+
+        // Assert
+        Assert.IsTrue(_inventory.HasNewItems);
+        Assert.IsTrue(_inventory.IsNew(_carrot));
+        Assert.AreEqual(true, received);
+    }
+
+    [Test]
+    public void Add_ExistingKindAfterSeen_IsNotNew()
+    {
+        // Arrange
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+        _inventory.MarkAllSeen();
+
+        // Act
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+
+        // Assert
+        Assert.IsFalse(_inventory.HasNewItems);
+    }
+
+    [Test]
+    public void MarkAllSeen_ClearsAndFiresEventOnce()
+    {
+        // Arrange
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+        _inventory.Add(_fish, 1, ItemChangeReason.Test);
+        int falseEvents = 0;
+        _inventory.OnHasNewItemsChanged += has => { if (!has) falseEvents++; };
+
+        // Act
+        _inventory.MarkAllSeen();
+        _inventory.MarkAllSeen();
+
+        // Assert
+        Assert.IsFalse(_inventory.HasNewItems);
+        Assert.AreEqual(1, falseEvents);
+    }
+
+    [Test]
+    public void TryRemove_UnseenToZero_NoLongerNew()
+    {
+        // Arrange
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+        bool? received = null;
+        _inventory.OnHasNewItemsChanged += has => received = has;
+
+        // Act
+        _inventory.TryRemove(_carrot, 1, ItemChangeReason.Test);
+
+        // Assert
+        Assert.IsFalse(_inventory.HasNewItems);
+        Assert.AreEqual(false, received);
+    }
+
+    [Test]
+    public void Add_SecondNewKind_DoesNotFireAgain()
+    {
+        // Arrange: 이미 N이 켜져 있으면 뱃지 상태는 그대로
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+        int events = 0;
+        _inventory.OnHasNewItemsChanged += _ => events++;
+
+        // Act
+        _inventory.Add(_fish, 1, ItemChangeReason.Test);
+
+        // Assert
+        Assert.AreEqual(0, events);
+        Assert.IsTrue(_inventory.IsNew(_fish));
+    }
+
+    #endregion
 }

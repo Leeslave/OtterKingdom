@@ -27,6 +27,10 @@ public class ItemSlotView : MonoBehaviour
     [SerializeField]
     private GameObject _selectRing;
 
+    [Tooltip("오른쪽 위 희귀도 점 (흰 원 스프라이트에 ItemRarity.Color를 곱함)")]
+    [SerializeField]
+    private Image _rarityDot;
+
     [Header("배경 스프라이트")]
     [SerializeField]
     private Sprite _filledSprite;
@@ -34,9 +38,8 @@ public class ItemSlotView : MonoBehaviour
     [SerializeField]
     private Sprite _emptySprite;
 
-    [Header("잠긴 칸 색 (전용 스프라이트가 생기기 전 임시)")]
     [SerializeField]
-    private Color _lockedTint = new Color(0.75f, 0.7f, 0.65f);
+    private Sprite _lockedSprite;
 
     public event Action<ItemSlotView> OnClicked;
 
@@ -64,6 +67,11 @@ public class ItemSlotView : MonoBehaviour
         _countText.text = $"x{count}";
         _countText.enabled = true;
         _lockIcon.SetActive(false);
+
+        bool hasRarity = item.Rarity != null;
+        _rarityDot.enabled = hasRarity;
+        if (hasRarity)
+            _rarityDot.color = item.Rarity.Color;
     }
 
     public void ShowEmpty()
@@ -76,6 +84,7 @@ public class ItemSlotView : MonoBehaviour
         _icon.enabled = false;
         _countText.enabled = false;
         _lockIcon.SetActive(false);
+        _rarityDot.enabled = false;
         SetSelected(false);
     }
 
@@ -84,11 +93,12 @@ public class ItemSlotView : MonoBehaviour
         State = SlotState.Locked;
         Item = null;
 
-        _background.sprite = _emptySprite;
-        _background.color = _lockedTint;
+        _background.sprite = _lockedSprite;
+        _background.color = Color.white;
         _icon.enabled = false;
         _countText.enabled = false;
         _lockIcon.SetActive(true);
+        _rarityDot.enabled = false;
         SetSelected(false);
     }
 
