@@ -6,7 +6,27 @@ using UnityEngine;
 [DefaultExecutionOrder(-100)]
 public class CurrencyManager : MonoBehaviour
 {
-    public static CurrencyManager Instance { get; private set; }
+    private static CurrencyManager _instance;
+
+    // 없으면 새로 생성하는 Instance와 달리, 순수 존재 확인용. 씬이 닫히는 도중(OnDisable/OnDestroy)에
+    // Instance를 읽어버리면 그 시점에 새 GameObject가 생성되어 정리되지 못한 채 남는 문제가 있었다.
+    public static bool Exists => _instance != null;
+
+    // 씬에 배치하지 않은 씬(밭/광장 등)에서도 쓸 수 있도록 없으면 새로 생성
+    public static CurrencyManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                var go = new GameObject(nameof(CurrencyManager));
+                _instance = go.AddComponent<CurrencyManager>();
+                DontDestroyOnLoad(go);
+            }
+            return _instance;
+        }
+    }
+
     public event Action<Currency, int> OnCurrencyChanged;
 
     private readonly Dictionary<Currency, int> _wallets = new Dictionary<Currency, int>();
@@ -14,6 +34,9 @@ public class CurrencyManager : MonoBehaviour
 
     private void InitializeWallets()
     {
+        // 코드로 생성된 경우 목록이 비어 있음 → LoadFromSave에서 채움
+        if (_allCurrencies == null) return;
+
         foreach (var currency in _allCurrencies)
         {
             _wallets[currency] = 0;
@@ -22,13 +45,13 @@ public class CurrencyManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        Instance = this;
+        _instance = this;
         DontDestroyOnLoad(gameObject);
         InitializeWallets();
     }
@@ -59,6 +82,19 @@ public class CurrencyManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// 재화 획득 (ProcessTransaction과 같이 배율 적용). 판매 대금처럼 0원이 나올 수 있는 곳에서 쓰므로
+    /// 0 이하는 무시하고 false 반환.
+    /// </summary>
+    public bool Add(Currency currency, int amount, TransactionSource source)
+    {
+        if (currency == null) throw new ArgumentNullException(nameof(currency));
+        if (amount <= 0) return false;
+
+        ProcessTransaction(new CurrencyTransaction(currency, amount, source));
+        return true;
+    }
+
     public bool CanAfford(Currency currency, int amount)
     {
         return GetCurrency(currency) >= amount;
@@ -69,6 +105,26 @@ public class CurrencyManager : MonoBehaviour
         if (currency == null) throw new ArgumentNullException(nameof(currency));
 
         return _wallets.TryGetValue(currency, out int balance) ? balance : 0;
+    }
+
+    public void LoadFromSave(SaveData save, IEnumerable<Currency> knownCurrencies)
+    {
+        foreach (var currency in knownCurrencies)
+        {
+            if (currency == null) continue;
+
+            var entry = save.currencies.Find(c => c.currencyId == currency.CurrencyID);
+            _wallets[currency] = entry != null ? entry.amount : 0;
+        }
+    }
+
+    public void SaveToSave(SaveData save)
+    {
+        save.currencies.Clear();
+        foreach (var wallet in _wallets)
+        {
+            save.currencies.Add(new CurrencyBalance { currencyId = wallet.Key.CurrencyID, amount = wallet.Value });
+        }
     }
 
     private void ApplyChange(Currency currency, int delta, TransactionSource source)
