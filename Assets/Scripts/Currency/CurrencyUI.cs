@@ -24,14 +24,15 @@ public class CurrencyUI : MonoBehaviour
     // 구독/해제는 OnEnable/OnDisable 짝으로 → 껐다 켜도 다시 구독됨
     private void OnEnable()
     {
+        if (CurrencyManager.Instance == null) return;
+
         CurrencyManager.Instance.OnCurrencyChanged += UpdateUI;
         RefreshUI(); // 꺼져 있던 동안 바뀐 값 반영
     }
 
     private void OnDisable()
     {
-        // Instance는 없으면 새로 만들므로, 씬 종료 중에는 Exists로만 확인
-        if (CurrencyManager.Exists)
+        if (CurrencyManager.Instance != null)
             CurrencyManager.Instance.OnCurrencyChanged -= UpdateUI;
     }
 
