@@ -120,6 +120,38 @@ public class Inventory
         return added;
     }
 
+    /// <returns>지금 더 넣을 수 있는 개수. 새 종류인데 빈 칸이 없으면 0 (수확 전에 가방이 꽉 찼는지 확인용)</returns>
+    public int GetAddableAmount(ItemDefinition item)
+    {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+
+        int count = GetCount(item);
+        if (count == 0 && FreeSlots <= 0)
+            return 0;
+
+        return Math.Max(0, item.MaxStack - count);
+    }
+
+    /// <summary>
+    /// 세이브 복원용. 용량과 최대 스택을 무시하고 그대로 넣는다 (옛 세이브가 한도를 넘어도 버리지 않음).
+    /// 새 아이템(N)으로 표시하지 않는다. 호출 순서가 획득 순서가 된다.
+    /// </summary>
+    public void LoadItem(ItemDefinition item, int count)
+    {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+        if (count <= 0)
+            throw new ArgumentOutOfRangeException(nameof(count), "count는 1 이상이어야 합니다.");
+        if (_counts.ContainsKey(item))
+            throw new InvalidOperationException($"이미 가방에 있는 아이템입니다: {item.ItemId}");
+
+        _counts[item] = count;
+        _acquiredOrder[item] = ++_acquireSequence;
+
+        OnItemChanged?.Invoke(new ItemChangedEvent(item, 0, count, ItemChangeReason.Load));
+    }
+
     // 몇개 갖고있는지 확인하는 함수
     public bool Has(ItemDefinition item, int amount)
     {

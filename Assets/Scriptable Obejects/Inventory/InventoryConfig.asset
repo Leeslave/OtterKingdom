@@ -17,3 +17,5 @@ MonoBehaviour:
   _expandStep: 4
   _expandCost: 100
   _expandCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+  _sellCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _itemDatabase: {fileID: 11400000, guid: 6c43e23598b360565995a0e5cc38d773, type: 2}

@@ -24,9 +24,9 @@ public static class InventorySlotSetup
     // (에셋 이름, ID, 표시 이름, 설명, 아이콘, 희귀도, 판매가) — 판매가는 임시값 (상점 구매가의 절반)
     private static readonly (string asset, string id, string name, string desc, string icon, string rarity, int sellPrice)[] Seedlings =
     {
-        ("감자 모종", "PotatoSeedling", "감자 모종", "밭에 심으면 감자가 자라요.", "ICON_Seedling_Potato", "Common", 50),
-        ("고구마 모종", "SweetPotatoSeedling", "고구마 모종", "밭에 심으면 고구마가 자라요.", "ICON_Seedling_SweetPotato", "Common", 75),
-        ("딸기 모종", "StrawberrySeedling", "딸기 모종", "밭에 심으면 딸기가 열려요.", "ICON_Seedling_Strawberry", "Rare", 150),
+        ("감자 모종", "seed_potato", "감자 모종", "밭에 심으면 감자가 자라요.", "ICON_Seedling_Potato", "Common", 50),
+        ("고구마 모종", "seed_sweet_potato", "고구마 모종", "밭에 심으면 고구마가 자라요.", "ICON_Seedling_SweetPotato", "Common", 75),
+        ("딸기 모종", "seed_strawberry", "딸기 모종", "밭에 심으면 딸기가 열려요.", "ICON_Seedling_Strawberry", "Rare", 150),
     };
 
     [MenuItem("Tools/Inventory/Setup Slot Rarity and Seedlings")]

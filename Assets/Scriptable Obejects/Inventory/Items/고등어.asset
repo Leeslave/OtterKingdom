@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
   m_Name: "\uACE0\uB4F1\uC5B4"
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  _itemId: Mackerel
+  _itemId: fish_mackerel
   _displayName: "\uACE0\uB4F1\uC5B4"
   _description: "\uACE0\uB4F1\uC5B4\uB2E4."
   _icon: {fileID: -8407166883477379423, guid: bfecfe2efbfe60549bf456b13140d3b6, type: 3}

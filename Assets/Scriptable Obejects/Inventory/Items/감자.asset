@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
   m_Name: "\uAC10\uC790"
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  _itemId: Potato
+  _itemId: crop_potato
   _displayName: "\uAC10\uC790"
   _description: "\uAC10\uC790\uB2E4."
   _icon: {fileID: 21300000, guid: 518282ed563ba1c4f87280f830653a3e, type: 3}

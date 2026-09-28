@@ -25,11 +25,23 @@ public class InventoryConfig : ScriptableObject
     [SerializeField]
     private Currency _expandCurrency;
 
+    [Header("판매")]
+    [Tooltip("아이템을 팔면 받는 재화 (골드)")]
+    [SerializeField]
+    private Currency _sellCurrency;
+
+    [Header("세이브")]
+    [Tooltip("세이브의 아이템 ID → ItemDefinition 조회표")]
+    [SerializeField]
+    private ItemDatabase _itemDatabase;
+
     public int InitialCapacity => _initialCapacity;
     public int MaxCapacity => _maxCapacity;
     public int ExpandStep => _expandStep;
     public int ExpandCost => _expandCost;
     public Currency ExpandCurrency => _expandCurrency;
+    public Currency SellCurrency => _sellCurrency;
+    public ItemDatabase ItemDatabase => _itemDatabase;
 
     private void OnValidate()
     {
@@ -40,5 +52,11 @@ public class InventoryConfig : ScriptableObject
 
         if (_expandCurrency == null)
             Debug.LogWarning($"[{name}] ExpandCurrency가 비어있습니다.", this);
+
+        if (_sellCurrency == null)
+            Debug.LogWarning($"[{name}] SellCurrency가 비어있습니다.", this);
+
+        if (_itemDatabase == null)
+            Debug.LogWarning($"[{name}] ItemDatabase가 비어있습니다.", this);
     }
 }

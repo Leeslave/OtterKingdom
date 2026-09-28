@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
   m_Name: "\uB538\uAE30 \uBAA8\uC885"
   m_EditorClassIdentifier: OtterKingdom::ItemDefinition
-  _itemId: StrawberrySeedling
+  _itemId: seed_strawberry
   _displayName: "\uB538\uAE30 \uBAA8\uC885"
   _description: "\uBC2D\uC5D0 \uC2EC\uC73C\uBA74 \uB538\uAE30\uAC00 \uC5F4\uB824\uC694."
   _icon: {fileID: -8219364252428169312, guid: 0062ccdbfb2609948ae4090c90be839f, type: 3}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
   m_Name: "\uACE0\uAD6C\uB9C8 \uBAA8\uC885"
   m_EditorClassIdentifier: OtterKingdom::ItemDefinition
-  _itemId: SweetPotatoSeedling
+  _itemId: seed_sweet_potato
   _displayName: "\uACE0\uAD6C\uB9C8 \uBAA8\uC885"
   _description: "\uBC2D\uC5D0 \uC2EC\uC73C\uBA74 \uACE0\uAD6C\uB9C8\uAC00 \uC790\uB77C\uC694."
   _icon: {fileID: 2899055153566729205, guid: 0b1bde50674f82f4d83d5ce8c3facc64, type: 3}

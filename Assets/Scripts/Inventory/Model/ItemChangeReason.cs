@@ -7,4 +7,5 @@ public enum ItemChangeReason
     Harvest,
     Fishing,
     Sell,
+    Load, // 세이브 복원
 }

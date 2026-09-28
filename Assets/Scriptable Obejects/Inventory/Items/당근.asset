@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
   m_Name: "\uB2F9\uADFC"
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  _itemId: Carrot
+  _itemId: crop_carrot
   _displayName: "\uB2F9\uADFC"
   _description: "\uB2F9\uADFC\uC774\uB2E4."
   _icon: {fileID: -5859083586626064994, guid: 125917c9ef5a91e478059e3954180ecc, type: 3}
