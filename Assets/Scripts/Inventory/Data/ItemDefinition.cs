@@ -23,7 +23,7 @@ public class ItemDefinition : ScriptableObject
     private Sprite _icon;
 
     [Header("분류")]
-    [Tooltip("이 아이템이 표시될 탭")]
+    [Tooltip("가장 아래 단계의 소분류 (예: 작물). 부모 탭(농사)에도 자동으로 표시됨")]
     [SerializeField]
     private ItemCategory _category;
 
@@ -58,7 +58,7 @@ public class ItemDefinition : ScriptableObject
         if (_category == null)
             Debug.LogWarning($"[{name}] Category가 비어있습니다.", this);
         else if (_category.ShowsAllItems)
-            Debug.LogWarning($"[{name}] '전체' 카테고리는 탭 전용입니다. 실제 카테고리(채소, 어류 등)를 지정하세요.", this);
+            Debug.LogWarning($"[{name}] '전체' 카테고리는 탭 전용입니다. 실제 소분류(작물, 모종 등)를 지정하세요.", this);
 
         if (_rarity == null)
             Debug.LogWarning($"[{name}] Rarity가 비어있습니다.", this);

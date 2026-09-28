@@ -10,6 +10,11 @@ public class Inventory
     // UI 목록 표시용
     public IReadOnlyDictionary<ItemDefinition, int> Counts => _counts;
 
+    // 최신순 정렬용: 획득할 때마다 1씩 커지는 번호 (같은 프레임에 여러 개를 얻어도 겹치지 않도록 시간 대신 번호 사용)
+    private long _acquireSequence;
+    private readonly Dictionary<ItemDefinition, long> _acquiredOrder =
+        new Dictionary<ItemDefinition, long>();
+
     public event Action<int> OnCapacityChanged;
 
     private int _capacity;
@@ -45,6 +50,15 @@ public class Inventory
         return _counts.TryGetValue(item, out int count) ? count : 0;
     }
 
+    /// <returns>마지막으로 획득한 순번 (클수록 최근). 가지고 있지 않으면 0</returns>
+    public long GetAcquiredOrder(ItemDefinition item)
+    {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+
+        return _acquiredOrder.TryGetValue(item, out long order) ? order : 0;
+    }
+
     /// <returns> 실제로 추가된 개수 (MaxStack에 걸리면 요청보다 적을 수 있음) </returns>
     public int Add(ItemDefinition item, int amount, ItemChangeReason reason)
     {
@@ -68,6 +82,9 @@ public class Inventory
 
         int newCount = oldCount + added;
         _counts[item] = newCount;
+
+        // 이미 가진 아이템도 갱신 (마지막 획득 순). 이벤트 전에 기록해야 받는 쪽이 새 순서로 정렬함
+        _acquiredOrder[item] = ++_acquireSequence;
 
         OnItemChanged?.Invoke(new ItemChangedEvent(item, oldCount, newCount, reason));
         return added;
@@ -100,7 +117,10 @@ public class Inventory
         int newCount = oldCount - amount;
 
         if (newCount == 0)
+        {
             _counts.Remove(item);
+            _acquiredOrder.Remove(item);
+        }
         else
             _counts[item] = newCount;
 

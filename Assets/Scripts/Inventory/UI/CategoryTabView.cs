@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 카테고리 탭 하나. 받은 카테고리를 그리고 클릭을 알리기만 한다.
+/// 카테고리 탭(또는 소분류 칩) 하나. 받은 카테고리를 그리고 클릭을 알리기만 한다.
+/// 탭과 칩은 같은 스크립트를 쓰고 프리팹(스프라이트, 크기)만 다르다.
 /// </summary>
 public class CategoryTabView : MonoBehaviour
 {
@@ -40,13 +41,14 @@ public class CategoryTabView : MonoBehaviour
         _button.onClick.AddListener(() => OnClicked?.Invoke(this));
     }
 
-    public void Bind(ItemCategory category)
+    /// <param name="label">비우면 카테고리 이름. 소분류 칩의 "전체"처럼 탭 자신을 다른 이름으로 보일 때 사용</param>
+    public void Bind(ItemCategory category, string label = null)
     {
         if (category == null)
             throw new ArgumentNullException(nameof(category));
 
         Category = category;
-        _label.text = category.DisplayName;
+        _label.text = label ?? category.DisplayName;
     }
 
     public void SetSelected(bool selected)

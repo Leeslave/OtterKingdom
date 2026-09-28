@@ -13,7 +13,7 @@ public class ItemCategory : ScriptableObject
     private string _displayName;
 
     [Header("탭 설정")]
-    [Tooltip("탭 정렬 순서(작을수록 왼쪽)")]
+    [Tooltip("정렬 순서(작을수록 왼쪽). 탭끼리, 같은 탭 안의 칩끼리 비교")]
     [SerializeField]
     private int _sortOrder;
 
@@ -21,20 +21,46 @@ public class ItemCategory : ScriptableObject
     [SerializeField]
     private bool _showsAllItems;
 
+    [Header("계층")]
+    [Tooltip("비우면 탭, 지정하면 그 탭 안의 소분류 칩")]
+    [SerializeField]
+    private ItemCategory _parent;
+
     public string CategoryId => _categoryId;
     public string DisplayName => _displayName;
     public int SortOrder => _sortOrder;
     public bool ShowsAllItems => _showsAllItems;
+    public ItemCategory Parent => _parent;
+    public bool IsRoot => _parent == null;
 
-    /// <summary>이 탭에 해당 아이템을 보여줘야 하는지</summary>
+    /// <summary>이 탭(또는 칩)에 해당 아이템을 보여줘야 하는지</summary>
     public bool Contains(ItemDefinition item)
     {
-        return item != null && (_showsAllItems || item.Category == this);
+        if (item == null)
+            return false;
+
+        if (_showsAllItems)
+            return true;
+
+        // 아이템의 카테고리부터 부모 쪽으로 올라가며 자신을 찾음 (작물 → 농사)
+        for (var c = item.Category; c != null; c = c.Parent)
+        {
+            if (c == this)
+                return true;
+        }
+
+        return false;
     }
 
     private void OnValidate()
     {
         if (string.IsNullOrWhiteSpace(_categoryId))
             Debug.LogWarning($"[{name}] CategoryID가 비어 있습니다.", this);
+
+        if (_parent == this)
+            Debug.LogWarning($"[{name}] 부모가 자기 자신입니다.", this);
+
+        if (_showsAllItems && _parent != null)
+            Debug.LogWarning($"[{name}] '전체' 카테고리는 부모를 가질 수 없습니다 (탭 전용).", this);
     }
 }

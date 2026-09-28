@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebefc16158b7a7243b225db3929be096, type: 3}
-  m_Name: Vegetable
+  m_Name: Farming
   m_EditorClassIdentifier: Assembly-CSharp::ItemCategory
-  _categoryId: Vegetable
-  _displayName: "\uCC44\uC18C"
+  _categoryId: Farming
+  _displayName: "\uB18D\uC0AC"
   _sortOrder: 0
+  _showsAllItems: 0
+  _parent: {fileID: 0}

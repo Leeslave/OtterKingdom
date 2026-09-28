@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebefc16158b7a7243b225db3929be096, type: 3}
-  m_Name: Fish
+  m_Name: Crops
   m_EditorClassIdentifier: Assembly-CSharp::ItemCategory
-  _categoryId: Fish
-  _displayName: "\uBB3C\uACE0\uAE30"
+  _categoryId: Crops
+  _displayName: "\uC791\uBB3C"
   _sortOrder: 0
   _showsAllItems: 0
-  _parent: {fileID: 11400000, guid: fc357f853fd815244984d3c1af9fcf29, type: 2}
+  _parent: {fileID: 11400000, guid: 7e73a2f059c05244d854e377e092c4f8, type: 2}

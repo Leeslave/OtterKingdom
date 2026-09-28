@@ -239,4 +239,58 @@ public class InventoryTests
     }
 
     #endregion
+
+    #region 획득 순서
+
+    [Test]
+    public void GetAcquiredOrder_LaterAdd_IsGreater()
+    {
+        // Act
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+        _inventory.Add(_fish, 1, ItemChangeReason.Test);
+
+        // Assert
+        Assert.Greater(_inventory.GetAcquiredOrder(_fish), _inventory.GetAcquiredOrder(_carrot));
+    }
+
+    [Test]
+    public void GetAcquiredOrder_AddAgain_Updates()
+    {
+        // Act
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+        _inventory.Add(_fish, 1, ItemChangeReason.Test);
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+
+        // Assert
+        Assert.Greater(_inventory.GetAcquiredOrder(_carrot), _inventory.GetAcquiredOrder(_fish));
+    }
+
+    [Test]
+    public void GetAcquiredOrder_RemovedToZero_ReturnsZero()
+    {
+        // Arrange
+        _inventory.Add(_carrot, 2, ItemChangeReason.Test);
+
+        // Act
+        _inventory.TryRemove(_carrot, 2, ItemChangeReason.Test);
+
+        // Assert
+        Assert.AreEqual(0, _inventory.GetAcquiredOrder(_carrot));
+    }
+
+    [Test]
+    public void GetAcquiredOrder_AddFailed_DoesNotUpdate()
+    {
+        // Arrange: 가득 찬 당근은 더 들어가지 않음
+        _inventory.Add(_carrot, 10, ItemChangeReason.Test);
+        _inventory.Add(_fish, 1, ItemChangeReason.Test);
+
+        // Act
+        _inventory.Add(_carrot, 1, ItemChangeReason.Test);
+
+        // Assert
+        Assert.Greater(_inventory.GetAcquiredOrder(_fish), _inventory.GetAcquiredOrder(_carrot));
+    }
+
+    #endregion
 }
