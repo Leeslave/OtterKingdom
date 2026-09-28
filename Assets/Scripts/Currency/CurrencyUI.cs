@@ -1,19 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 public class CurrencyUI : MonoBehaviour
 {
-    [Header("¼³Á¤")]
+    [Header("ì„¤ì •")]
     [SerializeField] private Currency _targetCurrency;
     [SerializeField] private TextMeshProUGUI _uIText;
     [SerializeField] private Image _currencyIcon;
 
-    [Header("¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤")]
-    [SerializeField] private float _animationDuration = 0.5f; // È¿°ú Áö¼Ó ½Ã°£
+    [Header("ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •")]
+    [SerializeField] private float _animationDuration = 0.5f; // íš¨ê³¼ ì§€ì† ì‹œê°„
 
-    private int _currentDisplayValue = 0; 
-    private Coroutine _iconCoroutine;
+    private int _currentDisplayValue = 0;
     private Coroutine _textCoroutine;
 
     private void Awake()
@@ -22,13 +21,13 @@ public class CurrencyUI : MonoBehaviour
             _currencyIcon.sprite = _targetCurrency.Icon;
     }
 
-    private void Start()
+    // êµ¬ë…/í•´ì œëŠ” OnEnable/OnDisable ì§ìœ¼ë¡œ â†’ ê»ë‹¤ ì¼œë„ ë‹¤ì‹œ êµ¬ë…ë¨
+    private void OnEnable()
     {
-        if (CurrencyManager.Instance != null)
-        {
-            CurrencyManager.Instance.OnCurrencyChanged += UpdateUI;
-            RefreshUI();
-        }
+        if (CurrencyManager.Instance == null) return;
+
+        CurrencyManager.Instance.OnCurrencyChanged += UpdateUI;
+        RefreshUI(); // êº¼ì ¸ ìˆë˜ ë™ì•ˆ ë°”ë€ ê°’ ë°˜ì˜
     }
 
     private void OnDisable()
@@ -60,7 +59,7 @@ public class CurrencyUI : MonoBehaviour
         _textCoroutine = StartCoroutine(AnimateText(targetValue));
     }
 
-    // ÅØ½ºÆ® Ä«¿îÆ® ¾÷ È¿°ú
+    // í…ìŠ¤íŠ¸ ì¹´ìš´íŠ¸ ì—… íš¨ê³¼
     private IEnumerator AnimateText(int targetValue)
     {
         int startValue = _currentDisplayValue;
@@ -71,7 +70,7 @@ public class CurrencyUI : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = elapsed / _animationDuration;
 
-            // ¼ıÀÚ°¡ ¼­¼­È÷ Áõ°¡ÇÏµµ·Ï º¸°£
+            // ìˆ«ìê°€ ì„œì„œíˆ ì¦ê°€í•˜ë„ë¡ ë³´ê°„
             int val = Mathf.RoundToInt(Mathf.Lerp(startValue, targetValue, t));
             _uIText.text = val.ToString();
             yield return null;
