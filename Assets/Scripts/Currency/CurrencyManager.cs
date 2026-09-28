@@ -71,6 +71,21 @@ public class CurrencyManager : MonoBehaviour
         return _wallets.TryGetValue(currency, out int balance) ? balance : 0;
     }
 
+    /// <summary>
+    /// 잔액을 그대로 지정 (세이브 복원용). 배율 미적용, 한도 안으로 자름.
+    /// </summary>
+    public void SetBalance(Currency currency, int amount)
+    {
+        if (currency == null) throw new ArgumentNullException(nameof(currency));
+
+        int oldBalance = GetCurrency(currency);
+        int newBalance = Math.Clamp(amount, currency.MinCapacity, currency.MaxCapacity);
+        _wallets[currency] = newBalance;
+
+        if (newBalance != oldBalance)
+            OnCurrencyChanged?.Invoke(currency, newBalance);
+    }
+
     private void ApplyChange(Currency currency, int delta, TransactionSource source)
     {
         int oldBalance = GetCurrency(currency);

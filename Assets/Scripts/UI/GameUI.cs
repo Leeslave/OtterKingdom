@@ -174,17 +174,27 @@ public class GameUI : MonoBehaviour
 
     public void ShowConfirm(string title, string message, Action onYes)
     {
+        ShowChoice(title, message, "예", onYes, "아니오", null);
+    }
+
+    // Two-button popup with custom labels; either button closes it.
+    public void ShowChoice(string title, string message, string yesLabel, Action onYes, string noLabel, Action onNo)
+    {
         CloseAllModals();
         var modal = OpenModal(title, out var content);
         CreateLabel(content, message);
 
         var row = CreateRow(content, ButtonHeight);
-        CreateButton(row, "예", () =>
+        CreateButton(row, yesLabel, () =>
         {
             CloseModal(modal);
             onYes?.Invoke();
         }, flexible: true);
-        CreateButton(row, "아니오", () => CloseModal(modal), flexible: true);
+        CreateButton(row, noLabel, () =>
+        {
+            CloseModal(modal);
+            onNo?.Invoke();
+        }, flexible: true);
     }
 
     // Stacks on top of whatever is open (e.g. over the crop-selection prompt).

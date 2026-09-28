@@ -48,15 +48,14 @@ public class FishingService
 
     public bool IsFish(string itemId) => itemId == balance.fishItemId;
 
-    // Gold has no lower capacity bound, so check the balance before spending
+    // TrySpend rejects a zero cost (throws), so a free upgrade skips it
     // (same as FarmService.TryUnlockPlot).
     public bool TryUpgradeRod(CurrencyManager currencyManager, Currency currency)
     {
         if (!CanUpgradeRod) return false;
 
         int cost = NextRodUpgradeCost;
-        if (currencyManager.GetCurrency(currency) < cost) return false;
-        if (!currencyManager.TrySpend(currency, cost, TransactionSource.RodUpgrade)) return false;
+        if (cost > 0 && !currencyManager.TrySpend(currency, cost, TransactionSource.RodUpgrade)) return false;
 
         save.rodLevel++;
         return true;
