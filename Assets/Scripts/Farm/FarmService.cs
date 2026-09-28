@@ -8,19 +8,25 @@ public class FarmService
     private readonly Dictionary<string, CropDefinition> cropsById;
     private readonly FarmBalanceData balance;
     private readonly List<PlotRuntime> plots = new List<PlotRuntime>();
+    // Consumable seeds are bag items owned by the inventory; the farm only
+    // asks how many there are and spends one per planting (argument: cropId).
+    private readonly Func<string, int> seedCount;
+    private readonly Func<string, bool> tryConsumeSeed;
 
     // Fired after a plot is unlocked mid-session (argument: plot index), so
     // things like the farmer otter can start covering it without a reload.
     public event Action<int> PlotUnlocked;
 
-    public FarmService(SaveData save, IEnumerable<CropDefinition> crops, FarmBalanceData balance)
+    public FarmService(SaveData save, IEnumerable<CropDefinition> crops, FarmBalanceData balance,
+        Func<string, int> seedCount, Func<string, bool> tryConsumeSeed)
     {
         this.save = save;
         this.balance = balance;
+        this.seedCount = seedCount;
+        this.tryConsumeSeed = tryConsumeSeed;
         cropsById = crops.ToDictionary(c => c.cropId, c => c);
 
         NormalizePlots(save);
-        NormalizeSeeds(save, cropsById.Values);
         foreach (var plotData in save.plots)
         {
             NormalizeSlots(plotData);
@@ -57,20 +63,6 @@ public class FarmService
         }
     }
 
-    // Grants each consumable crop its starting seed stock the first time the
-    // save sees it. A crop that has been planted down to 0 keeps its 0 entry,
-    // so this never re-grants.
-    private static void NormalizeSeeds(SaveData save, IEnumerable<CropDefinition> crops)
-    {
-        save.seeds ??= new List<ItemStack>();
-        foreach (var crop in crops)
-        {
-            if (crop.seedType != SeedType.Consumable) continue;
-            if (save.seeds.Exists(s => s.itemId == crop.cropId)) continue;
-            save.seeds.Add(new ItemStack(crop.cropId, crop.initialSeedCount));
-        }
-    }
-
     public IReadOnlyList<PlotRuntime> Plots => plots;
 
     public bool IsPlotUnlocked(int plotIndex) =>
@@ -100,11 +92,7 @@ public class FarmService
 
     // Remaining consumable seeds. Meaningless for permanent seeds — check
     // IsUnlimitedSeed first.
-    public int GetSeedCount(string cropId)
-    {
-        var stack = save.seeds.Find(s => s.itemId == cropId);
-        return stack != null ? stack.quantity : 0;
-    }
+    public int GetSeedCount(string cropId) => seedCount(cropId);
 
     // Shared by the player's crop-selection prompt and the otter's replant.
     // Consumable seeds cost 1 per slot planted.
@@ -115,16 +103,12 @@ public class FarmService
         var crop = LookupCrop(cropId);
         if (crop == null) return PlantResult.Failed;
 
-        ItemStack seedStack = null;
-        if (crop.seedType == SeedType.Consumable)
-        {
-            seedStack = save.seeds.Find(s => s.itemId == cropId);
-            if (seedStack == null || seedStack.quantity <= 0) return PlantResult.NoSeed;
-        }
+        bool consumable = crop.seedType == SeedType.Consumable;
+        if (consumable && seedCount(cropId) <= 0) return PlantResult.NoSeed;
 
         if (!plots[plotIndex].Plant(slotIndex, cropId, CurrentDurationMultiplier)) return PlantResult.Failed;
 
-        if (seedStack != null) seedStack.quantity--;
+        if (consumable) tryConsumeSeed(cropId);
         return PlantResult.Planted;
     }
 
