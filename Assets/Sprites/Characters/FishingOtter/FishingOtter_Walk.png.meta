@@ -1,0 +1,1077 @@
+fileFormatVersion: 2
+guid: 4aed5401dd028e34a8643f159781fe8b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8417391269122584158
+    second: FishingOtter_Walk_0
+  - first:
+      213: 3971470428431047648
+    second: FishingOtter_Walk_1
+  - first:
+      213: 1595863476355549358
+    second: FishingOtter_Walk_2
+  - first:
+      213: 4190216242300027443
+    second: FishingOtter_Walk_3
+  - first:
+      213: 462679935660984955
+    second: FishingOtter_Walk_4
+  - first:
+      213: -3221036962415238441
+    second: FishingOtter_Walk_5
+  - first:
+      213: 1104118599396154100
+    second: FishingOtter_Walk_6
+  - first:
+      213: 147325572512073657
+    second: FishingOtter_Walk_7
+  - first:
+      213: -4046350916239448907
+    second: FishingOtter_Walk_8
+  - first:
+      213: 3462009516929117445
+    second: FishingOtter_Walk_9
+  - first:
+      213: 4658464663024366683
+    second: FishingOtter_Walk_10
+  - first:
+      213: -6319200289933259137
+    second: FishingOtter_Walk_11
+  - first:
+      213: -8256176706422193212
+    second: FishingOtter_Walk_12
+  - first:
+      213: -7407966332130741175
+    second: FishingOtter_Walk_13
+  - first:
+      213: -2204905130720460641
+    second: FishingOtter_Walk_14
+  - first:
+      213: 1867938861474527339
+    second: FishingOtter_Walk_15
+  - first:
+      213: 4789651294607020239
+    second: FishingOtter_Walk_16
+  - first:
+      213: -8957382526396190649
+    second: FishingOtter_Walk_17
+  - first:
+      213: 4033855634011583226
+    second: FishingOtter_Walk_18
+  - first:
+      213: 5325324801881117526
+    second: FishingOtter_Walk_19
+  - first:
+      213: -2054921095483089115
+    second: FishingOtter_Walk_20
+  - first:
+      213: -2843561155471884639
+    second: FishingOtter_Walk_21
+  - first:
+      213: -2099919168522738300
+    second: FishingOtter_Walk_22
+  - first:
+      213: -4670727338034187729
+    second: FishingOtter_Walk_23
+  - first:
+      213: 5411576625533709949
+    second: FishingOtter_Walk_24
+  - first:
+      213: 8488364103856183578
+    second: FishingOtter_Walk_25
+  - first:
+      213: 8635760492522581755
+    second: FishingOtter_Walk_26
+  - first:
+      213: 8812480676448860170
+    second: FishingOtter_Walk_27
+  - first:
+      213: 1862570051651653647
+    second: FishingOtter_Walk_28
+  - first:
+      213: -1385365255061793288
+    second: FishingOtter_Walk_29
+  - first:
+      213: -7176185276888357950
+    second: FishingOtter_Walk_30
+  - first:
+      213: 7376062611696004231
+    second: FishingOtter_Walk_31
+  - first:
+      213: 5858112366785257310
+    second: FishingOtter_Walk_0_0
+  - first:
+      213: 1180333975664194580
+    second: FishingOtter_Walk_0_1
+  - first:
+      213: -3203946523764452859
+    second: FishingOtter_Walk_0_2
+  - first:
+      213: -1239912461423921877
+    second: FishingOtter_Walk_0_3
+  - first:
+      213: -5809542578185615119
+    second: FishingOtter_Walk_0_4
+  - first:
+      213: -776001620733923684
+    second: FishingOtter_Walk_0_5
+  - first:
+      213: -1958280534317679483
+    second: FishingOtter_Walk_0_6
+  - first:
+      213: -3129027506283899230
+    second: FishingOtter_Walk_0_7
+  - first:
+      213: -5907734001174577122
+    second: FishingOtter_Walk_1_0
+  - first:
+      213: 2152698379838190444
+    second: FishingOtter_Walk_1_1
+  - first:
+      213: -4694958831363198856
+    second: FishingOtter_Walk_1_2
+  - first:
+      213: 4372199787092979143
+    second: FishingOtter_Walk_1_3
+  - first:
+      213: -458944005128679385
+    second: FishingOtter_Walk_1_4
+  - first:
+      213: -5150294120775876584
+    second: FishingOtter_Walk_1_5
+  - first:
+      213: 2645700501602765806
+    second: FishingOtter_Walk_1_6
+  - first:
+      213: 2515966669877135384
+    second: FishingOtter_Walk_1_7
+  - first:
+      213: -5925289528118688799
+    second: FishingOtter_Walk_2_0
+  - first:
+      213: -6983230676264323311
+    second: FishingOtter_Walk_2_1
+  - first:
+      213: 4885688774078784634
+    second: FishingOtter_Walk_2_2
+  - first:
+      213: -5154112963180593714
+    second: FishingOtter_Walk_2_3
+  - first:
+      213: -2111922251475780316
+    second: FishingOtter_Walk_2_4
+  - first:
+      213: -8895492932955732101
+    second: FishingOtter_Walk_2_5
+  - first:
+      213: 5271767168054887379
+    second: FishingOtter_Walk_2_6
+  - first:
+      213: -2211450248892735511
+    second: FishingOtter_Walk_2_7
+  - first:
+      213: -191466542615212237
+    second: FishingOtter_Walk_3_0
+  - first:
+      213: -5435248915935314602
+    second: FishingOtter_Walk_3_1
+  - first:
+      213: 4953031380352852930
+    second: FishingOtter_Walk_3_2
+  - first:
+      213: 3176789230835275604
+    second: FishingOtter_Walk_3_3
+  - first:
+      213: -5528113867342236446
+    second: FishingOtter_Walk_3_4
+  - first:
+      213: -5727055439443158067
+    second: FishingOtter_Walk_3_5
+  - first:
+      213: 2174944743494061573
+    second: FishingOtter_Walk_3_6
+  - first:
+      213: 1943955401920259334
+    second: FishingOtter_Walk_3_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 145
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FishingOtter_Walk_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 828
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5fde84f8223c4150800000000000000
+      internalID: 5858112366785257310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_0_1
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 828
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 414f9c74f73616010800000000000000
+      internalID: 1180333975664194580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_0_2
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 828
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5021ca3ac9b4983d0800000000000000
+      internalID: -3203946523764452859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_0_3
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 828
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b253f388f22facee0800000000000000
+      internalID: -1239912461423921877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_0_4
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 828
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f84dbf2ecb506fa0800000000000000
+      internalID: -5809542578185615119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_0_5
+      rect:
+        serializedVersion: 2
+        x: 2140
+        y: 828
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9ee60b23a61b35f0800000000000000
+      internalID: -776001620733923684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_0_6
+      rect:
+        serializedVersion: 2
+        x: 2568
+        y: 828
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58cbe6dba3ac2d4e0800000000000000
+      internalID: -1958280534317679483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_0_7
+      rect:
+        serializedVersion: 2
+        x: 2996
+        y: 828
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a69583bf067394d0800000000000000
+      internalID: -3129027506283899230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 552
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e100e78f933830ea0800000000000000
+      internalID: -5907734001174577122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_1_1
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 552
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6370de55cbefdd10800000000000000
+      internalID: 2152698379838190444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_1_2
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 552
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 870738d51d728deb0800000000000000
+      internalID: -4694958831363198856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_1_3
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 552
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cd27bc9a8c2dac30800000000000000
+      internalID: 4372199787092979143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_1_4
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 552
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7209282ebd081a9f0800000000000000
+      internalID: -458944005128679385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_1_5
+      rect:
+        serializedVersion: 2
+        x: 2140
+        y: 552
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8100f5ad8ca7688b0800000000000000
+      internalID: -5150294120775876584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_1_6
+      rect:
+        serializedVersion: 2
+        x: 2568
+        y: 552
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeb0b14b69a67b420800000000000000
+      internalID: 2645700501602765806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_1_7
+      rect:
+        serializedVersion: 2
+        x: 2996
+        y: 552
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 818cfb82b528ae220800000000000000
+      internalID: 2515966669877135384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 276
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e3c425519425cda0800000000000000
+      internalID: -5925289528118688799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_2_1
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 276
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11777acd2b4961f90800000000000000
+      internalID: -6983230676264323311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_2_2
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 276
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a746416fd047dc340800000000000000
+      internalID: 4885688774078784634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_2_3
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 276
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd72615199e878b0800000000000000
+      internalID: -5154112963180593714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_2_4
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 276
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42dfa87d6e1f0b2e0800000000000000
+      internalID: -2111922251475780316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_2_5
+      rect:
+        serializedVersion: 2
+        x: 2140
+        y: 276
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b770d2dce4cdc8480800000000000000
+      internalID: -8895492932955732101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_2_6
+      rect:
+        serializedVersion: 2
+        x: 2568
+        y: 276
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d38a7eee44192940800000000000000
+      internalID: 5271767168054887379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_2_7
+      rect:
+        serializedVersion: 2
+        x: 2996
+        y: 276
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ef9c4427b95f41e0800000000000000
+      internalID: -2211450248892735511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33f4c05a136c75df0800000000000000
+      internalID: -191466542615212237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_3_1
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65d39db78ed1294b0800000000000000
+      internalID: -5435248915935314602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_3_2
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c36b435cc3bcb440800000000000000
+      internalID: 4953031380352852930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_3_3
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 457193e59f8361c20800000000000000
+      internalID: 3176789230835275604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_3_4
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e4b7231ab13843b0800000000000000
+      internalID: -5528113867342236446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_3_5
+      rect:
+        serializedVersion: 2
+        x: 2140
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcb950bcb696580b0800000000000000
+      internalID: -5727055439443158067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_3_6
+      rect:
+        serializedVersion: 2
+        x: 2568
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50e011a88b4fe2e10800000000000000
+      internalID: 2174944743494061573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Walk_3_7
+      rect:
+        serializedVersion: 2
+        x: 2996
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 605a8a673215afa10800000000000000
+      internalID: 1943955401920259334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FishingOtter_Walk_0: 8417391269122584158
+      FishingOtter_Walk_0_0: 5858112366785257310
+      FishingOtter_Walk_0_1: 1180333975664194580
+      FishingOtter_Walk_0_2: -3203946523764452859
+      FishingOtter_Walk_0_3: -1239912461423921877
+      FishingOtter_Walk_0_4: -5809542578185615119
+      FishingOtter_Walk_0_5: -776001620733923684
+      FishingOtter_Walk_0_6: -1958280534317679483
+      FishingOtter_Walk_0_7: -3129027506283899230
+      FishingOtter_Walk_1: 3971470428431047648
+      FishingOtter_Walk_10: 4658464663024366683
+      FishingOtter_Walk_11: -6319200289933259137
+      FishingOtter_Walk_12: -8256176706422193212
+      FishingOtter_Walk_13: -7407966332130741175
+      FishingOtter_Walk_14: -2204905130720460641
+      FishingOtter_Walk_15: 1867938861474527339
+      FishingOtter_Walk_16: 4789651294607020239
+      FishingOtter_Walk_17: -8957382526396190649
+      FishingOtter_Walk_18: 4033855634011583226
+      FishingOtter_Walk_19: 5325324801881117526
+      FishingOtter_Walk_1_0: -5907734001174577122
+      FishingOtter_Walk_1_1: 2152698379838190444
+      FishingOtter_Walk_1_2: -4694958831363198856
+      FishingOtter_Walk_1_3: 4372199787092979143
+      FishingOtter_Walk_1_4: -458944005128679385
+      FishingOtter_Walk_1_5: -5150294120775876584
+      FishingOtter_Walk_1_6: 2645700501602765806
+      FishingOtter_Walk_1_7: 2515966669877135384
+      FishingOtter_Walk_2: 1595863476355549358
+      FishingOtter_Walk_20: -2054921095483089115
+      FishingOtter_Walk_21: -2843561155471884639
+      FishingOtter_Walk_22: -2099919168522738300
+      FishingOtter_Walk_23: -4670727338034187729
+      FishingOtter_Walk_24: 5411576625533709949
+      FishingOtter_Walk_25: 8488364103856183578
+      FishingOtter_Walk_26: 8635760492522581755
+      FishingOtter_Walk_27: 8812480676448860170
+      FishingOtter_Walk_28: 1862570051651653647
+      FishingOtter_Walk_29: -1385365255061793288
+      FishingOtter_Walk_2_0: -5925289528118688799
+      FishingOtter_Walk_2_1: -6983230676264323311
+      FishingOtter_Walk_2_2: 4885688774078784634
+      FishingOtter_Walk_2_3: -5154112963180593714
+      FishingOtter_Walk_2_4: -2111922251475780316
+      FishingOtter_Walk_2_5: -8895492932955732101
+      FishingOtter_Walk_2_6: 5271767168054887379
+      FishingOtter_Walk_2_7: -2211450248892735511
+      FishingOtter_Walk_3: 4190216242300027443
+      FishingOtter_Walk_30: -7176185276888357950
+      FishingOtter_Walk_31: 7376062611696004231
+      FishingOtter_Walk_3_0: -191466542615212237
+      FishingOtter_Walk_3_1: -5435248915935314602
+      FishingOtter_Walk_3_2: 4953031380352852930
+      FishingOtter_Walk_3_3: 3176789230835275604
+      FishingOtter_Walk_3_4: -5528113867342236446
+      FishingOtter_Walk_3_5: -5727055439443158067
+      FishingOtter_Walk_3_6: 2174944743494061573
+      FishingOtter_Walk_3_7: 1943955401920259334
+      FishingOtter_Walk_4: 462679935660984955
+      FishingOtter_Walk_5: -3221036962415238441
+      FishingOtter_Walk_6: 1104118599396154100
+      FishingOtter_Walk_7: 147325572512073657
+      FishingOtter_Walk_8: -4046350916239448907
+      FishingOtter_Walk_9: 3462009516929117445
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

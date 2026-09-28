@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 // One instance per furrow slot (up to 3 per furrow). Shows the empty/locked
 // placeholder sprite until planted, then swaps between the crop's seed/sprout/
 // grown sprites as it grows. Tapping an empty slot opens GameManager's
-// crop-selection prompt; a growing or awaiting-harvest slot ignores clicks —
-// harvesting only happens through FarmService.Harvest (currently triggered by
-// a debug-panel button standing in for the future otter NPC).
+// crop-selection prompt; tapping a growing or awaiting-harvest slot opens the
+// "change crop" prompt instead. Harvesting itself is done by the farmer otter
+// (FarmerOtterController), which also finds its walk targets through these
+// views. Slots of a locked plot stay hidden and unclickable until PlotView's
+// unlock goes through.
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Collider2D))]
 public class FurrowSlotView : MonoBehaviour
@@ -14,6 +16,9 @@ public class FurrowSlotView : MonoBehaviour
     [SerializeField] private int plotIndex;
     [SerializeField] private int slotIndex;
     [SerializeField] private Sprite emptySlotSprite;
+
+    public int PlotIndex => plotIndex;
+    public int SlotIndex => slotIndex;
 
     private SpriteRenderer spriteRenderer;
     private Camera mainCamera;
@@ -32,6 +37,10 @@ public class FurrowSlotView : MonoBehaviour
         if (GameManager.Instance == null || GameManager.Instance.FarmService == null) return;
 
         var farmService = GameManager.Instance.FarmService;
+        bool unlocked = farmService.IsPlotUnlocked(plotIndex);
+        spriteRenderer.enabled = unlocked;
+        if (!unlocked) return;
+
         var state = farmService.GetSlotState(plotIndex, slotIndex);
         var stage = farmService.GetSlotStage(plotIndex, slotIndex);
 
@@ -48,10 +57,12 @@ public class FurrowSlotView : MonoBehaviour
         if (state == FurrowSlotState.Empty)
         {
             spriteRenderer.sprite = emptySlotSprite;
+            spriteRenderer.color = Color.white;
             return;
         }
 
         var crop = farmService.GetSlotCrop(plotIndex, slotIndex);
+        spriteRenderer.color = crop != null ? crop.spriteTint : Color.white;
         Sprite[] variants = crop == null ? null : stage switch
         {
             SlotGrowthStage.Seed => crop.seedSprites,
@@ -67,8 +78,6 @@ public class FurrowSlotView : MonoBehaviour
 
     private void HandleClick(FurrowSlotState state)
     {
-        if (state != FurrowSlotState.Empty) return;
-
         var pointer = Pointer.current;
         if (pointer == null || !pointer.press.wasPressedThisFrame) return;
         if (mainCamera == null) return;
@@ -80,6 +89,7 @@ public class FurrowSlotView : MonoBehaviour
         var hit = Physics2D.OverlapPoint(worldPos);
         if (hit == null || hit.gameObject != gameObject) return;
 
-        GameManager.Instance.RequestPlantPrompt(plotIndex, slotIndex);
+        if (state == FurrowSlotState.Empty) GameManager.Instance.RequestPlantPrompt(plotIndex, slotIndex);
+        else GameManager.Instance.RequestCropChangePrompt(plotIndex, slotIndex);
     }
 }

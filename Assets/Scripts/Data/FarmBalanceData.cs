@@ -12,4 +12,7 @@ public class FarmBalanceData : ScriptableObject
     public float[] durationMultiplierByLevel = { 1.00f, 0.90f, 0.80f, 0.70f, 0.60f };
 
     public int maxFarmLevel = 5;
+
+    // Coin cost to unlock each locked plot (plot 1 starts unlocked).
+    public int plotUnlockCost = 100;
 }

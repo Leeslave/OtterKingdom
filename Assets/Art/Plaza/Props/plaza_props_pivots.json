@@ -2,87 +2,87 @@
   "props": [
     {
       "name": "Bench",
-      "width": 232,
-      "height": 207,
-      "pivotX": 0.3363,
-      "pivotY": 0.0145
+      "width": 253,
+      "height": 239,
+      "pivotX": 0.3585,
+      "pivotY": 0.0084
     },
     {
       "name": "Bush",
-      "width": 302,
-      "height": 236,
-      "pivotX": 0.4538,
-      "pivotY": 0.0127
+      "width": 307,
+      "height": 280,
+      "pivotX": 0.4962,
+      "pivotY": 0.0107
     },
     {
       "name": "Fence_Falling",
-      "width": 233,
-      "height": 212,
-      "pivotX": 0.8883,
-      "pivotY": 0.0142
+      "width": 260,
+      "height": 233,
+      "pivotX": 0.8834,
+      "pivotY": 0.0129
     },
     {
       "name": "Fence_Rising",
-      "width": 226,
-      "height": 208,
-      "pivotX": 0.1074,
-      "pivotY": 0.0144
+      "width": 263,
+      "height": 228,
+      "pivotX": 0.1175,
+      "pivotY": 0.0132
     },
     {
       "name": "House_Blue",
-      "width": 297,
-      "height": 327,
-      "pivotX": 0.5785,
-      "pivotY": 0.0061
+      "width": 314,
+      "height": 359,
+      "pivotX": 0.5528,
+      "pivotY": 0.0056
     },
     {
       "name": "House_Red",
-      "width": 376,
-      "height": 387,
-      "pivotX": 0.5585,
-      "pivotY": 0.0078
+      "width": 346,
+      "height": 389,
+      "pivotX": 0.5507,
+      "pivotY": 0.0077
     },
     {
       "name": "Lamp",
-      "width": 148,
-      "height": 271,
-      "pivotX": 0.6592,
-      "pivotY": 0.0111
+      "width": 175,
+      "height": 307,
+      "pivotX": 0.7144,
+      "pivotY": 0.0098
     },
     {
       "name": "Log",
-      "width": 245,
-      "height": 191,
-      "pivotX": 0.2395,
-      "pivotY": 0.0157
+      "width": 283,
+      "height": 208,
+      "pivotX": 0.2857,
+      "pivotY": 0.0144
     },
     {
       "name": "Picnic",
-      "width": 382,
-      "height": 253,
-      "pivotX": 0.4954,
-      "pivotY": 0.0119
+      "width": 407,
+      "height": 271,
+      "pivotX": 0.4755,
+      "pivotY": 0.0074
     },
     {
       "name": "Rock",
-      "width": 297,
-      "height": 185,
-      "pivotX": 0.6128,
-      "pivotY": 0.0162
+      "width": 338,
+      "height": 238,
+      "pivotX": 0.6159,
+      "pivotY": 0.0126
     },
     {
       "name": "Stump",
-      "width": 190,
-      "height": 173,
-      "pivotX": 0.4906,
-      "pivotY": 0.0173
+      "width": 265,
+      "height": 207,
+      "pivotX": 0.5292,
+      "pivotY": 0.0145
     },
     {
       "name": "Tree",
-      "width": 396,
-      "height": 413,
-      "pivotX": 0.4147,
-      "pivotY": 0.0073
+      "width": 378,
+      "height": 423,
+      "pivotX": 0.4404,
+      "pivotY": 0.0047
     }
   ]
 }

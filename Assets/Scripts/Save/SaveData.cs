@@ -28,6 +28,7 @@ public class FurrowSlotSaveData
 public class PlotSaveData
 {
     public const int SlotCount = 3;
+    public const int PlotCount = 3;
 
     public string plotId;
     public bool unlocked;
@@ -66,9 +67,15 @@ public class SaveData
     public int schemaVersion = 1;
     public int lifetimeSales;
     public int farmLevel = 1;
+    public int rodLevel = 1;
+    // True while the fishing otter is assigned to the fishing spot (between
+    // the player's "start fishing" and "stop fishing" confirmations).
+    public bool fishingActive;
     public string lastSaveUtc;
     public List<PlotSaveData> plots = new List<PlotSaveData>();
     public List<ItemStack> inventory = new List<ItemStack>();
+    // Remaining consumable-seed stock, keyed by cropId. Permanent seeds never appear here.
+    public List<ItemStack> seeds = new List<ItemStack>();
     public List<OtterSaveData> otters = new List<OtterSaveData>();
     public List<CurrencyBalance> currencies = new List<CurrencyBalance>();
 }

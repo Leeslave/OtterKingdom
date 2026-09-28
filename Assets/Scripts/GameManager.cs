@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
@@ -7,24 +8,29 @@ using UnityEngine;
 // debug UI so the loop (plant -> grow -> harvest -> sell -> upgrade) can
 // be verified with zero scene/prefab setup. Replace the OnGUI block with real
 // uGUI views in M4; the services underneath should not need to change.
+//
+// Every zone scene (Farm, Fishing) has its own GameManager with the same data
+// assigned, so the save, coins, inventory and sale UI are shared. The farm
+// keeps ticking in the fishing scene too — crops grow wherever the player is.
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     public static readonly Rect DebugPanelRect = new Rect(20, 20, 440, 560);
-    public static readonly Rect SeedPromptRect = new Rect(480, 20, 320, 220);
 
     public bool IsDebugPanelOpen => showDebugPanel;
-    public bool IsSeedPromptOpen => pendingPlotIndex >= 0;
     public FarmService FarmService => farmService;
+    public IReadOnlyList<CropDefinition> Crops => cropDefinitions;
+    public FishingService FishingService => fishingService;
+    public IReadOnlyList<SellableItem> SellableItems => sellableItems;
+    public int CoinBalance => CurrencyManager.Instance.GetCurrency(goldCurrency);
 
     private bool showDebugPanel;
-    private int pendingPlotIndex = -1;
-    private int pendingSlotIndex = -1;
 
     [Header("Data (optional — falls back to built-in defaults if empty)")]
     [SerializeField] private CropDefinition[] cropDefinitions;
     [SerializeField] private FarmBalanceData farmBalance;
+    [SerializeField] private FishingBalanceData fishingBalance;
 
     [Header("Save")]
     [SerializeField] private float autoSaveIntervalSec = 30f;
@@ -40,6 +46,9 @@ public class GameManager : MonoBehaviour
     private SaveService saveService;
     private FarmService farmService;
     private InventoryService inventoryService;
+    private FishingService fishingService;
+    private GameUI gameUI;
+    private readonly List<SellableItem> sellableItems = new List<SellableItem>();
 
     private float autoSaveTimer;
     private float pendingOfflineElapsedSec;
@@ -64,6 +73,9 @@ public class GameManager : MonoBehaviour
         CurrencyHud.Show(goldCurrency);
         inventoryService = new InventoryService(save.inventory);
         farmService = new FarmService(save, cropDefinitions, farmBalance);
+        fishingService = new FishingService(save, fishingBalance);
+        BuildSellableItems();
+        gameUI = GameUI.Create(this);
     }
 
     private void Start()
@@ -118,7 +130,30 @@ public class GameManager : MonoBehaviour
             farmBalance = ScriptableObject.CreateInstance<FarmBalanceData>();
             Debug.Log("[GameManager] No FarmBalanceData assigned — using built-in defaults.");
         }
+
+        if (fishingBalance == null)
+        {
+            fishingBalance = ScriptableObject.CreateInstance<FishingBalanceData>();
+            Debug.Log("[GameManager] No FishingBalanceData assigned — using built-in defaults.");
+        }
     }
+
+    // Sale UI order: crops first, then fishing catches.
+    private void BuildSellableItems()
+    {
+        sellableItems.Clear();
+        foreach (var crop in cropDefinitions)
+        {
+            if (crop == null) continue;
+            sellableItems.Add(new SellableItem(crop.cropId, crop.displayName, crop.sellPrice, TransactionSource.CropSale));
+        }
+        sellableItems.Add(new SellableItem(fishingBalance.fishItemId, fishingBalance.fishDisplayName,
+            fishingBalance.fishSellPrice, TransactionSource.FishingSale));
+        sellableItems.Add(new SellableItem(fishingBalance.trashItemId, fishingBalance.trashDisplayName,
+            fishingBalance.trashSellPrice, TransactionSource.FishingSale));
+    }
+
+    private SellableItem FindSellable(string itemId) => sellableItems.Find(i => i.itemId == itemId);
 
     private SaveData CreateNewSave()
     {
@@ -170,8 +205,8 @@ public class GameManager : MonoBehaviour
         int total = 0;
         foreach (var stack in inventoryService.Items)
         {
-            var crop = farmService.GetCrop(stack.itemId);
-            total += (crop != null ? crop.sellPrice : 0) * stack.quantity;
+            var item = FindSellable(stack.itemId);
+            total += (item != null ? item.sellPrice : 0) * stack.quantity;
         }
 
         if (total <= 0) return;
@@ -191,18 +226,115 @@ public class GameManager : MonoBehaviour
     // crop-selection prompt for that slot instead of planting directly.
     public void RequestPlantPrompt(int plotIndex, int slotIndex)
     {
-        pendingPlotIndex = plotIndex;
-        pendingSlotIndex = slotIndex;
+        gameUI.ShowSeedPrompt(plotIndex, slotIndex);
+    }
+
+    // Called by FurrowSlotView when the player taps a planted (growing or
+    // awaiting-harvest) slot.
+    public void RequestCropChangePrompt(int plotIndex, int slotIndex)
+    {
+        gameUI.ShowCropChangePrompt(plotIndex, slotIndex);
+    }
+
+    // Called by PlotView when the player taps a locked plot — opens the
+    // coin-unlock confirmation prompt for that plot.
+    public void RequestUnlockPrompt(int plotIndex)
+    {
+        if (farmService.IsPlotUnlocked(plotIndex)) return;
+        gameUI.ShowUnlockPrompt(plotIndex);
+    }
+
+    public static string NoSeedMessage(CropDefinition crop) => $"{crop.displayName}의 모종이 없습니다!";
+
+    public int GetItemQuantity(string itemId) => inventoryService.GetQuantity(itemId);
+
+    public PlantResult PlantFromPrompt(int plotIndex, int slotIndex, string cropId)
+    {
+        var result = farmService.Plant(plotIndex, slotIndex, cropId);
+        if (result == PlantResult.Planted) SaveNow();
+        return result;
+    }
+
+    public bool TryUnlockPlot(int plotIndex)
+    {
+        if (!farmService.TryUnlockPlot(plotIndex, CurrencyManager.Instance, goldCurrency)) return false;
+        SaveNow();
+        return true;
+    }
+
+    // Player's "change crop" confirmation — the old crop is thrown away.
+    public void DiscardSlot(int plotIndex, int slotIndex)
+    {
+        if (farmService.ClearSlot(plotIndex, slotIndex)) SaveNow();
+    }
+
+    public bool SellItem(SellableItem item, int quantity)
+    {
+        if (item == null || quantity <= 0) return false;
+        if (!inventoryService.Remove(item.itemId, quantity)) return false;
+
+        int total = item.sellPrice * quantity;
+        CurrencyManager.Instance.Add(goldCurrency, total, item.source);
+        save.lifetimeSales += total;
+        SaveNow();
+        return true;
+    }
+
+    // ------------------------------------------------------------- fishing
+
+    // Generic 예/아니오 popup — used by the fishing spot (start) and the
+    // fishing otter (stop).
+    public void ShowConfirm(string title, string message, Action onYes)
+    {
+        gameUI.ShowConfirm(title, message, onYes);
+    }
+
+    // Called once by the fishing scene; the farm scene has no rod button.
+    public void ShowRodUpgradeButton()
+    {
+        gameUI.ShowRodUpgradeButton();
+    }
+
+    // Single switch for "the otter is on fishing duty". FishingOtterController
+    // and FishingSpotView both follow this flag rather than each other.
+    public void SetFishingActive(bool active)
+    {
+        if (fishingService.IsActive == active) return;
+        fishingService.SetActive(active);
+        SaveNow();
+    }
+
+    // Called when the pull animation lands the catch.
+    public void AddFishingCatch(string itemId)
+    {
+        inventoryService.Add(itemId, 1);
+        SaveNow();
+    }
+
+    public bool TryUpgradeRod()
+    {
+        if (!fishingService.TryUpgradeRod(CurrencyManager.Instance, goldCurrency)) return false;
+        SaveNow();
+        return true;
     }
 
     // Shared harvest entry point — used by the debug-panel button and by
-    // FarmerOtterController once its harvest animation finishes.
+    // FarmerOtterController once its harvest animation finishes. A successful
+    // harvest immediately replants the same crop; if a consumable crop is out
+    // of seeds the slot is left empty and the player is told.
     public void HarvestSlot(int plotIndex, int slotIndex)
     {
+        var crop = farmService.GetSlotCrop(plotIndex, slotIndex);
         var harvested = farmService.Harvest(plotIndex, slotIndex);
         if (harvested.Count == 0) return;
 
         inventoryService.AddRange(harvested);
+
+        if (crop != null && farmService.Plant(plotIndex, slotIndex, crop.cropId) == PlantResult.NoSeed)
+        {
+            gameUI.ShowAlert(NoSeedMessage(crop));
+        }
+
         SaveNow();
     }
 
@@ -213,17 +345,11 @@ public class GameManager : MonoBehaviour
     {
         Vector2 guiPos = new Vector2(screenPos.x, Screen.height - screenPos.y);
         if (showDebugPanel && DebugPanelRect.Contains(guiPos)) return true;
-        if (IsSeedPromptOpen && SeedPromptRect.Contains(guiPos)) return true;
-        return false;
+        return gameUI != null && gameUI.IsBlocking(screenPos);
     }
 
     private void OnGUI()
     {
-        if (IsSeedPromptOpen)
-        {
-            DrawSeedPrompt();
-        }
-
         if (!showDebugPanel) return;
 
         GUILayout.BeginArea(DebugPanelRect, GUI.skin.box);
@@ -231,13 +357,22 @@ public class GameManager : MonoBehaviour
         GUILayout.Label($"코인: {CurrencyManager.Instance.GetCurrency(goldCurrency)}");
         GUILayout.Label($"농사 레벨: {save.farmLevel}");
 
-        GUILayout.Space(10);
-        GUILayout.Label("=== 밭 1 ===");
-
-        var plot = farmService.Plots[0];
-        for (int slotIndex = 0; slotIndex < plot.SlotCount; slotIndex++)
+        for (int plotIndex = 0; plotIndex < farmService.Plots.Count; plotIndex++)
         {
-            DrawSlotDebugRow(0, slotIndex);
+            GUILayout.Space(10);
+            GUILayout.Label($"=== 밭 {plotIndex + 1} ===");
+
+            if (!farmService.IsPlotUnlocked(plotIndex))
+            {
+                GUILayout.Label("잠김");
+                continue;
+            }
+
+            var plot = farmService.Plots[plotIndex];
+            for (int slotIndex = 0; slotIndex < plot.SlotCount; slotIndex++)
+            {
+                DrawSlotDebugRow(plotIndex, slotIndex);
+            }
         }
 
         GUILayout.Space(10);
@@ -248,11 +383,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            foreach (var item in inventoryService.Items)
+            foreach (var stack in inventoryService.Items)
             {
-                var crop = farmService.GetCrop(item.itemId);
-                string name = crop != null ? crop.displayName : item.itemId;
-                GUILayout.Label($"{name} x{item.quantity}");
+                var item = FindSellable(stack.itemId);
+                string name = item != null ? item.displayName : stack.itemId;
+                GUILayout.Label($"{name} x{stack.quantity}");
             }
         }
 
@@ -318,31 +453,5 @@ public class GameManager : MonoBehaviour
                 GUILayout.EndHorizontal();
                 break;
         }
-    }
-
-    private void DrawSeedPrompt()
-    {
-        GUILayout.BeginArea(SeedPromptRect, GUI.skin.box);
-        GUILayout.Label("심을 작물을 선택하세요");
-
-        foreach (var crop in cropDefinitions)
-        {
-            if (crop == null) continue;
-            if (GUILayout.Button(crop.displayName))
-            {
-                farmService.Plant(pendingPlotIndex, pendingSlotIndex, crop.cropId);
-                pendingPlotIndex = -1;
-                pendingSlotIndex = -1;
-                SaveNow();
-            }
-        }
-
-        if (GUILayout.Button("취소"))
-        {
-            pendingPlotIndex = -1;
-            pendingSlotIndex = -1;
-        }
-
-        GUILayout.EndArea();
     }
 }

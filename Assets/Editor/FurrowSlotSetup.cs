@@ -51,7 +51,7 @@ public static class FurrowSlotSetup
         {
             float t = SlotCount == 1 ? 0.5f : i / (float)(SlotCount - 1);
             float localX = Mathf.Lerp(-spread / 2f, spread / 2f, t);
-            CreateSlot(furrow, i, localX, emptySprite, furrowRenderer.sortingOrder + 1);
+            CreateSlot(furrow, 0, i, localX, emptySprite, furrowRenderer.sortingOrder + 1);
         }
 
         EditorUtility.SetDirty(furrow);
@@ -65,8 +65,10 @@ public static class FurrowSlotSetup
         // per-slot colliders/FurrowSlotView. PlotClickToggle.cs no longer
         // exists in the project, so any lingering reference on this object
         // shows up as a missing script — strip that too.
+        // PlotView (added by PlotUnlockSetup) needs its own collider for
+        // locked-plot taps, so leave it alone once that's been set up.
         var collider = furrow.GetComponent<BoxCollider2D>();
-        if (collider != null) Object.DestroyImmediate(collider);
+        if (collider != null && furrow.GetComponent<PlotView>() == null) Object.DestroyImmediate(collider);
 
         GameObjectUtility.RemoveMonoBehavioursWithMissingScript(furrow);
 
@@ -81,7 +83,8 @@ public static class FurrowSlotSetup
         }
     }
 
-    private static void CreateSlot(GameObject furrow, int slotIndex, float localX, Sprite emptySprite, int sortingOrder)
+    // Also used by PlotUnlockSetup to add slots under the locked plots.
+    internal static GameObject CreateSlot(GameObject furrow, int plotIndex, int slotIndex, float localX, Sprite emptySprite, int sortingOrder)
     {
         var slot = new GameObject($"Slot_{slotIndex}");
         slot.transform.SetParent(furrow.transform, false);
@@ -97,9 +100,10 @@ public static class FurrowSlotSetup
 
         var view = slot.AddComponent<FurrowSlotView>();
         var so = new SerializedObject(view);
-        so.FindProperty("plotIndex").intValue = 0;
+        so.FindProperty("plotIndex").intValue = plotIndex;
         so.FindProperty("slotIndex").intValue = slotIndex;
         so.FindProperty("emptySlotSprite").objectReferenceValue = emptySprite;
         so.ApplyModifiedPropertiesWithoutUndo();
+        return slot;
     }
 }

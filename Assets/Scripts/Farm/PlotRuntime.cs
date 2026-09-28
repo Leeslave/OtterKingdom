@@ -63,6 +63,21 @@ public class PlotRuntime
         return true;
     }
 
+    // Throws away whatever is in the slot (growing or awaiting harvest) with
+    // no yield and no seed refund — used by the player's "change crop" flow.
+    public bool ClearSlot(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= Data.slots.Count) return false;
+
+        var slot = Data.slots[slotIndex];
+        if (slot.state == FurrowSlotState.Empty) return false;
+
+        slot.cropId = null;
+        slot.state = FurrowSlotState.Empty;
+        slot.remainingSec = 0f;
+        return true;
+    }
+
     public void Tick(float deltaSeconds)
     {
         foreach (var slot in Data.slots)

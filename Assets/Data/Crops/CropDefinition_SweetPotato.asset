@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c519f86bc213e49a99df581246e373, type: 3}
+  m_Name: CropDefinition_SweetPotato
+  m_EditorClassIdentifier: Assembly-CSharp::CropDefinition
+  cropId: crop_sweet_potato
+  displayName: "고구마"
+  baseDurationSec: 90
+  yieldCount: 3
+  sellPrice: 35
+  seedType: 1
+  initialSeedCount: 5
+  spriteTint: {r: 1, g: 1, b: 1, a: 1}
+  seedSprites:
+  - {fileID: 21300000, guid: 70b1f294a1444b86acf10253e4038761, type: 3}
+  - {fileID: 21300000, guid: b66c2401ac004ef09b7a5d6e86d8db3b, type: 3}
+  - {fileID: 21300000, guid: 66275c9f497549c3b34520cea97d3c7e, type: 3}
+  sproutSprites:
+  - {fileID: 21300000, guid: 09ab3665d515439389fc58e4fea8d6b4, type: 3}
+  - {fileID: 21300000, guid: 4afa00650af64d7c8645eb82c89e1813, type: 3}
+  - {fileID: 21300000, guid: 63a904e56a614451a34d5d6e47e5a956, type: 3}
+  grownSprites:
+  - {fileID: 21300000, guid: a28b3a9f2b1240188cd60ef8a936aa71, type: 3}
+  - {fileID: 21300000, guid: 0d7fec741c04470db13b51ebddb72931, type: 3}
+  - {fileID: 21300000, guid: c1471232c76f44f6b9ab439a56951c3e, type: 3}

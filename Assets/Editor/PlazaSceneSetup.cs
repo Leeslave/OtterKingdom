@@ -84,6 +84,7 @@ public static class PlazaSceneSetup
         public float x;
         public float y;
         public bool flipX;
+        public float scale;   // multiplier on the prop's scale; 0 / missing = 1
     }
 
     [Serializable] private class PivotFile
@@ -319,8 +320,10 @@ public static class PlazaSceneSetup
             instance.name = $"{place.prop}_{n:00}";
             Vector2 pos = ToWorld(place.x, place.y);
             instance.transform.position = new Vector3(pos.x, pos.y, 0f);
-            // Negative X scale mirrors sprite and footprint together.
-            if (place.flipX) instance.transform.localScale = new Vector3(-1f, 1f, 1f);
+            // Scaling the transform scales sprite and footprint together;
+            // negative X mirrors both.
+            float scale = place.scale > 0f ? place.scale : 1f;
+            instance.transform.localScale = new Vector3(place.flipX ? -scale : scale, scale, 1f);
         }
 
         var walkableGo = CreateChild("WalkableArea", plazaRoot.transform);

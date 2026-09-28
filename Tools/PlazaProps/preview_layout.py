@@ -23,7 +23,7 @@ def pairs(flat):
 
 def prop_to_ground(place, px, py):
     """Prop-PNG pixel -> ground pixel, honouring pivot, scale and flip."""
-    piv, s = pivots[place['prop']], defs[place['prop']]['scale']
+    piv, s = pivots[place['prop']], defs[place['prop']]['scale'] * place.get('scale', 1)
     ox = px - piv['pivotX'] * piv['width']
     oy = py - (1 - piv['pivotY']) * piv['height']
     if place['flipX']:
@@ -32,7 +32,7 @@ def prop_to_ground(place, px, py):
 
 order = sorted(layout['placements'], key=lambda p: (not defs[p['prop']]['flat'], p['y']))
 for place in order:
-    piv, s = pivots[place['prop']], defs[place['prop']]['scale']
+    piv, s = pivots[place['prop']], defs[place['prop']]['scale'] * place.get('scale', 1)
     im = Image.open(f"{ART}/Props/Prop_{place['prop']}.png").convert('RGBA')
     if place['flipX']:
         im = im.transpose(Image.FLIP_LEFT_RIGHT)

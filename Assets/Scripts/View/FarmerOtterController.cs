@@ -1,13 +1,20 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 // Drives the farmer otter NPC in the Farm scene: wanders between hand-placed
 // waypoints while nothing is ready to harvest, and breaks off to walk to and
-// harvest the nearest AwaitingHarvest slot in `plotIndex` as soon as one
-// appears. Waypoints and slot anchors are wired in the Inspector rather than
-// looked up by name, since both are scene-specific placement done by hand
-// after running the FarmerOtterSpriteSetup / FurrowSlotSetup editor tools
-// (see 농부해달_애니메이션_작업기록.md).
+// harvest the nearest AwaitingHarvest slot across every unlocked plot as soon
+// as one appears (GameManager.HarvestSlot then replants the same crop).
+// Waypoints are wired by hand in the Inspector. Slot anchors are registered
+// per plot in `plotSlotAnchors`: any unlocked plot with no entry is filled in
+// automatically on Start from that plot's FurrowSlotView objects, and plots
+// unlocked mid-session are added through FarmService.PlotUnlocked — so they
+// show up in the Inspector list without manual wiring. Hand-assigned entries
+// are left alone (see 농부해달_애니메이션_작업기록.md).
 //
 // Relies on FarmerOtter.controller's exact parameter/state names: bool
 // "IsMoving", int "WalkDir" (see WalkDir below), trigger "Harvest", state "Harvest" auto-returning to "Idle"
@@ -18,8 +25,13 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class FarmerOtterController : MonoBehaviour
 {
-    [Header("Farm target")]
-    [SerializeField] private int plotIndex;
+    [Serializable]
+    public class PlotSlotAnchors
+    {
+        public int plotIndex;
+        [Tooltip("Index-matched to slot 0/1/2.")]
+        public Transform[] slotAnchors;
+    }
 
     [Header("Wander waypoints (hand-placed empty Transforms)")]
     [SerializeField] private Transform[] wanderWaypoints;
@@ -32,8 +44,13 @@ public class FarmerOtterController : MonoBehaviour
              "Leave empty to just wait in Idle instead.")]
     [SerializeField] private string[] randomActionTriggers = { "Net", "Stretch", "Eat", "Squat" };
 
-    [Header("Harvest slot anchors (index-matched to slot 0/1/2)")]
-    [SerializeField] private Transform[] slotAnchors;
+    [Header("Harvest slot anchors per plot (auto-filled for unlocked plots)")]
+    [SerializeField] private List<PlotSlotAnchors> plotSlotAnchors = new List<PlotSlotAnchors>();
+
+    // Pre-multi-plot scenes serialized plot 1's anchors as a flat array;
+    // migrated into plotSlotAnchors on Start.
+    [SerializeField, HideInInspector, FormerlySerializedAs("slotAnchors")]
+    private Transform[] legacySlotAnchors;
 
     [Header("Movement")]
     [Tooltip("Walking speed in world units per second.")]
@@ -68,6 +85,7 @@ public class FarmerOtterController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Coroutine activeRoutine;
     private bool isHarvesting;
+    private FarmService subscribedFarmService;
 
     private void Awake()
     {
@@ -92,41 +110,102 @@ public class FarmerOtterController : MonoBehaviour
 
     private void Start()
     {
+        RegisterAnchors();
         activeRoutine = StartCoroutine(WanderRoutine());
     }
+
+    private void OnDestroy()
+    {
+        if (subscribedFarmService != null) subscribedFarmService.PlotUnlocked -= RegisterPlotAnchors;
+    }
+
+    private void RegisterAnchors()
+    {
+        if (GameManager.Instance == null || GameManager.Instance.FarmService == null) return;
+        var farmService = GameManager.Instance.FarmService;
+
+        if (legacySlotAnchors != null && legacySlotAnchors.Length > 0 && FindAnchors(0) == null)
+        {
+            plotSlotAnchors.Add(new PlotSlotAnchors { plotIndex = 0, slotAnchors = legacySlotAnchors });
+        }
+        legacySlotAnchors = null;
+
+        for (int plotIndex = 0; plotIndex < farmService.Plots.Count; plotIndex++)
+        {
+            if (farmService.IsPlotUnlocked(plotIndex)) RegisterPlotAnchors(plotIndex);
+        }
+
+        farmService.PlotUnlocked += RegisterPlotAnchors;
+        subscribedFarmService = farmService;
+    }
+
+    // Adds an entry for `plotIndex` built from that plot's FurrowSlotView
+    // transforms, unless one already exists (hand-assigned or from an earlier
+    // call). Also the FarmService.PlotUnlocked handler.
+    private void RegisterPlotAnchors(int plotIndex)
+    {
+        if (FindAnchors(plotIndex) != null) return;
+
+        var anchors = new Transform[PlotSaveData.SlotCount];
+        bool foundAny = false;
+        foreach (var view in FindObjectsByType<FurrowSlotView>(FindObjectsSortMode.None))
+        {
+            if (view.PlotIndex != plotIndex) continue;
+            if (view.SlotIndex < 0 || view.SlotIndex >= anchors.Length) continue;
+            anchors[view.SlotIndex] = view.transform;
+            foundAny = true;
+        }
+
+        if (!foundAny)
+        {
+            Debug.LogWarning($"[FarmerOtterController] No FurrowSlotView found for plot {plotIndex} — " +
+                             "run OtterKingdom > Tools > Setup Plot Unlock.");
+            return;
+        }
+
+        plotSlotAnchors.Add(new PlotSlotAnchors { plotIndex = plotIndex, slotAnchors = anchors });
+    }
+
+    private PlotSlotAnchors FindAnchors(int plotIndex) => plotSlotAnchors.Find(p => p.plotIndex == plotIndex);
 
     private void Update()
     {
         if (isHarvesting) return;
         if (GameManager.Instance == null || GameManager.Instance.FarmService == null) return;
 
-        int slotIndex = FindNearestAwaitingHarvestSlot();
-        if (slotIndex < 0) return;
+        if (!FindNearestAwaitingHarvestSlot(out int plotIndex, out int slotIndex)) return;
 
         if (activeRoutine != null) StopCoroutine(activeRoutine);
-        activeRoutine = StartCoroutine(HarvestRoutine(slotIndex));
+        activeRoutine = StartCoroutine(HarvestRoutine(plotIndex, slotIndex));
     }
 
-    private int FindNearestAwaitingHarvestSlot()
+    private bool FindNearestAwaitingHarvestSlot(out int bestPlot, out int bestSlot)
     {
         var farmService = GameManager.Instance.FarmService;
-        int count = slotAnchors != null ? slotAnchors.Length : 0;
-
-        int best = -1;
+        bestPlot = -1;
+        bestSlot = -1;
         float bestDist = float.MaxValue;
-        for (int i = 0; i < count; i++)
-        {
-            if (slotAnchors[i] == null) continue;
-            if (farmService.GetSlotState(plotIndex, i) != FurrowSlotState.AwaitingHarvest) continue;
 
-            float dist = Vector2.Distance(transform.position, slotAnchors[i].position);
-            if (dist < bestDist)
+        foreach (var entry in plotSlotAnchors)
+        {
+            if (entry.slotAnchors == null || !farmService.IsPlotUnlocked(entry.plotIndex)) continue;
+
+            int count = Mathf.Min(entry.slotAnchors.Length, PlotSaveData.SlotCount);
+            for (int i = 0; i < count; i++)
             {
-                bestDist = dist;
-                best = i;
+                if (entry.slotAnchors[i] == null) continue;
+                if (farmService.GetSlotState(entry.plotIndex, i) != FurrowSlotState.AwaitingHarvest) continue;
+
+                float dist = Vector2.Distance(transform.position, entry.slotAnchors[i].position);
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    bestPlot = entry.plotIndex;
+                    bestSlot = i;
+                }
             }
         }
-        return best;
+        return bestPlot >= 0;
     }
 
     private IEnumerator WanderRoutine()
@@ -169,16 +248,17 @@ public class FarmerOtterController : MonoBehaviour
             animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !animator.IsInTransition(0));
     }
 
-    private IEnumerator HarvestRoutine(int slotIndex)
+    private IEnumerator HarvestRoutine(int plotIndex, int slotIndex)
     {
         isHarvesting = true;
 
         var farmService = GameManager.Instance.FarmService;
-        Transform anchor = slotAnchors[slotIndex];
+        Transform anchor = FindAnchors(plotIndex).slotAnchors[slotIndex];
         yield return MoveTo(anchor.position);
 
         // Slot may have been harvested by something else (e.g. the debug
-        // panel button) while we were walking over — bail out quietly.
+        // panel button) or cleared by the player's crop change while we were
+        // walking over — bail out quietly.
         if (farmService.GetSlotState(plotIndex, slotIndex) != FurrowSlotState.AwaitingHarvest)
         {
             isHarvesting = false;
