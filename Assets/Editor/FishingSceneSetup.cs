@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 //      FishingOtter prefab with its SpriteFrameAnimator clips,
 //   2. creates FishingBalanceData if missing,
 //   3. builds and saves Assets/Scenes/Fishing.unity: GameManager (same data
-//      as the farm scene, so save/coins/inventory are shared), background,
+//      as the farm scene, so save/coins/inventory are shared), CurrencyManager, background,
 //      the dashed fishing spot at the end of the dock, the walkable dock
 //      polygon, the otter and a camera.
 // Run via: OtterKingdom > Tools > Setup Fishing Scene
@@ -149,15 +149,15 @@ public static class FishingSceneSetup
 
         Sprite background = ImportSingleSprite(BackgroundPath, BackgroundPixelsPerUnit, new Vector2(0.5f, 0.5f), 2048);
         Sprite slotEmpty = AssetDatabase.LoadAssetAtPath<Sprite>(SlotEmptyPath);
-        var gold = AssetDatabase.LoadAssetAtPath<Currency>(GoldPath);
-        if (background == null || slotEmpty == null || gold == null)
+        bool goldExists = AssetDatabase.LoadAssetAtPath<Currency>(GoldPath) != null;
+        if (background == null || slotEmpty == null || !goldExists)
         {
             Debug.LogError($"[FishingSceneSetup] Missing asset: background={background != null}, " +
-                           $"slot_empty={slotEmpty != null}, Gold={gold != null}.");
+                           $"slot_empty={slotEmpty != null}, Gold={goldExists}.");
             return;
         }
 
-        BuildScene(background, slotEmpty, otterPrefab, balance, gold);
+        BuildScene(background, slotEmpty, otterPrefab);
         AssetDatabase.SaveAssets();
     }
 
@@ -321,10 +321,17 @@ public static class FishingSceneSetup
 
     // --- Scene -------------------------------------------------------------
 
-    private static void BuildScene(Sprite background, Sprite slotEmpty, GameObject otterPrefab,
-        FishingBalanceData balance, Currency gold)
+    private static void BuildScene(Sprite background, Sprite slotEmpty, GameObject otterPrefab)
     {
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+
+        // Load the ScriptableObjects only AFTER NewScene: opening a scene in
+        // Single mode unloads assets nothing references, and an object loaded
+        // before it comes back as a destroyed ("fake null") instance — which
+        // SerializedObject silently stores as None. That is how Gold ended up
+        // missing on the first run.
+        var gold = AssetDatabase.LoadAssetAtPath<Currency>(GoldPath);
+        var balance = AssetDatabase.LoadAssetAtPath<FishingBalanceData>(BalancePath);
         Vector2 imageSize = new Vector2(background.texture.width, background.texture.height);
         Vector2 ToWorld(Vector2 px) => new Vector2(
             (px.x - imageSize.x * 0.5f) / BackgroundPixelsPerUnit,
@@ -341,6 +348,26 @@ public static class FishingSceneSetup
         gmSo.FindProperty("fishingBalance").objectReferenceValue = balance;
         gmSo.FindProperty("goldCurrency").objectReferenceValue = gold;
         gmSo.ApplyModifiedPropertiesWithoutUndo();
+
+        gmSo.Update();
+        foreach (var field in new[] { "goldCurrency", "fishingBalance" })
+        {
+            if (gmSo.FindProperty(field).objectReferenceValue == null)
+            {
+                Debug.LogError($"[FishingSceneSetup] GameManager.{field} could not be assigned — " +
+                               "assign it by hand in the Inspector and save the scene.", gameManager);
+            }
+        }
+
+        // CurrencyManager isn't created on demand, so every zone scene that can
+        // be played directly carries one (the duplicate is destroyed in Awake).
+        var currencyManagerGo = new GameObject("CurrencyManager");
+        var currencyManager = currencyManagerGo.AddComponent<CurrencyManager>();
+        var cmSo = new SerializedObject(currencyManager);
+        var currenciesProp = cmSo.FindProperty("_allCurrencies");
+        currenciesProp.arraySize = 1;
+        currenciesProp.GetArrayElementAtIndex(0).objectReferenceValue = gold;
+        cmSo.ApplyModifiedPropertiesWithoutUndo();
 
         var root = new GameObject("FishingRoot");
 

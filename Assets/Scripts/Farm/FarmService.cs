@@ -154,23 +154,20 @@ public class FarmService
         if (!CanUpgrade) return false;
 
         int cost = NextUpgradeCost;
-        if (!currencyManager.TrySpend(currency, cost, TransactionSource.FarmUpgrade)) return false;
+        if (cost > 0 && !currencyManager.TrySpend(currency, cost, TransactionSource.FarmUpgrade)) return false;
 
         save.farmLevel++;
         return true;
     }
 
-    // The Gold currency has no lower capacity bound (MinCapacity is
-    // int.MinValue), so TrySpend alone would happily go negative — check the
-    // balance explicitly before spending.
+    // TrySpend rejects a zero cost (throws), so a free unlock skips it.
     public bool TryUnlockPlot(int plotIndex, CurrencyManager currencyManager, Currency currency)
     {
         if (plotIndex < 0 || plotIndex >= plots.Count) return false;
         if (IsPlotUnlocked(plotIndex)) return false;
 
         int cost = PlotUnlockCost;
-        if (currencyManager.GetCurrency(currency) < cost) return false;
-        if (!currencyManager.TrySpend(currency, cost, TransactionSource.PlotUnlock)) return false;
+        if (cost > 0 && !currencyManager.TrySpend(currency, cost, TransactionSource.PlotUnlock)) return false;
 
         plots[plotIndex].Data.unlocked = true;
         PlotUnlocked?.Invoke(plotIndex);
