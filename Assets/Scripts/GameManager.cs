@@ -60,12 +60,24 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        // Without a currency nothing can start (HUD, sale, upgrades). Stop
+        // here with one clear error instead of leaving Instance half-built,
+        // which made every view throw a NullReferenceException each frame.
+        if (goldCurrency == null)
+        {
+            Debug.LogError("[GameManager] Gold Currency is not assigned — drag " +
+                           "'Assets/Scriptable Obejects/Gold.asset' into this GameManager's Gold Currency field.", this);
+            enabled = false;
+            return;
+        }
         Instance = this;
 
         EnsureDefaultData();
 
         saveService = new SaveService();
-        save = saveService.Load() ?? CreateNewSave();
+        var loadStatus = saveService.Load(out save);
+        if (save == null) save = CreateNewSave();
 
         ComputePendingOfflineElapsed();
 
@@ -76,6 +88,45 @@ public class GameManager : MonoBehaviour
         fishingService = new FishingService(save, fishingBalance);
         BuildSellableItems();
         gameUI = GameUI.Create(this);
+
+        ReportLoadStatus(loadStatus);
+    }
+
+    private void ReportLoadStatus(SaveLoadStatus status)
+    {
+        switch (status)
+        {
+            case SaveLoadStatus.RecoveredFromBackup:
+                gameUI.ShowAlert("저장 데이터에 문제가 있어서\n이전 저장 시점으로 복구했어요.");
+                break;
+
+            case SaveLoadStatus.Corrupted:
+                // Freeze the world (farm ticks, otter coroutines) while the
+                // player decides — the uGUI popup runs on unscaled time.
+                // SaveService already refuses to write in this state.
+                Time.timeScale = 0f;
+                gameUI.ShowChoice("저장 데이터 오류",
+                    "저장 데이터를 불러오지 못했어요.\n새로 시작하면 이전 진행 상황은 사라져요.",
+                    "새로 시작", StartOverAfterCorruption,
+                    "종료", QuitGame);
+                break;
+        }
+    }
+
+    private void StartOverAfterCorruption()
+    {
+        saveService.DiscardCorruptedAndStartOver();
+        Time.timeScale = 1f;
+        SaveNow();
+    }
+
+    private static void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     private void Start()

@@ -242,7 +242,7 @@ MonoBehaviour:
   farmBalance: {fileID: 0}
   fishingBalance: {fileID: 11400000, guid: 821d8ca2ca83e6f49b91a462ea19214a, type: 2}
   autoSaveIntervalSec: 30
-  goldCurrency: {fileID: 0}
+  goldCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
 --- !u!4 &365869426
 Transform:
   m_ObjectHideFlags: 0
