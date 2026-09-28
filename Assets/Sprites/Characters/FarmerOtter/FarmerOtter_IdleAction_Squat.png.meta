@@ -1,0 +1,1098 @@
+fileFormatVersion: 2
+guid: d2ce658d85f3eac4cb05c283e7e04027
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2005550527724946274
+    second: FarmerOtter_IdleAction_Squat_0
+  - first:
+      213: -2092351511530342121
+    second: FarmerOtter_IdleAction_Squat_1
+  - first:
+      213: 8405509269009693858
+    second: FarmerOtter_IdleAction_Squat_2
+  - first:
+      213: -7537677834028448104
+    second: FarmerOtter_IdleAction_Squat_3
+  - first:
+      213: 5180375141695709229
+    second: FarmerOtter_IdleAction_Squat_4
+  - first:
+      213: 6509992885354021515
+    second: FarmerOtter_IdleAction_Squat_5
+  - first:
+      213: 845348646945988039
+    second: FarmerOtter_IdleAction_Squat_6
+  - first:
+      213: 7746806493803610052
+    second: FarmerOtter_IdleAction_Squat_7
+  - first:
+      213: -7071990502643230636
+    second: FarmerOtter_IdleAction_Squat_8
+  - first:
+      213: -3054437032641790811
+    second: FarmerOtter_IdleAction_Squat_9
+  - first:
+      213: -4476920161352675210
+    second: FarmerOtter_IdleAction_Squat_10
+  - first:
+      213: -5654978696214328091
+    second: FarmerOtter_IdleAction_Squat_11
+  - first:
+      213: 5426884273906868176
+    second: FarmerOtter_IdleAction_Squat_12
+  - first:
+      213: -6783238476586345081
+    second: FarmerOtter_IdleAction_Squat_13
+  - first:
+      213: -831412169410869924
+    second: FarmerOtter_IdleAction_Squat_14
+  - first:
+      213: -3270730682157485209
+    second: FarmerOtter_IdleAction_Squat_15
+  - first:
+      213: -4936230503388266744
+    second: FarmerOtter_IdleAction_Squat_16
+  - first:
+      213: -6302749536204718205
+    second: FarmerOtter_IdleAction_Squat_17
+  - first:
+      213: -4840764316140764530
+    second: FarmerOtter_IdleAction_Squat_18
+  - first:
+      213: -621715128442130004
+    second: FarmerOtter_IdleAction_Squat_19
+  - first:
+      213: -8256410195876169429
+    second: FarmerOtter_IdleAction_Squat_20
+  - first:
+      213: -2904214775074951555
+    second: FarmerOtter_IdleAction_Squat_21
+  - first:
+      213: -8530714847724127833
+    second: FarmerOtter_IdleAction_Squat_22
+  - first:
+      213: -4970271646300878801
+    second: FarmerOtter_IdleAction_Squat_23
+  - first:
+      213: 5934376660041736034
+    second: FarmerOtter_IdleAction_Squat_24
+  - first:
+      213: -6998069149901754946
+    second: FarmerOtter_IdleAction_Squat_25
+  - first:
+      213: -9198682539643451607
+    second: FarmerOtter_IdleAction_Squat_26
+  - first:
+      213: 3372973807516232281
+    second: FarmerOtter_IdleAction_Squat_27
+  - first:
+      213: 8941609328566564489
+    second: FarmerOtter_IdleAction_Squat_28
+  - first:
+      213: 3564820302835571498
+    second: FarmerOtter_IdleAction_Squat_29
+  - first:
+      213: -6157136516718572904
+    second: FarmerOtter_IdleAction_Squat_30
+  - first:
+      213: -7429975261874738131
+    second: FarmerOtter_IdleAction_Squat_31
+  - first:
+      213: -7371989383559658405
+    second: FarmerOtter_IdleAction_Squat_32
+  - first:
+      213: -3300493704140506983
+    second: FarmerOtter_IdleAction_Squat_33
+  - first:
+      213: -1331189988533129377
+    second: FarmerOtter_IdleAction_Squat_0_0
+  - first:
+      213: -8976158490372119426
+    second: FarmerOtter_IdleAction_Squat_0_1
+  - first:
+      213: 9212016538972353797
+    second: FarmerOtter_IdleAction_Squat_0_2
+  - first:
+      213: 5731684477033882976
+    second: FarmerOtter_IdleAction_Squat_0_3
+  - first:
+      213: -8912648077749868033
+    second: FarmerOtter_IdleAction_Squat_0_4
+  - first:
+      213: -3662139594136361090
+    second: FarmerOtter_IdleAction_Squat_0_5
+  - first:
+      213: -8404869926278015355
+    second: FarmerOtter_IdleAction_Squat_0_6
+  - first:
+      213: -8136111272353031593
+    second: FarmerOtter_IdleAction_Squat_0_7
+  - first:
+      213: 3177362628499389696
+    second: FarmerOtter_IdleAction_Squat_1_0
+  - first:
+      213: 3480459324219534362
+    second: FarmerOtter_IdleAction_Squat_1_1
+  - first:
+      213: 4278612798804005697
+    second: FarmerOtter_IdleAction_Squat_1_2
+  - first:
+      213: -3765677134126582737
+    second: FarmerOtter_IdleAction_Squat_1_3
+  - first:
+      213: -9043399913999793322
+    second: FarmerOtter_IdleAction_Squat_1_4
+  - first:
+      213: -8329685199372589207
+    second: FarmerOtter_IdleAction_Squat_1_5
+  - first:
+      213: -7618928884041035888
+    second: FarmerOtter_IdleAction_Squat_1_6
+  - first:
+      213: -2712609618819572229
+    second: FarmerOtter_IdleAction_Squat_1_7
+  - first:
+      213: -3822540661923140109
+    second: FarmerOtter_IdleAction_Squat_2_0
+  - first:
+      213: 4821130041452025185
+    second: FarmerOtter_IdleAction_Squat_2_1
+  - first:
+      213: 6783276533465447179
+    second: FarmerOtter_IdleAction_Squat_2_2
+  - first:
+      213: -8851607166062337096
+    second: FarmerOtter_IdleAction_Squat_2_3
+  - first:
+      213: -6738524122623244813
+    second: FarmerOtter_IdleAction_Squat_2_4
+  - first:
+      213: 4909495529154498640
+    second: FarmerOtter_IdleAction_Squat_2_5
+  - first:
+      213: 5973289382365352999
+    second: FarmerOtter_IdleAction_Squat_2_6
+  - first:
+      213: -851454482067616834
+    second: FarmerOtter_IdleAction_Squat_2_7
+  - first:
+      213: 7467551901398112615
+    second: FarmerOtter_IdleAction_Squat_3_0
+  - first:
+      213: 8899009792522149574
+    second: FarmerOtter_IdleAction_Squat_3_1
+  - first:
+      213: -485271635848776943
+    second: FarmerOtter_IdleAction_Squat_3_2
+  - first:
+      213: 1236189617101253613
+    second: FarmerOtter_IdleAction_Squat_3_3
+  - first:
+      213: -4757529268703924830
+    second: FarmerOtter_IdleAction_Squat_3_4
+  - first:
+      213: 5350334975551819574
+    second: FarmerOtter_IdleAction_Squat_3_5
+  - first:
+      213: 8419627517691637480
+    second: FarmerOtter_IdleAction_Squat_3_6
+  - first:
+      213: 787301505418642390
+    second: FarmerOtter_IdleAction_Squat_3_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 120
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5f2de422c9a68de0800000000000000
+      internalID: -1331189988533129377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_0_1
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 720
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7463c529674e6380800000000000000
+      internalID: -8976158490372119426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_0_2
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 720
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 505787e1c38a7df70800000000000000
+      internalID: 9212016538972353797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_0_3
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 065a9320aa80b8f40800000000000000
+      internalID: 5731684477033882976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_0_4
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 720
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff9a6a56bc9ef4480800000000000000
+      internalID: -8912648077749868033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_0_5
+      rect:
+        serializedVersion: 2
+        x: 2080
+        y: 720
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e77eb9521777d2dc0800000000000000
+      internalID: -3662139594136361090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_0_6
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 720
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 586d5dc3557eb5b80800000000000000
+      internalID: -8404869926278015355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_0_7
+      rect:
+        serializedVersion: 2
+        x: 2912
+        y: 720
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75a985e97e9b61f80800000000000000
+      internalID: -8136111272353031593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 480
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00dbe4ae972481c20800000000000000
+      internalID: 3177362628499389696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_1_1
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 480
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1c2d4ba0531d4030800000000000000
+      internalID: 3480459324219534362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_1_2
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 480
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1431724ebafa06b30800000000000000
+      internalID: 4278612798804005697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_1_3
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 480
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f24f2911990adbbc0800000000000000
+      internalID: -3765677134126582737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_1_4
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 480
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6538e3431b36f7280800000000000000
+      internalID: -9043399913999793322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_1_5
+      rect:
+        serializedVersion: 2
+        x: 2080
+        y: 480
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96761989173076c80800000000000000
+      internalID: -8329685199372589207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_1_6
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 480
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09f45c9fb80244690800000000000000
+      internalID: -7618928884041035888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_1_7
+      rect:
+        serializedVersion: 2
+        x: 2912
+        y: 480
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfd93f77cefda5ad0800000000000000
+      internalID: -2712609618819572229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fda59a458b93fac0800000000000000
+      internalID: -3822540661923140109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_2_1
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 240
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16556b0ba3818e240800000000000000
+      internalID: 4821130041452025185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_2_2
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 240
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0b737e511a032e50800000000000000
+      internalID: 6783276533465447179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_2_3
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 240
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b36d872e26c82580800000000000000
+      internalID: -8851607166062337096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_2_4
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 240
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f504a04304fb72a0800000000000000
+      internalID: -6738524122623244813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_2_5
+      rect:
+        serializedVersion: 2
+        x: 2080
+        y: 240
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0505f911c28022440800000000000000
+      internalID: 4909495529154498640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_2_6
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 240
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 724df70ab0365e250800000000000000
+      internalID: 5973289382365352999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_2_7
+      rect:
+        serializedVersion: 2
+        x: 2912
+        y: 240
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebb02f5e8a60f24f0800000000000000
+      internalID: -851454482067616834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76990a8b3e212a760800000000000000
+      internalID: 7467551901398112615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_3_1
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 0
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ce5100e142af7b70800000000000000
+      internalID: 8899009792522149574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_3_2
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11339ada408f349f0800000000000000
+      internalID: -485271635848776943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_3_3
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 0
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deba85a38e3d72110800000000000000
+      internalID: 1236189617101253613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_3_4
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 0
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ade06a265cd9fdb0800000000000000
+      internalID: -4757529268703924830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_3_5
+      rect:
+        serializedVersion: 2
+        x: 2080
+        y: 0
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63f4d1f1055304a40800000000000000
+      internalID: 5350334975551819574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_3_6
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 0
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ee2d154e9688d470800000000000000
+      internalID: 8419627517691637480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmerOtter_IdleAction_Squat_3_7
+      rect:
+        serializedVersion: 2
+        x: 2912
+        y: 0
+        width: 416
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d3cb914c8e0dea00800000000000000
+      internalID: 787301505418642390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FarmerOtter_IdleAction_Squat_0: -2005550527724946274
+      FarmerOtter_IdleAction_Squat_0_0: -1331189988533129377
+      FarmerOtter_IdleAction_Squat_0_1: -8976158490372119426
+      FarmerOtter_IdleAction_Squat_0_2: 9212016538972353797
+      FarmerOtter_IdleAction_Squat_0_3: 5731684477033882976
+      FarmerOtter_IdleAction_Squat_0_4: -8912648077749868033
+      FarmerOtter_IdleAction_Squat_0_5: -3662139594136361090
+      FarmerOtter_IdleAction_Squat_0_6: -8404869926278015355
+      FarmerOtter_IdleAction_Squat_0_7: -8136111272353031593
+      FarmerOtter_IdleAction_Squat_1: -2092351511530342121
+      FarmerOtter_IdleAction_Squat_10: -4476920161352675210
+      FarmerOtter_IdleAction_Squat_11: -5654978696214328091
+      FarmerOtter_IdleAction_Squat_12: 5426884273906868176
+      FarmerOtter_IdleAction_Squat_13: -6783238476586345081
+      FarmerOtter_IdleAction_Squat_14: -831412169410869924
+      FarmerOtter_IdleAction_Squat_15: -3270730682157485209
+      FarmerOtter_IdleAction_Squat_16: -4936230503388266744
+      FarmerOtter_IdleAction_Squat_17: -6302749536204718205
+      FarmerOtter_IdleAction_Squat_18: -4840764316140764530
+      FarmerOtter_IdleAction_Squat_19: -621715128442130004
+      FarmerOtter_IdleAction_Squat_1_0: 3177362628499389696
+      FarmerOtter_IdleAction_Squat_1_1: 3480459324219534362
+      FarmerOtter_IdleAction_Squat_1_2: 4278612798804005697
+      FarmerOtter_IdleAction_Squat_1_3: -3765677134126582737
+      FarmerOtter_IdleAction_Squat_1_4: -9043399913999793322
+      FarmerOtter_IdleAction_Squat_1_5: -8329685199372589207
+      FarmerOtter_IdleAction_Squat_1_6: -7618928884041035888
+      FarmerOtter_IdleAction_Squat_1_7: -2712609618819572229
+      FarmerOtter_IdleAction_Squat_2: 8405509269009693858
+      FarmerOtter_IdleAction_Squat_20: -8256410195876169429
+      FarmerOtter_IdleAction_Squat_21: -2904214775074951555
+      FarmerOtter_IdleAction_Squat_22: -8530714847724127833
+      FarmerOtter_IdleAction_Squat_23: -4970271646300878801
+      FarmerOtter_IdleAction_Squat_24: 5934376660041736034
+      FarmerOtter_IdleAction_Squat_25: -6998069149901754946
+      FarmerOtter_IdleAction_Squat_26: -9198682539643451607
+      FarmerOtter_IdleAction_Squat_27: 3372973807516232281
+      FarmerOtter_IdleAction_Squat_28: 8941609328566564489
+      FarmerOtter_IdleAction_Squat_29: 3564820302835571498
+      FarmerOtter_IdleAction_Squat_2_0: -3822540661923140109
+      FarmerOtter_IdleAction_Squat_2_1: 4821130041452025185
+      FarmerOtter_IdleAction_Squat_2_2: 6783276533465447179
+      FarmerOtter_IdleAction_Squat_2_3: -8851607166062337096
+      FarmerOtter_IdleAction_Squat_2_4: -6738524122623244813
+      FarmerOtter_IdleAction_Squat_2_5: 4909495529154498640
+      FarmerOtter_IdleAction_Squat_2_6: 5973289382365352999
+      FarmerOtter_IdleAction_Squat_2_7: -851454482067616834
+      FarmerOtter_IdleAction_Squat_3: -7537677834028448104
+      FarmerOtter_IdleAction_Squat_30: -6157136516718572904
+      FarmerOtter_IdleAction_Squat_31: -7429975261874738131
+      FarmerOtter_IdleAction_Squat_32: -7371989383559658405
+      FarmerOtter_IdleAction_Squat_33: -3300493704140506983
+      FarmerOtter_IdleAction_Squat_3_0: 7467551901398112615
+      FarmerOtter_IdleAction_Squat_3_1: 8899009792522149574
+      FarmerOtter_IdleAction_Squat_3_2: -485271635848776943
+      FarmerOtter_IdleAction_Squat_3_3: 1236189617101253613
+      FarmerOtter_IdleAction_Squat_3_4: -4757529268703924830
+      FarmerOtter_IdleAction_Squat_3_5: 5350334975551819574
+      FarmerOtter_IdleAction_Squat_3_6: 8419627517691637480
+      FarmerOtter_IdleAction_Squat_3_7: 787301505418642390
+      FarmerOtter_IdleAction_Squat_4: 5180375141695709229
+      FarmerOtter_IdleAction_Squat_5: 6509992885354021515
+      FarmerOtter_IdleAction_Squat_6: 845348646945988039
+      FarmerOtter_IdleAction_Squat_7: 7746806493803610052
+      FarmerOtter_IdleAction_Squat_8: -7071990502643230636
+      FarmerOtter_IdleAction_Squat_9: -3054437032641790811
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

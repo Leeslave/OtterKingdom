@@ -1,0 +1,365 @@
+fileFormatVersion: 2
+guid: aefc6b12f15e7534b90ecb8a465fcd7e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 81374449913059253
+    second: FishingOtter_Pull_0
+  - first:
+      213: -2248654781788073485
+    second: FishingOtter_Pull_1
+  - first:
+      213: 2173406234999649810
+    second: FishingOtter_Pull_2
+  - first:
+      213: -8538972910565828697
+    second: FishingOtter_Pull_3
+  - first:
+      213: 1339015826602329264
+    second: FishingOtter_Pull_4
+  - first:
+      213: 4761702746230065686
+    second: FishingOtter_Pull_5
+  - first:
+      213: 6076528551400373894
+    second: FishingOtter_Pull_6
+  - first:
+      213: 8472222344125047130
+    second: FishingOtter_Pull_7
+  - first:
+      213: 4815431575920978340
+    second: FishingOtter_Pull_8
+  - first:
+      213: -7323502813498555406
+    second: FishingOtter_Pull_9
+  - first:
+      213: 8991808719603905624
+    second: FishingOtter_Pull_0_0
+  - first:
+      213: -9120926842267336061
+    second: FishingOtter_Pull_0_1
+  - first:
+      213: 7130603376960072286
+    second: FishingOtter_Pull_0_2
+  - first:
+      213: 7888089692939091419
+    second: FishingOtter_Pull_0_3
+  - first:
+      213: -3709775198906463331
+    second: FishingOtter_Pull_0_4
+  - first:
+      213: -2684523446456790582
+    second: FishingOtter_Pull_0_5
+  - first:
+      213: 6054888850099808028
+    second: FishingOtter_Pull_0_6
+  - first:
+      213: -8211773037207268352
+    second: FishingOtter_Pull_0_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 145
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FishingOtter_Pull_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 854304cc36259cc70800000000000000
+      internalID: 8991808719603905624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Pull_0_1
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38284589c55fb6180800000000000000
+      internalID: -9120926842267336061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Pull_0_2
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5ae7e5edfdf4f260800000000000000
+      internalID: 7130603376960072286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Pull_0_3
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bddfd0868cf187d60800000000000000
+      internalID: 7888089692939091419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Pull_0_4
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9b40a0ac1b348cc0800000000000000
+      internalID: -3709775198906463331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Pull_0_5
+      rect:
+        serializedVersion: 2
+        x: 2140
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac15cbe0628aebad0800000000000000
+      internalID: -2684523446456790582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Pull_0_6
+      rect:
+        serializedVersion: 2
+        x: 2568
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c172ca83459470450800000000000000
+      internalID: 6054888850099808028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FishingOtter_Pull_0_7
+      rect:
+        serializedVersion: 2
+        x: 2996
+        y: 0
+        width: 428
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.06521739}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00451253eebe90e80800000000000000
+      internalID: -8211773037207268352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FishingOtter_Pull_0: 81374449913059253
+      FishingOtter_Pull_0_0: 8991808719603905624
+      FishingOtter_Pull_0_1: -9120926842267336061
+      FishingOtter_Pull_0_2: 7130603376960072286
+      FishingOtter_Pull_0_3: 7888089692939091419
+      FishingOtter_Pull_0_4: -3709775198906463331
+      FishingOtter_Pull_0_5: -2684523446456790582
+      FishingOtter_Pull_0_6: 6054888850099808028
+      FishingOtter_Pull_0_7: -8211773037207268352
+      FishingOtter_Pull_1: -2248654781788073485
+      FishingOtter_Pull_2: 2173406234999649810
+      FishingOtter_Pull_3: -8538972910565828697
+      FishingOtter_Pull_4: 1339015826602329264
+      FishingOtter_Pull_5: 4761702746230065686
+      FishingOtter_Pull_6: 6076528551400373894
+      FishingOtter_Pull_7: 8472222344125047130
+      FishingOtter_Pull_8: 4815431575920978340
+      FishingOtter_Pull_9: -7323502813498555406
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
