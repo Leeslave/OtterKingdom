@@ -71,6 +71,16 @@ public class GameManager : MonoBehaviour
             enabled = false;
             return;
         }
+
+        // CurrencyManager is placed in each zone scene (DontDestroyOnLoad, runs
+        // first via DefaultExecutionOrder) — it is not created on demand.
+        if (CurrencyManager.Instance == null)
+        {
+            Debug.LogError("[GameManager] No CurrencyManager in the scene — add one with Gold in its " +
+                           "All Currencies list.", this);
+            enabled = false;
+            return;
+        }
         Instance = this;
 
         EnsureDefaultData();
@@ -81,7 +91,7 @@ public class GameManager : MonoBehaviour
 
         ComputePendingOfflineElapsed();
 
-        CurrencyManager.Instance.LoadFromSave(save, new[] { goldCurrency });
+        LoadGoldFromSave();
         CurrencyHud.Show(goldCurrency);
         inventoryService = new InventoryService(save.inventory);
         farmService = new FarmService(save, cropDefinitions, farmBalance);
@@ -247,8 +257,33 @@ public class GameManager : MonoBehaviour
 
     private void SaveNow()
     {
-        CurrencyManager.Instance.SaveToSave(save);
+        WriteGoldToSave();
         saveService.Save(save);
+    }
+
+    // The currency system doesn't know about SaveData — the balance is
+    // copied in and out here. Only Gold is ours; other entries are kept.
+    private void LoadGoldFromSave()
+    {
+        var entry = save.currencies.Find(c => c.currencyId == goldCurrency.CurrencyID);
+        CurrencyManager.Instance.SetBalance(goldCurrency, entry != null ? entry.amount : 0);
+    }
+
+    private void WriteGoldToSave()
+    {
+        var entry = save.currencies.Find(c => c.currencyId == goldCurrency.CurrencyID);
+        if (entry == null)
+        {
+            entry = new CurrencyBalance { currencyId = goldCurrency.CurrencyID };
+            save.currencies.Add(entry);
+        }
+        entry.amount = CurrencyManager.Instance.GetCurrency(goldCurrency);
+    }
+
+    private void EarnGold(int amount, TransactionSource source)
+    {
+        if (amount <= 0) return;
+        CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(goldCurrency, amount, source));
     }
 
     private void SellAllForGold()
@@ -262,7 +297,7 @@ public class GameManager : MonoBehaviour
 
         if (total <= 0) return;
 
-        CurrencyManager.Instance.Add(goldCurrency, total, TransactionSource.CropSale);
+        EarnGold(total, TransactionSource.CropSale);
         save.lifetimeSales += total;
         inventoryService.Clear();
         Debug.Log($"[GameManager] 판매 완료: +{total} 코인");
@@ -325,7 +360,7 @@ public class GameManager : MonoBehaviour
         if (!inventoryService.Remove(item.itemId, quantity)) return false;
 
         int total = item.sellPrice * quantity;
-        CurrencyManager.Instance.Add(goldCurrency, total, item.source);
+        EarnGold(total, item.source);
         save.lifetimeSales += total;
         SaveNow();
         return true;

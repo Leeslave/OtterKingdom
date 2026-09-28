@@ -21,7 +21,7 @@ public class Currency : ScriptableObject
     public int MaxCapacity = Int32.MaxValue;
 
     [Tooltip("최소 보유 한도")]
-    public int MinCapacity = Int32.MinValue;
+    public int MinCapacity = 0;
 }
 #endregion
 
@@ -29,7 +29,8 @@ public class Currency : ScriptableObject
 /// <summary>
 /// 재화의 획득/소비 출처
 /// </summary>
-public enum TransactionSource{TestGet, TestUse, GotchaUse, ShopPurchase, BlacksmithUpgrade, CropSale, FarmUpgrade, PlotUnlock, FishingSale, RodUpgrade}
+public enum TransactionSource{TestGet, TestUse, GotchaUse, ShopPurchase, BlacksmithUpgrade, InventoryExpand,
+    CropSale, FarmUpgrade, PlotUnlock, FishingSale, RodUpgrade}
 public struct CurrencyTransaction
 {
     [Header("Data")]

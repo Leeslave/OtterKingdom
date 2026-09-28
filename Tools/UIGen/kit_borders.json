@@ -1,0 +1,135 @@
+{
+ "UI_Button_Coin": [
+  46,
+  46,
+  46,
+  55
+ ],
+ "UI_Button_Shell": [
+  46,
+  46,
+  46,
+  55
+ ],
+ "UI_Button_Primary": [
+  46,
+  46,
+  46,
+  55
+ ],
+ "UI_Button_Secondary": [
+  46,
+  46,
+  46,
+  55
+ ],
+ "UI_Button_Paper": [
+  42,
+  42,
+  42,
+  51
+ ],
+ "UI_Ribbon_Peach": [
+  54,
+  54,
+  54,
+  64
+ ],
+ "UI_Ribbon_Lav": [
+  54,
+  54,
+  54,
+  64
+ ],
+ "UI_Chip_Selected": [
+  34,
+  34,
+  34,
+  40
+ ],
+ "UI_Chip_Normal": [
+  34,
+  34,
+  34,
+  40
+ ],
+ "UI_Tag_Rarity_Common": [
+  24,
+  24,
+  24,
+  28
+ ],
+ "UI_Tag_Rarity_Rare": [
+  24,
+  24,
+  24,
+  28
+ ],
+ "UI_Tag_Rarity_Epic": [
+  24,
+  24,
+  24,
+  28
+ ],
+ "UI_Tag_Highlight": [
+  24,
+  24,
+  24,
+  28
+ ],
+ "UI_Tag_Category": [
+  24,
+  24,
+  24,
+  28
+ ],
+ "UI_Toggle_On": [
+  36,
+  36,
+  36,
+  42
+ ],
+ "UI_Toggle_Off": [
+  36,
+  36,
+  36,
+  42
+ ],
+ "UI_Slider_Track": [
+  22,
+  22,
+  22,
+  26
+ ],
+ "UI_Slider_Fill": [
+  22,
+  22,
+  22,
+  26
+ ],
+ "UI_Box_Inset": [
+  38,
+  38,
+  38,
+  38
+ ],
+ "UI_Inventory_Slot_Locked": [
+  52,
+  52,
+  52,
+  60
+ ],
+ "UI_RoundButton_Cream": null,
+ "UI_RoundButton_Peach": null,
+ "UI_RoundButton_Lav": null,
+ "UI_RoundButton_Featured": null,
+ "UI_Button_Confirm": null,
+ "UI_Button_Rotate": null,
+ "UI_Button_Plus": null,
+ "UI_Button_Minus": null,
+ "UI_Button_PlusSmall": null,
+ "UI_Badge": null,
+ "UI_Knob": null,
+ "UI_Tile_OK": null,
+ "UI_Tile_Blocked": null
+}

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
@@ -13,7 +13,6 @@ public class CurrencyUI : MonoBehaviour
     [SerializeField] private float _animationDuration = 0.5f; // 효과 지속 시간
 
     private int _currentDisplayValue = 0;
-    private Coroutine _iconCoroutine;
     private Coroutine _textCoroutine;
 
     private void Awake()
@@ -22,18 +21,18 @@ public class CurrencyUI : MonoBehaviour
             _currencyIcon.sprite = _targetCurrency.Icon;
     }
 
-    private void Start()
+    // 구독/해제는 OnEnable/OnDisable 짝으로 → 껐다 켜도 다시 구독됨
+    private void OnEnable()
     {
-        if (CurrencyManager.Exists)
-        {
-            CurrencyManager.Instance.OnCurrencyChanged += UpdateUI;
-            RefreshUI();
-        }
+        if (CurrencyManager.Instance == null) return;
+
+        CurrencyManager.Instance.OnCurrencyChanged += UpdateUI;
+        RefreshUI(); // 꺼져 있던 동안 바뀐 값 반영
     }
 
     private void OnDisable()
     {
-        if (CurrencyManager.Exists)
+        if (CurrencyManager.Instance != null)
             CurrencyManager.Instance.OnCurrencyChanged -= UpdateUI;
     }
 

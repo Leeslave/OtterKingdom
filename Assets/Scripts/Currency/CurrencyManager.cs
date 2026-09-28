@@ -1,38 +1,19 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 다른 스크립트의 Awake/OnEnable보다 먼저 실행되어야 UI가 구독 시점에 Instance를 찾을 수 있음
+[DefaultExecutionOrder(-100)]
 public class CurrencyManager : MonoBehaviour
 {
-    private static CurrencyManager _instance;
+    public static CurrencyManager Instance { get; private set; }
+    public event Action<Currency, int> OnCurrencyChanged;
 
-    // 없으면 새로 생성하는 Instance와 달리, 순수 존재 확인용. 씬이 닫히는 도중(OnDisable/OnDestroy)에
-    // Instance를 읽어버리면 그 시점에 새 GameObject가 생성되어 정리되지 못한 채 남는 문제가 있었다.
-    public static bool Exists => _instance != null;
-
-    public static CurrencyManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                var go = new GameObject(nameof(CurrencyManager));
-                _instance = go.AddComponent<CurrencyManager>();
-                DontDestroyOnLoad(go);
-            }
-            return _instance;
-        }
-    }
-
-    public Action<Currency, int> OnCurrencyChanged;
-
-    private Dictionary<Currency, int> _wallets = new Dictionary<Currency, int>();
+    private readonly Dictionary<Currency, int> _wallets = new Dictionary<Currency, int>();
     [SerializeField] private List<Currency> _allCurrencies;
 
     private void InitializeWallets()
     {
-        if (_allCurrencies == null) return;
-
         foreach (var currency in _allCurrencies)
         {
             _wallets[currency] = 0;
@@ -41,77 +22,85 @@ public class CurrencyManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (_instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
         InitializeWallets();
     }
 
-    // 트랜잭션을 적용한다. 결과 잔액이 화폐의 보유 한도를 벗어나면(예: 잔액 부족) 적용하지 않고 false를 반환한다.
-    public bool ProcessTransaction(CurrencyTransaction tx)
+    /// <summary>
+    /// 재화 획득 (배율 적용). 음수 금액은 MinCapacity까지 깎이므로 소비에는 TrySpend를 사용.
+    /// </summary>
+    public void ProcessTransaction(CurrencyTransaction tx)
     {
+        if (tx.Currency == null) throw new ArgumentNullException(nameof(tx.Currency));
+
         tx = ApplyGlobalModifiers(tx);
-        int finalAmount = tx.FinalAmount;
+        ApplyChange(tx.Currency, tx.FinalAmount, tx.Source);
+    }
 
-        if (!_wallets.ContainsKey(tx.Currency))
-            _wallets[tx.Currency] = 0;
+    /// <summary>
+    /// 재화 소비. 잔액이 부족하면 아무것도 바꾸지 않고 false 반환 (배율 미적용).
+    /// </summary>
+    public bool TrySpend(Currency currency, int amount, TransactionSource source)
+    {
+        if (currency == null) throw new ArgumentNullException(nameof(currency));
+        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount), "amount는 1 이상이어야 합니다.");
 
-        int newBalance = _wallets[tx.Currency] + finalAmount;
-        if (newBalance < tx.Currency.MinCapacity || newBalance > tx.Currency.MaxCapacity)
+        if (!CanAfford(currency, amount))
             return false;
 
-        _wallets[tx.Currency] = newBalance;
-
-        Debug.Log($"[{tx.Source}] {tx.Currency.CurrencyID} {finalAmount} 변동됨. (현재 잔액: {_wallets[tx.Currency]})");
-
-        // UI 업데이트 방송
-        OnCurrencyChanged?.Invoke(tx.Currency, _wallets[tx.Currency]);
+        ApplyChange(currency, -amount, source);
         return true;
     }
 
-    public bool TrySpend(Currency currency, int amount, TransactionSource source)
+    public bool CanAfford(Currency currency, int amount)
     {
-        if (amount <= 0) return false;
-        return ProcessTransaction(new CurrencyTransaction(currency, -amount, source));
-    }
-
-    public bool Add(Currency currency, int amount, TransactionSource source)
-    {
-        if (amount <= 0) return false;
-        return ProcessTransaction(new CurrencyTransaction(currency, amount, source));
+        return GetCurrency(currency) >= amount;
     }
 
     public int GetCurrency(Currency currency)
     {
-        return _wallets.TryGetValue(currency, out var amount) ? amount : 0;
+        if (currency == null) throw new ArgumentNullException(nameof(currency));
+
+        return _wallets.TryGetValue(currency, out int balance) ? balance : 0;
     }
 
-    public void LoadFromSave(SaveData save, IEnumerable<Currency> knownCurrencies)
+    /// <summary>
+    /// 잔액을 그대로 지정 (세이브 복원용). 배율 미적용, 한도 안으로 자름.
+    /// </summary>
+    public void SetBalance(Currency currency, int amount)
     {
-        foreach (var currency in knownCurrencies)
-        {
-            if (currency == null) continue;
+        if (currency == null) throw new ArgumentNullException(nameof(currency));
 
-            var entry = save.currencies.Find(c => c.currencyId == currency.CurrencyID);
-            _wallets[currency] = entry != null ? entry.amount : 0;
-        }
+        int oldBalance = GetCurrency(currency);
+        int newBalance = Math.Clamp(amount, currency.MinCapacity, currency.MaxCapacity);
+        _wallets[currency] = newBalance;
+
+        if (newBalance != oldBalance)
+            OnCurrencyChanged?.Invoke(currency, newBalance);
     }
 
-    public void SaveToSave(SaveData save)
+    private void ApplyChange(Currency currency, int delta, TransactionSource source)
     {
-        save.currencies.Clear();
-        foreach (var wallet in _wallets)
-        {
-            save.currencies.Add(new CurrencyBalance { currencyId = wallet.Key.CurrencyID, amount = wallet.Value });
-        }
+        int oldBalance = GetCurrency(currency);
+
+        // long으로 계산해서 int 범위를 넘는 경우(오버플로)를 막은 뒤 한도 안으로 자름
+        long raw = (long)oldBalance + delta;
+        int newBalance = (int)Math.Clamp(raw, currency.MinCapacity, currency.MaxCapacity);
+
+        _wallets[currency] = newBalance;
+
+        Debug.Log($"[{source}] {currency.CurrencyID} {newBalance - oldBalance:+#;-#;0} 변동됨. (현재 잔액: {newBalance})");
+
+        // 한도에 걸려 실제 변화가 없으면 알림 생략
+        if (newBalance != oldBalance)
+            OnCurrencyChanged?.Invoke(currency, newBalance);
     }
 
     // 버프(곱하기 연산)

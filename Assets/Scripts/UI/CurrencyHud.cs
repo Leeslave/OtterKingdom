@@ -57,7 +57,7 @@ public class CurrencyHud : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (CurrencyManager.Exists)
+        if (CurrencyManager.Instance != null)
             CurrencyManager.Instance.OnCurrencyChanged -= OnCurrencyChanged;
     }
 

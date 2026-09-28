@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 //      FishingOtter prefab with its SpriteFrameAnimator clips,
 //   2. creates FishingBalanceData if missing,
 //   3. builds and saves Assets/Scenes/Fishing.unity: GameManager (same data
-//      as the farm scene, so save/coins/inventory are shared), background,
+//      as the farm scene, so save/coins/inventory are shared), CurrencyManager, background,
 //      the dashed fishing spot at the end of the dock, the walkable dock
 //      polygon, the otter and a camera.
 // Run via: OtterKingdom > Tools > Setup Fishing Scene
@@ -358,6 +358,16 @@ public static class FishingSceneSetup
                                "assign it by hand in the Inspector and save the scene.", gameManager);
             }
         }
+
+        // CurrencyManager isn't created on demand, so every zone scene that can
+        // be played directly carries one (the duplicate is destroyed in Awake).
+        var currencyManagerGo = new GameObject("CurrencyManager");
+        var currencyManager = currencyManagerGo.AddComponent<CurrencyManager>();
+        var cmSo = new SerializedObject(currencyManager);
+        var currenciesProp = cmSo.FindProperty("_allCurrencies");
+        currenciesProp.arraySize = 1;
+        currenciesProp.GetArrayElementAtIndex(0).objectReferenceValue = gold;
+        cmSo.ApplyModifiedPropertiesWithoutUndo();
 
         var root = new GameObject("FishingRoot");
 
