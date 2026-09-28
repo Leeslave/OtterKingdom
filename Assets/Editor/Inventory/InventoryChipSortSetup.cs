@@ -29,10 +29,28 @@ public static class InventoryChipSortSetup
     private const float ChipWidth = 140f;
     private const float ChipSpacing = 16f;
     private const float SortWidth = 200f;
+    // 탭 아래쪽이 목록 패널에 덮이는 높이 (시안 약 10~12)
+    private const float TabTuck = 12f;
+    // 칩과 같은 높이 → 같은 9-slice 배율 → 테두리 두께 통일
+    private const float ListItemHeight = ToolbarHeight;
+    private const float ListPadding = 10f;
+    private const float ListGap = 8f;
+    // 칩 스프라이트 아래쪽 입체 턱 높이 (테두리 B40 - T34). 글자를 이만큼 올려야 가운데로 보임
+    private const float LipOffset = 6f;
 
     [MenuItem("Tools/Inventory/Setup Sub-Category Chips and Sort")]
     public static void Run()
     {
+        if (EditorApplication.isPlaying)
+        {
+            Debug.LogWarning("[InventoryChipSortSetup] Play 모드를 끄고 실행하세요.");
+            return;
+        }
+
+        // 에디터에서 실행할 때 열린 씬의 저장 안 한 변경이 날아가지 않도록
+        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            return;
+
         ApplyCommonSpriteBorders();
         CreateChipPrefab();
         AssetDatabase.SaveAssets();
@@ -111,6 +129,7 @@ public static class InventoryChipSortSetup
         var background = (Image)so.FindProperty("_background").objectReferenceValue;
         background.sprite = normal;
         background.type = Image.Type.Sliced;
+        background.pixelsPerUnitMultiplier = SlicedScaleFor(normal, ToolbarHeight);
 
         var label = (TextMeshProUGUI)so.FindProperty("_label").objectReferenceValue;
         label.fontSize = 28;
@@ -138,6 +157,8 @@ public static class InventoryChipSortSetup
         var frame = (RectTransform)all.First(t => t.name == "ItemListFrame");
         var scroll = (RectTransform)frame.Find("Scroll View");
         var font = AssetDatabase.LoadAssetAtPath<GameObject>(TabPrefabPath).GetComponentInChildren<TextMeshProUGUI>(true).font;
+
+        ArrangeTabsBehindPanel(frame);
 
         // 다시 실행할 때는 이전 결과를 지우고 새로 만듦
         var old = frame.Find("Toolbar");
@@ -190,6 +211,41 @@ public static class InventoryChipSortSetup
         EditorSceneManager.SaveScene(scene);
     }
 
+    // 시안: 탭이 목록 패널 "뒤"에 있고 아래쪽이 패널에 살짝 덮임 (폴더 탭처럼).
+    // 부모는 항상 자식보다 먼저 그려지므로, 배경이 부모(ListPanel)에 있으면 탭이 늘 위로 올라옴
+    // → 배경을 ItemListFrame으로 옮기고, 탭을 그보다 앞 순서에 둠
+    private static void ArrangeTabsBehindPanel(RectTransform frame)
+    {
+        var listPanel = (RectTransform)frame.parent;
+        var tabs = (RectTransform)listPanel.Find("Tabs");
+
+        var panelImage = listPanel.GetComponent<Image>();
+        if (panelImage != null && panelImage.sprite != null)
+        {
+            var frameImage = frame.GetComponent<Image>();
+            if (frameImage == null)
+                frameImage = frame.gameObject.AddComponent<Image>();
+
+            frameImage.sprite = panelImage.sprite;
+            frameImage.type = panelImage.type;
+            frameImage.color = panelImage.color;
+            frameImage.fillCenter = panelImage.fillCenter;
+            frameImage.pixelsPerUnitMultiplier = panelImage.pixelsPerUnitMultiplier;
+            frameImage.raycastTarget = true;
+
+            // 탭 사이 빈틈을 눌렀을 때 뒤의 딤까지 클릭이 새지 않도록 투명한 영역만 남김
+            panelImage.sprite = null;
+            panelImage.color = Color.clear;
+        }
+
+        if (tabs.GetSiblingIndex() > frame.GetSiblingIndex())
+            tabs.SetSiblingIndex(frame.GetSiblingIndex());
+
+        // 탭 아래쪽 TabTuck만큼이 패널 윗변에 덮이도록 (탭은 위쪽 앵커, 높이 고정)
+        float frameTop = -frame.offsetMax.y;
+        tabs.anchoredPosition = new Vector2(tabs.anchoredPosition.x, -(frameTop + TabTuck - tabs.sizeDelta.y));
+    }
+
     private static SortDropdownView CreateSortDropdown(RectTransform parent, TMP_FontAsset font)
     {
         var go = TMP_DefaultControls.CreateDropdown(new TMP_DefaultControls.Resources());
@@ -202,48 +258,139 @@ public static class InventoryChipSortSetup
         rect.anchoredPosition = Vector2.zero;
         rect.sizeDelta = new Vector2(SortWidth, 0);
 
-        var paper = LoadCommonSprite("UI_Button_Paper");
+        // 칩과 같은 스프라이트/같은 배율 → 테두리 두께가 옆 칩들과 똑같아 보임
+        var chipNormal = LoadCommonSprite("UI_Chip_Normal");
+        var chipSelected = LoadCommonSprite("UI_Chip_Selected");
+        float chipScale = SlicedScaleFor(chipNormal, ToolbarHeight);
         var muted = new Color32(0xA0, 0x86, 0x72, 0xFF);
         var cocoa = new Color32(0x4B, 0x2E, 0x22, 0xFF);
 
         var dropdown = go.GetComponent<TMP_Dropdown>();
         var background = go.GetComponent<Image>();
-        background.sprite = paper;
+        background.sprite = chipNormal;
         background.type = Image.Type.Sliced;
+        background.pixelsPerUnitMultiplier = chipScale;
 
+        // 칩 라벨과 같은 크기/색, 아래 입체 턱(lip)만큼 살짝 위로
         dropdown.captionText.font = font;
-        dropdown.captionText.fontSize = 26;
+        dropdown.captionText.fontSize = 28;
         dropdown.captionText.color = muted;
         dropdown.captionText.alignment = TextAlignmentOptions.Center;
         var captionRect = dropdown.captionText.rectTransform;
-        captionRect.offsetMin = new Vector2(16, 0);
-        captionRect.offsetMax = new Vector2(-44, 0);
-
-        dropdown.itemText.font = font;
-        dropdown.itemText.fontSize = 26;
-        dropdown.itemText.color = cocoa;
+        captionRect.offsetMin = new Vector2(20, LipOffset);
+        captionRect.offsetMax = new Vector2(-48, 0);
 
         // 기본 화살표 이미지(흰 사각형) 대신 글자 ▼
         var arrow = (RectTransform)go.transform.Find("Arrow");
         Object.DestroyImmediate(arrow.GetComponent<Image>());
+        arrow.anchorMin = new Vector2(1, 0);
+        arrow.anchorMax = new Vector2(1, 1);
+        arrow.pivot = new Vector2(1, 0.5f);
+        arrow.sizeDelta = new Vector2(40, -LipOffset);
+        arrow.anchoredPosition = new Vector2(-16, LipOffset / 2);
         var arrowText = arrow.gameObject.AddComponent<TextMeshProUGUI>();
         arrowText.font = font;
         arrowText.text = "▼";
-        arrowText.fontSize = 22;
+        arrowText.fontSize = 20;
         arrowText.color = muted;
         arrowText.alignment = TextAlignmentOptions.Center;
         arrowText.raycastTarget = false;
 
-        // 펼친 목록 배경도 종이 스프라이트
-        var templateImage = dropdown.template.GetComponent<Image>();
-        templateImage.sprite = paper;
-        templateImage.type = Image.Type.Sliced;
+        StyleDropdownList(dropdown, font, chipNormal, chipSelected, chipScale, cocoa);
 
         var view = go.AddComponent<SortDropdownView>();
         var so = new SerializedObject(view);
         so.FindProperty("_dropdown").objectReferenceValue = dropdown;
         so.ApplyModifiedPropertiesWithoutUndo();
         return view;
+    }
+
+    // TMP 기본 템플릿(항목 20px, 스크롤바, 체크 아이콘)을 칩 스타일로 교체:
+    // 크림 칩 패널 + 선택된 항목은 소분류 칩이 선택됐을 때와 같은 초록 칩
+    private static void StyleDropdownList(TMP_Dropdown dropdown, TMP_FontAsset font,
+        Sprite panelSprite, Sprite selectedSprite, float chipScale, Color cocoa)
+    {
+        int optionCount = System.Enum.GetValues(typeof(ItemSortMode)).Length;
+
+        var template = dropdown.template;
+        template.anchoredPosition = new Vector2(0, -ListGap);
+        template.sizeDelta = new Vector2(0, optionCount * ListItemHeight + ListPadding * 2 + LipOffset);
+
+        var templateImage = template.GetComponent<Image>();
+        templateImage.sprite = panelSprite;
+        templateImage.type = Image.Type.Sliced;
+        templateImage.pixelsPerUnitMultiplier = chipScale;
+        templateImage.color = Color.white;
+
+        // 항목이 몇 개 안 되므로 스크롤바 없이 전부 보여줌
+        var scrollRect = template.GetComponent<ScrollRect>();
+        var scrollbar = template.Find("Scrollbar");
+        scrollRect.verticalScrollbar = null;
+        scrollRect.vertical = false;
+        scrollRect.movementType = ScrollRect.MovementType.Clamped;
+        if (scrollbar != null)
+            Object.DestroyImmediate(scrollbar.gameObject);
+
+        var viewport = (RectTransform)template.Find("Viewport");
+        viewport.anchorMin = Vector2.zero;
+        viewport.anchorMax = Vector2.one;
+        // TMP는 펼칠 때 목록 높이를 "Content 안 항목 배치"로 다시 계산하므로, 여백은 Viewport가 아니라
+        // Content와 항목 사이에 둬야 함 (Viewport에 두면 여백만큼 마지막 항목이 잘림)
+        viewport.offsetMin = Vector2.zero;
+        viewport.offsetMax = Vector2.zero;
+
+        float padTop = ListPadding;
+        float padBottom = ListPadding + LipOffset;
+
+        var content = (RectTransform)viewport.Find("Content");
+        content.sizeDelta = new Vector2(0, ListItemHeight + padTop + padBottom);
+
+        var item = (RectTransform)content.Find("Item");
+        item.anchorMin = new Vector2(0, 0.5f);
+        item.anchorMax = new Vector2(1, 0.5f);
+        item.sizeDelta = new Vector2(-ListPadding * 2, ListItemHeight);
+        item.anchoredPosition = new Vector2(0, (padBottom - padTop) / 2);
+
+        // 누르는 동안만 살짝 물드는 배경 (평소/선택 상태는 투명)
+        var toggle = item.GetComponent<Toggle>();
+        var itemBackground = item.Find("Item Background").GetComponent<Image>();
+        itemBackground.sprite = null;
+        itemBackground.color = Color.white;
+        var colors = toggle.colors;
+        colors.normalColor = new Color(1, 1, 1, 0);
+        colors.highlightedColor = new Color32(0xF6, 0xD5, 0xBE, 0xFF);
+        colors.pressedColor = new Color32(0xEE, 0xC3, 0xA5, 0xFF);
+        colors.selectedColor = new Color(1, 1, 1, 0);
+        toggle.colors = colors;
+
+        // 체크 아이콘 대신 현재 정렬을 채우는 초록 칩 (Toggle이 켜진 항목에만 보임)
+        var checkmark = (RectTransform)item.Find("Item Checkmark");
+        checkmark.anchorMin = Vector2.zero;
+        checkmark.anchorMax = Vector2.one;
+        checkmark.offsetMin = Vector2.zero;
+        checkmark.offsetMax = Vector2.zero;
+        var checkImage = checkmark.GetComponent<Image>();
+        checkImage.sprite = selectedSprite;
+        checkImage.type = Image.Type.Sliced;
+        checkImage.color = Color.white;
+        checkImage.pixelsPerUnitMultiplier = chipScale;
+
+        var label = dropdown.itemText;
+        label.font = font;
+        label.fontSize = 28;
+        label.color = cocoa;
+        label.alignment = TextAlignmentOptions.Center;
+        label.rectTransform.anchorMin = Vector2.zero;
+        label.rectTransform.anchorMax = Vector2.one;
+        label.rectTransform.offsetMin = new Vector2(0, LipOffset);
+        label.rectTransform.offsetMax = Vector2.zero;
+    }
+
+    // 9-slice 테두리(위+아래)가 높이보다 크면 모서리가 찌그러지므로 테두리를 줄이는 배율
+    private static float SlicedScaleFor(Sprite sprite, float height)
+    {
+        float borders = sprite.border.y + sprite.border.w;
+        return borders > height ? borders / (height * 0.9f) : 1f;
     }
 
     private static RectTransform CreateRect(string name, Transform parent)
