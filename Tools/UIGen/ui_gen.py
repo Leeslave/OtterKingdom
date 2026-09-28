@@ -120,14 +120,16 @@ def paste(base, im, x, y):
     base.alpha_composite(im, (int(x), int(y)))
 
 
-def mockup(path):
-    """Portrait layout (Canvas Scaler reference 1080x1920): detail on top, tabs + grid below (thumb reach)."""
+def mockup(path, base=None):
+    """Portrait layout (Canvas Scaler reference 1080x1920): detail on top, tabs + grid below (thumb reach).
+    base: optional 1080x1920 background (e.g. the dimmed game screen) instead of the water pattern."""
     W, H = 1080, 1920
-    m = Image.new("RGBA", (W, H), "#CFE9EC")
+    m = base.copy() if base is not None else Image.new("RGBA", (W, H), "#CFE9EC")
     d = ImageDraw.Draw(m)
-    for y in range(60, H, 150):  # soft water waves
-        for x in range(-40, W + 40, 120):
-            d.arc([x, y, x + 60, y + 30], 200, 340, fill="#BBDDE2", width=5)
+    if base is None:
+        for y in range(60, H, 150):  # soft water waves
+            for x in range(-40, W + 40, 120):
+                d.arc([x, y, x + 60, y + 30], 200, 340, fill="#BBDDE2", width=5)
 
     # --- top: detail panel ---
     rx, ry, rw, rh = 40, 90, 1000, 740
@@ -179,7 +181,9 @@ def mockup(path):
             text(d, (cx + cell - 20, cy + cell - 28), "x3", 28, anchor="rs")
         else:
             paste(m, box(cell, cell, 36, EMPTY, EMPTY_LIP), cx, cy)
-    m.convert("RGB").save(path)
+    if path:
+        m.convert("RGB").save(path)
+    return m
 
 
 if __name__ == "__main__":
