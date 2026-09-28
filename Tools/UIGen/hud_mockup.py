@@ -52,8 +52,17 @@ def fairy_sprite(size):
     return out
 
 
+ICON_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "Assets", "Art", "Icons", "Items")
+ICON_FILES = {("\U0001FAB1", False): "ICON_Bait_Worm", ("\U0001F353", True): "ICON_Seedling_Strawberry",
+              ("\U0001F954", True): "ICON_Seedling_Potato", ("\U0001F360", True): "ICON_Seedling_SweetPotato",
+              ("⚽", False): "ICON_Toy_SoccerBall", ("\U0001F9E9", False): "ICON_Toy_Puzzle"}
+
+
 def item_icon(ch, size, seedling=False):
-    """Crop emoji; seedlings get a small sprout badge so they read as '모종', not the harvested crop."""
+    """Real icon if one exists in Assets; otherwise an emoji placeholder (seedlings get a sprout badge)."""
+    name = ICON_FILES.get((ch, seedling))
+    if name:
+        return Image.open(os.path.join(ICON_DIR, name + ".png")).convert("RGBA").resize((size, size), Image.LANCZOS)
     ic = emoji(ch, size)
     if seedling:
         ic.alpha_composite(emoji("\U0001F331", int(size * 0.45)), (int(size * 0.55), int(size * 0.55)))
@@ -412,13 +421,13 @@ def decorate_mode(bg):
     d = ImageDraw.Draw(m)
 
     # ghost (semi-transparent) soccer ball on the green tile + floating action buttons
-    ghost = emoji("\u26BD", 88); ghost.putalpha(ghost.getchannel("A").point(lambda a: int(a * 0.85)))
+    ghost = item_icon("\u26BD", 88); ghost.putalpha(ghost.getchannel("A").point(lambda a: int(a * 0.85)))
     paste(m, ghost, ok[0] + 10, ok[1] + 6)
     ax, ay = ok[0] + t // 2, ok[1] - 120
     glyph_btn(m, ax - 150, ay, 88, LAV, LAV_LIP, "rotate")
     glyph_btn(m, ax - 44, ay, 88, SAGE, SAGE_LIP, "check")
     paste(m, close_button(88), ax + 62, ay)
-    paste(m, emoji("\U0001F9E9", 70), bad[0] + 70, bad[1] + 18)  # an already placed puzzle, shown on a blocked spot
+    paste(m, item_icon("\U0001F9E9", 70), bad[0] + 70, bad[1] + 18)  # an already placed puzzle, shown on a blocked spot
 
     # top bar: mode title + done
     paste(m, box(380, 100, 50, PEACH, PEACH_LIP, shine=True), 30, 80)
@@ -443,7 +452,7 @@ def decorate_mode(bg):
             has = cnt != "0"
             paste(m, box(cell, cell, 36, PEACH if has else EMPTY, PEACH_LIP if has else EMPTY_LIP,
                          shine=has, ring=MUSTARD if sel else None), cx - (8 if sel else 0), cy - (8 if sel else 0))
-            ic = emoji(ch, 110)
+            ic = item_icon(ch, 110)
             if not has:
                 ic.putalpha(ic.getchannel("A").point(lambda a: int(a * 0.4)))
             paste(m, ic, cx + 40, cy + 26)
