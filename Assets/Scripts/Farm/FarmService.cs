@@ -160,14 +160,5 @@ public class FarmService
 
     private CropDefinition LookupCrop(string id) => cropsById.TryGetValue(id, out var c) ? c : null;
 
-    private float CurrentDurationMultiplier
-    {
-        get
-        {
-            int index = save.farmLevel - 1;
-            if (index < 0) index = 0;
-            if (index >= balance.durationMultiplierByLevel.Length) index = balance.durationMultiplierByLevel.Length - 1;
-            return balance.durationMultiplierByLevel[index];
-        }
-    }
+    private float CurrentDurationMultiplier => balance.DurationMultiplierAt(save.farmLevel);
 }

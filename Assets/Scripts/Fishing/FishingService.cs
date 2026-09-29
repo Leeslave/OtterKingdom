@@ -23,16 +23,13 @@ public class FishingService
     public void SetActive(bool active) => save.fishingActive = active;
 
     public int RodLevel => save.rodLevel;
-    public int MaxRodLevel => balance.rodUpgradeCosts.Length + 1;
+    public int MaxRodLevel => balance.MaxRodLevel;
     public bool CanUpgradeRod => RodLevel < MaxRodLevel;
     public int NextRodUpgradeCost => CanUpgradeRod ? balance.rodUpgradeCosts[RodLevel - 1] : 0;
 
     public float FishChance => FishChanceAt(RodLevel);
 
-    public float FishChanceAt(int rodLevel)
-    {
-        return Mathf.Clamp01(balance.baseFishChance + (rodLevel - 1) * balance.fishChancePerRodLevel);
-    }
+    public float FishChanceAt(int rodLevel) => balance.FishChanceAt(rodLevel);
 
     public float RollBiteDelaySec()
     {
