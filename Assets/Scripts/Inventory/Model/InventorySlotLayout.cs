@@ -78,17 +78,10 @@ public static class InventorySlotLayout
         if (a == null) return 1;
         if (b == null) return -1;
 
-        int result = GetRoot(a).SortOrder.CompareTo(GetRoot(b).SortOrder);
+        int result = a.Root.SortOrder.CompareTo(b.Root.SortOrder);
         if (result != 0)
             return result;
 
         return a.SortOrder.CompareTo(b.SortOrder);
-    }
-
-    private static ItemCategory GetRoot(ItemCategory category)
-    {
-        while (category.Parent != null)
-            category = category.Parent;
-        return category;
     }
 }

@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
-  m_Name: "\uAC10\uC790 \uBAA8\uC885"
+  m_Name: "\uB538\uAE30 \uBAA8\uC885"
   m_EditorClassIdentifier: OtterKingdom::ItemDefinition
-  _itemId: seed_potato
-  _displayName: "\uAC10\uC790 \uBAA8\uC885"
-  _description: "\uBC2D\uC5D0 \uC2EC\uC73C\uBA74 \uAC10\uC790\uAC00 \uC790\uB77C\uC694."
-  _icon: {fileID: 2056189159702533665, guid: 4413dc1710ce98c4097cd9a7357541c1, type: 3}
+  _itemId: seed_strawberry
+  _displayName: "\uB538\uAE30 \uBAA8\uC885"
+  _description: "\uBC2D\uC5D0 \uC2EC\uC73C\uBA74 \uB538\uAE30\uAC00 \uC5F4\uB824\uC694."
+  _icon: {fileID: -8219364252428169312, guid: 0062ccdbfb2609948ae4090c90be839f, type: 3}
   _category: {fileID: 11400000, guid: 21ef8cc3a93812d4dac1f6a4f756b488, type: 2}
-  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
-  _sellPrice: 50
+  _rarity: {fileID: 11400000, guid: 92826ade59cca8b4f9ec100f9c9a27f3, type: 2}
+  _isSellable: 0
+  _sellPrice: 150
   _maxStack: 999

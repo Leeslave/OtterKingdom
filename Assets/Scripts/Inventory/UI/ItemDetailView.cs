@@ -41,6 +41,10 @@ public class ItemDetailView : MonoBehaviour
     [SerializeField]
     private Sprite _emptySprite;
 
+    [Tooltip("가격 줄 전체 (판매 불가 아이템이면 숨김)")]
+    [SerializeField]
+    private GameObject _priceBox;
+
     [Header("빈 상태")]
     [SerializeField]
     private string _emptyMessage = "아이템을 선택하세요.";
@@ -64,6 +68,7 @@ public class ItemDetailView : MonoBehaviour
         _subText.text = BuildSubText(item);
         _countText.text = NumberFormatter.Short(count);
         _priceText.text = NumberFormatter.Short(item.SellPrice);
+        _priceBox.SetActive(item.IsSellable);
         _descriptionText.text = item.Description;
         _background.sprite = _filledSprite;
     }
@@ -76,6 +81,7 @@ public class ItemDetailView : MonoBehaviour
         _subText.text = "";
         _countText.text = "";
         _priceText.text = "";
+        _priceBox.SetActive(true); // 빈 상태에서는 시안처럼 빈 칸으로 보여줌
         _descriptionText.text = _emptyMessage;
         _background.sprite = _emptySprite;
     }

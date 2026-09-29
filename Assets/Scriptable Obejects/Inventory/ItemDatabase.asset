@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::ItemDatabase
   _items:
   - {fileID: 11400000, guid: 75fe364f3d85172469c9d04a63806f2d, type: 2}
+  - {fileID: 11400000, guid: ace88c3612db2fc45bd6ed4235c9f639, type: 2}
   - {fileID: 11400000, guid: 0e99b5383c079a0439f83ec3ff5c30f1, type: 2}
+  - {fileID: 11400000, guid: 3b1d9973c36f102419f2dcbd30a9bee7, type: 2}
   - {fileID: 11400000, guid: 0cb02bf2ad3606a439fe3742a5df077a, type: 2}
+  - {fileID: 11400000, guid: ee21cbf4f9f8c504bb6c83623d8e46c3, type: 2}
+  - {fileID: 11400000, guid: af53937c3adbfc648ba3c6f938aeb689, type: 2}
   - {fileID: 11400000, guid: 08c0badde6871bc4b94fd048143a9805, type: 2}
-  - {fileID: 11400000, guid: 2d3aaf5cc46875548b0683dc8afcb803, type: 2}
   - {fileID: 11400000, guid: 0e2321e08a8cdaa4ea3e8d57a9101251, type: 2}
+  - {fileID: 11400000, guid: 2d3aaf5cc46875548b0683dc8afcb803, type: 2}
+  - {fileID: 11400000, guid: dcb540f4df505f14fa823f9e0f126d98, type: 2}

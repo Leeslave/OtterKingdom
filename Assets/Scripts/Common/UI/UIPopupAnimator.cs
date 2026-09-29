@@ -35,6 +35,9 @@ public class UIPopupAnimator : MonoBehaviour
 
     public bool IsOpen { get; private set; }
 
+    /// <summary>닫기 연출이 끝나 화면이 꺼진 뒤 (배경 클릭으로 닫힌 경우 포함)</summary>
+    public event Action OnHidden;
+
     private Coroutine _routine;
     private Vector2 _panelBasePosition;
 
@@ -124,6 +127,7 @@ public class UIPopupAnimator : MonoBehaviour
         _routine = null;
         gameObject.SetActive(false);
         onHidden?.Invoke();
+        OnHidden?.Invoke();
     }
 
     private IEnumerator ShakeRoutine()

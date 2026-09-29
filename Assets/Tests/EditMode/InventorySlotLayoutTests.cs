@@ -288,4 +288,56 @@ public class InventorySlotLayoutTests
     }
 
     #endregion
+
+    #region 카테고리 계층 안전장치
+
+    [Test]
+    public void Root_OfSubCategory_ReturnsTab()
+    {
+        // Act & Assert
+        Assert.AreEqual(_farming, _seedling.Root);
+        Assert.AreEqual(_farming, _farming.Root);
+    }
+
+    [Test]
+    public void Contains_ParentCycle_DoesNotHang()
+    {
+        // Arrange: 실수로 부모가 순환 (A → B → A)
+        var a = CreateCategory(sortOrder: 0);
+        var b = CreateCategory(sortOrder: 0, parent: a);
+        SetParent(a, b);
+        var item = CreateItem("Loop", a);
+
+        // Act & Assert: 무한 반복 없이 끝나야 함
+        Assert.IsTrue(a.Contains(item));
+        Assert.IsFalse(_farming.Contains(item));
+        Assert.IsNotNull(a.Root);
+    }
+
+    [Test]
+    public void Build_ParentCycle_DoesNotHang()
+    {
+        // Arrange
+        var a = CreateCategory(sortOrder: 0);
+        var b = CreateCategory(sortOrder: 0, parent: a);
+        SetParent(a, b);
+        var inventory = new Inventory(capacity: 2, maxCapacity: 2);
+        inventory.Add(CreateItem("Loop1", a), 1, ItemChangeReason.Test);
+        inventory.Add(CreateItem("Loop2", b), 1, ItemChangeReason.Test);
+
+        // Act
+        InventorySlotLayout.Build(inventory, _all, ItemSortMode.Rarity, _result);
+
+        // Assert
+        Assert.AreEqual(2, CountState(SlotState.Item));
+    }
+
+    private static void SetParent(ItemCategory category, ItemCategory parent)
+    {
+        var so = new SerializedObject(category);
+        so.FindProperty("_parent").objectReferenceValue = parent;
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    #endregion
 }

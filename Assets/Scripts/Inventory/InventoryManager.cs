@@ -55,10 +55,21 @@ public class InventoryManager : MonoBehaviour
     #region 판매
 
     /// <summary>
-    /// 아이템을 팔아 판매가 × 개수만큼 판매 재화(골드)를 받는다. 개수가 부족하면 아무것도 바꾸지 않고 false.
+    /// 아이템을 팔아 판매가 × 개수만큼 판매 재화(골드)를 받는다.
+    /// 판매 불가 아이템이거나 개수가 부족하면 아무것도 바꾸지 않고 false.
     /// </summary>
     public bool TrySell(ItemDefinition item, int amount)
     {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+
+        // 설정 누락은 아이템을 빼기 전에 막아야 함: 빼고 나서 예외가 나면 아이템만 사라진다
+        if (_config.SellCurrency == null)
+            throw new InvalidOperationException($"[{name}] InventoryConfig에 판매 재화(SellCurrency)가 연결되지 않았습니다.");
+
+        if (!item.IsSellable)
+            return false;
+
         // 아이템부터 빼야 함: 재고가 없는데 돈만 들어오는 일을 막는다
         if (!Inventory.TryRemove(item, amount, ItemChangeReason.Sell))
             return false;

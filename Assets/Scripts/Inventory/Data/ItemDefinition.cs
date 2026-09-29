@@ -32,6 +32,10 @@ public class ItemDefinition : ScriptableObject
     private ItemRarity _rarity;
 
     [Header("수치")]
+    [Tooltip("끄면 판매 목록/전체 판매에서 빠지고 상세 패널에 가격을 표시하지 않음 (예: 모종)")]
+    [SerializeField]
+    private bool _isSellable = true;
+
     [Tooltip("판매 가격 (0 이상)")]
     [SerializeField]
     private int _sellPrice;
@@ -47,6 +51,7 @@ public class ItemDefinition : ScriptableObject
     public ItemCategory Category => _category;
     public ItemRarity Rarity => _rarity;
 
+    public bool IsSellable => _isSellable;
     public int SellPrice => _sellPrice;
     public int MaxStack => _maxStack;
 
