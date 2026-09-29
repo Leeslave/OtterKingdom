@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Plaza.unity
+    guid: 2ffdcf37914f1a945bf94c366ac9bf89
+  - enabled: 1
+    path: Assets/Scenes/Farm.unity
+    guid: 33308139dace745429fcb4061c8aa3fc
+  - enabled: 1
+    path: Assets/Scenes/Fishing.unity
+    guid: 2d1ba9201d8b0ce4e9f46422330761e3
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:

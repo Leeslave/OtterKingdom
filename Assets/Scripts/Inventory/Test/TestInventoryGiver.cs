@@ -57,6 +57,10 @@ public class TestInventoryGiver : MonoBehaviour
     [ContextMenu("인벤토리 열기")]
     private void OpenInventory()
     {
-        _presenter.Open();
+        // 전역 UI의 가방을 연다. 씬의 원본 가방 UI(InventoryUISource)는 꺼져 있음
+        var presenter = GlobalUIRoot.Instance != null
+            ? GlobalUIRoot.Instance.GetComponentInChildren<InventoryPresenter>(true)
+            : _presenter;
+        presenter.Open();
     }
 }
