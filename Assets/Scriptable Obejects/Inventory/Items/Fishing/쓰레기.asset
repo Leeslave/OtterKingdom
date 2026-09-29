@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uC4F0\uB808\uAE30"
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  _itemId: trash_basic
+  _displayName: "\uC4F0\uB808\uAE30"
+  _description: "\uC4F0\uB808\uAE30\uB2E4."
+  _icon: {fileID: 1966833535897431605, guid: e51ca85484ae39c439785ba0f195c61f, type: 3}
+  _category: {fileID: 11400000, guid: fc357f853fd815244984d3c1af9fcf29, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 1
+  _sellPrice: 1
+  _maxStack: 999
