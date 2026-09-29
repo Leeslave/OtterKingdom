@@ -274,7 +274,9 @@ public class GameUI : MonoBehaviour
         var modal = OpenModal("[보유 아이템]", out var content);
 
         var refreshers = new List<Action>();
-        foreach (var item in game.SellableItems)
+        var items = game.GetSellableItems();
+        if (items.Count == 0) CreateLabel(content, "팔 수 있는 아이템이 없어요");
+        foreach (var item in items)
         {
             var itemForClick = item;
             var row = CreateRow(content, ButtonHeight);
@@ -284,8 +286,8 @@ public class GameUI : MonoBehaviour
 
             refreshers.Add(() =>
             {
-                int owned = game.GetItemQuantity(itemForClick.itemId);
-                label.text = $"{itemForClick.displayName} : {owned}개";
+                int owned = game.GetItemQuantity(itemForClick);
+                label.text = $"{itemForClick.DisplayName} : {owned}개";
                 sellButton.interactable = owned > 0;
             });
         }
@@ -294,16 +296,16 @@ public class GameUI : MonoBehaviour
         CreateButton(content, "닫기", () => CloseModal(modal));
     }
 
-    private void ShowSellDetail(SellableItem item)
+    private void ShowSellDetail(ItemDefinition item)
     {
         CloseAllModals();
         var modal = OpenModal("[판매]", out var content);
 
         int amount = 1;
-        int Owned() => game.GetItemQuantity(item.itemId);
+        int Owned() => game.GetItemQuantity(item);
         int Clamp(int value) => Mathf.Clamp(value, 1, Mathf.Max(1, Owned()));
 
-        CreateLabel(content, $"{item.displayName} : {item.sellPrice}원");
+        CreateLabel(content, $"{item.DisplayName} : {item.SellPrice}원");
         var ownedLabel = CreateLabel(content, "");
 
         var row = CreateRow(content, ButtonHeight);
@@ -334,7 +336,7 @@ public class GameUI : MonoBehaviour
         SetRefresher(modal, () =>
         {
             ownedLabel.text = $"현재 보유개수 : {Owned()}개";
-            totalLabel.text = $"합계 : {Clamp(amount) * item.sellPrice}원";
+            totalLabel.text = $"합계 : {Clamp(amount) * item.SellPrice}원";
         });
 
         var buttons = CreateRow(content, ButtonHeight);

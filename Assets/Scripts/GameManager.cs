@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public FarmService FarmService => farmService;
     public IReadOnlyList<CropDefinition> Crops => cropDefinitions;
     public FishingService FishingService => fishingService;
-    public IReadOnlyList<SellableItem> SellableItems => sellableItems;
+    public Inventory Bag => InventoryManager.Instance.Inventory;
     public int CoinBalance => CurrencyManager.Instance.GetCurrency(goldCurrency);
 
     private bool showDebugPanel;
@@ -41,14 +41,24 @@ public class GameManager : MonoBehaviour
     private const string DefaultOtterId = "otter_001";
     private const string PlotId = "plot_1";
     private const string DefaultCropId = "crop_carrot";
+    // Save ids renamed since release: old -> new. Applied to the bag before it loads.
+    private static readonly (string from, string to)[] LegacyItemIds =
+    {
+        ("fish_basic", "fish_mackerel"),
+    };
+
+    // InventoryManager survives scene loads but every zone scene's GameManager
+    // reads the save again, and LoadFromSave adds to the bag — so only the
+    // first GameManager to meet a given InventoryManager fills it.
+    private static InventoryManager loadedInventory;
 
     private SaveData save;
     private SaveService saveService;
     private FarmService farmService;
-    private InventoryService inventoryService;
     private FishingService fishingService;
     private GameUI gameUI;
-    private readonly List<SellableItem> sellableItems = new List<SellableItem>();
+    private readonly HashSet<string> warnedMissingItems = new HashSet<string>();
+    private bool fullBagCatchAlertShown;
 
     private float autoSaveTimer;
     private float pendingOfflineElapsedSec;
@@ -81,6 +91,15 @@ public class GameManager : MonoBehaviour
             enabled = false;
             return;
         }
+        // Same for the bag: InventoryManager (DontDestroyOnLoad, runs first)
+        // owns it, with its InventoryConfig/ItemDatabase assigned.
+        if (InventoryManager.Instance == null)
+        {
+            Debug.LogError("[GameManager] No InventoryManager in the scene — add one with " +
+                           "'Assets/Scriptable Obejects/Inventory/InventoryConfig.asset' as its Config.", this);
+            enabled = false;
+            return;
+        }
         Instance = this;
 
         EnsureDefaultData();
@@ -93,13 +112,16 @@ public class GameManager : MonoBehaviour
 
         LoadGoldFromSave();
         CurrencyHud.Show(goldCurrency);
-        inventoryService = new InventoryService(save.inventory);
-        farmService = new FarmService(save, cropDefinitions, farmBalance);
+        bool seedsMoved = LoadInventoryOnce();
+        farmService = new FarmService(save, cropDefinitions, farmBalance, GetSeedCount, TryConsumeSeed);
         fishingService = new FishingService(save, fishingBalance);
-        BuildSellableItems();
         gameUI = GameUI.Create(this);
 
         ReportLoadStatus(loadStatus);
+
+        // Seeds just moved out of save.seeds into the bag — write that out now
+        // so a crash can't grant them again from the old file.
+        if (seedsMoved) SaveNow();
     }
 
     private void ReportLoadStatus(SaveLoadStatus status)
@@ -199,22 +221,112 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Sale UI order: crops first, then fishing catches.
-    private void BuildSellableItems()
+    // ------------------------------------------------------------- inventory
+
+    // Returns true if seeds were moved into the bag (the save needs writing).
+    private bool LoadInventoryOnce()
     {
-        sellableItems.Clear();
-        foreach (var crop in cropDefinitions)
-        {
-            if (crop == null) continue;
-            sellableItems.Add(new SellableItem(crop.cropId, crop.displayName, crop.sellPrice, TransactionSource.CropSale));
-        }
-        sellableItems.Add(new SellableItem(fishingBalance.fishItemId, fishingBalance.fishDisplayName,
-            fishingBalance.fishSellPrice, TransactionSource.FishingSale));
-        sellableItems.Add(new SellableItem(fishingBalance.trashItemId, fishingBalance.trashDisplayName,
-            fishingBalance.trashSellPrice, TransactionSource.FishingSale));
+        var manager = InventoryManager.Instance;
+        if (loadedInventory == manager) return false;
+        loadedInventory = manager;
+
+        save.inventory ??= new List<ItemStack>();
+        RenameLegacyItemIds(save.inventory);
+        manager.LoadFromSave(save.inventory, save.inventoryCapacity);
+
+        return MoveLegacySeedsToBag() | GrantStarterSeeds();
     }
 
-    private SellableItem FindSellable(string itemId) => sellableItems.Find(i => i.itemId == itemId);
+    private static void RenameLegacyItemIds(List<ItemStack> stacks)
+    {
+        foreach (var stack in stacks)
+        {
+            foreach (var (from, to) in LegacyItemIds)
+            {
+                if (stack.itemId == from) stack.itemId = to;
+            }
+        }
+    }
+
+    // Before seeds were bag items, consumable stock lived in save.seeds keyed
+    // by cropId. Move each entry into the bag as its seed_* item. An entry
+    // whose seed item has no ItemDefinition yet stays put until it does.
+    private bool MoveLegacySeedsToBag()
+    {
+        save.seeds ??= new List<ItemStack>();
+        save.starterSeedsGranted ??= new List<string>();
+        bool moved = false;
+
+        for (int i = save.seeds.Count - 1; i >= 0; i--)
+        {
+            var stack = save.seeds[i];
+            var crop = Array.Find(cropDefinitions, c => c != null && c.cropId == stack.itemId);
+            if (crop == null || !TryFindItem(crop.SeedItemId, out var seedItem)) continue;
+
+            if (stack.quantity > 0) PutInBagIgnoringCapacity(seedItem, stack.quantity);
+            // Having an entry at all meant the starter stock was already given.
+            if (!save.starterSeedsGranted.Contains(crop.cropId)) save.starterSeedsGranted.Add(crop.cropId);
+            save.seeds.RemoveAt(i);
+            moved = true;
+        }
+        return moved;
+    }
+
+    // Each consumable crop's starting seeds go in the bag the first time the
+    // save sees that crop. Skipped (and retried next launch) while the seed
+    // item has no ItemDefinition.
+    private bool GrantStarterSeeds()
+    {
+        bool granted = false;
+        foreach (var crop in cropDefinitions)
+        {
+            if (crop == null || crop.seedType != SeedType.Consumable) continue;
+            if (save.starterSeedsGranted.Contains(crop.cropId)) continue;
+            if (!TryFindItem(crop.SeedItemId, out var seedItem)) continue;
+
+            if (crop.initialSeedCount > 0) PutInBagIgnoringCapacity(seedItem, crop.initialSeedCount);
+            save.starterSeedsGranted.Add(crop.cropId);
+            granted = true;
+        }
+        return granted;
+    }
+
+    // Seeds the player already owned must not vanish because the bag is full,
+    // so a new kind goes in over capacity (the same way LoadFromSave keeps an
+    // over-full old save).
+    private void PutInBagIgnoringCapacity(ItemDefinition item, int amount)
+    {
+        if (Bag.GetCount(item) > 0 || Bag.FreeSlots > 0) Bag.Add(item, amount, ItemChangeReason.Grant);
+        else Bag.LoadItem(item, amount);
+    }
+
+    // Save ids -> ItemDefinition. An id with no definition yet is logged once
+    // and treated as "can't go in the bag" by every caller.
+    private bool TryFindItem(string itemId, out ItemDefinition item)
+    {
+        if (InventoryManager.Instance.Config.ItemDatabase.TryGet(itemId, out item)) return true;
+
+        if (warnedMissingItems.Add(itemId))
+            Debug.LogWarning($"[GameManager] No ItemDefinition for '{itemId}' in the ItemDatabase.");
+        return false;
+    }
+
+    private int GetSeedCount(string cropId)
+    {
+        var crop = farmService.GetCrop(cropId);
+        return crop != null && TryFindItem(crop.SeedItemId, out var seedItem) ? Bag.GetCount(seedItem) : 0;
+    }
+
+    private bool TryConsumeSeed(string cropId)
+    {
+        var crop = farmService.GetCrop(cropId);
+        return crop != null && TryFindItem(crop.SeedItemId, out var seedItem) &&
+               Bag.TryRemove(seedItem, 1, ItemChangeReason.Plant);
+    }
+
+    // Seeds are bought to be planted — they never show up in the sale list.
+    private static bool IsSellable(ItemDefinition item) =>
+        !item.ItemId.StartsWith(CropDefinition.SeedItemPrefix);
 
     private SaveData CreateNewSave()
     {
@@ -258,6 +370,8 @@ public class GameManager : MonoBehaviour
     private void SaveNow()
     {
         WriteGoldToSave();
+        InventoryManager.Instance.WriteToSave(save.inventory);
+        save.inventoryCapacity = Bag.Capacity;
         saveService.Save(save);
     }
 
@@ -280,26 +394,13 @@ public class GameManager : MonoBehaviour
         entry.amount = CurrencyManager.Instance.GetCurrency(goldCurrency);
     }
 
-    private void EarnGold(int amount, TransactionSource source)
-    {
-        if (amount <= 0) return;
-        CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(goldCurrency, amount, source));
-    }
-
+    // InventoryManager pays the coins; lifetimeSales is ours to keep up.
     private void SellAllForGold()
     {
-        int total = 0;
-        foreach (var stack in inventoryService.Items)
-        {
-            var item = FindSellable(stack.itemId);
-            total += (item != null ? item.sellPrice : 0) * stack.quantity;
-        }
-
+        int total = InventoryManager.Instance.SellAll(IsSellable);
         if (total <= 0) return;
 
-        EarnGold(total, TransactionSource.CropSale);
         save.lifetimeSales += total;
-        inventoryService.Clear();
         Debug.Log($"[GameManager] 판매 완료: +{total} 코인");
     }
 
@@ -332,7 +433,19 @@ public class GameManager : MonoBehaviour
 
     public static string NoSeedMessage(CropDefinition crop) => $"{crop.displayName}의 모종이 없습니다!";
 
-    public int GetItemQuantity(string itemId) => inventoryService.GetQuantity(itemId);
+    // Sale list rows: everything sellable in the bag, oldest pickup first.
+    public List<ItemDefinition> GetSellableItems()
+    {
+        var items = new List<ItemDefinition>();
+        foreach (var item in Bag.Counts.Keys)
+        {
+            if (IsSellable(item)) items.Add(item);
+        }
+        items.Sort((a, b) => Bag.GetAcquiredOrder(a).CompareTo(Bag.GetAcquiredOrder(b)));
+        return items;
+    }
+
+    public int GetItemQuantity(ItemDefinition item) => Bag.GetCount(item);
 
     public PlantResult PlantFromPrompt(int plotIndex, int slotIndex, string cropId)
     {
@@ -354,14 +467,12 @@ public class GameManager : MonoBehaviour
         if (farmService.ClearSlot(plotIndex, slotIndex)) SaveNow();
     }
 
-    public bool SellItem(SellableItem item, int quantity)
+    public bool SellItem(ItemDefinition item, int quantity)
     {
         if (item == null || quantity <= 0) return false;
-        if (!inventoryService.Remove(item.itemId, quantity)) return false;
+        if (!InventoryManager.Instance.TrySell(item, quantity)) return false;
 
-        int total = item.sellPrice * quantity;
-        EarnGold(total, item.source);
-        save.lifetimeSales += total;
+        save.lifetimeSales += item.SellPrice * quantity;
         SaveNow();
         return true;
     }
@@ -390,11 +501,27 @@ public class GameManager : MonoBehaviour
         SaveNow();
     }
 
-    // Called when the pull animation lands the catch.
+    // Called when the pull animation lands the catch. With no room in the bag
+    // the catch is thrown back; the player is told once per full-bag spell,
+    // not on every cast. A catch with no ItemDefinition yet is dropped too
+    // (TryFindItem logs it) — that isn't the bag's fault, so no alert.
     public void AddFishingCatch(string itemId)
     {
-        inventoryService.Add(itemId, 1);
-        SaveNow();
+        if (!TryFindItem(itemId, out var item)) return;
+
+        if (Bag.GetAddableAmount(item) > 0)
+        {
+            Bag.Add(item, 1, ItemChangeReason.Fishing);
+            fullBagCatchAlertShown = false;
+            SaveNow();
+            return;
+        }
+
+        if (!fullBagCatchAlertShown)
+        {
+            fullBagCatchAlertShown = true;
+            gameUI.ShowAlert("가방이 가득 차서\n잡은 것을 놓아줬어요.");
+        }
     }
 
     public bool TryUpgradeRod()
@@ -404,17 +531,32 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    // Whether the whole yield of this ready slot fits in the bag. The farmer
+    // otter skips slots that don't, so it doesn't walk to them forever.
+    public bool CanStoreHarvest(int plotIndex, int slotIndex)
+    {
+        var crop = farmService.GetSlotCrop(plotIndex, slotIndex);
+        return crop != null && TryFindItem(crop.cropId, out var item) &&
+               Bag.GetAddableAmount(item) >= crop.yieldCount;
+    }
+
     // Shared harvest entry point — used by the debug-panel button and by
-    // FarmerOtterController once its harvest animation finishes. A successful
-    // harvest immediately replants the same crop; if a consumable crop is out
-    // of seeds the slot is left empty and the player is told.
+    // FarmerOtterController once its harvest animation finishes. If the yield
+    // doesn't fit in the bag nothing happens and the slot stays ready. A
+    // successful harvest immediately replants the same crop; if a consumable
+    // crop is out of seeds the slot is left empty and the player is told.
     public void HarvestSlot(int plotIndex, int slotIndex)
     {
+        if (!CanStoreHarvest(plotIndex, slotIndex)) return;
+
         var crop = farmService.GetSlotCrop(plotIndex, slotIndex);
         var harvested = farmService.Harvest(plotIndex, slotIndex);
         if (harvested.Count == 0) return;
 
-        inventoryService.AddRange(harvested);
+        foreach (var stack in harvested)
+        {
+            if (TryFindItem(stack.itemId, out var item)) Bag.Add(item, stack.quantity, ItemChangeReason.Harvest);
+        }
 
         if (crop != null && farmService.Plant(plotIndex, slotIndex, crop.cropId) == PlantResult.NoSeed)
         {
@@ -463,21 +605,20 @@ public class GameManager : MonoBehaviour
 
         GUILayout.Space(10);
         GUILayout.Label("=== 가방 ===");
-        if (inventoryService.Items.Count == 0)
+        GUILayout.Label($"칸 {Bag.UsedSlots}/{Bag.Capacity}");
+        if (Bag.UsedSlots == 0)
         {
             GUILayout.Label("아직 모은 생산물이 없어요");
         }
         else
         {
-            foreach (var stack in inventoryService.Items)
+            foreach (var pair in Bag.Counts)
             {
-                var item = FindSellable(stack.itemId);
-                string name = item != null ? item.displayName : stack.itemId;
-                GUILayout.Label($"{name} x{stack.quantity}");
+                GUILayout.Label($"{pair.Key.DisplayName} x{pair.Value}");
             }
         }
 
-        GUI.enabled = inventoryService.Items.Count > 0;
+        GUI.enabled = GetSellableItems().Count > 0;
         if (GUILayout.Button("전체 판매"))
         {
             SellAllForGold();

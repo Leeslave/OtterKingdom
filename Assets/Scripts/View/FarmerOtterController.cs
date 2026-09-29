@@ -195,6 +195,8 @@ public class FarmerOtterController : MonoBehaviour
             {
                 if (entry.slotAnchors[i] == null) continue;
                 if (farmService.GetSlotState(entry.plotIndex, i) != FurrowSlotState.AwaitingHarvest) continue;
+                // Bag too full for this yield — the slot waits until the player sells.
+                if (!GameManager.Instance.CanStoreHarvest(entry.plotIndex, i)) continue;
 
                 float dist = Vector2.Distance(transform.position, entry.slotAnchors[i].position);
                 if (dist < bestDist)

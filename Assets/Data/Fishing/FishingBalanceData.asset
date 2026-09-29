@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676b319aaeac2304c9b0f832980ca34c, type: 3}
   m_Name: FishingBalanceData
   m_EditorClassIdentifier: Assembly-CSharp::FishingBalanceData
-  fishItemId: fish_basic
-  fishDisplayName: "\uBB3C\uACE0\uAE30"
-  fishSellPrice: 20
+  fishItemId: fish_mackerel
   trashItemId: trash_basic
-  trashDisplayName: "\uC4F0\uB808\uAE30"
-  trashSellPrice: 1
   biteDelaySec: {x: 10, y: 30}
   baseFishChance: 0.5
   fishChancePerRodLevel: 0.05

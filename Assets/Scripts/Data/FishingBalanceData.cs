@@ -1,18 +1,13 @@
 using UnityEngine;
 
-// Fishing tuning shared by every scene's GameManager (the farm scene needs the
-// catch items' names/prices for the sale UI too). Values are placeholders.
+// Fishing tuning shared by every scene's GameManager. Values are placeholders.
+// The catch items' names and sale prices live in their ItemDefinitions.
 [CreateAssetMenu(menuName = "OtterKingdom/Fishing Balance", fileName = "FishingBalanceData")]
 public class FishingBalanceData : ScriptableObject
 {
     [Header("Catch items")]
-    public string fishItemId = "fish_basic";
-    public string fishDisplayName = "물고기";
-    public int fishSellPrice = 20;
-
+    public string fishItemId = "fish_mackerel";
     public string trashItemId = "trash_basic";
-    public string trashDisplayName = "쓰레기";
-    public int trashSellPrice = 1;
 
     [Header("Timing")]
     [Tooltip("Seconds from the bobber landing until something bites, rolled per cast.")]

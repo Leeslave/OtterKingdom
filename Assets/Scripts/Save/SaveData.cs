@@ -74,8 +74,16 @@ public class SaveData
     public string lastSaveUtc;
     public List<PlotSaveData> plots = new List<PlotSaveData>();
     public List<ItemStack> inventory = new List<ItemStack>();
-    // Remaining consumable-seed stock, keyed by cropId. Permanent seeds never appear here.
+    // Unlocked bag slots. 0 (saves from before the bag had a limit) means
+    // InventoryConfig's initial capacity.
+    public int inventoryCapacity;
+    // Legacy: consumable-seed stock keyed by cropId, from before seeds became
+    // bag items (seed_*). GameManager moves these into the bag on load; an
+    // entry only stays here if its seed item has no ItemDefinition yet.
     public List<ItemStack> seeds = new List<ItemStack>();
+    // cropIds whose starting seed stock (CropDefinition.initialSeedCount) has
+    // already been put in the bag, so it is never granted twice.
+    public List<string> starterSeedsGranted = new List<string>();
     public List<OtterSaveData> otters = new List<OtterSaveData>();
     public List<CurrencyBalance> currencies = new List<CurrencyBalance>();
 }
