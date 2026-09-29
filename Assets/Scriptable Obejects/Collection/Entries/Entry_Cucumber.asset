@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_Cucumber
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: crop_cucumber
+  _tab: {fileID: 11400000, guid: dcb3b9557d9798d4290580afb291c277, type: 2}
+  _displayName: 
+  _sortOrder: 3
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 0b5856ce63c5524438c39b608cc83305, type: 3}
+  _tagline: "\uC2DC\uC6D0\uD558\uACE0 \uC544\uC0AD\uD55C \uC5EC\uB984 \uCC44\uC18C."
+  _description: "\uB354\uC6B4 \uB0A0 \uD574\uB2EC\uB4E4\uC758 \uAC04\uC2DD\uC774\uC5D0\uC694."
+  _extraValue: "\uBC2D"
+  _linkedItem: {fileID: 11400000, guid: ace88c3612db2fc45bd6ed4235c9f639, type: 2}

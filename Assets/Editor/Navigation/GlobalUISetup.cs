@@ -29,13 +29,13 @@ public static class GlobalUISetup
     private const string BodyFontPath = "Assets/Fonts/NanumSquareRoundOTFR SDF.asset";
     private const string InventoryConfigPath = "Assets/Scriptable Obejects/Inventory/InventoryConfig.asset";
     private static readonly string[] CurrencyPaths = { "Assets/Scriptable Obejects/Gold.asset", "Assets/Scriptable Obejects/Gem.asset" };
-    private const string CommonSpriteFolder = "Assets/Art/UI/Common";
-    private const string NavIconFolder = "Assets/Art/UI/Nav";       // ICON_Nav_*.png
+    internal const string CommonSpriteFolder = "Assets/Art/UI/Common";
+    internal const string NavIconFolder = "Assets/Art/UI/Nav";       // ICON_Nav_*.png
     private const string PlaceIconFolder = "Assets/Art/UI/Travel";  // ICON_Place_*.png
-    private const string InventorySpriteFolder = "Assets/Art/UI/Inventory";
+    internal const string InventorySpriteFolder = "Assets/Art/UI/Inventory";
 
-    private static readonly Color Cocoa = new Color32(0x4B, 0x2E, 0x22, 0xFF);
-    private static readonly Color LightBrown = new Color32(0xA0, 0x86, 0x72, 0xFF);
+    internal static readonly Color Cocoa = new Color32(0x4B, 0x2E, 0x22, 0xFF);
+    internal static readonly Color LightBrown = new Color32(0xA0, 0x86, 0x72, 0xFF);
     private static readonly Color Sage = new Color(0.62f, 0.76f, 0.54f); // 크림 태그에 곱해 초록 "현재 위치"
 
     // (에셋 이름, ID, 이름, 설명, 씬, 이용 가능, 정렬, 아이콘 파일)
@@ -58,8 +58,8 @@ public static class GlobalUISetup
     private const float TravelPanelWidth = 640f;
     private const float TravelPanelHeight = 700f;
 
-    private static TMP_FontAsset _titleFont;
-    private static TMP_FontAsset _bodyFont;
+    internal static TMP_FontAsset _titleFont;
+    internal static TMP_FontAsset _bodyFont;
 
     [MenuItem("Tools/Navigation/Build Global UI")]
     public static void Run()
@@ -85,6 +85,8 @@ public static class GlobalUISetup
 
         CreateZones();
         BuildZoneCardPrefab();
+        CollectionSetup.CreateData();
+        CollectionSetup.BuildPrefabs();
         BuildGlobalUIPrefab();
         RegisterBuildScenes();
 
@@ -238,13 +240,14 @@ public static class GlobalUISetup
         var inventoryPresenter = inventoryScreen.GetComponentInChildren<InventoryPresenter>(true);
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
-        // 그리는 순서: 바 → 가방 → 확장 팝업 → 이동 팝업 → 페이드
+        // 그리는 순서: 바 → 가방 → 확장 팝업 → 도감 → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
         hud.gameObject.AddComponent<SafeAreaFltter>();
         hud.SetSiblingIndex(0);
 
         var navBar = BuildNavBar(hud);
+        var collection = CollectionSetup.BuildScreen(rootRect);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
         var fader = BuildFader(rootRect);
         BuildEventSystem(rootRect);
@@ -261,6 +264,10 @@ public static class GlobalUISetup
         Set(navigator, "_root", globalRoot);
         Set(navigator, "_fader", fader);
 
+        // 도감 모델의 주인: 전역 UI와 함께 씬을 넘어 유지 (중복은 GlobalUIRoot가 먼저 정리)
+        var collectionManager = root.AddComponent<CollectionManager>();
+        Set(collectionManager, "_database", AssetDatabase.LoadAssetAtPath<CollectionDatabase>(CollectionSetup.DatabasePath));
+
         var presenter = root.AddComponent<GlobalUIPresenter>();
         Set(presenter, "_root", globalRoot);
         Set(presenter, "_navigator", navigator);
@@ -268,6 +275,8 @@ public static class GlobalUISetup
         Set(presenter, "_travelPopup", travel);
         Set(presenter, "_inventory", inventoryPresenter);
         Set(presenter, "_inventoryScreen", inventoryAnimator);
+        Set(presenter, "_collection", collection.presenter);
+        Set(presenter, "_collectionScreen", collection.screen);
 
         PrefabUtility.SaveAsPrefabAsset(root, GlobalUIPrefabPath);
         Object.DestroyImmediate(root);
@@ -331,6 +340,8 @@ public static class GlobalUISetup
         BuildCenterButton(bar, LoadIcon(NavIconFolder, "ICON_Nav_Decorate"));
 
         var view = bar.gameObject.AddComponent<NavBarView>();
+        Set(view, "_codexButton", codex.button);
+        Set(view, "_codexSelected", codex.selected);
         Set(view, "_bagButton", bag.button);
         Set(view, "_travelButton", travel.button);
         Set(view, "_bagSelected", bag.selected);
@@ -595,7 +606,7 @@ public static class GlobalUISetup
 
     #region 도우미
 
-    private static void Set(Object target, string property, Object value)
+    internal static void Set(Object target, string property, Object value)
     {
         var so = new SerializedObject(target);
         var prop = so.FindProperty(property);
@@ -605,7 +616,7 @@ public static class GlobalUISetup
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 
-    private static RectTransform CreateRect(string name, Transform parent)
+    internal static RectTransform CreateRect(string name, Transform parent)
     {
         var go = new GameObject(name, typeof(RectTransform));
         go.layer = 5; // UI
@@ -614,7 +625,7 @@ public static class GlobalUISetup
         return rect;
     }
 
-    private static Image CreateImage(string name, Transform parent, Sprite sprite, bool raycast)
+    internal static Image CreateImage(string name, Transform parent, Sprite sprite, bool raycast)
     {
         var rect = CreateRect(name, parent);
         var image = rect.gameObject.AddComponent<Image>();
@@ -625,7 +636,7 @@ public static class GlobalUISetup
         return image;
     }
 
-    private static TextMeshProUGUI CreateText(string name, Transform parent, TMP_FontAsset font, string text, float size, Color color)
+    internal static TextMeshProUGUI CreateText(string name, Transform parent, TMP_FontAsset font, string text, float size, Color color)
     {
         var rect = CreateRect(name, parent);
         var tmp = rect.gameObject.AddComponent<TextMeshProUGUI>();
@@ -638,7 +649,7 @@ public static class GlobalUISetup
         return tmp;
     }
 
-    private static void Stretch(RectTransform rect, float inset)
+    internal static void Stretch(RectTransform rect, float inset)
     {
         rect.anchorMin = Vector2.zero;
         rect.anchorMax = Vector2.one;
@@ -647,7 +658,7 @@ public static class GlobalUISetup
     }
 
     // 한 점에 고정 (anchor = pivot)
-    private static void Place(RectTransform rect, Vector2 anchor, Vector2 position, Vector2 size)
+    internal static void Place(RectTransform rect, Vector2 anchor, Vector2 position, Vector2 size)
     {
         rect.anchorMin = anchor;
         rect.anchorMax = anchor;
@@ -657,7 +668,7 @@ public static class GlobalUISetup
     }
 
     // 아래쪽 가로 띠 (bottom-stretch)
-    private static void BottomBand(RectTransform rect, float bottom, float height)
+    internal static void BottomBand(RectTransform rect, float bottom, float height)
     {
         rect.anchorMin = new Vector2(0, 0);
         rect.anchorMax = new Vector2(1, 0);
@@ -667,7 +678,7 @@ public static class GlobalUISetup
     }
 
     // 아이콘은 없어도 진행 (글자만 표시). 새로 넣은 PNG는 스프라이트로 가져오도록 설정
-    private static Sprite LoadIcon(string folder, string name)
+    internal static Sprite LoadIcon(string folder, string name)
     {
         string path = $"{folder}/{name}.png";
         if (!File.Exists(path))
@@ -690,7 +701,7 @@ public static class GlobalUISetup
         return AssetDatabase.LoadAssetAtPath<Sprite>(path);
     }
 
-    private static Sprite LoadSprite(string folder, string name)
+    internal static Sprite LoadSprite(string folder, string name)
     {
         var sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{folder}/{name}.png");
         if (sprite == null)
@@ -699,7 +710,7 @@ public static class GlobalUISetup
     }
 
     // 패널 텍스처는 Multiple 모드 → 하위 스프라이트 _0 (9-slice 테두리 포함)
-    private static Sprite LoadPanelSprite()
+    internal static Sprite LoadPanelSprite()
     {
         var sprite = AssetDatabase.LoadAllAssetsAtPath($"{InventorySpriteFolder}/UI_Inventory_Panel.png")
             .OfType<Sprite>()
@@ -709,7 +720,7 @@ public static class GlobalUISetup
         return sprite;
     }
 
-    private static void EnsureFolder(string path)
+    internal static void EnsureFolder(string path)
     {
         if (AssetDatabase.IsValidFolder(path))
             return;

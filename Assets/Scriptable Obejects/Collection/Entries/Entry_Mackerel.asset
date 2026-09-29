@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_Mackerel
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_mackerel
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 4
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 595c90a805ca9b94a9570994ca9f6f98, type: 3}
+  _tagline: "\uD478\uB978 \uC904\uBB34\uB2AC\uB97C \uAC00\uC9C4 \uBC14\uB2E4 \uBB3C\uACE0\uAE30."
+  _description: "\uC740\uBE5B \uBC30\uB97C \uBC18\uC9DD\uC774\uBA70 \uBC14\uB2F7\uC18D\uC744
+    \uD5E4\uC5C4\uCCD0\uC694."
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130"
+  _linkedItem: {fileID: 11400000, guid: 0cb02bf2ad3606a439fe3742a5df077a, type: 2}

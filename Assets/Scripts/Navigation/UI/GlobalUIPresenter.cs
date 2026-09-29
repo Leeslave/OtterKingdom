@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 전역 UI 연결: 네비게이션 바 ↔ 가방 화면 / 이동 팝업 ↔ SceneNavigator.
+/// 전역 UI 연결: 네비게이션 바 ↔ 도감 / 가방 화면 / 이동 팝업 ↔ SceneNavigator.
 /// 어떤 화면이 열려 있는지(바 버튼 선택 표시)는 여기 한 곳에서만 관리한다.
 /// </summary>
 public class GlobalUIPresenter : MonoBehaviour
@@ -12,6 +12,11 @@ public class GlobalUIPresenter : MonoBehaviour
     [SerializeField] private NavBarView _navBar;
     [SerializeField] private TravelPopupView _travelPopup;
 
+    [Header("도감")]
+    [SerializeField] private CollectionPresenter _collection;
+    [Tooltip("도감 화면 루트의 연출 (닫힘을 알아채 바 선택 표시를 끄기 위함)")]
+    [SerializeField] private UIPopupAnimator _collectionScreen;
+
     [Header("가방")]
     [SerializeField] private InventoryPresenter _inventory;
     [Tooltip("가방 화면 루트의 연출 (닫힘을 알아채 바 선택 표시를 끄기 위함)")]
@@ -19,21 +24,44 @@ public class GlobalUIPresenter : MonoBehaviour
 
     private void OnEnable()
     {
+        _navBar.OnCodexClicked += OpenCollection;
         _navBar.OnBagClicked += OpenBag;
         _navBar.OnTravelClicked += ToggleTravel;
         _travelPopup.OnZoneSelected += HandleZoneSelected;
         _travelPopup.OnHidden += HandleTravelHidden;
         _inventoryScreen.OnHidden += HandleBagHidden;
+        _collectionScreen.OnHidden += HandleCollectionHidden;
     }
 
     private void OnDisable()
     {
+        _navBar.OnCodexClicked -= OpenCollection;
         _navBar.OnBagClicked -= OpenBag;
         _navBar.OnTravelClicked -= ToggleTravel;
         _travelPopup.OnZoneSelected -= HandleZoneSelected;
         _travelPopup.OnHidden -= HandleTravelHidden;
         _inventoryScreen.OnHidden -= HandleBagHidden;
+        _collectionScreen.OnHidden -= HandleCollectionHidden;
     }
+
+    #region 도감
+
+    private void OpenCollection()
+    {
+        if (_navigator.IsTraveling)
+            return;
+
+        _travelPopup.Hide();
+        _navBar.SetCodexSelected(true);
+        _collection.Open();
+    }
+
+    private void HandleCollectionHidden()
+    {
+        _navBar.SetCodexSelected(false);
+    }
+
+    #endregion
 
     #region 가방
 
