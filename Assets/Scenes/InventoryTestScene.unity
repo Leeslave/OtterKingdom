@@ -3559,6 +3559,7 @@ MonoBehaviour:
   _closeButton: {fileID: 313693828}
   _filledSprite: {fileID: 21300000, guid: fb6aa2be01579164c9a1d10f9816ea6c, type: 3}
   _emptySprite: {fileID: 21300000, guid: 846f8134f4d476c42ab10743c31ef6f3, type: 3}
+  _priceBox: {fileID: 1087935011}
   _emptyMessage: "\uC544\uC774\uD15C\uC744 \uC120\uD0DD\uD558\uC138\uC694."
 --- !u!114 &1001908171
 MonoBehaviour:

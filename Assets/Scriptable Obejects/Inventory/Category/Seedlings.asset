@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebefc16158b7a7243b225db3929be096, type: 3}
   m_Name: Seedlings
   m_EditorClassIdentifier: Assembly-CSharp::ItemCategory
-  _categoryId: seedlings
+  _categoryId: Seedlings
   _displayName: "\uBAA8\uC885"
   _sortOrder: 1
   _showsAllItems: 0

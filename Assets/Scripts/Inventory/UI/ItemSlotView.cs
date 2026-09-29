@@ -38,6 +38,7 @@ public class ItemSlotView : MonoBehaviour
     [SerializeField]
     private Sprite _emptySprite;
 
+    [Tooltip("잠긴 칸 (확장 구매 전) 배경")]
     [SerializeField]
     private Sprite _lockedSprite;
 

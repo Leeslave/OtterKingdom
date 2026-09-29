@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemCategory", menuName = "Game Data/Inventory/Item Category")]
 public class ItemCategory : ScriptableObject
@@ -33,6 +34,21 @@ public class ItemCategory : ScriptableObject
     public ItemCategory Parent => _parent;
     public bool IsRoot => _parent == null;
 
+    // 부모를 따라 올라가는 반복의 안전 한도. 실수로 부모가 순환(A→B→A)해도 에디터가 멈추지 않게
+    private const int MaxDepth = 16;
+
+    /// <summary>가장 위의 탭 (자신이 탭이면 자신)</summary>
+    public ItemCategory Root
+    {
+        get
+        {
+            var c = this;
+            for (int depth = 0; c._parent != null && depth < MaxDepth; depth++)
+                c = c._parent;
+            return c;
+        }
+    }
+
     /// <summary>이 탭(또는 칩)에 해당 아이템을 보여줘야 하는지</summary>
     public bool Contains(ItemDefinition item)
     {
@@ -43,12 +59,25 @@ public class ItemCategory : ScriptableObject
             return true;
 
         // 아이템의 카테고리부터 부모 쪽으로 올라가며 자신을 찾음 (작물 → 농사)
-        for (var c = item.Category; c != null; c = c.Parent)
+        var c = item.Category;
+        for (int depth = 0; c != null && depth < MaxDepth; depth++)
         {
             if (c == this)
                 return true;
+            c = c.Parent;
         }
 
+        return false;
+    }
+
+    private bool HasParentCycle()
+    {
+        var visited = new HashSet<ItemCategory>();
+        for (var c = this; c != null; c = c._parent)
+        {
+            if (!visited.Add(c))
+                return true;
+        }
         return false;
     }
 
@@ -57,8 +86,8 @@ public class ItemCategory : ScriptableObject
         if (string.IsNullOrWhiteSpace(_categoryId))
             Debug.LogWarning($"[{name}] CategoryID가 비어 있습니다.", this);
 
-        if (_parent == this)
-            Debug.LogWarning($"[{name}] 부모가 자기 자신입니다.", this);
+        if (HasParentCycle())
+            Debug.LogWarning($"[{name}] 부모가 순환합니다 (자기 자신으로 되돌아옴). 부모 설정을 확인하세요.", this);
 
         if (_showsAllItems && _parent != null)
             Debug.LogWarning($"[{name}] '전체' 카테고리는 부모를 가질 수 없습니다 (탭 전용).", this);
