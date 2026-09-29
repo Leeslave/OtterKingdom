@@ -25,7 +25,7 @@ public static class GlobalUISetup
     private const string GlobalUIPrefabPath = "Assets/Resources/GlobalUI.prefab";
     private const string ZoneCardPrefabPath = "Assets/Prefab/Navigation/ZoneCard.prefab";
     private const string ZoneFolder = "Assets/Scriptable Obejects/Navigation";
-    private const string TabPrefabPath = "Assets/Prefab/Inventory/UI/CategoryButton.prefab";
+    private const string TitleFontPath = "Assets/Fonts/Cafe24Ssurround-v2.0 SDF.asset";
     private const string BodyFontPath = "Assets/Fonts/NanumSquareRoundOTFR SDF.asset";
     private const string InventoryConfigPath = "Assets/Scriptable Obejects/Inventory/InventoryConfig.asset";
     private static readonly string[] CurrencyPaths = { "Assets/Scriptable Obejects/Gold.asset", "Assets/Scriptable Obejects/Gem.asset" };
@@ -76,7 +76,8 @@ public static class GlobalUISetup
         // 끝나면 원래 보던 씬으로 돌아가기 위해 기억
         string previousScene = SceneManager.GetActiveScene().path;
 
-        _titleFont = AssetDatabase.LoadAssetAtPath<GameObject>(TabPrefabPath).GetComponentInChildren<TextMeshProUGUI>(true).font;
+        // 제목·라벨: Cafe24 (탭 프리팹 라벨은 기본 폰트 LiberationSans라서 숫자·기호가 얇게 나왔음)
+        _titleFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(TitleFontPath);
         _bodyFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BodyFontPath) ?? _titleFont;
 
         EnsureFolder(ZoneFolder);
@@ -221,6 +222,9 @@ public static class GlobalUISetup
             go.GetComponent<Canvas>() != null
             && go.GetComponent<GlobalUIRoot>() == null
             && go.GetComponentInChildren<InventoryPresenter>(true) != null);
+
+        // 가방 원본에 판매 버튼·판매 팝업이 없으면 먼저 넣음 (원본에 넣어야 테스트 씬과 전역 UI가 같아짐)
+        SellUISetup.EnsureSellUI(sourceCanvas);
 
         var root = Object.Instantiate(sourceCanvas);
         root.name = "GlobalUI";
