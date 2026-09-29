@@ -131,5 +131,26 @@
  "UI_Badge": null,
  "UI_Knob": null,
  "UI_Tile_OK": null,
- "UI_Tile_Blocked": null
+ "UI_Tile_Blocked": null,
+ "UI_Tab_Gold": [
+  48,
+  48,
+  48,
+  56
+ ],
+ "UI_TitleBoard": [
+  54,
+  54,
+  54,
+  64
+ ],
+ "UI_Badge_Status": [
+  34,
+  34,
+  34,
+  39
+ ],
+ "UI_Deco_Leaf": null,
+ "UI_Icon_CheckSmall": null,
+ "UI_Icon_Paw": null
 }

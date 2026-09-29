@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_SweetPotato
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: crop_sweet_potato
+  _tab: {fileID: 11400000, guid: dcb3b9557d9798d4290580afb291c277, type: 2}
+  _displayName: 
+  _sortOrder: 2
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: d4c141084208f1542b0e5ca079973059, type: 3}
+  _tagline: "\uB2EC\uCF64\uD55C \uBCF4\uB78F\uBE5B \uBFCC\uB9AC\uCC44\uC18C."
+  _description: "\uAD6C\uC6B0\uBA74 \uAFC0\uCC98\uB7FC \uB2EC\uCF64\uD574\uC838\uC694."
+  _extraValue: "\uBC2D"
+  _linkedItem: {fileID: 11400000, guid: 3b1d9973c36f102419f2dcbd30a9bee7, type: 2}
