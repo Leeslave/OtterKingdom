@@ -23,6 +23,12 @@ public class InventoryManager : MonoBehaviour
 
     public bool CanExpand => Inventory.Capacity < Inventory.MaxCapacity;
 
+    /// <summary>
+    /// 판매가 끝났을 때 (가방 판매 팝업, SellAll, 게임 쪽 TrySell 모두). 누적 판매액 계산 등에 사용.
+    /// SellAll은 아이템마다 한 번씩 알린다.
+    /// </summary>
+    public event Action<ItemSoldEvent> OnItemSold;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -77,6 +83,8 @@ public class InventoryManager : MonoBehaviour
         int total = (int)Math.Min((long)item.SellPrice * amount, int.MaxValue);
         if (total > 0)
             CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(_config.SellCurrency, total, TransactionSource.ItemSale));
+
+        OnItemSold?.Invoke(new ItemSoldEvent(item, amount, total));
 
         return true;
     }

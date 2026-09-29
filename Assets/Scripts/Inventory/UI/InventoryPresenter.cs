@@ -27,6 +27,8 @@ public class InventoryPresenter : MonoBehaviour
     [SerializeField] private UIPopupAnimator _screen;
     [Tooltip("잠긴 칸을 눌렀을 때 뜨는 확장 구매 팝업")]
     [SerializeField] private ExpandPopupView _expandPopup;
+    [Tooltip("상세 패널의 판매 버튼을 눌렀을 때 뜨는 판매 팝업")]
+    [SerializeField] private SellPopupView _sellPopup;
 
     [Header("데이터")]
     [Tooltip("탭과 소분류 카테고리 전부. 부모가 없는 것 = 탭, 부모가 있는 것 = 그 탭의 칩 (SortOrder 순으로 정렬됨)")]
@@ -59,6 +61,8 @@ public class InventoryPresenter : MonoBehaviour
         _inventory.OnCapacityChanged += HandleCapacityChanged;
         _detailView.OnCloseClicked += Close;
         _expandPopup.OnConfirmClicked += HandleExpandConfirmed;
+        _detailView.OnSellClicked += ShowSellPopup;
+        _sellPopup.OnConfirmed += HandleSellConfirmed;
         _sortDropdown.OnChanged += HandleSortChanged;
 
         // 꺼져 있던 동안 바뀐 내용 반영
@@ -79,6 +83,8 @@ public class InventoryPresenter : MonoBehaviour
         }
         _detailView.OnCloseClicked -= Close;
         _expandPopup.OnConfirmClicked -= HandleExpandConfirmed;
+        _detailView.OnSellClicked -= ShowSellPopup;
+        _sellPopup.OnConfirmed -= HandleSellConfirmed;
         _sortDropdown.OnChanged -= HandleSortChanged;
     }
 
@@ -345,6 +351,27 @@ public class InventoryPresenter : MonoBehaviour
         bool canAfford = CurrencyManager.Instance.CanAfford(config.ExpandCurrency, config.ExpandCost);
 
         _expandPopup.Show(_inventory.Capacity, newCapacity, config.ExpandCurrency, config.ExpandCost, canAfford);
+    }
+
+    private void ShowSellPopup()
+    {
+        if (_selectedItem == null || !_selectedItem.IsSellable)
+            return;
+
+        int owned = _inventory.GetCount(_selectedItem);
+        if (owned < 1)
+            return;
+
+        _sellPopup.Show(_selectedItem, owned, InventoryManager.Instance.Config.SellCurrency);
+    }
+
+    private void HandleSellConfirmed(int amount)
+    {
+        // 성공하면 OnItemChanged → 목록과 상세가 이미 갱신되어 있음 (다 팔면 다음 아이템이 선택됨)
+        if (_selectedItem != null && InventoryManager.Instance.TrySell(_selectedItem, amount))
+            _sellPopup.Hide();
+        else
+            _sellPopup.ShowFailed();
     }
 
     private void HandleExpandConfirmed()

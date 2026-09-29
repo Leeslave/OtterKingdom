@@ -45,15 +45,21 @@ public class ItemDetailView : MonoBehaviour
     [SerializeField]
     private GameObject _priceBox;
 
+    [Tooltip("가격 줄 옆 판매 버튼 (판매 불가 아이템이거나 선택한 게 없으면 숨김)")]
+    [SerializeField]
+    private Button _sellButton;
+
     [Header("빈 상태")]
     [SerializeField]
     private string _emptyMessage = "아이템을 선택하세요.";
 
     public event Action OnCloseClicked;
+    public event Action OnSellClicked;
 
     private void Awake()
     {
         _closeButton.onClick.AddListener(() => OnCloseClicked?.Invoke());
+        _sellButton.onClick.AddListener(() => OnSellClicked?.Invoke());
     }
 
     public void Show(ItemDefinition item, int count)
@@ -69,6 +75,7 @@ public class ItemDetailView : MonoBehaviour
         _countText.text = NumberFormatter.Short(count);
         _priceText.text = NumberFormatter.Short(item.SellPrice);
         _priceBox.SetActive(item.IsSellable);
+        _sellButton.gameObject.SetActive(item.IsSellable);
         _descriptionText.text = item.Description;
         _background.sprite = _filledSprite;
     }
@@ -82,6 +89,7 @@ public class ItemDetailView : MonoBehaviour
         _countText.text = "";
         _priceText.text = "";
         _priceBox.SetActive(true); // 빈 상태에서는 시안처럼 빈 칸으로 보여줌
+        _sellButton.gameObject.SetActive(false);
         _descriptionText.text = _emptyMessage;
         _background.sprite = _emptySprite;
     }
