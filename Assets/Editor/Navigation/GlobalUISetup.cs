@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// 전역 UI(하단 네비게이션 바 + 가방 + 이동 팝업 + 씬 전환 페이드)를 만든다. 여러 번 실행해도 결과가 같음.
+/// 전역 UI(하단 네비게이션 바 + 가방 + 도감 + 퀘스트 + 이동 팝업 + 씬 전환 페이드)를 만든다. 여러 번 실행해도 결과가 같음.
 /// - 장소 에셋 4개 (광장/밭/낚시터/광산)
 /// - Assets/Prefab/Navigation/ZoneCard.prefab
 /// - Assets/Resources/GlobalUI.prefab  (가방 화면은 InventoryTestScene의 Canvas를 복제해서 사용)
@@ -88,6 +88,8 @@ public static class GlobalUISetup
         BuildZoneCardPrefab();
         CollectionSetup.CreateData();
         CollectionSetup.BuildPrefabs();
+        QuestSetup.CreateData();
+        QuestSetup.BuildPrefabs();
         BuildGlobalUIPrefab();
         RegisterBuildScenes();
 
@@ -244,7 +246,7 @@ public static class GlobalUISetup
         var inventoryPresenter = inventoryScreen.GetComponentInChildren<InventoryPresenter>(true);
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
-        // 그리는 순서: 바 → 가방 → 확장 팝업 → 도감 → 이동 팝업 → 페이드
+        // 그리는 순서: 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
         hud.gameObject.AddComponent<SafeAreaFltter>();
@@ -252,6 +254,7 @@ public static class GlobalUISetup
 
         var navBar = BuildNavBar(hud);
         var collection = CollectionSetup.BuildScreen(rootRect);
+        var quest = QuestSetup.BuildScreen(rootRect);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
         var fader = BuildFader(rootRect);
         BuildEventSystem(rootRect);
@@ -272,6 +275,10 @@ public static class GlobalUISetup
         var collectionManager = root.AddComponent<CollectionManager>();
         Set(collectionManager, "_database", AssetDatabase.LoadAssetAtPath<CollectionDatabase>(CollectionSetup.DatabasePath));
 
+        // 퀘스트 모델의 주인: 도감과 같이 전역 UI에 붙음
+        var questManager = root.AddComponent<QuestManager>();
+        Set(questManager, "_database", AssetDatabase.LoadAssetAtPath<QuestDatabase>(QuestSetup.DatabasePath));
+
         var presenter = root.AddComponent<GlobalUIPresenter>();
         Set(presenter, "_root", globalRoot);
         Set(presenter, "_navigator", navigator);
@@ -281,6 +288,8 @@ public static class GlobalUISetup
         Set(presenter, "_inventoryScreen", inventoryAnimator);
         Set(presenter, "_collection", collection.presenter);
         Set(presenter, "_collectionScreen", collection.screen);
+        Set(presenter, "_quest", quest.presenter);
+        Set(presenter, "_questScreen", quest.screen);
 
         PrefabUtility.SaveAsPrefabAsset(root, GlobalUIPrefabPath);
         Object.DestroyImmediate(root);
@@ -332,8 +341,6 @@ public static class GlobalUISetup
         var bag = BuildNavItem(bar, 3, "Bag", "가방", true, LoadIcon(NavIconFolder, "ICON_Nav_Bag"));
         var travel = BuildNavItem(bar, 4, "Travel", "이동", false, LoadIcon(NavIconFolder, "ICON_Nav_Travel"));
 
-        // 퀘스트 숫자 뱃지는 퀘스트 기능이 생기면 사용 (지금은 숨김)
-        quest.badge.SetActive(false);
         codex.badge.SetActive(false);
         travel.badge.SetActive(false);
 
@@ -341,11 +348,19 @@ public static class GlobalUISetup
         var newBadge = bag.item.gameObject.AddComponent<InventoryNewBadgeView>();
         Set(newBadge, "_badge", bag.badge);
 
+        // 퀘스트 숫자: 보상을 받을 수 있는 퀘스트가 있을 때만
+        var questBadge = quest.item.gameObject.AddComponent<QuestBadgeView>();
+        Set(questBadge, "_badge", quest.badge);
+        Set(questBadge, "_countText", quest.badge.GetComponentInChildren<TextMeshProUGUI>(true));
+        quest.badge.SetActive(false);
+
         BuildCenterButton(bar, LoadIcon(NavIconFolder, "ICON_Nav_Decorate"));
 
         var view = bar.gameObject.AddComponent<NavBarView>();
         Set(view, "_codexButton", codex.button);
         Set(view, "_codexSelected", codex.selected);
+        Set(view, "_questButton", quest.button);
+        Set(view, "_questSelected", quest.selected);
         Set(view, "_bagButton", bag.button);
         Set(view, "_travelButton", travel.button);
         Set(view, "_bagSelected", bag.selected);

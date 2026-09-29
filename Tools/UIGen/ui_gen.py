@@ -88,7 +88,27 @@ def fish(size):
     return img.resize((size, size), Image.LANCZOS)
 
 
+CURRENCY_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "Assets", "Art", "UI", "Currency")
+
+
+def currency_art(name, size):
+    """Real currency icon (Gold.png / Gem.png) trimmed and fitted, or None if it doesn't exist."""
+    path = os.path.join(CURRENCY_DIR, name + ".png")
+    if not os.path.exists(path):
+        return None
+    im = Image.open(path).convert("RGBA")
+    im = im.crop(im.getchannel("A").point(lambda a: 255 if a > 8 else 0).getbbox())
+    k = size / max(im.size)
+    im = im.resize((max(1, int(im.width * k)), max(1, int(im.height * k))), Image.LANCZOS)
+    out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    out.alpha_composite(im, ((size - im.width) // 2, (size - im.height) // 2))
+    return out
+
+
 def coin(size):
+    real = currency_art("Gold", size)
+    if real is not None:
+        return real
     S = size * SS; img = Image.new("RGBA", (S, S), (0, 0, 0, 0)); d = ImageDraw.Draw(img)
     ow = int(size * 0.07 * SS)
     d.ellipse([0, 0, S - 1, S - 1], fill=COCOA)

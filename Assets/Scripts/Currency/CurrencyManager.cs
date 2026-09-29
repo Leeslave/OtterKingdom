@@ -9,6 +9,12 @@ public class CurrencyManager : MonoBehaviour
     public static CurrencyManager Instance { get; private set; }
     public event Action<Currency, int> OnCurrencyChanged;
 
+    /// <summary>
+    /// 거래(획득·소비)로 잔액이 실제로 바뀔 때마다, 출처와 함께 (퀘스트의 "업그레이드 N회" 등).
+    /// 세이브 복원(SetBalance)은 거래가 아니므로 알리지 않는다.
+    /// </summary>
+    public event Action<CurrencyChange> OnTransaction;
+
     private readonly Dictionary<Currency, int> _wallets = new Dictionary<Currency, int>();
     [SerializeField] private List<Currency> _allCurrencies;
 
@@ -100,7 +106,10 @@ public class CurrencyManager : MonoBehaviour
 
         // 한도에 걸려 실제 변화가 없으면 알림 생략
         if (newBalance != oldBalance)
+        {
             OnCurrencyChanged?.Invoke(currency, newBalance);
+            OnTransaction?.Invoke(new CurrencyChange(currency, newBalance - oldBalance, source));
+        }
     }
 
     // 버프(곱하기 연산)

@@ -17,9 +17,9 @@ public static class CollectionSetup
     internal const string DatabasePath = DataFolder + "/CollectionDatabase.asset";
     private const string TabPrefabPath = "Assets/Prefab/Collection/CollectionTab.prefab";
     private const string SlotPrefabPath = "Assets/Prefab/Collection/CollectionSlot.prefab";
-    private const string CollectionSpriteFolder = "Assets/Art/UI/Collection";
+    internal const string CollectionSpriteFolder = "Assets/Art/UI/Collection";
     private const string SilhouetteFolder = "Assets/Art/UI/Collection/Silhouettes";
-    private const string OtterFolder = "Assets/Art/Otter";
+    internal const string OtterFolder = "Assets/Art/Otter";
     private const string ItemFolder = "Assets/Scriptable Obejects/Inventory/Items";
     private const string BordersJsonPath = "Tools/UIGen/kit_borders.json";
 
@@ -117,7 +117,7 @@ public static class CollectionSetup
         AssetDatabase.SaveAssets();
     }
 
-    private static (T asset, bool isNew) LoadOrCreate<T>(string path) where T : ScriptableObject
+    internal static (T asset, bool isNew) LoadOrCreate<T>(string path) where T : ScriptableObject
     {
         var asset = AssetDatabase.LoadAssetAtPath<T>(path);
         if (asset != null)
@@ -128,14 +128,14 @@ public static class CollectionSetup
         return (asset, true);
     }
 
-    private static void FillIfEmpty(SerializedObject so, string property, Object value)
+    internal static void FillIfEmpty(SerializedObject so, string property, Object value)
     {
         var prop = so.FindProperty(property);
         if (prop.objectReferenceValue == null && value != null)
             prop.objectReferenceValue = value;
     }
 
-    private static List<T> FindAll<T>(string folder) where T : Object
+    internal static List<T> FindAll<T>(string folder) where T : Object
     {
         return AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { folder })
             .Select(guid => AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid)))
@@ -144,7 +144,7 @@ public static class CollectionSetup
             .ToList();
     }
 
-    private static void SetList<T>(SerializedProperty list, List<T> values) where T : Object
+    internal static void SetList<T>(SerializedProperty list, List<T> values) where T : Object
     {
         list.arraySize = values.Count;
         for (int i = 0; i < values.Count; i++)
@@ -164,7 +164,7 @@ public static class CollectionSetup
     #region 스프라이트 가져오기
 
     /// <summary>새 PNG를 스프라이트로 가져오고, kit_borders.json에 테두리가 있으면 9-slice로 설정</summary>
-    private static Sprite ImportSprite(string folder, string name)
+    internal static Sprite ImportSprite(string folder, string name)
     {
         string path = $"{folder}/{name}.png";
         if (!File.Exists(path))
@@ -493,7 +493,7 @@ public static class CollectionSetup
         right.rectTransform.localScale = new Vector3(-1, 1, 1); // 좌우 대칭
     }
 
-    private static Button BuildCloseButton(RectTransform parent)
+    internal static Button BuildCloseButton(RectTransform parent)
     {
         var close = CreateImage("CloseButton", parent, LoadSprite(InventorySpriteFolder, "UI_Inventory_CloseButton"), true);
         Place(close.rectTransform, new Vector2(1, 1), new Vector2(-24, -86), new Vector2(96, 96));
@@ -588,7 +588,7 @@ public static class CollectionSetup
     }
 
     // 위쪽 가로 띠 (top-stretch): 왼/오른 여백, 위에서 거리, 높이
-    private static void TopBand(RectTransform rect, float left, float right, float top, float height)
+    internal static void TopBand(RectTransform rect, float left, float right, float top, float height)
     {
         rect.anchorMin = new Vector2(0, 1);
         rect.anchorMax = new Vector2(1, 1);

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: Quest_Otter_2
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: quest_otter_2
+  _title: "\uD574\uB2EC \uCE5C\uAD6C\uB4E4"
+  _description: "\uD574\uB2EC 2\uB9C8\uB9AC \uB9CC\uB098\uAE30"
+  _sortOrder: 9
+  _icon: {fileID: 21300000, guid: 4951d4902ad1b814cbbff2ea208b0a11, type: 3}
+  _goalType: 4
+  _goal: 2
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 11400000, guid: e57bb4e159ee155448fc7c02082cbb58, type: 2}
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 500
