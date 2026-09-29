@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// 전역 UI(하단 네비게이션 바 + 가방 + 도감 + 퀘스트 + 이동 팝업 + 씬 전환 페이드)를 만든다. 여러 번 실행해도 결과가 같음.
+/// 전역 UI(상단바 + 하단 네비게이션 바 + 가방 + 도감 + 퀘스트 + 재화 충전 + 이동 팝업 + 씬 전환 페이드)를 만든다. 여러 번 실행해도 결과가 같음.
 /// - 장소 에셋 4개 (광장/밭/낚시터/광산)
 /// - Assets/Prefab/Navigation/ZoneCard.prefab
 /// - Assets/Resources/GlobalUI.prefab  (가방 화면은 InventoryTestScene의 Canvas를 복제해서 사용)
@@ -90,6 +90,8 @@ public static class GlobalUISetup
         CollectionSetup.BuildPrefabs();
         QuestSetup.CreateData();
         QuestSetup.BuildPrefabs();
+        CurrencyShopSetup.CreateData();
+        CurrencyShopSetup.BuildPrefabs();
         BuildGlobalUIPrefab();
         RegisterBuildScenes();
 
@@ -246,15 +248,17 @@ public static class GlobalUISetup
         var inventoryPresenter = inventoryScreen.GetComponentInChildren<InventoryPresenter>(true);
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
-        // 그리는 순서: 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 이동 팝업 → 페이드
+        // 그리는 순서: 상단바·하단 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 재화 충전 → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
         hud.gameObject.AddComponent<SafeAreaFltter>();
         hud.SetSiblingIndex(0);
 
         var navBar = BuildNavBar(hud);
+        var topBar = TopBarSetup.Build(hud);
         var collection = CollectionSetup.BuildScreen(rootRect);
         var quest = QuestSetup.BuildScreen(rootRect);
+        var shop = CurrencyShopSetup.BuildScreens(rootRect);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
         var fader = BuildFader(rootRect);
         BuildEventSystem(rootRect);
@@ -274,6 +278,19 @@ public static class GlobalUISetup
         // 도감 모델의 주인: 전역 UI와 함께 씬을 넘어 유지 (중복은 GlobalUIRoot가 먼저 정리)
         var collectionManager = root.AddComponent<CollectionManager>();
         Set(collectionManager, "_database", AssetDatabase.LoadAssetAtPath<CollectionDatabase>(CollectionSetup.DatabasePath));
+
+        // 상단바 프로필(이름·레벨)의 주인
+        root.AddComponent<ProfileManager>();
+
+        // 상단바 [+] → 충전 화면
+        var shopPresenter = root.AddComponent<CurrencyShopPresenter>();
+        Set(shopPresenter, "_catalog", AssetDatabase.LoadAssetAtPath<CurrencyShopCatalog>(CurrencyShopSetup.CatalogPath));
+        Set(shopPresenter, "_goldPill", topBar.goldPill);
+        Set(shopPresenter, "_gemPill", topBar.gemPill);
+        Set(shopPresenter, "_goldShop", shop.goldShop);
+        Set(shopPresenter, "_gemShop", shop.gemShop);
+        Set(shopPresenter, "_confirm", shop.confirm);
+        Set(shopPresenter, "_shortage", shop.shortage);
 
         // 퀘스트 모델의 주인: 도감과 같이 전역 UI에 붙음
         var questManager = root.AddComponent<QuestManager>();

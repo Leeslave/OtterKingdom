@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26edd8aec060794da0f4380cab6ac92, type: 3}
+  m_Name: CurrencyShopCatalog
+  m_EditorClassIdentifier: OtterKingdom::CurrencyShopCatalog
+  _goldPacks:
+  - {fileID: 11400000, guid: 664167de15df78548b127b10b500518b, type: 2}
+  - {fileID: 11400000, guid: 6951fa9fbb5ac9c459615f00c822b2a0, type: 2}
+  - {fileID: 11400000, guid: 84d1ef3c86a50364a8528f82d36c9ec8, type: 2}
+  - {fileID: 11400000, guid: 7d43e15a783ecb34497c651938f1c7ae, type: 2}
+  _gemPacks:
+  - {fileID: 11400000, guid: db717c8844eef414d9976a71e5449e30, type: 2}
+  - {fileID: 11400000, guid: 1e60e8c092f6b3145ba676aea39415d0, type: 2}
+  - {fileID: 11400000, guid: 5499f8cdaabbe5246a7bdcedee58ef9c, type: 2}
+  - {fileID: 11400000, guid: 7466de78083519748a09a70255faa41b, type: 2}
+  - {fileID: 11400000, guid: 8b83694acd2ff9747843d2a5db349254, type: 2}
+  - {fileID: 11400000, guid: 50c636e0b4c689c448cf3c4d0f693800, type: 2}

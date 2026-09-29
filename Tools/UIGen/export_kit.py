@@ -48,6 +48,26 @@ def tile(ok):
     return g.resize((size, size), Image.LANCZOS)
 
 
+def gear(size=128):
+    """Settings gear: lavender-grey 8-tooth gear with a cocoa outline and a cream hub."""
+    import math
+    S = size * SS; g = Image.new("RGBA", (S, S), (0, 0, 0, 0)); d = ImageDraw.Draw(g)
+    c = S / 2; ow = 7 * SS * size / 128
+    outer, inner, teeth = S * 0.46, S * 0.34, 8
+    pts = []
+    for i in range(teeth * 4):
+        a = 2 * math.pi * i / (teeth * 4) - math.pi / 2
+        r = outer if i % 4 in (1, 2) else inner
+        pts.append((c + r * math.cos(a), c + r * math.sin(a)))
+    d.polygon(pts, fill=COCOA)
+    shrink = [(c + (x - c) * (1 - ow / outer), c + (y - c) * (1 - ow / outer)) for x, y in pts]
+    d.polygon(shrink, fill="#B9B6CF")
+    hub = S * 0.15
+    d.ellipse([c - hub - ow, c - hub - ow, c + hub + ow, c + hub + ow], fill=COCOA)
+    d.ellipse([c - hub, c - hub, c + hub, c + hub], fill=CREAM)
+    return g.resize((size, size), Image.LANCZOS)
+
+
 def build():
     k = {}  # name: (image, border or None)
     # --- 9-slice: buttons (colour = meaning; price buttons follow the payment currency) ---
@@ -67,6 +87,7 @@ def build():
         k[f"UI_Tag_Rarity_{key}"] = sliced(22, *RARITY[label], ow=4, lip_h=4)
     k["UI_Tag_Highlight"] = sliced(22, CORAL, CORAL_LIP, ow=4, lip_h=4)  # 1회 한정, +10% 보너스
     k["UI_Tag_Category"] = sliced(22, CREAM, CREAM_LIP, ow=4, lip_h=4)
+    k["UI_Tag_Level"] = sliced(18, MUSTARD, MUSTARD_LIP, ow=4, lip_h=4)  # top bar "Lv.5"
     # --- 9-slice: settings controls ---
     k["UI_Toggle_On"] = sliced(34, SAGE, SAGE_LIP, ow=6, lip_h=6)
     k["UI_Toggle_Off"] = sliced(34, EMPTY, EMPTY_LIP, ow=6, lip_h=6)
@@ -89,6 +110,7 @@ def build():
     k["UI_Button_PlusSmall"] = (with_glyph(fixed(54, SAGE, SAGE_LIP, ow=6, lip_h=6), "plus", lip_h=6), None)
     k["UI_Badge"] = (fixed(46, RED, "#B8363A", ow=4, lip_h=4), None)
     k["UI_Knob"] = (fixed(64, PAPER, PAPER_LIP, ow=6, lip_h=6), None)
+    k["ICON_Settings"] = (gear(), None)
     k["UI_Tile_OK"] = (tile(True), None)
     k["UI_Tile_Blocked"] = (tile(False), None)
     return k
