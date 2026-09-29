@@ -104,6 +104,9 @@ public static class CollectionSetup
             entries.Add(entry);
         }
 
+        // 사람이 추가한 항목까지 포함해, 실루엣이 비어 있으면 그림(또는 아이템 아이콘)으로 자동 생성
+        SilhouetteGenerator.FillMissing(FindAll<CollectionEntry>(DataFolder + "/Entries"));
+
         // DB는 항상 폴더 안의 모든 탭·항목으로 다시 채움 (사람이 추가한 항목도 포함)
         var (database, _) = LoadOrCreate<CollectionDatabase>(DatabasePath);
         var dbSo = new SerializedObject(database);
