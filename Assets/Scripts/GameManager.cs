@@ -9,9 +9,11 @@ using UnityEngine;
 // be verified with zero scene/prefab setup. Replace the OnGUI block with real
 // uGUI views in M4; the services underneath should not need to change.
 //
-// Every zone scene (Farm, Fishing) has its own GameManager with the same data
-// assigned, so the save, coins, inventory and sale UI are shared. The farm
-// keeps ticking in the fishing scene too — crops grow wherever the player is.
+// Every zone scene (Farm, Fishing, Plaza) has its own instance of the
+// GameManager prefab (OtterKingdom > Tools > Setup GameManager Prefab), so the
+// save, coins, inventory and sale UI are shared and the data can't drift. The
+// farm keeps ticking in every scene — crops grow wherever the player is, but
+// only the farm scene's otter harvests them.
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -31,12 +33,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CropDefinition[] cropDefinitions;
     [SerializeField] private FarmBalanceData farmBalance;
     [SerializeField] private FishingBalanceData fishingBalance;
+    [SerializeField] private OtterVisitBalanceData otterVisitBalance;
 
     [Header("Save")]
     [SerializeField] private float autoSaveIntervalSec = 30f;
 
     [Header("Currency")]
     [SerializeField] private Currency goldCurrency;
+
+    [Header("UI")]
+    [Tooltip("The temporary always-on sale button. Off in the plaza.")]
+    [SerializeField] private bool showSellButton = true;
 
     private const string DefaultOtterId = "otter_001";
     private const string PlotId = "plot_1";
@@ -52,16 +59,34 @@ public class GameManager : MonoBehaviour
     // first GameManager to meet a given InventoryManager fills it.
     private static InventoryManager loadedInventory;
 
+    // Offline production covers the time the app was closed, which ends when
+    // the app starts — not when the first zone scene with a GameManager opens
+    // (the game starts in the plaza, which has none). Handled once per launch;
+    // later zone scenes only catch the farm up on time spent elsewhere.
+    private static DateTime appLaunchUtc;
+    private static bool launchAbsenceHandled;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void OnAppLaunch()
+    {
+        appLaunchUtc = DateTime.UtcNow;
+        launchAbsenceHandled = false;
+    }
+
     private SaveData save;
     private SaveService saveService;
     private FarmService farmService;
     private FishingService fishingService;
+    private OfflineProductionService offlineProduction;
     private GameUI gameUI;
     private readonly HashSet<string> warnedMissingItems = new HashSet<string>();
     private bool fullBagCatchAlertShown;
 
     private float autoSaveTimer;
     private float pendingOfflineElapsedSec;
+    private double pendingAbsenceSec;
+    // Set while the app is in the background (mobile), to measure the absence.
+    private DateTime? pausedAtUtc;
 
     private void Awake()
     {
@@ -115,7 +140,8 @@ public class GameManager : MonoBehaviour
         bool seedsMoved = LoadInventoryOnce();
         farmService = new FarmService(save, cropDefinitions, farmBalance, GetSeedCount, TryConsumeSeed);
         fishingService = new FishingService(save, fishingBalance);
-        gameUI = GameUI.Create(this);
+        offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance, otterVisitBalance);
+        gameUI = GameUI.Create(this, showSellButton);
 
         ReportLoadStatus(loadStatus);
 
@@ -169,6 +195,12 @@ public class GameManager : MonoBehaviour
             pendingOfflineElapsedSec = 0f;
             SaveNow();
         }
+
+        if (pendingAbsenceSec > 0)
+        {
+            RunOfflineProduction(pendingAbsenceSec);
+            pendingAbsenceSec = 0;
+        }
     }
 
     private void Update()
@@ -183,9 +215,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // The GameManager dies with its zone scene, so save before the navigator
+    // loads the next one. The next zone's GameManager reads this save, and
+    // lastSaveUtc lets the farm catch up on time spent in scenes without one.
+    // The Instance check skips a duplicate that Awake is about to destroy.
+    private void OnEnable()
+    {
+        if (Instance == this) SceneNavigator.BeforeLeave += SaveNow;
+    }
+
+    private void OnDisable()
+    {
+        SceneNavigator.BeforeLeave -= SaveNow;
+    }
+
+    // Back from the background: planted slots grow through the absence (up
+    // to AwaitingHarvest, like on launch) and offline production runs for it.
+    // Frame time is capped, so Update alone would drop that time.
     private void OnApplicationPause(bool pause)
     {
-        if (pause) SaveNow();
+        if (pause)
+        {
+            pausedAtUtc = DateTime.UtcNow;
+            SaveNow();
+            return;
+        }
+
+        if (pausedAtUtc == null) return;
+        double away = (DateTime.UtcNow - pausedAtUtc.Value).TotalSeconds;
+        pausedAtUtc = null;
+        if (away <= 0) return;
+
+        farmService.Tick((float)away);
+        RunOfflineProduction(away);
     }
 
     private void OnApplicationQuit()
@@ -218,6 +280,11 @@ public class GameManager : MonoBehaviour
         {
             fishingBalance = ScriptableObject.CreateInstance<FishingBalanceData>();
             Debug.Log("[GameManager] No FishingBalanceData assigned — using built-in defaults.");
+        }
+
+        if (otterVisitBalance == null)
+        {
+            otterVisitBalance = ScriptableObject.CreateInstance<OtterVisitBalanceData>();
         }
     }
 
@@ -364,6 +431,84 @@ public class GameManager : MonoBehaviour
         if (elapsed > 0)
         {
             pendingOfflineElapsedSec = (float)elapsed;
+        }
+
+        if (!launchAbsenceHandled)
+        {
+            launchAbsenceHandled = true;
+            pendingAbsenceSec = Math.Max(0, (appLaunchUtc - last.ToUniversalTime()).TotalSeconds);
+        }
+    }
+
+    // ------------------------------------------------------------- offline
+
+    // Registered crops and rod catches for time the game wasn't running, then
+    // the return popup. Saved right away so a crash can't hand them out twice.
+    private void RunOfflineProduction(double absenceSec)
+    {
+        var report = offlineProduction.Run(save, absenceSec, new OfflineBag(this));
+        SaveNow();
+        if (report.HasAnything) gameUI.ShowOfflineReport(report, ItemDisplayName);
+    }
+
+    // ---- farm NPC registrations (what grows offline)
+
+    public bool IsOfflineFarmUnlocked => offlineProduction.IsFarmUnlocked(save);
+
+    public int OfflineFarmRegistrationLimit => OfflineProductionService.RegistrationLimit(save);
+
+    // Null for an unused registration.
+    public CropDefinition GetOfflineCrop(int index)
+    {
+        if (index < 0 || index >= save.offlineFarmSlots.Count) return null;
+        string cropId = save.offlineFarmSlots[index].cropId;
+        return string.IsNullOrEmpty(cropId) ? null : farmService.GetCrop(cropId);
+    }
+
+    // cropId null/empty clears the registration. Changing the crop restarts
+    // its grow cycle.
+    public void SetOfflineCrop(int index, string cropId)
+    {
+        if (index < 0 || index >= OfflineFarmRegistrationLimit) return;
+        while (save.offlineFarmSlots.Count <= index) save.offlineFarmSlots.Add(new OfflineFarmSlotSaveData());
+
+        var slot = save.offlineFarmSlots[index];
+        if (slot.cropId == cropId) return;
+        slot.cropId = string.IsNullOrEmpty(cropId) ? null : cropId;
+        slot.progressSec = 0f;
+        SaveNow();
+    }
+
+    // Called by OfflineFarmNpcView when the player taps the farm NPC.
+    public void RequestOfflineFarmPrompt()
+    {
+        gameUI.ShowOfflineFarmPrompt();
+    }
+
+    public float OfflineSlowdown => farmBalance.offlineSlowdown;
+
+    private string ItemDisplayName(string itemId) =>
+        TryFindItem(itemId, out var item) ? item.DisplayName : itemId;
+
+    private class OfflineBag : IOfflineBag
+    {
+        private readonly GameManager game;
+
+        public OfflineBag(GameManager game) => this.game = game;
+
+        public int GetCount(string itemId) =>
+            game.TryFindItem(itemId, out var item) ? game.Bag.GetCount(item) : 0;
+
+        public bool TryRemove(string itemId, int amount) =>
+            game.TryFindItem(itemId, out var item) && game.Bag.TryRemove(item, amount, ItemChangeReason.Plant);
+
+        public int Add(string itemId, int amount)
+        {
+            if (!game.TryFindItem(itemId, out var item)) return 0;
+            var reason = game.fishingService.IsFish(itemId) || itemId == game.fishingBalance.trashItemId
+                ? ItemChangeReason.Fishing
+                : ItemChangeReason.Harvest;
+            return game.Bag.Add(item, amount, reason);
         }
     }
 
@@ -523,6 +668,42 @@ public class GameManager : MonoBehaviour
             gameUI.ShowAlert("가방이 가득 차서\n잡은 것을 놓아줬어요.");
         }
     }
+
+#if UNITY_EDITOR
+    // Dev tool (OtterKingdom > Dev > Offline Test) — reads and edits the live
+    // save while playing, since this GameManager would overwrite file edits.
+    public SaveData DevSave => save;
+
+    public void DevSetLevels(int farmLevel, int rodLevel)
+    {
+        save.farmLevel = Mathf.Clamp(farmLevel, 1, farmBalance.maxFarmLevel);
+        save.rodLevel = Mathf.Clamp(rodLevel, 1, fishingBalance.MaxRodLevel);
+        SaveNow();
+    }
+
+    // Locks every plot but the first again and empties its slots (crops are
+    // lost, no seed refund). Views and the farmer otter re-read the unlock
+    // state every frame, so this shows up without a reload.
+    public void DevRelockExtraPlots()
+    {
+        RelockExtraPlots(save);
+        SaveNow();
+    }
+
+    public static void RelockExtraPlots(SaveData data)
+    {
+        for (int i = 1; i < data.plots.Count; i++)
+        {
+            data.plots[i].unlocked = false;
+            foreach (var slot in data.plots[i].slots)
+            {
+                slot.cropId = null;
+                slot.state = FurrowSlotState.Empty;
+                slot.remainingSec = 0f;
+            }
+        }
+    }
+#endif
 
     public bool TryUpgradeRod()
     {

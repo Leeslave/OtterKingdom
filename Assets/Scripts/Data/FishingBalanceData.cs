@@ -20,4 +20,22 @@ public class FishingBalanceData : ScriptableObject
     [Range(0f, 1f)] public float fishChancePerRodLevel = 0.05f;
     // Cost to go from level (index+1) to (index+2). Max level = length + 1.
     public int[] rodUpgradeCosts = { 100, 200, 400, 800 };
+    public int MaxRodLevel => rodUpgradeCosts.Length + 1;
+
+    [Header("Offline")]
+    [Tooltip("Rod level at which fishing keeps going while the game is closed (no fishing duty needed).")]
+    public int offlineUnlockRodLevel = 2;
+    [Tooltip("Seconds of cast/bite/pull/reaction animation per catch online, on top of the bite delay.")]
+    public float onlineAnimationSecPerCatch = 5f;
+    [Tooltip("Offline time per catch = average online time per catch x this.")]
+    public float offlineSlowdown = 4f;
+
+    public float FishChanceAt(int rodLevel)
+    {
+        return Mathf.Clamp01(baseFishChance + (rodLevel - 1) * fishChancePerRodLevel);
+    }
+
+    // Average bite delay + animation, slowed down. ~100s with the defaults.
+    public float OfflineSecPerCatch =>
+        ((biteDelaySec.x + biteDelaySec.y) * 0.5f + onlineAnimationSecPerCatch) * offlineSlowdown;
 }

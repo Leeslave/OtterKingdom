@@ -15,4 +15,24 @@ public class FarmBalanceData : ScriptableObject
 
     // Coin cost to unlock each locked plot (plot 1 starts unlocked).
     public int plotUnlockCost = 100;
+
+    [Header("Offline")]
+    [Tooltip("Farm level at which the crops registered with the farm NPC keep growing while the game is closed.")]
+    public int offlineUnlockLevel = 2;
+    [Tooltip("Offline grow time = online grow time x this.")]
+    public float offlineSlowdown = 4f;
+    [Tooltip("Vegetables per offline harvest (one seed each for consumable crops), instead of the crop's online yield.")]
+    public int offlineYieldPerHarvest = 1;
+
+    public float DurationMultiplierAt(int farmLevel)
+    {
+        int index = Mathf.Clamp(farmLevel - 1, 0, durationMultiplierByLevel.Length - 1);
+        return durationMultiplierByLevel[index];
+    }
+
+    // Seconds for one online grow cycle of this crop at this farm level.
+    public float GrowDurationSec(CropDefinition crop, int farmLevel)
+    {
+        return Mathf.Ceil(crop.baseDurationSec * DurationMultiplierAt(farmLevel));
+    }
 }

@@ -46,6 +46,17 @@ public class PlotSaveData
     }
 }
 
+// One crop registered with the farm NPC for offline growing. Not tied to a
+// real furrow slot — the NPC's list only has as many entries in use as there
+// are unlocked slots. progressSec carries a half-grown cycle over to the next
+// time the game is closed.
+[Serializable]
+public class OfflineFarmSlotSaveData
+{
+    public string cropId;
+    public float progressSec;
+}
+
 [Serializable]
 public class OtterSaveData
 {
@@ -84,6 +95,13 @@ public class SaveData
     // cropIds whose starting seed stock (CropDefinition.initialSeedCount) has
     // already been put in the bag, so it is never granted twice.
     public List<string> starterSeedsGranted = new List<string>();
+    // Crops registered with the farm NPC (farm level 2+), grown only while
+    // the game is closed. Empty cropId = an unused registration.
+    public List<OfflineFarmSlotSaveData> offlineFarmSlots = new List<OfflineFarmSlotSaveData>();
+    // Offline time already spent towards the next catch (rod level 2+).
+    public float offlineFishingProgressSec;
+    // Offline time already spent towards the next otter visit roll.
+    public float offlineOtterVisitProgressSec;
     public List<OtterSaveData> otters = new List<OtterSaveData>();
     public List<CurrencyBalance> currencies = new List<CurrencyBalance>();
 }

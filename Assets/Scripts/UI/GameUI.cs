@@ -37,14 +37,14 @@ public class GameUI : MonoBehaviour
 
     public bool IsModalOpen => modals.Count > 0;
 
-    public static GameUI Create(GameManager game)
+    public static GameUI Create(GameManager game, bool showSellButton)
     {
         EnsureEventSystem();
 
         var go = new GameObject(nameof(GameUI),
             typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         var ui = go.AddComponent<GameUI>();
-        ui.Initialize(game);
+        ui.Initialize(game, showSellButton);
         return ui;
     }
 
@@ -57,7 +57,7 @@ public class GameUI : MonoBehaviour
         new GameObject(nameof(EventSystem), typeof(EventSystem), typeof(InputSystemUIInputModule));
     }
 
-    private void Initialize(GameManager owner)
+    private void Initialize(GameManager owner, bool showSellButton)
     {
         game = owner;
         font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
@@ -71,7 +71,7 @@ public class GameUI : MonoBehaviour
         scaler.referenceResolution = ReferenceResolution;
         scaler.matchWidthOrHeight = 0.5f;
 
-        CreateSellButton();
+        if (showSellButton) CreateSellButton();
     }
 
     private void Update()
@@ -211,6 +211,138 @@ public class GameUI : MonoBehaviour
             openAlertMessages.Remove(message);
             CloseModal(modal);
         });
+    }
+
+    // --------------------------------------------------------------- offline
+
+    // Return popup after offline production. Stacks on top of anything open.
+    public void ShowOfflineReport(OfflineReport report, Func<string, string> itemName)
+    {
+        var modal = OpenModal("자리를 비운 동안", out var content);
+        CreateLabel(content, $"{FormatDuration(report.ElapsedSec)} 동안 있었던 일이에요.");
+
+        if (report.OtterVisits.Count > 0) CreateLabel(content, DescribeOtterVisits(report.OtterVisits));
+
+        if (report.Received.Count > 0) CreateLabel(content, "받은 것\n" + ListStacks(report.Received, itemName));
+        if (report.SeedsUsed.Count > 0) CreateLabel(content, "사용한 모종\n" + ListStacks(report.SeedsUsed, itemName));
+
+        if (report.Lost.Count > 0)
+        {
+            var lost = CreateLabel(content, "가방이 가득 차서 놓친 것\n" + ListStacks(report.Lost, itemName));
+            lost.color = WarningColor;
+        }
+
+        if (report.OutOfSeeds.Count > 0)
+        {
+            var names = new List<string>();
+            foreach (var cropId in report.OutOfSeeds) names.Add(itemName(cropId));
+            var outOfSeeds = CreateLabel(content, $"모종이 떨어져서 멈춘 작물\n{string.Join(", ", names)}");
+            outOfSeeds.color = WarningColor;
+        }
+
+        CreateButton(content, "확인", () => CloseModal(modal));
+    }
+
+    // Farm NPC: one row per unlocked slot, each holding the crop that grows
+    // there while the game is closed.
+    public void ShowOfflineFarmPrompt()
+    {
+        CloseAllModals();
+        var modal = OpenModal("오프라인 농사", out var content);
+        CreateLabel(content, "게임을 끈 동안 여기 등록한 작물을 수확해요.\n" +
+                             $"밭에 심은 작물과는 따로 자라고, 온라인보다 {game.OfflineSlowdown:0.#}배 느려요.");
+
+        int limit = game.OfflineFarmRegistrationLimit;
+        for (int i = 0; i < limit; i++)
+        {
+            int index = i;
+            var row = CreateRow(content, ButtonHeight);
+            var label = CreateLabel(row, DescribeOfflineCrop(index), TextAnchor.MiddleLeft);
+            label.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1f;
+            CreateButton(row, "변경", () => ShowOfflineCropPicker(index), width: 200f);
+        }
+
+        CreateButton(content, "닫기", () => CloseModal(modal));
+    }
+
+    private string DescribeOfflineCrop(int index)
+    {
+        var crop = game.GetOfflineCrop(index);
+        return $"칸 {index + 1} : {(crop != null ? SeedLabel(crop) : "비어 있음")}";
+    }
+
+    private string SeedLabel(CropDefinition crop) =>
+        game.FarmService.IsUnlimitedSeed(crop.cropId)
+            ? crop.displayName
+            : $"{crop.displayName} (남은 모종 {game.FarmService.GetSeedCount(crop.cropId)})";
+
+    private void ShowOfflineCropPicker(int index)
+    {
+        CloseAllModals();
+        OpenModal($"칸 {index + 1}에 등록할 작물", out var content);
+
+        foreach (var crop in game.Crops)
+        {
+            if (crop == null) continue;
+
+            var cropForClick = crop;
+            CreateButton(content, SeedLabel(crop), () =>
+            {
+                game.SetOfflineCrop(index, cropForClick.cropId);
+                ShowOfflineFarmPrompt();
+            });
+        }
+
+        if (game.GetOfflineCrop(index) != null)
+        {
+            CreateButton(content, "등록 해제", () =>
+            {
+                game.SetOfflineCrop(index, null);
+                ShowOfflineFarmPrompt();
+            });
+        }
+        CreateButton(content, "취소", ShowOfflineFarmPrompt);
+    }
+
+    // "도깨비 해달이 다녀갔어요!" per otter, first visit order, with a count
+    // when the same otter came more than once.
+    private static string DescribeOtterVisits(List<string> visits)
+    {
+        var order = new List<string>();
+        var counts = new Dictionary<string, int>();
+        foreach (var name in visits)
+        {
+            if (!counts.ContainsKey(name))
+            {
+                order.Add(name);
+                counts[name] = 0;
+            }
+            counts[name]++;
+        }
+
+        var lines = new List<string>();
+        foreach (var name in order)
+        {
+            string times = counts[name] > 1 ? $" ({counts[name]}번)" : "";
+            lines.Add($"{WithSubjectParticle(name)} 다녀갔어요!{times}");
+        }
+        return string.Join("\n", lines);
+    }
+
+    private static string ListStacks(List<ItemStack> stacks, Func<string, string> itemName)
+    {
+        var lines = new List<string>();
+        foreach (var stack in stacks) lines.Add($"{itemName(stack.itemId)} ×{stack.quantity}");
+        return string.Join("\n", lines);
+    }
+
+    private static string FormatDuration(double seconds)
+    {
+        var time = TimeSpan.FromSeconds(seconds);
+        if (time.TotalDays >= 1) return $"{(int)time.TotalDays}일 {time.Hours}시간";
+        if (time.TotalHours >= 1) return $"{(int)time.TotalHours}시간 {time.Minutes}분";
+        if (time.TotalMinutes >= 1) return $"{time.Minutes}분";
+        return $"{time.Seconds}초";
     }
 
     // --------------------------------------------------------------- fishing
@@ -508,11 +640,16 @@ public class GameUI : MonoBehaviour
     }
 
     // Picks 은/는 from whether the last Hangul syllable has a final consonant.
-    private static string WithTopicParticle(string word)
+    private static string WithTopicParticle(string word) =>
+        string.IsNullOrEmpty(word) ? word : word + (HasFinalConsonant(word) ? "은" : "는");
+
+    // Same for 이/가.
+    private static string WithSubjectParticle(string word) =>
+        string.IsNullOrEmpty(word) ? word : word + (HasFinalConsonant(word) ? "이" : "가");
+
+    private static bool HasFinalConsonant(string word)
     {
-        if (string.IsNullOrEmpty(word)) return word;
         char last = word[word.Length - 1];
-        bool hasFinal = last >= 0xAC00 && last <= 0xD7A3 && (last - 0xAC00) % 28 != 0;
-        return word + (hasFinal ? "은" : "는");
+        return last >= 0xAC00 && last <= 0xD7A3 && (last - 0xAC00) % 28 != 0;
     }
 }

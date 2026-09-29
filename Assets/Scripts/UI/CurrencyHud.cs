@@ -6,11 +6,17 @@ using UnityEngine.UI;
 // with a proper uGUI/CurrencyUI view once real HUD art exists.
 public class CurrencyHud : MonoBehaviour
 {
+    // The HUD outlives scenes, but every zone scene's GameManager calls Show —
+    // only the first call builds it.
+    private static CurrencyHud instance;
+
     private Currency currency;
     private Text label;
 
     public static void Show(Currency currency)
     {
+        if (instance != null) return;
+
         var go = new GameObject(nameof(CurrencyHud),
             typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         DontDestroyOnLoad(go);
@@ -19,6 +25,7 @@ public class CurrencyHud : MonoBehaviour
 
     private void Initialize(Currency targetCurrency)
     {
+        instance = this;
         currency = targetCurrency;
 
         var canvas = GetComponent<Canvas>();
@@ -57,6 +64,7 @@ public class CurrencyHud : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (instance == this) instance = null;
         if (CurrencyManager.Instance != null)
             CurrencyManager.Instance.OnCurrencyChanged -= OnCurrencyChanged;
     }

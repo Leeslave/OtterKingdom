@@ -80,7 +80,9 @@ public class SaveService
         warnedBlocked = false;
     }
 
-    public bool Save(SaveData data)
+    // stampTime: false keeps data.lastSaveUtc as is — only the dev tool that
+    // rewinds it to fake time away uses that.
+    public bool Save(SaveData data, bool stampTime = true)
     {
         if (WritesBlocked)
         {
@@ -92,7 +94,7 @@ public class SaveService
             return false;
         }
 
-        data.lastSaveUtc = DateTime.UtcNow.ToString("o");
+        if (stampTime) data.lastSaveUtc = DateTime.UtcNow.ToString("o");
         string json = JsonUtility.ToJson(data, true);
 
         try
