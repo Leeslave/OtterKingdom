@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 825cd634af4be214280222a1eadbe5ae, type: 3}
+  m_Name: QuestDatabase
+  m_EditorClassIdentifier: OtterKingdom::QuestDatabase
+  _quests:
+  - {fileID: 11400000, guid: 0b4273eadd1a2524a9797eb5eb29642d, type: 2}
+  - {fileID: 11400000, guid: 1c5037fac49a430429a98676f686b216, type: 2}
+  - {fileID: 11400000, guid: 2d78f79a0a5a82b428e2838d50f4a2b1, type: 2}
+  - {fileID: 11400000, guid: 71a2b0cf00227214fb9029a2867375af, type: 2}
+  - {fileID: 11400000, guid: 0f6ef386924d1d7469ea442b68363503, type: 2}
+  - {fileID: 11400000, guid: f9dd8c3021c85754bb307e39934d5678, type: 2}
+  - {fileID: 11400000, guid: 9da8cf4010d8a8443bccb3f5af9052b9, type: 2}
+  - {fileID: 11400000, guid: debf7160f756ea243b6b074616d6af46, type: 2}
+  - {fileID: 11400000, guid: 547b7521d3254f246a4e239ba3772328, type: 2}
+  - {fileID: 11400000, guid: 53e8915c0ead6f34fa17a753303f72d0, type: 2}

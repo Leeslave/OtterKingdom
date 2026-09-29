@@ -55,6 +55,7 @@ def build():
     k["UI_Button_Shell"] = sliced(44, LAV, LAV_LIP)
     k["UI_Button_Primary"] = sliced(44, SAGE, SAGE_LIP, shine=True)
     k["UI_Button_Secondary"] = sliced(44, CREAM, CREAM_LIP)
+    k["UI_Button_Idle"] = sliced(44, "#E9DCCB", "#D2C0AA")  # grey: in progress / not yet claimable (quest doc)
     k["UI_Button_Paper"] = sliced(40, PAPER, PAPER_LIP)  # currency pill, sort, dropdown, list buttons, toast
     # --- 9-slice: title ribbons ---
     k["UI_Ribbon_Peach"] = sliced(52, PEACH, PEACH_LIP, ow=8, lip_h=10, shine=True)
@@ -71,6 +72,7 @@ def build():
     k["UI_Toggle_Off"] = sliced(34, EMPTY, EMPTY_LIP, ow=6, lip_h=6)
     k["UI_Slider_Track"] = sliced(20, EMPTY, EMPTY_LIP, ow=5, lip_h=4)
     k["UI_Slider_Fill"] = sliced(20, PEACH, PEACH_LIP, ow=5, lip_h=4)
+    k["UI_Bar_Fill"] = sliced(20, SAGE, SAGE_LIP, ow=5, lip_h=4)  # progress bars (quest)
     # --- 9-slice: misc boxes ---
     k["UI_Box_Inset"] = sliced(36, EMPTY, EMPTY_LIP, lip_h=0, outline=False)  # icon well inside shop cards
     locked = box(128, 128, 36, "#E3D3C2", "#CDB9A4", pad=8)  # same canvas as the other slot sprites
@@ -116,6 +118,9 @@ if __name__ == "__main__":
         img.save(os.path.join(out, name + ".png"))
         borders[name] = border
         print(f"{name:28s} {img.width:>3}x{img.height:<3} " + (f"border L{border[0]} T{border[1]} R{border[2]} B{border[3]}" if border else "fixed"))
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "kit_borders.json"), "w", encoding="utf-8") as f:
-        json.dump(borders, f, indent=1)
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kit_borders.json")
+    merged = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
+    merged.update(borders)  # keep entries other exporters (export_collection.py) wrote
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(merged, f, indent=1)
     preview(kit, prev)

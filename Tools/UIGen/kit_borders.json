@@ -23,6 +23,12 @@
   46,
   55
  ],
+ "UI_Button_Idle": [
+  46,
+  46,
+  46,
+  55
+ ],
  "UI_Button_Paper": [
   42,
   42,
@@ -152,5 +158,11 @@
  ],
  "UI_Deco_Leaf": null,
  "UI_Icon_CheckSmall": null,
- "UI_Icon_Paw": null
+ "UI_Icon_Paw": null,
+ "UI_Bar_Fill": [
+  22,
+  22,
+  22,
+  26
+ ]
 }

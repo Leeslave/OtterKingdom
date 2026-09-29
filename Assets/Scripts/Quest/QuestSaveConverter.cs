@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+
+/// <summary>세이브 한 줄: 퀘스트 ID, 진행 수치, 보상 수령 여부</summary>
+[Serializable]
+public class QuestSaveEntry
+{
+    public string questId;
+    public int progress;
+    public bool claimed;
+
+    public QuestSaveEntry() { }
+
+    public QuestSaveEntry(string questId, int progress, bool claimed)
+    {
+        this.questId = questId;
+        this.progress = progress;
+        this.claimed = claimed;
+    }
+}
+
+/// <summary>
+/// QuestLog ↔ 세이브 형식(List&lt;QuestSaveEntry&gt;) 변환. 모델이 세이브 타입을 모르도록 여기서만 한다.
+/// </summary>
+public static class QuestSaveConverter
+{
+    /// <summary>기록이 있는 퀘스트만 ID 순으로 쓴다 (DB에 없는 ID도 보관해 둔 그대로 씀)</summary>
+    public static void Write(QuestLog log, List<QuestSaveEntry> result)
+    {
+        if (log == null) throw new ArgumentNullException(nameof(log));
+        if (result == null) throw new ArgumentNullException(nameof(result));
+
+        result.Clear();
+
+        var ids = new List<string>(log.Records.Keys);
+        ids.Sort(string.CompareOrdinal);
+        foreach (var id in ids)
+        {
+            var record = log.Records[id];
+            result.Add(new QuestSaveEntry(id, record.Progress, record.Claimed));
+        }
+    }
+
+    /// <summary>저장된 기록을 넣는다. 비었거나 잘못된 줄은 건너뛴다.</summary>
+    public static void Read(IEnumerable<QuestSaveEntry> saved, QuestLog log)
+    {
+        if (saved == null) throw new ArgumentNullException(nameof(saved));
+        if (log == null) throw new ArgumentNullException(nameof(log));
+
+        foreach (var line in saved)
+        {
+            if (line == null || string.IsNullOrEmpty(line.questId))
+                continue;
+
+            log.LoadRecord(line.questId, line.progress, line.claimed);
+        }
+    }
+}
