@@ -11,9 +11,18 @@ using UnityEngine;
 // otter just idles again and retries later — no immediate re-search loop.
 //
 // Keeps running while off-screen; nothing here depends on the camera.
+//
+// Toys: when choosing the next walk, the otter may instead reserve a placed
+// toy (DecorBoardView.Active), walk to a spot beside it and Play there for a
+// while. The reservation is always released when play ends or is cut short.
+// Placing/moving a toy bumps PlazaWalkableArea.Version; a walk planned on an
+// older version is abandoned so the otter re-plans around the new obstacle.
 public class OtterWanderAgent : MonoBehaviour
 {
-    public enum State { Idle, Walk }
+    public enum State { Idle, Walk, Play }
+
+    // Pause before re-planning after the obstacles changed mid-walk.
+    private const float ReplanDelaySeconds = 0.3f;
 
     // Walking longer than expected * this (+ grace) counts as stuck.
     private const float StuckTimeMultiplier = 2f;
@@ -27,12 +36,17 @@ public class OtterWanderAgent : MonoBehaviour
     private int pathIndex;
     private float stateTimer;
     private float walkTimeLimit;
+    private int pathVersion;
+    private DecorPlaySession playSession;
+    private bool walkingToPlay;
 
     public State CurrentState { get; private set; } = State.Idle;
     public float WalkSpeed { get; private set; }
     // Direction of the current path segment (zero while idle). Stable for a
     // whole segment, so visuals keyed off it don't jitter frame to frame.
     public Vector2 MoveDirection { get; private set; }
+    // Where to face while playing (the toy).
+    public Vector2 LookTarget { get; private set; }
 
     public void Initialize(PlazaWalkableArea walkableArea, PlazaSettings plazaSettings)
     {
@@ -60,11 +74,67 @@ public class OtterWanderAgent : MonoBehaviour
             case State.Walk:
                 UpdateWalk(Time.deltaTime);
                 break;
+
+            case State.Play:
+                stateTimer -= Time.deltaTime;
+                if (stateTimer <= 0f || !playSession.IsValid)
+                {
+                    EnterIdle(settings.RollIdleSeconds());
+                }
+                break;
         }
+    }
+
+    private void OnDisable()
+    {
+        ReleasePlay();
+    }
+
+    // Reserve a toy and a spot beside it, then walk there.
+    private bool TryStartPlayWalk()
+    {
+        var board = DecorBoardView.Active;
+        if (board == null || !board.RollWantsToPlay()) return false;
+
+        Vector2 from = transform.position;
+        if (!board.TryReservePlay(from, area.IsWalkable, out var session)) return false;
+
+        if (!area.TryFindPath(from, session.StandPoint, path) || path.Count == 0)
+        {
+            session.Release();
+            return false;
+        }
+
+        playSession = session;
+        walkingToPlay = true;
+        BeginWalk(from);
+        return true;
+    }
+
+    private void EnterPlay()
+    {
+        walkingToPlay = false;
+        CurrentState = State.Play;
+        MoveDirection = Vector2.zero;
+        LookTarget = playSession.LookPoint;
+        stateTimer = playSession.Seconds;
+        path.Clear();
+        pathIndex = 0;
+        playSession.Begin();
+    }
+
+    private void ReleasePlay()
+    {
+        walkingToPlay = false;
+        if (playSession == null) return;
+        playSession.Release();
+        playSession = null;
     }
 
     private bool TryStartWalk()
     {
+        if (TryStartPlayWalk()) return true;
+
         Vector2 from = transform.position;
         for (int i = 0; i < settings.maxDestinationTries; i++)
         {
@@ -77,14 +147,20 @@ public class OtterWanderAgent : MonoBehaviour
                 continue;
             }
 
-            pathIndex = 0;
-            stateTimer = 0f;
-            walkTimeLimit = PathLength(from) / Mathf.Max(WalkSpeed, 0.01f) * StuckTimeMultiplier + StuckGraceSeconds;
-            CurrentState = State.Walk;
-            MoveDirection = (path[0] - from).normalized;
+            BeginWalk(from);
             return true;
         }
         return false;
+    }
+
+    private void BeginWalk(Vector2 from)
+    {
+        pathIndex = 0;
+        stateTimer = 0f;
+        pathVersion = area.Version;
+        walkTimeLimit = PathLength(from) / Mathf.Max(WalkSpeed, 0.01f) * StuckTimeMultiplier + StuckGraceSeconds;
+        CurrentState = State.Walk;
+        MoveDirection = (path[0] - from).normalized;
     }
 
     private void UpdateWalk(float deltaTime)
@@ -93,6 +169,12 @@ public class OtterWanderAgent : MonoBehaviour
         if (stateTimer > walkTimeLimit)
         {
             EnterIdle(settings.RollIdleSeconds());
+            return;
+        }
+        if (area.Version != pathVersion)
+        {
+            // A toy was placed/moved/removed: this path may now cross it.
+            EnterIdle(ReplanDelaySeconds);
             return;
         }
 
@@ -131,12 +213,14 @@ public class OtterWanderAgent : MonoBehaviour
 
         if (pathIndex >= path.Count)
         {
-            EnterIdle(settings.RollIdleSeconds());
+            if (walkingToPlay && playSession != null && playSession.IsValid) EnterPlay();
+            else EnterIdle(settings.RollIdleSeconds());
         }
     }
 
     private void EnterIdle(float duration)
     {
+        ReleasePlay();
         CurrentState = State.Idle;
         MoveDirection = Vector2.zero;
         stateTimer = duration;

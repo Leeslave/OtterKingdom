@@ -27,8 +27,8 @@ public static class MiningDataSetup
     private const string DiamondIconPath = "Assets/Art/Item/Ore/Diamond.png";
     private const string StoneIconPath = "Assets/Art/Item/Ore/Stone.png";
 
-    // Tabs: 농사 0, 낚시 1, 광산 2.
-    private const int MiningTabSortOrder = 2;
+    // Tabs: 농사 0, 낚시 1, 꾸미기 2, 광산 3.
+    private const int MiningTabSortOrder = 3;
 
     public static bool Run()
     {

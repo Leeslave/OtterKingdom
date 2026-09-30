@@ -16,6 +16,12 @@ using Random = UnityEngine.Random;
 // show up in the Inspector list without manual wiring. Hand-assigned entries
 // are left alone (see 농부해달_애니메이션_작업기록.md).
 //
+// Toys (DecorBoardView.Active): while waiting for crops the otter sometimes
+// walks to a placed toy and plays beside it (random idle actions facing the
+// toy while it bounces/wiggles). A harvest that becomes ready interrupts play
+// immediately. Walks that would cross a toy take a grid detour instead of
+// the usual vertical-then-horizontal line.
+//
 // Relies on FarmerOtter.controller's exact parameter/state names: bool
 // "IsMoving", int "WalkDir" (see WalkDir below), trigger "Harvest", state "Harvest" auto-returning to "Idle"
 // after one loop (hasExitTime, exitTime = 1). `randomActionTriggers` expects
@@ -86,6 +92,8 @@ public class FarmerOtterController : MonoBehaviour
     private Coroutine activeRoutine;
     private bool isHarvesting;
     private FarmService subscribedFarmService;
+    private DecorPlaySession playSession;
+    private readonly List<Vector2> detour = new List<Vector2>();
 
     private void Awake()
     {
@@ -117,6 +125,7 @@ public class FarmerOtterController : MonoBehaviour
     private void OnDestroy()
     {
         if (subscribedFarmService != null) subscribedFarmService.PlotUnlocked -= RegisterPlotAnchors;
+        ReleasePlay();
     }
 
     private void RegisterAnchors()
@@ -176,6 +185,7 @@ public class FarmerOtterController : MonoBehaviour
         if (!FindNearestAwaitingHarvestSlot(out int plotIndex, out int slotIndex)) return;
 
         if (activeRoutine != null) StopCoroutine(activeRoutine);
+        ReleasePlay(); // harvesting beats playing
         activeRoutine = StartCoroutine(HarvestRoutine(plotIndex, slotIndex));
     }
 
@@ -214,6 +224,16 @@ public class FarmerOtterController : MonoBehaviour
     {
         while (true)
         {
+            var board = DecorBoardView.Active;
+            if (board != null && board.RollWantsToPlay()
+                && board.TryReservePlay(transform.position, board.CanStandOnGrid, out var session))
+            {
+                playSession = session;
+                yield return PlayRoutine(session);
+                ReleasePlay();
+                continue;
+            }
+
             if (wanderWaypoints == null || wanderWaypoints.Length == 0)
             {
                 yield return null;
@@ -221,7 +241,10 @@ public class FarmerOtterController : MonoBehaviour
             }
 
             var target = wanderWaypoints[Random.Range(0, wanderWaypoints.Length)];
-            if (target != null)
+            // A waypoint walled off by toys is skipped this time (harvest and
+            // play still walk through if they must).
+            bool blocked = target != null && board != null && !board.CanReachWithoutToys(transform.position, target.position);
+            if (target != null && !blocked)
             {
                 yield return MoveTo(target.position);
             }
@@ -229,6 +252,32 @@ public class FarmerOtterController : MonoBehaviour
             SetMoving(false);
             yield return PlayRandomActionOrWait();
         }
+    }
+
+    // Walk up to the toy, face it and keep doing idle actions until the play
+    // time runs out (or the toy is put away).
+    private IEnumerator PlayRoutine(DecorPlaySession session)
+    {
+        yield return MoveTo(session.StandPoint);
+        if (!session.IsValid) yield break;
+
+        SetMoving(false);
+        FaceTowards(session.LookPoint);
+        session.Begin();
+
+        float endTime = Time.time + session.Seconds;
+        while (Time.time < endTime && session.IsValid)
+        {
+            yield return PlayRandomActionOrWait();
+            FaceTowards(session.LookPoint);
+        }
+    }
+
+    private void ReleasePlay()
+    {
+        if (playSession == null) return;
+        playSession.Release();
+        playSession = null;
     }
 
     private IEnumerator PlayRandomActionOrWait()
@@ -287,7 +336,26 @@ public class FarmerOtterController : MonoBehaviour
     // diagonal line — a diagonal path cuts across the furrow's raised bed
     // art at an angle and made the otter's legs clip behind it; approaching
     // along the row (Y) before stepping sideways into the slot (X) avoids that.
+    //
+    // A placed toy on that line: follow a grid detour around it instead, each
+    // leg still walked vertical-then-horizontal.
     private IEnumerator MoveTo(Vector3 destination)
+    {
+        var board = DecorBoardView.Active;
+        if (board != null && board.TryFindDetour(transform.position, destination, detour))
+        {
+            var points = new List<Vector2>(detour);
+            foreach (var point in points)
+            {
+                yield return MoveL(new Vector3(point.x, point.y, destination.z));
+            }
+            yield break;
+        }
+
+        yield return MoveL(destination);
+    }
+
+    private IEnumerator MoveL(Vector3 destination)
     {
         yield return MoveAxis(new Vector3(transform.position.x, destination.y, destination.z));
         yield return MoveAxis(destination);

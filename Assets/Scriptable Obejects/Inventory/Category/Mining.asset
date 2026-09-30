@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::ItemCategory
   _categoryId: Mining
   _displayName: "\uAD11\uC0B0"
-  _sortOrder: 2
+  _sortOrder: 3
   _showsAllItems: 0
   _parent: {fileID: 0}

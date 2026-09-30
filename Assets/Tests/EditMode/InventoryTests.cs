@@ -37,6 +37,38 @@ public class InventoryTests
     }
 
     [Test]
+    public void ItemInNoCapacityCategory_DoesNotUseSlot()
+    {
+        // Arrange: 꾸미기(칸 안 씀) > 장난감 — 하위 분류도 부모 설정을 따름
+        var decor = ScriptableObject.CreateInstance<ItemCategory>();
+        var decorSo = new SerializedObject(decor);
+        decorSo.FindProperty("_usesBagCapacity").boolValue = false;
+        decorSo.ApplyModifiedPropertiesWithoutUndo();
+        var toyCategory = ScriptableObject.CreateInstance<ItemCategory>();
+        var toySo = new SerializedObject(toyCategory);
+        toySo.FindProperty("_parent").objectReferenceValue = decor;
+        toySo.ApplyModifiedPropertiesWithoutUndo();
+        var toy = CreateItem("toy_ball", maxStack: 10);
+        var itemSo = new SerializedObject(toy);
+        itemSo.FindProperty("_category").objectReferenceValue = toyCategory;
+        itemSo.ApplyModifiedPropertiesWithoutUndo();
+        var full = new Inventory(capacity: 1, maxCapacity: 1);
+        full.Add(_carrot, 1, ItemChangeReason.Test);
+
+        // Act
+        int added = full.Add(toy, 2, ItemChangeReason.Test);
+
+        // Assert
+        Assert.AreEqual(2, added, "가방이 가득 차도 장난감은 들어가야 합니다.");
+        Assert.AreEqual(1, full.UsedSlots);
+        Assert.AreEqual(0, full.Add(_fish, 1, ItemChangeReason.Test), "일반 아이템은 여전히 칸이 필요합니다.");
+
+        UnityEngine.Object.DestroyImmediate(toy);
+        UnityEngine.Object.DestroyImmediate(toyCategory);
+        UnityEngine.Object.DestroyImmediate(decor);
+    }
+
+    [Test]
     public void Add_NewItem_CountIncreases()
     {
         // Act

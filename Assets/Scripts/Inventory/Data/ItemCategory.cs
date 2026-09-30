@@ -22,6 +22,11 @@ public class ItemCategory : ScriptableObject
     [SerializeField]
     private bool _showsAllItems;
 
+    [Header("가방 칸")]
+    [Tooltip("끄면 이 분류(와 하위 분류)의 아이템은 가방 칸을 차지하지 않음 (예: 꾸미기 장난감 — 광장에 놓는 물건이라 보관 한도와 무관)")]
+    [SerializeField]
+    private bool _usesBagCapacity = true;
+
     [Header("계층")]
     [Tooltip("비우면 탭, 지정하면 그 탭 안의 소분류 칩")]
     [SerializeField]
@@ -33,6 +38,22 @@ public class ItemCategory : ScriptableObject
     public bool ShowsAllItems => _showsAllItems;
     public ItemCategory Parent => _parent;
     public bool IsRoot => _parent == null;
+
+    /// <summary>이 분류의 아이템이 가방 칸을 차지하는지 (자신이나 부모 중 하나라도 끄면 차지하지 않음)</summary>
+    public bool UsesBagCapacity
+    {
+        get
+        {
+            var c = this;
+            for (int depth = 0; c != null && depth < MaxDepth; depth++)
+            {
+                if (!c._usesBagCapacity)
+                    return false;
+                c = c._parent;
+            }
+            return true;
+        }
+    }
 
     // 부모를 따라 올라가는 반복의 안전 한도. 실수로 부모가 순환(A→B→A)해도 에디터가 멈추지 않게
     private const int MaxDepth = 16;
