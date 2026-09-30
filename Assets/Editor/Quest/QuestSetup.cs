@@ -25,20 +25,48 @@ public static class QuestSetup
 
     private static readonly Color Body = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
 
-    // 아이콘: "item:경로" (아이템 아이콘), "gold" (골드 아이콘), "place:파일", "otter:파일"
-    // 제목·조건·보상은 시안용 예시 (실제 목록은 기획이 정하면 에셋에서 고친다)
-    private static readonly (string asset, string id, string title, string description, QuestGoalType type, int goal, string filter, int reward, string icon)[] Quests =
+    // 아이콘: "item:경로" (아이템 아이콘), "gold" (골드 아이콘), "place:파일", "otter:파일", "npc:파일", "nav:파일"
+    // 성장 체인: 목표 종류마다 단계가 있고, 앞 단계 보상을 받고 필요 레벨이 되면 다음 단계가 열린다.
+    // 수치는 성장 곡선 설계안(Docs/성장곡선_퀘스트설계.md) 기준. 밸런스가 바뀌면 에셋에서 고친다
+    // (에셋, ID, 제목, 조건, 목표 종류, 목표, 필터, 골드, 아이콘, 종류, 필요 레벨, 앞 단계 에셋, 경험치, 경험치 %)
+    private static readonly (string asset, string id, string title, string description, QuestGoalType type, int goal, string filter,
+        int reward, string icon, QuestKind kind, int level, string prerequisite, int exp, float expPercent)[] Quests =
     {
-        ("Quest_Harvest_1", "quest_harvest_1", "내가 키운 첫 수확", "작물 3개 수확하기", QuestGoalType.Harvest, 3, "Crops", 100, "item:Farming/당근"),
-        ("Quest_Catch_1", "quest_catch_1", "오늘부터 낚시왕", "물고기 3마리 낚기", QuestGoalType.Catch, 3, "Fish", 100, "item:Fishing/고등어"),
-        ("Quest_Sales_1", "quest_sales_1", "티끌 모아 왕국", "판매로 500골드 벌기", QuestGoalType.EarnFromSales, 500, "", 150, "gold"),
-        ("Quest_Upgrade_1", "quest_upgrade_1", "더 좋은 도구가 필요해", "생산 업그레이드 1회", QuestGoalType.Upgrade, 1, "", 200, "place:ICON_Place_Farm"),
-        ("Quest_Otter_1", "quest_otter_1", "처음 뵙겠습니다!", "새로운 해달 1마리 만나기", QuestGoalType.CollectionRegister, 1, "otter", 200, "otter:ICON_Otter_Fisher"),
-        ("Quest_Harvest_2", "quest_harvest_2", "부지런한 농부", "작물 30개 수확하기", QuestGoalType.Harvest, 30, "Crops", 300, "item:Farming/감자"),
-        ("Quest_Catch_2", "quest_catch_2", "바다의 단골손님", "물고기 20마리 낚기", QuestGoalType.Catch, 20, "Fish", 300, "item:Fishing/고등어"),
-        ("Quest_Sales_2", "quest_sales_2", "왕국의 살림꾼", "판매로 3,000골드 벌기", QuestGoalType.EarnFromSales, 3000, "", 500, "gold"),
-        ("Quest_Upgrade_2", "quest_upgrade_2", "장인의 손길", "생산 업그레이드 3회", QuestGoalType.Upgrade, 3, "", 500, "place:ICON_Place_FishingSpot"),
-        ("Quest_Otter_2", "quest_otter_2", "해달 친구들", "해달 2마리 만나기", QuestGoalType.CollectionRegister, 2, "otter", 500, "otter:ICON_Otter_Farmer"),
+        ("Main_Harvest_1", "main_harvest_1", "내가 키운 첫 수확", "작물 5개 수확하기", QuestGoalType.Harvest, 5, "Crops", 50, "item:Farming/당근", QuestKind.Main, 1, "", 40, 0f),
+        ("Main_Harvest_2", "main_harvest_2", "부지런한 손길", "작물 20개 수확하기", QuestGoalType.Harvest, 20, "Crops", 100, "item:Farming/감자", QuestKind.Main, 2, "Main_Harvest_1", 60, 0f),
+        ("Main_Harvest_3", "main_harvest_3", "텃밭 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 200, "item:Farming/당근", QuestKind.Main, 3, "Main_Harvest_2", 110, 0f),
+        ("Main_Harvest_4", "main_harvest_4", "밭의 주인", "작물 150개 수확하기", QuestGoalType.Harvest, 150, "Crops", 400, "item:Farming/감자", QuestKind.Main, 5, "Main_Harvest_3", 200, 0f),
+        ("Main_Harvest_5", "main_harvest_5", "풍년이다!", "작물 400개 수확하기", QuestGoalType.Harvest, 400, "Crops", 800, "item:Farming/당근", QuestKind.Main, 8, "Main_Harvest_4", 380, 0f),
+        ("Main_Harvest_6", "main_harvest_6", "농사 달인", "작물 1,000개 수확하기", QuestGoalType.Harvest, 1000, "Crops", 1500, "item:Farming/감자", QuestKind.Main, 11, "Main_Harvest_5", 650, 0f),
+        ("Main_Harvest_7", "main_harvest_7", "전설의 농부", "작물 2,500개 수확하기", QuestGoalType.Harvest, 2500, "Crops", 3000, "item:Farming/당근", QuestKind.Main, 14, "Main_Harvest_6", 1100, 0f),
+        ("Main_Catch_1", "main_catch_1", "첫 입질", "물고기 2마리 낚기", QuestGoalType.Catch, 2, "Fish", 50, "item:Fishing/고등어", QuestKind.Main, 1, "", 40, 0f),
+        ("Main_Catch_2", "main_catch_2", "오늘부터 낚시왕", "물고기 6마리 낚기", QuestGoalType.Catch, 6, "Fish", 100, "item:Fishing/고등어", QuestKind.Main, 2, "Main_Catch_1", 60, 0f),
+        ("Main_Catch_3", "main_catch_3", "바다의 단골", "물고기 15마리 낚기", QuestGoalType.Catch, 15, "Fish", 250, "item:Fishing/고등어", QuestKind.Main, 4, "Main_Catch_2", 120, 0f),
+        ("Main_Catch_4", "main_catch_4", "만선의 꿈", "물고기 40마리 낚기", QuestGoalType.Catch, 40, "Fish", 500, "item:Fishing/고등어", QuestKind.Main, 6, "Main_Catch_3", 220, 0f),
+        ("Main_Catch_5", "main_catch_5", "고등어 사냥꾼", "물고기 100마리 낚기", QuestGoalType.Catch, 100, "Fish", 1000, "item:Fishing/고등어", QuestKind.Main, 9, "Main_Catch_4", 420, 0f),
+        ("Main_Catch_6", "main_catch_6", "바다의 전설", "물고기 250마리 낚기", QuestGoalType.Catch, 250, "Fish", 2000, "item:Fishing/고등어", QuestKind.Main, 12, "Main_Catch_5", 750, 0f),
+        ("Main_Sales_1", "main_sales_1", "티끌 모아 왕국", "판매로 200골드 벌기", QuestGoalType.EarnFromSales, 200, "", 50, "gold", QuestKind.Main, 1, "", 50, 0f),
+        ("Main_Sales_2", "main_sales_2", "첫 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 100, "gold", QuestKind.Main, 2, "Main_Sales_1", 80, 0f),
+        ("Main_Sales_3", "main_sales_3", "알뜰 상인", "판매로 4,000골드 벌기", QuestGoalType.EarnFromSales, 4000, "", 300, "gold", QuestKind.Main, 4, "Main_Sales_2", 140, 0f),
+        ("Main_Sales_4", "main_sales_4", "왕국의 살림꾼", "판매로 15,000골드 벌기", QuestGoalType.EarnFromSales, 15000, "", 700, "gold", QuestKind.Main, 7, "Main_Sales_3", 260, 0f),
+        ("Main_Sales_5", "main_sales_5", "큰손 해달", "판매로 50,000골드 벌기", QuestGoalType.EarnFromSales, 50000, "", 1500, "gold", QuestKind.Main, 10, "Main_Sales_4", 480, 0f),
+        ("Main_Sales_6", "main_sales_6", "해달 재벌", "판매로 150,000골드 벌기", QuestGoalType.EarnFromSales, 150000, "", 3000, "gold", QuestKind.Main, 13, "Main_Sales_5", 850, 0f),
+        ("Main_Upgrade_1", "main_upgrade_1", "더 좋은 도구가 필요해", "생산 업그레이드 1회", QuestGoalType.Upgrade, 1, "", 100, "place:ICON_Place_Farm", QuestKind.Main, 2, "", 80, 0f),
+        ("Main_Upgrade_2", "main_upgrade_2", "장인의 손길", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 200, "place:ICON_Place_FishingSpot", QuestKind.Main, 4, "Main_Upgrade_1", 140, 0f),
+        ("Main_Upgrade_3", "main_upgrade_3", "최고의 장비", "생산 업그레이드 3회", QuestGoalType.Upgrade, 3, "", 400, "place:ICON_Place_Farm", QuestKind.Main, 7, "Main_Upgrade_2", 260, 0f),
+        ("Main_Upgrade_4", "main_upgrade_4", "완벽한 설비", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 800, "place:ICON_Place_FishingSpot", QuestKind.Main, 10, "Main_Upgrade_3", 400, 0f),
+        ("Main_Shop_1", "main_shop_1", "요정과 첫 거래", "요정 상점에서 1번 사기", QuestGoalType.ShopPurchase, 1, "", 50, "npc:Fairy", QuestKind.Main, 2, "", 60, 0f),
+        ("Main_Shop_2", "main_shop_2", "요정 상점 단골", "요정 상점에서 5번 사기", QuestGoalType.ShopPurchase, 5, "", 300, "npc:Fairy", QuestKind.Main, 6, "Main_Shop_1", 160, 0f),
+        ("Main_Decor_1", "main_decor_1", "광장 꾸미기", "장난감 1개 놓기", QuestGoalType.PlaceDecor, 1, "", 100, "item:Decor/축구공", QuestKind.Main, 3, "", 80, 0f),
+        ("Main_Decor_2", "main_decor_2", "놀이터 만들기", "장난감 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 200, "item:Decor/퍼즐", QuestKind.Main, 5, "Main_Decor_1", 140, 0f),
+        ("Main_Decor_3", "main_decor_3", "해달 놀이공원", "장난감 6개 놓기", QuestGoalType.PlaceDecor, 6, "", 500, "item:Decor/축구공", QuestKind.Main, 9, "Main_Decor_2", 300, 0f),
+        ("Main_Collection_1", "main_collection_1", "도감 시작", "도감 3칸 채우기", QuestGoalType.CollectionRegister, 3, "", 100, "nav:ICON_Nav_Collection", QuestKind.Main, 2, "", 80, 0f),
+        ("Main_Collection_2", "main_collection_2", "수집가", "도감 6칸 채우기", QuestGoalType.CollectionRegister, 6, "", 300, "nav:ICON_Nav_Collection", QuestKind.Main, 5, "Main_Collection_1", 180, 0f),
+        ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.CollectionRegister, 1, "otter", 200, "otter:ICON_Otter_Fisher", QuestKind.Main, 3, "", 120, 0f),
+        ("Main_Otter_2", "main_otter_2", "해달 친구들", "해달 2마리 만나기", QuestGoalType.CollectionRegister, 2, "otter", 500, "otter:ICON_Otter_Farmer", QuestKind.Main, 8, "Main_Otter_1", 300, 0f),
+        ("Daily_Harvest", "daily_harvest", "오늘의 수확", "작물 30개 수확하기", QuestGoalType.Harvest, 30, "Crops", 150, "item:Farming/당근", QuestKind.Daily, 2, "", 0, 10f),
+        ("Daily_Catch", "daily_catch", "오늘의 낚시", "물고기 3마리 낚기", QuestGoalType.Catch, 3, "Fish", 150, "item:Fishing/고등어", QuestKind.Daily, 2, "", 0, 10f),
+        ("Daily_Sales", "daily_sales", "오늘의 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 200, "gold", QuestKind.Daily, 2, "", 0, 10f),
     };
 
     #region 데이터
@@ -63,12 +91,28 @@ public static class QuestSetup
                 so.FindProperty("_goal").intValue = q.goal;
                 so.FindProperty("_rewardCurrency").objectReferenceValue = gold;
                 so.FindProperty("_rewardAmount").intValue = q.reward;
+                so.FindProperty("_kind").enumValueIndex = (int)q.kind;
+                so.FindProperty("_requiredLevel").intValue = q.level;
+                so.FindProperty("_expReward").intValue = q.exp;
+                so.FindProperty("_expPercentOfLevel").floatValue = q.expPercent;
                 if (q.filter == "otter")
                     so.FindProperty("_collectionTab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<CollectionTab>(OtterTabPath);
                 else if (!string.IsNullOrEmpty(q.filter))
                     so.FindProperty("_itemFilter").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ItemCategory>($"{CategoryFolder}/{q.filter}.asset");
             }
             FillIfEmpty(so, "_icon", LoadQuestIcon(q.icon, gold));
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        // 체인의 앞 단계 연결 (모든 에셋이 만들어진 뒤에, 새로 만든 것만)
+        foreach (var q in Quests)
+        {
+            if (string.IsNullOrEmpty(q.prerequisite))
+                continue;
+
+            var quest = AssetDatabase.LoadAssetAtPath<QuestDefinition>($"{QuestFolder}/{q.asset}.asset");
+            var so = new SerializedObject(quest);
+            FillIfEmpty(so, "_prerequisite", AssetDatabase.LoadAssetAtPath<QuestDefinition>($"{QuestFolder}/{q.prerequisite}.asset"));
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
@@ -100,6 +144,10 @@ public static class QuestSetup
                 return LoadIcon(PlaceIconFolder, value);
             case "otter":
                 return ImportSprite(OtterFolder, value);
+            case "npc":
+                return ImportSprite("Assets/Art/Npc", value);
+            case "nav":
+                return LoadIcon(NavIconFolder, value);
             default:
                 throw new System.ArgumentException($"알 수 없는 아이콘 종류: {icon}");
         }
@@ -156,12 +204,30 @@ public static class QuestSetup
         FitText(progress, 18, 26);
         Place(progress.rectTransform, new Vector2(0, 1), new Vector2(422, -110), new Vector2(148, 42));
 
-        // 보상: 코인 아이콘 + 금액 (버튼 왼쪽 열)
+        // 보상: 코인 아이콘 + 금액, 그 아래 경험치 칩 (버튼 왼쪽 열)
         var rewardIcon = CreateImage("RewardIcon", rect, null, false);
-        Place(rewardIcon.rectTransform, new Vector2(1, 1), new Vector2(-270, -20), new Vector2(62, 62));
+        Place(rewardIcon.rectTransform, new Vector2(1, 1), new Vector2(-274, -14), new Vector2(54, 54));
         rewardIcon.preserveAspect = true;
-        var reward = CreateText("RewardText", rect, _titleFont, "100", 32, Cocoa);
-        Place(reward.rectTransform, new Vector2(1, 1), new Vector2(-236, -90), new Vector2(130, 44));
+        var reward = CreateText("RewardText", rect, _titleFont, "100", 30, Cocoa);
+        Place(reward.rectTransform, new Vector2(1, 1), new Vector2(-236, -68), new Vector2(130, 40));
+
+        var expTag = CreateImage("ExpTag", rect, LoadSprite(CommonSpriteFolder, "UI_Chip_Selected"), false);
+        expTag.pixelsPerUnitMultiplier = 1.6f; // 칩이 낮아서 테두리를 얇게
+        Place(expTag.rectTransform, new Vector2(1, 1), new Vector2(-236, -112), new Vector2(130, 38));
+        var expText = CreateText("Label", expTag.rectTransform, _titleFont, "경험치 50", 20, Color.white);
+        expText.enableAutoSizing = true;
+        expText.fontSizeMin = 14;
+        expText.fontSizeMax = 20;
+        Stretch(expText.rectTransform, 0);
+        expText.rectTransform.offsetMin = new Vector2(6, 4);
+        expText.rectTransform.offsetMax = new Vector2(-6, 0);
+
+        // 일일 퀘스트: 그림 칸 왼쪽 위 모서리의 산호색 칩
+        var dailyTag = CreateImage("DailyTag", rect, LoadSprite(CommonSpriteFolder, "UI_Tag_Highlight"), false);
+        Place(dailyTag.rectTransform, new Vector2(0, 1), new Vector2(6, 2), new Vector2(76, 36));
+        var dailyText = CreateText("Label", dailyTag.rectTransform, _titleFont, "일일", 20, Color.white);
+        Stretch(dailyText.rectTransform, 0);
+        dailyText.rectTransform.offsetMin = new Vector2(0, 3);
 
         var claimable = ImportSprite(CollectionSpriteFolder, "UI_Tab_Gold");
         var idle = ImportSprite(CommonSpriteFolder, "UI_Button_Idle");
@@ -185,6 +251,9 @@ public static class QuestSetup
         Set(view, "_progressText", progress);
         Set(view, "_rewardIcon", rewardIcon);
         Set(view, "_rewardText", reward);
+        Set(view, "_expTag", expTag.gameObject);
+        Set(view, "_expText", expText);
+        Set(view, "_dailyTag", dailyTag.gameObject);
         Set(view, "_button", button);
         Set(view, "_buttonImage", buttonImage);
         Set(view, "_buttonLabel", label);
@@ -194,6 +263,7 @@ public static class QuestSetup
         Set(view, "_idleSprite", idle);
 
         check.gameObject.SetActive(false);
+        dailyTag.gameObject.SetActive(false);
 
         PrefabUtility.SaveAsPrefabAsset(root, RowPrefabPath);
         Object.DestroyImmediate(root);
@@ -261,7 +331,7 @@ public static class QuestSetup
         var panelRect = panel.rectTransform;
 
         BuildHeader(panelRect);
-        var (completedText, completedBar) = BuildOverall(panelRect);
+        var (levelText, expText, expBar) = BuildOverall(panelRect);
         var (scroll, content) = BuildList(panelRect);
         var (claimAll, claimAllImage, claimAllLabel) = BuildClaimAll(panelRect);
 
@@ -283,8 +353,9 @@ public static class QuestSetup
         Set(presenter, "_rowPrefab", rowPrefab);
         Set(presenter, "_rowParent", content);
         Set(presenter, "_scrollRect", scroll);
-        Set(presenter, "_completedText", completedText);
-        Set(presenter, "_completedBar", completedBar);
+        Set(presenter, "_levelText", levelText);
+        Set(presenter, "_expText", expText);
+        Set(presenter, "_expBar", expBar);
         Set(presenter, "_claimAllButton", claimAll);
         Set(presenter, "_claimAllImage", claimAllImage);
         Set(presenter, "_claimAllLabel", claimAllLabel);
@@ -339,29 +410,32 @@ public static class QuestSetup
         TopBand(subtitle.rectTransform, 412, 40, 206, 48);
     }
 
-    // "완료한 퀘스트 [바] 2 / 10"
-    private static (TextMeshProUGUI text, ProgressBarView bar) BuildOverall(RectTransform panel)
+    // "Lv.3 [경험치 바] 120 / 300" (경험치는 퀘스트 보상으로만 쌓임)
+    private static (TextMeshProUGUI level, TextMeshProUGUI exp, ProgressBarView bar) BuildOverall(RectTransform panel)
     {
         var box = CreateImage("Overall", panel, LoadSprite(CommonSpriteFolder, "UI_Button_Paper"), false);
         TopBand(box.rectTransform, 40, 40, 342, 96);
         var rect = box.rectTransform;
 
-        var label = CreateText("Label", rect, _titleFont, "완료한 퀘스트", 32, Body);
+        var label = CreateText("Level", rect, _titleFont, "Lv.1", 38, Cocoa);
         label.alignment = TextAlignmentOptions.Left;
-        Place(label.rectTransform, new Vector2(0, 0.5f), new Vector2(36, 4), new Vector2(230, 50));
+        Place(label.rectTransform, new Vector2(0, 0.5f), new Vector2(36, 4), new Vector2(150, 54));
 
         var bar = BuildBar(rect, "Bar");
         var barRect = (RectTransform)bar.transform;
         barRect.anchorMin = new Vector2(0, 0.5f);
         barRect.anchorMax = new Vector2(1, 0.5f);
         barRect.pivot = new Vector2(0.5f, 0.5f);
-        barRect.offsetMin = new Vector2(270, -14);
-        barRect.offsetMax = new Vector2(-176, 22);
+        barRect.offsetMin = new Vector2(190, -14);
+        barRect.offsetMax = new Vector2(-236, 22);
 
-        var count = CreateText("Count", rect, _titleFont, "0 / 0", 34, Cocoa);
+        var count = CreateText("Exp", rect, _titleFont, "0 / 100", 30, Cocoa);
         count.alignment = TextAlignmentOptions.Right;
-        Place(count.rectTransform, new Vector2(1, 0.5f), new Vector2(-36, 4), new Vector2(130, 50));
-        return (count, bar);
+        count.enableAutoSizing = true;
+        count.fontSizeMin = 20;
+        count.fontSizeMax = 30;
+        Place(count.rectTransform, new Vector2(1, 0.5f), new Vector2(-36, 4), new Vector2(190, 50));
+        return (label, count, bar);
     }
 
     private static (ScrollRect scroll, RectTransform content) BuildList(RectTransform panel)

@@ -26,13 +26,16 @@ public readonly struct QuestRecord
 /// </summary>
 public class QuestLog
 {
-    /// <summary>진행 수치가 오르거나 보상을 받았을 때</summary>
+    /// <summary>진행 수치가 오르거나 보상을 받았을 때 (여러 개가 한꺼번에 바뀌면 null — 일일 초기화)</summary>
     public event Action<QuestDefinition> OnChanged;
 
     // 세이브와 같은 ID 기준. DB에서 지워진 퀘스트의 기록도 그대로 보관해 다음 저장 때 잃지 않음
     private readonly Dictionary<string, QuestRecord> _records = new Dictionary<string, QuestRecord>();
 
     public IReadOnlyDictionary<string, QuestRecord> Records => _records;
+
+    /// <summary>일일 퀘스트를 마지막으로 초기화한 날 (0 = 아직 없음). 날이 바뀌면 QuestManager가 초기화한다</summary>
+    public int DailyDay { get; private set; }
 
     /// <returns>진행 수치 (목표를 넘지 않음)</returns>
     public int GetProgress(QuestDefinition quest)
@@ -94,6 +97,24 @@ public class QuestLog
 
         _records[questId] = new QuestRecord(Math.Max(0, progress), claimed);
     }
+
+    /// <summary>이 퀘스트들의 진행·수령 기록을 지운다 (일일 초기화). 알림은 한 번만</summary>
+    public void Reset(IEnumerable<QuestDefinition> quests, int day)
+    {
+        if (quests == null)
+            throw new ArgumentNullException(nameof(quests));
+
+        foreach (var quest in quests)
+        {
+            if (quest != null)
+                _records.Remove(quest.QuestId);
+        }
+        DailyDay = day;
+        OnChanged?.Invoke(null);
+    }
+
+    /// <summary>세이브 복원용</summary>
+    public void LoadDailyDay(int day) => DailyDay = Math.Max(0, day);
 
     public int Count(IEnumerable<QuestDefinition> quests, QuestStatus status)
     {

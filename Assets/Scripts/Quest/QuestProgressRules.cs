@@ -13,6 +13,10 @@ public static class QuestProgressRules
         if (e.Delta <= 0)
             return 0;
 
+        // 요정 상점: 한 번 산 것 = 1 (개수가 아니라 횟수)
+        if (quest.GoalType == QuestGoalType.ShopPurchase)
+            return e.Reason == ItemChangeReason.Purchase ? 1 : 0;
+
         bool matchesReason =
             (quest.GoalType == QuestGoalType.Harvest && e.Reason == ItemChangeReason.Harvest)
             || (quest.GoalType == QuestGoalType.Catch && e.Reason == ItemChangeReason.Fishing);
@@ -39,6 +43,28 @@ public static class QuestProgressRules
             return 0;
 
         return change.Source == TransactionSource.FarmUpgrade || change.Source == TransactionSource.RodUpgrade ? 1 : 0;
+    }
+
+    /// <summary>장난감 놓기: 놓은 것 하나 = 1 (옮기기는 세지 않음)</summary>
+    public static int From(QuestDefinition quest, PlacedDecor placed)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+
+        return quest.GoalType == QuestGoalType.PlaceDecor && placed != null ? 1 : 0;
+    }
+
+    /// <summary>
+    /// 지금 목록에 나타나고 진행이 쌓이는지: 레벨이 되었고, 앞 단계 보상을 받았음
+    /// (앞 단계가 일일 퀘스트여도 오늘 받았으면 열림)
+    /// </summary>
+    public static bool IsAvailable(QuestDefinition quest, int level, QuestLog log)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        if (log == null) throw new ArgumentNullException(nameof(log));
+
+        if (level < quest.RequiredLevel)
+            return false;
+        return quest.Prerequisite == null || log.GetStatus(quest.Prerequisite) == QuestStatus.Claimed;
     }
 
     /// <summary>도감 등록: 새로 획득·등록된 항목 1개 = 1 (방문 흔적은 세지 않음)</summary>

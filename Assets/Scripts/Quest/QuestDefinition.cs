@@ -23,6 +23,20 @@ public class QuestDefinition : ScriptableObject
     [SerializeField]
     private int _sortOrder;
 
+    [Header("열림")]
+    [Tooltip("성장(한 번) 또는 일일(매일 초기화)")]
+    [SerializeField]
+    private QuestKind _kind = QuestKind.Main;
+
+    [Tooltip("이 레벨부터 목록에 나타나고 진행이 쌓인다")]
+    [Min(1)]
+    [SerializeField]
+    private int _requiredLevel = 1;
+
+    [Tooltip("이 퀘스트의 보상을 받아야 나타남 (체인의 앞 단계). 비우면 레벨만 봄")]
+    [SerializeField]
+    private QuestDefinition _prerequisite;
+
     [Header("시각 요소 (UI)")]
     [Tooltip("왼쪽 살구색 칸에 들어갈 그림")]
     [SerializeField]
@@ -56,6 +70,16 @@ public class QuestDefinition : ScriptableObject
     [SerializeField]
     private int _rewardAmount;
 
+    [Tooltip("보상 경험치 (왕국 레벨)")]
+    [Min(0)]
+    [SerializeField]
+    private int _expReward;
+
+    [Tooltip("0보다 크면 경험치를 '받는 순간의 레벨에서 다음 레벨까지 필요한 경험치의 %'로 줌 (일일 퀘스트가 높은 레벨에서도 의미 있게)")]
+    [Range(0f, 100f)]
+    [SerializeField]
+    private float _expPercentOfLevel;
+
     public string QuestId => _questId;
     public string Title => _title;
     public string Description => _description;
@@ -67,6 +91,19 @@ public class QuestDefinition : ScriptableObject
     public CollectionTab CollectionTab => _collectionTab;
     public Currency RewardCurrency => _rewardCurrency;
     public int RewardAmount => _rewardAmount;
+    public QuestKind Kind => _kind;
+    public int RequiredLevel => Mathf.Max(1, _requiredLevel);
+    public QuestDefinition Prerequisite => _prerequisite;
+
+    /// <summary>이 레벨에서 받을 경험치</summary>
+    public int ExpFor(int level, ILevelCurve curve)
+    {
+        if (_expPercentOfLevel <= 0f || curve == null)
+            return _expReward;
+
+        int need = curve.ExpToNext(level);
+        return need <= 0 ? _expReward : Mathf.Max(1, Mathf.RoundToInt(need * _expPercentOfLevel / 100f));
+    }
 
     private void OnValidate()
     {

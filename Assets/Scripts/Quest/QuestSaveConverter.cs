@@ -24,6 +24,9 @@ public class QuestSaveEntry
 /// </summary>
 public static class QuestSaveConverter
 {
+    // 일일 초기화 날짜를 퀘스트 목록에 한 줄로 끼워 저장 (SaveData 형식을 바꾸지 않으려고). progress = 날짜 번호
+    public const string DailyDayId = "__daily_day";
+
     /// <summary>기록이 있는 퀘스트만 ID 순으로 쓴다 (DB에 없는 ID도 보관해 둔 그대로 씀)</summary>
     public static void Write(QuestLog log, List<QuestSaveEntry> result)
     {
@@ -39,6 +42,9 @@ public static class QuestSaveConverter
             var record = log.Records[id];
             result.Add(new QuestSaveEntry(id, record.Progress, record.Claimed));
         }
+
+        if (log.DailyDay > 0)
+            result.Add(new QuestSaveEntry(DailyDayId, log.DailyDay, false));
     }
 
     /// <summary>저장된 기록을 넣는다. 비었거나 잘못된 줄은 건너뛴다.</summary>
@@ -51,6 +57,12 @@ public static class QuestSaveConverter
         {
             if (line == null || string.IsNullOrEmpty(line.questId))
                 continue;
+
+            if (line.questId == DailyDayId)
+            {
+                log.LoadDailyDay(line.progress);
+                continue;
+            }
 
             log.LoadRecord(line.questId, line.progress, line.claimed);
         }

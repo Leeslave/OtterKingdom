@@ -34,6 +34,9 @@ public class DecorManager : MonoBehaviour
     /// <summary>보관함 개수가 바뀌었을 때 (가방 개수가 바뀌거나 어느 장소에서든 놓고 치울 때)</summary>
     public event Action OnStorageChanged;
 
+    /// <summary>어느 장소에서든 물건을 새로 놓았을 때 (옮기기 제외, 퀘스트용)</summary>
+    public event Action<PlacedDecor> OnDecorPlaced;
+
     /// <summary>꾸미기 모드를 끝냈을 때 ([완료]). 게임 쪽이 여기서 바로 저장하면 배치가 30초 자동 저장을 기다리지 않는다</summary>
     public event Action OnEditFinished;
 
@@ -57,7 +60,11 @@ public class DecorManager : MonoBehaviour
                 continue;
 
             var layout = CreateLayout(board);
-            layout.OnPlaced += _ => OnStorageChanged?.Invoke();
+            layout.OnPlaced += placed =>
+            {
+                OnStorageChanged?.Invoke();
+                OnDecorPlaced?.Invoke(placed);
+            };
             layout.OnRemoved += _ => OnStorageChanged?.Invoke();
             _layouts.Add(board, layout);
         }

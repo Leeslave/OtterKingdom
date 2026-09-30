@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 퀘스트 모델(QuestLog)과 퀘스트 화면을 연결한다.
-/// 목록 순서: 보상 받을 수 있는 것 → 진행 중 → 받은 것, 같은 상태끼리는 퀘스트 정렬 순서.
+/// 퀘스트 모델(QuestLog)과 퀘스트 화면을 연결한다. 위쪽은 왕국 레벨과 경험치.
+/// 목록은 지금 열린 퀘스트만: 보상 받을 수 있는 것 → 일일 → 성장 → 오늘 받은 일일. 받은 성장 퀘스트는 사라지고 다음 단계가 열린다.
 /// </summary>
 public class QuestPresenter : MonoBehaviour
 {
@@ -16,10 +16,12 @@ public class QuestPresenter : MonoBehaviour
     [Tooltip("열 때 맨 위로 되돌리기용")]
     [SerializeField] private ScrollRect _scrollRect;
 
-    [Header("전체 진행")]
-    [Tooltip("\"2 / 10\" (목표를 달성한 퀘스트 / 전체)")]
-    [SerializeField] private TextMeshProUGUI _completedText;
-    [SerializeField] private ProgressBarView _completedBar;
+    [Header("왕국 레벨")]
+    [Tooltip("\"Lv.3\"")]
+    [SerializeField] private TextMeshProUGUI _levelText;
+    [Tooltip("\"120 / 300\" (최고 레벨이면 \"MAX\")")]
+    [SerializeField] private TextMeshProUGUI _expText;
+    [SerializeField] private ProgressBarView _expBar;
 
     [Header("버튼")]
     [SerializeField] private Button _claimAllButton;
@@ -41,6 +43,7 @@ public class QuestPresenter : MonoBehaviour
     private readonly List<QuestDefinition> _ordered = new List<QuestDefinition>();
 
     private QuestManager _manager;
+    private ProfileManager _profile;
     private bool _glyphsReady;
 
     private void Awake()
@@ -53,6 +56,9 @@ public class QuestPresenter : MonoBehaviour
     {
         _manager = QuestManager.Instance;
         _manager.OnChanged += Refresh;
+        _profile = ProfileManager.Instance;
+        if (_profile != null)
+            _profile.OnExpChanged += Refresh;
 
         if (!_glyphsReady)
             PrepareGlyphs();
@@ -64,6 +70,8 @@ public class QuestPresenter : MonoBehaviour
     {
         if (_manager != null)
             _manager.OnChanged -= Refresh;
+        if (_profile != null)
+            _profile.OnExpChanged -= Refresh;
     }
 
     public void Open()
@@ -79,16 +87,12 @@ public class QuestPresenter : MonoBehaviour
         var log = _manager.Log;
         var quests = _manager.Database.Quests;
 
-        // Quests는 이미 정렬 순서이므로 상태별로 나눠 담기만 하면 안정 정렬이 된다
+        // Quests는 이미 정렬 순서이므로 묶음별로 나눠 담기만 하면 안정 정렬이 된다
         _ordered.Clear();
-        foreach (var status in new[] { QuestStatus.Claimable, QuestStatus.InProgress, QuestStatus.Claimed })
-        {
-            foreach (var quest in quests)
-            {
-                if (log.GetStatus(quest) == status)
-                    _ordered.Add(quest);
-            }
-        }
+        AddGroup(quests, q => log.GetStatus(q) == QuestStatus.Claimable);
+        AddGroup(quests, q => q.Kind == QuestKind.Daily && log.GetStatus(q) == QuestStatus.InProgress);
+        AddGroup(quests, q => q.Kind == QuestKind.Main && log.GetStatus(q) == QuestStatus.InProgress);
+        AddGroup(quests, q => q.Kind == QuestKind.Daily && log.GetStatus(q) == QuestStatus.Claimed);
 
         while (_rows.Count < _ordered.Count)
         {
@@ -102,18 +106,36 @@ public class QuestPresenter : MonoBehaviour
             bool used = i < _ordered.Count;
             _rows[i].gameObject.SetActive(used);
             if (used)
-                _rows[i].Bind(_ordered[i], log.GetProgress(_ordered[i]), log.GetStatus(_ordered[i]));
+                _rows[i].Bind(_ordered[i], log.GetProgress(_ordered[i]), log.GetStatus(_ordered[i]), _manager.ExpFor(_ordered[i]));
         }
 
-        int claimable = log.Count(quests, QuestStatus.Claimable);
-        int completed = claimable + log.Count(quests, QuestStatus.Claimed);
-        _completedText.text = $"{completed} / {quests.Count}";
-        _completedBar.SetProgress(completed, quests.Count);
+        RefreshLevel();
 
-        bool canClaim = claimable > 0;
+        bool canClaim = _manager.ClaimableCount > 0;
         _claimAllButton.interactable = canClaim;
         _claimAllImage.sprite = canClaim ? _claimAllActiveSprite : _claimAllIdleSprite;
         _claimAllLabel.color = canClaim ? _claimAllActiveTextColor : _claimAllIdleTextColor;
+    }
+
+    private void AddGroup(IReadOnlyList<QuestDefinition> quests, System.Predicate<QuestDefinition> match)
+    {
+        foreach (var quest in quests)
+        {
+            if (_manager.IsAvailable(quest) && match(quest))
+                _ordered.Add(quest);
+        }
+    }
+
+    private void RefreshLevel()
+    {
+        if (_profile == null)
+            return;
+
+        var progress = _profile.Progress;
+        int need = _profile.LevelTable.ExpToNext(progress.Level);
+        _levelText.text = $"Lv.{progress.Level}";
+        _expText.text = need > 0 ? $"{progress.Exp:N0} / {need:N0}" : "MAX";
+        _expBar.SetRatio(progress.Ratio(_profile.LevelTable));
     }
 
     // 처음 보는 한글을 폰트 아틀라스에 미리 넣는다 (동적 폰트).
@@ -121,7 +143,7 @@ public class QuestPresenter : MonoBehaviour
     // D3D12 에디터에서 GPU가 멈춰 크래시가 났다 (Unity 6000.3.8, 퀘스트 화면을 열 때 재현).
     private void PrepareGlyphs()
     {
-        var text = new StringBuilder("0123456789/ ,보상 받기진행 중완료");
+        var text = new StringBuilder("0123456789/ ,.보상 받기진행 중완료일일경험치LvMAX");
         foreach (var quest in _manager.Database.Quests)
             text.Append(quest.Title).Append(quest.Description);
 
