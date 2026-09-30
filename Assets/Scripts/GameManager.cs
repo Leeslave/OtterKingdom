@@ -9,7 +9,7 @@ using UnityEngine;
 // be verified with zero scene/prefab setup. Replace the OnGUI block with real
 // uGUI views in M4; the services underneath should not need to change.
 //
-// Every zone scene (Farm, Fishing, Plaza) has its own instance of the
+// Every zone scene (Farm, Fishing, Mine, Plaza) has its own instance of the
 // GameManager prefab (OtterKingdom > Tools > Setup GameManager Prefab), so the
 // save, coins, inventory and sale UI are shared and the data can't drift. The
 // farm keeps ticking in every scene — crops grow wherever the player is, but
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public FarmService FarmService => farmService;
     public IReadOnlyList<CropDefinition> Crops => cropDefinitions;
     public FishingService FishingService => fishingService;
+    public MiningService MiningService => miningService;
     public Inventory Bag => InventoryManager.Instance.Inventory;
     public int CoinBalance => CurrencyManager.Instance.GetCurrency(goldCurrency);
 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CropDefinition[] cropDefinitions;
     [SerializeField] private FarmBalanceData farmBalance;
     [SerializeField] private FishingBalanceData fishingBalance;
+    [SerializeField] private MiningBalanceData miningBalance;
     [SerializeField] private OtterVisitBalanceData otterVisitBalance;
 
     [Header("Save")]
@@ -78,10 +80,12 @@ public class GameManager : MonoBehaviour
     private SaveService saveService;
     private FarmService farmService;
     private FishingService fishingService;
+    private MiningService miningService;
     private OfflineProductionService offlineProduction;
     private GameUI gameUI;
     private readonly HashSet<string> warnedMissingItems = new HashSet<string>();
     private bool fullBagCatchAlertShown;
+    private bool fullBagFindAlertShown;
 
     private float autoSaveTimer;
     private float pendingOfflineElapsedSec;
@@ -144,7 +148,9 @@ public class GameManager : MonoBehaviour
         LoadGlobalProgressOnce();
         farmService = new FarmService(save, cropDefinitions, farmBalance, GetSeedCount, TryConsumeSeed);
         fishingService = new FishingService(save, fishingBalance);
-        offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance, otterVisitBalance);
+        miningService = new MiningService(save, miningBalance);
+        offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
+            otterVisitBalance, miningBalance);
         gameUI = GameUI.Create(this);
 
         ReportLoadStatus(loadStatus);
@@ -294,6 +300,12 @@ public class GameManager : MonoBehaviour
         {
             fishingBalance = ScriptableObject.CreateInstance<FishingBalanceData>();
             Debug.Log("[GameManager] No FishingBalanceData assigned — using built-in defaults.");
+        }
+
+        if (miningBalance == null)
+        {
+            miningBalance = ScriptableObject.CreateInstance<MiningBalanceData>();
+            Debug.Log("[GameManager] No MiningBalanceData assigned — using built-in defaults.");
         }
 
         if (otterVisitBalance == null)
@@ -548,7 +560,7 @@ public class GameManager : MonoBehaviour
             if (!game.TryFindItem(itemId, out var item)) return 0;
             var reason = game.fishingService.IsFish(itemId) || itemId == game.fishingBalance.trashItemId
                 ? ItemChangeReason.Fishing
-                : ItemChangeReason.Harvest;
+                : game.miningService.IsOre(itemId) ? ItemChangeReason.Mining : ItemChangeReason.Harvest;
             return game.Bag.Add(item, amount, reason);
         }
     }
@@ -678,6 +690,57 @@ public class GameManager : MonoBehaviour
             fullBagCatchAlertShown = true;
             gameUI.ShowAlert("가방이 가득 차서\n잡은 것을 놓아줬어요.");
         }
+    }
+
+    // -------------------------------------------------------------- mining
+
+    // Single switch for "the miner otter is inside the mine", like
+    // SetFishingActive. MinerOtterController, MineEntranceView and
+    // MineEmoteView all follow this flag.
+    public bool IsMiningActive => miningService.IsActive;
+
+    public void SetMiningActive(bool active)
+    {
+        if (miningService.IsActive == active) return;
+        miningService.SetActive(active);
+        SaveNow();
+    }
+
+    // Called once by the mine scene; other scenes have no pickaxe button.
+    public void ShowPickaxeUpgradeButton()
+    {
+        gameUI.ShowPickaxeUpgradeButton();
+    }
+
+    public bool TryUpgradePickaxe()
+    {
+        if (!miningService.TryUpgradePickaxe(CurrencyManager.Instance, goldCurrency)) return false;
+        SaveNow();
+        return true;
+    }
+
+    // Called by MinerOtterController each time a find comes up. Same rules as
+    // AddFishingCatch: no room in the bag drops it with one alert per
+    // full-bag spell. Returns the item that went into the bag (for the
+    // pop-up above the bubble), or null if nothing did.
+    public ItemDefinition AddMiningFind(string itemId)
+    {
+        if (!TryFindItem(itemId, out var item)) return null;
+
+        if (Bag.GetAddableAmount(item) > 0)
+        {
+            Bag.Add(item, 1, ItemChangeReason.Mining);
+            fullBagFindAlertShown = false;
+            SaveNow();
+            return item;
+        }
+
+        if (!fullBagFindAlertShown)
+        {
+            fullBagFindAlertShown = true;
+            gameUI.ShowAlert("가방이 가득 차서\n캔 광석을 두고 왔어요.");
+        }
+        return null;
     }
 
 #if UNITY_EDITOR

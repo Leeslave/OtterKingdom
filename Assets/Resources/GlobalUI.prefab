@@ -33844,6 +33844,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 21ef8cc3a93812d4dac1f6a4f756b488, type: 2}
   - {fileID: 11400000, guid: a5d435af32690514687933a9a05c2de6, type: 2}
   - {fileID: 11400000, guid: b17fe1ae81840fe4d9794a3ea8059425, type: 2}
+  - {fileID: 11400000, guid: c74ae8e750d061b40a3dd3999f4ce170, type: 2}
+  - {fileID: 11400000, guid: c0aaf6ff75ccefa499fe320afcbcbb59, type: 2}
   _defaultSortMode: 1
 --- !u!1 &8374255302544085195
 GameObject:

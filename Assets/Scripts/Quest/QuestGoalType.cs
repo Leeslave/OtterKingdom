@@ -6,7 +6,7 @@ public enum QuestGoalType
     Harvest,            // 수확으로 가방에 들어온 개수 (오프라인 수확 포함)
     Catch,              // 낚시로 가방에 들어온 개수 (오프라인 낚시 포함)
     EarnFromSales,      // 판매로 받은 골드 합계
-    Upgrade,            // 생산 업그레이드 횟수 (밭 강화, 낚싯대 강화)
+    Upgrade,            // 생산 업그레이드 횟수 (밭 강화, 낚싯대 강화, 곡괭이 강화)
     CollectionRegister, // 도감에 새로 등록한 항목 수 (해달 탭이면 해달 등록)
     PlaceDecor,         // 장난감을 놓은 횟수 (어느 장소든)
     ShopPurchase,       // 요정 상점에서 산 횟수

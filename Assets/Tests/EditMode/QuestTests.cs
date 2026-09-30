@@ -226,6 +226,7 @@ public class QuestTests
 
         Assert.AreEqual(1, QuestProgressRules.From(quest, new CurrencyChange(null, -100, TransactionSource.FarmUpgrade)));
         Assert.AreEqual(1, QuestProgressRules.From(quest, new CurrencyChange(null, -200, TransactionSource.RodUpgrade)));
+        Assert.AreEqual(1, QuestProgressRules.From(quest, new CurrencyChange(null, -400, TransactionSource.PickaxeUpgrade)));
         Assert.AreEqual(0, QuestProgressRules.From(quest, new CurrencyChange(null, -50, TransactionSource.InventoryExpand)));
         Assert.AreEqual(0, QuestProgressRules.From(quest, new CurrencyChange(null, 100, TransactionSource.FarmUpgrade)), "획득은 업그레이드가 아닙니다.");
     }
