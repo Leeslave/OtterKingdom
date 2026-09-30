@@ -129,6 +129,9 @@ public class DecorModePresenter : MonoBehaviour
 
         _hud.SetActive(true);
         gameObject.SetActive(false);
+
+        if (_manager != null)
+            _manager.NotifyEditFinished();
     }
 
     private void OnDisable()

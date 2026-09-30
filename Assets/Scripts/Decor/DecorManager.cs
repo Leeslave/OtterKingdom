@@ -34,6 +34,9 @@ public class DecorManager : MonoBehaviour
     /// <summary>보관함 개수가 바뀌었을 때 (가방 개수가 바뀌거나 어느 장소에서든 놓고 치울 때)</summary>
     public event Action OnStorageChanged;
 
+    /// <summary>꾸미기 모드를 끝냈을 때 ([완료]). 게임 쪽이 여기서 바로 저장하면 배치가 30초 자동 저장을 기다리지 않는다</summary>
+    public event Action OnEditFinished;
+
     private readonly Dictionary<DecorBoardDefinition, DecorLayout> _layouts = new Dictionary<DecorBoardDefinition, DecorLayout>();
 
     // 세이브에 있었지만 지금 없는 격자. 다음 저장 때 그대로 다시 써서 잃어버리지 않게 보관
@@ -225,6 +228,9 @@ public class DecorManager : MonoBehaviour
     }
 
     #endregion
+
+    /// <summary>꾸미기 모드가 끝났음을 알린다 (DecorModePresenter가 호출)</summary>
+    public void NotifyEditFinished() => OnEditFinished?.Invoke();
 
     #region 세이브
 
