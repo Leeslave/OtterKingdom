@@ -17,7 +17,10 @@ using System.Linq;
 // OfflineSecPerCatch, each rolled fish/trash at the rod's fish chance. The
 // fishing otter doesn't need to be on duty.
 //
-// Both run offlineSlowdown times slower than online, with no time cap.
+// Mining (pickaxe level >= offlineUnlockPickaxeLevel): the same, one find
+// per OfflineSecPerFind rolled diamond/stone at the pickaxe's diamond chance.
+//
+// All three run offlineSlowdown times slower than online, with no time cap.
 //
 // Otter visits (always on): one roll per rollIntervalSec, each a
 // visitChancePerRoll chance that a random otter came by. Only reported for
@@ -32,21 +35,26 @@ public class OfflineProductionService
     private readonly FarmBalanceData farmBalance;
     private readonly FishingBalanceData fishingBalance;
     private readonly OtterVisitBalanceData otterVisitBalance;
+    private readonly MiningBalanceData miningBalance;
     private readonly Random random;
 
     public OfflineProductionService(IEnumerable<CropDefinition> crops, FarmBalanceData farmBalance,
-        FishingBalanceData fishingBalance, OtterVisitBalanceData otterVisitBalance, Random random = null)
+        FishingBalanceData fishingBalance, OtterVisitBalanceData otterVisitBalance, MiningBalanceData miningBalance,
+        Random random = null)
     {
         cropsById = crops.Where(c => c != null).ToDictionary(c => c.cropId, c => c);
         this.farmBalance = farmBalance;
         this.fishingBalance = fishingBalance;
         this.otterVisitBalance = otterVisitBalance;
+        this.miningBalance = miningBalance;
         this.random = random ?? new Random();
     }
 
     public bool IsFarmUnlocked(SaveData save) => save.farmLevel >= farmBalance.offlineUnlockLevel;
 
     public bool IsFishingUnlocked(SaveData save) => save.rodLevel >= fishingBalance.offlineUnlockRodLevel;
+
+    public bool IsMiningUnlocked(SaveData save) => save.pickaxeLevel >= miningBalance.offlineUnlockPickaxeLevel;
 
     // How many crops the farm NPC accepts: one per unlocked slot.
     public static int RegistrationLimit(SaveData save)
@@ -66,6 +74,7 @@ public class OfflineProductionService
 
         if (IsFarmUnlocked(save)) RunFarm(save, elapsedSec, bag, report);
         if (IsFishingUnlocked(save)) RunFishing(save, elapsedSec, bag, report);
+        if (IsMiningUnlocked(save)) RunMining(save, elapsedSec, bag, report);
         RunOtterVisits(save, elapsedSec, report);
         return report;
     }
@@ -159,6 +168,28 @@ public class OfflineProductionService
 
         Store(fishingBalance.fishItemId, ClampToInt(fish), bag, report);
         Store(fishingBalance.trashItemId, ClampToInt(catches - fish), bag, report);
+    }
+
+    // ---------------------------------------------------------------- mining
+
+    private void RunMining(SaveData save, double elapsedSec, IOfflineBag bag, OfflineReport report)
+    {
+        double perFind = miningBalance.OfflineSecPerFind;
+        if (perFind <= 0) return;
+
+        double total = Math.Max(save.offlineMiningProgressSec, 0f) + elapsedSec;
+        long finds = (long)Math.Floor(total / perFind);
+        save.offlineMiningProgressSec = (float)(total - finds * perFind);
+
+        float diamondChance = miningBalance.DiamondChanceAt(save.pickaxeLevel);
+        long diamonds = 0;
+        for (long i = 0; i < finds; i++)
+        {
+            if (random.NextDouble() < diamondChance) diamonds++;
+        }
+
+        Store(miningBalance.diamondItemId, ClampToInt(diamonds), bag, report);
+        Store(miningBalance.stoneItemId, ClampToInt(finds - diamonds), bag, report);
     }
 
     // ----------------------------------------------------------- otter visits

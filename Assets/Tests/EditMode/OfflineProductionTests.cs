@@ -14,6 +14,7 @@ public class OfflineProductionTests
     private FarmBalanceData _farm;
     private FishingBalanceData _fishing;
     private OtterVisitBalanceData _visits;
+    private MiningBalanceData _mining;
     private FakeBag _bag;
 
     private class FakeBag : IOfflineBag
@@ -56,6 +57,10 @@ public class OfflineProductionTests
         _visits.rollIntervalSec = 1800f;
         _visits.visitChancePerRoll = 0f;
 
+        _mining = ScriptableObject.CreateInstance<MiningBalanceData>();
+        _mining.findIntervalSec = new Vector2(20f, 20f);
+        _mining.offlineSlowdown = 4f; // 20 x 4 = 80s per find
+
         _bag = new FakeBag();
     }
 
@@ -67,6 +72,7 @@ public class OfflineProductionTests
         Object.DestroyImmediate(_farm);
         Object.DestroyImmediate(_fishing);
         Object.DestroyImmediate(_visits);
+        Object.DestroyImmediate(_mining);
     }
 
     private static CropDefinition CreateCrop(string id, float durationSec, int yield, SeedType seedType)
@@ -80,12 +86,13 @@ public class OfflineProductionTests
     }
 
     private OfflineProductionService CreateService(int seed = 1) =>
-        new OfflineProductionService(new[] { _carrot, _potato }, _farm, _fishing, _visits, new System.Random(seed));
+        new OfflineProductionService(new[] { _carrot, _potato }, _farm, _fishing, _visits, _mining, new System.Random(seed));
 
-    // One unlocked plot (3 slots), rod level 1 so fishing stays off unless a test turns it on.
+    // One unlocked plot (3 slots), rod and pickaxe level 1 so fishing and
+    // mining stay off unless a test turns them on.
     private static SaveData CreateSave(int farmLevel, params string[] registeredCrops)
     {
-        var save = new SaveData { farmLevel = farmLevel, rodLevel = 1 };
+        var save = new SaveData { farmLevel = farmLevel, rodLevel = 1, pickaxeLevel = 1 };
         save.plots.Add(new PlotSaveData { plotId = "plot_1", unlocked = true, slots = PlotSaveData.CreateEmptySlots() });
         save.plots.Add(new PlotSaveData { plotId = "plot_2", unlocked = false, slots = PlotSaveData.CreateEmptySlots() });
         foreach (var cropId in registeredCrops)
@@ -246,6 +253,50 @@ public class OfflineProductionTests
         CreateService(seed: 42).Run(save, 100f * 1000, _bag);
 
         Assert.AreEqual(550, _bag.GetCount(_fishing.fishItemId), 50);
+    }
+
+    // ---------------------------------------------------------------- mining
+
+    [Test]
+    public void Mining_BelowUnlockPickaxeLevel_FindsNothing()
+    {
+        var save = CreateSave(1);
+
+        var report = CreateService().Run(save, 80f * 10, _bag);
+
+        Assert.IsFalse(report.HasAnything);
+    }
+
+    [Test]
+    public void Mining_OneFindPerInterval_SplitIntoDiamondAndStone()
+    {
+        var save = CreateSave(1);
+        save.pickaxeLevel = 2;
+
+        var report = CreateService().Run(save, 80f * 10 + 30, _bag);
+
+        int diamonds = OfflineReport.CountOf(report.Received, _mining.diamondItemId);
+        int stones = OfflineReport.CountOf(report.Received, _mining.stoneItemId);
+        Assert.AreEqual(10, diamonds + stones);
+        Assert.AreEqual(30f, save.offlineMiningProgressSec, 0.01f);
+    }
+
+    [Test]
+    public void Mining_ManyFinds_StayNearTheExpectedDiamondRate()
+    {
+        var save = CreateSave(1);
+        save.pickaxeLevel = 2; // 35% diamond
+
+        CreateService(seed: 42).Run(save, 80f * 1000, _bag);
+
+        Assert.AreEqual(350, _bag.GetCount(_mining.diamondItemId), 50);
+    }
+
+    [Test]
+    public void Mining_DiamondChance_CapsAtMaxPickaxeLevel()
+    {
+        Assert.AreEqual(0.3f, _mining.DiamondChanceAt(1), 0.001f);
+        Assert.AreEqual(0.5f, _mining.DiamondChanceAt(_mining.MaxPickaxeLevel), 0.001f);
     }
 
     // ---------------------------------------------------------- otter visits

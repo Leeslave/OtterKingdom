@@ -79,9 +79,13 @@ public class SaveData
     public int lifetimeSales;
     public int farmLevel = 1;
     public int rodLevel = 1;
+    public int pickaxeLevel = 1;
     // True while the fishing otter is assigned to the fishing spot (between
     // the player's "start fishing" and "stop fishing" confirmations).
     public bool fishingActive;
+    // True while the miner otter is assigned to the mine (between the
+    // player's "start mining" and "stop mining" confirmations).
+    public bool miningActive;
     public string lastSaveUtc;
     public List<PlotSaveData> plots = new List<PlotSaveData>();
     public List<ItemStack> inventory = new List<ItemStack>();
@@ -100,6 +104,8 @@ public class SaveData
     public List<OfflineFarmSlotSaveData> offlineFarmSlots = new List<OfflineFarmSlotSaveData>();
     // Offline time already spent towards the next catch (rod level 2+).
     public float offlineFishingProgressSec;
+    // Offline time already spent towards the next ore find (pickaxe level 2+).
+    public float offlineMiningProgressSec;
     // Offline time already spent towards the next otter visit roll.
     public float offlineOtterVisitProgressSec;
     public List<OtterSaveData> otters = new List<OtterSaveData>();

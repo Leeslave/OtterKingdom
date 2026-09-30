@@ -1,0 +1,370 @@
+fileFormatVersion: 2
+guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -819489578786999619
+    second: MinerOtter_Mine_0
+  - first:
+      213: -1787533783548979652
+    second: MinerOtter_Mine_1
+  - first:
+      213: -8980311260102871366
+    second: MinerOtter_Mine_2
+  - first:
+      213: -8245372725552981073
+    second: MinerOtter_Mine_3
+  - first:
+      213: 1630175182219336116
+    second: MinerOtter_Mine_4
+  - first:
+      213: 3249685917041972158
+    second: MinerOtter_Mine_5
+  - first:
+      213: -4437768590128254525
+    second: MinerOtter_Mine_6
+  - first:
+      213: 506591628059050711
+    second: MinerOtter_Mine_7
+  - first:
+      213: 9058410090837375587
+    second: MinerOtter_Mine_0_0
+  - first:
+      213: 8124726121430529473
+    second: MinerOtter_Mine_0_1
+  - first:
+      213: 8671229435004206248
+    second: MinerOtter_Mine_0_2
+  - first:
+      213: -8588549519341785491
+    second: MinerOtter_Mine_0_3
+  - first:
+      213: -7131514882806320652
+    second: MinerOtter_Mine_0_4
+  - first:
+      213: -8577886893449170698
+    second: MinerOtter_Mine_0_5
+  - first:
+      213: -3340578318136227465
+    second: MinerOtter_Mine_0_6
+  - first:
+      213: 4530077187370645881
+    second: MinerOtter_Mine_0_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 145
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MinerOtter_Mine_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 308
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.039855074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36afc2eebffe5bd70800000000000000
+      internalID: 9058410090837375587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Mine_0_1
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 0
+        width: 308
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.039855074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c5343d5c53d0c070800000000000000
+      internalID: 8124726121430529473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Mine_0_2
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 0
+        width: 308
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.039855074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ac365f9a35665870800000000000000
+      internalID: 8671229435004206248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Mine_0_3
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 0
+        width: 308
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.039855074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6ee7cb57b75fc880800000000000000
+      internalID: -8588549519341785491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Mine_0_4
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 0
+        width: 308
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.039855074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f1faeb9ff4c70d90800000000000000
+      internalID: -7131514882806320652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Mine_0_5
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 0
+        width: 308
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.039855074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f0bb78615935f880800000000000000
+      internalID: -8577886893449170698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Mine_0_6
+      rect:
+        serializedVersion: 2
+        x: 1848
+        y: 0
+        width: 308
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.039855074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7794e1308b1e3a1d0800000000000000
+      internalID: -3340578318136227465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Mine_0_7
+      rect:
+        serializedVersion: 2
+        x: 2156
+        y: 0
+        width: 308
+        height: 276
+      alignment: 9
+      pivot: {x: 0.5, y: 0.039855074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 979f35653311ede30800000000000000
+      internalID: 4530077187370645881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MinerOtter_Mine_0: -819489578786999619
+      MinerOtter_Mine_0_0: 9058410090837375587
+      MinerOtter_Mine_0_1: 8124726121430529473
+      MinerOtter_Mine_0_2: 8671229435004206248
+      MinerOtter_Mine_0_3: -8588549519341785491
+      MinerOtter_Mine_0_4: -7131514882806320652
+      MinerOtter_Mine_0_5: -8577886893449170698
+      MinerOtter_Mine_0_6: -3340578318136227465
+      MinerOtter_Mine_0_7: 4530077187370645881
+      MinerOtter_Mine_1: -1787533783548979652
+      MinerOtter_Mine_2: -8980311260102871366
+      MinerOtter_Mine_3: -8245372725552981073
+      MinerOtter_Mine_4: 1630175182219336116
+      MinerOtter_Mine_5: 3249685917041972158
+      MinerOtter_Mine_6: -4437768590128254525
+      MinerOtter_Mine_7: 506591628059050711
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

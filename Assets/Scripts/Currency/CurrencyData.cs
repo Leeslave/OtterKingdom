@@ -30,7 +30,7 @@ public class Currency : ScriptableObject
 /// 재화의 획득/소비 출처
 /// </summary>
 public enum TransactionSource{TestGet, TestUse, GotchaUse, ShopPurchase, BlacksmithUpgrade, InventoryExpand,
-    CropSale, FarmUpgrade, PlotUnlock, FishingSale, RodUpgrade, ItemSale, QuestReward, DecorExpand}
+    CropSale, FarmUpgrade, PlotUnlock, FishingSale, RodUpgrade, ItemSale, QuestReward, DecorExpand, PickaxeUpgrade}
 public struct CurrencyTransaction
 {
     [Header("Data")]
