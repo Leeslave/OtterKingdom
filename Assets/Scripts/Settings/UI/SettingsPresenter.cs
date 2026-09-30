@@ -23,7 +23,7 @@ public class SettingsPresenter : MonoBehaviour
 
         _topBar.OnSettingsClicked += Open;
         _view.OnBgmVolumeChanged += _settings.SetBgmVolume;
-        _view.OnSfxVolumeChanged += _settings.SetSfxVolume;
+        _view.OnSfxVolumeChanged += HandleSfxVolumeChanged;
         _view.OnVibrationToggled += HandleVibrationToggled;
         _view.OnPushToggled += _settings.SetPushEnabled;
         _view.OnLanguageChanged += _settings.SetLanguage;
@@ -39,6 +39,7 @@ public class SettingsPresenter : MonoBehaviour
     {
         _topBar.OnSettingsClicked -= Open;
         _view.OnMenuClicked -= HandleMenuClicked;
+        _view.OnSfxVolumeChanged -= HandleSfxVolumeChanged;
         _view.OnVibrationToggled -= HandleVibrationToggled;
         _view.OnHidden -= HandleHidden;
 
@@ -46,7 +47,6 @@ public class SettingsPresenter : MonoBehaviour
             return;
 
         _view.OnBgmVolumeChanged -= _settings.SetBgmVolume;
-        _view.OnSfxVolumeChanged -= _settings.SetSfxVolume;
         _view.OnPushToggled -= _settings.SetPushEnabled;
         _view.OnLanguageChanged -= _settings.SetLanguage;
         _settings.OnChanged -= Refresh;
@@ -62,6 +62,13 @@ public class SettingsPresenter : MonoBehaviour
     {
         _view.SetValues(_settings.BgmVolume, _settings.SfxVolume, _settings.VibrationEnabled,
             _settings.PushEnabled, _settings.Language);
+    }
+
+    // 바뀐 크기로 "띵"을 들려줌 (배경음은 계속 나오고 있어서 따로 들려줄 필요 없음)
+    private void HandleSfxVolumeChanged(float volume)
+    {
+        _settings.SetSfxVolume(volume);
+        AudioManager.Instance.PlaySfxPreview();
     }
 
     private void HandleVibrationToggled(bool enabled)

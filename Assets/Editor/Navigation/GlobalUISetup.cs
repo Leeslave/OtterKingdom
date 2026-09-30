@@ -328,6 +328,8 @@ public static class GlobalUISetup
 
         // 상단바 설정 버튼 → 설정 화면. 설정 값의 주인(기기에 저장)도 전역 UI에 붙음
         root.AddComponent<SettingsManager>();
+        // 배경음/효과음 (설정 음량을 따름). 곡을 비워 두면 코드로 만든 임시 배경음
+        root.AddComponent<AudioManager>();
         var settingsPresenter = root.AddComponent<SettingsPresenter>();
         Set(settingsPresenter, "_topBar", topBar.view);
         Set(settingsPresenter, "_view", settings);
