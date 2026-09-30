@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 /// <summary>
 /// 퀘스트 모델(QuestLog)과 퀘스트 화면을 연결한다. 위쪽은 왕국 레벨과 경험치.
-/// 목록은 지금 열린 퀘스트만: 보상 받을 수 있는 것 → 일일 → 성장 → 받은 퀘스트(오늘 받은 일일 → 받은 성장).
-/// 받은 퀘스트는 남은 퀘스트 아래에 [완료] + 체크 + 흐리게 표시된다 (QuestRowView).
+/// 목록은 지금 열린 퀘스트만: 보상 받을 수 있는 것 → 일일 → 성장 → 완료(오늘 받은 일일 → 이번 레벨에 받은 성장).
+/// 완료는 남은 퀘스트 아래에 [완료] + 체크 + 흐리게 표시된다 (QuestRowView). 레벨이 오르면 받은 성장 퀘스트는 목록에서 빠진다.
 /// </summary>
 public class QuestPresenter : MonoBehaviour
 {
@@ -93,9 +93,9 @@ public class QuestPresenter : MonoBehaviour
         AddGroup(quests, q => log.GetStatus(q) == QuestStatus.Claimable);
         AddGroup(quests, q => q.Kind == QuestKind.Daily && log.GetStatus(q) == QuestStatus.InProgress);
         AddGroup(quests, q => q.Kind == QuestKind.Main && log.GetStatus(q) == QuestStatus.InProgress);
-        // 받은 퀘스트는 남은 퀘스트 아래로
-        AddGroup(quests, q => q.Kind == QuestKind.Daily && log.GetStatus(q) == QuestStatus.Claimed);
-        AddGroup(quests, q => q.Kind == QuestKind.Main && log.GetStatus(q) == QuestStatus.Claimed);
+        // 완료는 남은 퀘스트 아래로 (오늘 받은 일일, 이번 레벨에 받은 성장만)
+        AddGroup(quests, q => q.Kind == QuestKind.Daily && _manager.ShowsAsCompleted(q));
+        AddGroup(quests, q => q.Kind == QuestKind.Main && _manager.ShowsAsCompleted(q));
 
         while (_rows.Count < _ordered.Count)
         {

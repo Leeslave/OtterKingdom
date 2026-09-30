@@ -67,6 +67,21 @@ public static class QuestProgressRules
         return quest.Prerequisite == null || log.GetStatus(quest.Prerequisite) == QuestStatus.Claimed;
     }
 
+    /// <summary>
+    /// 받은 퀘스트를 목록 아래 완료 칸에 남길지. 레벨을 한 챕터처럼: 이번 레벨에 받은 것만 남고 레벨이 오르면 비워진다.
+    /// 일일 퀘스트는 받은 기록이 매일 초기화되므로 오늘 받았으면 남긴다.
+    /// 받은 레벨을 모르는 옛 기록(0)은 남기지 않는다.
+    /// </summary>
+    public static bool ShowsAsCompleted(QuestDefinition quest, int level, QuestLog log)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        if (log == null) throw new ArgumentNullException(nameof(log));
+
+        if (log.GetStatus(quest) != QuestStatus.Claimed)
+            return false;
+        return quest.Kind == QuestKind.Daily || log.GetClaimedLevel(quest) == level;
+    }
+
     /// <summary>도감 등록: 새로 획득·등록된 항목 1개 = 1 (방문 흔적은 세지 않음)</summary>
     public static int From(QuestDefinition quest, CollectionEntry entry, CollectionState state)
     {

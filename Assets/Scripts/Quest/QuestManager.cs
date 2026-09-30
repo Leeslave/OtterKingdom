@@ -139,6 +139,9 @@ public class QuestManager : MonoBehaviour
     /// <summary>지금 목록에 나타나고 진행이 쌓이는지 (레벨·앞 단계 충족)</summary>
     public bool IsAvailable(QuestDefinition quest) => QuestProgressRules.IsAvailable(quest, PlayerLevel, Log);
 
+    /// <summary>받은 퀘스트 중 목록 아래 완료 칸에 남길지 (오늘 받은 일일, 이번 레벨에 받은 성장)</summary>
+    public bool ShowsAsCompleted(QuestDefinition quest) => QuestProgressRules.ShowsAsCompleted(quest, PlayerLevel, Log);
+
     /// <summary>이 퀘스트를 지금 받으면 얻는 경험치</summary>
     public int ExpFor(QuestDefinition quest)
     {
@@ -220,11 +223,12 @@ public class QuestManager : MonoBehaviour
         if (!IsAvailable(quest))
             return false;
 
-        // 경험치는 받기 전 레벨 기준 (받으면서 레벨이 오르면 % 계산이 달라지므로 먼저 계산)
+        // 경험치와 받은 레벨은 받기 전 레벨 기준 (받으면서 레벨이 오르면 달라지므로 먼저 계산)
+        int level = PlayerLevel;
         int exp = ExpFor(quest);
 
         // 받음 표시부터: 같은 보상을 두 번 받는 일을 막는다
-        if (!Log.TryClaim(quest))
+        if (!Log.TryClaim(quest, level))
             return false;
 
         if (quest.RewardCurrency != null && quest.RewardAmount > 0)

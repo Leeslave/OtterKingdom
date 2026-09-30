@@ -13,11 +13,14 @@ public readonly struct QuestRecord
 {
     public readonly int Progress;
     public readonly bool Claimed;
+    /// <summary>보상을 받은 순간의 왕국 레벨 (0 = 모름: 안 받았거나 이 값이 생기기 전 세이브)</summary>
+    public readonly int ClaimedLevel;
 
-    public QuestRecord(int progress, bool claimed)
+    public QuestRecord(int progress, bool claimed, int claimedLevel = 0)
     {
         Progress = progress;
         Claimed = claimed;
+        ClaimedLevel = claimed ? claimedLevel : 0;
     }
 }
 
@@ -78,24 +81,34 @@ public class QuestLog
     }
 
     /// <summary>보상 받음으로 표시. 목표를 달성했고 아직 받지 않았을 때만.</summary>
+    /// <param name="level">받는 순간의 왕국 레벨 (목록에서 "이번 레벨에 받은 퀘스트"를 가려내는 데 씀)</param>
     /// <returns>받음으로 바뀌었으면 true (보상 지급은 호출한 쪽이 한다)</returns>
-    public bool TryClaim(QuestDefinition quest)
+    public bool TryClaim(QuestDefinition quest, int level = 0)
     {
         if (GetStatus(quest) != QuestStatus.Claimable)
             return false;
 
-        _records[quest.QuestId] = new QuestRecord(GetProgress(quest), true);
+        _records[quest.QuestId] = new QuestRecord(GetProgress(quest), true, Math.Max(0, level));
         OnChanged?.Invoke(quest);
         return true;
     }
 
+    /// <returns>보상을 받은 순간의 왕국 레벨 (0 = 안 받았거나 모름)</returns>
+    public int GetClaimedLevel(QuestDefinition quest)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+
+        return GetRecord(quest).ClaimedLevel;
+    }
+
     /// <summary>세이브 복원용. 알림 없이 기록을 넣는다.</summary>
-    public void LoadRecord(string questId, int progress, bool claimed)
+    public void LoadRecord(string questId, int progress, bool claimed, int claimedLevel = 0)
     {
         if (string.IsNullOrEmpty(questId))
             throw new ArgumentException("questId가 비어 있습니다.", nameof(questId));
 
-        _records[questId] = new QuestRecord(Math.Max(0, progress), claimed);
+        _records[questId] = new QuestRecord(Math.Max(0, progress), claimed, Math.Max(0, claimedLevel));
     }
 
     /// <summary>이 퀘스트들의 진행·수령 기록을 지운다 (일일 초기화). 알림은 한 번만</summary>

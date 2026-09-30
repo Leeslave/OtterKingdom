@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 
-/// <summary>세이브 한 줄: 퀘스트 ID, 진행 수치, 보상 수령 여부</summary>
+/// <summary>세이브 한 줄: 퀘스트 ID, 진행 수치, 보상 수령 여부, 받은 레벨</summary>
 [Serializable]
 public class QuestSaveEntry
 {
     public string questId;
     public int progress;
     public bool claimed;
+    // 보상을 받은 순간의 왕국 레벨. 이 값이 생기기 전 세이브에는 없음 → 0 (모름)
+    public int claimedLevel;
 
     public QuestSaveEntry() { }
 
-    public QuestSaveEntry(string questId, int progress, bool claimed)
+    public QuestSaveEntry(string questId, int progress, bool claimed, int claimedLevel = 0)
     {
         this.questId = questId;
         this.progress = progress;
         this.claimed = claimed;
+        this.claimedLevel = claimedLevel;
     }
 }
 
@@ -40,7 +43,7 @@ public static class QuestSaveConverter
         foreach (var id in ids)
         {
             var record = log.Records[id];
-            result.Add(new QuestSaveEntry(id, record.Progress, record.Claimed));
+            result.Add(new QuestSaveEntry(id, record.Progress, record.Claimed, record.ClaimedLevel));
         }
 
         if (log.DailyDay > 0)
@@ -64,7 +67,7 @@ public static class QuestSaveConverter
                 continue;
             }
 
-            log.LoadRecord(line.questId, line.progress, line.claimed);
+            log.LoadRecord(line.questId, line.progress, line.claimed, line.claimedLevel);
         }
     }
 }

@@ -105,6 +105,47 @@ public class ProgressionTests
     }
 
     [Test]
+    public void Completed_ShowsOnlyClaimedAtCurrentLevel_DailyAlways()
+    {
+        var early = CreateQuest("early");
+        var now = CreateQuest("now");
+        var open = CreateQuest("open");
+        var daily = CreateQuest("daily", kind: QuestKind.Daily);
+        var log = new QuestLog();
+        foreach (var quest in new[] { early, now, open, daily })
+            log.AddProgress(quest, 1);
+
+        log.TryClaim(early, 1);
+        log.TryClaim(now, 2);
+        log.TryClaim(daily, 1);
+        log.LoadRecord("old", 1, true); // 받은 레벨이 생기기 전 세이브
+        var old = CreateQuest("old");
+
+        Assert.IsFalse(QuestProgressRules.ShowsAsCompleted(early, 2, log), "이전 레벨에 받은 것은 빠져야 합니다.");
+        Assert.IsTrue(QuestProgressRules.ShowsAsCompleted(now, 2, log));
+        Assert.IsFalse(QuestProgressRules.ShowsAsCompleted(open, 2, log), "받지 않은 것은 완료 칸이 아닙니다.");
+        Assert.IsTrue(QuestProgressRules.ShowsAsCompleted(daily, 2, log), "오늘 받은 일일은 레벨과 상관없이 남습니다.");
+        Assert.IsFalse(QuestProgressRules.ShowsAsCompleted(old, 1, log), "받은 레벨을 모르는 옛 기록은 남기지 않습니다.");
+    }
+
+    [Test]
+    public void ClaimedLevel_SurvivesSave()
+    {
+        var quest = CreateQuest("q");
+        var log = new QuestLog();
+        log.AddProgress(quest, 1);
+        log.TryClaim(quest, 3);
+
+        var saved = new List<QuestSaveEntry>();
+        QuestSaveConverter.Write(log, saved);
+        var loaded = new QuestLog();
+        QuestSaveConverter.Read(saved, loaded);
+
+        Assert.AreEqual(3, loaded.GetClaimedLevel(quest));
+        Assert.AreEqual(QuestStatus.Claimed, loaded.GetStatus(quest));
+    }
+
+    [Test]
     public void DailyExp_FollowsCurrentLevel()
     {
         var daily = CreateQuest("daily", exp: 5, percent: 10f, kind: QuestKind.Daily);
