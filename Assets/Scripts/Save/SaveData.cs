@@ -75,7 +75,10 @@ public class CurrencyBalance
 [Serializable]
 public class SaveData
 {
-    public int schemaVersion = 1;
+    // 2: firstPlantGuideDone exists (1-saves are checked once on load).
+    // 3: tutorialsDone exists (older saves skip every zone tutorial).
+    public const int CurrentSchemaVersion = 3;
+    public int schemaVersion = CurrentSchemaVersion;
     public int lifetimeSales;
     public int farmLevel = 1;
     public int rodLevel = 1;
@@ -86,6 +89,12 @@ public class SaveData
     // True while the miner otter is assigned to the mine (between the
     // player's "start mining" and "stop mining" confirmations).
     public bool miningActive;
+    // True once the player has planted for the first time, which ends the
+    // "당근을 심어 볼까?" guide and the plot highlight for good.
+    public bool firstPlantGuideDone;
+    // Scene names (Plaza, Farm, Fishing, Mine) whose first-visit tutorial has
+    // been seen or skipped.
+    public List<string> tutorialsDone = new List<string>();
     public string lastSaveUtc;
     public List<PlotSaveData> plots = new List<PlotSaveData>();
     public List<ItemStack> inventory = new List<ItemStack>();

@@ -65,6 +65,9 @@ public class FarmService
 
     public IReadOnlyList<PlotRuntime> Plots => plots;
 
+    public bool HasAnyPlantedSlot =>
+        plots.Any(p => p.Data.slots.Any(s => s.state != FurrowSlotState.Empty));
+
     public bool IsPlotUnlocked(int plotIndex) =>
         plotIndex >= 0 && plotIndex < plots.Count && plots[plotIndex].Data.unlocked;
 

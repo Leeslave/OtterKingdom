@@ -21,6 +21,9 @@ public class TopBarView : MonoBehaviour
     [Header("버튼")]
     [SerializeField] private Button _settingsButton;
 
+    /// <summary>튜토리얼이 프로필 위치를 강조할 때 사용</summary>
+    public RectTransform ProfileArea => (RectTransform)_profileButton.transform;
+
     /// <summary>아바타를 눌렀을 때 (왕국 정보 화면 등이 생기면 연결)</summary>
     public event Action OnProfileClicked;
 

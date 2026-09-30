@@ -21,6 +21,13 @@ public class NavBarView : MonoBehaviour
     [SerializeField] private GameObject _bagSelected;
     [SerializeField] private GameObject _travelSelected;
 
+    // 튜토리얼이 버튼 위치를 강조할 때 사용
+    public RectTransform CodexButton => (RectTransform)_codexButton.transform;
+    public RectTransform QuestButton => (RectTransform)_questButton.transform;
+    public RectTransform DecorateButton => (RectTransform)_decorateButton.transform;
+    public RectTransform BagButton => (RectTransform)_bagButton.transform;
+    public RectTransform TravelButton => (RectTransform)_travelButton.transform;
+
     public event Action OnCodexClicked;
     public event Action OnQuestClicked;
     public event Action OnDecorateClicked;

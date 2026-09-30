@@ -25,6 +25,7 @@ public class FurrowSlotView : MonoBehaviour
 
     private FurrowSlotState lastState = (FurrowSlotState)(-1);
     private SlotGrowthStage lastStage = (SlotGrowthStage)(-1);
+    private bool highlighted;
 
     private void Awake()
     {
@@ -45,7 +46,19 @@ public class FurrowSlotView : MonoBehaviour
         var stage = farmService.GetSlotStage(plotIndex, slotIndex);
 
         RefreshSprite(farmService, state, stage);
+        RefreshGuideHighlight(state);
         HandleClick(state);
+    }
+
+    // Empty slots of the first-plant guide plot pulse with PlotView's highlight.
+    private void RefreshGuideHighlight(FurrowSlotState state)
+    {
+        bool highlight = state == FurrowSlotState.Empty
+                         && plotIndex == GameManager.FirstPlantGuidePlotIndex
+                         && GameManager.Instance.IsFirstPlantGuideActive;
+        if (highlight) spriteRenderer.color = PlotView.GuidePulse(Color.white);
+        else if (highlighted) lastState = (FurrowSlotState)(-1); // RefreshSprite restores the color next frame
+        highlighted = highlight;
     }
 
     private void RefreshSprite(FarmService farmService, FurrowSlotState state, SlotGrowthStage stage)

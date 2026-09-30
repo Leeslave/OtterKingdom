@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -23,20 +24,124 @@ public enum SaveLoadStatus
 // replace their progress with a fresh game. The corrupt files are left in
 // place until then, so quitting and relaunching asks again.
 //
+// Dev wipe/restore (SaveFilesWindow): WipeToSnapshot moves every save.json*
+// file into save.json.snapshots/<time>-<tag>/ instead of deleting it, and
+// RestoreSnapshot copies a snapshot back — first snapshotting whatever save is
+// there now, so neither direction can lose progress.
+//
 // Still not handled: unknown-item-id migration and schemaVersion upgrades.
 public class SaveService
 {
+    private readonly string fileName;
     private readonly string savePath;
     private readonly string backupPath;
     private readonly string tempPath;
+    private readonly string snapshotRoot;
 
     private bool warnedBlocked;
 
     public SaveService(string fileName = "save.json")
     {
+        this.fileName = fileName;
         savePath = Path.Combine(Application.persistentDataPath, fileName);
         backupPath = savePath + ".bak";
         tempPath = savePath + ".tmp";
+        snapshotRoot = savePath + ".snapshots";
+    }
+
+    public string SavePath => savePath;
+    public string SnapshotRoot => snapshotRoot;
+
+    // save.json, .bak, .tmp and any .corrupt-* files — the whole save state,
+    // so a snapshot of a corrupted save still reproduces the corruption.
+    private string[] CurrentSaveFiles()
+    {
+        string dir = Path.GetDirectoryName(savePath);
+        return Directory.Exists(dir) ? Directory.GetFiles(dir, fileName + "*") : Array.Empty<string>();
+    }
+
+    public bool HasSaveFiles => CurrentSaveFiles().Length > 0;
+
+    // Moves the current save files into a new snapshot; the next launch starts
+    // a new game. Returns the snapshot name, or null if there was nothing to move.
+    public string WipeToSnapshot(string tag = "wipe")
+    {
+        var files = CurrentSaveFiles();
+        if (files.Length == 0) return null;
+
+        string name = NewSnapshotName(tag);
+        string dir = Path.Combine(snapshotRoot, name);
+        Directory.CreateDirectory(dir);
+        foreach (var file in files)
+        {
+            File.Move(file, Path.Combine(dir, Path.GetFileName(file)));
+        }
+
+        WritesBlocked = false;
+        warnedBlocked = false;
+        Debug.Log($"[SaveService] Save files moved to snapshot {dir}");
+        return name;
+    }
+
+    // Copies a snapshot back as the current save. The snapshot is kept, so
+    // the same state can be restored again; the save it replaces (if any) is
+    // snapshotted first. Returns false if the snapshot has no files.
+    public bool RestoreSnapshot(string name)
+    {
+        string dir = Path.Combine(snapshotRoot, name);
+        var files = Directory.Exists(dir) ? Directory.GetFiles(dir, fileName + "*") : Array.Empty<string>();
+        if (files.Length == 0)
+        {
+            Debug.LogError($"[SaveService] Snapshot {dir} has no save files.");
+            return false;
+        }
+
+        WipeToSnapshot("before-restore");
+        foreach (var file in files)
+        {
+            File.Copy(file, Path.Combine(Path.GetDirectoryName(savePath), Path.GetFileName(file)));
+        }
+        Debug.Log($"[SaveService] Restored save files from snapshot {dir}");
+        return true;
+    }
+
+    public void DeleteSnapshot(string name)
+    {
+        string dir = Path.Combine(snapshotRoot, name);
+        if (Directory.Exists(dir)) Directory.Delete(dir, true);
+    }
+
+    // Newest first (names start with a sortable timestamp).
+    public List<string> ListSnapshots()
+    {
+        var names = new List<string>();
+        if (!Directory.Exists(snapshotRoot)) return names;
+
+        foreach (var dir in Directory.GetDirectories(snapshotRoot))
+        {
+            names.Add(Path.GetFileName(dir));
+        }
+        names.Sort(StringComparer.Ordinal);
+        names.Reverse();
+        return names;
+    }
+
+    // The snapshot's save.json, or its .bak if that's the readable one.
+    public bool TryReadSnapshot(string name, out SaveData data)
+    {
+        string dir = Path.Combine(snapshotRoot, name);
+        return TryReadFrom(Path.Combine(dir, fileName), out data)
+            || TryReadFrom(Path.Combine(dir, fileName + ".bak"), out data);
+    }
+
+    private string NewSnapshotName(string tag)
+    {
+        string name = $"{DateTime.Now:yyyyMMdd-HHmmss}-{tag}";
+        for (int i = 1; Directory.Exists(Path.Combine(snapshotRoot, name)); i++)
+        {
+            name = $"{DateTime.Now:yyyyMMdd-HHmmss}-{tag}-{i}";
+        }
+        return name;
     }
 
     public bool WritesBlocked { get; private set; }

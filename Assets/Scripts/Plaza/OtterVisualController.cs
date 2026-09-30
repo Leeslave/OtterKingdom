@@ -16,8 +16,9 @@ using UnityEngine.Rendering;
 // (e.g. a future shadow) move in depth together with the body.
 //
 // While the agent plays with a toy the otter faces it and loops the idle
-// action triggers that exist on the controller (Squat/Stretch/Net/Eat), each
-// returning to Idle before the next one fires.
+// action triggers that exist on the controller (FarmerOtter: Squat/Stretch/
+// Net/Eat; visitors: Eat/Happy, Yawn/Sleep, Paint/Wave — see
+// OtterVisitorSpriteSetup), each returning to Idle before the next one fires.
 [RequireComponent(typeof(OtterWanderAgent))]
 public class OtterVisualController : MonoBehaviour
 {
@@ -27,7 +28,11 @@ public class OtterVisualController : MonoBehaviour
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     private static readonly int WalkDirHash = Animator.StringToHash("WalkDir");
     private static readonly int WalkAnimSpeedHash = Animator.StringToHash("WalkAnimSpeed");
-    private static readonly string[] PlayTriggerNames = { "Squat", "Stretch", "Net", "Eat" };
+    private static readonly string[] PlayTriggerNames =
+    {
+        "Squat", "Stretch", "Net", "Eat",
+        "Happy", "Yawn", "Sleep", "Paint", "Wave",
+    };
     // Short breather in Idle between two play actions.
     private const float PlayActionGapSeconds = 0.4f;
 
