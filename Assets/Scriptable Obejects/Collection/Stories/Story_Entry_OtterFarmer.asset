@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterFarmer
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 0}
+  - {fileID: 0}
+  _lines:
+  - _cut: 0
+    _text: "\uCC98\uC74C \uBD59\uACA0\uC2B5\uB2C8\uB2E4, {\uC774\uB984}\uB2D8! \uC624\uB298\uBD80\uD130
+      \uBC2D\uC744 \uB9E1\uC740 \uD574\uB2EC\uC774\uC5D0\uC694."
+  - _cut: 1
+    _text: "\uC0C8\uC2F9 \uD558\uB098\uB3C4 \uADF8\uB0E5 \uC548 \uC9C0\uB098\uCE60\uAC8C\uC694.
+      \uB9E1\uACA8 \uC8FC\uC138\uC694!"
+  - _cut: 1
+    _text: "\u2026\uADF8\uB7F0\uB370 \uB2F9\uADFC\uC740 \uAC00\uB054 \uC81C\uAC00
+      \uBA39\uC5B4\uB3C4 \uB418\uC8E0? \uAC00\uB054\uC774\uC694!"

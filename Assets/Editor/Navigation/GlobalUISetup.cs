@@ -264,6 +264,9 @@ public static class GlobalUISetup
         var navBar = BuildNavBar(hud);
         var topBar = TopBarSetup.Build(hud);
         var collection = CollectionSetup.BuildScreen(rootRect);
+        // 도감 이야기(컷씬)는 도감 화면 위에
+        var story = CollectionSetup.BuildStoryPlayer(rootRect);
+        Set(collection.presenter, "_storyPlayer", story);
         var quest = QuestSetup.BuildScreen(rootRect);
         var decorMode = DecorModeSetup.BuildScreen(rootRect, hud.gameObject);
         var fairyShop = FairyShopSetup.BuildScreens(rootRect);
@@ -396,13 +399,17 @@ public static class GlobalUISetup
         barImage.type = Image.Type.Sliced;
         barImage.pixelsPerUnitMultiplier = 1.6f; // 바가 낮아서 테두리를 얇게
 
-        var codex = BuildNavItem(bar, 0, "Codex", "도감", false, LoadIcon(NavIconFolder, "ICON_Nav_Collection"));
+        var codex = BuildNavItem(bar, 0, "Codex", "도감", true, LoadIcon(NavIconFolder, "ICON_Nav_Collection"));
         var quest = BuildNavItem(bar, 1, "Quest", "퀘스트", false, LoadIcon(NavIconFolder, "ICON_Nav_Quest"));
         var bag = BuildNavItem(bar, 3, "Bag", "가방", true, LoadIcon(NavIconFolder, "ICON_Nav_Bag"));
         var travel = BuildNavItem(bar, 4, "Travel", "이동", false, LoadIcon(NavIconFolder, "ICON_Nav_Travel"));
 
         codex.badge.SetActive(false);
         travel.badge.SetActive(false);
+
+        // 도감 "N": 해금했지만 안 본 이야기가 있을 때만
+        var storyBadge = codex.item.gameObject.AddComponent<CollectionStoryBadgeView>();
+        Set(storyBadge, "_badge", codex.badge);
 
         // 가방 "N": 새 종류가 있을 때만
         var newBadge = bag.item.gameObject.AddComponent<InventoryNewBadgeView>();

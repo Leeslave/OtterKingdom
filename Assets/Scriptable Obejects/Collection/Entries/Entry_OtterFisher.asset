@@ -23,3 +23,5 @@ MonoBehaviour:
     \uC6C0\uC9C1\uC774\uAE38 \uAE30\uB2E4\uB824\uC694."
   _extraValue: "\uACE0\uB4F1\uC5B4"
   _linkedItem: {fileID: 0}
+  _unlockLevel: 10
+  _story: {fileID: 11400000, guid: 5ad7d4f5dcad13546809bb16bf46e1f3, type: 2}

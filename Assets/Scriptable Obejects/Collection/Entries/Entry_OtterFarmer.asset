@@ -23,3 +23,5 @@ MonoBehaviour:
     \uBABB\uD574\uC694."
   _extraValue: "\uB2F9\uADFC"
   _linkedItem: {fileID: 0}
+  _unlockLevel: 2
+  _story: {fileID: 11400000, guid: 42ef3c3f198c850449d91f367f19c7eb, type: 2}
