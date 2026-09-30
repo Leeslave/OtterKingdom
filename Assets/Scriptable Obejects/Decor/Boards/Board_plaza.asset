@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4f2c37776658c43b09e03007345868, type: 3}
+  m_Name: Board_plaza
+  m_EditorClassIdentifier: OtterKingdom::DecorBoardDefinition
+  _boardId: plaza
+  _zone: {fileID: 11400000, guid: c58e59f71c343b648b46ce47894437b1, type: 2}
+  _size: {x: 24, y: 33}
+  _regions:
+  - {fileID: 11400000, guid: e17d589f56270b940a354f1bac65124e, type: 2}

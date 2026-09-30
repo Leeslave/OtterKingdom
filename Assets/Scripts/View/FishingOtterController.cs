@@ -15,6 +15,9 @@ using UnityEngine.InputSystem;
 // it, and Update() follows it. So a save that was fishing puts the otter
 // straight back on the spot on the next visit.
 //
+// Off duty it may also walk up to a placed toy (DecorBoardView.Active) and
+// play beside it for a while; going fishing ends play right away.
+//
 // The transform position is the otter's feet (sprites are pivoted there).
 [RequireComponent(typeof(SpriteFrameAnimator))]
 [RequireComponent(typeof(Collider2D))]
@@ -34,7 +37,7 @@ public class FishingOtterController : MonoBehaviour
     public const string ClipCatchTrash = "CatchTrash";
 
     // Order matters: everything from GoToSpot on counts as "on fishing duty".
-    private enum Phase { Idle, Walk, GoToSpot, Cast, Wait, Bite, Pull, Reaction }
+    private enum Phase { Idle, Walk, WalkToPlay, Play, GoToSpot, Cast, Wait, Bite, Pull, Reaction }
 
     // Walking longer than expected * this (+ grace) counts as stuck.
     private const float StuckTimeMultiplier = 2f;
@@ -69,6 +72,7 @@ public class FishingOtterController : MonoBehaviour
     private float walkTimeLimit;
     private bool facingLeft;
     private string pendingCatch;
+    private DecorPlaySession playSession;
 
     private bool IsOnFishingDuty => phase >= Phase.GoToSpot;
 
@@ -112,11 +116,21 @@ public class FishingOtterController : MonoBehaviour
         {
             case Phase.Idle:
                 timer -= dt;
-                if (timer <= 0f && !TryBeginWander()) EnterIdle();
+                if (timer <= 0f && !TryBeginPlay() && !TryBeginWander()) EnterIdle();
                 break;
 
             case Phase.Walk:
                 if (StepWalk(dt)) EnterIdle();
+                break;
+
+            case Phase.WalkToPlay:
+                if (!playSession.IsValid) EnterIdle();
+                else if (StepWalk(dt)) BeginPlay();
+                break;
+
+            case Phase.Play:
+                timer -= dt;
+                if (timer <= 0f || !playSession.IsValid) EnterIdle();
                 break;
 
             case Phase.GoToSpot:
@@ -193,8 +207,14 @@ public class FishingOtterController : MonoBehaviour
 
     // --------------------------------------------------------------- fishing
 
+    private void OnDestroy()
+    {
+        ReleasePlay();
+    }
+
     private void BeginGoToSpot()
     {
+        ReleasePlay();
         pendingCatch = null;
         Vector2 from = transform.position;
         Vector2 target = spot.FeetPosition;
@@ -234,6 +254,7 @@ public class FishingOtterController : MonoBehaviour
 
     private void EnterIdle()
     {
+        ReleasePlay();
         phase = Phase.Idle;
         timer = RandomInRange(idleSeconds);
         path.Clear();
@@ -241,6 +262,45 @@ public class FishingOtterController : MonoBehaviour
         // Idle is a side view facing right; mirror it to keep the last facing.
         spriteRenderer.flipX = facingLeft;
         frameAnimator.Play(ClipIdle);
+    }
+
+    // ------------------------------------------------------------------ toys
+
+    private bool TryBeginPlay()
+    {
+        var board = DecorBoardView.Active;
+        if (board == null || walkableArea == null || !board.RollWantsToPlay()) return false;
+
+        Vector2 from = transform.position;
+        if (!board.TryReservePlay(from, walkableArea.IsWalkable, out var session)) return false;
+
+        if (!walkableArea.TryFindPath(from, session.StandPoint, path) || path.Count == 0)
+        {
+            session.Release();
+            return false;
+        }
+
+        playSession = session;
+        StartWalking(from);
+        phase = Phase.WalkToPlay;
+        return true;
+    }
+
+    private void BeginPlay()
+    {
+        phase = Phase.Play;
+        timer = playSession.Seconds;
+        facingLeft = playSession.LookPoint.x < transform.position.x;
+        spriteRenderer.flipX = facingLeft;
+        frameAnimator.Play(ClipIdle);
+        playSession.Begin();
+    }
+
+    private void ReleasePlay()
+    {
+        if (playSession == null) return;
+        playSession.Release();
+        playSession = null;
     }
 
     private bool TryBeginWander()

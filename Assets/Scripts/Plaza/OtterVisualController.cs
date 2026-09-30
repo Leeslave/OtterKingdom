@@ -14,6 +14,10 @@ using UnityEngine.Rendering;
 //
 // Sorting goes through a SortingGroup on the root so any child renderers
 // (e.g. a future shadow) move in depth together with the body.
+//
+// While the agent plays with a toy the otter faces it and loops the idle
+// action triggers that exist on the controller (Squat/Stretch/Net/Eat), each
+// returning to Idle before the next one fires.
 [RequireComponent(typeof(OtterWanderAgent))]
 public class OtterVisualController : MonoBehaviour
 {
@@ -23,6 +27,9 @@ public class OtterVisualController : MonoBehaviour
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     private static readonly int WalkDirHash = Animator.StringToHash("WalkDir");
     private static readonly int WalkAnimSpeedHash = Animator.StringToHash("WalkAnimSpeed");
+    private static readonly string[] PlayTriggerNames = { "Squat", "Stretch", "Net", "Eat" };
+    // Short breather in Idle between two play actions.
+    private const float PlayActionGapSeconds = 0.4f;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
     [Tooltip("Optional. Leave empty (or without a controller) to show a static sprite.")]
@@ -48,6 +55,8 @@ public class OtterVisualController : MonoBehaviour
     private bool hasWalkDir;
     private bool hasWalkAnimSpeed;
     private WalkDir currentDir = WalkDir.Side;
+    private readonly System.Collections.Generic.List<int> playTriggers = new System.Collections.Generic.List<int>();
+    private float playActionTimer;
 
     private void Awake()
     {
@@ -66,6 +75,7 @@ public class OtterVisualController : MonoBehaviour
                     if (p.nameHash == IsMovingHash && p.type == AnimatorControllerParameterType.Bool) hasIsMoving = true;
                     else if (p.nameHash == WalkDirHash && p.type == AnimatorControllerParameterType.Int) hasWalkDir = true;
                     else if (p.nameHash == WalkAnimSpeedHash && p.type == AnimatorControllerParameterType.Float) hasWalkAnimSpeed = true;
+                    else if (p.type == AnimatorControllerParameterType.Trigger && System.Array.IndexOf(PlayTriggerNames, p.name) >= 0) playTriggers.Add(p.nameHash);
                 }
             }
             if (!hasIsMoving)
@@ -89,7 +99,34 @@ public class OtterVisualController : MonoBehaviour
         if (hasIsMoving) animator.SetBool(IsMovingHash, walking);
         if (hasWalkAnimSpeed) animator.SetFloat(WalkAnimSpeedHash, agent.WalkSpeed / walkAnimReferenceSpeed);
 
+        if (agent.CurrentState == OtterWanderAgent.State.Play) UpdatePlay();
+
         UpdateSorting();
+    }
+
+    private void UpdatePlay()
+    {
+        float dx = agent.LookTarget.x - transform.position.x;
+        if (spriteRenderer != null && Mathf.Abs(dx) > 0.01f)
+        {
+            spriteRenderer.flipX = (dx > 0f) != spriteFacesRight;
+        }
+
+        if (playTriggers.Count == 0) return;
+
+        // Fire the next action only once the previous one has handed back to Idle.
+        var state = animator.GetCurrentAnimatorStateInfo(0);
+        if (!state.IsName("Idle") || animator.IsInTransition(0))
+        {
+            playActionTimer = PlayActionGapSeconds;
+            return;
+        }
+
+        playActionTimer -= Time.deltaTime;
+        if (playActionTimer > 0f) return;
+
+        animator.SetTrigger(playTriggers[Random.Range(0, playTriggers.Count)]);
+        playActionTimer = PlayActionGapSeconds;
     }
 
     private void UpdateFacing(Vector2 dir)

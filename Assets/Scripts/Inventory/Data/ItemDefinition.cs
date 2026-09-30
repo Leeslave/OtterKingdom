@@ -55,6 +55,9 @@ public class ItemDefinition : ScriptableObject
     public int SellPrice => _sellPrice;
     public int MaxStack => _maxStack;
 
+    /// <summary>가방 칸을 차지하는지 (분류가 정함, 분류가 없으면 차지함)</summary>
+    public bool UsesBagCapacity => _category == null || _category.UsesBagCapacity;
+
     private void OnValidate()
     {
         if (string.IsNullOrWhiteSpace(_itemId))

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uD37C\uC990"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: toy_puzzle
+  _displayName: "\uD37C\uC990"
+  _description: "\uC870\uAC01\uC744 \uB9DE\uCD94\uBA70 \uC2DC\uAC04\uC744 \uBCF4\uB0B4\uC694."
+  _icon: {fileID: 21300000, guid: 36a103bcbf5870349be1100535869408, type: 3}
+  _category: {fileID: 11400000, guid: b17fe1ae81840fe4d9794a3ea8059425, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 0
+  _sellPrice: 0
+  _maxStack: 99
