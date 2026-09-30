@@ -69,6 +69,30 @@ public class OfflineTestWindow : EditorWindow
         PlotsGui(save);
         EditorGUILayout.Space();
         TimeGui(save);
+        EditorGUILayout.Space();
+        GuideGui(save);
+    }
+
+    // ----------------------------------------------------------------- guide
+
+    private void GuideGui(SaveData save)
+    {
+        EditorGUILayout.LabelField("튜토리얼", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("첫 안내 (당근을 심어 볼까?)", save.firstPlantGuideDone ? "끝남" : "보이는 중");
+
+        using (new EditorGUI.DisabledScope(!save.firstPlantGuideDone))
+        {
+            if (!GUILayout.Button("첫 안내 다시 보기")) return;
+        }
+
+        if (IsLive)
+        {
+            GameManager.Instance.DevResetFirstPlantGuide();
+            return;
+        }
+
+        save.firstPlantGuideDone = false;
+        WriteFile(stampTime: false);
     }
 
     // ---------------------------------------------------------------- levels

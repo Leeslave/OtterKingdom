@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 // saved unlock state. While locked, tapping the plot opens GameManager's
 // coin-unlock prompt. The collider is only enabled while locked so it never
 // competes with the per-slot colliders (FurrowSlotView) once unlocked.
+// The first-plant guide plot also shows the "당근을 심어 볼까?" guide and
+// pulses until the player's first planting.
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Collider2D))]
 public class PlotView : MonoBehaviour
@@ -14,17 +16,37 @@ public class PlotView : MonoBehaviour
     [SerializeField] private Sprite activeSprite;
     [SerializeField] private Sprite lockedSprite;
 
+    private static readonly Color GuideHighlightColor = new Color(1f, 0.85f, 0.35f, 1f);
+    private const float GuidePulseSpeed = 4f;
+
     private SpriteRenderer spriteRenderer;
     private Collider2D plotCollider;
     private Camera mainCamera;
 
     private bool? lastUnlocked;
+    private Color baseColor;
+    private bool highlighted;
+
+    private bool IsGuidePlot => plotIndex == GameManager.FirstPlantGuidePlotIndex;
+
+    // Shared with FurrowSlotView so the guide plot's empty slots pulse in step.
+    public static Color GuidePulse(Color from)
+    {
+        float t = (Mathf.Sin(Time.unscaledTime * GuidePulseSpeed) + 1f) * 0.5f;
+        return Color.Lerp(from, GuideHighlightColor, t);
+    }
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         plotCollider = GetComponent<Collider2D>();
         mainCamera = Camera.main;
+        baseColor = spriteRenderer.color;
+    }
+
+    private void Start()
+    {
+        if (IsGuidePlot && GameManager.Instance != null) GameManager.Instance.ShowFirstPlantGuide();
     }
 
     private void Update()
@@ -33,7 +55,16 @@ public class PlotView : MonoBehaviour
 
         bool unlocked = GameManager.Instance.FarmService.IsPlotUnlocked(plotIndex);
         RefreshVisual(unlocked);
+        RefreshGuideHighlight(unlocked);
         if (!unlocked) HandleClick();
+    }
+
+    private void RefreshGuideHighlight(bool unlocked)
+    {
+        bool highlight = unlocked && IsGuidePlot && GameManager.Instance.IsFirstPlantGuideActive;
+        if (highlight) spriteRenderer.color = GuidePulse(baseColor);
+        else if (highlighted) spriteRenderer.color = baseColor;
+        highlighted = highlight;
     }
 
     private void RefreshVisual(bool unlocked)

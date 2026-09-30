@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour
     [Header("Save")]
     [SerializeField] private float autoSaveIntervalSec = 30f;
 
+    [Header("Offline")]
+    [Tooltip("Shorter absences give no offline production (and no return popup).")]
+    [SerializeField] private float minOfflineAbsenceSec = 180f;
+
     [Header("Currency")]
     [SerializeField] private Currency goldCurrency;
 
@@ -152,6 +156,7 @@ public class GameManager : MonoBehaviour
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
             otterVisitBalance, miningBalance);
         gameUI = GameUI.Create(this);
+        SkipFirstPlantGuideForOldSaves();
 
         ReportLoadStatus(loadStatus);
 
@@ -495,10 +500,12 @@ public class GameManager : MonoBehaviour
 
     // ------------------------------------------------------------- offline
 
-    // Registered crops and rod catches for time the game wasn't running, then
-    // the return popup. Saved right away so a crash can't hand them out twice.
+    // Registered crops and rod catches for time the game wasn't running (at
+    // least minOfflineAbsenceSec), then the return popup. Saved right away so a crash can't hand them out twice.
     private void RunOfflineProduction(double absenceSec)
     {
+        if (absenceSec < minOfflineAbsenceSec) return;
+
         var report = offlineProduction.Run(save, absenceSec, new OfflineBag(this));
         SaveNow();
         if (report.HasAnything) gameUI.ShowOfflineReport(report, ItemDisplayName);
@@ -628,8 +635,52 @@ public class GameManager : MonoBehaviour
     public PlantResult PlantFromPrompt(int plotIndex, int slotIndex, string cropId)
     {
         var result = farmService.Plant(plotIndex, slotIndex, cropId);
-        if (result == PlantResult.Planted) SaveNow();
+        if (result == PlantResult.Planted)
+        {
+            CompleteFirstPlantGuide();
+            SaveNow();
+        }
         return result;
+    }
+
+    // ------------------------------------------------------ first-plant guide
+
+    // The very first guide (design doc 4.2): "당근을 심어 볼까?" with the
+    // first plot highlighted, until the player plants anything.
+    public const int FirstPlantGuidePlotIndex = 0;
+    private const string FirstPlantGuideMessage = "당근을 심어 볼까?";
+
+    public bool IsFirstPlantGuideActive => !save.firstPlantGuideDone;
+
+    // Called by the guide plot's PlotView, so the guide only shows in the farm
+    // scene (the fishing and mine scenes have a GameManager but no plots).
+    public void ShowFirstPlantGuide()
+    {
+        if (IsFirstPlantGuideActive) gameUI.ShowGuide(FirstPlantGuideMessage);
+    }
+
+    private void CompleteFirstPlantGuide()
+    {
+        if (!IsFirstPlantGuideActive) return;
+        save.firstPlantGuideDone = true;
+        gameUI.HideGuide();
+    }
+
+    // Saves from before the guide existed have no flag, but a player who has
+    // already planted or sold something doesn't need to be told. Checked only
+    // once per save, so resetting the flag later (dev window) brings it back.
+    private void SkipFirstPlantGuideForOldSaves()
+    {
+        if (save.schemaVersion >= 2) return;
+        if (farmService.HasAnyPlantedSlot || save.lifetimeSales > 0) save.firstPlantGuideDone = true;
+        save.schemaVersion = 2;
+    }
+
+    public void DevResetFirstPlantGuide()
+    {
+        save.firstPlantGuideDone = false;
+        ShowFirstPlantGuide();
+        SaveNow();
     }
 
     public bool TryUnlockPlot(int plotIndex)

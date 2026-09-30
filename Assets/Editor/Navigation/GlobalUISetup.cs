@@ -656,6 +656,11 @@ public static class GlobalUISetup
     private static void RegisterBuildScenes()
     {
         var scenes = new List<EditorBuildSettingsScene>();
+
+        // 타이틀 씬이 있으면 항상 맨 앞 (앱 시작 씬)
+        if (File.Exists(TitleSceneSetup.ScenePath))
+            scenes.Add(new EditorBuildSettingsScene(TitleSceneSetup.ScenePath, true));
+
         foreach (var path in ZoneScenes)
         {
             if (File.Exists(path))
@@ -664,7 +669,7 @@ public static class GlobalUISetup
                 Debug.LogWarning($"[GlobalUISetup] 씬이 없습니다: {path}");
         }
 
-        // 기존에 등록된 다른 씬은 뒤에 유지 (광장이 첫 씬)
+        // 기존에 등록된 다른 씬은 뒤에 유지 (타이틀 다음은 광장)
         foreach (var existing in EditorBuildSettings.scenes)
         {
             if (!scenes.Any(s => s.path == existing.path))

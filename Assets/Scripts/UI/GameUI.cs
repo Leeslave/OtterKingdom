@@ -30,6 +30,8 @@ public class GameUI : MonoBehaviour
     private Font font;
     private Button rodUpgradeButton;
     private Button pickaxeUpgradeButton;
+    private RectTransform guideBubble;
+    private GameObject offlineReportModal;
 
     private readonly List<GameObject> modals = new List<GameObject>();
     private readonly Dictionary<GameObject, Action> modalRefreshers = new Dictionary<GameObject, Action>();
@@ -76,6 +78,7 @@ public class GameUI : MonoBehaviour
     private void Update()
     {
         foreach (var refresh in modalRefreshers.Values) refresh();
+        BobGuide();
     }
 
     // True if a screen point should NOT reach the world (slots/plots): any
@@ -212,12 +215,64 @@ public class GameUI : MonoBehaviour
         });
     }
 
+    // ----------------------------------------------------------------- guide
+
+    // One-line tutorial bubble in the upper part of the screen. It never
+    // takes clicks (so IsBlocking ignores it and the world stays tappable) and
+    // sits below every modal.
+    public void ShowGuide(string message)
+    {
+        HideGuide();
+
+        var go = new GameObject("Guide", typeof(RectTransform), typeof(Image),
+            typeof(HorizontalLayoutGroup), typeof(ContentSizeFitter));
+        go.transform.SetParent(transform, false);
+        go.transform.SetAsFirstSibling();
+
+        var image = go.GetComponent<Image>();
+        image.color = PanelColor;
+        image.raycastTarget = false;
+
+        var layout = go.GetComponent<HorizontalLayoutGroup>();
+        layout.padding = new RectOffset(60, 60, 36, 36);
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+
+        var fitter = go.GetComponent<ContentSizeFitter>();
+        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        var label = CreateLabel(go.transform, message);
+        label.fontSize = TitleFontSize;
+        label.fontStyle = FontStyle.Bold;
+
+        guideBubble = (RectTransform)go.transform;
+        guideBubble.anchorMin = guideBubble.anchorMax = guideBubble.pivot = new Vector2(0.5f, 0.75f);
+    }
+
+    public void HideGuide()
+    {
+        if (guideBubble == null) return;
+        Destroy(guideBubble.gameObject);
+        guideBubble = null;
+    }
+
+    private void BobGuide()
+    {
+        if (guideBubble == null) return;
+        guideBubble.anchoredPosition = new Vector2(0f, Mathf.Sin(Time.unscaledTime * 3f) * 12f);
+    }
+
     // --------------------------------------------------------------- offline
 
-    // Return popup after offline production. Stacks on top of anything open.
+    // Return popup after offline production. Stacks on top of anything open,
+    // but replaces an earlier report still on screen (left open, then away again).
     public void ShowOfflineReport(OfflineReport report, Func<string, string> itemName)
     {
+        if (offlineReportModal != null) CloseModal(offlineReportModal);
+
         var modal = OpenModal("자리를 비운 동안", out var content);
+        offlineReportModal = modal;
         CreateLabel(content, $"{FormatDuration(report.ElapsedSec)} 동안 있었던 일이에요.");
 
         if (report.OtterVisits.Count > 0) CreateLabel(content, DescribeOtterVisits(report.OtterVisits));
