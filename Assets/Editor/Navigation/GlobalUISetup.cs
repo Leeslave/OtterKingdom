@@ -44,10 +44,10 @@ public static class GlobalUISetup
         ("Zone_Plaza", "Plaza", "광장", "요정상점 · 해달 구경", "Plaza", true, 0, "ICON_Place_Plaza"),
         ("Zone_Farm", "Farm", "밭", "모종 심기 · 수확", "Farm", true, 1, "ICON_Place_Farm"),
         ("Zone_Fishing", "Fishing", "낚시터", "물고기 낚기", "Fishing", true, 2, "ICON_Place_FishingSpot"),
-        ("Zone_Mine", "Mine", "광산", "광석 캐기", "", false, 3, "ICON_Place_Mine"),
+        ("Zone_Mine", "Mine", "광산", "광석 캐기", "Mine", true, 3, "ICON_Place_Mine"),
     };
 
-    private static readonly string[] ZoneScenes = { "Assets/Scenes/Plaza.unity", "Assets/Scenes/Farm.unity", "Assets/Scenes/Fishing.unity" };
+    private static readonly string[] ZoneScenes = { "Assets/Scenes/Plaza.unity", "Assets/Scenes/Farm.unity", "Assets/Scenes/Fishing.unity", "Assets/Scenes/Mine.unity" };
 
     // ── 1080×1920 기준 배치 (시안) ──
     private const float BarSideMargin = 32f;

@@ -5,10 +5,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
-// Zone-scene uGUI (farm and fishing), built entirely at runtime (same
+// Zone-scene uGUI (farm, fishing and mine), built entirely at runtime (same
 // approach as CurrencyHud) so no scene/prefab wiring is needed: the fishing
-// scene's "낚싯대 강화" button and every modal popup (crop selection, plot
-// unlock, crop change, confirm, alerts, rod upgrade). Selling lives in the
+// scene's "낚싯대 강화" and the mine's "곡괭이 강화" buttons and every modal
+// popup (crop selection, plot unlock, crop change, confirm, alerts, rod and
+// pickaxe upgrade). Selling lives in the
 // bag (GlobalUI). Holds no game rules itself — every action goes back
 // through GameManager. Replace with prefab-based views once real UI art exists.
 public class GameUI : MonoBehaviour
@@ -28,6 +29,7 @@ public class GameUI : MonoBehaviour
     private GameManager game;
     private Font font;
     private Button rodUpgradeButton;
+    private Button pickaxeUpgradeButton;
 
     private readonly List<GameObject> modals = new List<GameObject>();
     private readonly Dictionary<GameObject, Action> modalRefreshers = new Dictionary<GameObject, Action>();
@@ -381,6 +383,48 @@ public class GameUI : MonoBehaviour
                 : $"{current}\n최대 레벨이에요!";
             balanceLabel.text = $"보유 코인 : {game.CoinBalance}";
             upgradeButton.interactable = fishing.CanUpgradeRod;
+        });
+    }
+
+    // ---------------------------------------------------------------- mining
+
+    public void ShowPickaxeUpgradeButton()
+    {
+        if (pickaxeUpgradeButton != null) return;
+
+        pickaxeUpgradeButton = CreateButton(transform, "곡괭이 강화", ShowPickaxeUpgradePrompt);
+        var rect = (RectTransform)pickaxeUpgradeButton.transform;
+        rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 0f);
+        rect.sizeDelta = new Vector2(340f, ButtonHeight);
+        rect.anchoredPosition = new Vector2(40f, 40f);
+    }
+
+    private void ShowPickaxeUpgradePrompt()
+    {
+        CloseAllModals();
+        var mining = game.MiningService;
+        var modal = OpenModal("곡괭이 강화", out var content);
+
+        var infoLabel = CreateLabel(content, "");
+        var balanceLabel = CreateLabel(content, "");
+        var row = CreateRow(content, ButtonHeight);
+        var upgradeButton = CreateButton(row, "강화", () =>
+        {
+            if (!game.TryUpgradePickaxe()) ShowAlert("코인이 부족해요!");
+        }, flexible: true);
+        CreateButton(row, "닫기", () => CloseModal(modal), flexible: true);
+
+        // Stays open after an upgrade so the new level/chance shows right away.
+        SetRefresher(modal, () =>
+        {
+            int level = mining.PickaxeLevel;
+            string current = $"현재 Lv.{level} (다이아몬드 확률 {Percent(mining.DiamondChanceAt(level))})";
+            infoLabel.text = mining.CanUpgradePickaxe
+                ? $"{current}\n다음 Lv.{level + 1} (다이아몬드 확률 {Percent(mining.DiamondChanceAt(level + 1))})\n" +
+                  $"강화 비용 : {mining.NextPickaxeUpgradeCost} 코인"
+                : $"{current}\n최대 레벨이에요!";
+            balanceLabel.text = $"보유 코인 : {game.CoinBalance}";
+            upgradeButton.interactable = mining.CanUpgradePickaxe;
         });
     }
 

@@ -30,7 +30,7 @@ public static class QuestProgressRules
         return quest.GoalType == QuestGoalType.EarnFromSales ? Math.Max(0, e.TotalPrice) : 0;
     }
 
-    /// <summary>생산 업그레이드: 밭·낚싯대 강화 비용을 낸 거래 1번 = 1회</summary>
+    /// <summary>생산 업그레이드: 밭·낚싯대·곡괭이 강화 비용을 낸 거래 1번 = 1회</summary>
     public static int From(QuestDefinition quest, CurrencyChange change)
     {
         if (quest == null) throw new ArgumentNullException(nameof(quest));
@@ -38,7 +38,9 @@ public static class QuestProgressRules
         if (quest.GoalType != QuestGoalType.Upgrade || change.Delta >= 0)
             return 0;
 
-        return change.Source == TransactionSource.FarmUpgrade || change.Source == TransactionSource.RodUpgrade ? 1 : 0;
+        return change.Source == TransactionSource.FarmUpgrade
+            || change.Source == TransactionSource.RodUpgrade
+            || change.Source == TransactionSource.PickaxeUpgrade ? 1 : 0;
     }
 
     /// <summary>도감 등록: 새로 획득·등록된 항목 1개 = 1 (방문 흔적은 세지 않음)</summary>

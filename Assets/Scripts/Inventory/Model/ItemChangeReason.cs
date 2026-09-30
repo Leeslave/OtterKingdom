@@ -10,4 +10,5 @@ public enum ItemChangeReason
     Load, // 세이브 복원
     Plant, // 모종을 심어서 소모
     Grant, // 시작 모종 지급, 옛 세이브의 모종 재고를 가방으로 옮김
+    Mining, // 광산에서 캔 광석 (오프라인 채굴 포함)
 }
