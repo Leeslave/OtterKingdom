@@ -78,6 +78,7 @@ public class OfflineTestWindow : EditorWindow
     private void GuideGui(SaveData save)
     {
         EditorGUILayout.LabelField("튜토리얼", EditorStyles.boldLabel);
+        ZoneTutorialsGui(save);
         EditorGUILayout.LabelField("첫 안내 (당근을 심어 볼까?)", save.firstPlantGuideDone ? "끝남" : "보이는 중");
 
         using (new EditorGUI.DisabledScope(!save.firstPlantGuideDone))
@@ -92,6 +93,29 @@ public class OfflineTestWindow : EditorWindow
         }
 
         save.firstPlantGuideDone = false;
+        WriteFile(stampTime: false);
+    }
+
+    private void ZoneTutorialsGui(SaveData save)
+    {
+        var done = save.tutorialsDone ?? new System.Collections.Generic.List<string>();
+        EditorGUILayout.LabelField("장소 튜토리얼 본 곳", done.Count > 0 ? string.Join(", ", done) : "(없음)");
+
+        using (new EditorGUI.DisabledScope(done.Count == 0))
+        {
+            if (!GUILayout.Button("장소 튜토리얼 다시 보기")) return;
+        }
+
+        if (IsLive)
+        {
+            GameManager.Instance.DevResetZoneTutorials();
+            return;
+        }
+
+        done.Clear();
+        save.tutorialsDone = done;
+        // An older file would otherwise be migrated on load, marking them all seen again.
+        save.schemaVersion = SaveData.CurrentSchemaVersion;
         WriteFile(stampTime: false);
     }
 
@@ -216,7 +240,7 @@ public class OfflineTestWindow : EditorWindow
 
     // ------------------------------------------------------------------ file
 
-    private void ReloadFile()
+    internal void ReloadFile()
     {
         fileStatus = new SaveService().Load(out fileSave);
     }

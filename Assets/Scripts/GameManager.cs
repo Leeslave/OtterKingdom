@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // M1 vertical-slice bootstrap: loads/creates the save, wires the plain-C#
 // services, drives the farm production tick, and exposes a temporary OnGUI
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
     public MiningService MiningService => miningService;
     public Inventory Bag => InventoryManager.Instance.Inventory;
     public int CoinBalance => CurrencyManager.Instance.GetCurrency(goldCurrency);
+    public Currency GoldCurrency => goldCurrency;
 
     private bool showDebugPanel;
 
@@ -156,7 +159,9 @@ public class GameManager : MonoBehaviour
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
             otterVisitBalance, miningBalance);
         gameUI = GameUI.Create(this);
-        SkipFirstPlantGuideForOldSaves();
+        SkipGuidesForOldSaves();
+        // Set here, before any view's Start asks for the first-plant guide.
+        zoneTutorialPending = ZoneTutorials.Has(CurrentZoneId) && !save.tutorialsDone.Contains(CurrentZoneId);
 
         ReportLoadStatus(loadStatus);
 
@@ -216,6 +221,8 @@ public class GameManager : MonoBehaviour
             RunOfflineProduction(pendingAbsenceSec);
             pendingAbsenceSec = 0;
         }
+
+        if (zoneTutorialPending) StartCoroutine(PlayZoneTutorialWhenReady());
     }
 
     private void Update()
@@ -654,9 +661,17 @@ public class GameManager : MonoBehaviour
 
     // Called by the guide plot's PlotView, so the guide only shows in the farm
     // scene (the fishing and mine scenes have a GameManager but no plots).
+    // While the farm's zone tutorial is still to come, the guide waits and
+    // shows when the tutorial ends.
     public void ShowFirstPlantGuide()
     {
-        if (IsFirstPlantGuideActive) gameUI.ShowGuide(FirstPlantGuideMessage);
+        if (!IsFirstPlantGuideActive) return;
+        if (zoneTutorialPending)
+        {
+            firstPlantGuideDeferred = true;
+            return;
+        }
+        gameUI.ShowGuide(FirstPlantGuideMessage);
     }
 
     private void CompleteFirstPlantGuide()
@@ -666,14 +681,27 @@ public class GameManager : MonoBehaviour
         gameUI.HideGuide();
     }
 
-    // Saves from before the guide existed have no flag, but a player who has
-    // already planted or sold something doesn't need to be told. Checked only
-    // once per save, so resetting the flag later (dev window) brings it back.
-    private void SkipFirstPlantGuideForOldSaves()
+    // Saves from before the guides existed have no flags. A player who has
+    // already planted or sold something doesn't need the first-plant guide,
+    // and the zone tutorials are only for new games. Checked only once per
+    // save, so resetting the flags later (dev window) brings them back.
+    private void SkipGuidesForOldSaves()
     {
-        if (save.schemaVersion >= 2) return;
-        if (farmService.HasAnyPlantedSlot || save.lifetimeSales > 0) save.firstPlantGuideDone = true;
-        save.schemaVersion = 2;
+        save.tutorialsDone ??= new List<string>();
+        if (save.schemaVersion >= SaveData.CurrentSchemaVersion) return;
+
+        if (save.schemaVersion < 2 && (farmService.HasAnyPlantedSlot || save.lifetimeSales > 0))
+            save.firstPlantGuideDone = true;
+
+        if (save.schemaVersion < 3)
+        {
+            foreach (var id in ZoneTutorials.AllIds)
+            {
+                if (!save.tutorialsDone.Contains(id)) save.tutorialsDone.Add(id);
+            }
+        }
+
+        save.schemaVersion = SaveData.CurrentSchemaVersion;
     }
 
     public void DevResetFirstPlantGuide()
@@ -681,6 +709,52 @@ public class GameManager : MonoBehaviour
         save.firstPlantGuideDone = false;
         ShowFirstPlantGuide();
         SaveNow();
+    }
+
+    // ------------------------------------------------------- zone tutorials
+
+    // First visit to each zone (new games only): a step-by-step overlay that
+    // points out the zone's objects and the shared UI. Seen or skipped, it is
+    // marked in save.tutorialsDone and never comes back on its own.
+    private bool zoneTutorialPending;
+    private bool firstPlantGuideDeferred;
+
+    private static string CurrentZoneId => SceneManager.GetActiveScene().name;
+
+    private IEnumerator PlayZoneTutorialWhenReady()
+    {
+        // Let the scene's views and GlobalUI finish their first layout, then
+        // wait out the arrival fade and any popup (offline report, save error).
+        yield return null;
+        yield return null;
+        var navigator = FindAnyObjectByType<SceneNavigator>();
+        while (gameUI.IsModalOpen || (navigator != null && navigator.IsTraveling)) yield return null;
+
+        TutorialOverlay.Play(ZoneTutorials.For(CurrentZoneId, gameUI), CompleteZoneTutorial);
+    }
+
+    private void CompleteZoneTutorial()
+    {
+        zoneTutorialPending = false;
+        if (!save.tutorialsDone.Contains(CurrentZoneId)) save.tutorialsDone.Add(CurrentZoneId);
+        SaveNow();
+
+        if (firstPlantGuideDeferred)
+        {
+            firstPlantGuideDeferred = false;
+            ShowFirstPlantGuide();
+        }
+    }
+
+    // Forgets every zone tutorial and replays this zone's right away.
+    public void DevResetZoneTutorials()
+    {
+        save.tutorialsDone.Clear();
+        SaveNow();
+        if (zoneTutorialPending || !ZoneTutorials.Has(CurrentZoneId)) return;
+
+        zoneTutorialPending = true;
+        StartCoroutine(PlayZoneTutorialWhenReady());
     }
 
     public bool TryUnlockPlot(int plotIndex)

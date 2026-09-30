@@ -27,6 +27,8 @@ public class PlotView : MonoBehaviour
     private Color baseColor;
     private bool highlighted;
 
+    public int PlotIndex => plotIndex;
+
     private bool IsGuidePlot => plotIndex == GameManager.FirstPlantGuidePlotIndex;
 
     // Shared with FurrowSlotView so the guide plot's empty slots pulse in step.

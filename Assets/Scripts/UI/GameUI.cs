@@ -40,6 +40,11 @@ public class GameUI : MonoBehaviour
 
     public bool IsModalOpen => modals.Count > 0;
 
+    // For the zone tutorial's highlight; null until the scene shows the button.
+    public RectTransform RodUpgradeButton => rodUpgradeButton != null ? (RectTransform)rodUpgradeButton.transform : null;
+    public RectTransform PickaxeUpgradeButton =>
+        pickaxeUpgradeButton != null ? (RectTransform)pickaxeUpgradeButton.transform : null;
+
     public static GameUI Create(GameManager game)
     {
         EnsureEventSystem();
