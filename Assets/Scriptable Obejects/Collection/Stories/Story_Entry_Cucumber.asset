@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Story_Entry_Cucumber
   m_EditorClassIdentifier: OtterKingdom::CollectionStory
   _cuts:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 4b1952360255ebe459da3fa68aa62f56, type: 3}
+  - {fileID: 21300000, guid: e537e2f35854a4b4a88fcb24bafe3d01, type: 3}
   _lines:
   - _cut: 0
     _text: "\uC544~ \uC2DC\uC6D0\uD574\u2026"
