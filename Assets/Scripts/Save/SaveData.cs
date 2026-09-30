@@ -104,4 +104,8 @@ public class SaveData
     public float offlineOtterVisitProgressSec;
     public List<OtterSaveData> otters = new List<OtterSaveData>();
     public List<CurrencyBalance> currencies = new List<CurrencyBalance>();
+    // Owned by CollectionManager / QuestManager (GlobalUI); copied in and out
+    // by GameManager. Missing (null) in saves from before they existed.
+    public List<CollectionSaveEntry> collection = new List<CollectionSaveEntry>();
+    public List<QuestSaveEntry> quests = new List<QuestSaveEntry>();
 }

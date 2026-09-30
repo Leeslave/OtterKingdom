@@ -58,6 +58,9 @@ public class GameManager : MonoBehaviour
     // reads the save again, and LoadFromSave adds to the bag — so only the
     // first GameManager to meet a given InventoryManager fills it.
     private static InventoryManager loadedInventory;
+    // Same for the collection and quests (their LoadFromSave adds too).
+    private static CollectionManager loadedCollection;
+    private static QuestManager loadedQuests;
 
     // Offline production covers the time the app was closed, which ends when
     // the app starts — not when the first zone scene with a GameManager opens
@@ -138,6 +141,9 @@ public class GameManager : MonoBehaviour
         LoadGoldFromSave();
         CurrencyHud.Show(goldCurrency);
         bool seedsMoved = LoadInventoryOnce();
+        // After the bag, so the collection also marks what the bag holds, and
+        // before Start's offline harvest, so quests count it.
+        LoadGlobalProgressOnce();
         farmService = new FarmService(save, cropDefinitions, farmBalance, GetSeedCount, TryConsumeSeed);
         fishingService = new FishingService(save, fishingBalance);
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance, otterVisitBalance);
@@ -219,14 +225,24 @@ public class GameManager : MonoBehaviour
     // loads the next one. The next zone's GameManager reads this save, and
     // lastSaveUtc lets the farm catch up on time spent in scenes without one.
     // The Instance check skips a duplicate that Awake is about to destroy.
+    // Sales from anywhere (bag popup, SellItem, SellAll) come through
+    // OnItemSold, so lifetimeSales is kept up here and nowhere else.
     private void OnEnable()
     {
-        if (Instance == this) SceneNavigator.BeforeLeave += SaveNow;
+        if (Instance != this) return;
+        SceneNavigator.BeforeLeave += SaveNow;
+        InventoryManager.Instance.OnItemSold += HandleItemSold;
     }
 
     private void OnDisable()
     {
         SceneNavigator.BeforeLeave -= SaveNow;
+        if (InventoryManager.Instance != null) InventoryManager.Instance.OnItemSold -= HandleItemSold;
+    }
+
+    private void HandleItemSold(ItemSoldEvent e)
+    {
+        save.lifetimeSales += e.TotalPrice;
     }
 
     // Back from the background: planted slots grow through the absence (up
@@ -302,6 +318,28 @@ public class GameManager : MonoBehaviour
         manager.LoadFromSave(save.inventory, save.inventoryCapacity);
 
         return MoveLegacySeedsToBag() | GrantStarterSeeds();
+    }
+
+    // CollectionManager and QuestManager live on GlobalUI. Also called from
+    // SaveNow: if GlobalUI was only auto-created after this Awake, loading
+    // there keeps WriteToSave from replacing the saved lists with empty ones.
+    private void LoadGlobalProgressOnce()
+    {
+        var collection = CollectionManager.Instance;
+        if (collection != null && loadedCollection != collection)
+        {
+            loadedCollection = collection;
+            save.collection ??= new List<CollectionSaveEntry>();
+            collection.LoadFromSave(save.collection);
+        }
+
+        var quests = QuestManager.Instance;
+        if (quests != null && loadedQuests != quests)
+        {
+            loadedQuests = quests;
+            save.quests ??= new List<QuestSaveEntry>();
+            quests.LoadFromSave(save.quests);
+        }
     }
 
     private static void RenameLegacyItemIds(List<ItemStack> stacks)
@@ -517,6 +555,9 @@ public class GameManager : MonoBehaviour
         WriteGoldToSave();
         InventoryManager.Instance.WriteToSave(save.inventory);
         save.inventoryCapacity = Bag.Capacity;
+        LoadGlobalProgressOnce();
+        if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(save.collection);
+        if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);
         saveService.Save(save);
     }
 
@@ -539,13 +580,12 @@ public class GameManager : MonoBehaviour
         entry.amount = CurrencyManager.Instance.GetCurrency(goldCurrency);
     }
 
-    // InventoryManager pays the coins; lifetimeSales is ours to keep up.
+    // InventoryManager pays the coins; HandleItemSold adds to lifetimeSales.
     private void SellAllForGold()
     {
         int total = InventoryManager.Instance.SellAll(IsSellable);
         if (total <= 0) return;
 
-        save.lifetimeSales += total;
         Debug.Log($"[GameManager] 판매 완료: +{total} 코인");
     }
 
@@ -617,7 +657,6 @@ public class GameManager : MonoBehaviour
         if (item == null || quantity <= 0) return false;
         if (!InventoryManager.Instance.TrySell(item, quantity)) return false;
 
-        save.lifetimeSales += item.SellPrice * quantity;
         SaveNow();
         return true;
     }
