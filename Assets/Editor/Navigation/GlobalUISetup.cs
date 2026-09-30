@@ -255,7 +255,7 @@ public static class GlobalUISetup
         var inventoryPresenter = inventoryScreen.GetComponentInChildren<InventoryPresenter>(true);
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
-        // 그리는 순서: 상단바·하단 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 레벨업 → 이동 팝업 → 페이드
+        // 그리는 순서: 상단바·하단 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 설정 → 레벨업 → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
         hud.gameObject.AddComponent<SafeAreaFltter>();
@@ -268,6 +268,7 @@ public static class GlobalUISetup
         var decorMode = DecorModeSetup.BuildScreen(rootRect, hud.gameObject);
         var fairyShop = FairyShopSetup.BuildScreens(rootRect);
         var shop = CurrencyShopSetup.BuildScreens(rootRect);
+        var settings = SettingsSetup.BuildScreen(rootRect);
         var levelUp = ProgressionSetup.BuildPopup(rootRect);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
         var fader = BuildFader(rootRect);
@@ -324,6 +325,14 @@ public static class GlobalUISetup
         Set(fairyPresenter, "_shop", fairyShop.shop);
         Set(fairyPresenter, "_popup", fairyShop.popup);
         Set(fairyPresenter, "_shortage", shop.shortage);
+
+        // 상단바 설정 버튼 → 설정 화면. 설정 값의 주인(기기에 저장)도 전역 UI에 붙음
+        root.AddComponent<SettingsManager>();
+        // 배경음/효과음 (설정 음량을 따름). 곡을 비워 두면 코드로 만든 임시 배경음
+        root.AddComponent<AudioManager>();
+        var settingsPresenter = root.AddComponent<SettingsPresenter>();
+        Set(settingsPresenter, "_topBar", topBar.view);
+        Set(settingsPresenter, "_view", settings);
 
         // 퀘스트 모델의 주인: 도감과 같이 전역 UI에 붙음
         var questManager = root.AddComponent<QuestManager>();
