@@ -17,7 +17,7 @@ MonoBehaviour:
   _description: "\uC870\uAC01\uC744 \uB9DE\uCD94\uBA70 \uC2DC\uAC04\uC744 \uBCF4\uB0B4\uC694."
   _icon: {fileID: 21300000, guid: 36a103bcbf5870349be1100535869408, type: 3}
   _category: {fileID: 11400000, guid: b17fe1ae81840fe4d9794a3ea8059425, type: 2}
-  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _rarity: {fileID: 11400000, guid: 92826ade59cca8b4f9ec100f9c9a27f3, type: 2}
   _isSellable: 0
   _sellPrice: 0
   _maxStack: 99

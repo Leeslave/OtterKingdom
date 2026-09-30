@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// 전역 UI(상단바 + 하단 네비게이션 바 + 가방 + 도감 + 퀘스트 + 재화 충전 + 이동 팝업 + 씬 전환 페이드)를 만든다. 여러 번 실행해도 결과가 같음.
+/// 전역 UI(상단바 + 하단 네비게이션 바 + 가방 + 도감 + 퀘스트 + 꾸미기 모드 + 요정 상점 + 재화 충전 + 이동 팝업 + 씬 전환 페이드)를 만든다. 여러 번 실행해도 결과가 같음.
 /// - 장소 에셋 4개 (광장/밭/낚시터/광산)
 /// - Assets/Prefab/Navigation/ZoneCard.prefab
 /// - Assets/Resources/GlobalUI.prefab  (가방 화면은 InventoryTestScene의 Canvas를 복제해서 사용)
@@ -94,6 +94,8 @@ public static class GlobalUISetup
         CurrencyShopSetup.BuildPrefabs();
         DecorSetup.CreateData();
         DecorModeSetup.BuildPrefabs();
+        FairyShopSetup.CreateData();
+        FairyShopSetup.BuildPrefabs();
         BuildGlobalUIPrefab();
         RegisterBuildScenes();
 
@@ -252,7 +254,7 @@ public static class GlobalUISetup
         var inventoryPresenter = inventoryScreen.GetComponentInChildren<InventoryPresenter>(true);
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
-        // 그리는 순서: 상단바·하단 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 재화 충전 → 이동 팝업 → 페이드
+        // 그리는 순서: 상단바·하단 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
         hud.gameObject.AddComponent<SafeAreaFltter>();
@@ -262,8 +264,9 @@ public static class GlobalUISetup
         var topBar = TopBarSetup.Build(hud);
         var collection = CollectionSetup.BuildScreen(rootRect);
         var quest = QuestSetup.BuildScreen(rootRect);
-        var shop = CurrencyShopSetup.BuildScreens(rootRect);
         var decorMode = DecorModeSetup.BuildScreen(rootRect, hud.gameObject);
+        var fairyShop = FairyShopSetup.BuildScreens(rootRect);
+        var shop = CurrencyShopSetup.BuildScreens(rootRect);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
         var fader = BuildFader(rootRect);
         BuildEventSystem(rootRect);
@@ -307,6 +310,13 @@ public static class GlobalUISetup
         Set(shopPresenter, "_gemShop", shop.gemShop);
         Set(shopPresenter, "_confirm", shop.confirm);
         Set(shopPresenter, "_shortage", shop.shortage);
+
+        // 요정 상점 (광장 요정, 꾸미기 보관함 [+ 상점]에서 열림). 재화 부족은 충전 흐름의 부족 팝업을 같이 씀
+        var fairyPresenter = root.AddComponent<FairyShopPresenter>();
+        Set(fairyPresenter, "_catalog", AssetDatabase.LoadAssetAtPath<ShopCatalog>(FairyShopSetup.CatalogPath));
+        Set(fairyPresenter, "_shop", fairyShop.shop);
+        Set(fairyPresenter, "_popup", fairyShop.popup);
+        Set(fairyPresenter, "_shortage", shop.shortage);
 
         // 퀘스트 모델의 주인: 도감과 같이 전역 UI에 붙음
         var questManager = root.AddComponent<QuestManager>();

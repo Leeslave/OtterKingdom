@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdcf0b58db9a2674aa0d62723c40271e, type: 3}
+  m_Name: ShopCatalog
+  m_EditorClassIdentifier: OtterKingdom::ShopCatalog
+  _tabs:
+  - _label: "\uC528\uC557"
+    _category: {fileID: 11400000, guid: 21ef8cc3a93812d4dac1f6a4f756b488, type: 2}
+  - _label: "\uB09A\uC2DC"
+    _category: {fileID: 11400000, guid: fc357f853fd815244984d3c1af9fcf29, type: 2}
+  - _label: "\uC7A5\uB09C\uAC10"
+    _category: {fileID: 11400000, guid: b17fe1ae81840fe4d9794a3ea8059425, type: 2}
+  _products:
+  - {fileID: 11400000, guid: d766e9baf84a40e4f83ba5bcc42f9393, type: 2}
+  - {fileID: 11400000, guid: f69eab7d742b2d24e91408889b742c76, type: 2}
+  - {fileID: 11400000, guid: 777553148a483e843bdb291c8b8062ba, type: 2}
+  - {fileID: 11400000, guid: 68d3c9a598ae2f34ab84d5d9f643e15a, type: 2}
+  - {fileID: 11400000, guid: 07742a4b47cf931419e2bba56bcab187, type: 2}

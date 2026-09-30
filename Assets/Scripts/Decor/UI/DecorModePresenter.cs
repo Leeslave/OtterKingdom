@@ -49,6 +49,9 @@ public class DecorModePresenter : MonoBehaviour
 
     public bool IsOpen => gameObject.activeSelf;
 
+    /// <summary>꾸미기 모드 중인지 (월드의 다른 탭 입력 — 요정 NPC 등 — 이 무시하도록)</summary>
+    public static bool IsActive { get; private set; }
+
     /// <summary>지금 장소에 꾸미기 격자가 있어 모드에 들어갈 수 있는지</summary>
     public bool CanEnter => DecorBoardView.Active != null && DecorBoardView.Active.Layout != null && DecorManager.Instance != null;
 
@@ -78,8 +81,22 @@ public class DecorModePresenter : MonoBehaviour
         _view.OnConfirmClicked += ConfirmSession;
         _view.OnRemoveClicked += RemoveSession;
         _storage.OnDecorClicked += BeginNew;
-        _storage.OnShopClicked += () => _view.ShowHint(HintShop);
+        _storage.OnShopClicked += OpenShop;
         _storage.OnTabChanged += RefreshStorage;
+    }
+
+    // 보관함 [+ 상점] → 요정 상점을 꾸미기 물건 탭으로 (상점이 없으면 안내만)
+    private void OpenShop()
+    {
+        var shop = FairyShopPresenter.Instance;
+        if (shop == null)
+        {
+            _view.ShowHint(HintShop);
+            return;
+        }
+
+        CancelSession();
+        shop.Open(_tabCategories.Count > 0 ? _tabCategories[0] : null);
     }
 
     #region 들어가기 / 나가기
@@ -107,6 +124,7 @@ public class DecorModePresenter : MonoBehaviour
         BuildTabs();
         _hud.SetActive(false);
         gameObject.SetActive(true);
+        IsActive = true;
 
         _manager.OnStorageChanged += RefreshStorage;
         _session = null;
@@ -129,6 +147,7 @@ public class DecorModePresenter : MonoBehaviour
 
         _hud.SetActive(true);
         gameObject.SetActive(false);
+        IsActive = false;
 
         if (_manager != null)
             _manager.NotifyEditFinished();
@@ -137,6 +156,7 @@ public class DecorModePresenter : MonoBehaviour
     private void OnDisable()
     {
         // 장소를 옮기는 등으로 꺼질 때도 들고 있던 물건과 카메라를 원래대로
+        IsActive = false;
         CancelSession();
         SetCameraDrag(true);
         _pressing = false;
