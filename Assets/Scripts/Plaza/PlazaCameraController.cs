@@ -4,18 +4,29 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
-// Drag-to-pan orthographic camera for the plaza. The grabbed point of the
-// background stays under the finger (drag right -> camera moves left), the
-// whole view — not just its centre — is kept inside the background, and the
-// orthographic size is capped so the background always covers the screen on
-// any aspect ratio. No zoom gesture or inertia yet (out of scope for v1).
+// Drag-to-pan and pinch/scroll-to-zoom orthographic camera for the plaza. The
+// grabbed point of the background stays under the finger (drag right ->
+// camera moves left), the whole view — not just its centre — is kept inside
+// the background, and the orthographic size is capped so the background
+// always covers the screen on any aspect ratio. No inertia yet.
 //
-// Input: one tracked pointer. The first touch that begins is followed until
-// it ends; extra fingers are ignored, and once it ends nothing is tracked
-// until a new press begins. Mouse left button is the editor fallback when no
-// touch is active. A press that starts over UI stays "blocked" for its whole
-// lifetime so it never turns into a camera drag. Uses the Input System
-// directly (the project's active input handler); no legacy Input calls.
+// Zoom: the orthographic size stays within [minOrthographicSize,
+// maxOrthographicSize], and never above the largest size at which the map
+// still covers the screen. The map rectangle is re-read every frame from the
+// bounds renderers, so a ground that grows (swapped/scaled sprite, or extra
+// expansion tiles switched on at a level-up) widens both the pan area and the
+// zoom-out limit with no extra wiring. A map smaller than the min zoom wins
+// over the min zoom, so the view never shows past the map's edge.
+//
+// Input: one tracked pointer for dragging. The first touch that begins is
+// followed until it ends; once it ends nothing is tracked until a new press
+// begins. A second finger turns the gesture into a pinch (zoom about the
+// fingers' midpoint, which also pans with it); after the pinch nothing drags
+// until a new press, so lifting one finger never makes the view jump. Mouse
+// left button / scroll wheel are the editor fallback when no touch is active.
+// A press that starts over UI stays "blocked" for its whole lifetime so it
+// never turns into a camera drag or pinch. Uses the Input System directly (the
+// project's active input handler); no legacy Input calls.
 [DefaultExecutionOrder(-50)]
 [RequireComponent(typeof(Camera))]
 public class PlazaCameraController : MonoBehaviour
@@ -23,14 +34,28 @@ public class PlazaCameraController : MonoBehaviour
     [Header("Bounds & framing")]
     [Tooltip("World-space background whose rectangle bounds the view.")]
     [SerializeField] private SpriteRenderer boundsSource;
+    [Tooltip("More ground pieces added to the bounds (e.g. expansion tiles). Inactive ones are ignored, so switching a piece on at a level-up grows the map.")]
+    [SerializeField] private Renderer[] extraBoundsSources = new Renderer[0];
     [Tooltip("Shrinks the usable rectangle on each side (world units), e.g. to hide soft image edges.")]
     [SerializeField] private Vector2 boundsInset = Vector2.zero;
     [Tooltip("Where the camera starts. Clamped into bounds after applying.")]
     [SerializeField] private Transform initialFocus;
 
     [Header("Zoom")]
-    [Tooltip("Preferred orthographic size. Automatically reduced if the background couldn't cover the view at this size.")]
+    [Tooltip("Orthographic size on entry. Automatically reduced if the background couldn't cover the view at this size.")]
     [SerializeField, Min(0.1f)] private float desiredOrthographicSize = 9f;
+    // 6: otters (1.67 units) fill ~14% of the screen height and the ground
+    // (PPU 40) is only ~1.5x more magnified than the default 9 — closer than
+    // that the ground art gets visibly blurry.
+    [Tooltip("Most zoomed in (smallest orthographic size, half the view height in world units).")]
+    [SerializeField, Min(0.1f)] private float minOrthographicSize = 6f;
+    // 13: otters stay ~6% of the screen height. On today's 25.6 x 38.4 plaza a
+    // portrait phone is limited by the map (~19) before this, so this cap only
+    // matters once the map grows.
+    [Tooltip("Most zoomed out (largest orthographic size). The map covering the screen can limit it further.")]
+    [SerializeField, Min(0.1f)] private float maxOrthographicSize = 13f;
+    [Tooltip("Size multiplier per mouse-wheel step (editor / desktop).")]
+    [SerializeField, Range(1.01f, 1.5f)] private float scrollZoomStep = 1.1f;
 
     [Header("Drag")]
     [Tooltip("Movement needed before a press becomes a drag, as a fraction of the screen's short side.")]
@@ -41,6 +66,11 @@ public class PlazaCameraController : MonoBehaviour
     private Camera cam;
     private bool warnedMissingBounds;
 
+    // The zoom the player chose. Applied through the current limits every
+    // frame (not overwritten by them), so a temporary limit such as a rotated
+    // screen doesn't lose it.
+    private float zoomSize;
+
     private bool tracking;
     private int trackedTouchId = -1; // -1 while tracking = mouse
     private bool blockedByUI;
@@ -48,10 +78,18 @@ public class PlazaCameraController : MonoBehaviour
     private Vector2 pressScreenPos;
     private Vector2 lastScreenPos;
 
+    private bool pinching;
+    private bool pinchBlockedByUI;
+    private int pinchIdA = -1;
+    private int pinchIdB = -1;
+    private float lastPinchDistance;
+    private Vector2 lastPinchMid;
+
     private void Awake()
     {
         cam = GetComponent<Camera>();
         cam.orthographic = true;
+        zoomSize = desiredOrthographicSize;
 
         if (initialFocus != null)
         {
@@ -62,32 +100,45 @@ public class PlazaCameraController : MonoBehaviour
         ApplyZoomAndClamp();
     }
 
-    private void OnDisable() => ResetDrag();
+    private void OnDisable()
+    {
+        ResetDrag();
+        EndPinch();
+    }
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        if (!hasFocus) ResetDrag();
+        if (!hasFocus) { ResetDrag(); EndPinch(); }
     }
 
     private void OnApplicationPause(bool paused)
     {
-        if (paused) ResetDrag();
+        if (paused) { ResetDrag(); EndPinch(); }
+    }
+
+    private void OnValidate()
+    {
+        if (maxOrthographicSize < minOrthographicSize) maxOrthographicSize = minOrthographicSize;
     }
 
     private void Update()
     {
+        if (UpdatePinch()) return;
+
         if (tracking) ContinueTracking();
         else TryBeginTracking();
+
+        UpdateScrollZoom();
     }
 
-    // Runs every frame (cheap) so resolution / orientation / viewport changes
-    // are picked up without any change detection.
+    // Runs every frame (cheap) so resolution / orientation / viewport / map
+    // size changes are picked up without any change detection.
     private void LateUpdate()
     {
         ApplyZoomAndClamp();
     }
 
-    // --- Input -------------------------------------------------------------
+    // --- Input: drag -------------------------------------------------------
 
     private void TryBeginTracking()
     {
@@ -176,8 +227,7 @@ public class PlazaCameraController : MonoBehaviour
         if (screenDelta == Vector2.zero) return;
 
         // Ortho camera: world units per screen pixel is uniform.
-        float worldPerPixel = 2f * cam.orthographicSize / cam.pixelHeight;
-        Vector3 worldDelta = screenDelta * worldPerPixel;
+        Vector3 worldDelta = screenDelta * WorldPerPixel(cam.orthographicSize);
         transform.position -= worldDelta;
         ApplyZoomAndClamp();
     }
@@ -210,23 +260,143 @@ public class PlazaCameraController : MonoBehaviour
         return UiHits.Count > 0;
     }
 
+    // --- Input: zoom -------------------------------------------------------
+
+    // Returns true while two fingers are down (the pinch owns the input).
+    private bool UpdatePinch()
+    {
+        var touchscreen = Touchscreen.current;
+        TouchControl a = null, b = null;
+        if (touchscreen != null)
+        {
+            foreach (TouchControl touch in touchscreen.touches)
+            {
+                if (!touch.isInProgress) continue;
+                if (a == null) a = touch;
+                else { b = touch; break; }
+            }
+        }
+
+        if (b == null)
+        {
+            EndPinch();
+            return false;
+        }
+
+        Vector2 posA = a.position.ReadValue();
+        Vector2 posB = b.position.ReadValue();
+        float distance = (posA - posB).magnitude;
+        Vector2 mid = (posA + posB) * 0.5f;
+        int idA = a.touchId.ReadValue();
+        int idB = b.touchId.ReadValue();
+
+        // A new pinch, or a different pair of fingers: take a fresh baseline
+        // so the view doesn't jump.
+        if (!pinching || idA != pinchIdA || idB != pinchIdB)
+        {
+            if (!pinching)
+            {
+                ResetDrag(); // the first finger's drag hands over to the pinch
+                pinchBlockedByUI = IsOverUI(a.startPosition.ReadValue()) || IsOverUI(b.startPosition.ReadValue());
+            }
+            pinching = true;
+            pinchIdA = idA;
+            pinchIdB = idB;
+            lastPinchDistance = distance;
+            lastPinchMid = mid;
+            return true;
+        }
+
+        if (!pinchBlockedByUI && lastPinchDistance > 0.5f && distance > 0.5f)
+        {
+            // Fingers apart -> smaller size (zoom in). The world point that was
+            // under the old midpoint moves to the new one: zoom + pan together.
+            float size = cam.orthographicSize * (lastPinchDistance / distance);
+            ZoomAround(lastPinchMid, mid, size);
+        }
+        lastPinchDistance = distance;
+        lastPinchMid = mid;
+        return true;
+    }
+
+    private void EndPinch()
+    {
+        pinching = false;
+        pinchBlockedByUI = false;
+        pinchIdA = -1;
+        pinchIdB = -1;
+    }
+
+    private void UpdateScrollZoom()
+    {
+        var mouse = Mouse.current;
+        if (mouse == null) return;
+
+        // Only the direction is used: wheel deltas differ between platforms
+        // and Input System settings, one step per frame keeps it predictable.
+        float scroll = mouse.scroll.ReadValue().y;
+        if (Mathf.Abs(scroll) < 0.01f) return;
+
+        Vector2 screenPos = mouse.position.ReadValue();
+        if (!cam.pixelRect.Contains(screenPos) || IsOverUI(screenPos)) return;
+
+        float size = scroll > 0f ? cam.orthographicSize / scrollZoomStep : cam.orthographicSize * scrollZoomStep;
+        ZoomAround(screenPos, screenPos, size);
+    }
+
+    // Sets the zoom so the world point under `fromScreen` (at the current
+    // zoom) ends up under `toScreen`, then clamps into the map.
+    private void ZoomAround(Vector2 fromScreen, Vector2 toScreen, float size)
+    {
+        Vector2 anchor = ScreenToWorld(fromScreen, cam.orthographicSize);
+
+        GetZoomLimits(TryGetBounds(out Rect bounds), bounds, out float min, out float max);
+        zoomSize = Mathf.Clamp(size, min, max); // stored clamped: no dead zone past the limit
+        cam.orthographicSize = zoomSize;
+
+        Vector2 offset = (toScreen - cam.pixelRect.center) * WorldPerPixel(zoomSize);
+        Vector3 pos = transform.position;
+        pos.x = anchor.x - offset.x;
+        pos.y = anchor.y - offset.y;
+        transform.position = pos;
+        ApplyZoomAndClamp();
+    }
+
+    private float WorldPerPixel(float orthographicSize) => 2f * orthographicSize / cam.pixelHeight;
+
+    private Vector2 ScreenToWorld(Vector2 screenPos, float orthographicSize)
+    {
+        return (Vector2)transform.position + (screenPos - cam.pixelRect.center) * WorldPerPixel(orthographicSize);
+    }
+
     // --- Framing -----------------------------------------------------------
 
     private void ApplyZoomAndClamp()
     {
-        if (!TryGetBounds(out Rect bounds)) return;
-
-        float aspect = cam.aspect;
-        // Largest size at which the background still covers the view on both axes.
-        float maxSizeToCover = Mathf.Min(bounds.height * 0.5f, bounds.width / (2f * aspect));
-        cam.orthographicSize = Mathf.Min(desiredOrthographicSize, maxSizeToCover);
+        bool hasBounds = TryGetBounds(out Rect bounds);
+        GetZoomLimits(hasBounds, bounds, out float min, out float max);
+        cam.orthographicSize = Mathf.Clamp(zoomSize, min, max);
+        if (!hasBounds) return;
 
         float halfHeight = cam.orthographicSize;
-        float halfWidth = halfHeight * aspect;
+        float halfWidth = halfHeight * cam.aspect;
         Vector3 pos = transform.position;
         pos.x = ClampAxis(pos.x, bounds.xMin + halfWidth, bounds.xMax - halfWidth, bounds.center.x);
         pos.y = ClampAxis(pos.y, bounds.yMin + halfHeight, bounds.yMax - halfHeight, bounds.center.y);
         transform.position = pos;
+    }
+
+    private void GetZoomLimits(bool hasBounds, Rect bounds, out float min, out float max)
+    {
+        max = Mathf.Max(minOrthographicSize, maxOrthographicSize);
+        if (hasBounds)
+        {
+            // Largest size at which the background still covers the view on both axes.
+            float maxSizeToCover = Mathf.Min(bounds.height * 0.5f, bounds.width / (2f * cam.aspect));
+            max = Mathf.Min(max, maxSizeToCover);
+        }
+        // A map too small for the min zoom: covering the screen wins.
+        min = Mathf.Min(minOrthographicSize, max);
     }
 
     // An axis with no room left (or float error making min > max) locks to
@@ -236,9 +406,19 @@ public class PlazaCameraController : MonoBehaviour
         return min >= max ? center : Mathf.Clamp(value, min, max);
     }
 
+    // Union of the active bound renderers, shrunk by the inset.
     private bool TryGetBounds(out Rect rect)
     {
-        if (boundsSource == null)
+        bool has = false;
+        Bounds b = default;
+        AddBounds(boundsSource, ref b, ref has);
+        if (extraBoundsSources != null)
+        {
+            foreach (var source in extraBoundsSources)
+                AddBounds(source, ref b, ref has);
+        }
+
+        if (!has)
         {
             rect = default;
             if (!warnedMissingBounds)
@@ -249,11 +429,18 @@ public class PlazaCameraController : MonoBehaviour
             return false;
         }
 
-        Bounds b = boundsSource.bounds;
         Vector2 inset = new Vector2(Mathf.Max(0f, boundsInset.x), Mathf.Max(0f, boundsInset.y));
         Vector2 min = (Vector2)b.min + inset;
         Vector2 size = Vector2.Max((Vector2)b.size - inset * 2f, Vector2.one * 0.01f);
         rect = new Rect(min, size);
         return true;
+    }
+
+    private static void AddBounds(Renderer source, ref Bounds bounds, ref bool has)
+    {
+        if (source == null || !source.enabled || !source.gameObject.activeInHierarchy) return;
+
+        if (has) bounds.Encapsulate(source.bounds);
+        else { bounds = source.bounds; has = true; }
     }
 }
