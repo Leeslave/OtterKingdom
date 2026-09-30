@@ -3,8 +3,9 @@ using UnityEngine;
 
 /// <summary>
 /// 도감 모델(Collection)의 주인. 전역 UI(GlobalUI) 루트에 붙어 씬을 넘어 유지된다.
-/// - 채소·어류: 가방에 처음 들어오면 자동 획득
-/// - 해달: 게임 쪽이 Register / MarkVisited를 호출 (항목 ID = 해달 speciesId)
+/// - 채소·어류: 수확·낚시로 처음 얻으면 자동 획득
+/// - 레벨 해금 항목(농부 해달 2, 낚시꾼 해달 10): 그 레벨에 도달하면 자동 등록
+/// - 그 밖의 해달: 게임 쪽이 Register / MarkVisited를 호출 (항목 ID = 해달 speciesId)
 /// - 세이브: 게임 쪽이 LoadFromSave / WriteToSave를 호출
 /// </summary>
 // InventoryManager(-100)가 가방을 만든 뒤, 게임 쪽(GameManager)이 세이브를 불러오기 전에 준비
@@ -20,6 +21,7 @@ public class CollectionManager : MonoBehaviour
     public CollectionDatabase Database => _database;
 
     private Inventory _inventory;
+    private ProfileManager _profile;
 
     private void Awake()
     {
@@ -35,6 +37,14 @@ public class CollectionManager : MonoBehaviour
     {
         if (Instance != this)
             return;
+
+        // 레벨 해금: 경험치가 바뀔 때마다 확인 (세이브 복원 때도 알림이 오므로 불러오는 순서와 무관)
+        _profile = ProfileManager.Instance;
+        if (_profile != null)
+        {
+            _profile.OnExpChanged += HandleExpChanged;
+            HandleExpChanged();
+        }
 
         if (InventoryManager.Instance == null)
         {
@@ -53,6 +63,8 @@ public class CollectionManager : MonoBehaviour
     {
         if (_inventory != null)
             _inventory.OnItemChanged -= HandleItemChanged;
+        if (_profile != null)
+            _profile.OnExpChanged -= HandleExpChanged;
     }
 
     private void OnDestroy()
@@ -64,6 +76,11 @@ public class CollectionManager : MonoBehaviour
     private void HandleItemChanged(ItemChangedEvent e)
     {
         CollectionAutoCollector.Handle(Collection, _database, e);
+    }
+
+    private void HandleExpChanged()
+    {
+        CollectionLevelUnlocker.Unlock(Collection, _database, _profile.Level);
     }
 
     #region 게임 쪽 연결 (해달)
@@ -101,6 +118,10 @@ public class CollectionManager : MonoBehaviour
 
         if (_inventory != null)
             CollectionAutoCollector.CollectOwned(Collection, _database, _inventory);
+        if (_profile != null)
+            CollectionLevelUnlocker.Unlock(Collection, _database, _profile.Level);
+
+        Collection.NotifyLoaded();
     }
 
     /// <summary>도감 상태를 세이브 목록에 쓴다 (기존 내용은 지움)</summary>

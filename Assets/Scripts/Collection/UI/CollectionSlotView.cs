@@ -19,6 +19,8 @@ public class CollectionSlotView : MonoBehaviour
     [Tooltip("발자국 + \"방문 흔적\" (방문 흔적)")]
     [SerializeField] private GameObject _visitLabel;
     [SerializeField] private GameObject _selectRing;
+    [Tooltip("아직 안 본 이야기가 있을 때 오른쪽 위 \"N\" (통통 튐)")]
+    [SerializeField] private GameObject _newBadge;
 
     [Header("배경 스프라이트")]
     [SerializeField] private Sprite _collectedSprite;
@@ -36,7 +38,7 @@ public class CollectionSlotView : MonoBehaviour
         _button.onClick.AddListener(() => OnClicked?.Invoke(this));
     }
 
-    public void Bind(CollectionEntry entry, CollectionState state)
+    public void Bind(CollectionEntry entry, CollectionState state, bool hasNewStory)
     {
         if (entry == null)
             throw new ArgumentNullException(nameof(entry));
@@ -57,7 +59,9 @@ public class CollectionSlotView : MonoBehaviour
         _silhouette.sprite = entry.Silhouette;
         _silhouette.enabled = state == CollectionState.Unknown && entry.Silhouette != null;
 
-        _check.SetActive(collected);
+        // 새 이야기 "N"이 있으면 같은 자리의 체크 대신 N
+        _newBadge.SetActive(hasNewStory);
+        _check.SetActive(collected && !hasNewStory);
         _unknownLabel.SetActive(state == CollectionState.Unknown);
         _visitLabel.SetActive(visited);
     }

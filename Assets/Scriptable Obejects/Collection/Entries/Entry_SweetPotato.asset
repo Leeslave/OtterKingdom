@@ -22,3 +22,5 @@ MonoBehaviour:
   _description: "\uAD6C\uC6B0\uBA74 \uAFC0\uCC98\uB7FC \uB2EC\uCF64\uD574\uC838\uC694."
   _extraValue: "\uBC2D"
   _linkedItem: {fileID: 11400000, guid: 3b1d9973c36f102419f2dcbd30a9bee7, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 11400000, guid: 732e45c9385fe8446b4a2d8e775ef9bf, type: 2}

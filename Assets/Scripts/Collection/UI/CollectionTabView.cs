@@ -12,6 +12,8 @@ public class CollectionTabView : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private Image _background;
     [SerializeField] private TextMeshProUGUI _label;
+    [Tooltip("이 탭에 아직 안 본 이야기가 있을 때 \"N\"")]
+    [SerializeField] private GameObject _newBadge;
 
     [Header("배경 스프라이트")]
     [SerializeField] private Sprite _normalSprite;
@@ -37,5 +39,10 @@ public class CollectionTabView : MonoBehaviour
     public void SetSelected(bool selected)
     {
         _background.sprite = selected ? _selectedSprite : _normalSprite;
+    }
+
+    public void SetNew(bool hasNewStory)
+    {
+        _newBadge.SetActive(hasNewStory);
     }
 }

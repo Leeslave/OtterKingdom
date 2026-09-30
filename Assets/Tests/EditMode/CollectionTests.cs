@@ -289,4 +289,160 @@ public class CollectionTests
         Assert.IsNull(_database.FindByItem(_trashItem));
         CollectionAssert.AreEqual(new[] { _farmer }, _database.GetEntries(_otter));
     }
+
+    #region 해금 조건 (도감_이벤트컷씬_기획서 1.1)
+
+    [TestCase(ItemChangeReason.Purchase)]
+    [TestCase(ItemChangeReason.Grant)]
+    [TestCase(ItemChangeReason.Load)]
+    public void AutoCollect_NotProducedByPlayer_IsIgnored(ItemChangeReason reason)
+    {
+        // Arrange: 사거나 받거나 세이브에서 복원된 것은 해금 조건이 아님
+        var e = new ItemChangedEvent(_carrotItem, 0, 3, reason);
+
+        // Act & Assert
+        Assert.IsFalse(CollectionAutoCollector.Handle(_collection, _database, e));
+        Assert.AreEqual(CollectionState.Unknown, _collection.GetState(_carrot));
+    }
+
+    [TestCase(ItemChangeReason.Harvest)]
+    [TestCase(ItemChangeReason.Fishing)]
+    [TestCase(ItemChangeReason.Mining)]
+    public void AutoCollect_ProducedByPlayer_Collects(ItemChangeReason reason)
+    {
+        var e = new ItemChangedEvent(_carrotItem, 0, 1, reason);
+
+        Assert.IsTrue(CollectionAutoCollector.Handle(_collection, _database, e));
+    }
+
+    [Test]
+    public void LevelUnlock_BeforeLevel_DoesNothing_AtLevel_Registers()
+    {
+        // Arrange: 농부 해달 2레벨 해금
+        SetUnlockLevel(_farmer, 2);
+
+        // Act & Assert
+        Assert.AreEqual(0, CollectionLevelUnlocker.Unlock(_collection, _database, 1));
+        Assert.AreEqual(CollectionState.Unknown, _collection.GetState(_farmer));
+
+        Assert.AreEqual(1, CollectionLevelUnlocker.Unlock(_collection, _database, 2));
+        Assert.AreEqual(CollectionState.Collected, _collection.GetState(_farmer));
+
+        Assert.AreEqual(0, CollectionLevelUnlocker.Unlock(_collection, _database, 5), "이미 등록한 항목은 다시 세지 않음");
+    }
+
+    [Test]
+    public void LevelUnlock_EntryWithoutLevel_IsIgnored()
+    {
+        // 레벨 해금이 아닌 항목(당근)은 몇 레벨이든 그대로
+        Assert.AreEqual(0, CollectionLevelUnlocker.Unlock(_collection, _database, 99));
+        Assert.AreEqual(CollectionState.Unknown, _collection.GetState(_carrot));
+    }
+
+    private void SetUnlockLevel(CollectionEntry entry, int level)
+    {
+        var so = new SerializedObject(entry);
+        so.FindProperty("_unlockLevel").intValue = level;
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    #endregion
+
+    #region 이야기
+
+    private CollectionStory AttachStory(CollectionEntry entry, params string[] lines)
+    {
+        var story = Track(ScriptableObject.CreateInstance<CollectionStory>());
+        var storySo = new SerializedObject(story);
+        var list = storySo.FindProperty("_lines");
+        list.arraySize = lines.Length;
+        for (int i = 0; i < lines.Length; i++)
+            list.GetArrayElementAtIndex(i).FindPropertyRelative("_text").stringValue = lines[i];
+        storySo.ApplyModifiedPropertiesWithoutUndo();
+
+        var entrySo = new SerializedObject(entry);
+        entrySo.FindProperty("_story").objectReferenceValue = story;
+        entrySo.ApplyModifiedPropertiesWithoutUndo();
+        return story;
+    }
+
+    [Test]
+    public void NewStory_OnlyAfterCollected_AndUntilWatched()
+    {
+        // Arrange
+        AttachStory(_carrot, "{이름}님, 이것 좀 보세요!");
+
+        // Act & Assert
+        Assert.IsFalse(_collection.HasNewStory(_carrot), "해금 전에는 볼 수 없음");
+
+        _collection.Collect(_carrot);
+        Assert.IsTrue(_collection.HasNewStory(_carrot));
+        Assert.AreEqual(1, _collection.CountNewStories(_database.Entries));
+
+        Assert.IsTrue(_collection.MarkStoryWatched(_carrot));
+        Assert.IsFalse(_collection.HasNewStory(_carrot));
+        Assert.IsFalse(_collection.MarkStoryWatched(_carrot), "두 번째는 처음이 아님");
+    }
+
+    [Test]
+    public void NewStory_EntryWithoutStory_IsNeverNew()
+    {
+        _collection.Collect(_carrot);
+
+        Assert.IsFalse(_collection.HasNewStory(_carrot));
+    }
+
+    [Test]
+    public void StoriesChanged_FiresOnCollectWithStory_AndOnWatch()
+    {
+        // Arrange
+        AttachStory(_carrot, "대사");
+        int fired = 0;
+        _collection.OnStoriesChanged += () => fired++;
+
+        // Act
+        _collection.Collect(_carrot);
+        _collection.MarkStoryWatched(_carrot);
+        _collection.Collect(_farmer); // 이야기 없는 항목은 알리지 않음
+
+        // Assert
+        Assert.AreEqual(2, fired);
+    }
+
+    [Test]
+    public void Save_StoryWatched_IsRestored_OldSaveStartsUnwatched()
+    {
+        // Arrange
+        AttachStory(_carrot, "대사");
+        AttachStory(_farmer, "대사");
+        _collection.Collect(_carrot);
+        _collection.Collect(_farmer);
+        _collection.MarkStoryWatched(_carrot);
+        var saved = new List<CollectionSaveEntry>();
+
+        // Act
+        CollectionSaveConverter.Write(_collection, saved);
+        var restored = new Collection();
+        CollectionSaveConverter.Read(saved, restored);
+
+        // Assert
+        Assert.IsFalse(restored.HasNewStory(_carrot), "본 이야기는 다시 N이 뜨지 않음");
+        Assert.IsTrue(restored.HasNewStory(_farmer));
+
+        // 옛 세이브 (storyWatched 필드 없음) → 안 본 것으로 시작
+        var old = JsonUtility.FromJson<CollectionSaveEntry>("{\"entryId\":\"crop_carrot\",\"state\":2}");
+        var fromOld = new Collection();
+        CollectionSaveConverter.Read(new List<CollectionSaveEntry> { old }, fromOld);
+        Assert.IsTrue(fromOld.HasNewStory(_carrot));
+    }
+
+    [Test]
+    public void FormatLine_ReplacesEveryNameToken()
+    {
+        string line = CollectionStory.FormatLine("{이름}님, {이름}님! 이것 좀 보세요!", "해달왕");
+
+        Assert.AreEqual("해달왕님, 해달왕님! 이것 좀 보세요!", line);
+    }
+
+    #endregion
 }

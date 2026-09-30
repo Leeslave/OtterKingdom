@@ -20,6 +20,19 @@ public class CollectionDetailView : MonoBehaviour
     [Tooltip("\"획득 장소: 밭\" 줄")]
     [SerializeField] private TextMeshProUGUI _extraText;
 
+    [Header("이야기 버튼")]
+    [SerializeField] private Button _storyButton;
+    [SerializeField] private Image _storyButtonImage;
+    [SerializeField] private TextMeshProUGUI _storyButtonLabel;
+    [Tooltip("안 본 이야기일 때만 켜서 버튼이 천천히 커졌다 작아지게")]
+    [SerializeField] private PulseAnimator _storyPulse;
+    [SerializeField] private Sprite _newStorySprite;
+    [SerializeField] private Sprite _watchedStorySprite;
+    [SerializeField] private Color _newStoryTextColor = Color.white;
+    [SerializeField] private Color _watchedStoryTextColor = new Color32(0x4B, 0x2E, 0x22, 0xFF);
+    [SerializeField] private string _newStoryLabel = "이야기 보기";
+    [SerializeField] private string _watchedStoryLabel = "다시 보기";
+
     [Header("문구")]
     [SerializeField] private string _unknownName = "???";
     [SerializeField] private string _unknownTagline = "아직 만나지 못했어요.";
@@ -29,6 +42,28 @@ public class CollectionDetailView : MonoBehaviour
 
     [Header("방문 흔적")]
     [SerializeField] private float _visitedAlpha = 0.4f;
+
+    /// <summary>[이야기 보기] / [다시 보기]를 눌렀을 때</summary>
+    public event Action OnStoryClicked;
+
+    private void Awake()
+    {
+        _storyButton.onClick.AddListener(() => OnStoryClicked?.Invoke());
+    }
+
+    /// <param name="canWatch">이야기가 있고 해금됐는지</param>
+    /// <param name="isNew">아직 안 봤는지 (눈에 띄는 버튼 + 커졌다 작아짐)</param>
+    public void ShowStory(bool canWatch, bool isNew)
+    {
+        _storyButton.gameObject.SetActive(canWatch);
+        if (!canWatch)
+            return;
+
+        _storyButtonImage.sprite = isNew ? _newStorySprite : _watchedStorySprite;
+        _storyButtonLabel.text = isNew ? _newStoryLabel : _watchedStoryLabel;
+        _storyButtonLabel.color = isNew ? _newStoryTextColor : _watchedStoryTextColor;
+        _storyPulse.enabled = isNew;
+    }
 
     public void Show(CollectionEntry entry, CollectionState state)
     {
@@ -68,5 +103,6 @@ public class CollectionDetailView : MonoBehaviour
         _taglineText.text = _emptyMessage;
         _descriptionText.text = "";
         _extraText.text = "";
+        _storyButton.gameObject.SetActive(false);
     }
 }
