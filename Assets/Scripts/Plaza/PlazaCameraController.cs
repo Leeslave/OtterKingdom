@@ -23,7 +23,8 @@ using UnityEngine.InputSystem.Controls;
 // begins. A second finger turns the gesture into a pinch (zoom about the
 // fingers' midpoint, which also pans with it); after the pinch nothing drags
 // until a new press, so lifting one finger never makes the view jump. Mouse
-// left button / scroll wheel are the editor fallback when no touch is active.
+// left button / scroll wheel are the editor fallback when no touch is active,
+// and in the editor Alt + left-drag stands in for a pinch.
 // A press that starts over UI stays "blocked" for its whole lifetime so it
 // never turns into a camera drag or pinch. Uses the Input System directly (the
 // project's active input handler); no legacy Input calls.
@@ -104,6 +105,9 @@ public class PlazaCameraController : MonoBehaviour
     {
         ResetDrag();
         EndPinch();
+#if UNITY_EDITOR
+        editorPinching = false;
+#endif
     }
 
     private void OnApplicationFocus(bool hasFocus)
@@ -124,6 +128,9 @@ public class PlazaCameraController : MonoBehaviour
     private void Update()
     {
         if (UpdatePinch()) return;
+#if UNITY_EDITOR
+        if (UpdateEditorPinch()) return;
+#endif
 
         if (tracking) ContinueTracking();
         else TryBeginTracking();
@@ -326,6 +333,53 @@ public class PlazaCameraController : MonoBehaviour
         pinchIdA = -1;
         pinchIdB = -1;
     }
+
+#if UNITY_EDITOR
+    // Editor stand-in for a pinch (a mouse has one pointer): hold Alt and
+    // left-drag. Up = zoom in, down = zoom out, about the pressed point —
+    // the same ZoomAround path a real pinch uses.
+    private const float EditorPinchSpeed = 3f; // e-fold per screen height dragged
+
+    private bool editorPinching;
+    private Vector2 editorPinchAnchor;
+    private Vector2 editorPinchLast;
+
+    private bool UpdateEditorPinch()
+    {
+        var mouse = Mouse.current;
+        var keyboard = Keyboard.current;
+        if (mouse == null) { editorPinching = false; return false; }
+
+        if (!editorPinching)
+        {
+            if (keyboard == null || !keyboard.altKey.isPressed || !mouse.leftButton.wasPressedThisFrame) return false;
+
+            Vector2 pressPos = mouse.position.ReadValue();
+            if (IsOverUI(pressPos)) return false; // let UI (and the normal blocked-press path) have it
+            ResetDrag();
+            editorPinching = true;
+            editorPinchAnchor = pressPos;
+            editorPinchLast = pressPos;
+            return true;
+        }
+
+        if (!mouse.leftButton.isPressed)
+        {
+            editorPinching = false;
+            return true;
+        }
+
+        Vector2 pos = mouse.position.ReadValue();
+        float dy = pos.y - editorPinchLast.y;
+        editorPinchLast = pos;
+        if (dy != 0f)
+        {
+            float size = cam.orthographicSize * Mathf.Exp(-dy / cam.pixelHeight * EditorPinchSpeed);
+            ZoomAround(editorPinchAnchor, editorPinchAnchor, size);
+        }
+        return true;
+    }
+#endif
 
     private void UpdateScrollZoom()
     {
