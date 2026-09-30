@@ -391,7 +391,7 @@ public static class CurrencyShopSetup
     }
 
     // 딤 + SafeArea + 크림 패널 + 패널 윗선에 걸친 제목 리본. 닫힌 채로 시작
-    private static (RectTransform screen, RectTransform panel, UIPopupAnimator animator) BuildModal(RectTransform canvas, string name, string title,
+    internal static (RectTransform screen, RectTransform panel, UIPopupAnimator animator) BuildModal(RectTransform canvas, string name, string title,
         Sprite ribbonSprite, Vector2 size, float centerY, float ribbonWidth, float ribbonHeight, float titleSize)
     {
         var screen = CreateRect(name, canvas);
@@ -431,7 +431,7 @@ public static class CurrencyShopSetup
         return (screen, panel, animator);
     }
 
-    private static Button BuildTextButton(Transform parent, string name, string sprite, string label, float size, Color color)
+    internal static Button BuildTextButton(Transform parent, string name, string sprite, string label, float size, Color color)
     {
         var image = CreateImage(name, parent, LoadSprite(CommonSpriteFolder, sprite), true);
         var button = image.gameObject.AddComponent<Button>();
