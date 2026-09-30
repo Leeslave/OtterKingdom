@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 전역 UI 연결: 네비게이션 바 ↔ 도감 / 퀘스트 / 가방 화면 / 이동 팝업 ↔ SceneNavigator.
+/// 전역 UI 연결: 네비게이션 바 ↔ 도감 / 퀘스트 / 꾸미기 모드 / 가방 화면 / 이동 팝업 ↔ SceneNavigator.
 /// 어떤 화면이 열려 있는지(바 버튼 선택 표시)는 여기 한 곳에서만 관리한다.
 /// </summary>
 public class GlobalUIPresenter : MonoBehaviour
@@ -22,6 +22,9 @@ public class GlobalUIPresenter : MonoBehaviour
     [Tooltip("퀘스트 화면 루트의 연출 (닫힘을 알아채 바 선택 표시를 끄기 위함)")]
     [SerializeField] private UIPopupAnimator _questScreen;
 
+    [Header("꾸미기")]
+    [SerializeField] private DecorModePresenter _decorMode;
+
     [Header("가방")]
     [SerializeField] private InventoryPresenter _inventory;
     [Tooltip("가방 화면 루트의 연출 (닫힘을 알아채 바 선택 표시를 끄기 위함)")]
@@ -31,6 +34,7 @@ public class GlobalUIPresenter : MonoBehaviour
     {
         _navBar.OnCodexClicked += OpenCollection;
         _navBar.OnQuestClicked += OpenQuest;
+        _navBar.OnDecorateClicked += OpenDecorMode;
         _navBar.OnBagClicked += OpenBag;
         _navBar.OnTravelClicked += ToggleTravel;
         _travelPopup.OnZoneSelected += HandleZoneSelected;
@@ -44,6 +48,7 @@ public class GlobalUIPresenter : MonoBehaviour
     {
         _navBar.OnCodexClicked -= OpenCollection;
         _navBar.OnQuestClicked -= OpenQuest;
+        _navBar.OnDecorateClicked -= OpenDecorMode;
         _navBar.OnBagClicked -= OpenBag;
         _navBar.OnTravelClicked -= ToggleTravel;
         _travelPopup.OnZoneSelected -= HandleZoneSelected;
@@ -87,6 +92,20 @@ public class GlobalUIPresenter : MonoBehaviour
     private void HandleQuestHidden()
     {
         _navBar.SetQuestSelected(false);
+    }
+
+    #endregion
+
+    #region 꾸미기
+
+    // 꾸미기 격자가 없는 씬(테스트 씬 등)에서는 아무 일도 하지 않음
+    private void OpenDecorMode()
+    {
+        if (_navigator.IsTraveling || !_decorMode.CanEnter)
+            return;
+
+        _travelPopup.Hide();
+        _decorMode.Enter();
     }
 
     #endregion

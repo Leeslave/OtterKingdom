@@ -29,7 +29,20 @@ public class Inventory
 
     public int Capacity => _capacity;
     public int MaxCapacity => _maxCapacity;
-    public int UsedSlots => _counts.Count; // 종류 하나 = 1칸
+    // 종류 하나 = 1칸. 칸을 차지하지 않는 아이템(장난감 등)은 세지 않음
+    public int UsedSlots
+    {
+        get
+        {
+            int used = 0;
+            foreach (var item in _counts.Keys)
+            {
+                if (item.UsesBagCapacity)
+                    used++;
+            }
+            return used;
+        }
+    }
     public int FreeSlots => _capacity - UsedSlots;
 
     public Inventory(int capacity, int maxCapacity)
@@ -95,7 +108,7 @@ public class Inventory
         int oldCount = GetCount(item);
 
         // 처음 들어오는 종류는 빈 칸이 있어야 함 (이미 가진 종류는 칸을 더 쓰지 않음)
-        if (oldCount == 0 && FreeSlots <= 0)
+        if (oldCount == 0 && item.UsesBagCapacity && FreeSlots <= 0)
             return 0;
 
         int space = item.MaxStack - oldCount;
@@ -127,7 +140,7 @@ public class Inventory
             throw new ArgumentNullException(nameof(item));
 
         int count = GetCount(item);
-        if (count == 0 && FreeSlots <= 0)
+        if (count == 0 && item.UsesBagCapacity && FreeSlots <= 0)
             return 0;
 
         return Math.Max(0, item.MaxStack - count);

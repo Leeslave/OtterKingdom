@@ -304,6 +304,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 958454370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &235615500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 235615501}
+  - component: {fileID: 235615502}
+  m_Layer: 0
+  m_Name: DecorBlock_Plot1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &235615501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235615500}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.2727002, y: -0.201, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1602835713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &235615502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235615500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2840685ba1280a4886e0797ef373ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DecorBlockArea
+  _size: {x: 5.825086, y: 1.3}
 --- !u!1 &331522460
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,6 +685,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &631552255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 631552256}
+  - component: {fileID: 631552257}
+  m_Layer: 0
+  m_Name: DecorBlock_Plot0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &631552256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631552255}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.32540005, y: 1.933, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1602835713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &631552257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631552255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2840685ba1280a4886e0797ef373ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DecorBlockArea
+  _size: {x: 5.8250856, y: 1.3}
 --- !u!1 &645378729
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +915,51 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &699719912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 699719913}
+  - component: {fileID: 699719914}
+  m_Layer: 0
+  m_Name: DecorBlock_Plot2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &699719913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699719912}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.18660021, y: -2.5502, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1602835713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &699719914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699719912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2840685ba1280a4886e0797ef373ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DecorBlockArea
+  _size: {x: 5.825086, y: 1.3}
 --- !u!1 &700000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,6 +2527,11 @@ MonoBehaviour:
   harvestAnimSpeed: 0.1
   idleActionAnimSpeed: 0.1
   spriteSortingOrder: 2
+--- !u!4 &1093326233 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2990488517859178134, guid: 1f23c186ee2c5f749a5a8e0101f8e6d3, type: 3}
+  m_PrefabInstance: {fileID: 1093326230}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1262058032
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2686,117 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1265397616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1265397618}
+  - component: {fileID: 1265397617}
+  m_Layer: 0
+  m_Name: DecorBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1265397617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265397616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5831c02dd01937d409c8f2e12995876a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DecorBoardView
+  _board: {fileID: 11400000, guid: fb762b9d73defb048980dc6f2f75f15b, type: 2}
+  _cellSize: 0.6
+  _walkableArea: {fileID: 0}
+  _allowOutsideWalkable: 1
+  _toysBlockWalking: 0
+  _reservedPoints:
+  - {fileID: 1093326233}
+  - {fileID: 549403067}
+  - {fileID: 645378730}
+  - {fileID: 1936967810}
+  - {fileID: 2018711503}
+  - {fileID: 331522461}
+  - {fileID: 79314276}
+  - {fileID: 997591999}
+  - {fileID: 545877605}
+  - {fileID: 775371532}
+  - {fileID: 685079240}
+  - {fileID: 1998556566}
+  - {fileID: 1964572513}
+  - {fileID: 1693847360}
+  - {fileID: 1262058033}
+  - {fileID: 1044223283}
+  - {fileID: 984372472}
+  - {fileID: 835978515}
+  - {fileID: 39952619}
+  - {fileID: 558309114}
+  _reservedRadius: 0.35
+  _depthSorted: 0
+  _sortingOrder: 1
+  _fill: 0.85
+  _playChance: 0.35
+  _standGap: 0.35
+  _drawGrid: 1
+--- !u!4 &1265397618
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265397616}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6, y: -5.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1602835712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1602835713}
+  m_Layer: 0
+  m_Name: DecorBlocks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1602835713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602835712}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 699719913}
+  - {fileID: 631552256}
+  - {fileID: 235615501}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1693847359
 GameObject:
   m_ObjectHideFlags: 0
@@ -3086,3 +3337,5 @@ SceneRoots:
   - {fileID: 931407876}
   - {fileID: 558309114}
   - {fileID: 1013876387}
+  - {fileID: 1265397618}
+  - {fileID: 1602835713}

@@ -92,6 +92,8 @@ public static class GlobalUISetup
         QuestSetup.BuildPrefabs();
         CurrencyShopSetup.CreateData();
         CurrencyShopSetup.BuildPrefabs();
+        DecorSetup.CreateData();
+        DecorModeSetup.BuildPrefabs();
         BuildGlobalUIPrefab();
         RegisterBuildScenes();
 
@@ -229,6 +231,8 @@ public static class GlobalUISetup
 
         // 가방 원본에 판매 버튼·판매 팝업이 없으면 먼저 넣음 (원본에 넣어야 테스트 씬과 전역 UI가 같아짐)
         SellUISetup.EnsureSellUI(sourceCanvas);
+        // 가방 탭에 꾸미기(장난감) 추가
+        DecorSetup.EnsureBagCategories(sourceCanvas);
 
         var root = Object.Instantiate(sourceCanvas);
         root.name = "GlobalUI";
@@ -259,6 +263,7 @@ public static class GlobalUISetup
         var collection = CollectionSetup.BuildScreen(rootRect);
         var quest = QuestSetup.BuildScreen(rootRect);
         var shop = CurrencyShopSetup.BuildScreens(rootRect);
+        var decorMode = DecorModeSetup.BuildScreen(rootRect, hud.gameObject);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
         var fader = BuildFader(rootRect);
         BuildEventSystem(rootRect);
@@ -281,6 +286,17 @@ public static class GlobalUISetup
 
         // 상단바 프로필(이름·레벨)의 주인
         root.AddComponent<ProfileManager>();
+
+        // 꾸미기(장소별 격자, 보관함)의 주인
+        var decorManager = root.AddComponent<DecorManager>();
+        Set(decorManager, "_catalog", AssetDatabase.LoadAssetAtPath<DecorCatalog>(DecorSetup.CatalogPath));
+        var decorSo = new SerializedObject(decorManager);
+        var boards = DecorSetup.LoadBoards();
+        var boardList = decorSo.FindProperty("_boards");
+        boardList.arraySize = boards.Count;
+        for (int i = 0; i < boards.Count; i++)
+            boardList.GetArrayElementAtIndex(i).objectReferenceValue = boards[i];
+        decorSo.ApplyModifiedPropertiesWithoutUndo();
 
         // 상단바 [+] → 충전 화면
         var shopPresenter = root.AddComponent<CurrencyShopPresenter>();
@@ -307,6 +323,7 @@ public static class GlobalUISetup
         Set(presenter, "_collectionScreen", collection.screen);
         Set(presenter, "_quest", quest.presenter);
         Set(presenter, "_questScreen", quest.screen);
+        Set(presenter, "_decorMode", decorMode);
 
         PrefabUtility.SaveAsPrefabAsset(root, GlobalUIPrefabPath);
         Object.DestroyImmediate(root);
@@ -371,13 +388,14 @@ public static class GlobalUISetup
         Set(questBadge, "_countText", quest.badge.GetComponentInChildren<TextMeshProUGUI>(true));
         quest.badge.SetActive(false);
 
-        BuildCenterButton(bar, LoadIcon(NavIconFolder, "ICON_Nav_Decorate"));
+        var decorate = BuildCenterButton(bar, LoadIcon(NavIconFolder, "ICON_Nav_Decorate"));
 
         var view = bar.gameObject.AddComponent<NavBarView>();
         Set(view, "_codexButton", codex.button);
         Set(view, "_codexSelected", codex.selected);
         Set(view, "_questButton", quest.button);
         Set(view, "_questSelected", quest.selected);
+        Set(view, "_decorateButton", decorate);
         Set(view, "_bagButton", bag.button);
         Set(view, "_travelButton", travel.button);
         Set(view, "_bagSelected", bag.selected);
@@ -422,8 +440,8 @@ public static class GlobalUISetup
         return (item, button, selected.gameObject, badge.gameObject);
     }
 
-    // 가운데 꾸미기: 바 위로 튀어나온 큰 원. 기능은 나중에 연결
-    private static void BuildCenterButton(RectTransform bar, Sprite iconSprite)
+    // 가운데 꾸미기: 바 위로 튀어나온 큰 원
+    private static Button BuildCenterButton(RectTransform bar, Sprite iconSprite)
     {
         var column = CreateRect("Decorate", bar);
         column.anchorMin = new Vector2(2 / 5f, 0);
@@ -445,6 +463,7 @@ public static class GlobalUISetup
 
         var label = CreateText("Label", column, _titleFont, "꾸미기", 36, Cocoa);
         BottomBand(label.rectTransform, 10, 50);
+        return button;
     }
 
     private static TravelPopupView BuildTravelPopup(RectTransform parent, ZoneCardView cardPrefab)

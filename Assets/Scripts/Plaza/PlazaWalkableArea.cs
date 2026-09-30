@@ -12,7 +12,10 @@ using UnityEngine;
 // the far side of the sea/houses are rejected without running A* at all.
 //
 // The grid is built lazily on first query (or on Rebuild()); nothing is
-// recomputed per frame. In edit mode the gizmo rebuilds when a polygon
+// recomputed per frame. Placed decor (DecorBoardView) can add rectangular
+// obstacles at runtime through SetObstacles: only the walkable mask and the
+// component labels are refreshed, and Version bumps so agents walking an
+// old path can re-plan. In edit mode the gizmo rebuilds when a polygon
 // changes so the Scene view always shows the real result.
 [DefaultExecutionOrder(-100)]
 public class PlazaWalkableArea : MonoBehaviour
@@ -48,7 +51,9 @@ public class PlazaWalkableArea : MonoBehaviour
     private int width;
     private int height;
     private bool[] walkable;
+    private bool[] staticWalkable; // polygons only, before runtime obstacles
     private int[] component;
+    private readonly List<Rect> obstacles = new List<Rect>();
     private int largestComponent = -1;
 
     // A* scratch buffers, reused between searches via a stamp counter.
@@ -66,6 +71,9 @@ public class PlazaWalkableArea : MonoBehaviour
     private bool warnedNoAreas;
 
     public bool HasWalkableCells => EnsureBuilt() && largestComponent >= 0;
+
+    // Bumped whenever runtime obstacles change the walkable cells.
+    public int Version { get; private set; }
 
     private void Awake()
     {
@@ -91,6 +99,7 @@ public class PlazaWalkableArea : MonoBehaviour
         {
             width = height = 0;
             walkable = new bool[0];
+            staticWalkable = new bool[0];
             component = new int[0];
             largestComponent = -1;
             if (!warnedNoAreas && Application.isPlaying)
@@ -126,6 +135,8 @@ public class PlazaWalkableArea : MonoBehaviour
             }
         }
 
+        staticWalkable = (bool[])walkable.Clone();
+        ApplyObstacleCells();
         LabelComponents();
 
         gScore = new float[count];
@@ -213,6 +224,49 @@ public class PlazaWalkableArea : MonoBehaviour
     {
         if (!built) Rebuild();
         return width > 0;
+    }
+
+    // --- Runtime obstacles ---------------------------------------------------
+
+    // Replaces every runtime obstacle (world-space rectangles, e.g. placed
+    // toys). Cells within `clearance` of a rectangle stop being walkable, the
+    // same margin the polygons get.
+    public void SetObstacles(IReadOnlyList<Rect> rects)
+    {
+        obstacles.Clear();
+        if (rects != null) obstacles.AddRange(rects);
+
+        if (!EnsureBuilt()) return;
+        System.Array.Copy(staticWalkable, walkable, walkable.Length);
+        ApplyObstacleCells();
+        LabelComponents();
+        Version++;
+    }
+
+    // Walkable from the polygons alone, ignoring runtime obstacles. Used to
+    // decide where decor may be placed at all.
+    public bool IsStaticWalkable(Vector2 worldPos)
+    {
+        return EnsureBuilt() && TryGetCell(worldPos, out int cell) && staticWalkable[cell];
+    }
+
+    private void ApplyObstacleCells()
+    {
+        foreach (var rect in obstacles)
+        {
+            Rect grown = new Rect(rect.xMin - clearance, rect.yMin - clearance, rect.width + clearance * 2f, rect.height + clearance * 2f);
+            int x0 = Mathf.Max(0, Mathf.FloorToInt((grown.xMin - origin.x) / cellSize));
+            int y0 = Mathf.Max(0, Mathf.FloorToInt((grown.yMin - origin.y) / cellSize));
+            int x1 = Mathf.Min(width - 1, Mathf.FloorToInt((grown.xMax - origin.x) / cellSize));
+            int y1 = Mathf.Min(height - 1, Mathf.FloorToInt((grown.yMax - origin.y) / cellSize));
+            for (int y = y0; y <= y1; y++)
+            {
+                for (int x = x0; x <= x1; x++)
+                {
+                    if (grown.Contains(CellCenter(x, y))) walkable[y * width + x] = false;
+                }
+            }
+        }
     }
 
     // --- Queries -----------------------------------------------------------
