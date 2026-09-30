@@ -41,10 +41,6 @@ public class GameManager : MonoBehaviour
     [Header("Currency")]
     [SerializeField] private Currency goldCurrency;
 
-    [Header("UI")]
-    [Tooltip("The temporary always-on sale button. Off in the plaza.")]
-    [SerializeField] private bool showSellButton = true;
-
     private const string DefaultOtterId = "otter_001";
     private const string PlotId = "plot_1";
     private const string DefaultCropId = "crop_carrot";
@@ -147,7 +143,7 @@ public class GameManager : MonoBehaviour
         farmService = new FarmService(save, cropDefinitions, farmBalance, GetSeedCount, TryConsumeSeed);
         fishingService = new FishingService(save, fishingBalance);
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance, otterVisitBalance);
-        gameUI = GameUI.Create(this, showSellButton);
+        gameUI = GameUI.Create(this);
 
         ReportLoadStatus(loadStatus);
 
@@ -225,7 +221,7 @@ public class GameManager : MonoBehaviour
     // loads the next one. The next zone's GameManager reads this save, and
     // lastSaveUtc lets the farm catch up on time spent in scenes without one.
     // The Instance check skips a duplicate that Awake is about to destroy.
-    // Sales from anywhere (bag popup, SellItem, SellAll) come through
+    // Sales from anywhere (bag popup, TrySell, SellAll) come through
     // OnItemSold, so lifetimeSales is kept up here and nowhere else.
     private void OnEnable()
     {
@@ -429,10 +425,6 @@ public class GameManager : MonoBehaviour
                Bag.TryRemove(seedItem, 1, ItemChangeReason.Plant);
     }
 
-    // Seeds are bought to be planted — they never show up in the sale list.
-    private static bool IsSellable(ItemDefinition item) =>
-        !item.ItemId.StartsWith(CropDefinition.SeedItemPrefix);
-
     private SaveData CreateNewSave()
     {
         var data = new SaveData();
@@ -580,15 +572,6 @@ public class GameManager : MonoBehaviour
         entry.amount = CurrencyManager.Instance.GetCurrency(goldCurrency);
     }
 
-    // InventoryManager pays the coins; HandleItemSold adds to lifetimeSales.
-    private void SellAllForGold()
-    {
-        int total = InventoryManager.Instance.SellAll(IsSellable);
-        if (total <= 0) return;
-
-        Debug.Log($"[GameManager] 판매 완료: +{total} 코인");
-    }
-
     public void ToggleDebugPanel()
     {
         showDebugPanel = !showDebugPanel;
@@ -618,20 +601,6 @@ public class GameManager : MonoBehaviour
 
     public static string NoSeedMessage(CropDefinition crop) => $"{crop.displayName}의 모종이 없습니다!";
 
-    // Sale list rows: everything sellable in the bag, oldest pickup first.
-    public List<ItemDefinition> GetSellableItems()
-    {
-        var items = new List<ItemDefinition>();
-        foreach (var item in Bag.Counts.Keys)
-        {
-            if (IsSellable(item)) items.Add(item);
-        }
-        items.Sort((a, b) => Bag.GetAcquiredOrder(a).CompareTo(Bag.GetAcquiredOrder(b)));
-        return items;
-    }
-
-    public int GetItemQuantity(ItemDefinition item) => Bag.GetCount(item);
-
     public PlantResult PlantFromPrompt(int plotIndex, int slotIndex, string cropId)
     {
         var result = farmService.Plant(plotIndex, slotIndex, cropId);
@@ -650,15 +619,6 @@ public class GameManager : MonoBehaviour
     public void DiscardSlot(int plotIndex, int slotIndex)
     {
         if (farmService.ClearSlot(plotIndex, slotIndex)) SaveNow();
-    }
-
-    public bool SellItem(ItemDefinition item, int quantity)
-    {
-        if (item == null || quantity <= 0) return false;
-        if (!InventoryManager.Instance.TrySell(item, quantity)) return false;
-
-        SaveNow();
-        return true;
     }
 
     // ------------------------------------------------------------- fishing
@@ -837,14 +797,6 @@ public class GameManager : MonoBehaviour
                 GUILayout.Label($"{pair.Key.DisplayName} x{pair.Value}");
             }
         }
-
-        GUI.enabled = GetSellableItems().Count > 0;
-        if (GUILayout.Button("전체 판매"))
-        {
-            SellAllForGold();
-            SaveNow();
-        }
-        GUI.enabled = true;
 
         GUILayout.Space(10);
         GUILayout.Label("=== 강화 ===");

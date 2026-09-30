@@ -61,7 +61,6 @@ public static class GameManagerPrefabSetup
         {
             fishingBalance.objectReferenceValue = AssetDatabase.LoadAssetAtPath<FishingBalanceData>(FishingBalancePath);
         }
-        so.FindProperty("showSellButton").boolValue = true;
         so.ApplyModifiedPropertiesWithoutUndo();
 
         var prefab = PrefabUtility.SaveAsPrefabAsset(copy, PrefabPath);
@@ -90,13 +89,6 @@ public static class GameManagerPrefabSetup
         {
             instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, scene);
             instance.name = "GameManager";
-        }
-
-        if (scenePath == PlazaScenePath)
-        {
-            var so = new SerializedObject(instance.GetComponent<GameManager>());
-            so.FindProperty("showSellButton").boolValue = false;
-            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         EditorSceneManager.MarkSceneDirty(scene);
