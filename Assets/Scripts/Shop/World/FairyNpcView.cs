@@ -67,6 +67,10 @@ public class FairyNpcView : MonoBehaviour
             _pressOnUI = IsOverUI(screen);
         }
 
+        // 두 손가락이 닿으면 카메라 핀치 줌 → 이번 누름은 탭이 아님
+        if (_pressing && IsMultiTouch())
+            _pressing = false;
+
         if (!_pressing || !pointer.press.wasReleasedThisFrame)
             return;
 
@@ -80,6 +84,21 @@ public class FairyNpcView : MonoBehaviour
         Vector2 world = camera.ScreenToWorldPoint(new Vector3(screen.x, screen.y, -camera.transform.position.z));
         if (_tapArea.OverlapPoint(world))
             FairyShopPresenter.Instance.Open();
+    }
+
+    private static bool IsMultiTouch()
+    {
+        var touchscreen = Touchscreen.current;
+        if (touchscreen == null)
+            return false;
+
+        int count = 0;
+        foreach (var touch in touchscreen.touches)
+        {
+            if (touch.isInProgress && ++count >= 2)
+                return true;
+        }
+        return false;
     }
 
     private static bool IsOverUI(Vector2 screen)

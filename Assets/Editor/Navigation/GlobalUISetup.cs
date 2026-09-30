@@ -88,6 +88,7 @@ public static class GlobalUISetup
         BuildZoneCardPrefab();
         CollectionSetup.CreateData();
         CollectionSetup.BuildPrefabs();
+        ProgressionSetup.CreateData();
         QuestSetup.CreateData();
         QuestSetup.BuildPrefabs();
         CurrencyShopSetup.CreateData();
@@ -254,7 +255,7 @@ public static class GlobalUISetup
         var inventoryPresenter = inventoryScreen.GetComponentInChildren<InventoryPresenter>(true);
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
-        // 그리는 순서: 상단바·하단 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 이동 팝업 → 페이드
+        // 그리는 순서: 상단바·하단 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 레벨업 → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
         hud.gameObject.AddComponent<SafeAreaFltter>();
@@ -267,6 +268,7 @@ public static class GlobalUISetup
         var decorMode = DecorModeSetup.BuildScreen(rootRect, hud.gameObject);
         var fairyShop = FairyShopSetup.BuildScreens(rootRect);
         var shop = CurrencyShopSetup.BuildScreens(rootRect);
+        var levelUp = ProgressionSetup.BuildPopup(rootRect);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
         var fader = BuildFader(rootRect);
         BuildEventSystem(rootRect);
@@ -288,7 +290,12 @@ public static class GlobalUISetup
         Set(collectionManager, "_database", AssetDatabase.LoadAssetAtPath<CollectionDatabase>(CollectionSetup.DatabasePath));
 
         // 상단바 프로필(이름·레벨)의 주인
-        root.AddComponent<ProfileManager>();
+        var profileManager = root.AddComponent<ProfileManager>();
+        Set(profileManager, "_levelTable", AssetDatabase.LoadAssetAtPath<LevelTable>(ProgressionSetup.LevelTablePath));
+
+        // 레벨이 오르면 레벨업 팝업
+        var levelUpPresenter = root.AddComponent<LevelUpPresenter>();
+        Set(levelUpPresenter, "_popup", levelUp);
 
         // 꾸미기(장소별 격자, 보관함)의 주인
         var decorManager = root.AddComponent<DecorManager>();

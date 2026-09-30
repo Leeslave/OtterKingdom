@@ -114,4 +114,7 @@ public class SaveData
     // by GameManager. Missing (null) in saves from before they existed.
     public List<CollectionSaveEntry> collection = new List<CollectionSaveEntry>();
     public List<QuestSaveEntry> quests = new List<QuestSaveEntry>();
+    // Owned by ProfileManager (GlobalUI): name and kingdom level/exp.
+    // Missing in older saves -> JsonUtility fills defaults (Lv.1).
+    public ProfileSaveData profile = new ProfileSaveData();
 }

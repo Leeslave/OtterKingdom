@@ -56,9 +56,11 @@ public class GameManager : MonoBehaviour
     // reads the save again, and LoadFromSave adds to the bag — so only the
     // first GameManager to meet a given InventoryManager fills it.
     private static InventoryManager loadedInventory;
-    // Same for the collection and quests (their LoadFromSave adds too).
+    // Same for the collection and quests (their LoadFromSave adds too),
+    // and the profile (so a later scene can't roll the level back).
     private static CollectionManager loadedCollection;
     private static QuestManager loadedQuests;
+    private static ProfileManager loadedProfile;
 
     // Offline production covers the time the app was closed, which ends when
     // the app starts — not when the first zone scene with a GameManager opens
@@ -333,6 +335,15 @@ public class GameManager : MonoBehaviour
     // there keeps WriteToSave from replacing the saved lists with empty ones.
     private void LoadGlobalProgressOnce()
     {
+        // The level first: quests decide what's open from it.
+        var profile = ProfileManager.Instance;
+        if (profile != null && loadedProfile != profile)
+        {
+            loadedProfile = profile;
+            save.profile ??= new ProfileSaveData();
+            profile.LoadFromSave(save.profile);
+        }
+
         var collection = CollectionManager.Instance;
         if (collection != null && loadedCollection != collection)
         {
@@ -562,6 +573,7 @@ public class GameManager : MonoBehaviour
         LoadGlobalProgressOnce();
         if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(save.collection);
         if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);
+        if (ProfileManager.Instance != null) ProfileManager.Instance.WriteToSave(save.profile ??= new ProfileSaveData());
         saveService.Save(save);
     }
 

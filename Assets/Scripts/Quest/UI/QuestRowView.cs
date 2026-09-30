@@ -22,6 +22,13 @@ public class QuestRowView : MonoBehaviour
     [Header("보상")]
     [SerializeField] private Image _rewardIcon;
     [SerializeField] private TextMeshProUGUI _rewardText;
+    [Tooltip("\"경험치 50\" (없으면 숨김)")]
+    [SerializeField] private GameObject _expTag;
+    [SerializeField] private TextMeshProUGUI _expText;
+
+    [Header("종류")]
+    [Tooltip("일일 퀘스트 표시")]
+    [SerializeField] private GameObject _dailyTag;
 
     [Header("버튼")]
     [SerializeField] private Button _button;
@@ -54,7 +61,8 @@ public class QuestRowView : MonoBehaviour
         _button.onClick.AddListener(() => OnClaimClicked?.Invoke(this));
     }
 
-    public void Bind(QuestDefinition quest, int progress, QuestStatus status)
+    /// <param name="exp">받으면 얻는 경험치 (지금 레벨 기준)</param>
+    public void Bind(QuestDefinition quest, int progress, QuestStatus status, int exp)
     {
         if (quest == null)
             throw new ArgumentNullException(nameof(quest));
@@ -73,6 +81,9 @@ public class QuestRowView : MonoBehaviour
         _rewardIcon.sprite = currency != null ? currency.Icon : null;
         _rewardIcon.enabled = _rewardIcon.sprite != null;
         _rewardText.text = NumberFormatter.Short(quest.RewardAmount);
+        _expTag.SetActive(exp > 0);
+        _expText.text = $"경험치 {NumberFormatter.Short(exp)}";
+        _dailyTag.SetActive(quest.Kind == QuestKind.Daily);
 
         bool claimable = status == QuestStatus.Claimable;
         bool claimed = status == QuestStatus.Claimed;

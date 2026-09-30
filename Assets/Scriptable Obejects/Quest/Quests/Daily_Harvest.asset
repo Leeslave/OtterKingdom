@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: Daily_Harvest
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: daily_harvest
+  _title: "\uC624\uB298\uC758 \uC218\uD655"
+  _description: "\uC791\uBB3C 30\uAC1C \uC218\uD655\uD558\uAE30"
+  _sortOrder: 32
+  _kind: 1
+  _requiredLevel: 2
+  _prerequisite: {fileID: 0}
+  _icon: {fileID: -5859083586626064994, guid: 125917c9ef5a91e478059e3954180ecc, type: 3}
+  _goalType: 0
+  _goal: 30
+  _itemFilter: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
+  _collectionTab: {fileID: 0}
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 150
+  _expReward: 0
+  _expPercentOfLevel: 10

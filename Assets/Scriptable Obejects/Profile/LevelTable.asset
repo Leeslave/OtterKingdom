@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222c0cb1564733c4eb2fc6751fcd60d3, type: 3}
+  m_Name: LevelTable
+  m_EditorClassIdentifier: OtterKingdom::LevelTable
+  _levels:
+  - _expToNext: 100
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 5
+  - _expToNext: 150
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 5
+  - _expToNext: 220
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 10
+  - _expToNext: 320
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 20
+  - _expToNext: 450
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 10
+  - _expToNext: 600
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 10
+  - _expToNext: 800
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 15
+  - _expToNext: 1050
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 15
+  - _expToNext: 1350
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 1700
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 15
+  - _expToNext: 2100
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 15
+  - _expToNext: 2600
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 20
+  - _expToNext: 3200
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 20
+  - _expToNext: 3900
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 40
+  - _expToNext: 4700
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 20
+  - _expToNext: 5600
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 25
+  - _expToNext: 6600
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 25
+  - _expToNext: 7700
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 9000
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 50
