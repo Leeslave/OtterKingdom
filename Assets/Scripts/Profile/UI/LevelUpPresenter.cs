@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// 레벨이 오르면 레벨업 팝업을 띄운다. 한 번에 여러 레벨이 오르면 하나씩 차례로 보여준다.
-/// 그 레벨에 열리는 장소(ZoneDefinition.RequiredLevel)가 있으면 안내 줄에 알린다.
+/// 그 레벨에 열리는 장소(ZoneDefinition.RequiredLevel)가 있으면 안내 줄에 알린다 (개척 전이면 "발견했어요").
 /// 전역 UI 루트에 붙어 늘 켜져 있다 (팝업 화면은 닫힌 채로 시작하므로 여기서 대신 듣는다).
 /// </summary>
 public class LevelUpPresenter : MonoBehaviour
@@ -59,15 +59,15 @@ public class LevelUpPresenter : MonoBehaviour
         if (root == null)
             return DefaultNote;
 
-        var opened = new List<string>();
         foreach (var zone in root.Zones)
         {
-            if (zone != null && zone.IsAvailable && zone.RequiredLevel == level)
-                opened.Add(zone.DisplayName);
+            if (zone == null || !zone.IsAvailable || zone.RequiredLevel != level)
+                continue;
+            string name = zone.DisplayName;
+            return ZoneAccess.IsUncleared(zone)
+                ? $"{name}{KoreanParticle.ObjectParticle(name)} 발견했어요!"
+                : $"{name}{KoreanParticle.SubjectParticle(name)} 열렸어요!";
         }
-        if (opened.Count == 0)
-            return DefaultNote;
-        string names = string.Join(", ", opened);
-        return $"{names}{KoreanParticle.SubjectParticle(names)} 열렸어요!";
+        return DefaultNote;
     }
 }

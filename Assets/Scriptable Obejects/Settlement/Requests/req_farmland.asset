@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_farmland
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_farmland
-  _order: 2
+  _order: 4
   _title: "\uBA39\uAC70\uB9AC\uB97C \uAE38\uB7EC\uC694"
   _description: "\uC8FC\uBBFC\uC774 \uB298\uC5C8\uC5B4\uC694.\n\uB18D\uACBD\uC9C0\uB97C
     \uAC1C\uAC04\uD574 \uBC2D\uC744 \uB9CC\uB4E4\uC5B4\uC694."
@@ -22,9 +22,11 @@ MonoBehaviour:
   _requiredDevelopment: house_2
   _minResidents: 3
   _construction: {fileID: 11400000, guid: eb034591ee2b7f147af7411b3829153c, type: 2}
+  _clearZone: {fileID: 0}
   _settles: []
   _arrivals: []
   _stageOnComplete: 3
   _completionEntry: {fileID: 11400000, guid: f9b73a8d51966a54e9420ef04052e970, type: 2}
   _completionMessage: "\uB18D\uACBD\uC9C0\uAC00 \uC5F4\uB838\uC5B4\uC694!\n\uC774\uC81C
     \uBC2D\uC5D0 \uAC08 \uC218 \uC788\uC5B4\uC694."
+  _kingdomLevel: 0

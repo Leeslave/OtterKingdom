@@ -279,6 +279,11 @@ public class SettlementPresenter : MonoBehaviour
         var status = _manager.GetStatus(request);
         if (status == RequestStatus.Completed)
             return;
+        if (request.ClearZone != null)
+        {
+            OpenClearing(request, status);
+            return;
+        }
 
         var builder = _manager.Config.FindBuilder();
         bool byBuilder = construction.NeedsBuilder && builder != null;
@@ -326,6 +331,19 @@ public class SettlementPresenter : MonoBehaviour
         _construction.Show(request, speaker, line, _costs, note, startLabel, canStart);
     }
 
+    // 장소를 직접 치우는 부탁 (광산 길 열기): 비용 없이 [가 보기]로 그 장소에 감
+    private void OpenClearing(BoardRequestDefinition request, RequestStatus status)
+    {
+        var zone = request.ClearZone;
+        bool here = _navigator != null && _navigator.CurrentZone == zone;
+        string note = status == RequestStatus.Locked ? "아직 할 수 없어요."
+            : here ? "길을 막은 나무와 돌을 톡톡 눌러 치워요!"
+            : $"{zone.DisplayName}에 가서 길을 막은 나무와 돌을 치워요.";
+        _costs.Clear();
+        _construction.Show(request, request.Requester, request.Description, _costs, note, "가 보기",
+            status == RequestStatus.Available && !here);
+    }
+
     // 모자란 것 한 줄 (넉넉하면 null)
     private string MissingText(ConstructionDefinition construction)
     {
@@ -346,6 +364,15 @@ public class SettlementPresenter : MonoBehaviour
     private void HandleStartClicked()
     {
         var request = _construction.Request;
+        if (request.ClearZone != null)
+        {
+            _construction.Hide();
+            if (_board.IsOpen)
+                _board.Hide();
+            _navigator.TryGo(request.ClearZone);
+            return;
+        }
+
         switch (_manager.TryStart(request))
         {
             case ConstructionStartResult.Started:

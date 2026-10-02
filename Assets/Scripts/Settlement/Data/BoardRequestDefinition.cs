@@ -56,6 +56,9 @@ public class BoardRequestDefinition : ScriptableObject
     [Header("할 일")]
     [SerializeField] private ConstructionDefinition _construction;
 
+    [Tooltip("직접 치우러 갈 장소 (설정하면 [가 보기]로 그 장소에 가고, 그곳의 장애물을 다 치우면 완료. 건설은 비용 0·바로 끝남으로)")]
+    [SerializeField] private ZoneDefinition _clearZone;
+
     [Header("완료하면")]
     [Tooltip("주민이 되는 해달")]
     [SerializeField] private List<SettlementOtterDefinition> _settles = new List<SettlementOtterDefinition>();
@@ -72,6 +75,9 @@ public class BoardRequestDefinition : ScriptableObject
     [Tooltip("완료 팝업 문구 (예: 첫 주민이 정착했어요!)")]
     [SerializeField] private string _completionMessage;
 
+    [Tooltip("끝내면 왕국 레벨이 여기까지 오름 (0이면 그대로). 끝내기 전에는 경험치가 차도 이 레벨 아래에 머묾")]
+    [SerializeField] private int _kingdomLevel;
+
     public string RequestId => _requestId;
     public int Order => _order;
     public string Title => _title;
@@ -81,11 +87,13 @@ public class BoardRequestDefinition : ScriptableObject
     public string RequiredDevelopment => _requiredDevelopment;
     public int MinResidents => _minResidents;
     public ConstructionDefinition Construction => _construction;
+    public ZoneDefinition ClearZone => _clearZone;
     public IReadOnlyList<SettlementOtterDefinition> Settles => _settles;
     public IReadOnlyList<OtterArrival> Arrivals => _arrivals;
     public int StageOnComplete => _stageOnComplete;
     public GuestbookEntryDefinition CompletionEntry => _completionEntry;
     public string CompletionMessage => _completionMessage;
+    public int KingdomLevel => _kingdomLevel;
 
     private void OnValidate()
     {

@@ -22,15 +22,13 @@ MonoBehaviour:
   _requiredDevelopment: 
   _minResidents: 0
   _construction: {fileID: 11400000, guid: 45c4958c9aedc574d9aa4cae7ca1e883, type: 2}
+  _clearZone: {fileID: 0}
   _settles:
   - {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   _arrivals:
-  - _otter: {fileID: 11400000, guid: b0187b75dfd9a104b8c3725c8a4f5e91, type: 2}
-    _state: 1
   - _otter: {fileID: 11400000, guid: 8ff3e80563dfd8a4cbf590e6056ddc02, type: 2}
     _state: 0
-  - _otter: {fileID: 11400000, guid: 09ada72536705ff4c80b2fc67cae7e65, type: 2}
-    _state: 3
   _stageOnComplete: 1
   _completionEntry: {fileID: 11400000, guid: 26cb5157adbe284468d965b7886dcf4c, type: 2}
   _completionMessage: "\uCCAB \uC8FC\uBBFC\uC774 \uC815\uCC29\uD588\uC5B4\uC694!"
+  _kingdomLevel: 0

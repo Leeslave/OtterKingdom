@@ -59,7 +59,7 @@ public class ZoneCardView : MonoBehaviour
 
         _nameText.text = zone.DisplayName;
         _nameText.color = locked ? _lockedColor : _nameColor;
-        _subtitleText.text = locked ? ZoneAccess.LockedSubtitle(zone) : zone.Subtitle;
+        _subtitleText.text = locked ? ZoneAccess.LockedSubtitle(zone) : ZoneAccess.Subtitle(zone);
         _subtitleText.color = locked ? _lockedColor : _subtitleColor;
 
         _currentBadge.SetActive(showCurrent);

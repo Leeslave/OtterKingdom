@@ -15,14 +15,17 @@ public static class KoreanParticle
     }
 
     /// <returns>낱말 뒤 "이" 또는 "가" (한글이 아닌 글자로 끝나면 "가")</returns>
-    public static string SubjectParticle(string word)
+    public static string SubjectParticle(string word) => HasFinalConsonant(word) ? "이" : "가";
+
+    /// <returns>낱말 뒤 "을" 또는 "를" (한글이 아닌 글자로 끝나면 "를")</returns>
+    public static string ObjectParticle(string word) => HasFinalConsonant(word) ? "을" : "를";
+
+    private static bool HasFinalConsonant(string word)
     {
         if (string.IsNullOrEmpty(word))
-            return "가";
-
+            return false;
         char last = word[word.Length - 1];
-        bool hasFinal = last >= '가' && last <= '힣' && (last - '가') % 28 != 0;
-        return hasFinal ? "이" : "가";
+        return last >= '가' && last <= '힣' && (last - '가') % 28 != 0;
     }
 
     // 0으로 끝나면 십·백·천·만·억 등 자릿수 이름으로 끝나는데, 모두 받침이 있다 (0 하나는 "영"도 받침 있음)

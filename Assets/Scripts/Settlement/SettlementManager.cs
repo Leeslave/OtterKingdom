@@ -222,7 +222,21 @@ public class SettlementManager : MonoBehaviour
         if (!SettlementRules.ApplyCompletion(request, Settlement))
             return;
         OnRequestCompleted?.Invoke(request);
+
+        // 큰 발전: 왕국 레벨이 바로 오르고, 다음 발전까지의 제한이 풀림
+        var profile = ProfileManager.Instance;
+        if (profile != null && request.KingdomLevel > 0)
+            profile.ReachLevel(request.KingdomLevel);
+        ApplyLevelCap();
         SaveRequested?.Invoke();
+    }
+
+    // 아직 안 끝낸 큰 발전 아래로 왕국 레벨을 묶음 (경험치는 계속 쌓임)
+    private void ApplyLevelCap()
+    {
+        var profile = ProfileManager.Instance;
+        if (profile != null)
+            profile.SetLevelCap(SettlementRules.LevelCap(_config, Settlement));
     }
 
     #endregion
@@ -321,6 +335,45 @@ public class SettlementManager : MonoBehaviour
 
     #endregion
 
+    #region 장소 개척 (광산 길 열기)
+
+    /// <summary>이 장소를 직접 치우는 부탁을 끝냈는지 (그런 부탁이 없으면 처음부터 열린 곳)</summary>
+    public bool IsZoneCleared(ZoneDefinition zone)
+    {
+        var request = SettlementRules.FindClearing(_config, zone);
+        return request == null || Settlement.IsCompleted(request.RequestId);
+    }
+
+    /// <summary>지금 이 장소를 치울 수 있는지 (부탁이 열려 있음)</summary>
+    public bool CanClearZone(ZoneDefinition zone)
+    {
+        var request = SettlementRules.FindClearing(_config, zone);
+        return request != null && GetStatus(request) == RequestStatus.Available;
+    }
+
+    public bool IsObstacleCleared(string obstacleId) => Settlement.HasFlag(ObstacleFlag(obstacleId));
+
+    /// <summary>장애물 하나를 치웠음 (세이브에 남아 다시 오지 않음)</summary>
+    public void MarkObstacleCleared(string obstacleId)
+    {
+        if (string.IsNullOrEmpty(obstacleId))
+            throw new ArgumentNullException(nameof(obstacleId));
+        if (Settlement.SetFlag(ObstacleFlag(obstacleId)))
+            SaveRequested?.Invoke();
+    }
+
+    /// <summary>장애물을 다 치움 → 그 장소의 부탁을 끝냄</summary>
+    /// <returns>이번에 끝냈으면 true</returns>
+    public bool TryClearZone(ZoneDefinition zone)
+    {
+        var request = SettlementRules.FindClearing(_config, zone);
+        return request != null && TryStart(request) == ConstructionStartResult.Completed;
+    }
+
+    private static string ObstacleFlag(string obstacleId) => "cleared_" + obstacleId;
+
+    #endregion
+
     #region 자리를 비운 동안
 
     /// <summary>
@@ -411,6 +464,7 @@ public class SettlementManager : MonoBehaviour
         if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
             FinishJob();
 
+        ApplyLevelCap();
         OnLoaded?.Invoke();
         OnChanged?.Invoke();
     }

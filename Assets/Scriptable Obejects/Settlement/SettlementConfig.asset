@@ -26,11 +26,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09ada72536705ff4c80b2fc67cae7e65, type: 2}
   _requests:
   - {fileID: 11400000, guid: d5ddcf15a08ec3b44b1590e7df581403, type: 2}
+  - {fileID: 11400000, guid: 1311babe897fada4f810827479de71e7, type: 2}
+  - {fileID: 11400000, guid: 2d2e95483cb26fe408ec80a641ef116f, type: 2}
   - {fileID: 11400000, guid: f6bb9bebc0ee9e94f9192c2fcb886631, type: 2}
   - {fileID: 11400000, guid: 330d3ce7e7f44574384032e31b4fec34, type: 2}
   _guestbookEntries:
   - {fileID: 11400000, guid: 33c4ddbf79f82ec4295cddd2da782dfe, type: 2}
   - {fileID: 11400000, guid: 26cb5157adbe284468d965b7886dcf4c, type: 2}
+  - {fileID: 11400000, guid: 121d3d2726a74224d8ec68022c51cb2a, type: 2}
+  - {fileID: 11400000, guid: cb31b40de040c1548b6ab53a9e6843ea, type: 2}
   - {fileID: 11400000, guid: 1f2f009cb4ce68246848f01ab9f3520f, type: 2}
   - {fileID: 11400000, guid: 7c0551d55ded6a942ba91705e51b4344, type: 2}
   - {fileID: 11400000, guid: d616fbca7b3ace543b85158c08436dc4, type: 2}

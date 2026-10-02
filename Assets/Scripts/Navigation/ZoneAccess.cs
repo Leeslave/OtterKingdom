@@ -19,11 +19,22 @@ public static class ZoneAccess
         return profile == null || profile.Level >= zone.RequiredLevel;
     }
 
+    /// <summary>갈 수 있지만 아직 개척하지 않은 장소인지 (광산: 길을 막은 나무·돌을 치우기 전)</summary>
+    public static bool IsUncleared(ZoneDefinition zone)
+    {
+        var settlement = SettlementManager.Instance;
+        return settlement != null && settlement.IsLoaded && !settlement.IsZoneCleared(zone);
+    }
+
+    /// <summary>열린 장소 카드에 보일 문구 (개척 전이면 그 안내)</summary>
+    public static string Subtitle(ZoneDefinition zone) =>
+        IsUncleared(zone) ? $"개간되지 않은 {zone.DisplayName} · 길을 열어 주세요" : zone.Subtitle;
+
     /// <summary>잠긴 장소 카드에 보일 문구</summary>
     public static string LockedSubtitle(ZoneDefinition zone)
     {
         if (zone.IsAvailable && !IsLevelReached(zone))
-            return $"왕국 Lv.{zone.RequiredLevel}에 열려요";
+            return $"개간되지 않은 구역 · 왕국 Lv.{zone.RequiredLevel}";
         if (zone.IsAvailable && !string.IsNullOrEmpty(zone.DevelopmentLockedSubtitle))
             return zone.DevelopmentLockedSubtitle;
         return zone.LockedSubtitle;

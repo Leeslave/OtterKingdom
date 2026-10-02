@@ -47,11 +47,12 @@ public static class GlobalUISetup
         ("Zone_Mine", "Mine", "광산", "광석 캐기", "Mine", true, 3, "ICON_Place_Mine"),
     };
 
-    // 정착 진행으로 열리는 장소: ID → (필요 발전, 잠겨 있을 때 문구). 광장은 처음부터, 광산은 왕국 레벨로 (ZoneLevels)
+    // 정착 진행으로 열리는 장소: ID → (필요 발전, 잠겨 있을 때 문구). 광장은 처음부터. 광산은 발전 + 왕국 레벨(ZoneLevels)
     private static readonly Dictionary<string, (string development, string lockedText)> ZoneLocks = new Dictionary<string, (string, string)>
     {
         { "Farm", ("farmland", "농경지를 개간하면 열려요") },
         { "Fishing", (SettlementSetup.FishingDevelopment, "아직 갈 수 없어요") },
+        { "Mine", ("chair", "개간되지 않은 구역") }, // 의자를 만들면 동굴 발견 → 길을 열면 채굴 (개척 기획)
     };
 
     // 왕국 레벨로 열리는 장소: ID → 필요 레벨 (목록에 없으면 1 = 처음부터)

@@ -29,7 +29,7 @@ public static partial class SettlementSetup
     private static readonly (string prop, float x, float y, string development)[] PropGates =
     {
         ("House_Blue", 965, 400, "house_1"),
-        ("Bench", 240, 320, "house_1"),
+        ("Bench", 240, 320, "chair"), // 의자 부탁으로 지음 (Site_Chair)
         ("Lamp", 990, 520, "house_1"),
         ("House_Red", 905, 240, "house_2"),
         ("Fence_Rising", 40, 690, "house_2"),
@@ -118,6 +118,11 @@ public static partial class SettlementSetup
             }
             siteViews.Add(BuildHouseSite(root, h.site, h.construction, house.GetComponent<SpriteRenderer>(), FootprintDepthOffset(house)));
         }
+        var bench = props.Cast<Transform>().FirstOrDefault(t => t.name.StartsWith("Bench_"));
+        if (bench != null)
+            siteViews.Add(BuildChairSite(root, bench.position));
+        else
+            Debug.LogError("[SettlementSetup] 광장에 Bench 소품이 없어 의자 공사 현장을 만들지 못했습니다.");
         var clearTargets = BuildFarmPath(root, ToWorld);
         siteViews.Add(BuildClearingSite(root, ToWorld(FarmlandPixel), ToWorld(FarmlandStandPixel), ToWorld(FarmlandBubblePixel), clearTargets));
 
@@ -561,6 +566,15 @@ public static partial class SettlementSetup
     }
 
     // 개간 현장: 진행에 따라 덤불 → 돌 → 통나무가 하나씩 치워짐
+    // 의자: 단계 그림 없이 먼지만 (완성되면 DevelopmentGate가 벤치 소품을 켬). 첫 해달이 옆에서 일함
+    private static ConstructionSiteView BuildChairSite(Transform root, Vector3 bench)
+    {
+        var (view, so) = CreateSite(root, "Site_Chair", "con_chair", bench,
+            bench + new Vector3(1.4f, -0.2f, 0f), bench + new Vector3(0f, 2.2f, 0f), 2.4f);
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return view;
+    }
+
     private static ConstructionSiteView BuildClearingSite(Transform root, Vector3 position, Vector3 stand, Vector3 bubble, List<GameObject> clearTargets)
     {
         var (view, so) = CreateSite(root, "Site_Farmland", "con_farmland", position, stand, bubble, 3.5f);
@@ -680,5 +694,6 @@ public static partial class SettlementSetup
     {
         GlobalUISetup.Run();
         PlacePlaza();
+        PlaceMine();
     }
 }

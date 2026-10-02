@@ -84,6 +84,41 @@ public class ProgressionTests
         Assert.Throws<ArgumentOutOfRangeException>(() => progress.AddExp(-1, _curve, new List<int>()));
     }
 
+    [Test]
+    public void Cap_HoldsLevelWithFullBar_UntilRaised()
+    {
+        var progress = new LevelProgress();
+        var reached = new List<int>();
+        progress.SetCap(1, _curve, reached);
+
+        progress.AddExp(250, _curve, reached);
+        Assert.AreEqual(1, progress.Level, "큰 발전 전에는 경험치가 차도 레벨이 그대로");
+        Assert.AreEqual(100, progress.Exp, "막대는 꽉 찬 채로 기다림");
+        Assert.AreEqual(1f, progress.Ratio(_curve));
+        Assert.IsEmpty(reached);
+
+        progress.SetCap(int.MaxValue, _curve, reached);
+        Assert.AreEqual(2, progress.Level, "제한이 풀리면 쌓아 둔 경험치로 바로 오름");
+        CollectionAssert.AreEqual(new[] { 2 }, reached);
+    }
+
+    [Test]
+    public void ReachLevel_TopsUpMissingExp_AndKeepsLeftover()
+    {
+        var progress = new LevelProgress();
+        var reached = new List<int>();
+        progress.SetCap(1, _curve, reached);
+        progress.AddExp(40, _curve, reached);
+
+        progress.ReachLevel(2, _curve, reached);
+        Assert.AreEqual(2, progress.Level, "의자를 만들면 경험치가 모자라도 Lv.2");
+        Assert.AreEqual(0, progress.Exp);
+        CollectionAssert.AreEqual(new[] { 2 }, reached);
+
+        progress.ReachLevel(2, _curve, reached);
+        Assert.AreEqual(1, reached.Count, "이미 넘은 레벨이면 그대로");
+    }
+
     #endregion
 
     #region 퀘스트 열림
