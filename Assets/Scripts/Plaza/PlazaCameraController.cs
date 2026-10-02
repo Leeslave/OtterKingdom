@@ -86,6 +86,13 @@ public class PlazaCameraController : MonoBehaviour
     private float lastPinchDistance;
     private Vector2 lastPinchMid;
 
+    // PanTo: glide toward a point (e.g. a house that just appeared) until the
+    // player touches the screen.
+    private bool panning;
+    private Vector2 panTarget;
+    private const float PanSmoothTime = 0.35f;
+    private Vector2 panVelocity;
+
     private void Awake()
     {
         cam = GetComponent<Camera>();
@@ -136,6 +143,31 @@ public class PlazaCameraController : MonoBehaviour
         else TryBeginTracking();
 
         UpdateScrollZoom();
+        UpdatePan();
+    }
+
+    /// Glides the view to centre on a world point (clamped into the map like
+    /// any drag). A touch or drag by the player cancels it.
+    public void PanTo(Vector2 worldPoint)
+    {
+        panTarget = worldPoint;
+        panVelocity = Vector2.zero;
+        panning = true;
+    }
+
+    private void UpdatePan()
+    {
+        if (!panning) return;
+        if (tracking || pinching)
+        {
+            panning = false;
+            return;
+        }
+
+        Vector2 pos = transform.position;
+        Vector2 next = Vector2.SmoothDamp(pos, panTarget, ref panVelocity, PanSmoothTime);
+        transform.position = new Vector3(next.x, next.y, transform.position.z);
+        if ((next - panTarget).sqrMagnitude < 0.0004f) panning = false;
     }
 
     // Runs every frame (cheap) so resolution / orientation / viewport / map

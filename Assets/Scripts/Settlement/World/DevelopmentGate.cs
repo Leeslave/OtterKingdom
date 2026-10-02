@@ -1,0 +1,52 @@
+﻿using System.Collections;
+using UnityEngine;
+
+/// <summary>
+/// 왕국 발전에 따라 켜지거나 꺼지는 광장 오브젝트 (집, 벤치, 막힌 길의 잡목 등).
+/// 오브젝트를 지우지 않고 켜고 끈다. 판단·적용은 SettlementPlazaView가 한다 (꺼진 오브젝트는 스스로 깨어나지 않으므로).
+/// </summary>
+public class DevelopmentGate : MonoBehaviour
+{
+    private const float PopSeconds = 0.35f;
+
+    [Header("조건")]
+    [Tooltip("이 발전 ID (예: house_1, farmland)")]
+    [SerializeField] private string _developmentId;
+
+    [Tooltip("켜면 발전 후에 보임 (집). 끄면 발전 후에 사라짐 (개간으로 치우는 잡목·돌)")]
+    [SerializeField] private bool _showWhenUnlocked = true;
+
+    [Tooltip("새로 보이게 될 때 광장 카메라가 이쪽을 비춤 (집, 밭 표지판)")]
+    [SerializeField] private bool _focusOnUnlock;
+
+    public string DevelopmentId => _developmentId;
+    public bool FocusOnUnlock => _focusOnUnlock && _showWhenUnlocked;
+
+    public bool ShouldBeVisible(bool unlocked) => unlocked == _showWhenUnlocked;
+
+    /// <param name="animate">새로 생길 때 통통 튀어나오는 연출</param>
+    public void Apply(bool unlocked, bool animate)
+    {
+        bool visible = ShouldBeVisible(unlocked);
+        if (gameObject.activeSelf == visible)
+            return;
+
+        gameObject.SetActive(visible);
+        if (visible && animate)
+            StartCoroutine(Pop());
+    }
+
+    private IEnumerator Pop()
+    {
+        var target = transform.localScale;
+        for (float t = 0f; t < PopSeconds; t += Time.deltaTime)
+        {
+            float k = t / PopSeconds;
+            // 0 → 1.12 → 1 (살짝 넘쳤다 돌아옴)
+            float s = k < 0.7f ? Mathf.Lerp(0f, 1.12f, k / 0.7f) : Mathf.Lerp(1.12f, 1f, (k - 0.7f) / 0.3f);
+            transform.localScale = target * s;
+            yield return null;
+        }
+        transform.localScale = target;
+    }
+}

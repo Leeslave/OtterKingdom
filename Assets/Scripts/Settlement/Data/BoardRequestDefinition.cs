@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>부탁을 끝냈을 때 새로 오는 해달과 그 해달의 상태</summary>
+[Serializable]
+public class OtterArrival
+{
+    [SerializeField] private SettlementOtterDefinition _otter;
+    [SerializeField] private ResidentState _state;
+
+    public SettlementOtterDefinition Otter => _otter;
+    public ResidentState State => _state;
+
+    public OtterArrival() { }
+
+    public OtterArrival(SettlementOtterDefinition otter, ResidentState state)
+    {
+        _otter = otter;
+        _state = state;
+    }
+}
+
+/// <summary>
+/// 게시판 "해달의 부탁" 하나 = 세계를 바꾸는 진행 (집 짓기, 개간). 반복 보상인 퀘스트와는 따로 간다.
+/// 조건(앞선 발전, 주민 수)이 되면 나타나고, 건설을 끝내면 완료된다.
+/// </summary>
+[CreateAssetMenu(fileName = "BoardRequest", menuName = "Game Data/Settlement/Board Request")]
+public class BoardRequestDefinition : ScriptableObject
+{
+    [Header("식별")]
+    [Tooltip("세이브에 저장되는 ID (예: req_first_house)")]
+    [SerializeField] private string _requestId;
+
+    [Tooltip("게시판 정렬 순서 (작을수록 위)")]
+    [SerializeField] private int _order;
+
+    [Header("내용")]
+    [SerializeField] private string _title;
+
+    [TextArea]
+    [SerializeField] private string _description;
+
+    [SerializeField] private Sprite _icon;
+
+    [Tooltip("부탁한 해달 (팝업 얼굴 그림)")]
+    [SerializeField] private SettlementOtterDefinition _requester;
+
+    [Header("나타나는 조건")]
+    [Tooltip("이 발전이 끝나야 나타남 (비우면 처음부터)")]
+    [SerializeField] private string _requiredDevelopment;
+
+    [Tooltip("주민이 이만큼 있어야 나타남")]
+    [SerializeField] private int _minResidents;
+
+    [Header("할 일")]
+    [SerializeField] private ConstructionDefinition _construction;
+
+    [Header("완료하면")]
+    [Tooltip("주민이 되는 해달")]
+    [SerializeField] private List<SettlementOtterDefinition> _settles = new List<SettlementOtterDefinition>();
+
+    [Tooltip("새로 찾아오는 해달")]
+    [SerializeField] private List<OtterArrival> _arrivals = new List<OtterArrival>();
+
+    [Tooltip("왕국 단계 (-1이면 그대로)")]
+    [SerializeField] private int _stageOnComplete = -1;
+
+    [Tooltip("방명록에 남는 기록 (비워도 됨)")]
+    [SerializeField] private GuestbookEntryDefinition _completionEntry;
+
+    [Tooltip("완료 팝업 문구 (예: 첫 주민이 정착했어요!)")]
+    [SerializeField] private string _completionMessage;
+
+    public string RequestId => _requestId;
+    public int Order => _order;
+    public string Title => _title;
+    public string Description => _description;
+    public Sprite Icon => _icon;
+    public SettlementOtterDefinition Requester => _requester;
+    public string RequiredDevelopment => _requiredDevelopment;
+    public int MinResidents => _minResidents;
+    public ConstructionDefinition Construction => _construction;
+    public IReadOnlyList<SettlementOtterDefinition> Settles => _settles;
+    public IReadOnlyList<OtterArrival> Arrivals => _arrivals;
+    public int StageOnComplete => _stageOnComplete;
+    public GuestbookEntryDefinition CompletionEntry => _completionEntry;
+    public string CompletionMessage => _completionMessage;
+
+    private void OnValidate()
+    {
+        if (string.IsNullOrWhiteSpace(_requestId))
+            Debug.LogWarning($"[{name}] RequestId가 비어 있습니다.", this);
+        if (_construction == null)
+            Debug.LogWarning($"[{name}] 건설이 비어 있습니다.", this);
+    }
+}

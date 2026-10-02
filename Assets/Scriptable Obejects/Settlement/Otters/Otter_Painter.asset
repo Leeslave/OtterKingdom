@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde64cb29026ea4a985d0e677b28392, type: 3}
+  m_Name: Otter_Painter
+  m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
+  _otterId: otter_painter
+  _displayName: "\uBB3C\uAC10\uC774"
+  _portrait: {fileID: 21300000, guid: 73d3958f4839ca3428f2b29ed0f46e19, type: 3}
+  _plazaPrefab: {fileID: 7043452558069457149, guid: bb3135875573f5549a628191893e39f6, type: 3}
+  _isBuilder: 0
+  _arrivalEntry: {fileID: 11400000, guid: 1f2f009cb4ce68246848f01ab9f3520f, type: 2}
+  _lines:
+  - "\uADF8\uB9BC \uADF8\uB9AC\uAE30 \uC88B\uC740 \uB0A0\uC774\uC5D0\uC694!"
+  - "\uAD11\uC7A5 \uD48D\uACBD\uC774 \uCC38 \uC608\uBED0\uC694."
+  - "\uCC3D\uBB38\uC5D0 \uAC78 \uADF8\uB9BC\uC744 \uADF8\uB9AC\uB294 \uC911\uC774\uC5D0\uC694."
+  _introLine: "\uC800\uB3C4 \uC5EC\uAE30 \uC0B4\uACE0 \uC2F6\uC5B4\uC694!\n\uC9D1\uC744
+    \uC9C0\uC5B4 \uC8FC\uC2E4\uB798\uC694?"
+  _introDevelopment: met_painter

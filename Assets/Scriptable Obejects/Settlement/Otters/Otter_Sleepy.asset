@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde64cb29026ea4a985d0e677b28392, type: 3}
+  m_Name: Otter_Sleepy
+  m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
+  _otterId: otter_sleepy
+  _displayName: "\uAFB8\uBC85\uC774"
+  _portrait: {fileID: 21300000, guid: 96122e84e50259244b42d66a1f5f18c2, type: 3}
+  _plazaPrefab: {fileID: 5447658792398674207, guid: 5d6ead5fdf9832d4083ad4403192a0ce, type: 3}
+  _isBuilder: 0
+  _arrivalEntry: {fileID: 11400000, guid: 7c0551d55ded6a942ba91705e51b4344, type: 2}
+  _lines:
+  - "\uD558\uC554\u2026 \uC878\uB824\uC694\u2026"
+  - "\uD587\uC0B4\uC774 \uB530\uB73B\uD574\uC694\u2026"
+  - "\uC870\uAE08\uB9CC \uB354 \uC798\uAC8C\uC694\u2026"
+  _introLine: 
+  _introDevelopment: 

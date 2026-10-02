@@ -19,7 +19,9 @@ public static class QuestProgressRules
 
         bool matchesReason =
             (quest.GoalType == QuestGoalType.Harvest && e.Reason == ItemChangeReason.Harvest)
-            || (quest.GoalType == QuestGoalType.Catch && e.Reason == ItemChangeReason.Fishing);
+            || (quest.GoalType == QuestGoalType.Catch && e.Reason == ItemChangeReason.Fishing)
+            || (quest.GoalType == QuestGoalType.Mine && e.Reason == ItemChangeReason.Mining)
+            || (quest.GoalType == QuestGoalType.Gather && e.Reason == ItemChangeReason.Gather);
         if (!matchesReason)
             return 0;
 

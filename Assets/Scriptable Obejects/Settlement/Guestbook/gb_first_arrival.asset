@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21bf3c5778b2f79489589cdca7cb1806, type: 3}
+  m_Name: gb_first_arrival
+  m_EditorClassIdentifier: OtterKingdom::GuestbookEntryDefinition
+  _entryId: gb_first_arrival
+  _otter: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
+  _tag: "\uCCAB \uBC29\uBB38"
+  _message: "\uBC14\uB2F7\uBC14\uB78C\uC774 \uD3EC\uADFC\uD55C \uACF3\uC774\uB124\uC694.\n\uC5EC\uAE30
+    \uBA38\uBB3C\uB7EC\uB3C4 \uB420\uAE4C\uC694?"

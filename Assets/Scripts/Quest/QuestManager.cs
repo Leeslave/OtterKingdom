@@ -52,6 +52,7 @@ public class QuestManager : MonoBehaviour
     private Collection _collection;
     private DecorManager _decorManager;
     private ProfileManager _profileManager;
+    private SettlementManager _settlementManager;
 
     private void Awake()
     {
@@ -108,6 +109,11 @@ public class QuestManager : MonoBehaviour
         if (_profileManager != null)
             _profileManager.OnLevelUp += HandleLevelUp;
 
+        // 밭·낚시터가 열리면 그 퀘스트가 나타남
+        _settlementManager = SettlementManager.Instance;
+        if (_settlementManager != null)
+            _settlementManager.OnDevelopmentUnlocked += HandleDevelopmentUnlocked;
+
         CheckDailyReset();
     }
 
@@ -125,6 +131,8 @@ public class QuestManager : MonoBehaviour
             _decorManager.OnDecorPlaced -= HandleDecorPlaced;
         if (_profileManager != null)
             _profileManager.OnLevelUp -= HandleLevelUp;
+        if (_settlementManager != null)
+            _settlementManager.OnDevelopmentUnlocked -= HandleDevelopmentUnlocked;
     }
 
     private void OnDestroy()
@@ -137,7 +145,8 @@ public class QuestManager : MonoBehaviour
     private void Update() => CheckDailyReset();
 
     /// <summary>지금 목록에 나타나고 진행이 쌓이는지 (레벨·앞 단계 충족)</summary>
-    public bool IsAvailable(QuestDefinition quest) => QuestProgressRules.IsAvailable(quest, PlayerLevel, Log);
+    public bool IsAvailable(QuestDefinition quest) =>
+        QuestProgressRules.IsAvailable(quest, PlayerLevel, Log) && SettlementQuestGate.IsReachable(quest);
 
     /// <summary>받은 퀘스트 중 목록 아래 완료 칸에 남길지 (오늘 받은 일일, 이번 레벨에 받은 성장)</summary>
     public bool ShowsAsCompleted(QuestDefinition quest) => QuestProgressRules.ShowsAsCompleted(quest, PlayerLevel, Log);
@@ -183,6 +192,8 @@ public class QuestManager : MonoBehaviour
 
     // 레벨이 올라 새 퀘스트가 열림 → 목록 갱신
     private void HandleLevelUp(int level) => OnChanged?.Invoke();
+
+    private void HandleDevelopmentUnlocked(string developmentId) => OnChanged?.Invoke();
 
     private void AddProgress(QuestDefinition quest, int amount)
     {

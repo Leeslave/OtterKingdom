@@ -64,10 +64,12 @@ public class GameManager : MonoBehaviour
     // first GameManager to meet a given InventoryManager fills it.
     private static InventoryManager loadedInventory;
     // Same for the collection and quests (their LoadFromSave adds too),
-    // and the profile (so a later scene can't roll the level back).
+    // the profile (so a later scene can't roll the level back) and the
+    // settlement (it grants the new-game materials once).
     private static CollectionManager loadedCollection;
     private static QuestManager loadedQuests;
     private static ProfileManager loadedProfile;
+    private static SettlementManager loadedSettlement;
 
     // Offline production covers the time the app was closed, which ends when
     // the app starts — not when the first zone scene with a GameManager opens
@@ -144,6 +146,7 @@ public class GameManager : MonoBehaviour
         saveService = new SaveService();
         var loadStatus = saveService.Load(out save);
         if (save == null) save = CreateNewSave();
+        MarkLegacySettlement();
 
         ComputePendingOfflineElapsed();
 
@@ -209,6 +212,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // GlobalUI is auto-created after the first scene's Awake (scene
+        // loaded), so its managers may have missed Awake's load. Load them now,
+        // before the scene's own Starts read the settlement (plaza houses).
+        LoadGlobalProgressOnce();
+
         if (pendingOfflineElapsedSec > 0f)
         {
             farmService.Tick(pendingOfflineElapsedSec);
@@ -228,6 +236,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         farmService.Tick(Time.deltaTime);
+        TickMining(Time.deltaTime);
 
         autoSaveTimer += Time.deltaTime;
         if (autoSaveTimer >= autoSaveIntervalSec)
@@ -247,12 +256,14 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != this) return;
         SceneNavigator.BeforeLeave += SaveNow;
+        SettlementManager.SaveRequested += SaveNow;
         InventoryManager.Instance.OnItemSold += HandleItemSold;
     }
 
     private void OnDisable()
     {
         SceneNavigator.BeforeLeave -= SaveNow;
+        SettlementManager.SaveRequested -= SaveNow;
         if (InventoryManager.Instance != null) InventoryManager.Instance.OnItemSold -= HandleItemSold;
     }
 
@@ -354,6 +365,15 @@ public class GameManager : MonoBehaviour
             loadedProfile = profile;
             save.profile ??= new ProfileSaveData();
             profile.LoadFromSave(save.profile);
+        }
+
+        // After the bag (the new-game materials go in it), before quests.
+        var settlement = SettlementManager.Instance;
+        if (settlement != null && loadedSettlement != settlement)
+        {
+            loadedSettlement = settlement;
+            save.settlement ??= new SettlementSaveData();
+            settlement.LoadFromSave(save.settlement);
         }
 
         var collection = CollectionManager.Instance;
@@ -458,6 +478,15 @@ public class GameManager : MonoBehaviour
         var crop = farmService.GetCrop(cropId);
         return crop != null && TryFindItem(crop.SeedItemId, out var seedItem) &&
                Bag.TryRemove(seedItem, 1, ItemChangeReason.Plant);
+    }
+
+    // Saves from before the settlement (schema < 4) keep everything they had:
+    // SettlementManager completes every board request when it loads them.
+    private void MarkLegacySettlement()
+    {
+        save.settlement ??= new SettlementSaveData();
+        if (save.schemaVersion < 4 && !save.settlement.initialized)
+            save.settlement.legacyComplete = true;
     }
 
     private SaveData CreateNewSave()
@@ -588,6 +617,7 @@ public class GameManager : MonoBehaviour
         if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(save.collection);
         if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);
         if (ProfileManager.Instance != null) ProfileManager.Instance.WriteToSave(save.profile ??= new ProfileSaveData());
+        if (SettlementManager.Instance != null) SettlementManager.Instance.WriteToSave(save.settlement ??= new SettlementSaveData());
         saveService.Save(save);
     }
 
@@ -824,6 +854,22 @@ public class GameManager : MonoBehaviour
     // MineEmoteView all follow this flag.
     public bool IsMiningActive => miningService.IsActive;
 
+    // A find went into the bag while playing (any scene; not offline finds).
+    // Static so GlobalUI can listen across scene changes: the mine scene's
+    // otter bubble shows it there, a GlobalUI toast everywhere else.
+    public static event Action<ItemDefinition> MiningFound;
+
+    // Mining runs in every zone scene once the otter is in the mine, like
+    // the farm growing everywhere — not only while the mine scene is open.
+    private void TickMining(float deltaSec)
+    {
+        string find = miningService.Tick(deltaSec);
+        if (find == null) return;
+
+        var item = AddMiningFind(find);
+        if (item != null) MiningFound?.Invoke(item);
+    }
+
     public void SetMiningActive(bool active)
     {
         if (miningService.IsActive == active) return;
@@ -844,7 +890,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    // Called by MinerOtterController each time a find comes up. Same rules as
+    // Called by TickMining each time a find comes up. Same rules as
     // AddFishingCatch: no room in the bag drops it with one alert per
     // full-bag spell. Returns the item that went into the bag (for the
     // pop-up above the bubble), or null if nothing did.

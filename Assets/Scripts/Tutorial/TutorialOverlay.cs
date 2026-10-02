@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,7 @@ using UnityEngine.UI;
 /// 모든 캔버스(전역 UI 100, 장소 UI 200)보다 위에 있고 입력을 전부 막으므로
 /// 튜토리얼 동안 월드·버튼이 눌리지 않는다. 월드는 멈추지 않아서 해달은 계속 돌아다닌다.
 /// GameUI처럼 코드로만 만들며, 장소 씬과 함께 사라진다.
+/// 모양(패널·버튼·폰트·안내 해달)은 Resources/TutorialStyle에서 읽어 다른 UI와 맞춘다 (없으면 단색).
 /// </summary>
 public class TutorialOverlay : MonoBehaviour
 {
@@ -16,40 +19,42 @@ public class TutorialOverlay : MonoBehaviour
     private const int SortingOrder = 500;
 
     private const float PanelWidth = 900f;
-    private const int TitleFontSize = 48;
-    private const int BodyFontSize = 40;
-    private const float ButtonHeight = 100f;
-    // 대상 둘레의 여백과 테두리 두께 (캔버스 단위)
+    private const float TitleFontSize = 50f;
+    private const float BodyFontSize = 36f;
+    private const float ButtonHeight = 112f;
+    private const float PortraitSize = 150f;
+    // 대상 둘레의 여백과, 테두리가 그 바깥으로 나오는 폭 (캔버스 단위)
     private const float HolePadding = 16f;
-    private const float FrameThickness = 8f;
+    private const float FrameOutset = 14f;
     // 말풍선과 대상 사이, 말풍선과 화면 끝 사이
-    private const float BubbleGap = 40f;
+    private const float BubbleGap = 48f;
     private const float ScreenMargin = 40f;
     // 장이 바뀐 직후의 연타로 여러 장이 한꺼번에 넘어가지 않게
     private const float TapCooldownSec = 0.3f;
 
     private static readonly Color DimColor = new Color(0f, 0f, 0f, 0.6f);
-    private static readonly Color PanelColor = new Color(0.97f, 0.94f, 0.86f, 1f);
-    private static readonly Color ButtonColor = Color.white;
-    private static readonly Color NextButtonColor = new Color(1f, 0.85f, 0.35f, 1f);
-    private static readonly Color TextColor = new Color(0.2f, 0.15f, 0.1f, 1f);
-    private static readonly Color SubTextColor = new Color(0.45f, 0.38f, 0.3f, 1f);
-    private static readonly Color FrameColor = new Color(1f, 0.85f, 0.35f, 1f);
+    // 스타일이 없을 때(단색)만 쓰는 색
+    private static readonly Color FallbackPanelColor = new Color(1f, 0.96f, 0.9f, 1f);
+    private static readonly Color FallbackNextColor = new Color(0.6f, 0.71f, 0.53f, 1f);
+    private static readonly Color FallbackSkipColor = Color.white;
 
-    private Font _font;
+    private TutorialStyle _style;
     private Canvas _canvas;
     private RectTransform _root;
     private readonly RectTransform[] _dims = new RectTransform[4];
     private RectTransform _frame;
-    private readonly List<Image> _frameEdges = new List<Image>();
+    private Image _frameImage;
     private RectTransform _bubble;
-    private Text _titleLabel;
-    private Text _messageLabel;
-    private Text _nextLabel;
+    private TextMeshProUGUI _titleLabel;
+    private TextMeshProUGUI _messageLabel;
+    private TextMeshProUGUI _counterLabel;
+    private TextMeshProUGUI _nextLabel;
 
     private IReadOnlyList<TutorialStep> _steps;
     private Action _onFinished;
     private int _index = -1;
+    private int _shownCount;
+    private int _shownTotal;
     private float _stepShownAt;
     private bool _finished;
 
@@ -58,9 +63,10 @@ public class TutorialOverlay : MonoBehaviour
         var go = new GameObject(nameof(TutorialOverlay),
             typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         var overlay = go.AddComponent<TutorialOverlay>();
-        overlay.Build();
         overlay._steps = steps;
         overlay._onFinished = onFinished;
+        overlay.Build();
+        overlay.CountShownSteps();
         overlay.Advance();
         return overlay;
     }
@@ -73,9 +79,10 @@ public class TutorialOverlay : MonoBehaviour
         LayoutHole(hole);
         LayoutBubble(hole);
 
-        float pulse = 0.55f + 0.45f * Mathf.Sin(Time.unscaledTime * 5f);
-        var color = new Color(FrameColor.r, FrameColor.g, FrameColor.b, pulse);
-        foreach (var edge in _frameEdges) edge.color = color;
+        // 테두리가 은은하게 숨쉬듯 깜빡임
+        var color = _frameImage.color;
+        color.a = 0.65f + 0.35f * Mathf.Sin(Time.unscaledTime * 5f);
+        _frameImage.color = color;
     }
 
     #region 진행
@@ -84,6 +91,16 @@ public class TutorialOverlay : MonoBehaviour
     {
         if (Time.unscaledTime - _stepShownAt < TapCooldownSec) return;
         Advance();
+    }
+
+    // 시작할 때 대상이 있는(또는 대상이 필요 없는) 장 수 = "3 / 12"의 12
+    private void CountShownSteps()
+    {
+        _shownTotal = 0;
+        foreach (var step in _steps)
+        {
+            if (!step.NeedsTarget || step.FindTarget() != null) _shownTotal++;
+        }
     }
 
     // 다음 장으로. 대상이 필요한데 지금 없는 장은 건너뛴다.
@@ -103,9 +120,11 @@ public class TutorialOverlay : MonoBehaviour
         }
 
         var step = _steps[_index];
+        _shownCount++;
         _titleLabel.text = step.Title;
         _messageLabel.text = step.Message;
-        _nextLabel.text = IsLastShownStep() ? "알겠어요!" : "다음 ▶";
+        _counterLabel.text = $"{_shownCount} / {Mathf.Max(_shownTotal, _shownCount)}";
+        _nextLabel.text = IsLastShownStep() ? "알겠어요!" : "다음";
         _stepShownAt = Time.unscaledTime;
         Update();
     }
@@ -148,7 +167,7 @@ public class TutorialOverlay : MonoBehaviour
         return Rect.MinMaxRect(xMin, yMin, xMax, yMax);
     }
 
-    // 어두운 조각 4개가 대상 영역만 비워 두고 둘러싼다
+    // 어두운 조각 4개가 대상 영역만 비워 두고 둘러싼다. 테두리는 뚫린 곳 바깥에 걸침
     private void LayoutHole(Rect? hole)
     {
         _frame.gameObject.SetActive(hole.HasValue);
@@ -166,6 +185,8 @@ public class TutorialOverlay : MonoBehaviour
         SetAnchors(_dims[2], new Vector2(0f, h.yMin), new Vector2(h.xMin, h.yMax)); // 왼쪽
         SetAnchors(_dims[3], new Vector2(h.xMax, h.yMin), new Vector2(1f, h.yMax)); // 오른쪽
         SetAnchors(_frame, h.min, h.max);
+        _frame.offsetMin = new Vector2(-FrameOutset, -FrameOutset);
+        _frame.offsetMax = new Vector2(FrameOutset, FrameOutset);
     }
 
     // 대상 위아래 중 공간이 넓은 쪽에 말풍선을 두고, 화면 밖으로 나가지 않게 자른다
@@ -173,7 +194,10 @@ public class TutorialOverlay : MonoBehaviour
     {
         float screenH = _root.rect.height;
         float bubbleH = _bubble.rect.height;
-        float halfRange = Mathf.Max(0f, screenH * 0.5f - bubbleH * 0.5f - ScreenMargin);
+        // 위로 걸친 안내 해달 얼굴까지 화면 안에 들어오게
+        float topExtra = _style.GuidePortrait != null ? PortraitSize * 0.5f : 0f;
+        float maxY = Mathf.Max(0f, screenH * 0.5f - bubbleH * 0.5f - ScreenMargin - topExtra);
+        float minY = -Mathf.Max(0f, screenH * 0.5f - bubbleH * 0.5f - ScreenMargin);
 
         float y = 0f;
         if (hole.HasValue)
@@ -184,9 +208,9 @@ public class TutorialOverlay : MonoBehaviour
             float roomBelow = holeBottom + screenH * 0.5f;
             y = roomBelow >= roomAbove
                 ? holeBottom - BubbleGap - bubbleH * 0.5f
-                : holeTop + BubbleGap + bubbleH * 0.5f;
+                : holeTop + BubbleGap + bubbleH * 0.5f + topExtra;
         }
-        _bubble.anchoredPosition = new Vector2(0f, Mathf.Clamp(y, -halfRange, halfRange));
+        _bubble.anchoredPosition = new Vector2(0f, Mathf.Clamp(y, minY, maxY));
     }
 
     private static void SetAnchors(RectTransform rect, Vector2 min, Vector2 max)
@@ -203,7 +227,8 @@ public class TutorialOverlay : MonoBehaviour
 
     private void Build()
     {
-        _font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        _style = Resources.Load<TutorialStyle>(TutorialStyle.ResourcePath);
+        if (_style == null) _style = ScriptableObject.CreateInstance<TutorialStyle>();
 
         _canvas = GetComponent<Canvas>();
         _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -217,116 +242,160 @@ public class TutorialOverlay : MonoBehaviour
         _root = (RectTransform)transform;
 
         // 투명한 전체 화면 버튼: 뚫린 곳까지 포함해 모든 입력을 받아 다음 장으로
-        var catcher = CreateImage("TapCatcher", _root, Color.clear);
+        var catcher = CreateImage("TapCatcher", _root, null, Color.clear);
         SetAnchors(catcher.rectTransform, Vector2.zero, Vector2.one);
         catcher.gameObject.AddComponent<Button>().onClick.AddListener(HandleTap);
 
         for (int i = 0; i < 4; i++)
         {
-            var dim = CreateImage("Dim", _root, DimColor);
+            var dim = CreateImage("Dim", _root, null, DimColor);
             dim.raycastTarget = false;
             _dims[i] = dim.rectTransform;
         }
 
-        BuildFrame();
+        _frameImage = CreateImage("Frame", _root, _style.Highlight, Color.white);
+        _frameImage.raycastTarget = false;
+        _frame = _frameImage.rectTransform;
+        // 테두리 그림이 없으면 강조 테두리 없이 (단색 사각형이 대상을 덮지 않게)
+        _frameImage.enabled = _style.Highlight != null;
+
         BuildBubble();
-    }
-
-    // 뚫린 영역 바깥쪽을 두르는 테두리 4변
-    private void BuildFrame()
-    {
-        _frame = new GameObject("Frame", typeof(RectTransform)).GetComponent<RectTransform>();
-        _frame.SetParent(_root, false);
-
-        float t = FrameThickness;
-        AddEdge(new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(-t, 0f), new Vector2(t, t));   // 위
-        AddEdge(new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(-t, -t), new Vector2(t, 0f));  // 아래
-        AddEdge(new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(-t, 0f), new Vector2(0f, 0f)); // 왼쪽
-        AddEdge(new Vector2(1f, 0f), new Vector2(1f, 1f), new Vector2(0f, 0f), new Vector2(t, 0f));  // 오른쪽
-    }
-
-    private void AddEdge(Vector2 anchorMin, Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
-    {
-        var edge = CreateImage("Edge", _frame, FrameColor);
-        edge.raycastTarget = false;
-        var rect = edge.rectTransform;
-        rect.anchorMin = anchorMin;
-        rect.anchorMax = anchorMax;
-        rect.offsetMin = offsetMin;
-        rect.offsetMax = offsetMax;
-        _frameEdges.Add(edge);
+        PrepareGlyphs();
     }
 
     private void BuildBubble()
     {
-        var panel = CreateImage("Bubble", _root, PanelColor);
+        var panel = CreateImage("Bubble", _root, _style.Panel, _style.Panel != null ? Color.white : FallbackPanelColor);
         panel.raycastTarget = false; // 말풍선을 눌러도 다음 장으로 (버튼은 따로 받음)
         _bubble = panel.rectTransform;
         _bubble.anchorMin = _bubble.anchorMax = _bubble.pivot = new Vector2(0.5f, 0.5f);
         _bubble.sizeDelta = new Vector2(PanelWidth, 0f);
 
         var layout = panel.gameObject.AddComponent<VerticalLayoutGroup>();
-        layout.padding = new RectOffset(48, 48, 40, 40);
-        layout.spacing = 24f;
+        layout.padding = new RectOffset(60, 60, 56, 52);
+        layout.spacing = 18f;
         layout.childControlWidth = true;
         layout.childControlHeight = true;
         layout.childForceExpandWidth = true;
         layout.childForceExpandHeight = false;
         panel.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-        _titleLabel = CreateLabel(_bubble, TitleFontSize, TextColor);
-        _titleLabel.fontStyle = FontStyle.Bold;
-        _messageLabel = CreateLabel(_bubble, BodyFontSize, TextColor);
+        _titleLabel = CreateLabel(_bubble, _style.TitleFont, TitleFontSize, _style.TitleColor);
+        // 안내 해달 얼굴과 장 번호를 피해 제목 좌우를 비움
+        _titleLabel.margin = new Vector4(90f, 0f, 90f, 0f);
+
+        if (_style.Divider != null)
+        {
+            var divider = CreateImage("Divider", _bubble, _style.Divider, Color.white);
+            divider.preserveAspect = true;
+            divider.raycastTarget = false;
+            divider.gameObject.AddComponent<LayoutElement>().preferredHeight = 30f;
+        }
+
+        _messageLabel = CreateLabel(_bubble, _style.BodyFont, BodyFontSize, _style.BodyColor);
+        _messageLabel.lineSpacing = 12f;
 
         var row = new GameObject("Row", typeof(RectTransform), typeof(HorizontalLayoutGroup), typeof(LayoutElement));
         row.transform.SetParent(_bubble, false);
-        row.GetComponent<LayoutElement>().preferredHeight = ButtonHeight;
+        var rowElement = row.GetComponent<LayoutElement>();
+        rowElement.preferredHeight = ButtonHeight;
+        rowElement.minHeight = ButtonHeight;
         var rowLayout = row.GetComponent<HorizontalLayoutGroup>();
-        rowLayout.spacing = 16f;
+        rowLayout.spacing = 20f;
+        rowLayout.padding = new RectOffset(0, 0, 10, 0);
         rowLayout.childControlWidth = true;
         rowLayout.childControlHeight = true;
         rowLayout.childForceExpandWidth = false;
         rowLayout.childForceExpandHeight = true;
 
-        var skipLabel = CreateButton(row.transform, ButtonColor, 260f, Finish);
+        var skipLabel = CreateButton(row.transform, _style.SkipButton, FallbackSkipColor, 260f, Finish);
         skipLabel.text = "건너뛰기";
-        skipLabel.color = SubTextColor;
-        _nextLabel = CreateButton(row.transform, NextButtonColor, -1f, HandleTap);
+        skipLabel.color = _style.SubColor;
+        _nextLabel = CreateButton(row.transform, _style.NextButton, FallbackNextColor, -1f, HandleTap);
+        _nextLabel.color = _style.NextLabelColor;
+        _nextLabel.fontSize = 42f;
+
+        // 장 번호 "3 / 12" (오른쪽 위)
+        _counterLabel = CreateLabel(_bubble, _style.BodyFont, 26f, _style.SubColor);
+        _counterLabel.alignment = TextAlignmentOptions.Right;
+        _counterLabel.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+        var counter = _counterLabel.rectTransform;
+        counter.anchorMin = counter.anchorMax = counter.pivot = new Vector2(1f, 1f);
+        counter.sizeDelta = new Vector2(140f, 40f);
+        counter.anchoredPosition = new Vector2(-36f, -26f);
+
+        // 안내 해달 얼굴: 말풍선 왼쪽 위 모서리에 걸침
+        if (_style.GuidePortrait != null)
+        {
+            var frame = CreateImage("GuideFrame", _bubble, _style.PortraitFrame, Color.white);
+            frame.raycastTarget = false;
+            frame.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+            var frameRect = frame.rectTransform;
+            frameRect.anchorMin = frameRect.anchorMax = new Vector2(0f, 1f);
+            frameRect.pivot = new Vector2(0.5f, 0.5f);
+            frameRect.sizeDelta = new Vector2(PortraitSize, PortraitSize);
+            frameRect.anchoredPosition = new Vector2(70f, -10f);
+
+            var portrait = CreateImage("Portrait", frameRect, _style.GuidePortrait, Color.white);
+            portrait.raycastTarget = false;
+            portrait.preserveAspect = true;
+            SetAnchors(portrait.rectTransform, Vector2.zero, Vector2.one);
+            portrait.rectTransform.offsetMin = new Vector2(14f, 14f);
+            portrait.rectTransform.offsetMax = new Vector2(-14f, -14f);
+        }
     }
 
-    private Image CreateImage(string name, Transform parent, Color color)
+    // 동적 폰트에 이번 튜토리얼 글자를 미리 넣어 둔다 (처음 보는 글자가 그려지는 순간의 끊김 방지)
+    private void PrepareGlyphs()
+    {
+        var text = new StringBuilder("0123456789 /!다음알겠어요건너뛰기");
+        foreach (var step in _steps) text.Append(step.Title).Append(step.Message);
+        string characters = text.ToString();
+        foreach (var font in new[] { _titleLabel.font, _messageLabel.font })
+        {
+            if (font != null) font.TryAddCharacters(characters, out _);
+        }
+    }
+
+    private Image CreateImage(string name, Transform parent, Sprite sprite, Color color)
     {
         var go = new GameObject(name, typeof(RectTransform), typeof(Image));
         go.transform.SetParent(parent, false);
         var image = go.GetComponent<Image>();
+        image.sprite = sprite;
         image.color = color;
+        if (sprite != null && sprite.border != Vector4.zero) image.type = Image.Type.Sliced;
         return image;
     }
 
-    private Text CreateLabel(Transform parent, int fontSize, Color color)
+    private TextMeshProUGUI CreateLabel(Transform parent, TMP_FontAsset font, float fontSize, Color color)
     {
-        var go = new GameObject("Label", typeof(RectTransform), typeof(Text));
+        var go = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
         go.transform.SetParent(parent, false);
-        var label = go.GetComponent<Text>();
-        label.font = _font;
+        var label = go.GetComponent<TextMeshProUGUI>();
+        if (font != null) label.font = font;
         label.fontSize = fontSize;
-        label.alignment = TextAnchor.MiddleCenter;
+        label.alignment = TextAlignmentOptions.Center;
         label.color = color;
+        label.textWrappingMode = TextWrappingModes.Normal;
         label.raycastTarget = false;
         return label;
     }
 
     // width < 0이면 남는 폭을 전부 차지. 버튼 글자를 돌려준다.
-    private Text CreateButton(Transform parent, Color color, float width, Action onClick)
+    private TextMeshProUGUI CreateButton(Transform parent, Sprite sprite, Color fallbackColor, float width, Action onClick)
     {
-        var image = CreateImage("Button", parent, color);
+        var image = CreateImage("Button", parent, sprite, sprite != null ? Color.white : fallbackColor);
         var element = image.gameObject.AddComponent<LayoutElement>();
         if (width > 0f) element.preferredWidth = width;
         else element.flexibleWidth = 1f;
         image.gameObject.AddComponent<Button>().onClick.AddListener(() => onClick());
 
-        var label = CreateLabel(image.transform, BodyFontSize, TextColor);
+        var label = CreateLabel(image.transform, _style.TitleFont, 38f, _style.TitleColor);
         SetAnchors(label.rectTransform, Vector2.zero, Vector2.one);
+        // 버튼 아래 입체 턱만큼 글자를 위로
+        label.rectTransform.offsetMin = new Vector2(8f, 12f);
+        label.rectTransform.offsetMax = new Vector2(-8f, 0f);
         return label;
     }
 

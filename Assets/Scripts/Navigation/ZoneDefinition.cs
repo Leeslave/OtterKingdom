@@ -37,6 +37,15 @@ public class ZoneDefinition : ScriptableObject
     [SerializeField]
     private bool _isAvailable = true;
 
+    [Header("해금 (정착 진행)")]
+    [Tooltip("이 발전이 열려야 갈 수 있음 (예: farmland). 비우면 처음부터 열림")]
+    [SerializeField]
+    private string _requiredDevelopment;
+
+    [Tooltip("발전 전 잠겨 있을 때 설명 대신 보일 문구 (예: 농경지를 개간하면 열려요)")]
+    [SerializeField]
+    private string _developmentLockedSubtitle;
+
     [Header("정렬")]
     [Tooltip("이동 팝업 정렬 순서 (작을수록 앞)")]
     [SerializeField]
@@ -49,6 +58,8 @@ public class ZoneDefinition : ScriptableObject
     public Sprite Icon => _icon;
     public string SceneName => _sceneName;
     public int SortOrder => _sortOrder;
+    public string RequiredDevelopment => _requiredDevelopment;
+    public string DevelopmentLockedSubtitle => _developmentLockedSubtitle;
 
     /// <summary>켜져 있고 씬도 지정돼 있어야 이동 가능</summary>
     public bool IsAvailable => _isAvailable && !string.IsNullOrWhiteSpace(_sceneName);

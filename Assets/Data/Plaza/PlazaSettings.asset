@@ -17,7 +17,7 @@ MonoBehaviour:
   - {fileID: 5833170307420288663, guid: e86c7eb151ead664abbc91e7cefe9682, type: 3}
   - {fileID: 5447658792398674207, guid: 5d6ead5fdf9832d4083ad4403192a0ce, type: 3}
   - {fileID: 7043452558069457149, guid: bb3135875573f5549a628191893e39f6, type: 3}
-  otterCount: 5
+  otterCount: 0
   otterHeight: 1.67
   otterBodyWidth: 1.2
   spawnSpacingInWidths: 1.2

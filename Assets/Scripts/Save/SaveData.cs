@@ -77,7 +77,9 @@ public class SaveData
 {
     // 2: firstPlantGuideDone exists (1-saves are checked once on load).
     // 3: tutorialsDone exists (older saves skip every zone tutorial).
-    public const int CurrentSchemaVersion = 3;
+    // 4: settlement exists (older saves get every board request completed,
+    //    so a farm they already use isn't locked again).
+    public const int CurrentSchemaVersion = 4;
     public int schemaVersion = CurrentSchemaVersion;
     public int lifetimeSales;
     public int farmLevel = 1;
@@ -115,6 +117,10 @@ public class SaveData
     public float offlineFishingProgressSec;
     // Offline time already spent towards the next ore find (pickaxe level 2+).
     public float offlineMiningProgressSec;
+    // Online mining: seconds left until the next find while mining is on.
+    // Kept in the save so it carries over scene changes (every zone's
+    // GameManager ticks it, not only the mine's). 0 = roll a new interval.
+    public float miningSecToNextFind;
     // Offline time already spent towards the next otter visit roll.
     public float offlineOtterVisitProgressSec;
     public List<OtterSaveData> otters = new List<OtterSaveData>();
@@ -126,4 +132,7 @@ public class SaveData
     // Owned by ProfileManager (GlobalUI): name and kingdom level/exp.
     // Missing in older saves -> JsonUtility fills defaults (Lv.1).
     public ProfileSaveData profile = new ProfileSaveData();
+    // Owned by SettlementManager (GlobalUI): kingdom stage, residents, board
+    // requests, construction. Missing in saves before schema 4.
+    public SettlementSaveData settlement = new SettlementSaveData();
 }
