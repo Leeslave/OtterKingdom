@@ -11,9 +11,9 @@ using UnityEngine.U2D;
 using UnityEngine.U2D.Animation;
 
 // Experimental 2D Animation (bone + SpriteSkin) rig for the farmer otter,
-// built from the separated walk parts (ArtSource/Otter/FarmerOtter_PartsSheet_v2.png,
-// tails from the v1 sheet), repacked into FarmerOtter_RigParts.png by
-// Tools/SpriteRepack/repack_otter_rig_parts.py. Does everything the Skinning Editor
+// built from the separated parts sheet (ArtSource/Otter/FarmerOtter_RigPartsSheet.png:
+// front / side / back rows, left = mirrored side), repacked into
+// FarmerOtter_RigParts.png by Tools/SpriteRepack/repack_otter_rig_parts.py. Does everything the Skinning Editor
 // would normally be used for by hand:
 //   1. slices the parts texture with per-part pivots (= joint positions),
 //   2. writes sprite bones + a grid mesh + bone weights into the importer
@@ -23,56 +23,82 @@ using UnityEngine.U2D.Animation;
 //   4. generates Idle/Walk clips per view plus an AnimatorController,
 //   5. creates Assets/Scenes/RiggingTestScene.unity with a keyboard test driver.
 // Bones/weights stay editable afterwards in the Sprite Editor > Skinning Editor.
+// Everything rig-specific lives in a RigConfig: config A (this file) is the 4-view
+// rig, config B (OtterRigSetup.ArmSwap.cs) a front/back rig with arm-pose swaps.
 // Run via: OtterKingdom > Tools > Setup Otter Rig Test
-public static class OtterRigSetup
+public static partial class OtterRigSetup
 {
-    private const string TexturePath = "Assets/Art/Otter/Rig/FarmerOtter_RigParts.png";
-    private const string AnimDir = "Assets/Animations/OtterRig";
-    private const string ControllerPath = AnimDir + "/FarmerOtterRig.controller";
     private const string PrefabDir = "Assets/Prefabs/RigTest";
-    private const string PrefabPath = PrefabDir + "/FarmerOtterRig.prefab";
-    private const string ScenePath = "Assets/Scenes/RiggingTestScene.unity";
-
-    // ~175px tall -> ~1.75 units, the same on-screen size as the frame-animated FarmerOtter.
-    private const float PixelsPerUnit = 100f;
     // Grid mesh resolution in texture pixels. Fine enough for the tail to bend smoothly.
-    private const int MeshCellPx = 8;
+    private const int MeshCellPx = 16;
     private const int TailBoneCount = 3;
 
     // Must match OtterRigTestController.
     private const string DirParam = "Dir";
     private const string MovingParam = "Moving";
+    private const int DirDown = 0, DirRight = 1, DirLeft = 2, DirUp = 3;
+
+    private sealed class RigConfig
+    {
+        public string MenuTitle, LogTag, RootName, ClipPrefix;
+        public string TexturePath, AnimDir, ControllerPath, PrefabPath, ScenePath;
+        public float PixelsPerUnit;
+        public Dictionary<string, RectInt> PartRects;
+        // Normalized pivot = where the part hinges on its parent bone.
+        public System.Func<string, Vector2> PivotOf;
+        // Direction the tail bone chain runs in (degrees), from the pivot toward the tip.
+        public System.Func<string, float> TailAngle;
+        // Layout origin in source pixels: character centre line and feet line.
+        public float LayoutCenterX, LayoutFeetY;
+        // First view is the default. dirs = OtterRigTestController directions it shows.
+        public (string name, int[] dirs, Part[] parts)[] Views;
+        // Front/back arm swing while walking, in degrees.
+        public float FrontArmSwing = 14f;
+        // Extra per-clip curves (e.g. sprite swaps): clip, view, walking, period.
+        public System.Action<AnimationClip, ViewRig, bool, float> ExtraCurves;
+    }
+
+    // The config being built; set by Build().
+    private static RigConfig C;
+    private static Dictionary<string, Sprite> s_Sprites;
+
+    // --- Config A: front / side / back, left = mirrored side ----------------------
 
     // Rects inside FarmerOtter_RigParts.png (Unity bottom-left origin), printed by
     // Tools/SpriteRepack/repack_otter_rig_parts.py — re-paste whenever the PNG is regenerated.
-    private static readonly Dictionary<string, RectInt> PartRects = new Dictionary<string, RectInt>
+    private static readonly Dictionary<string, RectInt> RectsA = new Dictionary<string, RectInt>
     {
-        { "Head_Front", new RectInt(4, 220, 137, 96) },
-        { "Head_Right", new RectInt(145, 215, 119, 101) },
-        { "Head_Left", new RectInt(268, 215, 124, 101) },
-        { "Head_Back", new RectInt(4, 113, 138, 98) },
-        { "Body_Front", new RectInt(146, 121, 94, 90) },
-        { "Body_Right", new RectInt(244, 122, 64, 89) },
-        { "Body_Left", new RectInt(312, 121, 61, 90) },
-        { "Body_Back", new RectInt(377, 121, 99, 90) },
-        { "Arm_Front_L", new RectInt(4, 50, 42, 59) },
-        { "Arm_Front_R", new RectInt(50, 51, 45, 58) },
-        { "Arm_SideNear_R", new RectInt(99, 57, 42, 52) },
-        { "Arm_SideNear_L", new RectInt(145, 57, 42, 52) },
-        { "Arm_SideFar_R", new RectInt(191, 50, 41, 59) },
-        { "Arm_SideFar_L", new RectInt(236, 49, 42, 60) },
-        { "Leg_Front_L", new RectInt(282, 52, 42, 57) },
-        { "Leg_Front_R", new RectInt(328, 52, 42, 57) },
-        { "Leg_Back_L", new RectInt(374, 49, 41, 60) },
-        { "Leg_Back_R", new RectInt(419, 50, 39, 59) },
-        { "Leg_Side", new RectInt(462, 48, 42, 61) },
-        { "Tail_Right", new RectInt(4, 6, 64, 38) },
-        { "Tail_Left", new RectInt(72, 7, 63, 37) },
-        { "Tail_Back", new RectInt(139, 5, 55, 39) },
+        { "Head_Front", new RectInt(4, 507, 316, 217) },
+        { "Head_Right", new RectInt(324, 499, 276, 225) },
+        { "Head_Left", new RectInt(604, 499, 276, 225) },
+        { "Head_Back", new RectInt(4, 264, 312, 231) },
+        { "Body_Front", new RectInt(320, 327, 172, 168) },
+        { "Body_Right", new RectInt(496, 330, 166, 165) },
+        { "Body_Left", new RectInt(666, 330, 166, 165) },
+        { "Body_Back", new RectInt(836, 312, 181, 183) },
+        { "Arm_Front_L", new RectInt(4, 142, 78, 118) },
+        { "Arm_Front_R", new RectInt(86, 142, 81, 118) },
+        { "Arm_Back_L", new RectInt(171, 135, 85, 125) },
+        { "Arm_Back_R", new RectInt(260, 136, 84, 124) },
+        { "Arm_SideNear_R", new RectInt(348, 137, 84, 123) },
+        { "Arm_SideFar_R", new RectInt(436, 138, 84, 122) },
+        { "Arm_SideNear_L", new RectInt(524, 137, 84, 123) },
+        { "Arm_SideFar_L", new RectInt(612, 138, 84, 122) },
+        { "Leg_Front_L", new RectInt(700, 135, 84, 125) },
+        { "Leg_Front_R", new RectInt(788, 134, 85, 126) },
+        { "Leg_Back_L", new RectInt(877, 135, 83, 125) },
+        { "Leg_Back_R", new RectInt(4, 4, 85, 126) },
+        { "Leg_SideNear_R", new RectInt(93, 4, 92, 126) },
+        { "Leg_SideFar_R", new RectInt(189, 4, 94, 126) },
+        { "Leg_SideNear_L", new RectInt(287, 4, 92, 126) },
+        { "Leg_SideFar_L", new RectInt(383, 4, 94, 126) },
+        { "Tail_Front", new RectInt(481, 48, 85, 82) },
+        { "Tail_Right", new RectInt(570, 45, 151, 85) },
+        { "Tail_Left", new RectInt(725, 45, 151, 85) },
+        { "Tail_Back", new RectInt(880, 31, 69, 99) },
     };
 
-    // Normalized pivot = where the part hinges on its parent bone.
-    private static Vector2 PivotOf(string sprite)
+    private static Vector2 PivotOfA(string sprite)
     {
         // Head_* includes the hat (merged by the repack script); 0.08 is the neck.
         if (sprite.StartsWith("Head_")) return new Vector2(0.5f, 0.08f);
@@ -80,18 +106,19 @@ public static class OtterRigSetup
         if (sprite.StartsWith("Arm_") || sprite.StartsWith("Leg_")) return new Vector2(0.5f, 0.85f);
         switch (sprite)
         {
-            case "Tail_Right": return new Vector2(0.92f, 0.55f); // root on the right, tail trails left
-            case "Tail_Left": return new Vector2(0.08f, 0.55f);
+            case "Tail_Front": return new Vector2(0.2f, 0.25f); // peeks out behind the body, lower right
+            case "Tail_Right": return new Vector2(0.92f, 0.5f); // root on the right, tail trails left
+            case "Tail_Left": return new Vector2(0.08f, 0.5f);
             case "Tail_Back": return new Vector2(0.5f, 0.85f);
         }
         return new Vector2(0.5f, 0.5f);
     }
 
-    // Direction the tail bone chain runs in (degrees), from the pivot toward the tip.
-    private static float TailAngle(string sprite)
+    private static float TailAngleA(string sprite)
     {
         switch (sprite)
         {
+            case "Tail_Front": return 50f;
             case "Tail_Right": return 180f;
             case "Tail_Left": return 0f;
             default: return -90f;
@@ -100,120 +127,152 @@ public static class OtterRigSetup
 
     private static bool IsTail(string sprite) => sprite.StartsWith("Tail_");
 
-    // One part placed in a view. centerPx = sprite centre in "layout px":
-    // x right from the character's centre line (82), y down with the feet at 179.
+    // One part placed in a view, in "layout px" (x right, y down, see
+    // RigConfig.LayoutCenterX/FeetY). By default posPx is the sprite centre;
+    // AtPivot parts place their pivot there instead (arms whose pose sprites get
+    // swapped keep the shoulder fixed that way).
     private struct Part
     {
         public string bone, sprite, parent;
-        public Vector2 centerPx;
+        public Vector2 posPx;
         public int order;
+        public bool atPivot;
 
-        public Part(string bone, string sprite, string parent, float cx, float cy, int order)
+        public Part(string bone, string sprite, string parent, float x, float y, int order)
         {
             this.bone = bone; this.sprite = sprite; this.parent = parent;
-            centerPx = new Vector2(cx, cy); this.order = order;
+            posPx = new Vector2(x, y); this.order = order; atPivot = false;
         }
+
+        public static Part AtPivot(string bone, string sprite, string parent, float x, float y, int order) =>
+            new Part(bone, sprite, parent, x, y, order) { atPivot = true };
     }
 
-    private const float LayoutCenterX = 82f;
-    private const float LayoutFeetY = 179f;
-
-    // Layout fitted against the walk frames on the same sheet. Order = sorting order.
-    // Side views sit 8px higher than the composite they were fitted in so every
-    // view's feet land on the same line (no hop when turning). Parents before children.
-    private static readonly (string view, Part[] parts)[] Views =
+    // Layout in source pixels: centre line x=190, feet y=410. Every view's feet land
+    // on the feet line so the otter doesn't hop when turning. Left = Right mirrored around LayoutCenterX.
+    // Order = sorting order. Parents before children.
+    // Legs always sort behind the body: their tops hide inside the hips, so the leg
+    // outlines never cross the overalls (a near leg drawn over the side body split
+    // the trousers into several green pieces).
+    private static readonly (string name, int[] dirs, Part[] parts)[] ViewsA =
     {
-        ("Down", new[]
+        ("Down", new[] { DirDown }, new[]
         {
-            new Part("Hips", "Body_Front", null, 82, 125, 20),
-            new Part("Head", "Head_Front", "Hips", 82, 52, 40),
-            new Part("Arm_L", "Arm_Front_L", "Hips", 45, 122, 30),
-            new Part("Arm_R", "Arm_Front_R", "Hips", 119, 122, 30),
-            new Part("Leg_L", "Leg_Front_L", "Hips", 66, 150, 10),
-            new Part("Leg_R", "Leg_Front_R", "Hips", 98, 150, 10),
+            new Part("Hips", "Body_Front", null, 190, 278, 20),
+            new Part("Head", "Head_Front", "Hips", 190, 112, 40),
+            new Part("Arm_L", "Arm_Front_L", "Hips", 104, 265, 30),
+            new Part("Arm_R", "Arm_Front_R", "Hips", 276, 265, 30),
+            new Part("Leg_L", "Leg_Front_L", "Hips", 158, 352, 10),
+            new Part("Leg_R", "Leg_Front_R", "Hips", 222, 352, 10),
+            new Part("Tail", "Tail_Front", "Hips", 252, 350, 0),
         }),
-        ("Right", new[]
+        ("Right", new[] { DirRight }, new[]
         {
-            new Part("Hips", "Body_Right", null, 82, 117, 20),
-            new Part("Head", "Head_Right", "Hips", 90, 47, 50),
-            new Part("Arm_Far", "Arm_SideFar_R", "Hips", 104, 114, 15),
-            new Part("Arm_Near", "Arm_SideNear_R", "Hips", 82, 120, 40),
-            new Part("Leg_Far", "Leg_Side", "Hips", 96, 147, 10),
-            new Part("Leg_Near", "Leg_Side", "Hips", 72, 149, 30),
-            new Part("Tail", "Tail_Right", "Hips", 44, 134, 0),
+            new Part("Hips", "Body_Right", null, 182, 270, 20),
+            new Part("Head", "Head_Right", "Hips", 200, 112, 50),
+            new Part("Arm_Far", "Arm_SideFar_R", "Hips", 222, 262, 5),
+            new Part("Arm_Near", "Arm_SideNear_R", "Hips", 170, 268, 40),
+            new Part("Leg_Far", "Leg_SideFar_R", "Hips", 212, 352, 10),
+            new Part("Leg_Near", "Leg_SideNear_R", "Hips", 168, 352, 15),
+            new Part("Tail", "Tail_Right", "Hips", 100, 330, 0),
         }),
-        ("Left", new[]
+        ("Left", new[] { DirLeft }, new[]
         {
-            new Part("Hips", "Body_Left", null, 83, 117, 20),
-            new Part("Head", "Head_Left", "Hips", 75, 47, 50),
-            new Part("Arm_Far", "Arm_SideFar_L", "Hips", 61, 114, 15),
-            new Part("Arm_Near", "Arm_SideNear_L", "Hips", 83, 120, 40),
-            new Part("Leg_Far", "Leg_Side", "Hips", 69, 147, 10),
-            new Part("Leg_Near", "Leg_Side", "Hips", 93, 149, 30),
-            new Part("Tail", "Tail_Left", "Hips", 121, 134, 0),
+            new Part("Hips", "Body_Left", null, 198, 270, 20),
+            new Part("Head", "Head_Left", "Hips", 180, 112, 50),
+            new Part("Arm_Far", "Arm_SideFar_L", "Hips", 158, 262, 5),
+            new Part("Arm_Near", "Arm_SideNear_L", "Hips", 210, 268, 40),
+            new Part("Leg_Far", "Leg_SideFar_L", "Hips", 168, 352, 10),
+            new Part("Leg_Near", "Leg_SideNear_L", "Hips", 212, 352, 15),
+            new Part("Tail", "Tail_Left", "Hips", 280, 330, 0),
         }),
-        ("Up", new[]
+        ("Up", new[] { DirUp }, new[]
         {
-            new Part("Hips", "Body_Back", null, 82, 125, 20),
-            new Part("Head", "Head_Back", "Hips", 82, 58, 50),
-            new Part("Arm_L", "Arm_Front_L", "Hips", 45, 122, 10),
-            new Part("Arm_R", "Arm_Front_R", "Hips", 119, 122, 10),
-            new Part("Leg_L", "Leg_Back_L", "Hips", 66, 150, 0),
-            new Part("Leg_R", "Leg_Back_R", "Hips", 98, 150, 0),
-            new Part("Tail", "Tail_Back", "Hips", 82, 148, 40),
+            new Part("Hips", "Body_Back", null, 190, 278, 20),
+            new Part("Head", "Head_Back", "Hips", 190, 118, 50),
+            new Part("Arm_L", "Arm_Back_L", "Hips", 104, 265, 10),
+            new Part("Arm_R", "Arm_Back_R", "Hips", 276, 265, 10),
+            new Part("Leg_L", "Leg_Back_L", "Hips", 158, 352, 0),
+            new Part("Leg_R", "Leg_Back_R", "Hips", 222, 352, 0),
+            new Part("Tail", "Tail_Back", "Hips", 190, 350, 40),
         }),
     };
 
-    [MenuItem("OtterKingdom/Tools/Setup Otter Rig Test")]
-    public static void Run()
+    private static RigConfig ConfigA() => new RigConfig
     {
+        MenuTitle = "Setup Otter Rig Test",
+        LogTag = "[OtterRigSetup]",
+        RootName = "FarmerOtterRig",
+        ClipPrefix = "OtterRig_",
+        TexturePath = "Assets/Art/Otter/Rig/FarmerOtter_RigParts.png",
+        AnimDir = "Assets/Animations/OtterRig",
+        ControllerPath = "Assets/Animations/OtterRig/FarmerOtterRig.controller",
+        PrefabPath = PrefabDir + "/FarmerOtterRig.prefab",
+        ScenePath = "Assets/Scenes/RiggingTestScene.unity",
+        // Parts are kept at source resolution (~406px tall) -> ~1.75 units, the same
+        // on-screen size as the frame-animated FarmerOtter.
+        PixelsPerUnit = 230f,
+        PartRects = RectsA,
+        PivotOf = PivotOfA,
+        TailAngle = TailAngleA,
+        LayoutCenterX = 190f,
+        LayoutFeetY = 410f,
+        Views = ViewsA,
+    };
+
+    [MenuItem("OtterKingdom/Tools/Setup Otter Rig Test")]
+    public static void Run() => Build(ConfigA());
+
+    private static void Build(RigConfig config)
+    {
+        C = config;
         if (Application.isPlaying)
         {
-            Debug.LogError("[OtterRigSetup] Stop Play mode first.");
+            Debug.LogError($"{C.LogTag} Stop Play mode first.");
             return;
         }
-        if (File.Exists(ScenePath) &&
-            !EditorUtility.DisplayDialog("Setup Otter Rig Test",
-                $"{ScenePath} 이(가) 이미 있습니다. 리그/애니메이션/씬을 다시 만들까요?",
+        if (File.Exists(C.ScenePath) &&
+            !EditorUtility.DisplayDialog(C.MenuTitle,
+                $"{C.ScenePath} 이(가) 이미 있습니다. 리그/애니메이션/씬을 다시 만들까요?",
                 "다시 만들기", "취소"))
         {
             return;
         }
         if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
-        Dictionary<string, Sprite> sprites = ImportAndSkinParts();
-        if (sprites == null) return;
+        s_Sprites = ImportAndSkinParts();
+        if (s_Sprites == null) return;
 
-        EnsureFolder(AnimDir);
+        EnsureFolder(C.AnimDir);
         EnsureFolder(PrefabDir);
 
-        var root = BuildRig(sprites, out var viewRigs);
+        var root = BuildRig(s_Sprites, out var viewRigs);
         var controller = BuildAnimations(viewRigs);
         root.GetComponent<Animator>().runtimeAnimatorController = controller;
 
-        PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
+        PrefabUtility.SaveAsPrefabAsset(root, C.PrefabPath);
         Object.DestroyImmediate(root);
 
-        BuildScene(AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath));
+        BuildScene(AssetDatabase.LoadAssetAtPath<GameObject>(C.PrefabPath));
         AssetDatabase.SaveAssets();
-        Debug.Log("[OtterRigSetup] Done. Open RiggingTestScene and press Play (WASD / arrows to walk).");
+        Debug.Log($"{C.LogTag} Done. Open {Path.GetFileNameWithoutExtension(C.ScenePath)} and press Play (WASD / arrows to walk).");
     }
 
     // --- 1+2. Texture: slicing, bones, mesh, weights -------------------------
 
     private static Dictionary<string, Sprite> ImportAndSkinParts()
     {
-        AssetDatabase.ImportAsset(TexturePath);
-        var importer = AssetImporter.GetAtPath(TexturePath) as TextureImporter;
+        AssetDatabase.ImportAsset(C.TexturePath);
+        var importer = AssetImporter.GetAtPath(C.TexturePath) as TextureImporter;
         if (importer == null)
         {
-            Debug.LogError($"[OtterRigSetup] Parts texture not found at {TexturePath}.");
+            Debug.LogError($"{C.LogTag} Parts texture not found at {C.TexturePath}.");
             return null;
         }
 
         importer.textureType = TextureImporterType.Sprite;
         importer.spriteImportMode = SpriteImportMode.Multiple;
-        importer.spritePixelsPerUnit = PixelsPerUnit;
+        importer.spritePixelsPerUnit = C.PixelsPerUnit;
         importer.mipmapEnabled = false;
         importer.alphaIsTransparency = true;
         importer.filterMode = FilterMode.Bilinear;
@@ -229,7 +288,7 @@ public static class OtterRigSetup
         var existingIds = dp.GetSpriteRects().ToDictionary(r => r.name, r => r.spriteID);
 
         var rects = new List<SpriteRect>();
-        foreach (var kv in PartRects)
+        foreach (var kv in C.PartRects)
         {
             var r = kv.Value;
             rects.Add(new SpriteRect
@@ -237,7 +296,7 @@ public static class OtterRigSetup
                 name = kv.Key,
                 rect = new Rect(r.x, r.y, r.width, r.height),
                 alignment = SpriteAlignment.Custom,
-                pivot = PivotOf(kv.Key),
+                pivot = C.PivotOf(kv.Key),
                 spriteID = existingIds.TryGetValue(kv.Key, out var id) ? id : GUID.Generate(),
             });
         }
@@ -254,7 +313,7 @@ public static class OtterRigSetup
             bool tail = IsTail(r.name);
             int boneCount = tail ? TailBoneCount : 1;
             // Rigid parts keep an unrotated bone so their local axes match world axes in clips.
-            float angle = tail ? TailAngle(r.name) : 0f;
+            float angle = tail ? C.TailAngle(r.name) : 0f;
             float segLenPx = tail ? TailLengthPx(r.pivot, size, angle) / TailBoneCount : size.y * 0.3f;
 
             boneProvider.SetBones(r.spriteID, BuildSpriteBones(r.name, pivotPx, angle, segLenPx, boneCount));
@@ -268,13 +327,13 @@ public static class OtterRigSetup
         dp.Apply();
         importer.SaveAndReimport();
 
-        var sprites = AssetDatabase.LoadAllAssetsAtPath(TexturePath).OfType<Sprite>()
+        var sprites = AssetDatabase.LoadAllAssetsAtPath(C.TexturePath).OfType<Sprite>()
             .ToDictionary(s => s.name, s => s);
-        foreach (var name in PartRects.Keys)
+        foreach (var name in C.PartRects.Keys)
         {
             if (!sprites.ContainsKey(name))
             {
-                Debug.LogError($"[OtterRigSetup] Sprite '{name}' missing after import.");
+                Debug.LogError($"{C.LogTag} Sprite '{name}' missing after import.");
                 return null;
             }
         }
@@ -370,7 +429,7 @@ public static class OtterRigSetup
 
     // --- 3. Rig hierarchy ------------------------------------------------------
 
-    private class ViewRig
+    private sealed class ViewRig
     {
         public string name;
         public GameObject go;
@@ -379,12 +438,12 @@ public static class OtterRigSetup
 
     private static GameObject BuildRig(Dictionary<string, Sprite> sprites, out List<ViewRig> viewRigs)
     {
-        var root = new GameObject("FarmerOtterRig");
+        var root = new GameObject(C.RootName);
         root.AddComponent<SortingGroup>();
         root.AddComponent<Animator>();
         viewRigs = new List<ViewRig>();
 
-        foreach (var (viewName, parts) in Views)
+        foreach (var (viewName, _, parts) in C.Views)
         {
             var rig = new ViewRig { name = viewName, go = new GameObject("View_" + viewName) };
             rig.go.transform.SetParent(root.transform, false);
@@ -406,10 +465,10 @@ public static class OtterRigSetup
                 var chain = new List<Transform> { bone };
                 if (IsTail(part.sprite))
                 {
-                    var r = PartRects[part.sprite];
-                    float angle = TailAngle(part.sprite);
-                    float segLen = TailLengthPx(PivotOf(part.sprite), new Vector2(r.width, r.height), angle)
-                                   / TailBoneCount / PixelsPerUnit;
+                    var r = C.PartRects[part.sprite];
+                    float angle = C.TailAngle(part.sprite);
+                    float segLen = TailLengthPx(C.PivotOf(part.sprite), new Vector2(r.width, r.height), angle)
+                                   / TailBoneCount / C.PixelsPerUnit;
                     bone.rotation = Quaternion.Euler(0f, 0f, angle);
                     for (int i = 1; i < TailBoneCount; i++)
                     {
@@ -432,10 +491,10 @@ public static class OtterRigSetup
                 skin.SetRootBone(bone);
                 var state = skin.SetBoneTransforms(chain.ToArray());
                 if (state != SpriteSkinState.Ready)
-                    Debug.LogWarning($"[OtterRigSetup] {viewName}/{part.bone} SpriteSkin state: {state}");
+                    Debug.LogWarning($"{C.LogTag} {viewName}/{part.bone} SpriteSkin state: {state}");
             }
 
-            rig.go.SetActive(viewName == "Down");
+            rig.go.SetActive(viewRigs.Count == 0);
             viewRigs.Add(rig);
         }
         return root;
@@ -443,12 +502,15 @@ public static class OtterRigSetup
 
     private static Vector3 PivotWorld(Part part)
     {
-        var r = PartRects[part.sprite];
-        Vector2 pivot = PivotOf(part.sprite);
-        float cx = (part.centerPx.x - LayoutCenterX) / PixelsPerUnit;
-        float cy = (LayoutFeetY - part.centerPx.y) / PixelsPerUnit;
-        return new Vector3(cx + (pivot.x - 0.5f) * r.width / PixelsPerUnit,
-                           cy + (pivot.y - 0.5f) * r.height / PixelsPerUnit, 0f);
+        float ppu = C.PixelsPerUnit;
+        float x = (part.posPx.x - C.LayoutCenterX) / ppu;
+        float y = (C.LayoutFeetY - part.posPx.y) / ppu;
+        if (part.atPivot) return new Vector3(x, y, 0f);
+
+        var r = C.PartRects[part.sprite];
+        Vector2 pivot = C.PivotOf(part.sprite);
+        return new Vector3(x + (pivot.x - 0.5f) * r.width / ppu,
+                           y + (pivot.y - 0.5f) * r.height / ppu, 0f);
     }
 
     // --- 4. Clips + controller -------------------------------------------------
@@ -459,30 +521,34 @@ public static class OtterRigSetup
 
     private static AnimatorController BuildAnimations(List<ViewRig> viewRigs)
     {
-        AssetDatabase.DeleteAsset(ControllerPath);
-        var controller = AnimatorController.CreateAnimatorControllerAtPath(ControllerPath);
+        AssetDatabase.DeleteAsset(C.ControllerPath);
+        var controller = AnimatorController.CreateAnimatorControllerAtPath(C.ControllerPath);
         controller.AddParameter(DirParam, AnimatorControllerParameterType.Int);
         controller.AddParameter(MovingParam, AnimatorControllerParameterType.Bool);
         var sm = controller.layers[0].stateMachine;
 
-        // Order must match OtterRigTestController.Dir: Down, Right, Left, Up.
-        for (int dir = 0; dir < viewRigs.Count; dir++)
+        for (int v = 0; v < viewRigs.Count; v++)
         {
-            var rig = viewRigs[dir];
+            var rig = viewRigs[v];
             foreach (bool walking in new[] { false, true })
             {
-                string clipName = $"OtterRig_{(walking ? "Walk" : "Idle")}_{rig.name}";
+                string clipName = $"{C.ClipPrefix}{(walking ? "Walk" : "Idle")}_{rig.name}";
                 var clip = BuildClip(clipName, rig, viewRigs, walking);
                 var state = sm.AddState(clipName);
                 state.motion = clip;
-                if (dir == 0 && !walking) sm.defaultState = state;
+                if (v == 0 && !walking) sm.defaultState = state;
 
-                var t = sm.AddAnyStateTransition(state);
-                t.hasExitTime = false;
-                t.duration = 0f;
-                t.canTransitionToSelf = false;
-                t.AddCondition(AnimatorConditionMode.Equals, dir, DirParam);
-                t.AddCondition(walking ? AnimatorConditionMode.If : AnimatorConditionMode.IfNot, 0, MovingParam);
+                // A view can stand in for several directions (config B shows the
+                // front view while walking sideways).
+                foreach (int dir in C.Views[v].dirs)
+                {
+                    var t = sm.AddAnyStateTransition(state);
+                    t.hasExitTime = false;
+                    t.duration = 0f;
+                    t.canTransitionToSelf = false;
+                    t.AddCondition(AnimatorConditionMode.Equals, dir, DirParam);
+                    t.AddCondition(walking ? AnimatorConditionMode.If : AnimatorConditionMode.IfNot, 0, MovingParam);
+                }
             }
         }
         return controller;
@@ -490,7 +556,7 @@ public static class OtterRigSetup
 
     private static AnimationClip BuildClip(string name, ViewRig rig, List<ViewRig> allRigs, bool walk)
     {
-        string path = $"{AnimDir}/{name}.anim";
+        string path = $"{C.AnimDir}/{name}.anim";
         AssetDatabase.DeleteAsset(path);
         var clip = new AnimationClip { name = name, frameRate = 30f };
         float period = walk ? WalkPeriod : IdlePeriod;
@@ -510,24 +576,35 @@ public static class OtterRigSetup
 
         if (walk)
         {
-            Wave(clip, rig, "Hips", Prop.PosY, 0.025f, period, 0f, 2, absolute: true);
-            Wave(clip, rig, "Head", Prop.Rot, 3f * mirror, period, Pi / 2f, 2);
+            Wave(clip, rig, "Head", Prop.Rot, 1.5f * mirror, period, Pi / 2f, 2);
             if (side)
             {
+                // Legs swing front/back around the hip. Positive rotation swings the
+                // foot toward the facing side (mirror flips it for Left), so a leg is
+                // moving forward while cos > 0 -- it lifts only then, peaking as it
+                // passes under the body.
                 Wave(clip, rig, "Leg_Near", Prop.Rot, 28f * mirror, period, 0f);
                 Wave(clip, rig, "Leg_Far", Prop.Rot, 28f * mirror, period, Pi);
-                Wave(clip, rig, "Arm_Near", Prop.Rot, 22f * mirror, period, Pi);
-                Wave(clip, rig, "Arm_Far", Prop.Rot, 22f * mirror, period, 0f);
+                Wave(clip, rig, "Leg_Near", Prop.PosY, 0.05f, period, Pi / 2f, liftOnly: true);
+                Wave(clip, rig, "Leg_Far", Prop.PosY, 0.05f, period, -Pi / 2f, liftOnly: true);
+                // Each arm swings with the opposite leg.
+                Wave(clip, rig, "Arm_Near", Prop.Rot, 30f * mirror, period, Pi);
+                Wave(clip, rig, "Arm_Far", Prop.Rot, 30f * mirror, period, 0f);
+                // Lowest when the legs are spread (contact), highest as they pass.
+                Wave(clip, rig, "Hips", Prop.PosY, 0.02f, period, Pi / 2f, 2, absolute: true);
                 TailWave(clip, rig, 10f, period, 1);
             }
             else
             {
-                Wave(clip, rig, "Hips", Prop.Rot, 3f, period, 0f);
-                Wave(clip, rig, "Leg_L", Prop.PosY, 0.06f, period, 0f, 1, absolute: false, liftOnly: true);
-                Wave(clip, rig, "Leg_R", Prop.PosY, 0.06f, period, Pi, 1, absolute: false, liftOnly: true);
-                Wave(clip, rig, "Arm_L", Prop.Rot, 14f, period, 0f);
-                Wave(clip, rig, "Arm_R", Prop.Rot, 14f, period, Pi);
-                if (rig.bones.ContainsKey("Tail")) TailWave(clip, rig, 12f, period, 1);
+                // Front/back: rotating the legs barely reads, so the feet step instead --
+                // one foot up while the other is planted, hips leaning onto the planted one.
+                Wave(clip, rig, "Leg_L", Prop.PosY, 0.09f, period, 0f, liftOnly: true);
+                Wave(clip, rig, "Leg_R", Prop.PosY, 0.09f, period, Pi, liftOnly: true);
+                Wave(clip, rig, "Hips", Prop.Rot, 2.5f, period, 0f);
+                Wave(clip, rig, "Hips", Prop.PosY, 0.02f, period, 0f, 2, absolute: true);
+                Wave(clip, rig, "Arm_L", Prop.Rot, C.FrontArmSwing, period, 0f);
+                Wave(clip, rig, "Arm_R", Prop.Rot, C.FrontArmSwing, period, Pi);
+                if (rig.bones.ContainsKey("Tail")) TailWave(clip, rig, 8f, period, 1);
             }
         }
         else
@@ -538,6 +615,7 @@ public static class OtterRigSetup
                 if (rig.bones.ContainsKey(arm)) Wave(clip, rig, arm, Prop.Rot, 3f, period, arm.EndsWith("R") ? Pi : 0f);
             if (rig.bones.ContainsKey("Tail")) TailWave(clip, rig, 6f, period, 1);
         }
+        C.ExtraCurves?.Invoke(clip, rig, walk, period);
 
         var settings = AnimationUtility.GetAnimationClipSettings(clip);
         settings.loopTime = true;
@@ -624,7 +702,7 @@ public static class OtterRigSetup
         otter.transform.position = Vector3.zero;
         otter.AddComponent<OtterRigTestController>();
 
-        EditorSceneManager.SaveScene(scene, ScenePath);
+        EditorSceneManager.SaveScene(scene, C.ScenePath);
     }
 
     private static void EnsureFolder(string path)
