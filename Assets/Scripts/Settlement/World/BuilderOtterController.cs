@@ -7,7 +7,7 @@ using UnityEngine;
 /// 건설이 끝나면 다시 거닌다. 이 오브젝트의 위치 = 발밑.
 /// </summary>
 [RequireComponent(typeof(SpriteFrameAnimator))]
-public class BuilderOtterController : MonoBehaviour
+public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
 {
     // 클립 이름 — SettlementSetup이 SpriteFrameAnimator 클립을 이 이름으로 만든다
     public const string ClipIdle = "Idle";
@@ -23,6 +23,11 @@ public class BuilderOtterController : MonoBehaviour
     private const float StuckTimeMultiplier = 2f;
     private const float StuckGraceSeconds = 1f;
     private const float ArriveDistance = 0.05f;
+    // 다른 해달과 이만큼 가까이 멈춰 있으면 비켜 섬 / 목적지는 이만큼 떨어진 곳만
+    private const float OverlapDistance = 1f;
+    private const float FreeSpacing = 1.4f;
+    private const float OverlapRetrySeconds = 1.5f;
+    private float _nextOverlapCheck;
 
     [Header("걷기")]
     [Tooltip("초당 월드 단위")]
@@ -52,6 +57,13 @@ public class BuilderOtterController : MonoBehaviour
     private ConstructionSiteView _site;
 
     public bool IsWorking => _phase == Phase.Work;
+
+    public Vector2 Position => transform.position;
+    public Vector2 Goal => (_phase == Phase.Walk || _phase == Phase.ToWork) && _path.Count > 0 ? _path[_path.Count - 1] : Position;
+
+    private void OnEnable() => PlazaCrowd.Register(this);
+
+    private void OnDisable() => PlazaCrowd.Unregister(this);
 
     private void Awake()
     {
@@ -90,6 +102,11 @@ public class BuilderOtterController : MonoBehaviour
         {
             case Phase.Idle:
                 _timer -= Time.deltaTime;
+                if (_timer > 0f && Time.time >= _nextOverlapCheck && PlazaCrowd.IsOverlapping(this, OverlapDistance))
+                {
+                    _timer = 0f;
+                    _nextOverlapCheck = Time.time + OverlapRetrySeconds;
+                }
                 if (_timer <= 0f && !TryStartWander())
                     EnterIdle(RandomIn(_idleSeconds));
                 break;
@@ -133,6 +150,7 @@ public class BuilderOtterController : MonoBehaviour
             float min = Mathf.Min(_wanderDistance.x, _wanderDistance.y);
             float max = Mathf.Max(_wanderDistance.x, _wanderDistance.y);
             if (_area.TryPickDestination(from, min, max, out Vector2 destination)
+                && PlazaCrowd.IsFree(destination, FreeSpacing, this)
                 && _area.TryFindPath(from, destination, _path) && _path.Count > 0)
             {
                 BeginWalk(Phase.Walk, from);

@@ -160,6 +160,36 @@ def pebbles():
     return finish(im, W, H)
 
 
+# ── 공사 비계 (나무 기둥 + 발판 + 지붕 뼈대, 집 크기에 맞춰 늘려 씀) ──
+def scaffold():
+    W, H = 400, 440
+    im = canvas(W, H)
+    d = ImageDraw.Draw(im)
+    # 지붕 뼈대 (삼각형 서까래)
+    stick(d, (40, 150), (200, 30), 14, WOOD)
+    stick(d, (360, 150), (200, 30), 14, WOOD)
+    stick(d, (110, 98), (290, 98), 10, WOOD_LIGHT)
+    # 기둥
+    for x in (40, 150, 250, 360):
+        stick(d, (x, 150), (x, 425), 16, WOOD_DARK)
+    # 엇갈린 버팀목
+    stick(d, (40, 190), (150, 330), 9, WOOD_LIGHT)
+    stick(d, (250, 330), (360, 190), 9, WOOD_LIGHT)
+    # 발판 (가로 판자 두 층)
+    for y in (230, 340):
+        rrect(d, (22, y - 13, 378, y + 13), 8, WOOD_LIGHT, ow=5)
+        for x in range(60, 360, 60):
+            d.line((x * SS, (y - 8) * SS, x * SS, (y + 8) * SS), fill=WOOD_DARK, width=3 * SS)
+    # 사다리
+    stick(d, (300, 425), (318, 240), 7, WOOD)
+    stick(d, (330, 425), (348, 240), 7, WOOD)
+    for i in range(5):
+        y = 400 - i * 36
+        t = (425 - y) / 185
+        stick(d, (300 + 18 * t, y), (330 + 18 * t, y), 5, WOOD_LIGHT, ow=4)
+    return finish(im, W, H)
+
+
 # ── 공사 터 (주춧돌 + 말뚝) ──────────────────────────────
 def foundation():
     W, H = 380, 250
@@ -305,7 +335,6 @@ def main():
     save(bubble("hammer"), "UI_Bubble_Hammer")
     save(dust(), "FX_Dust")
     save(speech_bubble(), "UI_Bubble_Speech")
-    save(Image.new("RGBA", (8, 8), (255, 255, 255, 255)), "Mask_Square")
 
     # 얼굴: 방문 해달 시트는 240x260 칸, 광부는 걷기 시트 아래(앞모습) 줄
     save(portrait("Visitors/Snack.png", (0, 0, 240, 260), (20, 10, 220, 210)), "ICON_Otter_Snack")

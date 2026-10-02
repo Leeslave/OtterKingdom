@@ -21,8 +21,18 @@ using UnityEngine;
 // Tasks: AssignTask sends the otter to a spot (e.g. a house it is building)
 // where it stays in Play facing the work until ClearTask — the same look as
 // playing with a toy, without a toy reservation.
-public class OtterWanderAgent : MonoBehaviour
+//
+// Crowd: destinations near another otter (or where one is heading) are
+// skipped, and an idle otter standing on top of another one moves off
+// (PlazaCrowd). Passing each other while walking is fine.
+public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
 {
+    // Idle otters closer than this many body widths step aside.
+    private const float OverlapInWidths = 0.8f;
+    // After stepping aside (or failing to), wait this long before checking again.
+    private const float OverlapRetrySeconds = 1.5f;
+    private float nextOverlapCheck;
+
     public enum State { Idle, Walk, Play }
 
     // Walking to a task (e.g. building a house) is hurried, so the otter
@@ -54,6 +64,9 @@ public class OtterWanderAgent : MonoBehaviour
     private Vector2 taskLookPoint;
 
     public State CurrentState { get; private set; } = State.Idle;
+
+    public Vector2 Position => transform.position;
+    public Vector2 Goal => CurrentState == State.Walk && path.Count > 0 ? path[path.Count - 1] : Position;
     public float WalkSpeed { get; private set; }
     // Direction of the current path segment (zero while idle). Stable for a
     // whole segment, so visuals keyed off it don't jitter frame to frame.
@@ -99,6 +112,13 @@ public class OtterWanderAgent : MonoBehaviour
         {
             case State.Idle:
                 stateTimer -= Time.deltaTime;
+                // Standing on another otter: move off now instead of waiting out the idle
+                if (stateTimer > 0f && !hasTask && Time.time >= nextOverlapCheck
+                    && PlazaCrowd.IsOverlapping(this, settings.otterBodyWidth * OverlapInWidths))
+                {
+                    stateTimer = 0f;
+                    nextOverlapCheck = Time.time + OverlapRetrySeconds;
+                }
                 if (stateTimer <= 0f && !TryStartWalk())
                 {
                     EnterIdle(settings.RollIdleSeconds());
@@ -125,8 +145,14 @@ public class OtterWanderAgent : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        PlazaCrowd.Register(this);
+    }
+
     private void OnDisable()
     {
+        PlazaCrowd.Unregister(this);
         ReleasePlay();
     }
 
@@ -180,6 +206,10 @@ public class OtterWanderAgent : MonoBehaviour
         for (int i = 0; i < settings.maxDestinationTries; i++)
         {
             if (!area.TryPickDestination(from, settings.MinDestinationDistance, settings.MaxDestinationDistance, out Vector2 destination))
+            {
+                continue;
+            }
+            if (!PlazaCrowd.IsFree(destination, settings.SpawnSpacing, this))
             {
                 continue;
             }
