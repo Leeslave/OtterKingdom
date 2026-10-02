@@ -71,8 +71,28 @@ public class ProfileManager : MonoBehaviour
 
         _reached.Clear();
         Progress.AddExp(amount, _levelTable, _reached);
-        SyncProfile();
+        AnnounceReached();
+    }
 
+    /// <summary>경험치로 오를 수 있는 레벨 (정착 발전 전 제한). SettlementManager가 정한다</summary>
+    public void SetLevelCap(int cap)
+    {
+        _reached.Clear();
+        Progress.SetCap(cap, _levelTable, _reached);
+        AnnounceReached();
+    }
+
+    /// <summary>큰 발전을 끝내 그 레벨까지 바로 오름 (모자란 경험치를 채워 줌)</summary>
+    public void ReachLevel(int level)
+    {
+        _reached.Clear();
+        Progress.ReachLevel(level, _levelTable, _reached);
+        AnnounceReached();
+    }
+
+    private void AnnounceReached()
+    {
+        SyncProfile();
         foreach (int level in _reached)
         {
             GiveLevelReward(level);

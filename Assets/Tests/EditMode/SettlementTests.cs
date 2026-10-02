@@ -99,7 +99,7 @@ public class SettlementTests
     private BoardRequestDefinition Request(string id, int order, string requiredDevelopment, int minResidents,
         ConstructionDefinition construction, SettlementOtterDefinition[] settles = null,
         (SettlementOtterDefinition otter, ResidentState state)[] arrivals = null, int stage = -1,
-        GuestbookEntryDefinition completionEntry = null)
+        GuestbookEntryDefinition completionEntry = null, int kingdomLevel = 0, ZoneDefinition clearZone = null)
     {
         var request = Create<BoardRequestDefinition>();
         var so = new SerializedObject(request);
@@ -110,6 +110,8 @@ public class SettlementTests
         so.FindProperty("_construction").objectReferenceValue = construction;
         so.FindProperty("_stageOnComplete").intValue = stage;
         so.FindProperty("_completionEntry").objectReferenceValue = completionEntry;
+        so.FindProperty("_kingdomLevel").intValue = kingdomLevel;
+        so.FindProperty("_clearZone").objectReferenceValue = clearZone;
         SetList(so.FindProperty("_settles"), settles ?? new SettlementOtterDefinition[0]);
 
         var list = so.FindProperty("_arrivals");
@@ -232,6 +234,29 @@ public class SettlementTests
 
         Assert.AreEqual(2, settlement.CountGatherRegrown(100, 200));
         Assert.AreEqual(0, settlement.CountGatherRegrown(200, 200), "비운 시간이 0이면 없음");
+    }
+
+    [Test]
+    public void LevelCap_StaysBelowNextUnfinishedMilestone()
+    {
+        var mine = Create<ZoneDefinition>();
+        var chair = Request("req_chair", 1, "house_1", 0, Construction("con_chair", "chair", 8f, false), kingdomLevel: 2);
+        var minePath = Request("req_mine_path", 2, "chair", 0, Construction("con_mine_path", "mine_cleared", 0f, false),
+            kingdomLevel: 3, clearZone: mine);
+        var so = new SerializedObject(_config);
+        SetList(so.FindProperty("_requests"), _house1, chair, minePath, _house2, _farmland);
+        so.ApplyModifiedPropertiesWithoutUndo();
+        var settlement = new Settlement();
+
+        Assert.AreEqual(1, SettlementRules.LevelCap(_config, settlement), "의자 전에는 Lv.1");
+        Assert.AreSame(minePath, SettlementRules.FindClearing(_config, mine));
+        Assert.IsNull(SettlementRules.FindClearing(_config, null));
+
+        settlement.CompleteRequest("req_chair", "chair");
+        Assert.AreEqual(2, SettlementRules.LevelCap(_config, settlement), "광산 길 전에는 Lv.2");
+
+        settlement.CompleteRequest("req_mine_path", "mine_cleared");
+        Assert.AreEqual(int.MaxValue, SettlementRules.LevelCap(_config, settlement), "다 끝내면 제한 없음");
     }
 
     [Test]

@@ -765,6 +765,10 @@ public class GameManager : MonoBehaviour
         yield return null;
         var navigator = FindAnyObjectByType<SceneNavigator>();
         while (gameUI.IsModalOpen || (navigator != null && navigator.IsTraveling)) yield return null;
+        // A zone that still has to be cleared (the mine before its path is
+        // open) teaches its real controls only after the player opens it.
+        while (ZoneClearingView.IsWaiting) yield return null;
+        while (gameUI.IsModalOpen) yield return null;
 
         TutorialOverlay.Play(ZoneTutorials.For(CurrentZoneId, gameUI), CompleteZoneTutorial);
     }
@@ -813,6 +817,18 @@ public class GameManager : MonoBehaviour
     public void ShowConfirm(string title, string message, Action onYes)
     {
         gameUI.ShowConfirm(title, message, onYes);
+    }
+
+    // Bottom speech bubble (e.g. "길을 막은 나무와 돌을 톡톡 눌러 치워요!"
+    // while a zone still has to be cleared).
+    public void ShowGuide(string message)
+    {
+        gameUI.ShowGuide(message);
+    }
+
+    public void HideGuide()
+    {
+        gameUI.HideGuide();
     }
 
     // Called once by the fishing scene; the farm scene has no rod button.

@@ -116,6 +116,35 @@ public static class SettlementRules
         settlement.ClearLegacyFlag();
     }
 
+    /// <summary>
+    /// 경험치로 오를 수 있는 왕국 레벨: 아직 안 끝낸 큰 발전(KingdomLevel이 있는 부탁) 중 가장 낮은 것의 바로 아래.
+    /// 다 끝냈으면 제한 없음(int.MaxValue)
+    /// </summary>
+    public static int LevelCap(SettlementConfig config, Settlement settlement)
+    {
+        int cap = int.MaxValue;
+        foreach (var request in config.Requests)
+        {
+            if (request == null || request.KingdomLevel <= 0 || settlement.IsCompleted(request.RequestId))
+                continue;
+            cap = Math.Min(cap, Math.Max(1, request.KingdomLevel - 1));
+        }
+        return cap;
+    }
+
+    /// <summary>이 장소를 직접 치우는 부탁 (없으면 null)</summary>
+    public static BoardRequestDefinition FindClearing(SettlementConfig config, ZoneDefinition zone)
+    {
+        if (zone == null)
+            return null;
+        foreach (var request in config.Requests)
+        {
+            if (request != null && request.ClearZone == zone)
+                return request;
+        }
+        return null;
+    }
+
     /// <summary>지금 게시판에서 다음으로 할 부탁 (건설 중인 것 우선, 없으면 열린 것 중 순서가 빠른 것). 없으면 null</summary>
     public static BoardRequestDefinition FindCurrent(SettlementConfig config, Settlement settlement)
     {

@@ -26,6 +26,7 @@ public static partial class SettlementSetup
     private const string ItemDatabasePath = "Assets/Scriptable Obejects/Inventory/ItemDatabase.asset";
     private const string GoldPath = "Assets/Scriptable Obejects/Gold.asset";
     private const string GemPath = "Assets/Scriptable Obejects/Gem.asset";
+    private const string MineZonePath = "Assets/Scriptable Obejects/Navigation/Zone_Mine.asset";
     private const string PlazaPrefabFolder = "Assets/Prefabs/Plaza";
 
     // 왕국 단계 이름 (상단바 아래 칩)
@@ -60,6 +61,8 @@ public static partial class SettlementSetup
     {
         ("gb_first_arrival", "otter_first", "첫 방문", "바닷바람이 포근한 곳이네요.\n여기 머물러도 될까요?"),
         ("gb_first_settle", "otter_first", "정착", "작은 집이 생겼어요!\n오늘부터 여기가 우리 집이에요."),
+        ("gb_chair", "otter_first", "발견", "의자에 앉아 쉬다 보니\n숲 너머에 동굴이 보여요!"),
+        ("gb_mine_open", "otter_first", "개척", "광산 길이 열렸어요!\n이제 돌을 캘 수 있어요."),
         ("gb_painter_arrival", "otter_painter", "방문", "광장이 예뻐서 그림 그리러 왔어요.\n저도 여기 살고 싶어요!"),
         ("gb_sleepy_arrival", "otter_sleepy", "방문", "햇살이 따뜻해서…\n낮잠 자기 딱 좋네요."),
         ("gb_builder_arrival", "otter_builder", "도착", "집 짓는 건 저한테 맡겨요!\n뚝딱뚝딱!"),
@@ -73,29 +76,42 @@ public static partial class SettlementSetup
     {
         ("con_house_1", "작은 집", "ICON_House_Blue", ConstructionTarget.House, 0, 8, 5, 10f, false,
             "작은 집 짓는 중", "다 지으면 몽실이가 정착해요", "house_1"),
+        ("con_chair", "나무 그늘 의자", "ICON_Chair", ConstructionTarget.House, 50, 6, 0, 8f, false,
+            "의자 만드는 중", "다 만들면 몽실이가 쉴 수 있어요", "chair"),
+        ("con_mine_path", "광산 길 열기", "ICON_MinePath", ConstructionTarget.Clearing, 0, 0, 0, 0f, false,
+            "", "", "mine_cleared"),
         ("con_house_2", "새 이웃의 집", "ICON_House_Red", ConstructionTarget.House, 150, 18, 8, 30f, true,
             "새 이웃의 집 짓는 중", "다 지으면 새 이웃이 정착해요", "house_2"),
         ("con_farmland", "농경지 개간", "ICON_Clearing", ConstructionTarget.Clearing, 200, 16, 10, 45f, true,
             "농경지 개간 중", "완료하면 첫 밭이 열려요", "farmland"),
     };
 
-    // (ID, 순서, 제목, 설명, 아이콘, 부탁한 해달, 필요 발전, 필요 주민, 건설, 정착, 찾아옴(해달:상태), 단계, 완료 기록, 완료 문구)
+    // 개척 기획(2026-10-02): 첫 집 → 의자(왕국 Lv.2, 동굴 발견) → 광산 길 열기(직접 치움, Lv.3, 새 해달) → 새 이웃의 집 → 농경지
+    // (ID, 순서, 제목, 설명, 아이콘, 부탁한 해달, 필요 발전, 필요 주민, 건설, 정착, 찾아옴(해달:상태), 단계, 완료 기록, 완료 문구, 왕국 레벨, 직접 치울 장소)
     private static readonly (string id, int order, string title, string description, string icon, string requester,
         string requires, int residents, string construction, string[] settles, (string otter, ResidentState state)[] arrivals,
-        int stage, string entry, string message)[] Requests =
+        int stage, string entry, string message, int level, string zone)[] Requests =
     {
         ("req_first_house", 0, "첫 번째 집 만들기", "몽실이가 머물 작은 집이 필요해요.\n목재와 돌로 지어 줘요.", "ICON_House_Blue",
             "otter_first", "", 0, "con_house_1", new[] { "otter_first" },
-            new[] { ("otter_painter", ResidentState.SettlementCandidate), ("otter_sleepy", ResidentState.Visitor), ("otter_builder", ResidentState.SpecialNpc) },
-            1, "gb_first_settle", "첫 주민이 정착했어요!"),
-        ("req_neighbor_house", 1, "새 이웃의 집", "물감이가 이웃이 되고 싶대요.\n건설 해달과 집을 지어 줘요.", "ICON_House_Red",
+            new[] { ("otter_sleepy", ResidentState.Visitor) },
+            1, "gb_first_settle", "첫 주민이 정착했어요!", 0, ""),
+        ("req_chair", 1, "쉬어 갈 의자", "몽실이가 나무 그늘에서 쉴 의자를 갖고 싶대요.\n목재와 골드로 만들어 줘요.", "ICON_Chair",
+            "otter_first", "house_1", 0, "con_chair", new string[0],
+            new (string, ResidentState)[0],
+            -1, "gb_chair", "의자 완성! 몽실이가 숲 너머에서\n동굴을 발견했어요.", 2, ""),
+        ("req_mine_path", 2, "광산 길 열기", "몽실이가 찾은 동굴은 광산이었어요!\n길을 막은 나무와 돌을 치워 줘요.", "ICON_MinePath",
+            "otter_first", "chair", 0, "con_mine_path", new string[0],
+            new[] { ("otter_painter", ResidentState.SettlementCandidate), ("otter_builder", ResidentState.SpecialNpc) },
+            -1, "gb_mine_open", "광산 길이 열렸어요!\n소식을 듣고 새 해달들이 찾아왔어요.", 3, MineZonePath),
+        ("req_neighbor_house", 3, "새 이웃의 집", "물감이가 이웃이 되고 싶대요.\n건설 해달과 집을 지어 줘요.", "ICON_House_Red",
             "otter_painter", PainterIntroDevelopment, 0, "con_house_2", new[] { "otter_painter", "otter_builder" },
             new (string, ResidentState)[0],
-            2, "gb_neighbor_settle", "새 이웃이 정착했어요!\n주민이 3명이 됐어요."),
-        ("req_farmland", 2, "먹거리를 길러요", "주민이 늘었어요.\n농경지를 개간해 밭을 만들어요.", "ICON_Clearing",
+            2, "gb_neighbor_settle", "새 이웃이 정착했어요!\n주민이 3명이 됐어요.", 0, ""),
+        ("req_farmland", 4, "먹거리를 길러요", "주민이 늘었어요.\n농경지를 개간해 밭을 만들어요.", "ICON_Clearing",
             "otter_first", "house_2", 3, "con_farmland", new string[0],
             new (string, ResidentState)[0],
-            3, "gb_farmland", "농경지가 열렸어요!\n이제 밭에 갈 수 있어요."),
+            3, "gb_farmland", "농경지가 열렸어요!\n이제 밭에 갈 수 있어요.", 0, ""),
     };
 
     // 새 게임 시작 재료 = 첫 집 비용 (시안 1: 목재 8, 돌 5)
@@ -212,6 +228,9 @@ public static partial class SettlementSetup
             so.FindProperty("_stageOnComplete").intValue = r.stage;
             so.FindProperty("_completionEntry").objectReferenceValue = entries[r.entry];
             so.FindProperty("_completionMessage").stringValue = r.message;
+            so.FindProperty("_kingdomLevel").intValue = r.level;
+            so.FindProperty("_clearZone").objectReferenceValue =
+                string.IsNullOrEmpty(r.zone) ? null : AssetDatabase.LoadAssetAtPath<ZoneDefinition>(r.zone);
             so.ApplyModifiedPropertiesWithoutUndo();
             requests.Add(request);
         }
