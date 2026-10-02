@@ -239,10 +239,19 @@ public class SettlementPlazaView : MonoBehaviour
         return true;
     }
 
+    // 다른 해달과 겹치지 않는 자리 (못 찾으면 겹쳐도 아무 데나)
     private bool TryFindSpawnPoint(bool arriving, out Vector2 position)
     {
         var anchor = arriving && _arrivalPoint != null ? _arrivalPoint : _gatherPoint;
         float radius = _plazaSettings.SpawnNearCameraRadius;
+        for (int i = 0; i < 20; i++)
+        {
+            bool found = anchor != null
+                ? _walkableArea.TryGetRandomPointNear(anchor.position, radius, 5, out position)
+                : _walkableArea.TryGetRandomPoint(out position);
+            if (found && PlazaCrowd.IsFree(position, _plazaSettings.SpawnSpacing, null))
+                return true;
+        }
         if (anchor != null && _walkableArea.TryGetRandomPointNear(anchor.position, radius, 20, out position))
             return true;
         return _walkableArea.TryGetRandomPoint(out position);

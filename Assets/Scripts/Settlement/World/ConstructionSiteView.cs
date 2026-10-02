@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 공사 현장 한 곳 (집 터, 농경지 개간 자리). 진행 비율에 따라 공사 과정을 보여 준다.
-/// - 집: 주춧돌 → 집이 아래에서부터 올라옴(마스크) + 공사 먼지 → 완성되면 먼지가 펑 (진짜 집은 DevelopmentGate가 띄움)
+/// 공사 현장 한 곳 (집 터, 농경지 개간 자리). 진행 비율에 따라 공사 과정을 단계로 보여 준다.
+/// - 집: 주춧돌 → 단계 그림(골조 → 벽 → 마무리, 완성될 집과 같은 크기)을 차례로 바꿔 끼움 → 완성되면 먼지가 펑
+///   (진짜 집은 DevelopmentGate가 띄움). 단계가 바뀔 때마다 통 튀고 먼지가 남
 /// - 개간: 치울 것(덤불·돌·통나무)이 순서대로 먼지와 함께 사라짐
 /// 건설 해달이 설 자리와 진행 말풍선 위치도 알려 준다.
 /// </summary>
 public class ConstructionSiteView : MonoBehaviour
 {
-    // 이 비율까지는 주춧돌만, 그 뒤로 집이 올라옴
-    private const float FoundationOnlyUntil = 0.12f;
+    // 단계 그림이 바뀌는 진행 비율 (그 전까지는 주춧돌만). 그림이 적으면 앞에서부터 씀
+    private static readonly float[] StageFrom = { 0.15f, 0.45f, 0.8f };
+    private const float BounceSeconds = 0.3f;
     private const float DustInterval = 0.45f;
     private const float DustSeconds = 0.7f;
     private const int DustPool = 8;
@@ -28,17 +31,14 @@ public class ConstructionSiteView : MonoBehaviour
     [SerializeField] private Transform _bubbleAnchor;
 
     [Header("집 짓기")]
-    [Tooltip("건설 중에만 보이는 터 (주춧돌). 없어도 됨")]
+    [Tooltip("건설 예정지 (바닥에 깔린 터·말뚝). 공사를 시작해 첫 단계 그림이 나오기 전까지만 보임. 없어도 됨")]
     [SerializeField] private GameObject _scaffold;
 
-    [Tooltip("올라오는 집 그림 (완성될 집과 같은 그림). 없으면 터만")]
-    [SerializeField] private SpriteRenderer _rising;
+    [Tooltip("단계 그림을 그릴 곳 (완성될 집과 같은 자리·크기·정렬). 없으면 터만")]
+    [SerializeField] private SpriteRenderer _stage;
 
-    [Tooltip("올라오는 집을 아래부터 보여 줄 마스크 (발밑 피벗, 세로 크기 = 보이는 높이)")]
-    [SerializeField] private SpriteMask _revealMask;
-
-    [Tooltip("집 전체 높이 (월드 단위)")]
-    [SerializeField] private float _riseHeight = 4f;
+    [Tooltip("공사 단계 그림 (골조 → 벽 → 마무리)")]
+    [SerializeField] private List<Sprite> _stageSprites = new List<Sprite>();
 
     [Header("개간")]
     [Tooltip("진행에 따라 순서대로 치워질 것 (덤불 → 돌 → 통나무)")]
@@ -67,6 +67,8 @@ public class ConstructionSiteView : MonoBehaviour
     private bool _building;
     private float _dustTimer;
     private int _baseOrder;
+    private Vector3 _stageScale;
+    private int _stageIndex = -1;
 
     private void Awake()
     {
@@ -79,8 +81,11 @@ public class ConstructionSiteView : MonoBehaviour
             go.SetActive(false);
             _dust.Add(new Dust { Renderer = renderer, Age = DustSeconds });
         }
-        if (_rising != null)
-            _rising.gameObject.SetActive(false);
+        if (_stage != null)
+        {
+            _stageScale = _stage.transform.localScale;
+            _stage.gameObject.SetActive(false);
+        }
         _baseOrder = PlazaDepth.SortingOrderFor(transform.position.y);
     }
 
@@ -102,33 +107,28 @@ public class ConstructionSiteView : MonoBehaviour
     public void SetBuilding(bool building)
     {
         _building = building;
-        if (_scaffold != null && _scaffold.activeSelf != building)
-            _scaffold.SetActive(building);
-        if (_rising != null && !building && _rising.gameObject.activeSelf)
-            _rising.gameObject.SetActive(false);
+        if (!building && _stage != null)
+        {
+            _stage.gameObject.SetActive(false);
+            _stageIndex = -1;
+        }
+        UpdateSite();
     }
 
-    /// <summary>진행 비율(0~1)에 맞춰 집을 올리고 치울 것을 치움</summary>
-    /// <param name="animate">false면 먼지 없이 바로 맞춤 (씬을 열었을 때)</param>
+    // 건설 예정지는 단계 그림이 나오면 숨김 (단계 그림에 돌 기초가 들어 있음)
+    private void UpdateSite()
+    {
+        bool visible = _building && _stageIndex < 0;
+        if (_scaffold != null && _scaffold.activeSelf != visible)
+            _scaffold.SetActive(visible);
+    }
+
+    /// <summary>진행 비율(0~1)에 맞춰 공사 단계를 보여 주고 치울 것을 치움</summary>
+    /// <param name="animate">false면 먼지·튀기 없이 바로 맞춤 (씬을 열었을 때)</param>
     public void SetProgress(float progress, bool animate)
     {
-        if (_rising != null)
-        {
-            float rise = Mathf.InverseLerp(FoundationOnlyUntil, 1f, progress);
-            bool visible = rise > 0f;
-            if (_rising.gameObject.activeSelf != visible)
-                _rising.gameObject.SetActive(visible);
-            if (visible)
-            {
-                var scale = _revealMask.transform.localScale;
-                scale.y = _riseHeight * rise;
-                _revealMask.transform.localScale = scale;
-                // 마스크가 올라오는 집에만 걸리도록 그 집의 그리는 순서 앞뒤로 범위를 둠
-                _revealMask.isCustomRangeActive = true;
-                _revealMask.frontSortingOrder = _rising.sortingOrder + 1;
-                _revealMask.backSortingOrder = _rising.sortingOrder - 1;
-            }
-        }
+        if (_stage != null)
+            ShowStage(StageIndexFor(progress), animate);
 
         for (int i = 0; i < _clearTargets.Count; i++)
         {
@@ -146,6 +146,51 @@ public class ConstructionSiteView : MonoBehaviour
 
     /// <summary>완성 순간 먼지가 펑</summary>
     public void PlayCompleteBurst() => Burst(transform.position, BurstCount);
+
+    // 이 진행 비율에서 보일 단계 그림 번호 (-1이면 주춧돌만)
+    private int StageIndexFor(float progress)
+    {
+        int index = -1;
+        int count = Mathf.Min(_stageSprites.Count, StageFrom.Length);
+        for (int i = 0; i < count; i++)
+        {
+            if (progress >= StageFrom[i])
+                index = i;
+        }
+        return index;
+    }
+
+    // 단계가 바뀌면 그림을 바꿔 끼우고, 통 튀며 먼지가 남
+    private void ShowStage(int index, bool animate)
+    {
+        if (index == _stageIndex)
+            return;
+        _stageIndex = index;
+        UpdateSite();
+
+        bool visible = index >= 0 && _stageSprites[index] != null;
+        _stage.gameObject.SetActive(visible);
+        if (!visible)
+            return;
+        _stage.sprite = _stageSprites[index];
+        if (!animate)
+            return;
+        StartCoroutine(Bounce(_stage.transform, _stageScale));
+        Burst(transform.position, 5);
+    }
+
+    // 바닥에 닿은 채로 0.85 → 1.08 → 1 (통 세워지는 느낌)
+    private IEnumerator Bounce(Transform target, Vector3 baseScale)
+    {
+        for (float t = 0f; t < BounceSeconds; t += Time.deltaTime)
+        {
+            float k = t / BounceSeconds;
+            float s = k < 0.6f ? Mathf.Lerp(0.85f, 1.08f, k / 0.6f) : Mathf.Lerp(1.08f, 1f, (k - 0.6f) / 0.4f);
+            target.localScale = new Vector3(baseScale.x, baseScale.y * s, baseScale.z);
+            yield return null;
+        }
+        target.localScale = baseScale;
+    }
 
     #region 먼지
 

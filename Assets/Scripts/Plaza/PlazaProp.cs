@@ -16,6 +16,17 @@ public class PlazaProp : MonoBehaviour
 {
     [Tooltip("Lies flat on the ground (e.g. picnic mat): always drawn under otters instead of Y-sorted.")]
     [SerializeField] private bool flat;
+    [Tooltip("Sort as if the ground contact were this far up (world units). For big slanted props (houses) whose pivot is the front-bottom corner: an otter standing in front of a side wall is above that corner, so it would be hidden. Set to about the middle of the footprint.")]
+    [SerializeField] private float depthOffset;
+
+    public float DepthOffset => depthOffset;
+
+    // Runtime copies (a house being built) sort like the real prop.
+    public void SetDepthOffset(float offset)
+    {
+        depthOffset = offset;
+        ApplySorting();
+    }
 
     private SpriteRenderer spriteRenderer;
     private float sortedY = float.NaN;
@@ -34,6 +45,6 @@ public class PlazaProp : MonoBehaviour
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
         sortedY = transform.position.y;
-        spriteRenderer.sortingOrder = flat ? PlazaDepth.FlatPropOrder : PlazaDepth.SortingOrderFor(sortedY);
+        spriteRenderer.sortingOrder = flat ? PlazaDepth.FlatPropOrder : PlazaDepth.SortingOrderFor(sortedY + depthOffset);
     }
 }

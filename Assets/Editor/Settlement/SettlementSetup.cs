@@ -312,7 +312,6 @@ public static partial class SettlementSetup
         ("UI_Bubble_Hammer", 0.85f, 0f),
         ("FX_Dust", 0.9f, 0.5f),
         ("UI_Bubble_Speech", 1.75f, 0f), // 해달 말풍선 (꼬리 끝 피벗, 머리 위에 붙음)
-        ("Mask_Square", 1f, 0f), // 1×1 유닛, 발밑 피벗 (올라오는 집을 아래부터 보여 줄 마스크)
     };
 
     private static void ImportArt()

@@ -110,7 +110,7 @@ public static partial class SettlementSetup
                 Debug.LogError($"[SettlementSetup] 광장에 {h.prop} 소품이 없어 {h.site}를 만들지 못했습니다.");
                 continue;
             }
-            siteViews.Add(BuildHouseSite(root, h.site, h.construction, house.GetComponent<SpriteRenderer>()));
+            siteViews.Add(BuildHouseSite(root, h.site, h.construction, house.GetComponent<SpriteRenderer>(), FootprintDepthOffset(house)));
         }
         var clearTargets = BuildFarmPath(root, ToWorld);
         siteViews.Add(BuildClearingSite(root, ToWorld(FarmlandPixel), ToWorld(FarmlandStandPixel), ToWorld(FarmlandBubblePixel), clearTargets));
@@ -219,12 +219,35 @@ public static partial class SettlementSetup
                     break;
                 }
             }
+            // 비스듬한 큰 건물: 앞 모서리가 아니라 발자국 가운데를 기준으로 정렬 (벽 앞 해달이 가려지지 않게)
+            if (kind.StartsWith("House"))
+            {
+                var propSo = new SerializedObject(prop.GetComponent<PlazaProp>());
+                propSo.FindProperty("depthOffset").floatValue = FootprintDepthOffset(prop);
+                propSo.ApplyModifiedPropertiesWithoutUndo();
+            }
         }
         for (int i = 0; i < PropGates.Length; i++)
         {
             if (!matched.Contains(i))
                 Debug.LogWarning($"[SettlementSetup] 발전 조건을 붙일 소품을 못 찾음: {PropGates[i].prop} ({PropGates[i].x}, {PropGates[i].y})");
         }
+    }
+
+    /// <summary>발자국(Blocked 다각형) 꼭짓점의 가운데 높이 − 발밑 높이 (월드 단위). 발자국이 없으면 0</summary>
+    private static float FootprintDepthOffset(Transform prop)
+    {
+        var footprint = prop.GetComponentInChildren<PlazaAreaPolygon>(true);
+        if (footprint == null)
+            return 0f;
+        var points = new List<Vector2>();
+        footprint.GetWorldPoints(points);
+        if (points.Count == 0)
+            return 0f;
+        float sum = 0f;
+        foreach (var p in points)
+            sum += p.y;
+        return sum / points.Count - prop.position.y;
     }
 
     private static SpriteRenderer CreateSprite(string name, Transform parent, Sprite sprite, Vector3 position, bool sorted)
@@ -352,9 +375,12 @@ public static partial class SettlementSetup
         return (view, so);
     }
 
-    // 집 터: 주춧돌 + 아래부터 올라오는 집(완성될 소품과 같은 그림·크기) + 마스크
-    private static ConstructionSiteView BuildHouseSite(Transform root, string name, string constructionId, SpriteRenderer house)
+    // 집 터: 주춧돌 + 단계 그림(골조 → 벽 → 마무리, Tools/UIGen/house_stages.py가 완성 집 그림으로 만듦)
+    // 단계 그림은 완성 집과 같은 자리·크기·정렬로 그려서, 완성되는 순간 진짜 집으로 자연스럽게 바뀜
+    private static ConstructionSiteView BuildHouseSite(Transform root, string name, string constructionId, SpriteRenderer house, float depthOffset)
     {
+        // 소품 이름(House_Blue_01) → 단계 그림 이름(Stage_House_Blue_1~3)
+        string houseName = house.name.Substring(0, house.name.LastIndexOf('_'));
         var bounds = house.bounds;
         Vector3 basePoint = house.transform.position;
         // 해달은 집 왼쪽 앞에서 일하고, 진행 말풍선은 집 아래 (말풍선이 집을 가리지 않게)
@@ -363,36 +389,83 @@ public static partial class SettlementSetup
         var (view, so) = CreateSite(root, name, constructionId, basePoint, stand, bubble, bounds.size.x * 0.8f);
         var site = view.transform;
 
-        var foundationSprite = LoadPropArt("Prop_Foundation");
-        var foundation = CreateSprite("Scaffold", site, foundationSprite, basePoint, true);
-        foundation.transform.localScale = Vector3.one * (bounds.size.x * 1.15f / foundationSprite.bounds.size.x);
+        // 건설 예정지 (0단계): 단계 그림과 같은 자리·크기로 바닥에 깖. 그림이 아직 없으면 예전 주춧돌 그림을 집 그림 가운데에
+        var siteSprite = ImportStageSprite($"Stage_{houseName}_0", house.sprite);
+        SpriteRenderer foundation;
+        if (siteSprite != null)
+        {
+            foundation = CreateSprite("Scaffold", site, siteSprite, basePoint, true);
+            foundation.transform.localScale = house.transform.lossyScale;
+            foundation.flipX = house.flipX;
+        }
+        else
+        {
+            var foundationSprite = LoadPropArt("Prop_Foundation");
+            foundation = CreateSprite("Scaffold", site, foundationSprite, new Vector3(bounds.center.x, basePoint.y, 0f), true);
+            foundation.transform.localScale = Vector3.one * (bounds.size.x * 1.15f / foundationSprite.bounds.size.x);
+        }
         var propSo = new SerializedObject(foundation.GetComponent<PlazaProp>());
         propSo.FindProperty("flat").boolValue = true; // 바닥에 깔린 터: 해달이 위로 지나감
         propSo.ApplyModifiedPropertiesWithoutUndo();
         foundation.gameObject.SetActive(false);
 
-        var rising = CreateSprite("Rising", site, house.sprite, basePoint, true);
-        rising.transform.localScale = house.transform.lossyScale;
-        rising.flipX = house.flipX;
-        rising.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-        rising.gameObject.SetActive(false);
+        var stages = new List<Sprite>();
+        for (int i = 1; i <= 3; i++)
+        {
+            var sprite = ImportStageSprite($"Stage_{houseName}_{i}", house.sprite);
+            if (sprite != null)
+                stages.Add(sprite);
+        }
 
-        var maskGo = new GameObject("RevealMask");
-        maskGo.transform.SetParent(site, false);
-        maskGo.transform.position = new Vector3(bounds.center.x, bounds.min.y - 0.05f, 0f);
-        maskGo.transform.localScale = new Vector3(bounds.size.x * 1.2f, 0f, 1f);
-        var mask = maskGo.AddComponent<SpriteMask>();
-        mask.sprite = LoadPropArt("Mask_Square");
+        var stage = CreateSprite("Stage", site, stages.Count > 0 ? stages[0] : house.sprite, basePoint, true);
+        stage.transform.localScale = house.transform.lossyScale;
+        stage.flipX = house.flipX;
+        SetDepthOffset(stage, depthOffset);
+        stage.gameObject.SetActive(false);
 
         // 집이 생길 자리에는 장난감을 못 놓게
         AddDecorBlock(site, new Vector2(bounds.center.x - basePoint.x, bounds.size.y * 0.25f), new Vector2(bounds.size.x, bounds.size.y * 0.5f));
 
         so.FindProperty("_scaffold").objectReferenceValue = foundation.gameObject;
-        so.FindProperty("_rising").objectReferenceValue = rising;
-        so.FindProperty("_revealMask").objectReferenceValue = mask;
-        so.FindProperty("_riseHeight").floatValue = bounds.size.y + 0.1f;
+        so.FindProperty("_stage").objectReferenceValue = stage;
+        var stageList = so.FindProperty("_stageSprites");
+        stageList.arraySize = stages.Count;
+        for (int i = 0; i < stages.Count; i++)
+            stageList.GetArrayElementAtIndex(i).objectReferenceValue = stages[i];
         so.ApplyModifiedPropertiesWithoutUndo();
         return view;
+    }
+
+    // 단계 그림은 완성 집 그림과 같은 크기라, 완성 집 스프라이트의 PPU·피벗을 그대로 써서 겹쳐 보이게 함
+    private static Sprite ImportStageSprite(string name, Sprite house)
+    {
+        string path = $"{ArtFolder}/{name}.png";
+        if (!System.IO.File.Exists(path))
+        {
+            Debug.LogWarning($"[SettlementSetup] 공사 단계 그림이 없습니다: {path} (python Tools/UIGen/house_stages.py)");
+            return null;
+        }
+        AssetDatabase.ImportAsset(path);
+        var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Single;
+        importer.alphaIsTransparency = true;
+        importer.mipmapEnabled = false;
+        importer.spritePixelsPerUnit = house.pixelsPerUnit;
+        var settings = new TextureImporterSettings();
+        importer.ReadTextureSettings(settings);
+        settings.spriteAlignment = (int)SpriteAlignment.Custom;
+        settings.spritePivot = new Vector2(house.pivot.x / house.rect.width, house.pivot.y / house.rect.height);
+        importer.SetTextureSettings(settings);
+        importer.SaveAndReimport();
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
+    private static void SetDepthOffset(SpriteRenderer renderer, float offset)
+    {
+        var propSo = new SerializedObject(renderer.GetComponent<PlazaProp>());
+        propSo.FindProperty("depthOffset").floatValue = offset;
+        propSo.ApplyModifiedPropertiesWithoutUndo();
     }
 
     // 개간 현장: 진행에 따라 덤불 → 돌 → 통나무가 하나씩 치워짐
