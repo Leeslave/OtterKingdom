@@ -58,6 +58,9 @@ public class SettlementManager : MonoBehaviour
     /// <summary>게시판을 열어 달라는 부탁 (광장 게시판·안내 띠). 게시판 화면이 듣는다. 인자: 부탁 탭으로 열지</summary>
     public event Action<bool> OnBoardRequested;
 
+    // 끝난 건설 (부탁, 끝난 시각). 돌아옴 팝업이 자리를 비운 동안 끝난 것만 골라 알리고 비운다
+    private readonly List<(BoardRequestDefinition request, long endTicks)> _finishedJobs = new List<(BoardRequestDefinition, long)>();
+
     private void Awake()
     {
         // 중복은 GlobalUIRoot가 먼저 꺼서 여기까지 오지 않지만, 혹시 모를 경우를 대비
@@ -210,6 +213,7 @@ public class SettlementManager : MonoBehaviour
             SaveRequested?.Invoke();
             return;
         }
+        _finishedJobs.Add((request, job.EndUtcTicks));
         Complete(request);
     }
 
@@ -286,6 +290,71 @@ public class SettlementManager : MonoBehaviour
         Settlement.SetGatherReady(pointId, NowTicks + TimeSpan.FromSeconds(cooldownSeconds).Ticks);
         SaveRequested?.Invoke();
         return added;
+    }
+
+    #endregion
+
+    #region 자리를 비운 동안
+
+    /// <summary>
+    /// 돌아옴 팝업의 마을 소식: 비운 동안 다 지은 건설, 아직 짓는 중인 건설, 다시 생긴 줍기 자리.
+    /// 다 지은 건설은 한 번만 알린다. 소식이 없으면 아무것도 넣지 않는다
+    /// </summary>
+    public void CollectAbsenceNews(double absenceSeconds, List<string> lines)
+    {
+        if (lines == null)
+            throw new ArgumentNullException(nameof(lines));
+        if (!IsLoaded)
+            return;
+
+        long now = NowTicks;
+        long leftAt = now - TimeSpan.FromSeconds(Math.Max(0, absenceSeconds)).Ticks;
+
+        // 백그라운드에서 돌아오면 Update보다 먼저 불려 아직 안 끝났을 수 있음
+        if (Settlement.Job != null && Settlement.Job.IsDue(now))
+            FinishJob();
+
+        foreach (var (request, endTicks) in _finishedJobs)
+        {
+            if (endTicks < leftAt)
+                continue;
+            // 완료 문구는 첫 줄만 (팝업 한 줄에 들어가게)
+            string done = $"{request.Construction.DisplayName} 완성!";
+            string message = string.IsNullOrEmpty(request.CompletionMessage) ? null : request.CompletionMessage.Split('\n')[0];
+            lines.Add(message == null ? done : $"{done} {message}");
+        }
+        _finishedJobs.Clear();
+
+        var building = JobRequest;
+        if (building != null)
+            lines.Add($"{building.Construction.ProgressLabel} · {FormatRemaining(Settlement.Job.Remaining(now))} 남았어요");
+
+        int regrown = Settlement.CountGatherRegrown(leftAt, now);
+        if (regrown > 0)
+            lines.Add($"광장에 주울 나뭇가지·돌이 {regrown}곳 다시 생겼어요");
+    }
+
+    /// <summary>돌아옴 팝업 맨 아래의 다음 할 일 (지금 할 부탁 또는 정착 후보의 이야기. 짓는 중이거나 다 끝냈으면 null)</summary>
+    public string NextGoalTitle
+    {
+        get
+        {
+            if (!IsLoaded || Settlement.Job != null)
+                return null;
+            var current = CurrentRequest;
+            if (current != null)
+                return current.Title;
+            var intro = PendingIntroOtter;
+            return intro != null ? $"{intro.DisplayName}의 이야기 듣기" : null;
+        }
+    }
+
+    private static string FormatRemaining(TimeSpan remaining)
+    {
+        int seconds = (int)Math.Ceiling(remaining.TotalSeconds);
+        if (seconds >= 3600)
+            return $"{seconds / 3600}시간 {seconds / 60 % 60}분";
+        return seconds >= 60 ? $"{(seconds + 59) / 60}분" : $"{seconds}초";
     }
 
     #endregion

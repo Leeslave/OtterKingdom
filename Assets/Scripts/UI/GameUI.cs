@@ -291,6 +291,8 @@ public class GameUI : MonoBehaviour
         offlineReportModal = modal;
         CreateLabel(content, $"{FormatDuration(report.ElapsedSec)} 동안 있었던 일이에요.");
 
+        if (report.SettlementNews.Count > 0) CreateLabel(content, "마을 소식\n" + string.Join("\n", report.SettlementNews));
+
         if (report.OtterVisits.Count > 0) CreateLabel(content, DescribeOtterVisits(report.OtterVisits));
 
         if (report.Received.Count > 0) CreateLabel(content, "받은 것\n" + ListStacks(report.Received, itemName));
@@ -309,6 +311,8 @@ public class GameUI : MonoBehaviour
             var outOfSeeds = CreateLabel(content, $"모종이 떨어져서 멈춘 작물\n{string.Join(", ", names)}");
             outOfSeeds.color = style.WarningColor;
         }
+
+        if (!string.IsNullOrEmpty(report.NextGoal)) CreateLabel(content, $"다음 할 일 · {report.NextGoal}");
 
         CreateButton(content, "확인", () => CloseModal(modal), kind: ButtonKind.Primary);
     }

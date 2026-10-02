@@ -100,6 +100,18 @@ public class Settlement
     public bool IsGatherReady(string pointId, long nowUtcTicks) =>
         !_gatherReady.TryGetValue(pointId, out long ready) || nowUtcTicks >= ready;
 
+    /// <summary>from 뒤로 to까지 사이에 다시 생긴 줍기 자리 수 (자리를 비운 동안의 소식)</summary>
+    public int CountGatherRegrown(long fromUtcTicks, long toUtcTicks)
+    {
+        int count = 0;
+        foreach (long ready in _gatherReady.Values)
+        {
+            if (ready > fromUtcTicks && ready <= toUtcTicks)
+                count++;
+        }
+        return count;
+    }
+
     #endregion
 
     #region 바꾸기
