@@ -144,6 +144,9 @@ public class PlazaWalkableArea : MonoBehaviour
         openStamp = new int[count];
         closedStamp = new int[count];
         searchStamp = 0;
+        // A runtime rebuild (a house appearing) can change the cells under a
+        // walk in progress, same as an obstacle change.
+        Version++;
     }
 
     // Centre plus a ring of 8 samples at `clearance`: cheap approximation of

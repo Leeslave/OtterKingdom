@@ -47,6 +47,13 @@ public static class GlobalUISetup
         ("Zone_Mine", "Mine", "광산", "광석 캐기", "Mine", true, 3, "ICON_Place_Mine"),
     };
 
+    // 정착 진행으로 열리는 장소: ID → (필요 발전, 잠겨 있을 때 문구). 광장·광산은 처음부터 열림
+    private static readonly Dictionary<string, (string development, string lockedText)> ZoneLocks = new Dictionary<string, (string, string)>
+    {
+        { "Farm", ("farmland", "농경지를 개간하면 열려요") },
+        { "Fishing", (SettlementSetup.FishingDevelopment, "아직 갈 수 없어요") },
+    };
+
     private static readonly string[] ZoneScenes = { "Assets/Scenes/Plaza.unity", "Assets/Scenes/Farm.unity", "Assets/Scenes/Fishing.unity", "Assets/Scenes/Mine.unity" };
 
     // ── 1080×1920 기준 배치 (시안) ──
@@ -97,6 +104,8 @@ public static class GlobalUISetup
         DecorModeSetup.BuildPrefabs();
         FairyShopSetup.CreateData();
         FairyShopSetup.BuildPrefabs();
+        SettlementSetup.CreateData();
+        TutorialStyleSetup.CreateStyle();
         BuildGlobalUIPrefab();
         RegisterBuildScenes();
 
@@ -135,6 +144,9 @@ public static class GlobalUISetup
             so.FindProperty("_sceneName").stringValue = z.scene;
             so.FindProperty("_isAvailable").boolValue = z.available;
             so.FindProperty("_sortOrder").intValue = z.order;
+            var hasLock = ZoneLocks.TryGetValue(z.id, out var zoneLock);
+            so.FindProperty("_requiredDevelopment").stringValue = hasLock ? zoneLock.development : "";
+            so.FindProperty("_developmentLockedSubtitle").stringValue = hasLock ? zoneLock.lockedText : "";
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(zone);
         }
@@ -255,7 +267,8 @@ public static class GlobalUISetup
         var inventoryPresenter = inventoryScreen.GetComponentInChildren<InventoryPresenter>(true);
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
-        // 그리는 순서: 상단바·하단 바 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 설정 → 레벨업 → 이동 팝업 → 페이드
+        // 그리는 순서: 상단바·하단 바(정착 칩·안내 띠 포함) → 공사 진행 말풍선 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 설정
+        //            → 게시판 → 건설 → 건설 완료 → 레벨업 → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
         hud.gameObject.AddComponent<SafeAreaFltter>();
@@ -263,12 +276,16 @@ public static class GlobalUISetup
 
         var navBar = BuildNavBar(hud);
         var topBar = TopBarSetup.Build(hud);
+        var settlement = SettlementSetup.BuildHud(hud, rootRect);
+        settlement.progress.transform.SetSiblingIndex(1); // HUD 바로 위, 가방·팝업 아래
+        var findToast = FindToastSetup.Build(hud);
         var collection = CollectionSetup.BuildScreen(rootRect);
         var quest = QuestSetup.BuildScreen(rootRect);
         var decorMode = DecorModeSetup.BuildScreen(rootRect, hud.gameObject);
         var fairyShop = FairyShopSetup.BuildScreens(rootRect);
         var shop = CurrencyShopSetup.BuildScreens(rootRect);
         var settings = SettingsSetup.BuildScreen(rootRect);
+        SettlementSetup.BuildPopups(rootRect, ref settlement);
         var levelUp = ProgressionSetup.BuildPopup(rootRect);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
         var fader = BuildFader(rootRect);
@@ -337,6 +354,13 @@ public static class GlobalUISetup
         // 퀘스트 모델의 주인: 도감과 같이 전역 UI에 붙음
         var questManager = root.AddComponent<QuestManager>();
         Set(questManager, "_database", AssetDatabase.LoadAssetAtPath<QuestDatabase>(QuestSetup.DatabasePath));
+
+        // 정착 진행(게시판·건설·장소 해금)의 주인. 모든 부탁을 끝내면 안내 띠가 밭으로 이끔
+        SettlementSetup.AttachManagers(root, settlement, navigator, zones.First(z => z.ZoneId == "Farm"));
+
+        // 광산 밖에서 캔 것 알림
+        var miningToast = root.AddComponent<MiningToastPresenter>();
+        Set(miningToast, "_toast", findToast);
 
         var presenter = root.AddComponent<GlobalUIPresenter>();
         Set(presenter, "_root", globalRoot);

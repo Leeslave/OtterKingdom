@@ -48,7 +48,7 @@ public class ZoneCardView : MonoBehaviour
             throw new ArgumentNullException(nameof(zone));
 
         Zone = zone;
-        bool locked = !zone.IsAvailable;
+        bool locked = !ZoneAccess.IsOpen(zone);
         bool showCurrent = isCurrent && !locked;
 
         _background.sprite = locked ? _lockedSprite : showCurrent ? _currentSprite : _normalSprite;
@@ -59,7 +59,7 @@ public class ZoneCardView : MonoBehaviour
 
         _nameText.text = zone.DisplayName;
         _nameText.color = locked ? _lockedColor : _nameColor;
-        _subtitleText.text = locked ? zone.LockedSubtitle : zone.Subtitle;
+        _subtitleText.text = locked ? ZoneAccess.LockedSubtitle(zone) : zone.Subtitle;
         _subtitleText.color = locked ? _lockedColor : _subtitleColor;
 
         _currentBadge.SetActive(showCurrent);

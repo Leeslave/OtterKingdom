@@ -19,4 +19,6 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: e6eaba03fc7b28941b5311f5097cbf65, type: 3}
   _sceneName: Mine
   _isAvailable: 1
+  _requiredDevelopment: 
+  _developmentLockedSubtitle: 
   _sortOrder: 3

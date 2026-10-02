@@ -2,8 +2,10 @@ using UnityEngine;
 
 // Mining rules with no scene dependencies: pickaxe level/upgrade, the diamond
 // vs stone roll, time between finds, and whether the miner otter is inside.
-// Whether mining is active is saved so the otter is back inside on the next
-// visit; the time towards the next find is not (same as a catch in progress).
+// Once the otter is put in the mine, mining keeps going in every scene:
+// GameManager (one per zone scene) calls Tick each frame, and the time
+// towards the next find is saved so a scene change doesn't reset it. The
+// mine scene only shows it (MinerOtterController's bubble).
 public class MiningService
 {
     private readonly SaveData save;
@@ -19,7 +21,27 @@ public class MiningService
     public MiningBalanceData Balance => balance;
 
     public bool IsActive => save.miningActive;
-    public void SetActive(bool active) => save.miningActive = active;
+
+    public void SetActive(bool active)
+    {
+        save.miningActive = active;
+        // Stopping throws away the time towards the next find
+        save.miningSecToNextFind = 0f;
+    }
+
+    // Advances online mining by deltaSec. Returns the item id dug up this
+    // frame, or null (not mining / not yet). At most one find per call.
+    public string Tick(float deltaSec)
+    {
+        if (!IsActive) return null;
+
+        if (save.miningSecToNextFind <= 0f) save.miningSecToNextFind = RollFindIntervalSec();
+        save.miningSecToNextFind -= deltaSec;
+        if (save.miningSecToNextFind > 0f) return null;
+
+        save.miningSecToNextFind = RollFindIntervalSec();
+        return RollFind();
+    }
 
     public int PickaxeLevel => save.pickaxeLevel;
     public int MaxPickaxeLevel => balance.MaxPickaxeLevel;

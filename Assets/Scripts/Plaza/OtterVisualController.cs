@@ -102,7 +102,7 @@ public class OtterVisualController : MonoBehaviour
         }
 
         if (hasIsMoving) animator.SetBool(IsMovingHash, walking);
-        if (hasWalkAnimSpeed) animator.SetFloat(WalkAnimSpeedHash, agent.WalkSpeed / walkAnimReferenceSpeed);
+        if (hasWalkAnimSpeed) animator.SetFloat(WalkAnimSpeedHash, agent.CurrentWalkSpeed / walkAnimReferenceSpeed);
 
         if (agent.CurrentState == OtterWanderAgent.State.Play) UpdatePlay();
 

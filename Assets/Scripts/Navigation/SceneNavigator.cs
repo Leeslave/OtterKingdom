@@ -30,7 +30,7 @@ public class SceneNavigator : MonoBehaviour
         if (zone == null)
             throw new ArgumentNullException(nameof(zone));
 
-        if (IsTraveling || !zone.IsAvailable || zone == CurrentZone)
+        if (IsTraveling || !ZoneAccess.IsOpen(zone) || zone == CurrentZone)
             return false;
 
         if (!Application.CanStreamedLevelBeLoaded(zone.SceneName))

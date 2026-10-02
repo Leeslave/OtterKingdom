@@ -35,6 +35,7 @@ public static class ZoneTutorials
         var topBar = Object.FindAnyObjectByType<TopBarView>();
         var navBar = Object.FindAnyObjectByType<NavBarView>();
         var fairy = Object.FindAnyObjectByType<FairyNpcView>();
+        var board = Object.FindAnyObjectByType<SettlementBoardPropView>();
         var otter = NearestToScreenCenter(Object.FindObjectsByType<OtterWanderAgent>(FindObjectsSortMode.None));
         // Gold의 CurrencyID는 "Gold"가 아니라서 GameManager가 쓰는 에셋과 직접 비교
         var gold = GameManager.Instance.GoldCurrency;
@@ -67,7 +68,7 @@ public static class ZoneTutorials
                 "모은 물건이 전부 여기 들어가요.\n가방에서 물건을 팔아 코인으로 바꿀 수 있어요.",
                 () => TutorialTargets.Ui(navBar != null ? navBar.BagButton : null)),
             TutorialStep.At("이동",
-                "밭, 낚시터, 광산 같은\n다른 장소로 갈 수 있어요.",
+                "밭, 낚시터, 광산 같은\n다른 장소로 갈 수 있어요.\n잠긴 곳은 왕국이 커지면 열려요.",
                 () => TutorialTargets.Ui(navBar != null ? navBar.TravelButton : null)),
             TutorialStep.At("요정 상점",
                 "요정을 누르면 상점이 열려요.\n왕국에 필요한 물건을 살 수 있어요.",
@@ -77,9 +78,9 @@ public static class ZoneTutorials
                 () => TutorialTargets.World(otter)),
             TutorialStep.Info("광장 둘러보기",
                 "화면을 끌면 광장 여기저기를 볼 수 있어요.\n두 손가락을 벌리거나 모으면\n크게, 작게 볼 수 있어요."),
-            TutorialStep.At("밭으로 가 볼까요?",
-                "이동 버튼을 눌러 밭으로 가서\n첫 농사를 지어 봐요!",
-                () => TutorialTargets.Ui(navBar != null ? navBar.TravelButton : null)),
+            TutorialStep.At("해달 게시판",
+                "해달들의 부탁과 방명록이 붙어 있어요.\n게시판을 눌러 첫 부탁을 확인해 봐요!",
+                () => TutorialTargets.World(board)),
         };
     }
 
@@ -154,7 +155,7 @@ public static class ZoneTutorials
                 "입구의 동그라미를 누르면\n해달이 광산에 들어가 채굴을 시작해요.",
                 () => TutorialTargets.World(entrance)),
             TutorialStep.At("광부 해달",
-                "채굴하는 동안에는 말풍선으로\n캐낸 광석을 보여 줘요.\n말풍선을 누르면 채굴을 멈춰요.",
+                "채굴하는 동안에는 말풍선으로\n캐낸 광석을 보여 줘요.\n다른 곳에 가 있어도 계속 캐요.\n말풍선을 누르면 채굴을 멈춰요.",
                 () => TutorialTargets.World(miner)),
             TutorialStep.At("곡괭이 강화",
                 "곡괭이를 강화하면\n다이아몬드가 나올 확률이 올라가요.",

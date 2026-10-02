@@ -10,6 +10,8 @@ public enum QuestGoalType
     CollectionRegister, // 도감에 새로 등록한 항목 수 (해달 탭이면 해달 등록)
     PlaceDecor,         // 장난감을 놓은 횟수 (어느 장소든)
     ShopPurchase,       // 요정 상점에서 산 횟수
+    Mine,               // 광산에서 캐서 가방에 들어온 개수 (오프라인 채굴 포함)
+    Gather,             // 광장에서 주운 재료 개수 (나뭇가지, 돌무더기)
 }
 
 /// <summary>퀘스트 종류</summary>

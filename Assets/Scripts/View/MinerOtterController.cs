@@ -5,9 +5,9 @@ using UnityEngine;
 // (Idle <-> Walk, paths from PlazaWalkableArea). When mining is turned on it
 // walks to the MineEntranceView oval, then on into the tunnel while fading
 // out; once inside it is hidden and the MineEmoteView bubble shows instead.
-// While inside, every find interval (15-30s) it rolls diamond or stone into
-// the bag and the bubble pops the item's icon. Leaving the scene or stopping
-// throws away the time towards the next find.
+// While inside, the bubble pops the icon of each find. The finds themselves
+// come from GameManager (MiningService.Tick), which keeps mining in every
+// scene once the otter is in — this otter only shows it.
 // When mining is turned off it fades back in at the tunnel, walks out to the
 // oval and goes back to wandering.
 //
@@ -86,6 +86,18 @@ public class MinerOtterController : MonoBehaviour
     {
         if (MiningActive) EnterInside(snap: true);
         else EnterIdle();
+
+        GameManager.MiningFound += HandleMiningFound;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.MiningFound -= HandleMiningFound;
+    }
+
+    private void HandleMiningFound(ItemDefinition item)
+    {
+        if (phase == Phase.Inside && emote != null) emote.ShowFind(item.Icon);
     }
 
     private void Update()
@@ -132,14 +144,7 @@ public class MinerOtterController : MonoBehaviour
                 break;
 
             case Phase.Inside:
-                timer -= dt;
-                if (timer <= 0f)
-                {
-                    var mining = GameManager.Instance.MiningService;
-                    var found = GameManager.Instance.AddMiningFind(mining.RollFind());
-                    if (found != null && emote != null) emote.ShowFind(found.Icon);
-                    timer = mining.RollFindIntervalSec();
-                }
+                // Finds arrive through GameManager.MiningFound
                 break;
         }
     }
@@ -183,7 +188,6 @@ public class MinerOtterController : MonoBehaviour
     {
         if (snap) SnapTo(entrance.InsidePosition);
         phase = Phase.Inside;
-        timer = GameManager.Instance != null ? GameManager.Instance.MiningService.RollFindIntervalSec() : 0f;
         path.Clear();
         spriteRenderer.enabled = false;
         if (emote != null) emote.SetVisible(true);

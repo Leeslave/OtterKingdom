@@ -19,4 +19,6 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 83c4e9d4539ae1a42a11b4134583088c, type: 3}
   _sceneName: Fishing
   _isAvailable: 1
+  _requiredDevelopment: fishing_dock
+  _developmentLockedSubtitle: "\uC544\uC9C1 \uAC08 \uC218 \uC5C6\uC5B4\uC694"
   _sortOrder: 2

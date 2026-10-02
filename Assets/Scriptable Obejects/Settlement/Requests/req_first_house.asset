@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_first_house
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_first_house
+  _order: 0
+  _title: "\uCCAB \uBC88\uC9F8 \uC9D1 \uB9CC\uB4E4\uAE30"
+  _description: "\uBABD\uC2E4\uC774\uAC00 \uBA38\uBB3C \uC791\uC740 \uC9D1\uC774
+    \uD544\uC694\uD574\uC694.\n\uBAA9\uC7AC\uC640 \uB3CC\uB85C \uC9C0\uC5B4 \uC918\uC694."
+  _icon: {fileID: 21300000, guid: cdc5e4e4057a059438fddb5ca2478ae2, type: 3}
+  _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
+  _requiredDevelopment: 
+  _minResidents: 0
+  _construction: {fileID: 11400000, guid: 45c4958c9aedc574d9aa4cae7ca1e883, type: 2}
+  _settles:
+  - {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
+  _arrivals:
+  - _otter: {fileID: 11400000, guid: b0187b75dfd9a104b8c3725c8a4f5e91, type: 2}
+    _state: 1
+  - _otter: {fileID: 11400000, guid: 8ff3e80563dfd8a4cbf590e6056ddc02, type: 2}
+    _state: 0
+  - _otter: {fileID: 11400000, guid: 09ada72536705ff4c80b2fc67cae7e65, type: 2}
+    _state: 3
+  _stageOnComplete: 1
+  _completionEntry: {fileID: 11400000, guid: 26cb5157adbe284468d965b7886dcf4c, type: 2}
+  _completionMessage: "\uCCAB \uC8FC\uBBFC\uC774 \uC815\uCC29\uD588\uC5B4\uC694!"

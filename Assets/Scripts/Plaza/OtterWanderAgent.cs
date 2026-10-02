@@ -17,9 +17,17 @@ using UnityEngine;
 // while. The reservation is always released when play ends or is cut short.
 // Placing/moving a toy bumps PlazaWalkableArea.Version; a walk planned on an
 // older version is abandoned so the otter re-plans around the new obstacle.
+//
+// Tasks: AssignTask sends the otter to a spot (e.g. a house it is building)
+// where it stays in Play facing the work until ClearTask — the same look as
+// playing with a toy, without a toy reservation.
 public class OtterWanderAgent : MonoBehaviour
 {
     public enum State { Idle, Walk, Play }
+
+    // Walking to a task (e.g. building a house) is hurried, so the otter
+    // gets there while the work is still going on.
+    private const float TaskWalkSpeedMultiplier = 2.5f;
 
     // Pause before re-planning after the obstacles changed mid-walk.
     private const float ReplanDelaySeconds = 0.3f;
@@ -40,6 +48,11 @@ public class OtterWanderAgent : MonoBehaviour
     private DecorPlaySession playSession;
     private bool walkingToPlay;
 
+    private bool hasTask;
+    private bool walkingToTask;
+    private Vector2 taskStandPoint;
+    private Vector2 taskLookPoint;
+
     public State CurrentState { get; private set; } = State.Idle;
     public float WalkSpeed { get; private set; }
     // Direction of the current path segment (zero while idle). Stable for a
@@ -47,6 +60,27 @@ public class OtterWanderAgent : MonoBehaviour
     public Vector2 MoveDirection { get; private set; }
     // Where to face while playing (the toy).
     public Vector2 LookTarget { get; private set; }
+
+    // Working at the task spot (not walking there).
+    public bool IsOnTask => hasTask && CurrentState == State.Play && playSession == null;
+
+    // Go to standPoint and stay there facing lookPoint until ClearTask.
+    public void AssignTask(Vector2 standPoint, Vector2 lookPoint)
+    {
+        bool same = hasTask && standPoint == taskStandPoint;
+        hasTask = true;
+        taskStandPoint = standPoint;
+        taskLookPoint = lookPoint;
+        if (initialized && !same) EnterIdle(0f);
+    }
+
+    public void ClearTask()
+    {
+        if (!hasTask) return;
+        hasTask = false;
+        walkingToTask = false;
+        if (initialized && CurrentState != State.Walk) EnterIdle(settings.RollIdleSeconds());
+    }
 
     public void Initialize(PlazaWalkableArea walkableArea, PlazaSettings plazaSettings)
     {
@@ -76,6 +110,12 @@ public class OtterWanderAgent : MonoBehaviour
                 break;
 
             case State.Play:
+                if (playSession == null)
+                {
+                    // Task: stays until ClearTask
+                    if (!hasTask) EnterIdle(settings.RollIdleSeconds());
+                    break;
+                }
                 stateTimer -= Time.deltaTime;
                 if (stateTimer <= 0f || !playSession.IsValid)
                 {
@@ -133,6 +173,7 @@ public class OtterWanderAgent : MonoBehaviour
 
     private bool TryStartWalk()
     {
+        if (hasTask) return TryStartTaskWalk();
         if (TryStartPlayWalk()) return true;
 
         Vector2 from = transform.position;
@@ -153,12 +194,37 @@ public class OtterWanderAgent : MonoBehaviour
         return false;
     }
 
+    private bool TryStartTaskWalk()
+    {
+        Vector2 from = transform.position;
+        if ((taskStandPoint - from).sqrMagnitude <= settings.ArriveDistance * settings.ArriveDistance)
+        {
+            EnterTask();
+            return true;
+        }
+        if (!area.TryFindPath(from, taskStandPoint, path) || path.Count == 0) return false;
+
+        walkingToTask = true;
+        BeginWalk(from);
+        return true;
+    }
+
+    private void EnterTask()
+    {
+        walkingToTask = false;
+        CurrentState = State.Play;
+        MoveDirection = Vector2.zero;
+        LookTarget = taskLookPoint;
+        path.Clear();
+        pathIndex = 0;
+    }
+
     private void BeginWalk(Vector2 from)
     {
         pathIndex = 0;
         stateTimer = 0f;
         pathVersion = area.Version;
-        walkTimeLimit = PathLength(from) / Mathf.Max(WalkSpeed, 0.01f) * StuckTimeMultiplier + StuckGraceSeconds;
+        walkTimeLimit = PathLength(from) / Mathf.Max(CurrentWalkSpeed, 0.01f) * StuckTimeMultiplier + StuckGraceSeconds;
         CurrentState = State.Walk;
         MoveDirection = (path[0] - from).normalized;
     }
@@ -180,7 +246,7 @@ public class OtterWanderAgent : MonoBehaviour
 
         // Carry leftover distance across waypoints so speed stays constant
         // through corners.
-        float remaining = WalkSpeed * deltaTime;
+        float remaining = CurrentWalkSpeed * deltaTime;
         Vector2 position = transform.position;
         while (remaining > 0f && pathIndex < path.Count)
         {
@@ -213,14 +279,19 @@ public class OtterWanderAgent : MonoBehaviour
 
         if (pathIndex >= path.Count)
         {
-            if (walkingToPlay && playSession != null && playSession.IsValid) EnterPlay();
+            if (walkingToTask && hasTask) EnterTask();
+            else if (walkingToPlay && playSession != null && playSession.IsValid) EnterPlay();
             else EnterIdle(settings.RollIdleSeconds());
         }
     }
 
+    // Speed of the current walk (faster on the way to a task). Visuals match the walk clip to it.
+    public float CurrentWalkSpeed => walkingToTask ? WalkSpeed * TaskWalkSpeedMultiplier : WalkSpeed;
+
     private void EnterIdle(float duration)
     {
         ReleasePlay();
+        walkingToTask = false;
         CurrentState = State.Idle;
         MoveDirection = Vector2.zero;
         stateTimer = duration;
