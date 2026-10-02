@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
@@ -11,7 +12,9 @@ using UnityEngine.UI;
 // popup (crop selection, plot unlock, crop change, confirm, alerts, rod and
 // pickaxe upgrade). Selling lives in the
 // bag (GlobalUI). Holds no game rules itself — every action goes back
-// through GameManager. Replace with prefab-based views once real UI art exists.
+// through GameManager. Looks come from Resources/RuntimeUIStyle (the same
+// sticker style as GlobalUI: cream panel, Cafe24/Nanum fonts, green/cream/
+// paper/yellow buttons); without it everything falls back to flat colors.
 public class GameUI : MonoBehaviour
 {
     private static readonly Vector2 ReferenceResolution = new Vector2(1080f, 1920f);
@@ -19,15 +22,21 @@ public class GameUI : MonoBehaviour
     private const int TitleFontSize = 48;
     private const int BodyFontSize = 40;
     private const float ButtonHeight = 110f;
+    // Corner feature buttons (rod/pickaxe upgrade) sit just above GlobalUI's bottom nav bar
+    // (bar 24 + 190, centre button pokes up to ~250).
+    private const float FeatureButtonBottom = 270f;
 
     private static readonly Color DimColor = new Color(0f, 0f, 0f, 0.5f);
+    // Flat fallbacks when RuntimeUIStyle is missing.
     private static readonly Color PanelColor = new Color(0.97f, 0.94f, 0.86f, 1f);
     private static readonly Color ButtonColor = new Color(1f, 1f, 1f, 1f);
-    private static readonly Color TextColor = new Color(0.2f, 0.15f, 0.1f, 1f);
-    private static readonly Color WarningColor = new Color(0.8f, 0.3f, 0.1f, 1f);
+
+    // Which button sprite: the affirmative action (green), backing out
+    // (cream), one of several choices (paper), or a corner feature button (yellow).
+    private enum ButtonKind { Option, Primary, Secondary, Feature }
 
     private GameManager game;
-    private Font font;
+    private RuntimeUIStyle style;
     private Button rodUpgradeButton;
     private Button pickaxeUpgradeButton;
     private RectTransform guideBubble;
@@ -68,7 +77,8 @@ public class GameUI : MonoBehaviour
     private void Initialize(GameManager owner)
     {
         game = owner;
-        font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        style = Resources.Load<RuntimeUIStyle>(RuntimeUIStyle.ResourcePath);
+        if (style == null) style = ScriptableObject.CreateInstance<RuntimeUIStyle>();
 
         var canvas = GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -131,7 +141,7 @@ public class GameUI : MonoBehaviour
             });
         }
 
-        CreateButton(content, "취소", () => CloseModal(modal));
+        CreateButton(content, "취소", () => CloseModal(modal), kind: ButtonKind.Secondary);
     }
 
     public void ShowUnlockPrompt(int plotIndex)
@@ -148,8 +158,8 @@ public class GameUI : MonoBehaviour
         {
             if (game.TryUnlockPlot(plotIndex)) CloseModal(modal);
             else ShowAlert("코인이 부족해요!");
-        }, flexible: true);
-        CreateButton(row, "취소", () => CloseModal(modal), flexible: true);
+        }, flexible: true, kind: ButtonKind.Primary);
+        CreateButton(row, "취소", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
     }
 
     // "예" only empties the slot; the player then taps the empty slot again
@@ -167,7 +177,7 @@ public class GameUI : MonoBehaviour
         if (game.FarmService.GetSlotState(plotIndex, slotIndex) == FurrowSlotState.AwaitingHarvest)
         {
             var warning = CreateLabel(content, "주의! 수확 대기 중인 작물이에요.\n수확하지 않고 버려집니다.");
-            warning.color = WarningColor;
+            warning.color = style.WarningColor;
         }
 
         var row = CreateRow(content, ButtonHeight);
@@ -175,8 +185,8 @@ public class GameUI : MonoBehaviour
         {
             game.DiscardSlot(plotIndex, slotIndex);
             CloseModal(modal);
-        }, flexible: true);
-        CreateButton(row, "아니오", () => CloseModal(modal), flexible: true);
+        }, flexible: true, kind: ButtonKind.Primary);
+        CreateButton(row, "아니오", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
     }
 
     public void ShowConfirm(string title, string message, Action onYes)
@@ -196,12 +206,12 @@ public class GameUI : MonoBehaviour
         {
             CloseModal(modal);
             onYes?.Invoke();
-        }, flexible: true);
+        }, flexible: true, kind: ButtonKind.Primary);
         CreateButton(row, noLabel, () =>
         {
             CloseModal(modal);
             onNo?.Invoke();
-        }, flexible: true);
+        }, flexible: true, kind: ButtonKind.Secondary);
     }
 
     // Stacks on top of whatever is open (e.g. over the crop-selection prompt).
@@ -217,7 +227,7 @@ public class GameUI : MonoBehaviour
         {
             openAlertMessages.Remove(message);
             CloseModal(modal);
-        });
+        }, kind: ButtonKind.Primary);
     }
 
     // ----------------------------------------------------------------- guide
@@ -235,11 +245,11 @@ public class GameUI : MonoBehaviour
         go.transform.SetAsFirstSibling();
 
         var image = go.GetComponent<Image>();
-        image.color = PanelColor;
+        ApplySprite(image, style.Bubble, PanelColor);
         image.raycastTarget = false;
 
         var layout = go.GetComponent<HorizontalLayoutGroup>();
-        layout.padding = new RectOffset(60, 60, 36, 36);
+        layout.padding = new RectOffset(64, 64, 34, 40);
         layout.childControlWidth = true;
         layout.childControlHeight = true;
 
@@ -248,8 +258,9 @@ public class GameUI : MonoBehaviour
         fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
         var label = CreateLabel(go.transform, message);
+        if (style.TitleFont != null) label.font = style.TitleFont;
         label.fontSize = TitleFontSize;
-        label.fontStyle = FontStyle.Bold;
+        label.color = style.TextColor;
 
         guideBubble = (RectTransform)go.transform;
         guideBubble.anchorMin = guideBubble.anchorMax = guideBubble.pivot = new Vector2(0.5f, 0.75f);
@@ -288,7 +299,7 @@ public class GameUI : MonoBehaviour
         if (report.Lost.Count > 0)
         {
             var lost = CreateLabel(content, "가방이 가득 차서 놓친 것\n" + ListStacks(report.Lost, itemName));
-            lost.color = WarningColor;
+            lost.color = style.WarningColor;
         }
 
         if (report.OutOfSeeds.Count > 0)
@@ -296,10 +307,10 @@ public class GameUI : MonoBehaviour
             var names = new List<string>();
             foreach (var cropId in report.OutOfSeeds) names.Add(itemName(cropId));
             var outOfSeeds = CreateLabel(content, $"모종이 떨어져서 멈춘 작물\n{string.Join(", ", names)}");
-            outOfSeeds.color = WarningColor;
+            outOfSeeds.color = style.WarningColor;
         }
 
-        CreateButton(content, "확인", () => CloseModal(modal));
+        CreateButton(content, "확인", () => CloseModal(modal), kind: ButtonKind.Primary);
     }
 
     // Farm NPC: one row per unlocked slot, each holding the crop that grows
@@ -318,10 +329,10 @@ public class GameUI : MonoBehaviour
             var row = CreateRow(content, ButtonHeight);
             var label = CreateLabel(row, DescribeOfflineCrop(index), TextAnchor.MiddleLeft);
             label.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1f;
-            CreateButton(row, "변경", () => ShowOfflineCropPicker(index), width: 200f);
+            CreateButton(row, "변경", () => ShowOfflineCropPicker(index), width: 200f, kind: ButtonKind.Secondary);
         }
 
-        CreateButton(content, "닫기", () => CloseModal(modal));
+        CreateButton(content, "닫기", () => CloseModal(modal), kind: ButtonKind.Secondary);
     }
 
     private string DescribeOfflineCrop(int index)
@@ -358,9 +369,9 @@ public class GameUI : MonoBehaviour
             {
                 game.SetOfflineCrop(index, null);
                 ShowOfflineFarmPrompt();
-            });
+            }, kind: ButtonKind.Secondary);
         }
-        CreateButton(content, "취소", ShowOfflineFarmPrompt);
+        CreateButton(content, "취소", ShowOfflineFarmPrompt, kind: ButtonKind.Secondary);
     }
 
     // "도깨비 해달이 다녀갔어요!" per otter, first visit order, with a count
@@ -410,11 +421,11 @@ public class GameUI : MonoBehaviour
     {
         if (rodUpgradeButton != null) return;
 
-        rodUpgradeButton = CreateButton(transform, "낚싯대 강화", ShowRodUpgradePrompt);
+        rodUpgradeButton = CreateButton(transform, "낚싯대 강화", ShowRodUpgradePrompt, kind: ButtonKind.Feature);
         var rect = (RectTransform)rodUpgradeButton.transform;
         rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 0f);
         rect.sizeDelta = new Vector2(340f, ButtonHeight);
-        rect.anchoredPosition = new Vector2(40f, 40f);
+        rect.anchoredPosition = new Vector2(40f, FeatureButtonBottom);
     }
 
     private void ShowRodUpgradePrompt()
@@ -429,8 +440,8 @@ public class GameUI : MonoBehaviour
         var upgradeButton = CreateButton(row, "강화", () =>
         {
             if (!game.TryUpgradeRod()) ShowAlert("코인이 부족해요!");
-        }, flexible: true);
-        CreateButton(row, "닫기", () => CloseModal(modal), flexible: true);
+        }, flexible: true, kind: ButtonKind.Primary);
+        CreateButton(row, "닫기", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
 
         // Stays open after an upgrade so the new level/chance shows right away.
         SetRefresher(modal, () =>
@@ -452,11 +463,11 @@ public class GameUI : MonoBehaviour
     {
         if (pickaxeUpgradeButton != null) return;
 
-        pickaxeUpgradeButton = CreateButton(transform, "곡괭이 강화", ShowPickaxeUpgradePrompt);
+        pickaxeUpgradeButton = CreateButton(transform, "곡괭이 강화", ShowPickaxeUpgradePrompt, kind: ButtonKind.Feature);
         var rect = (RectTransform)pickaxeUpgradeButton.transform;
         rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 0f);
         rect.sizeDelta = new Vector2(340f, ButtonHeight);
-        rect.anchoredPosition = new Vector2(40f, 40f);
+        rect.anchoredPosition = new Vector2(40f, FeatureButtonBottom);
     }
 
     private void ShowPickaxeUpgradePrompt()
@@ -471,8 +482,8 @@ public class GameUI : MonoBehaviour
         var upgradeButton = CreateButton(row, "강화", () =>
         {
             if (!game.TryUpgradePickaxe()) ShowAlert("코인이 부족해요!");
-        }, flexible: true);
-        CreateButton(row, "닫기", () => CloseModal(modal), flexible: true);
+        }, flexible: true, kind: ButtonKind.Primary);
+        CreateButton(row, "닫기", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
 
         // Stays open after an upgrade so the new level/chance shows right away.
         SetRefresher(modal, () =>
@@ -504,15 +515,16 @@ public class GameUI : MonoBehaviour
         var panel = new GameObject("Panel", typeof(RectTransform), typeof(Image),
             typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
         panel.transform.SetParent(blocker.transform, false);
-        panel.GetComponent<Image>().color = PanelColor;
+        ApplySprite(panel.GetComponent<Image>(), style.Panel, PanelColor);
 
         content = (RectTransform)panel.transform;
         content.anchorMin = content.anchorMax = content.pivot = new Vector2(0.5f, 0.5f);
         content.sizeDelta = new Vector2(PanelWidth, 0f);
 
         var layout = panel.GetComponent<VerticalLayoutGroup>();
-        layout.padding = new RectOffset(40, 40, 40, 40);
-        layout.spacing = 20f;
+        // The panel sprite's 9-slice border is 72 (bottom 80): keep text clear of it
+        layout.padding = new RectOffset(64, 64, 60, 72);
+        layout.spacing = 22f;
         layout.childControlWidth = true;
         layout.childControlHeight = true;
         layout.childForceExpandWidth = true;
@@ -521,8 +533,9 @@ public class GameUI : MonoBehaviour
         panel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
         var titleLabel = CreateLabel(content, title);
+        if (style.TitleFont != null) titleLabel.font = style.TitleFont;
         titleLabel.fontSize = TitleFontSize;
-        titleLabel.fontStyle = FontStyle.Bold;
+        titleLabel.color = style.TextColor;
 
         modals.Add(blocker);
         return blocker;
@@ -553,26 +566,29 @@ public class GameUI : MonoBehaviour
 
     // ------------------------------------------------------------ primitives
 
-    private Text CreateLabel(Transform parent, string text, TextAnchor alignment = TextAnchor.MiddleCenter)
+    private TextMeshProUGUI CreateLabel(Transform parent, string text, TextAnchor alignment = TextAnchor.MiddleCenter)
     {
-        var go = new GameObject("Label", typeof(RectTransform), typeof(Text));
+        var go = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
         go.transform.SetParent(parent, false);
 
-        var label = go.GetComponent<Text>();
-        label.font = font;
+        var label = go.GetComponent<TextMeshProUGUI>();
+        if (style.BodyFont != null) label.font = style.BodyFont;
         label.fontSize = BodyFontSize;
-        label.alignment = alignment;
-        label.color = TextColor;
+        label.alignment = alignment == TextAnchor.MiddleLeft ? TextAlignmentOptions.Left : TextAlignmentOptions.Center;
+        label.color = style.BodyColor;
+        label.lineSpacing = 8f;
         label.raycastTarget = false;
         label.text = text;
         return label;
     }
 
-    private Button CreateButton(Transform parent, string text, Action onClick, float width = -1f, bool flexible = false)
+    private Button CreateButton(Transform parent, string text, Action onClick, float width = -1f, bool flexible = false,
+        ButtonKind kind = ButtonKind.Option)
     {
         var go = new GameObject("Button", typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
         go.transform.SetParent(parent, false);
-        go.GetComponent<Image>().color = ButtonColor;
+        var image = go.GetComponent<Image>();
+        ApplySprite(image, ButtonSprite(kind), ButtonColor);
 
         var layoutElement = go.GetComponent<LayoutElement>();
         layoutElement.preferredHeight = ButtonHeight;
@@ -580,11 +596,41 @@ public class GameUI : MonoBehaviour
         if (flexible) layoutElement.flexibleWidth = 1f;
 
         var label = CreateLabel(go.transform, text);
-        Stretch((RectTransform)label.transform);
+        if (style.TitleFont != null) label.font = style.TitleFont;
+        label.color = kind == ButtonKind.Primary && style.PrimaryButton != null ? style.PrimaryLabelColor : style.TextColor;
+        var labelRect = (RectTransform)label.transform;
+        Stretch(labelRect);
+        // Lift the text off the button's raised bottom lip
+        if (image.sprite != null) labelRect.offsetMin = new Vector2(0f, 12f);
 
         var button = go.GetComponent<Button>();
+        button.targetGraphic = image;
         if (onClick != null) button.onClick.AddListener(() => onClick());
         return button;
+    }
+
+    private Sprite ButtonSprite(ButtonKind kind)
+    {
+        switch (kind)
+        {
+            case ButtonKind.Primary: return style.PrimaryButton;
+            case ButtonKind.Secondary: return style.SecondaryButton;
+            case ButtonKind.Feature: return style.FeatureButton;
+            default: return style.OptionButton;
+        }
+    }
+
+    // A 9-sliced sprite when the style has one, otherwise a flat color.
+    private static void ApplySprite(Image image, Sprite sprite, Color fallback)
+    {
+        if (sprite == null)
+        {
+            image.color = fallback;
+            return;
+        }
+        image.sprite = sprite;
+        image.color = Color.white;
+        image.type = sprite.border != Vector4.zero ? Image.Type.Sliced : Image.Type.Simple;
     }
 
     private RectTransform CreateRow(Transform parent, float height)

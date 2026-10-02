@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
         ComputePendingOfflineElapsed();
 
         LoadGoldFromSave();
-        CurrencyHud.Show(goldCurrency);
+        // Gold shows in GlobalUI's top bar now; the old CurrencyHud strip is no longer shown.
         bool seedsMoved = LoadInventoryOnce();
         // After the bag, so the collection also marks what the bag holds, and
         // before Start's offline harvest, so quests count it.

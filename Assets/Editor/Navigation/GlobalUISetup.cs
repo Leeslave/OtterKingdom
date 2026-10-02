@@ -106,6 +106,7 @@ public static class GlobalUISetup
         FairyShopSetup.BuildPrefabs();
         SettlementSetup.CreateData();
         TutorialStyleSetup.CreateStyle();
+        RuntimeUIStyleSetup.CreateStyle();
         BuildGlobalUIPrefab();
         RegisterBuildScenes();
 
