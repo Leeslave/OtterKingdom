@@ -552,7 +552,7 @@ public static class FairyShopSetup
         }
 
         var root = new GameObject("FairyNpc");
-        root.transform.position = new Vector3(-3.4f, 6.0f, 0f); // 처음 카메라 화면 왼쪽 위 (말풍선이 상단바에 가리지 않는 높이)
+        root.transform.position = new Vector3(3.6f, 1.4f, 0f); // 처음 카메라 화면 오른쪽 가운데 (왼쪽 위 게시판·나뭇가지와 안 겹침)
 
         var fairySprite = ImportSprite(NpcArtFolder, "Fairy");
         var fairy = new GameObject("Fairy").AddComponent<SpriteRenderer>();

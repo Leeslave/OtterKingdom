@@ -436,7 +436,8 @@ public static partial class SettlementSetup
         return view;
     }
 
-    // 단계 그림은 완성 집 그림과 같은 크기라, 완성 집 스프라이트의 PPU·피벗을 그대로 써서 겹쳐 보이게 함
+    // 단계 그림은 완성 집 그림 캔버스에 사방 같은 여백을 더한 크기(fit_stage_images.py의 PAD) →
+    // 완성 집의 PPU를 쓰고, 피벗은 완성 집 피벗을 여백만큼 옮겨서 겹쳐 보이게 함
     private static Sprite ImportStageSprite(string name, Sprite house)
     {
         string path = $"{ArtFolder}/{name}.png";
@@ -455,7 +456,9 @@ public static partial class SettlementSetup
         var settings = new TextureImporterSettings();
         importer.ReadTextureSettings(settings);
         settings.spriteAlignment = (int)SpriteAlignment.Custom;
-        settings.spritePivot = new Vector2(house.pivot.x / house.rect.width, house.pivot.y / house.rect.height);
+        importer.GetSourceTextureWidthAndHeight(out int width, out int height);
+        var pad = new Vector2((width - house.rect.width) * 0.5f, (height - house.rect.height) * 0.5f);
+        settings.spritePivot = new Vector2((house.pivot.x + pad.x) / width, (house.pivot.y + pad.y) / height);
         importer.SetTextureSettings(settings);
         importer.SaveAndReimport();
         return AssetDatabase.LoadAssetAtPath<Sprite>(path);

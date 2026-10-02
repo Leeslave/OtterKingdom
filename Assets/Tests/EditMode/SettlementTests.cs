@@ -222,6 +222,19 @@ public class SettlementTests
     }
 
     [Test]
+    public void CountGatherRegrown_CountsOnlySpotsThatGrewBackInTheWindow()
+    {
+        var settlement = new Settlement();
+        settlement.SetGatherReady("branch_1", 50);    // 나가기 전에 이미 생김
+        settlement.SetGatherReady("branch_2", 150);   // 비운 동안 생김
+        settlement.SetGatherReady("pebble_1", 200);   // 돌아온 순간 생김
+        settlement.SetGatherReady("pebble_2", 500);   // 아직 안 생김
+
+        Assert.AreEqual(2, settlement.CountGatherRegrown(100, 200));
+        Assert.AreEqual(0, settlement.CountGatherRegrown(200, 200), "비운 시간이 0이면 없음");
+    }
+
+    [Test]
     public void EmptySave_FromOldVersion_LoadsAsFreshState()
     {
         var loaded = new Settlement();

@@ -543,6 +543,12 @@ public class GameManager : MonoBehaviour
         if (absenceSec < minOfflineAbsenceSec) return;
 
         var report = offlineProduction.Run(save, absenceSec, new OfflineBag(this));
+        var settlement = SettlementManager.Instance;
+        if (settlement != null)
+        {
+            settlement.CollectAbsenceNews(absenceSec, report.SettlementNews);
+            report.NextGoal = settlement.NextGoalTitle;
+        }
         SaveNow();
         if (report.HasAnything) gameUI.ShowOfflineReport(report, ItemDisplayName);
     }

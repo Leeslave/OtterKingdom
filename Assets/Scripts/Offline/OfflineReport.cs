@@ -14,8 +14,15 @@ public class OfflineReport
     public readonly List<string> OutOfSeeds = new List<string>();
     // Names of otters that visited, in visit order (repeats possible).
     public readonly List<string> OtterVisits = new List<string>();
+    // Settlement news lines: construction finished or still going, plaza
+    // gather spots that grew back (SettlementManager.CollectAbsenceNews).
+    public readonly List<string> SettlementNews = new List<string>();
+    // The board request to do next. Shown at the bottom, but on its own
+    // doesn't make the popup appear.
+    public string NextGoal;
 
-    public bool HasAnything => Received.Count > 0 || Lost.Count > 0 || OutOfSeeds.Count > 0 || OtterVisits.Count > 0;
+    public bool HasAnything => Received.Count > 0 || Lost.Count > 0 || OutOfSeeds.Count > 0 || OtterVisits.Count > 0
+                               || SettlementNews.Count > 0;
 
     public static void AddTo(List<ItemStack> stacks, string itemId, int quantity)
     {
