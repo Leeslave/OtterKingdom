@@ -20,8 +20,12 @@ public static partial class SettlementSetup
     private const string MiningItemFolder = "Assets/Scriptable Obejects/Inventory/Items/Mining";
     private const string WoodItemPath = MiningItemFolder + "/목재.asset";
     private const string StoneItemPath = MiningItemFolder + "/돌.asset";
+    private const string PotatoItemPath = "Assets/Scriptable Obejects/Inventory/Items/Farming/감자.asset";
+    internal const string AppleItemPath = "Assets/Scriptable Obejects/Inventory/Items/Farming/사과.asset";
+    private const int AppleSellPrice = 10;
     private const string ItemDatabasePath = "Assets/Scriptable Obejects/Inventory/ItemDatabase.asset";
     private const string GoldPath = "Assets/Scriptable Obejects/Gold.asset";
+    private const string GemPath = "Assets/Scriptable Obejects/Gem.asset";
     private const string PlazaPrefabFolder = "Assets/Prefabs/Plaza";
 
     // 왕국 단계 이름 (상단바 아래 칩)
@@ -109,6 +113,7 @@ public static partial class SettlementSetup
             EnsureFolder($"{DataFolder}/{sub}");
 
         var wood = CreateWoodItem();
+        CreateFruitItem();
         var stone = AssetDatabase.LoadAssetAtPath<ItemDefinition>(StoneItemPath);
         if (stone == null)
             Debug.LogError($"[SettlementSetup] 돌 아이템이 없습니다: {StoneItemPath}");
@@ -280,19 +285,46 @@ public static partial class SettlementSetup
         woodSo.FindProperty("_maxStack").intValue = 999;
         woodSo.ApplyModifiedPropertiesWithoutUndo();
 
+        AddToDatabase(wood);
+        return wood;
+    }
+
+    // 광장 나무를 흔들면 가끔 떨어지는 열매 (작물 분류, 팔면 골드)
+    private static ItemDefinition CreateFruitItem()
+    {
+        var crops = AssetDatabase.LoadAssetAtPath<ItemCategory>($"{CategoryFolder}/Crops.asset");
+        var potato = AssetDatabase.LoadAssetAtPath<ItemDefinition>(PotatoItemPath);
+        var (apple, _) = LoadOrCreate<ItemDefinition>(AppleItemPath);
+        var so = new SerializedObject(apple);
+        so.FindProperty("_itemId").stringValue = "fruit_apple";
+        so.FindProperty("_displayName").stringValue = "사과";
+        so.FindProperty("_description").stringValue = "광장 나무를 흔들면 가끔 떨어지는 빨간 사과. 팔면 골드가 된다.";
+        so.FindProperty("_icon").objectReferenceValue = LoadArt("ICON_Item_Apple");
+        so.FindProperty("_category").objectReferenceValue = crops;
+        if (potato != null)
+            so.FindProperty("_rarity").objectReferenceValue = new SerializedObject(potato).FindProperty("_rarity").objectReferenceValue;
+        so.FindProperty("_isSellable").boolValue = true;
+        so.FindProperty("_sellPrice").intValue = AppleSellPrice;
+        so.FindProperty("_maxStack").intValue = 999;
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        AddToDatabase(apple);
+        return apple;
+    }
+
+    private static void AddToDatabase(ItemDefinition item)
+    {
         var database = AssetDatabase.LoadAssetAtPath<ItemDatabase>(ItemDatabasePath);
         var dbSo = new SerializedObject(database);
         var list = dbSo.FindProperty("_items");
-        bool found = false;
         for (int i = 0; i < list.arraySize; i++)
-            found |= list.GetArrayElementAtIndex(i).objectReferenceValue == wood;
-        if (!found)
         {
-            list.arraySize++;
-            list.GetArrayElementAtIndex(list.arraySize - 1).objectReferenceValue = wood;
-            dbSo.ApplyModifiedPropertiesWithoutUndo();
+            if (list.GetArrayElementAtIndex(i).objectReferenceValue == item)
+                return;
         }
-        return wood;
+        list.arraySize++;
+        list.GetArrayElementAtIndex(list.arraySize - 1).objectReferenceValue = item;
+        dbSo.ApplyModifiedPropertiesWithoutUndo();
     }
 
     #endregion
@@ -305,6 +337,15 @@ public static partial class SettlementSetup
         ("Prop_Board", 2.7f, 0.03f),
         ("Prop_Branches", 0.95f, 0.18f),
         ("Prop_Pebbles", 0.85f, 0.1f),
+        ("Prop_Rock_0", 1.3f, 0.1f), // 광장 바위: 금 간 단계·자갈이 같은 캔버스라 같은 크기·피벗 (fit_plaza_nodes.py)
+        ("Prop_Rock_1", 1.3f, 0.1f),
+        ("Prop_Rock_2", 1.3f, 0.1f),
+        ("Prop_Rock_Rubble", 1.3f, 0.1f),
+        ("Prop_AppleTree_0", 3.4f, 0.1f), // 사과나무: 사과 달림 / 흔든 뒤
+        ("Prop_AppleTree_1", 3.4f, 0.1f),
+        ("FX_StoneChip", 0.3f, 0.5f),
+        ("FX_Leaf", 0.3f, 0.5f),
+        ("FX_Sparkle", 0.6f, 0.5f),
         ("Prop_Foundation", 3.4f, 0.16f),
         ("Prop_FarmSign_Locked", 1.9f, 0.03f),
         ("Prop_FarmSign", 1.9f, 0.03f),

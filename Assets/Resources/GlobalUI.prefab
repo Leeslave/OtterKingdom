@@ -22747,6 +22747,7 @@ MonoBehaviour:
   _reward: {fileID: 5963822967512780594}
   _rewardIcon: {fileID: 7757510244096615185}
   _rewardText: {fileID: 374935899821174165}
+  _noteText: {fileID: 8408417792245549349}
   _confirmButton: {fileID: 4987091687754713381}
 --- !u!1 &3849634752287483792
 GameObject:

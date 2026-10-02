@@ -119,6 +119,7 @@ public static class ProgressionSetup
         Set(view, "_reward", reward.gameObject);
         Set(view, "_rewardIcon", rewardIcon);
         Set(view, "_rewardText", rewardText);
+        Set(view, "_noteText", note);
         Set(view, "_confirmButton", confirmButton);
 
         screen.gameObject.SetActive(false);

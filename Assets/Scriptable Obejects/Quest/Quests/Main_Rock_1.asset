@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
-  m_Name: Main_Mine_1
+  m_Name: Main_Rock_1
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
-  _questId: main_mine_1
-  _title: "\uCCAB \uACE1\uAD2D\uC774\uC9C8"
-  _description: "\uAD11\uC0B0\uC5D0\uC11C \uAD11\uC11D 5\uAC1C \uCE90\uAE30"
-  _sortOrder: 13
+  _questId: main_rock_1
+  _title: "\uB3CC \uAE68\uB294 \uD574\uB2EC"
+  _description: "\uAD11\uC7A5 \uBC14\uC704\uB97C \uAE68\uC11C \uB3CC 6\uAC1C \uC5BB\uAE30"
+  _sortOrder: 12
   _kind: 0
-  _requiredLevel: 2
+  _requiredLevel: 1
   _prerequisite: {fileID: 0}
   _icon: {fileID: 21300000, guid: 5e32cc5d73137d5469cfdf69f9db3dbd, type: 3}
-  _goalType: 7
-  _goal: 5
+  _goalType: 8
+  _goal: 6
   _itemFilter: {fileID: 11400000, guid: c0aaf6ff75ccefa499fe320afcbcbb59, type: 2}
   _collectionTab: {fileID: 0}
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}

@@ -47,11 +47,17 @@ public static class GlobalUISetup
         ("Zone_Mine", "Mine", "광산", "광석 캐기", "Mine", true, 3, "ICON_Place_Mine"),
     };
 
-    // 정착 진행으로 열리는 장소: ID → (필요 발전, 잠겨 있을 때 문구). 광장·광산은 처음부터 열림
+    // 정착 진행으로 열리는 장소: ID → (필요 발전, 잠겨 있을 때 문구). 광장은 처음부터, 광산은 왕국 레벨로 (ZoneLevels)
     private static readonly Dictionary<string, (string development, string lockedText)> ZoneLocks = new Dictionary<string, (string, string)>
     {
         { "Farm", ("farmland", "농경지를 개간하면 열려요") },
         { "Fishing", (SettlementSetup.FishingDevelopment, "아직 갈 수 없어요") },
+    };
+
+    // 왕국 레벨로 열리는 장소: ID → 필요 레벨 (목록에 없으면 1 = 처음부터)
+    private static readonly Dictionary<string, int> ZoneLevels = new Dictionary<string, int>
+    {
+        { "Mine", 2 },
     };
 
     private static readonly string[] ZoneScenes = { "Assets/Scenes/Plaza.unity", "Assets/Scenes/Farm.unity", "Assets/Scenes/Fishing.unity", "Assets/Scenes/Mine.unity" };
@@ -148,6 +154,7 @@ public static class GlobalUISetup
             var hasLock = ZoneLocks.TryGetValue(z.id, out var zoneLock);
             so.FindProperty("_requiredDevelopment").stringValue = hasLock ? zoneLock.development : "";
             so.FindProperty("_developmentLockedSubtitle").stringValue = hasLock ? zoneLock.lockedText : "";
+            so.FindProperty("_requiredLevel").intValue = ZoneLevels.TryGetValue(z.id, out int level) ? level : 1;
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(zone);
         }

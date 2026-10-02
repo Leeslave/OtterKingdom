@@ -15,14 +15,19 @@ HOUSE1 = dict(gold=0, wood=8, stone=5, secs=10)
 HOUSE2 = dict(gold=150, wood=18, stone=8, secs=30)
 FARMLAND = dict(gold=200, wood=16, stone=10, secs=45)
 
-BRANCHES, BRANCH_AMOUNT, BRANCH_COOLDOWN = 4, 2, 60
-PEBBLES, PEBBLE_AMOUNT, PEBBLE_COOLDOWN = 2, 1, 90
+BRANCHES, BRANCH_AMOUNT, BRANCH_COOLDOWN = 2, 2, 60
+# 바위: 여러 번 쳐서 깨면 돌 3개, 150초 뒤 다시 솟음 (치는 시간은 몇 초라 무시)
+ROCKS, ROCK_AMOUNT, ROCK_COOLDOWN = 2, 3, 150
+ROCK_GEM_CHANCE = 0.05
+# 나무: 3번 흔들면 목재 1+1+2, 120초 쉼. 흔들 때마다 25% 사과 (10골드에 팜)
+TREES, TREE_WOOD, TREE_REST, TREE_SHAKES = 2, 4, 120, 3
+APPLE_CHANCE, APPLE_PRICE = 0.25, 10
 MINE_INTERVAL = (15, 30)
 DIAMOND_CHANCE, DIAMOND_PER_LEVEL, DIAMOND_PRICE = 0.30, 0.05, 50
 PICKAXE_LV2_COST = 100
 
 TUTORIAL_SECS = 60   # 튜토리얼·게시판을 보고 첫 집을 시작하기까지
-MINE_ON_AT = 120     # 광산에 가서 채굴을 켜는 시각
+MINE_ON_DELAY = 30   # 광산이 열린 뒤(왕국 Lv.2) 가서 채굴을 켜기까지
 HORIZON = 3600
 
 
@@ -33,8 +38,11 @@ def run(check_every, upgrade_pickaxe, rng):
     mining_on = False
     next_find = None
     branch_ready = [0] * BRANCHES
-    pebble_ready = [0] * PEBBLES
+    rock_ready = [0] * ROCKS
+    tree_ready = [0] * TREES
     ores = gathered = sales = upgrades = 0
+    rock_stone = 0       # 광장 바위에서 얻은 돌 (1레벨 퀘스트)
+    lv2_at = None
     level = 1
     claimed = set()
     stage = 0            # 0 첫 집 전, 1 첫 집 공사, 2 새 이웃의 집 전, 3 공사, 4 개간 전, 5 공사, 6 끝
@@ -44,16 +52,17 @@ def run(check_every, upgrade_pickaxe, rng):
     waits = {"gold": 0, "wood": 0, "stone": 0}
 
     def quests():
-        nonlocal gold, level
-        lv1 = [("mine1", ores >= 5, 30), ("gather1", gathered >= 10, 30), ("sales1", sales >= 200, 50)]
+        nonlocal gold, level, lv2_at
+        lv1 = [("rock1", rock_stone >= 6, 30), ("gather1", gathered >= 10, 30), ("sales1", sales >= 10, 30)]
         for key, done, reward in lv1:
             if done and key not in claimed:
                 claimed.add(key)
                 gold += reward
-        if level == 1 and {"mine1", "gather1", "sales1"} <= claimed:
+        if level == 1 and {"rock1", "gather1", "sales1"} <= claimed:
             level = 2
+            lv2_at = t
         if level >= 2:
-            lv2 = [("mine2", ores >= 25, 80), ("gather2", gathered >= 50, 80), ("sales2", sales >= 1200, 100),
+            lv2 = [("mine1", ores >= 5, 30), ("mine2", ores >= 25, 80), ("gather2", gathered >= 50, 80), ("sales2", sales >= 1200, 100),
                    ("upgrade1", upgrades >= 1, 100), ("daily_sales", sales >= 1200, 200)]
             for key, done, reward in lv2:
                 if done and key not in claimed:
@@ -75,7 +84,7 @@ def run(check_every, upgrade_pickaxe, rng):
             marks[{2: "첫 집 완성", 4: "새 이웃의 집 완성", 6: "밭 해금"}[stage]] = t
 
         if t % check_every == 0:
-            if not mining_on and t >= MINE_ON_AT:
+            if not mining_on and lv2_at is not None and t >= lv2_at + MINE_ON_DELAY:
                 mining_on = True
                 next_find = t + rng.uniform(*MINE_INTERVAL)
             for i in range(BRANCHES):
@@ -83,11 +92,21 @@ def run(check_every, upgrade_pickaxe, rng):
                     wood += BRANCH_AMOUNT
                     gathered += BRANCH_AMOUNT
                     branch_ready[i] = t + BRANCH_COOLDOWN
-            for i in range(PEBBLES):
-                if t >= pebble_ready[i]:
-                    stone += PEBBLE_AMOUNT
-                    gathered += PEBBLE_AMOUNT
-                    pebble_ready[i] = t + PEBBLE_COOLDOWN
+            for i in range(ROCKS):
+                if t >= rock_ready[i]:
+                    stone += ROCK_AMOUNT
+                    rock_stone += ROCK_AMOUNT
+                    gathered += ROCK_AMOUNT
+                    rock_ready[i] = t + ROCK_COOLDOWN
+            for i in range(TREES):
+                if t >= tree_ready[i]:
+                    wood += TREE_WOOD
+                    gathered += TREE_WOOD
+                    apples = sum(rng.random() < APPLE_CHANCE for _ in range(TREE_SHAKES))
+                    gathered += apples
+                    gold += apples * APPLE_PRICE
+                    sales += apples * APPLE_PRICE
+                    tree_ready[i] = t + TREE_REST
             # 다이아몬드는 팔고 돌은 모음
             if diamonds:
                 gold += diamonds * DIAMOND_PRICE
