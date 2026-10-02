@@ -69,9 +69,9 @@ public static partial class SettlementSetup
     {
         ("con_house_1", "작은 집", "ICON_House_Blue", ConstructionTarget.House, 0, 8, 5, 10f, false,
             "작은 집 짓는 중", "다 지으면 몽실이가 정착해요", "house_1"),
-        ("con_house_2", "새 이웃의 집", "ICON_House_Red", ConstructionTarget.House, 150, 12, 8, 30f, true,
+        ("con_house_2", "새 이웃의 집", "ICON_House_Red", ConstructionTarget.House, 150, 18, 8, 30f, true,
             "새 이웃의 집 짓는 중", "다 지으면 새 이웃이 정착해요", "house_2"),
-        ("con_farmland", "농경지 개간", "ICON_Clearing", ConstructionTarget.Clearing, 200, 10, 10, 45f, true,
+        ("con_farmland", "농경지 개간", "ICON_Clearing", ConstructionTarget.Clearing, 200, 16, 10, 45f, true,
             "농경지 개간 중", "완료하면 첫 밭이 열려요", "farmland"),
     };
 

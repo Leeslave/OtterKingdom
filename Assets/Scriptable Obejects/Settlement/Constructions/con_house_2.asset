@@ -19,7 +19,7 @@ MonoBehaviour:
   _requiredGold: 150
   _requiredItems:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
-    _amount: 12
+    _amount: 18
   - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
     _amount: 8
   _durationSeconds: 30
