@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_sales_1
   _title: "\uD2F0\uB04C \uBAA8\uC544 \uC655\uAD6D"
-  _description: "\uD310\uB9E4\uB85C 200\uACE8\uB4DC \uBC8C\uAE30"
+  _description: "\uD310\uB9E4\uB85C 10\uACE8\uB4DC \uBC8C\uAE30"
   _sortOrder: 13
   _kind: 0
   _requiredLevel: 1
   _prerequisite: {fileID: 0}
   _icon: {fileID: 21300000, guid: 50d17c0c5e1496846a61da22ead35d0d, type: 3}
   _goalType: 2
-  _goal: 200
+  _goal: 10
   _itemFilter: {fileID: 0}
   _collectionTab: {fileID: 0}
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
-  _rewardAmount: 50
-  _expReward: 50
+  _rewardAmount: 30
+  _expReward: 30
   _expPercentOfLevel: 0

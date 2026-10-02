@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uC0AC\uACFC"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: fruit_apple
+  _displayName: "\uC0AC\uACFC"
+  _description: "\uAD11\uC7A5 \uB098\uBB34\uB97C \uD754\uB4E4\uBA74 \uAC00\uB054
+    \uB5A8\uC5B4\uC9C0\uB294 \uBE68\uAC04 \uC0AC\uACFC. \uD314\uBA74 \uACE8\uB4DC\uAC00
+    \uB41C\uB2E4."
+  _icon: {fileID: 21300000, guid: 1d1e372289dc2dc45a72507ae6779f5f, type: 3}
+  _category: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 1
+  _sellPrice: 10
+  _maxStack: 999

@@ -21,4 +21,5 @@ MonoBehaviour:
   _isAvailable: 1
   _requiredDevelopment: 
   _developmentLockedSubtitle: 
+  _requiredLevel: 2
   _sortOrder: 3

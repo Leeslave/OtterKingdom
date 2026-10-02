@@ -39,12 +39,14 @@ public static partial class SettlementSetup
     };
 
     private static readonly Vector2 BoardPixel = new Vector2(400, 525);
-    // 돌무더기: 돌 1개, 90초 뒤 다시 생김 (광산만으로는 돌이 모자라서)
-    private static readonly Vector2[] PebblePixels = { new Vector2(575, 770), new Vector2(320, 880) };
-    private const int PebbleAmount = 1;
-    private const float PebbleCooldownSeconds = 90f;
+    // 바위: 여러 번 쳐서 깨면 돌 3개, 150초 뒤 다시 솟음 (옛 돌무더기 자리)
+    private static readonly Vector2[] RockPixels = { new Vector2(575, 770), new Vector2(360, 880) };
 
-    private static readonly Vector2[] BranchPixels = { new Vector2(430, 800), new Vector2(690, 860), new Vector2(360, 700), new Vector2(650, 470) };
+    // 흔드는 나무: 3번 흔들면 목재 4개(+가끔 사과), 120초 쉼. 첫 화면 왼쪽 아래·오른쪽 위 (게시판·요정과 안 겹침)
+    private static readonly Vector2[] TreePixels = { new Vector2(385, 700), new Vector2(650, 548) };
+
+    // 바닥 나뭇가지: 한 번 눌러 줍기 (목재 2개, 60초)
+    private static readonly Vector2[] BranchPixels = { new Vector2(430, 800), new Vector2(690, 860) };
     private static readonly Vector2 GatherPixel = new Vector2(512, 640);   // 처음 카메라 화면 가운데
     private static readonly Vector2 ArrivalPixel = new Vector2(600, 1000); // 아래쪽 바닷가 길
 
@@ -98,8 +100,12 @@ public static partial class SettlementSetup
         for (int i = 0; i < BranchPixels.Length; i++)
             BuildGatherPoint(root, $"branch_{i + 1:00}", ToWorld(BranchPixels[i]), "Prop_Branches", null, 0, 0f);
         var stone = AssetDatabase.LoadAssetAtPath<ItemDefinition>(StoneItemPath);
-        for (int i = 0; i < PebblePixels.Length; i++)
-            BuildGatherPoint(root, $"pebble_{i + 1:00}", ToWorld(PebblePixels[i]), "Prop_Pebbles", stone, PebbleAmount, PebbleCooldownSeconds);
+        var gem = AssetDatabase.LoadAssetAtPath<Currency>(GemPath);
+        for (int i = 0; i < RockPixels.Length; i++)
+            BuildRockNode(root, $"rock_{i + 1:00}", ToWorld(RockPixels[i]), stone, gem);
+        var apple = AssetDatabase.LoadAssetAtPath<ItemDefinition>(AppleItemPath);
+        for (int i = 0; i < TreePixels.Length; i++)
+            BuildTreeNode(root, $"tree_{i + 1:00}", ToWorld(TreePixels[i]), apple);
 
         var siteViews = new List<ConstructionSiteView>();
         foreach (var h in HouseSites)
@@ -321,19 +327,7 @@ public static partial class SettlementSetup
         tap.radius = 0.8f;
         tap.offset = new Vector2(0f, 0.3f);
 
-        var popupGo = new GameObject("Popup");
-        popupGo.transform.SetParent(point, false);
-        popupGo.transform.localPosition = new Vector3(0f, 1.1f, 0f);
-        var popup = popupGo.AddComponent<TextMeshPro>();
-        popup.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(TitleFontAssetPath);
-        popup.text = "+2 목재";
-        popup.fontSize = 5f;
-        popup.color = Cocoa;
-        popup.alignment = TextAlignmentOptions.Center;
-        popup.rectTransform.sizeDelta = new Vector2(5f, 1.2f);
-        popup.outlineWidth = 0.25f;
-        popup.outlineColor = new Color32(0xFF, 0xF4, 0xE6, 0xFF);
-        popup.sortingOrder = OverlayOrder;
+        var popup = CreateWorldText("Popup", point, new Vector3(0f, 1.1f, 0f), "+2 목재");
 
         var view = point.gameObject.AddComponent<GatherPointView>();
         var so = new SerializedObject(view);
@@ -345,6 +339,101 @@ public static partial class SettlementSetup
         so.FindProperty("_amount").intValue = amount;
         so.FindProperty("_cooldownSeconds").floatValue = cooldownSeconds;
         so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    // 여러 번 쳐서 깨는 바위 (금 간 그림 3단계 + 자갈, 약점 반짝이, 드물게 조개)
+    private static void BuildRockNode(Transform root, string pointId, Vector3 position, ItemDefinition stone, Currency gem)
+    {
+        var node = new GameObject($"Rock_{pointId}").transform;
+        node.SetParent(root, false);
+        node.position = position;
+
+        var visual = CreateSprite("Visual", node, LoadPropArt("Prop_Rock_0"), position, true);
+        AddFootprint(node, new Rect(-0.75f, -0.05f, 1.5f, 0.45f));
+
+        var tap = node.gameObject.AddComponent<CircleCollider2D>();
+        tap.radius = 0.85f;
+        tap.offset = new Vector2(0f, 0.45f);
+
+        var weakSpot = CreateSprite("WeakSpot", node, LoadPropArt("FX_Sparkle"), position + new Vector3(0f, 0.6f, 0f), false);
+        weakSpot.sortingOrder = OverlayOrder - 1;
+
+        var view = node.gameObject.AddComponent<RockNodeView>();
+        var so = new SerializedObject(view);
+        so.FindProperty("_pointId").stringValue = pointId;
+        so.FindProperty("_item").objectReferenceValue = stone;
+        so.FindProperty("_rareCurrency").objectReferenceValue = gem;
+        var cracks = so.FindProperty("_crackSprites");
+        cracks.arraySize = 3;
+        for (int i = 0; i < 3; i++)
+            cracks.GetArrayElementAtIndex(i).objectReferenceValue = LoadPropArt($"Prop_Rock_{i}");
+        so.FindProperty("_rubbleSprite").objectReferenceValue = LoadPropArt("Prop_Rock_Rubble");
+        so.FindProperty("_chipSprite").objectReferenceValue = LoadPropArt("FX_StoneChip");
+        so.FindProperty("_renderer").objectReferenceValue = visual;
+        so.FindProperty("_weakSpot").objectReferenceValue = weakSpot;
+        so.FindProperty("_tapArea").objectReferenceValue = tap;
+        so.FindProperty("_fx").objectReferenceValue = CreateNodeFx(node);
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    // 흔들면 나뭇가지·사과가 떨어지는 사과나무 (다 흔들면 잎이 성긴 그림)
+    private static void BuildTreeNode(Transform root, string pointId, Vector3 position, ItemDefinition fruit)
+    {
+        var node = new GameObject($"Tree_{pointId}").transform;
+        node.SetParent(root, false);
+        node.position = position;
+
+        var visual = CreateSprite("Visual", node, LoadPropArt("Prop_AppleTree_0"), position, true);
+        AddFootprint(node, new Rect(-0.4f, -0.1f, 0.8f, 0.4f));
+
+        var tap = node.gameObject.AddComponent<CircleCollider2D>();
+        tap.radius = 1.4f;
+        tap.offset = new Vector2(0f, 1.8f);
+
+        var view = node.gameObject.AddComponent<TreeShakeView>();
+        var so = new SerializedObject(view);
+        so.FindProperty("_pointId").stringValue = pointId;
+        so.FindProperty("_fruit").objectReferenceValue = fruit;
+        so.FindProperty("_readySprite").objectReferenceValue = LoadPropArt("Prop_AppleTree_0");
+        so.FindProperty("_restSprite").objectReferenceValue = LoadPropArt("Prop_AppleTree_1");
+        so.FindProperty("_branchSprite").objectReferenceValue = LoadPropArt("Prop_Branches");
+        so.FindProperty("_leafSprite").objectReferenceValue = LoadPropArt("FX_Leaf");
+        so.FindProperty("_renderer").objectReferenceValue = visual;
+        so.FindProperty("_tapArea").objectReferenceValue = tap;
+        so.FindProperty("_fx").objectReferenceValue = CreateNodeFx(node);
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    // 튀는 조각·떠오르는 글자 (바위·나무 공용)
+    private static PlazaNodeFx CreateNodeFx(Transform node)
+    {
+        var go = new GameObject("Fx");
+        go.transform.SetParent(node, false);
+        var text = CreateWorldText("Text", go.transform, Vector3.zero, "+3 돌");
+        var fx = go.AddComponent<PlazaNodeFx>();
+        var so = new SerializedObject(fx);
+        so.FindProperty("_textTemplate").objectReferenceValue = text;
+        so.FindProperty("_sortingOrder").intValue = OverlayOrder - 2;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return fx;
+    }
+
+    private static TextMeshPro CreateWorldText(string name, Transform parent, Vector3 localPosition, string sample)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.localPosition = localPosition;
+        var text = go.AddComponent<TextMeshPro>();
+        text.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(TitleFontAssetPath);
+        text.text = sample;
+        text.fontSize = 5f;
+        text.color = Cocoa;
+        text.alignment = TextAlignmentOptions.Center;
+        text.rectTransform.sizeDelta = new Vector2(6f, 1.2f);
+        text.outlineWidth = 0.25f;
+        text.outlineColor = new Color32(0xFF, 0xF4, 0xE6, 0xFF);
+        text.sortingOrder = OverlayOrder;
+        return text;
     }
 
     #endregion

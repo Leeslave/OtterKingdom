@@ -46,6 +46,11 @@ public class ZoneDefinition : ScriptableObject
     [SerializeField]
     private string _developmentLockedSubtitle;
 
+    [Header("해금 (왕국 레벨)")]
+    [Tooltip("이 왕국 레벨부터 갈 수 있음 (1이면 처음부터). 잠겨 있으면 \"왕국 Lv.N에 열려요\"")]
+    [SerializeField]
+    private int _requiredLevel = 1;
+
     [Header("정렬")]
     [Tooltip("이동 팝업 정렬 순서 (작을수록 앞)")]
     [SerializeField]
@@ -60,6 +65,7 @@ public class ZoneDefinition : ScriptableObject
     public int SortOrder => _sortOrder;
     public string RequiredDevelopment => _requiredDevelopment;
     public string DevelopmentLockedSubtitle => _developmentLockedSubtitle;
+    public int RequiredLevel => _requiredLevel;
 
     /// <summary>켜져 있고 씬도 지정돼 있어야 이동 가능</summary>
     public bool IsAvailable => _isAvailable && !string.IsNullOrWhiteSpace(_sceneName);

@@ -18,6 +18,8 @@ public class LevelUpPopupView : MonoBehaviour
     [SerializeField] private GameObject _reward;
     [SerializeField] private Image _rewardIcon;
     [SerializeField] private TextMeshProUGUI _rewardText;
+    [Tooltip("안내 한 줄 (\"새 퀘스트가 열렸어요!\" 또는 새로 열린 장소)")]
+    [SerializeField] private TextMeshProUGUI _noteText;
 
     [Header("버튼")]
     [SerializeField] private Button _confirmButton;
@@ -33,9 +35,10 @@ public class LevelUpPopupView : MonoBehaviour
         _animator.OnHidden += () => OnClosed?.Invoke();
     }
 
-    public void Show(int level, Currency rewardCurrency, int rewardAmount)
+    public void Show(int level, Currency rewardCurrency, int rewardAmount, string note)
     {
         _levelText.text = $"Lv.{level}";
+        _noteText.text = note;
 
         bool hasReward = rewardCurrency != null && rewardAmount > 0;
         _reward.SetActive(hasReward);

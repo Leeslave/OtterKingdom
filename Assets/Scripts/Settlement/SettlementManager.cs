@@ -264,7 +264,7 @@ public class SettlementManager : MonoBehaviour
 
     #endregion
 
-    #region 줍기 (나뭇가지 → 목재, 돌무더기 → 돌)
+    #region 줍기 (나뭇가지·나무 → 목재, 바위 → 돌)
 
     public bool IsGatherReady(string pointId) => Settlement.IsGatherReady(pointId, NowTicks);
 
@@ -290,6 +290,33 @@ public class SettlementManager : MonoBehaviour
         Settlement.SetGatherReady(pointId, NowTicks + TimeSpan.FromSeconds(cooldownSeconds).Ticks);
         SaveRequested?.Invoke();
         return added;
+    }
+
+    /// <summary>자리의 쉬는 시간과 상관없이 덤으로 얻은 것 (나무에서 떨어진 열매)</summary>
+    /// <returns>넣은 개수 (가방이 꽉 찼으면 0)</returns>
+    public int GatherExtra(ItemDefinition item, int amount)
+    {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+        if (amount <= 0)
+            throw new ArgumentOutOfRangeException(nameof(amount));
+
+        int added = InventoryManager.Instance.Inventory.Add(item, amount, ItemChangeReason.Gather);
+        if (added > 0)
+            SaveRequested?.Invoke();
+        return added;
+    }
+
+    /// <summary>광장에서 드물게 찾은 재화 (바위 속 조개)</summary>
+    public void GrantPlazaFind(Currency currency, int amount)
+    {
+        if (currency == null)
+            throw new ArgumentNullException(nameof(currency));
+        if (amount <= 0)
+            throw new ArgumentOutOfRangeException(nameof(amount));
+
+        CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(currency, amount, TransactionSource.PlazaFind));
+        SaveRequested?.Invoke();
     }
 
     #endregion

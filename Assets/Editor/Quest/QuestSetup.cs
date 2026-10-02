@@ -45,12 +45,13 @@ public static class QuestSetup
         ("Main_Catch_4", "main_catch_4", "만선의 꿈", "물고기 40마리 낚기", QuestGoalType.Catch, 40, "Fish", 500, "item:Fishing/고등어", QuestKind.Main, 6, "Main_Catch_3", 220, 0f),
         ("Main_Catch_5", "main_catch_5", "고등어 사냥꾼", "물고기 100마리 낚기", QuestGoalType.Catch, 100, "Fish", 1000, "item:Fishing/고등어", QuestKind.Main, 9, "Main_Catch_4", 420, 0f),
         ("Main_Catch_6", "main_catch_6", "바다의 전설", "물고기 250마리 낚기", QuestGoalType.Catch, 250, "Fish", 2000, "item:Fishing/고등어", QuestKind.Main, 12, "Main_Catch_5", 750, 0f),
-        // 밭·낚시터가 열리기 전(정착 진행 P0)에도 할 수 있는 것: 광산, 광장 줍기
-        ("Main_Mine_1", "main_mine_1", "첫 곡괭이질", "광산에서 광석 5개 캐기", QuestGoalType.Mine, 5, "Ore", 30, "item:Mining/돌", QuestKind.Main, 1, "", 40, 0f),
+        // 1레벨 = 광장에서 할 수 있는 것 (바위 깨기, 줍기, 첫 판매). 광산은 왕국 Lv.2에 열림
+        ("Main_Rock_1", "main_rock_1", "돌 깨는 해달", "광장 바위를 깨서 돌 6개 얻기", QuestGoalType.Gather, 6, "Ore", 30, "item:Mining/돌", QuestKind.Main, 1, "", 40, 0f),
+        ("Main_Mine_1", "main_mine_1", "첫 곡괭이질", "광산에서 광석 5개 캐기", QuestGoalType.Mine, 5, "Ore", 30, "item:Mining/돌", QuestKind.Main, 2, "", 40, 0f),
         ("Main_Mine_2", "main_mine_2", "광부의 하루", "광산에서 광석 20개 캐기", QuestGoalType.Mine, 20, "Ore", 80, "item:Mining/다이아몬드", QuestKind.Main, 2, "Main_Mine_1", 60, 0f),
         ("Main_Gather_1", "main_gather_1", "부지런한 손", "광장에서 재료 10개 줍기", QuestGoalType.Gather, 10, "", 30, "item:Mining/목재", QuestKind.Main, 1, "", 30, 0f),
         ("Main_Gather_2", "main_gather_2", "광장 청소부", "광장에서 재료 40개 줍기", QuestGoalType.Gather, 40, "", 80, "item:Mining/돌", QuestKind.Main, 2, "Main_Gather_1", 60, 0f),
-        ("Main_Sales_1", "main_sales_1", "티끌 모아 왕국", "판매로 200골드 벌기", QuestGoalType.EarnFromSales, 200, "", 50, "gold", QuestKind.Main, 1, "", 50, 0f),
+        ("Main_Sales_1", "main_sales_1", "티끌 모아 왕국", "판매로 10골드 벌기", QuestGoalType.EarnFromSales, 10, "", 30, "gold", QuestKind.Main, 1, "", 30, 0f),
         ("Main_Sales_2", "main_sales_2", "첫 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 100, "gold", QuestKind.Main, 2, "Main_Sales_1", 80, 0f),
         ("Main_Sales_3", "main_sales_3", "알뜰 상인", "판매로 4,000골드 벌기", QuestGoalType.EarnFromSales, 4000, "", 300, "gold", QuestKind.Main, 4, "Main_Sales_2", 140, 0f),
         ("Main_Sales_4", "main_sales_4", "왕국의 살림꾼", "판매로 15,000골드 벌기", QuestGoalType.EarnFromSales, 15000, "", 700, "gold", QuestKind.Main, 7, "Main_Sales_3", 260, 0f),
