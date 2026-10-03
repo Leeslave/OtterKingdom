@@ -18,6 +18,7 @@ MonoBehaviour:
   _discoverDevelopment: chair
   _playerClearDevelopment: mine_path_open
   _operationalDevelopment: mine_cleared
+  _productionDevelopment: mine_working
   _preparationTasks:
   - {fileID: 11400000, guid: 13f7193403b0af742b37211ed0380205, type: 2}
   _decorBoard: {fileID: 11400000, guid: 80981ba6273f1c943a4f84778cf49abf, type: 2}

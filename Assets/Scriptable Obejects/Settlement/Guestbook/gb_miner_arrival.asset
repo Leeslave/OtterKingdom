@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21bf3c5778b2f79489589cdca7cb1806, type: 3}
-  m_Name: gb_farmland
+  m_Name: gb_miner_arrival
   m_EditorClassIdentifier: OtterKingdom::GuestbookEntryDefinition
-  _entryId: gb_farmland
-  _otter: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
-  _tag: "\uAC1C\uAC04"
-  _message: "\uB18D\uACBD\uC9C0\uB97C \uC77C\uAD9C\uC5B4\uC694!\n\uC774\uC81C \uBC2D\uC5D0\uC11C \uBA39\uAC70\uB9AC\uB97C \uAE38\uB7EC\uC694."
+  _entryId: gb_miner_arrival
+  _otter: {fileID: 11400000, guid: 01434be3ebf84ed69c1bbf9c0735c9c9, type: 2}
+  _tag: "\uBC29\uBB38"
+  _message: "\uAD11\uC0B0\uC774 \uC5F4\uB838\uB2E4\uB294 \uC18C\uC2DD\uC744 \uB4E3\uACE0 \uC654\uC5B4\uC694.\n\uACE1\uAD2D\uC774\uB294 \uC81C\uAC00 \uCC59\uACA8 \uC654\uC5B4\uC694!"

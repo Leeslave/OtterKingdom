@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEditor;
-using UnityEditor.Animations;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,20 +7,24 @@ using static CollectionSetup;
 
 /// <summary>
 /// 전문 해달(광부·농부)과 밭 현장 개간:
-/// - 광부의 광장 프리팹 (광산 그림 그대로, 광장 해달처럼 걷게)
+/// - 광부의 광장 프리팹 (광산의 광부 그림·클립 그대로, 광장 해달처럼 걷게)
 /// - 밭 씬의 개간 현장: 잡목·바위(직접 치움) + 주민 정비 현장 + 개간·농부 배치 전에는 밭·농부를 숨기는 ZoneClearingView
 /// - 한 번에 적용하는 메뉴 (Tools/Settlement/Apply Specialist Progression)
-/// 여러 번 실행해도 결과가 같음.
+/// 데이터·프리팹·씬은 이미 저장소에 들어 있다. 이 메뉴는 표를 고친 뒤 다시 만들 때 쓴다 (여러 번 실행해도 결과가 같음).
 /// </summary>
 public static partial class SettlementSetup
 {
-    private const string MinerSpriteDir = "Assets/Sprites/Characters/MinerOtter";
-    private const string MinerAnimDir = "Assets/Animations/MinerPlaza";
+    private const string MinerPrefabPath = "Assets/Prefabs/Mine/MinerOtter.prefab";
     private const string MinerPlazaPrefabPath = PlazaPrefabFolder + "/PlazaOtter_Miner.prefab";
+    // 광부 그림(키 약 1.52)을 광장 해달 키(1.67)에 맞춤
+    private const float MinerPlazaScale = 1.1f;
+    private static readonly string[] MinerWalkClips = { "WalkRight", "WalkLeft", "WalkDown", "WalkUp" };
 
     private const string FarmScenePath = "Assets/Scenes/Farm.unity";
     private const string FarmClearingName = "FarmClearing";
     private const string FarmHintObstacle = "farm_rock_01";
+    // 밭 해달(농부 0.6배, 키 약 1.2)은 광부(키 약 1.9)보다 작아 잡목·바위도 줄임
+    private const float FarmObstacleScale = 0.65f;
 
     // 밭 고랑 세 줄(위 y 1.9, 가운데 -0.2, 아래 -2.55, 가운데 x 0.3) 위를 덮은 잡목·바위. 카메라 고정 (ortho 8, 가로 ±4.5)
     private static readonly (string id, ObstacleKind kind, Vector2 position)[] FarmObstacles =
@@ -58,35 +59,19 @@ public static partial class SettlementSetup
 
     #region 광부 광장 프리팹
 
-    // 광산 그림(MineSceneSetup이 자른 MinerOtter_Walk: 오른쪽/왼쪽/앞/뒤 줄, 8칸)으로 광장 해달 애니메이터를 만든다.
-    // OtterVisualController가 쓰는 파라미터(IsMoving, WalkDir, WalkAnimSpeed)와 같게: 옆 걸음은 오른쪽, 왼쪽은 좌우 뒤집기
+    // 광산의 광부 프리팹(MinerOtter)이 쓰는 클립(SpriteFrameAnimator: 오른쪽/왼쪽/앞/뒤 걷기)을 그대로 쓰는 광장 해달.
+    // OtterVisualController가 클립 이름으로 걷게 한다. 서 있을 때는 앞을 봄 (앞으로 걷기 첫 칸)
     [MenuItem("Tools/Settlement/Build Miner Plaza Otter")]
     public static void BuildMinerPlazaPrefab()
     {
-        string walkPath = $"{MinerSpriteDir}/MinerOtter_Walk.png";
-        var sprites = AssetDatabase.LoadAllAssetsAtPath(walkPath).OfType<Sprite>().ToDictionary(s => s.name);
-        if (!sprites.ContainsKey("MinerOtter_Walk_0_0"))
+        var minePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(MinerPrefabPath);
+        var mineFrames = minePrefab != null ? minePrefab.GetComponent<SpriteFrameAnimator>() : null;
+        if (mineFrames == null)
         {
-            Debug.LogError($"[SettlementSetup] 광부 그림이 잘려 있지 않습니다: {walkPath} (광산 씬 설정을 먼저 실행하세요)");
+            Debug.LogError($"[SettlementSetup] 광부 프리팹에 SpriteFrameAnimator가 없습니다: {MinerPrefabPath} (광산 씬 설정을 먼저 실행하세요)");
             return;
         }
-        Sprite[] Row(int row) => Enumerable.Range(0, 8).Select(col => sprites[$"MinerOtter_Walk_{row}_{col}"]).ToArray();
-
-        if (AssetDatabase.IsValidFolder(MinerAnimDir))
-            AssetDatabase.DeleteAsset(MinerAnimDir);
-        Directory.CreateDirectory(MinerAnimDir);
-        AssetDatabase.Refresh();
-
-        var front = Row(2);
-        var clips = new Dictionary<string, AnimationClip>
-        {
-            // 서 있을 때는 앞을 보고 가끔 한 발짝 (걷기 첫 칸을 길게)
-            { "Idle", BuildSpriteClip($"{MinerAnimDir}/Miner_Idle.anim", new[] { front[0], front[0], front[0], front[1] }, 3f) },
-            { "Walk", BuildSpriteClip($"{MinerAnimDir}/Miner_Walk.anim", Row(0), 10f) },
-            { "Walk_Down", BuildSpriteClip($"{MinerAnimDir}/Miner_Walk_Down.anim", front, 10f) },
-            { "Walk_Up", BuildSpriteClip($"{MinerAnimDir}/Miner_Walk_Up.anim", Row(3), 10f) },
-        };
-        var controller = BuildWalkController($"{MinerAnimDir}/MinerPlaza.controller", clips);
+        var sourceClips = new SerializedObject(mineFrames).FindProperty("clips");
 
         bool exists = AssetDatabase.LoadAssetAtPath<GameObject>(MinerPlazaPrefabPath) != null;
         var root = exists ? PrefabUtility.LoadPrefabContents(MinerPlazaPrefabPath) : new GameObject("PlazaOtter_Miner");
@@ -100,24 +85,44 @@ public static partial class SettlementSetup
             body = new GameObject("Visual").transform;
             body.SetParent(root.transform, false);
         }
-        // 광부 그림은 발밑 피벗이라 루트 = 발밑. 광장 해달 키에 맞춰 키움
-        var settings = AssetDatabase.LoadAssetAtPath<PlazaSettings>(PlazaSettingsPath);
-        float plazaHeight = settings != null ? settings.otterHeight : 1.67f;
-        float minerHeight = front[0].bounds.size.y;
+        // 광부 그림은 발밑 피벗이라 루트 = 발밑
         body.localPosition = Vector3.zero;
-        body.localScale = Vector3.one * (minerHeight > 0f ? plazaHeight / minerHeight * 0.92f : 1f);
+        body.localScale = new Vector3(MinerPlazaScale, MinerPlazaScale, 1f);
+        var oldAnimator = body.GetComponent<Animator>();
+        if (oldAnimator != null)
+            Object.DestroyImmediate(oldAnimator, true);
 
         var spriteRenderer = GetOrAdd<SpriteRenderer>(body.gameObject);
-        spriteRenderer.sprite = front[0];
-        var animator = GetOrAdd<Animator>(body.gameObject);
-        animator.runtimeAnimatorController = controller;
-        animator.applyRootMotion = false;
-        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        var frames = GetOrAdd<SpriteFrameAnimator>(body.gameObject);
+        var framesSo = new SerializedObject(frames);
+        var clips = framesSo.FindProperty("clips");
+        clips.arraySize = 0;
+        Sprite front = null;
+        foreach (var clipName in MinerWalkClips)
+        {
+            var source = FindClip(sourceClips, clipName);
+            if (source == null)
+            {
+                Debug.LogError($"[SettlementSetup] 광부 클립이 없습니다: {clipName}");
+                continue;
+            }
+            var sourceFrames = source.FindPropertyRelative("frames");
+            var sprites = new Sprite[sourceFrames.arraySize];
+            for (int i = 0; i < sprites.Length; i++)
+                sprites[i] = (Sprite)sourceFrames.GetArrayElementAtIndex(i).objectReferenceValue;
+            AddClip(clips, clipName, sprites, source.FindPropertyRelative("fps").floatValue);
+            if (clipName == "WalkDown" && sprites.Length > 0)
+                front = sprites[0];
+        }
+        AddClip(clips, "Idle", new[] { front }, 1f);
+        framesSo.ApplyModifiedPropertiesWithoutUndo();
+        spriteRenderer.sprite = front;
 
         var so = new SerializedObject(visual);
         so.FindProperty("spriteRenderer").objectReferenceValue = spriteRenderer;
-        so.FindProperty("animator").objectReferenceValue = animator;
+        so.FindProperty("animator").objectReferenceValue = null;
         so.FindProperty("sortingGroup").objectReferenceValue = sortingGroup;
+        so.FindProperty("frameAnimator").objectReferenceValue = frames;
         so.FindProperty("spriteFacesRight").boolValue = true;
         so.ApplyModifiedPropertiesWithoutUndo();
 
@@ -130,77 +135,28 @@ public static partial class SettlementSetup
         Debug.Log($"[SettlementSetup] 광부 광장 해달: {MinerPlazaPrefabPath}");
     }
 
-    private static AnimationClip BuildSpriteClip(string path, Sprite[] frames, float fps)
+    private static SerializedProperty FindClip(SerializedProperty clips, string clipName)
     {
-        var clip = new AnimationClip { frameRate = fps };
-        var settings = AnimationUtility.GetAnimationClipSettings(clip);
-        settings.loopTime = true;
-        AnimationUtility.SetAnimationClipSettings(clip, settings);
-
-        var binding = new EditorCurveBinding { type = typeof(SpriteRenderer), path = "", propertyName = "m_Sprite" };
-        // 마지막 칸을 한 번 더 넣어 모든 칸이 1/fps씩 보이게
-        var keys = new ObjectReferenceKeyframe[frames.Length + 1];
-        for (int i = 0; i <= frames.Length; i++)
-            keys[i] = new ObjectReferenceKeyframe { time = i / fps, value = frames[Mathf.Min(i, frames.Length - 1)] };
-        AnimationUtility.SetObjectReferenceCurve(clip, binding, keys);
-        AssetDatabase.CreateAsset(clip, path);
-        return clip;
+        for (int i = 0; i < clips.arraySize; i++)
+        {
+            var clip = clips.GetArrayElementAtIndex(i);
+            if (clip.FindPropertyRelative("name").stringValue == clipName)
+                return clip;
+        }
+        return null;
     }
 
-    // Idle ↔ 걷기 3방향 (WalkDir: 0 옆, 1 아래, 2 위). OtterVisitorSpriteSetup의 컨트롤러와 같은 모양 (동작 트리거 없음)
-    private static AnimatorController BuildWalkController(string path, Dictionary<string, AnimationClip> clips)
+    private static void AddClip(SerializedProperty clips, string clipName, Sprite[] sprites, float fps)
     {
-        var controller = AnimatorController.CreateAnimatorControllerAtPath(path);
-        var sm = controller.layers[0].stateMachine;
-        controller.AddParameter("IsMoving", AnimatorControllerParameterType.Bool);
-        controller.AddParameter("WalkDir", AnimatorControllerParameterType.Int);
-        controller.AddParameter(new AnimatorControllerParameter
-        {
-            name = "WalkAnimSpeed",
-            type = AnimatorControllerParameterType.Float,
-            defaultFloat = 1f,
-        });
-
-        var idle = sm.AddState("Idle");
-        idle.motion = clips["Idle"];
-        sm.defaultState = idle;
-
-        var walks = new (int dir, AnimatorState state)[]
-        {
-            (0, sm.AddState("Walk")),
-            (1, sm.AddState("Walk_Down")),
-            (2, sm.AddState("Walk_Up")),
-        };
-        foreach (var (dir, state) in walks)
-        {
-            state.motion = clips[state.name];
-            state.speedParameter = "WalkAnimSpeed";
-            state.speedParameterActive = true;
-
-            var toWalk = idle.AddTransition(state);
-            toWalk.hasExitTime = false;
-            toWalk.duration = 0f;
-            toWalk.AddCondition(AnimatorConditionMode.If, 0, "IsMoving");
-            toWalk.AddCondition(AnimatorConditionMode.Equals, dir, "WalkDir");
-
-            var toIdle = state.AddTransition(idle);
-            toIdle.hasExitTime = false;
-            toIdle.duration = 0f;
-            toIdle.AddCondition(AnimatorConditionMode.IfNot, 0, "IsMoving");
-
-            foreach (var (otherDir, other) in walks)
-            {
-                if (other == state)
-                    continue;
-                var toOther = state.AddTransition(other);
-                toOther.hasExitTime = false;
-                toOther.duration = 0f;
-                toOther.AddCondition(AnimatorConditionMode.If, 0, "IsMoving");
-                toOther.AddCondition(AnimatorConditionMode.Equals, otherDir, "WalkDir");
-            }
-        }
-        EditorUtility.SetDirty(controller);
-        return controller;
+        clips.arraySize++;
+        var clip = clips.GetArrayElementAtIndex(clips.arraySize - 1);
+        clip.FindPropertyRelative("name").stringValue = clipName;
+        clip.FindPropertyRelative("fps").floatValue = fps;
+        clip.FindPropertyRelative("loop").boolValue = true;
+        var list = clip.FindPropertyRelative("frames");
+        list.arraySize = sprites.Length;
+        for (int i = 0; i < sprites.Length; i++)
+            list.GetArrayElementAtIndex(i).objectReferenceValue = sprites[i];
     }
 
     private static T GetOrAdd<T>(GameObject go) where T : Component
@@ -238,7 +194,8 @@ public static partial class SettlementSetup
         var wood = AssetDatabase.LoadAssetAtPath<ItemDefinition>(WoodItemPath);
         var obstacles = new List<ClearingObstacleView>();
         foreach (var o in FarmObstacles)
-            obstacles.Add(BuildObstacle(root, o.id, o.kind, o.position, o.kind == ObstacleKind.Rock ? stone : wood, null, FarmHintObstacle));
+            obstacles.Add(BuildObstacle(root, o.id, o.kind, o.position, o.kind == ObstacleKind.Rock ? stone : wood, null,
+                FarmHintObstacle, FarmObstacleScale));
 
         BuildTaskSite(root, FarmRegionPath, farmer.GetComponentInChildren<SpriteRenderer>(), "hint_farm_workers", "농경지 개간\n0:45",
             FarmStandPoints, FarmLookPoint, FarmEntryPoint, FarmMarkerPoint, FarmProgressPoint);
@@ -258,7 +215,7 @@ public static partial class SettlementSetup
         SetList(so.FindProperty("_obstacles"), obstacles);
         SetList(so.FindProperty("_hiddenUntilCleared"), hidden);
         so.FindProperty("_guide").stringValue = "밭을 덮은 잡목과 바위를 톡톡 눌러 치워요!";
-        so.FindProperty("_awaitingWorkersGuide").stringValue = "다 치웠어요! 주민 해달을 보내 농경지를 개간해요";
+        so.FindProperty("_awaitingWorkersGuide").stringValue = "다 치웠어요! 망치 표지판을 눌러 주민 해달을 보내요";
         so.FindProperty("_preparingGuide").stringValue = "주민 해달이 농경지를 개간하고 있어요";
         so.ApplyModifiedPropertiesWithoutUndo();
 

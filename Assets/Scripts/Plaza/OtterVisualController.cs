@@ -12,6 +12,11 @@ using UnityEngine.Rendering;
 // WalkDir, float WalkAnimSpeed) but checks they exist first, so a prefab
 // with a different or missing controller still wanders as a static sprite.
 //
+// A prefab without an Animator controller can use a SpriteFrameAnimator
+// instead, with clips named Idle / WalkRight / WalkLeft / WalkDown / WalkUp
+// (the miner's plaza look reuses its mine clips). It has its own left walk,
+// so the sprite is never mirrored.
+//
 // Sorting goes through a SortingGroup on the root so any child renderers
 // (e.g. a future shadow) move in depth together with the body.
 //
@@ -40,6 +45,8 @@ public class OtterVisualController : MonoBehaviour
     [Tooltip("Optional. Leave empty (or without a controller) to show a static sprite.")]
     [SerializeField] private Animator animator;
     [SerializeField] private SortingGroup sortingGroup;
+    [Tooltip("Optional. Code-driven clips (Idle, WalkRight, WalkLeft, WalkDown, WalkUp) used when there is no Animator controller.")]
+    [SerializeField] private SpriteFrameAnimator frameAnimator;
 
     [Header("Facing")]
     [Tooltip("True if the unflipped sprite faces right.")]
@@ -62,6 +69,9 @@ public class OtterVisualController : MonoBehaviour
     private WalkDir currentDir = WalkDir.Side;
     private readonly System.Collections.Generic.List<int> playTriggers = new System.Collections.Generic.List<int>();
     private float playActionTimer;
+    private bool facingRight = true;
+
+    private bool UsesFrameClips => frameAnimator != null && (animator == null || animator.runtimeAnimatorController == null);
 
     private void Awake()
     {
@@ -69,6 +79,7 @@ public class OtterVisualController : MonoBehaviour
         if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (animator == null) animator = GetComponentInChildren<Animator>();
         if (sortingGroup == null) sortingGroup = GetComponent<SortingGroup>();
+        if (frameAnimator == null) frameAnimator = GetComponentInChildren<SpriteFrameAnimator>();
 
         if (animator != null)
         {
@@ -103,6 +114,7 @@ public class OtterVisualController : MonoBehaviour
 
         if (hasIsMoving) animator.SetBool(IsMovingHash, walking);
         if (hasWalkAnimSpeed) animator.SetFloat(WalkAnimSpeedHash, agent.CurrentWalkSpeed / walkAnimReferenceSpeed);
+        if (UsesFrameClips) frameAnimator.Play(FrameClip(walking));
 
         if (agent.CurrentState == OtterWanderAgent.State.Play) UpdatePlay();
 
@@ -112,7 +124,7 @@ public class OtterVisualController : MonoBehaviour
     private void UpdatePlay()
     {
         float dx = agent.LookTarget.x - transform.position.x;
-        if (spriteRenderer != null && Mathf.Abs(dx) > 0.01f)
+        if (spriteRenderer != null && !UsesFrameClips && Mathf.Abs(dx) > 0.01f)
         {
             spriteRenderer.flipX = (dx > 0f) != spriteFacesRight;
         }
@@ -136,16 +148,27 @@ public class OtterVisualController : MonoBehaviour
 
     private void UpdateFacing(Vector2 dir)
     {
-        if (spriteRenderer == null) return;
         if (Mathf.Abs(dir.x) < minHorizontalRatioToFlip * dir.magnitude) return;
 
-        bool facingRight = dir.x > 0f;
-        spriteRenderer.flipX = facingRight != spriteFacesRight;
+        facingRight = dir.x > 0f;
+        // Frame clips have their own left walk, so the sprite isn't mirrored.
+        if (spriteRenderer != null && !UsesFrameClips) spriteRenderer.flipX = facingRight != spriteFacesRight;
+    }
+
+    private string FrameClip(bool walking)
+    {
+        if (!walking) return "Idle";
+        switch (currentDir)
+        {
+            case WalkDir.Down: return "WalkDown";
+            case WalkDir.Up: return "WalkUp";
+            default: return facingRight ? "WalkRight" : "WalkLeft";
+        }
     }
 
     private void UpdateWalkDir(Vector2 dir)
     {
-        if (!hasWalkDir) return;
+        if (!hasWalkDir && !UsesFrameClips) return;
 
         float ax = Mathf.Abs(dir.x);
         float ay = Mathf.Abs(dir.y);
@@ -166,7 +189,7 @@ public class OtterVisualController : MonoBehaviour
         }
 
         currentDir = next;
-        animator.SetInteger(WalkDirHash, (int)currentDir);
+        if (hasWalkDir) animator.SetInteger(WalkDirHash, (int)currentDir);
     }
 
     private void UpdateSorting()

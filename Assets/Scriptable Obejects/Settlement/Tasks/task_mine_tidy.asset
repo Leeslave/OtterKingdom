@@ -19,5 +19,7 @@ MonoBehaviour:
   _completionMessage: "\uAD11\uC0B0 \uC8FC\uBCC0 \uC815\uB9AC\uAC00 \uB05D\uB0AC\uC5B4\uC694!"
   _requiredWorkers: 1
   _durationSeconds: 30
+  _requiredGold: 0
+  _requiredItems: []
   _requiredDevelopment: mine_path_open
   _resultDevelopment: mine_tidy

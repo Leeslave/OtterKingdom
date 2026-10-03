@@ -13,20 +13,21 @@ MonoBehaviour:
   m_Name: req_farmland
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_farmland
-  _order: 4
+  _order: 5
   _title: "\uBA39\uAC70\uB9AC\uB97C \uAE38\uB7EC\uC694"
-  _description: "\uC8FC\uBBFC\uC774 \uB298\uC5C8\uC5B4\uC694.\n\uB18D\uACBD\uC9C0\uB97C
-    \uAC1C\uAC04\uD574 \uBC2D\uC744 \uB9CC\uB4E4\uC5B4\uC694."
+  _description: "\uBABD\uC2E4\uC774\uAC00 \uCC3E\uC740 \uB545\uC744 \uBC2D\uC73C\uB85C \uB9CC\uB4E4\uC5B4\uC694.\n\uBC2D\uC5D0 \uAC00\uC11C \uC7A1\uBAA9\uACFC \uBC14\uC704\uB97C \uCE58\uC6B0\uACE0\n\uC8FC\uBBFC\uACFC \uD568\uAED8 \uB18D\uACBD\uC9C0\uB97C \uAC1C\uAC04\uD574\uC694."
   _icon: {fileID: 21300000, guid: d385ccec0040cad4ab1f52dd7d5acedd, type: 3}
   _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   _requiredDevelopment: house_2
   _minResidents: 3
   _construction: {fileID: 11400000, guid: eb034591ee2b7f147af7411b3829153c, type: 2}
-  _clearZone: {fileID: 0}
+  _clearZone: {fileID: 11400000, guid: b29d28b957a746941a62e5c52ff9be76, type: 2}
+  _assignSpecialist: {fileID: 0}
   _settles: []
-  _arrivals: []
+  _arrivals:
+  - _otter: {fileID: 11400000, guid: d77a0cb424b64937aa0cf04256be1d97, type: 2}
+    _state: 3
   _stageOnComplete: 3
   _completionEntry: {fileID: 11400000, guid: f9b73a8d51966a54e9420ef04052e970, type: 2}
-  _completionMessage: "\uB18D\uACBD\uC9C0\uAC00 \uC5F4\uB838\uC5B4\uC694!\n\uC774\uC81C
-    \uBC2D\uC5D0 \uAC08 \uC218 \uC788\uC5B4\uC694."
+  _completionMessage: "\uB18D\uACBD\uC9C0 \uAC1C\uAC04\uC774 \uB05D\uB0AC\uC5B4\uC694!\n\uC18C\uC2DD\uC744 \uB4E3\uACE0 \uB18D\uBD80 \uD574\uB2EC\uC774 \uAD11\uC7A5\uC5D0 \uCC3E\uC544\uC654\uC5B4\uC694."
   _kingdomLevel: 0

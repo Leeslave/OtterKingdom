@@ -133,8 +133,9 @@ public static partial class SettlementSetup
         ("req_neighbor_house", 4, "새 이웃의 집", "물감이가 이웃이 되고 싶대요.\n건설 해달과 집을 지어 줘요.", "ICON_House_Red",
             "otter_painter", PainterIntroDevelopment, 0, "con_house_2", new[] { "otter_painter", "otter_builder" },
             new (string, ResidentState)[0],
-            2, "gb_neighbor_settle", "새 이웃이 정착했어요!\n주민이 늘었어요.", 0, "", ""),
-        ("req_farmland", 5, "먹거리를 길러요", "주민이 늘었어요.\n밭에 가서 잡목과 바위를 치우고\n주민과 함께 농경지를 개간해요.", "ICON_Clearing",
+            // 광산 발견(의자)처럼: 새 이웃의 집을 지으면(주민이 늘면) 몽실이가 밭 자리를 발견 → 밭(개간되지 않은 농경지)에 갈 수 있음
+            2, "gb_neighbor_settle", "새 이웃의 집 완성! 몽실이가 마을 옆에서\n밭을 만들 만한 땅을 발견했어요.", 0, "", ""),
+        ("req_farmland", 5, "먹거리를 길러요", "몽실이가 찾은 땅을 밭으로 만들어요.\n밭에 가서 잡목과 바위를 치우고\n주민과 함께 농경지를 개간해요.", "ICON_Clearing",
             "otter_first", FarmDiscoverDevelopment, 3, "con_farmland", new string[0],
             new[] { ("otter_farmer", ResidentState.SpecialNpc) },
             3, "gb_farmland", "농경지 개간이 끝났어요!\n소식을 듣고 농부 해달이 광장에 찾아왔어요.", 0, FarmZonePath, ""),

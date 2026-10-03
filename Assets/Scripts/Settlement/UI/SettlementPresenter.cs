@@ -198,7 +198,7 @@ public class SettlementPresenter : MonoBehaviour
         _guide.Hide();
     }
 
-    // 길을 다 치운 지역: 주민 해달을 보내야 함 / 정비 중 남은 시간
+    // 길을 다 치운 지역: 주민 해달을 보내야 함 (그 장소에서만) / 정비 중 남은 시간
     private bool TryShowPreparationGuide(BoardRequestDefinition request)
     {
         var task = PreparationOf(request, out var state);
@@ -206,8 +206,10 @@ public class SettlementPresenter : MonoBehaviour
             return false;
         if (state == RegionProgressState.WorkerPreparing)
             _guide.Show($"{task.Title}  {FormatTime(_manager.GetTaskJob(task).Remaining(SettlementManager.NowTicks))}", "보기");
-        else
+        else if (IsIn(request.ClearZone))
             _guide.Show($"{task.Title}: 주민을 보내요", "보내기");
+        else
+            _guide.Show($"{task.Title}: {request.ClearZone.DisplayName}에서 주민을 보내요", "가 보기");
         return true;
     }
 
@@ -242,9 +244,18 @@ public class SettlementPresenter : MonoBehaviour
         if (current != null)
         {
             if (!_manager.Settlement.BoardVisited)
+            {
                 _manager.RequestBoard(false);
-            else
-                OpenConstruction(current);
+                return;
+            }
+            // 주민을 보낼 차례인데 그 장소에 있지 않음 → 바로 그 장소로 (작업은 현장의 망치 표지판에서)
+            if (PreparationOf(current, out var regionState) != null && regionState == RegionProgressState.AwaitingWorkers
+                && !IsIn(current.ClearZone) && _navigator != null)
+            {
+                _navigator.TryGo(current.ClearZone);
+                return;
+            }
+            OpenConstruction(current);
             return;
         }
 
@@ -411,11 +422,14 @@ public class SettlementPresenter : MonoBehaviour
         _construction.Show(request, speaker, line, _costs, note, startLabel, canStart);
     }
 
-    // 장소를 직접 치우는 부탁 (광산 길 열기): 비용 없이 [가 보기]로 그 장소에 감. 다 치운 뒤에는 주민 작업 화면
+    // 장소를 직접 치우는 부탁 (광산 길 열기, 농경지 개간): 비용 없이 [가 보기]로 그 장소에 감.
+    // 다 치운 뒤 주민 해달을 보내는 작업도 그 장소(망치 표지판)에서 시작한다. 그 장소에 있으면 바로 작업 화면, 아니면 [가 보기]
     private void OpenClearing(BoardRequestDefinition request, RequestStatus status)
     {
-        var task = PreparationOf(request, out _);
-        if (task != null)
+        var zone = request.ClearZone;
+        bool here = IsIn(zone);
+        var task = PreparationOf(request, out var regionState);
+        if (task != null && here)
         {
             if (_board.IsOpen)
                 _board.Hide();
@@ -425,11 +439,17 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
-        var zone = request.ClearZone;
-        bool here = _navigator != null && _navigator.CurrentZone == zone;
-        string note = status == RequestStatus.Locked ? "아직 할 수 없어요."
-            : here ? "길을 막은 나무와 돌을 톡톡 눌러 치워요!"
-            : $"{zone.DisplayName}에 가서 길을 막은 나무와 돌을 치워요.";
+        string note;
+        if (status == RequestStatus.Locked)
+            note = "아직 할 수 없어요.";
+        else if (task != null && regionState == RegionProgressState.WorkerPreparing)
+            note = $"주민 해달이 {zone.DisplayName}에서 일하고 있어요 · {FormatTime(_manager.GetTaskJob(task).Remaining(SettlementManager.NowTicks))}";
+        else if (task != null)
+            note = $"{zone.DisplayName}에 가서 망치 표지판을 눌러 주민 해달을 보내요.";
+        else if (here)
+            note = "길을 막은 나무와 돌을 톡톡 눌러 치워요!";
+        else
+            note = $"{zone.DisplayName}에 가서 길을 막은 나무와 돌을 치워요.";
         _costs.Clear();
         _construction.Show(request, request.Requester, request.Description, _costs, note, "가 보기",
             status == RequestStatus.Available && !here);
@@ -658,7 +678,7 @@ public class SettlementPresenter : MonoBehaviour
     private void PrepareGlyphs()
     {
         var config = _manager.Config;
-        var text = new StringBuilder("0123456789:/ ,.!?%·가는 중시간분초 보기진행중완료확인하기짓기건설개간시작해달게시판방명록의부탁방문기록새로운이도착했어요골드가모자라요개더필요해요아직할수없어요다른공사끝나면있어요바로지을걸려요주민가열렸어요집을짓고길을열어요광장으로돌아가찾아온만나보세요에게말을걸어배치해주세요오고있어요러가기을를서일의");
+        var text = new StringBuilder("0123456789:/ ,.!?%·가는 중시간분초 보기진행중완료확인하기짓기건설개간시작해달게시판방명록의부탁방문기록새로운이도착했어요골드가모자라요개더필요해요아직할수없어요다른공사끝나면있어요바로지을걸려요주민가열렸어요집을짓고길을열어요광장으로돌아가찾아온만나보세요에게말을걸어배치해주세요오고있어요러가기을를서일의망치표지판눌러보내요하고");
         foreach (var request in config.Requests)
         {
             if (request == null)

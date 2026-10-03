@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: Main_FirstCarrots
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: quest_first_carrots
+  _title: "\uCCAB \uC218\uD655\uC744 \uD574\uBD10\uC694"
+  _description: "\uB2F9\uADFC 3\uAC1C \uC218\uD655\uD558\uAE30"
+  _sortOrder: 0
+  _kind: 0
+  _requiredLevel: 1
+  _prerequisite: {fileID: 0}
+  _icon: {fileID: -5859083586626064994, guid: 125917c9ef5a91e478059e3954180ecc, type: 3}
+  _goalType: 0
+  _goal: 3
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 11400000, guid: 75fe364f3d85172469c9d04a63806f2d, type: 2}
+  _constructions: []
+  _builderOnly: 0
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 30
+  _expReward: 30
+  _expPercentOfLevel: 0
