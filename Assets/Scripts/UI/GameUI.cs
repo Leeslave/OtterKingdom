@@ -18,6 +18,12 @@ using UnityEngine.UI;
 public class GameUI : MonoBehaviour
 {
     private static readonly Vector2 ReferenceResolution = new Vector2(1080f, 1920f);
+    // Modals draw above GlobalUI's HUD (100). The guide bubble and the corner
+    // feature buttons are part of the screen instead, so they sit below
+    // GlobalUI: its popups (board, level-up, "path opened") and the
+    // scene-change clouds cover them.
+    private const int ModalSortingOrder = 200;
+    private const int ScreenSortingOrder = 90;
     private const float PanelWidth = 900f;
     private const int TitleFontSize = 48;
     private const int BodyFontSize = 40;
@@ -40,6 +46,7 @@ public class GameUI : MonoBehaviour
     private Button rodUpgradeButton;
     private Button pickaxeUpgradeButton;
     private RectTransform guideBubble;
+    private RectTransform screenLayer;
     private GameObject offlineReportModal;
 
     private readonly List<GameObject> modals = new List<GameObject>();
@@ -82,12 +89,31 @@ public class GameUI : MonoBehaviour
 
         var canvas = GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 200; // above CurrencyHud (100)
+        canvas.sortingOrder = ModalSortingOrder; // above CurrencyHud / GlobalUI (100)
 
         var scaler = GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = ReferenceResolution;
         scaler.matchWidthOrHeight = 0.5f;
+
+        screenLayer = CreateScreenLayer();
+    }
+
+    // Full-screen child canvas with its own (lower) sorting order. Needs its
+    // own raycaster: a nested canvas's graphics only take clicks through it.
+    private RectTransform CreateScreenLayer()
+    {
+        var go = new GameObject("ScreenLayer", typeof(RectTransform), typeof(Canvas), typeof(GraphicRaycaster));
+        var rect = (RectTransform)go.transform;
+        rect.SetParent(transform, false);
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+        var layer = go.GetComponent<Canvas>();
+        layer.overrideSorting = true;
+        layer.sortingOrder = ScreenSortingOrder;
+        return rect;
     }
 
     private void Update()
@@ -241,7 +267,7 @@ public class GameUI : MonoBehaviour
 
         var go = new GameObject("Guide", typeof(RectTransform), typeof(Image),
             typeof(HorizontalLayoutGroup), typeof(ContentSizeFitter));
-        go.transform.SetParent(transform, false);
+        go.transform.SetParent(screenLayer, false);
         go.transform.SetAsFirstSibling();
 
         var image = go.GetComponent<Image>();
@@ -425,7 +451,7 @@ public class GameUI : MonoBehaviour
     {
         if (rodUpgradeButton != null) return;
 
-        rodUpgradeButton = CreateButton(transform, "낚싯대 강화", ShowRodUpgradePrompt, kind: ButtonKind.Feature);
+        rodUpgradeButton = CreateButton(screenLayer, "낚싯대 강화", ShowRodUpgradePrompt, kind: ButtonKind.Feature);
         var rect = (RectTransform)rodUpgradeButton.transform;
         rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 0f);
         rect.sizeDelta = new Vector2(340f, ButtonHeight);
@@ -467,7 +493,7 @@ public class GameUI : MonoBehaviour
     {
         if (pickaxeUpgradeButton != null) return;
 
-        pickaxeUpgradeButton = CreateButton(transform, "곡괭이 강화", ShowPickaxeUpgradePrompt, kind: ButtonKind.Feature);
+        pickaxeUpgradeButton = CreateButton(screenLayer, "곡괭이 강화", ShowPickaxeUpgradePrompt, kind: ButtonKind.Feature);
         var rect = (RectTransform)pickaxeUpgradeButton.transform;
         rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 0f);
         rect.sizeDelta = new Vector2(340f, ButtonHeight);

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// 완료 팝업 (시안: "03 · 첫 집 마련 / 작은 집 마련 / 목재 8/8 ✓ 석재 5/5 ✓ / 첫 주민이 정착했어요! / [확인]").
-/// 닫힘을 알리기만 한다.
+/// 비용 없이 끝낸 부탁(광산 길 열기 등)은 비용 칸 자리에 부탁 그림을 보여 준다. 닫힘을 알리기만 한다.
 /// </summary>
 public class ConstructionCompletePopupView : MonoBehaviour
 {
@@ -18,6 +18,10 @@ public class ConstructionCompletePopupView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _chapterText;
     [SerializeField] private TextMeshProUGUI _titleText;
     [SerializeField] private List<CostChipView> _costChips = new List<CostChipView>();
+
+    [Tooltip("비용이 없을 때 비용 칸 자리에 보일 그림")]
+    [SerializeField] private Image _icon;
+
     [SerializeField] private TextMeshProUGUI _messageText;
 
     [Header("버튼")]
@@ -35,8 +39,11 @@ public class ConstructionCompletePopupView : MonoBehaviour
     }
 
     /// <param name="costs">(아이콘, 낸 개수) — 다 냈으니 "n / n ✓"로 그림</param>
-    public void Show(string chapter, string title, IReadOnlyList<(Sprite icon, int amount)> costs, string message)
+    /// <param name="icon">비용이 없을 때 대신 보일 그림 (없으면 빈 채로)</param>
+    public void Show(string chapter, string title, IReadOnlyList<(Sprite icon, int amount)> costs, string message, Sprite icon)
     {
+        _icon.sprite = icon;
+        _icon.gameObject.SetActive(costs.Count == 0 && icon != null);
         _chapterText.text = chapter;
         _titleText.text = title;
         for (int i = 0; i < _costChips.Count; i++)

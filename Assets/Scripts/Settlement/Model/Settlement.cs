@@ -46,7 +46,7 @@ public class ConstructionJob
 }
 
 /// <summary>
-/// 정착 진행 상태 (순수 C#): 왕국 단계, 해달별 처지, 끝낸 부탁, 열린 발전, 방명록, 진행 중인 건설.
+/// 정착 진행 상태 (순수 C#): 왕국 단계, 해달별 처지, 끝낸 부탁, 열린 발전, 방명록, 진행 중인 건설, 주민 작업.
 /// 규칙(언제 무엇이 열리는지)은 SettlementRules, 비용·시간은 SettlementManager가 다룬다.
 /// </summary>
 public class Settlement
@@ -59,6 +59,8 @@ public class Settlement
     private readonly List<string> _guestbook = new List<string>();
     private readonly Dictionary<string, long> _gatherReady = new Dictionary<string, long>();
     private readonly HashSet<string> _flags = new HashSet<string>();
+    private readonly Dictionary<string, SettlementTaskJob> _tasks = new Dictionary<string, SettlementTaskJob>();
+    private readonly HashSet<string> _completedTasks = new HashSet<string>();
 
     public int Stage { get; private set; }
     public bool Initialized { get; private set; }
@@ -69,6 +71,8 @@ public class Settlement
     public IReadOnlyList<string> ResidentOrder => _residentOrder;
     public IReadOnlyList<string> Guestbook => _guestbook;
     public IReadOnlyCollection<string> Developments => _developments;
+    /// <summary>진행 중인 주민 작업</summary>
+    public IReadOnlyCollection<SettlementTaskJob> TaskJobs => _tasks.Values;
 
     /// <summary>주민 수 (Resident만)</summary>
     public int ResidentCount
@@ -92,6 +96,8 @@ public class Settlement
     public event Action<string> OnGuestbookAdded;
     public event Action<ConstructionJob> OnConstructionStarted;
     public event Action<ConstructionJob> OnConstructionFinished;
+    public event Action<SettlementTaskJob> OnTaskStarted;
+    public event Action<SettlementTaskJob> OnTaskFinished;
     /// <summary>무엇이든 바뀌었을 때 (화면 갱신용)</summary>
     public event Action OnChanged;
 
@@ -118,6 +124,26 @@ public class Settlement
         _gatherReady.TryGetValue(pointId, out long ready) && ready > nowUtcTicks
             ? TimeSpan.FromTicks(ready - nowUtcTicks)
             : TimeSpan.Zero;
+
+    public bool IsTaskCompleted(string taskId) => _completedTasks.Contains(taskId);
+
+    /// <summary>진행 중인 작업 (없으면 false)</summary>
+    public bool TryGetTaskJob(string taskId, out SettlementTaskJob job)
+    {
+        job = null;
+        return !string.IsNullOrEmpty(taskId) && _tasks.TryGetValue(taskId, out job);
+    }
+
+    /// <summary>이 해달이 지금 작업 중인지</summary>
+    public ResidentWorkState GetWorkState(string otterId)
+    {
+        foreach (var job in _tasks.Values)
+        {
+            if (job.HasOtter(otterId))
+                return ResidentWorkState.Working;
+        }
+        return ResidentWorkState.Idle;
+    }
 
     /// <summary>from 뒤로 to까지 사이에 다시 생긴 줍기 자리 수 (자리를 비운 동안의 소식)</summary>
     public int CountGatherRegrown(long fromUtcTicks, long toUtcTicks)
@@ -263,6 +289,42 @@ public class Settlement
         OnChanged?.Invoke();
     }
 
+    /// <summary>주민 작업을 시작한다 (보낼 수 있는지는 SettlementRegionRules·SettlementManager가 먼저 확인)</summary>
+    public void StartTask(string taskId, IReadOnlyList<string> otterIds, long startUtcTicks, long endUtcTicks)
+    {
+        if (string.IsNullOrEmpty(taskId))
+            throw new ArgumentNullException(nameof(taskId));
+        if (otterIds == null || otterIds.Count == 0)
+            throw new ArgumentException("보낼 해달이 없습니다.", nameof(otterIds));
+        if (_tasks.ContainsKey(taskId) || _completedTasks.Contains(taskId))
+            throw new InvalidOperationException($"이미 시작했거나 끝낸 작업입니다: {taskId}");
+        foreach (var otterId in otterIds)
+        {
+            if (GetWorkState(otterId) == ResidentWorkState.Working)
+                throw new InvalidOperationException($"이미 작업 중인 해달입니다: {otterId}");
+        }
+
+        var job = new SettlementTaskJob(taskId, otterIds, startUtcTicks, endUtcTicks);
+        _tasks[taskId] = job;
+        OnTaskStarted?.Invoke(job);
+        OnChanged?.Invoke();
+    }
+
+    /// <summary>작업을 끝낸 것으로 표시하고 결과 발전을 연다. 해달은 다시 쉬는 상태가 됨</summary>
+    /// <returns>끝낸 작업 (진행 중이 아니었으면 null)</returns>
+    public SettlementTaskJob FinishTask(string taskId, string resultDevelopment)
+    {
+        if (!TryGetTaskJob(taskId, out var job))
+            return null;
+        _tasks.Remove(taskId);
+        _completedTasks.Add(taskId);
+        if (!string.IsNullOrEmpty(resultDevelopment) && _developments.Add(resultDevelopment))
+            OnDevelopmentUnlocked?.Invoke(resultDevelopment);
+        OnTaskFinished?.Invoke(job);
+        OnChanged?.Invoke();
+        return job;
+    }
+
     public void SetGatherReady(string pointId, long readyUtcTicks)
     {
         if (string.IsNullOrEmpty(pointId))
@@ -287,6 +349,8 @@ public class Settlement
         _guestbook.Clear();
         _gatherReady.Clear();
         _flags.Clear();
+        _tasks.Clear();
+        _completedTasks.Clear();
         Job = null;
 
         Initialized = saved.initialized;
@@ -348,6 +412,25 @@ public class Settlement
                     _flags.Add(flag);
             }
         }
+        if (saved.completedTasks != null)
+        {
+            foreach (var id in saved.completedTasks)
+            {
+                if (!string.IsNullOrEmpty(id))
+                    _completedTasks.Add(id);
+            }
+        }
+        if (saved.tasks != null)
+        {
+            foreach (var t in saved.tasks)
+            {
+                // 같은 해달이 두 작업에 들어 있는 등 깨진 줄은 버림 (해달이 묶여 버리지 않게)
+                if (t == null || string.IsNullOrEmpty(t.taskId) || t.assignedOtterIds == null || t.assignedOtterIds.Count == 0
+                    || _tasks.ContainsKey(t.taskId) || _completedTasks.Contains(t.taskId) || t.assignedOtterIds.Exists(id => GetWorkState(id) == ResidentWorkState.Working))
+                    continue;
+                _tasks[t.taskId] = new SettlementTaskJob(t.taskId, t.assignedOtterIds, t.startUtcTicks, t.endUtcTicks);
+            }
+        }
 
         OnChanged?.Invoke();
     }
@@ -391,6 +474,21 @@ public class Settlement
 
         result.flags = new List<string>(_flags);
         result.flags.Sort(StringComparer.Ordinal);
+
+        result.tasks = new List<SettlementTaskSaveData>();
+        foreach (var job in _tasks.Values)
+        {
+            result.tasks.Add(new SettlementTaskSaveData
+            {
+                taskId = job.TaskId,
+                startUtcTicks = job.StartUtcTicks,
+                endUtcTicks = job.EndUtcTicks,
+                assignedOtterIds = new List<string>(job.OtterIds),
+            });
+        }
+        result.tasks.Sort((a, b) => string.CompareOrdinal(a.taskId, b.taskId));
+        result.completedTasks = new List<string>(_completedTasks);
+        result.completedTasks.Sort(StringComparer.Ordinal);
     }
 
     #endregion

@@ -37,8 +37,20 @@ public class GatherCooldownSaveData
     public long readyUtcTicks;
 }
 
+/// <summary>진행 중인 주민 작업 하나. 끝나는 시각(UTC)을 저장해 게임을 꺼 둔 동안에도 진행된다</summary>
+[Serializable]
+public class SettlementTaskSaveData
+{
+    public string taskId;
+    public long startUtcTicks;
+    public long endUtcTicks;
+    // 보낸 주민 해달 (이 해달들은 작업이 끝날 때까지 Working)
+    public List<string> assignedOtterIds = new List<string>();
+}
+
 /// <summary>
 /// 정착 진행 세이브 (SaveData.settlement). SettlementManager가 읽고 쓴다.
+/// 개간 지역의 단계는 따로 저장하지 않는다: 열린 발전(unlockedDevelopments)과 작업(tasks, completedTasks)으로 정해짐.
 /// </summary>
 [Serializable]
 public class SettlementSaveData
@@ -58,4 +70,8 @@ public class SettlementSaveData
     public List<GatherCooldownSaveData> gatherCooldowns = new List<GatherCooldownSaveData>();
     // 한 번만 보이는 안내를 봤는지 등 (예: visited_Farm)
     public List<string> flags = new List<string>();
+    // 진행 중인 주민 작업 (P1. 옛 세이브는 없음 = 비어 있음)
+    public List<SettlementTaskSaveData> tasks = new List<SettlementTaskSaveData>();
+    // 끝낸 주민 작업
+    public List<string> completedTasks = new List<string>();
 }

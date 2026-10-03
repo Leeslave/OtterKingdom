@@ -56,6 +56,8 @@ public static partial class SettlementSetup
             obstacles.Add(BuildObstacle(root, o.id, o.kind, o.position, o.kind == ObstacleKind.Rock ? stone : wood, walkable));
         var miner = Object.FindAnyObjectByType<MinerOtterController>(FindObjectsInactive.Include);
         AddGroundDepthSort(miner.GetComponent<SpriteRenderer>(), true);
+        // P1: 다 치운 뒤 주민 해달이 와서 정비하는 현장
+        BuildTaskSite(root, miner);
 
         // 광산: 배경(0) 위 그림자(1), 나비 한 마리는 맨 위, 구름 그림자는 없음 (바위로 둘러싸인 곳)
         BuildAmbience(root, 1, 1, OverlayOrder - 10, 0, 0, 3);

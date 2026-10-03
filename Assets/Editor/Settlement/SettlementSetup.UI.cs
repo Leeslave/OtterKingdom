@@ -21,6 +21,7 @@ public static partial class SettlementSetup
         public ConstructionProgressView progress;
         public SettlementBoardView board;
         public ConstructionPopupView construction;
+        public SettlementTaskPopupView task;
         public ConstructionCompletePopupView complete;
     }
 
@@ -35,11 +36,12 @@ public static partial class SettlementSetup
         };
     }
 
-    /// <summary>팝업 (게시판 → 건설 → 완료 순서로 위에 그려짐)</summary>
+    /// <summary>팝업 (게시판 → 건설 → 주민 작업 → 완료 순서로 위에 그려짐)</summary>
     public static void BuildPopups(RectTransform canvas, ref Screens screens)
     {
         screens.board = BuildBoard(canvas);
         screens.construction = BuildConstructionPopup(canvas);
+        screens.task = BuildTaskPopup(canvas);
         screens.complete = BuildCompletePopup(canvas);
     }
 
@@ -603,6 +605,12 @@ public static partial class SettlementSetup
             BuildCostChip(costs, "Cost3", new Vector2(250, 96), true),
         };
 
+        // 비용 없이 끝낸 부탁(광산 길 열기)은 비용 칸 자리에 부탁 그림
+        var icon = CreateImage("Icon", panel, null, false);
+        icon.preserveAspect = true;
+        Place(icon.rectTransform, new Vector2(0.5f, 1), new Vector2(0, -184), new Vector2(124, 124));
+        icon.gameObject.SetActive(false);
+
         var leaf = CreateImage("Divider", panel, ImportSprite(CollectionSpriteFolder, "UI_Deco_Leaf"), false);
         leaf.preserveAspect = true;
         Place(leaf.rectTransform, new Vector2(0.5f, 1), new Vector2(0, -316), new Vector2(60, 40));
@@ -624,6 +632,7 @@ public static partial class SettlementSetup
         for (int i = 0; i < chips.Count; i++)
             chipProp.GetArrayElementAtIndex(i).objectReferenceValue = chips[i];
         so.ApplyModifiedPropertiesWithoutUndo();
+        Set(view, "_icon", icon);
         Set(view, "_messageText", message);
         Set(view, "_confirmButton", confirm);
 
@@ -648,5 +657,8 @@ public static partial class SettlementSetup
         Set(presenter, "_progress", screens.progress);
         Set(presenter, "_goalZone", goalZone);
         Set(presenter, "_navigator", navigator);
+
+        var tasks = root.AddComponent<SettlementTaskPresenter>();
+        Set(tasks, "_popup", screens.task);
     }
 }

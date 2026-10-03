@@ -49,6 +49,10 @@ public class SettlementPlazaView : MonoBehaviour
     private readonly List<DevelopmentGate> _gates = new List<DevelopmentGate>();
     private readonly Dictionary<string, OtterWanderAgent> _spawned = new Dictionary<string, OtterWanderAgent>();
     private readonly Dictionary<string, SettlementOtterView> _views = new Dictionary<string, SettlementOtterView>();
+    private readonly List<string> _leftForWork = new List<string>();
+    // 주민 작업에 보낸 해달이 광장을 떠나기 시작한 시각 (길을 못 찾아도 이만큼 지나면 내보냄)
+    private readonly Dictionary<string, float> _leavingSince = new Dictionary<string, float>();
+    private const float LeaveLimitSeconds = 12f;
     private SettlementManager _manager;
     private bool _builderInitialized;
 
@@ -87,6 +91,7 @@ public class SettlementPlazaView : MonoBehaviour
     {
         if (_manager == null || !_manager.IsLoaded)
             return;
+        RemoveOttersAtWork();
         var job = _manager.Settlement.Job;
         var site = job != null ? FindSite(job.ConstructionId) : null;
         if (site == null)
@@ -219,6 +224,9 @@ public class SettlementPlazaView : MonoBehaviour
             }
             if (otter.PlazaPrefab == null || _spawned.ContainsKey(otterId))
                 continue;
+            // 주민 작업을 하러 다른 장소에 가 있음 (끝나면 광장 가장자리에서 돌아옴)
+            if (_manager.Settlement.GetWorkState(otterId) == ResidentWorkState.Working)
+                continue;
 
             if (TryFindSpawnPoint(arriving, out Vector2 position))
                 Spawn(otter, position);
@@ -322,7 +330,10 @@ public class SettlementPlazaView : MonoBehaviour
             if (pair.Value == null)
                 continue;
             bool working = pair.Key == workerId;
-            if (working)
+            // 주민 작업에 보낸 해달은 광장 가장자리 길로 걸어 나감 (도착하면 사라짐)
+            if (_manager.Settlement.GetWorkState(pair.Key) == ResidentWorkState.Working)
+                pair.Value.AssignTask(_arrivalPoint.position, _arrivalPoint.position);
+            else if (working)
                 pair.Value.AssignTask(jobSite.StandPoint, jobSite.LookPoint);
             else
                 pair.Value.ClearTask();
@@ -333,6 +344,31 @@ public class SettlementPlazaView : MonoBehaviour
         if (!_builderInitialized)
             return;
         _builder.SetWorkSite(jobSite != null && byBuilder ? jobSite : null);
+    }
+
+    // 주민 작업에 보낸 해달이 광장 가장자리에 닿으면 광장에서 내보냄 (길을 못 찾아 오래 걸려도 내보냄)
+    private void RemoveOttersAtWork()
+    {
+        _leftForWork.Clear();
+        foreach (var pair in _spawned)
+        {
+            if (pair.Value == null || _manager.Settlement.GetWorkState(pair.Key) != ResidentWorkState.Working)
+            {
+                _leavingSince.Remove(pair.Key);
+                continue;
+            }
+            if (!_leavingSince.TryGetValue(pair.Key, out float since))
+                _leavingSince[pair.Key] = since = Time.time;
+            if (pair.Value.IsOnTask || Time.time - since >= LeaveLimitSeconds)
+                _leftForWork.Add(pair.Key);
+        }
+        foreach (var otterId in _leftForWork)
+        {
+            Destroy(_spawned[otterId].gameObject);
+            _spawned.Remove(otterId);
+            _views.Remove(otterId);
+            _leavingSince.Remove(otterId);
+        }
     }
 
     private ConstructionSiteView FindSite(string constructionId)

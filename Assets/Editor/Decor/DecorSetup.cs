@@ -33,11 +33,14 @@ public static class DecorSetup
 
     // 장소별 격자: (ID, 장소 에셋, 씬, 격자 왼쪽 아래, 칸 크기, 칸 수, 깊이 정렬, 고정 순서, 걷기 영역 밖 허용, 장애물)
     // 광장: 걷기 영역 전체 / 밭: 흙마당 (밭고랑은 DecorBlockArea) / 낚시터: 부두 뒤쪽 가장자리 한 줄 (해달은 앞쪽에서 놂)
+    // 광산: 입구 아래 모래 마당 작은 칸 (P1 개간 지역 샘플). 구역은 잠긴 채 시작 → 광산 정비를 마치면 열림 (SettlementSetup.Tasks)
+    // 광산은 광부·나무·돌이 1000 근처 순서로 앞뒤 정렬하므로 놓인 물건은 배경(0)·입구(1) 위 5에 고정
     private static readonly (string id, string zone, string scene, Vector2 origin, float cell, Vector2Int size, bool depth, int order, bool outside, bool blockWalk)[] Boards =
     {
         ("plaza", "Zone_Plaza", "Assets/Scenes/Plaza.unity", new Vector2(-12f, -14.4f), 1f, new Vector2Int(24, 33), true, 0, false, true),
         ("farm", "Zone_Farm", "Assets/Scenes/Farm.unity", new Vector2(-3.6f, -5.4f), 0.6f, new Vector2Int(13, 16), false, 1, true, false),
         ("fishing", "Zone_Fishing", "Assets/Scenes/Fishing.unity", new Vector2(-4.4f, 1.85f), 0.8f, new Vector2Int(6, 1), false, 1, true, false),
+        ("mine", "Zone_Mine", "Assets/Scenes/Mine.unity", new Vector2(-2.0f, -3.6f), 0.8f, new Vector2Int(4, 2), false, 5, false, false),
     };
 
     [MenuItem("Tools/Decor/Setup Decor (데이터 + 씬 격자)")]
