@@ -4,7 +4,8 @@ using UnityEngine;
 /// <summary>
 /// 광장의 정착 해달 한 마리에 붙는 말풍선·표시 (SettlementPlazaView가 내보낼 때 붙임).
 /// - 탭하면 한마디 (정착 후보는 처음 누르면 "저도 여기 살고 싶어요!" → 그 해달의 집 부탁이 열림)
-/// - 할 말이 있는 정착 후보는 머리 위에 "!"
+/// - 광장에 와 있는 전문 해달(광부·농부)은 탭하면 "일하고 싶어요" + [배치] 확인 → 일할 곳에 배치
+/// - 할 말이 있는 정착 후보·배치를 기다리는 전문 해달은 머리 위에 "!"
 /// - 공사를 맡으면 망치 말풍선
 /// </summary>
 public class SettlementOtterView : MonoBehaviour
@@ -106,7 +107,7 @@ public class SettlementOtterView : MonoBehaviour
             speaking = false;
         }
 
-        bool attention = !speaking && manager.HasPendingIntro(_otter);
+        bool attention = !speaking && (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter));
         if (_attention.gameObject.activeSelf != attention)
             _attention.gameObject.SetActive(attention);
         if (attention)
@@ -119,7 +120,12 @@ public class SettlementOtterView : MonoBehaviour
     private void Speak(SettlementManager manager)
     {
         string line;
-        if (manager.TryHearIntro(_otter))
+        if (manager.CanAssignSpecialist(_otter))
+        {
+            line = string.IsNullOrEmpty(_otter.AssignLine) ? PickLine() : _otter.AssignLine;
+            AskToAssign(manager);
+        }
+        else if (manager.TryHearIntro(_otter))
             line = _otter.IntroLine;
         else if (_otter.Lines.Count > 0)
             line = PickLine();
@@ -132,10 +138,28 @@ public class SettlementOtterView : MonoBehaviour
         _hideSpeechAt = Time.time + SpeechSeconds;
     }
 
+    // 전문 해달: [예]를 누르면 배치 (배치가 저장의 원본. 여러 번 눌러도 한 번만 됨)
+    private void AskToAssign(SettlementManager manager)
+    {
+        var game = GameManager.Instance;
+        if (game == null)
+        {
+            manager.TryAssignSpecialist(_otter);
+            return;
+        }
+        string name = _otter.DisplayName;
+        string place = _otter.WorkRegion.DisplayName;
+        game.ShowConfirm($"{place}에 배치",
+            $"{name}{KoreanParticle.ObjectParticle(name)} {place}에 배치할까요?\n배치하면 {place}에서만 일해요.",
+            () => manager.TryAssignSpecialist(_otter));
+    }
+
     // 같은 말을 연달아 하지 않게
     private string PickLine()
     {
         int count = _otter.Lines.Count;
+        if (count == 0)
+            return string.Empty;
         int index = Random.Range(0, count);
         if (count > 1 && index == _lastLine)
             index = (index + 1) % count;

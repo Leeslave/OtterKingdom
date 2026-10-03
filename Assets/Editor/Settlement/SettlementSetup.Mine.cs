@@ -5,7 +5,7 @@ using static CollectionSetup;
 
 /// <summary>
 /// 광산 씬에 개척을 배치한다: 입구 앞을 막은 나무·돌(ClearingObstacleView)과 ZoneClearingView.
-/// 다 치우기 전에는 광산 입구를 숨긴다. 여러 번 실행해도 결과가 같음.
+/// 다 치우고 광부 해달을 배치하기 전에는 광산 입구와 광부를 숨긴다. 여러 번 실행해도 결과가 같음.
 /// </summary>
 public static partial class SettlementSetup
 {
@@ -66,7 +66,8 @@ public static partial class SettlementSetup
         var so = new SerializedObject(view);
         so.FindProperty("_zone").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ZoneDefinition>(MineZonePath);
         SetList(so.FindProperty("_obstacles"), obstacles);
-        SetList(so.FindProperty("_hiddenUntilCleared"), new System.Collections.Generic.List<GameObject> { entrance.gameObject });
+        // 광부는 광장에서 만나 배치한 뒤에만 광산에 있음
+        SetList(so.FindProperty("_hiddenUntilCleared"), new System.Collections.Generic.List<GameObject> { entrance.gameObject, miner.gameObject });
         so.ApplyModifiedPropertiesWithoutUndo();
 
         EditorSceneManager.MarkSceneDirty(scene);
@@ -121,8 +122,10 @@ public static partial class SettlementSetup
         renderer.sortingOrder = GroundDepthSort.OrderFor(MineDepthBase, renderer.transform.position.y);
     }
 
+    // walkable이 없는 장소(밭)는 발자국 없이 (해달이 웨이포인트로만 걸음).
+    // scale: 그 장소 해달 크기에 맞춘 그림 크기 (밭은 해달이 작아 0.65). 누르는 영역은 손가락 크기 아래로 줄이지 않음
     private static ClearingObstacleView BuildObstacle(Transform root, string id, ObstacleKind kind, Vector2 position, ItemDefinition reward,
-        PlazaWalkableArea walkable)
+        PlazaWalkableArea walkable, string hintId = MineHintObstacle, float scale = 1f)
     {
         var node = new GameObject($"Obstacle_{id}").transform;
         node.SetParent(root, false);
@@ -132,13 +135,12 @@ public static partial class SettlementSetup
         var sprite = rock ? LoadPropArt("Prop_Rock_0") : AssetDatabase.LoadAssetAtPath<Sprite>(PlazaTreeArtPath);
         var visual = CreateSprite("Visual", node, sprite, position, false);
         AddGroundDepthSort(visual, false);
-        if (!rock)
-            visual.transform.localScale = Vector3.one * MineTreeScale;
-        var footprint = AddFootprint(node, rock ? RockFootprint : new Rect(-0.5f, -0.15f, 1.0f, 0.5f));
+        visual.transform.localScale = Vector3.one * ((rock ? 1f : MineTreeScale) * scale);
+        var footprint = walkable != null ? AddFootprint(node, rock ? RockFootprint : new Rect(-0.5f, -0.15f, 1.0f, 0.5f)) : null;
 
         var tap = node.gameObject.AddComponent<CircleCollider2D>();
-        tap.radius = rock ? 0.85f : 1.1f;
-        tap.offset = new Vector2(0f, rock ? 0.45f : 1.4f);
+        tap.radius = rock ? Mathf.Max(0.7f, 0.85f * scale) : Mathf.Max(0.85f, 1.1f * scale);
+        tap.offset = new Vector2(0f, (rock ? 0.45f : 1.4f) * scale);
 
         var view = node.gameObject.AddComponent<ClearingObstacleView>();
         var so = new SerializedObject(view);
@@ -158,8 +160,9 @@ public static partial class SettlementSetup
         so.FindProperty("_footprint").objectReferenceValue = footprint;
         so.FindProperty("_walkableArea").objectReferenceValue = walkable;
         // 화면 가운데 바위 하나에만 처음 안내
-        if (id == MineHintObstacle)
-            so.FindProperty("_hint").objectReferenceValue = CreateTapHint(node, "hint_obstacle", "톡톡 눌러 치워요!", new Vector3(0f, 1.35f, 0f));
+        if (id == hintId)
+            so.FindProperty("_hint").objectReferenceValue =
+                CreateTapHint(node, "hint_obstacle", "톡톡 눌러 치워요!", new Vector3(0f, Mathf.Max(1f, 1.35f * scale), 0f));
         so.ApplyModifiedPropertiesWithoutUndo();
         return view;
     }

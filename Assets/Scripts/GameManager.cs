@@ -232,6 +232,11 @@ public class GameManager : MonoBehaviour
         }
 
         if (zoneTutorialPending) StartCoroutine(PlayZoneTutorialWhenReady());
+        // This zone's guide was already seen (e.g. reset by the dev tool): a
+        // specialist placed here starts working right away.
+        else StartSpecialistWork();
+        if (CurrentZoneId == ZoneTutorials.Plaza && !save.tutorialsDone.Contains(ZoneTutorials.FairyShop))
+            StartCoroutine(PlayFairyShopTutorialWhenReady());
     }
 
     private void Update()
@@ -395,6 +400,8 @@ public class GameManager : MonoBehaviour
             loadedCollection = collection;
             save.collection ??= new List<CollectionSaveEntry>();
             collection.LoadFromSave(save.collection);
+            // Specialists assigned before the collection was loaded (old saves moved over on load).
+            if (settlement != null) settlement.SyncSpecialistCollection();
         }
 
         var quests = QuestManager.Instance;
@@ -555,7 +562,9 @@ public class GameManager : MonoBehaviour
     {
         if (absenceSec < minOfflineAbsenceSec) return;
 
-        var report = offlineProduction.Run(save, absenceSec, new OfflineBag(this));
+        // 전문 해달(농부·광부)이 일하기 전에는 그 장소의 오프라인 생산도 없음
+        var report = offlineProduction.Run(save, absenceSec, new OfflineBag(this),
+            CanProduceIn(FarmZoneId), CanProduceIn(MineZoneId));
         var settlement = SettlementManager.Instance;
         if (settlement != null)
         {
@@ -568,7 +577,23 @@ public class GameManager : MonoBehaviour
 
     // ---- farm NPC registrations (what grows offline)
 
-    public bool IsOfflineFarmUnlocked => offlineProduction.IsFarmUnlocked(save);
+    public bool IsOfflineFarmUnlocked => offlineProduction.IsFarmUnlocked(save) && CanProduceIn(FarmZoneId);
+
+    // ------------------------------------------------------ production gate
+
+    // Zone ids (= scene names) of the zones whose production waits for a
+    // specialist otter (farmer / miner) to be assigned and start working.
+    public const string FarmZoneId = "Farm";
+    public const string MineZoneId = "Mine";
+
+    // The settlement decides: a zone with a developable region produces only
+    // once its specialist is working there. Click, automatic and offline
+    // production all check this. Test scenes without a settlement always can.
+    public static bool CanProduceIn(string zoneId)
+    {
+        var settlement = SettlementManager.Instance;
+        return settlement == null || settlement.CanProduceIn(zoneId);
+    }
 
     public int OfflineFarmRegistrationLimit => OfflineProductionService.RegistrationLimit(save);
 
@@ -691,6 +716,8 @@ public class GameManager : MonoBehaviour
 
     public PlantResult PlantFromPrompt(int plotIndex, int slotIndex, string cropId)
     {
+        // No farmer working yet: nothing happens in the farm (plots stay hidden too).
+        if (!CanProduceIn(FarmZoneId)) return PlantResult.Failed;
         var result = farmService.Plant(plotIndex, slotIndex, cropId);
         if (result == PlantResult.Planted)
         {
@@ -749,6 +776,10 @@ public class GameManager : MonoBehaviour
             {
                 if (!save.tutorialsDone.Contains(id)) save.tutorialsDone.Add(id);
             }
+            foreach (var id in ZoneTutorials.FeatureIds)
+            {
+                if (!save.tutorialsDone.Contains(id)) save.tutorialsDone.Add(id);
+            }
         }
 
         save.schemaVersion = SaveData.CurrentSchemaVersion;
@@ -792,6 +823,9 @@ public class GameManager : MonoBehaviour
     {
         zoneTutorialPending = false;
         if (!save.tutorialsDone.Contains(CurrentZoneId)) save.tutorialsDone.Add(CurrentZoneId);
+        // The mine / farm guide is the specialist's first-production guide:
+        // finishing (or skipping) it is what starts production.
+        StartSpecialistWork();
         SaveNow();
 
         if (firstPlantGuideDeferred)
@@ -799,6 +833,51 @@ public class GameManager : MonoBehaviour
             firstPlantGuideDeferred = false;
             ShowFirstPlantGuide();
         }
+    }
+
+    // A specialist (miner / farmer) placed in this zone starts working.
+    private void StartSpecialistWork()
+    {
+        var settlement = SettlementManager.Instance;
+        if (settlement != null && settlement.IsLoaded) settlement.StartSpecialistWork(CurrentZoneId);
+    }
+
+    // ---------------------------------------------------- feature tutorials
+
+    // The fairy shop opens later than the plaza's first tutorial (with the
+    // farm), so it gets its own short guide: in the plaza, once the fairy is
+    // there and nothing else (zone tutorial, popups, level-up, travel) is on
+    // screen. Not finished = shown again on the next plaza visit. A player
+    // who opens the shop on their own before it shows counts as done.
+    private const float FeatureTutorialPollSeconds = 0.5f;
+
+    private IEnumerator PlayFairyShopTutorialWhenReady()
+    {
+        var navigator = FindAnyObjectByType<SceneNavigator>();
+        FairyNpcView fairy = null;
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(FeatureTutorialPollSeconds);
+            if (save.tutorialsDone.Contains(ZoneTutorials.FairyShop)) yield break;
+            if (FairyShopPresenter.Instance != null && FairyShopPresenter.Instance.IsOpen)
+            {
+                CompleteFairyShopTutorial();
+                yield break;
+            }
+            if (zoneTutorialPending || gameUI.IsModalOpen || (navigator != null && navigator.IsTraveling)) continue;
+            if (SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy) continue;
+            fairy = FindAnyObjectByType<FairyNpcView>();
+            if (fairy != null) break;
+        }
+
+        TutorialOverlay.Play(ZoneTutorials.FairyShopSteps(fairy), CompleteFairyShopTutorial);
+    }
+
+    private void CompleteFairyShopTutorial()
+    {
+        if (save.tutorialsDone.Contains(ZoneTutorials.FairyShop)) return;
+        save.tutorialsDone.Add(ZoneTutorials.FairyShop);
+        SaveNow();
     }
 
     // Forgets every zone tutorial and replays this zone's right away.
@@ -900,6 +979,7 @@ public class GameManager : MonoBehaviour
     // the farm growing everywhere — not only while the mine scene is open.
     private void TickMining(float deltaSec)
     {
+        if (!CanProduceIn(MineZoneId)) return;
         string find = miningService.Tick(deltaSec);
         if (find == null) return;
 
@@ -910,6 +990,8 @@ public class GameManager : MonoBehaviour
     public void SetMiningActive(bool active)
     {
         if (miningService.IsActive == active) return;
+        // Only the working miner can go in (stopping is always allowed).
+        if (active && !CanProduceIn(MineZoneId)) return;
         miningService.SetActive(active);
         SaveNow();
     }
@@ -1010,7 +1092,7 @@ public class GameManager : MonoBehaviour
     // crop is out of seeds the slot is left empty and the player is told.
     public void HarvestSlot(int plotIndex, int slotIndex)
     {
-        if (!CanStoreHarvest(plotIndex, slotIndex)) return;
+        if (!CanProduceIn(FarmZoneId) || !CanStoreHarvest(plotIndex, slotIndex)) return;
 
         var crop = farmService.GetSlotCrop(plotIndex, slotIndex);
         var harvested = farmService.Harvest(plotIndex, slotIndex);

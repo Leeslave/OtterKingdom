@@ -22,16 +22,20 @@ public static class QuestSetup
     private const string OtterTabPath = "Assets/Scriptable Obejects/Collection/Tabs/Tab_Otter.asset";
     private const string GoldPath = "Assets/Scriptable Obejects/Gold.asset";
     private const string PlaceIconFolder = "Assets/Art/UI/Travel";
+    private const string ConstructionFolder = "Assets/Scriptable Obejects/Settlement/Constructions";
 
     private static readonly Color Body = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
 
     // 아이콘: "item:경로" (아이템 아이콘), "gold" (골드 아이콘), "place:파일", "otter:파일", "npc:파일", "nav:파일"
     // 성장 체인: 목표 종류마다 단계가 있고, 앞 단계 보상을 받고 필요 레벨이 되면 다음 단계가 열린다.
     // 수치는 성장 곡선 설계안(Docs/성장곡선_퀘스트설계.md) 기준. 밸런스가 바뀌면 에셋에서 고친다
+    // 필터: 분류 이름(Crops 등) / "otter"(도감 해달 탭) / "only:아이템 경로"(그 아이템만) / "build:건설ID,건설ID"(그 건물만) / "builder"(건설 해달 참여 공사만)
     // (에셋, ID, 제목, 조건, 목표 종류, 목표, 필터, 골드, 아이콘, 종류, 필요 레벨, 앞 단계 에셋, 경험치, 경험치 %)
     private static readonly (string asset, string id, string title, string description, QuestGoalType type, int goal, string filter,
         int reward, string icon, QuestKind kind, int level, string prerequisite, int exp, float expPercent)[] Quests =
     {
+        // 농부를 밭에 배치한 뒤 (수확 퀘스트는 농부가 일해야 보임). 첫 안내가 당근이라 당근으로
+        ("Main_FirstCarrots", "quest_first_carrots", "첫 수확을 해봐요", "당근 3개 수확하기", QuestGoalType.Harvest, 3, "only:Farming/당근", 30, "item:Farming/당근", QuestKind.Main, 1, "", 30, 0f),
         ("Main_Harvest_1", "main_harvest_1", "내가 키운 첫 수확", "작물 5개 수확하기", QuestGoalType.Harvest, 5, "Crops", 50, "item:Farming/당근", QuestKind.Main, 1, "", 40, 0f),
         ("Main_Harvest_2", "main_harvest_2", "부지런한 손길", "작물 20개 수확하기", QuestGoalType.Harvest, 20, "Crops", 100, "item:Farming/감자", QuestKind.Main, 2, "Main_Harvest_1", 60, 0f),
         ("Main_Harvest_3", "main_harvest_3", "텃밭 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 200, "item:Farming/당근", QuestKind.Main, 3, "Main_Harvest_2", 110, 0f),
@@ -49,6 +53,10 @@ public static class QuestSetup
         ("Main_Rock_1", "main_rock_1", "돌 깨는 해달", "광장 바위를 깨서 돌 6개 얻기", QuestGoalType.Gather, 6, "Ore", 30, "item:Mining/돌", QuestKind.Main, 1, "", 40, 0f),
         ("Main_Mine_1", "main_mine_1", "첫 곡괭이질", "광산에서 광석 5개 캐기", QuestGoalType.Mine, 5, "Ore", 30, "item:Mining/돌", QuestKind.Main, 2, "", 40, 0f),
         ("Main_Mine_2", "main_mine_2", "광부의 하루", "광산에서 광석 20개 캐기", QuestGoalType.Mine, 20, "Ore", 80, "item:Mining/다이아몬드", QuestKind.Main, 2, "Main_Mine_1", 60, 0f),
+        // 건설 완료: 다 지은 건물 기록으로 셈 (퀘스트를 늦게 받아도 앞서 지은 집이 들어감). 개간은 세지 않음
+        ("Main_Build_1", "main_build_1", "첫 보금자리", "집 1채 짓기", QuestGoalType.CompleteConstruction, 1, "build:con_house_1,con_house_2", 50, "settle:ICON_House_Blue", QuestKind.Main, 1, "", 40, 0f),
+        ("Main_Build_2", "main_build_2", "왕국을 가꾸는 손", "건축물 2개 짓기", QuestGoalType.CompleteConstruction, 2, "", 100, "settle:ICON_Chair", QuestKind.Main, 2, "Main_Build_1", 60, 0f),
+        ("Main_Build_3", "main_build_3", "뚝딱뚝딱", "건설 해달과 공사 1번 끝내기", QuestGoalType.CompleteConstruction, 1, "builder", 150, "settle:ICON_Otter_Builder", QuestKind.Main, 3, "", 80, 0f),
         ("Main_Gather_1", "main_gather_1", "부지런한 손", "광장에서 재료 10개 줍기", QuestGoalType.Gather, 10, "", 30, "item:Mining/목재", QuestKind.Main, 1, "", 30, 0f),
         ("Main_Gather_2", "main_gather_2", "광장 청소부", "광장에서 재료 40개 줍기", QuestGoalType.Gather, 40, "", 80, "item:Mining/돌", QuestKind.Main, 2, "Main_Gather_1", 60, 0f),
         ("Main_Sales_1", "main_sales_1", "티끌 모아 왕국", "판매로 10골드 벌기", QuestGoalType.EarnFromSales, 10, "", 30, "gold", QuestKind.Main, 1, "", 30, 0f),
@@ -68,8 +76,9 @@ public static class QuestSetup
         ("Main_Decor_3", "main_decor_3", "해달 놀이공원", "장난감 6개 놓기", QuestGoalType.PlaceDecor, 6, "", 500, "item:Decor/축구공", QuestKind.Main, 9, "Main_Decor_2", 300, 0f),
         ("Main_Collection_1", "main_collection_1", "도감 시작", "도감 3칸 채우기", QuestGoalType.CollectionRegister, 3, "", 100, "nav:ICON_Nav_Collection", QuestKind.Main, 2, "", 80, 0f),
         ("Main_Collection_2", "main_collection_2", "수집가", "도감 6칸 채우기", QuestGoalType.CollectionRegister, 6, "", 300, "nav:ICON_Nav_Collection", QuestKind.Main, 5, "Main_Collection_1", 180, 0f),
-        ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.CollectionRegister, 1, "otter", 200, "otter:ICON_Otter_Fisher", QuestKind.Main, 3, "", 120, 0f),
-        ("Main_Otter_2", "main_otter_2", "해달 친구들", "해달 2마리 만나기", QuestGoalType.CollectionRegister, 2, "otter", 500, "otter:ICON_Otter_Farmer", QuestKind.Main, 8, "Main_Otter_1", 300, 0f),
+        // 새 해달 만나기: 광장에서 처음 만난 해달 수 (도감 등록과 별개, 기록으로 셈)
+        ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.MeetOtter, 1, "", 200, "otter:ICON_Otter_Fisher", QuestKind.Main, 3, "", 120, 0f),
+        ("Main_Otter_2", "main_otter_2", "해달 친구들", "해달 2마리 만나기", QuestGoalType.MeetOtter, 2, "", 500, "otter:ICON_Otter_Farmer", QuestKind.Main, 8, "Main_Otter_1", 300, 0f),
         ("Daily_Harvest", "daily_harvest", "오늘의 수확", "작물 30개 수확하기", QuestGoalType.Harvest, 30, "Crops", 150, "item:Farming/당근", QuestKind.Daily, 2, "", 0, 10f),
         ("Daily_Catch", "daily_catch", "오늘의 낚시", "물고기 3마리 낚기", QuestGoalType.Catch, 3, "Fish", 150, "item:Fishing/고등어", QuestKind.Daily, 2, "", 0, 10f),
         ("Daily_Sales", "daily_sales", "오늘의 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 200, "gold", QuestKind.Daily, 2, "", 0, 10f),
@@ -103,6 +112,12 @@ public static class QuestSetup
                 so.FindProperty("_expPercentOfLevel").floatValue = q.expPercent;
                 if (q.filter == "otter")
                     so.FindProperty("_collectionTab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<CollectionTab>(OtterTabPath);
+                else if (q.filter == "builder")
+                    so.FindProperty("_builderOnly").boolValue = true;
+                else if (q.filter.StartsWith("build:"))
+                    SetConstructions(so.FindProperty("_constructions"), q.filter.Substring("build:".Length).Split(','));
+                else if (q.filter.StartsWith("only:"))
+                    so.FindProperty("_item").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ItemDefinition>($"{ItemFolder}/{q.filter.Substring("only:".Length)}.asset");
                 else if (!string.IsNullOrEmpty(q.filter))
                     so.FindProperty("_itemFilter").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ItemCategory>($"{CategoryFolder}/{q.filter}.asset");
             }
@@ -131,6 +146,18 @@ public static class QuestSetup
         AssetDatabase.SaveAssets();
     }
 
+    private static void SetConstructions(SerializedProperty list, string[] ids)
+    {
+        list.arraySize = ids.Length;
+        for (int i = 0; i < ids.Length; i++)
+        {
+            var construction = AssetDatabase.LoadAssetAtPath<ConstructionDefinition>($"{ConstructionFolder}/{ids[i]}.asset");
+            if (construction == null)
+                Debug.LogWarning($"[QuestSetup] 건설을 찾을 수 없습니다: {ids[i]}");
+            list.GetArrayElementAtIndex(i).objectReferenceValue = construction;
+        }
+    }
+
     private static Sprite LoadQuestIcon(string icon, Currency gold)
     {
         int colon = icon.IndexOf(':');
@@ -154,6 +181,8 @@ public static class QuestSetup
                 return ImportSprite("Assets/Art/Npc", value);
             case "nav":
                 return LoadIcon(NavIconFolder, value);
+            case "settle":
+                return SettlementSetup.LoadArt(value);
             default:
                 throw new System.ArgumentException($"알 수 없는 아이콘 종류: {icon}");
         }

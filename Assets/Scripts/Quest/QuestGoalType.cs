@@ -12,6 +12,8 @@ public enum QuestGoalType
     ShopPurchase,       // 요정 상점에서 산 횟수
     Mine,               // 광산에서 캐서 가방에 들어온 개수 (오프라인 채굴 포함)
     Gather,             // 광장에서 주운 재료 개수 (나뭇가지, 돌무더기)
+    CompleteConstruction, // 다 지은 건물 수 (집·의자. 개간 제외). 저장된 기록으로 다시 세므로 퀘스트를 늦게 받아도 앞서 지은 것이 들어감
+    MeetOtter,          // 광장에서 처음 만난 해달 수 (처음부터 함께한 첫 해달 제외). 도감 등록과 별개, 기록으로 다시 셈
 }
 
 /// <summary>퀘스트 종류</summary>

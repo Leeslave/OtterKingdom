@@ -24,12 +24,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b0187b75dfd9a104b8c3725c8a4f5e91, type: 2}
   - {fileID: 11400000, guid: 8ff3e80563dfd8a4cbf590e6056ddc02, type: 2}
   - {fileID: 11400000, guid: 09ada72536705ff4c80b2fc67cae7e65, type: 2}
+  - {fileID: 11400000, guid: 01434be3ebf84ed69c1bbf9c0735c9c9, type: 2}
+  - {fileID: 11400000, guid: d77a0cb424b64937aa0cf04256be1d97, type: 2}
   _requests:
   - {fileID: 11400000, guid: d5ddcf15a08ec3b44b1590e7df581403, type: 2}
   - {fileID: 11400000, guid: 1311babe897fada4f810827479de71e7, type: 2}
   - {fileID: 11400000, guid: 2d2e95483cb26fe408ec80a641ef116f, type: 2}
   - {fileID: 11400000, guid: f6bb9bebc0ee9e94f9192c2fcb886631, type: 2}
   - {fileID: 11400000, guid: 330d3ce7e7f44574384032e31b4fec34, type: 2}
+  - {fileID: 11400000, guid: 20890445c1b3437aa04cbc47a24877d3, type: 2}
+  - {fileID: 11400000, guid: 0e841b5c82fa49e89ea9a660d3e62d19, type: 2}
   _guestbookEntries:
   - {fileID: 11400000, guid: 33c4ddbf79f82ec4295cddd2da782dfe, type: 2}
   - {fileID: 11400000, guid: 26cb5157adbe284468d965b7886dcf4c, type: 2}
@@ -40,10 +44,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d616fbca7b3ace543b85158c08436dc4, type: 2}
   - {fileID: 11400000, guid: fb35d679dbaa3bf44ba0fe37ec87c5ef, type: 2}
   - {fileID: 11400000, guid: f9b73a8d51966a54e9420ef04052e970, type: 2}
+  - {fileID: 11400000, guid: 1b5a878b864b414d89d773ab7f6f0e52, type: 2}
+  - {fileID: 11400000, guid: 4c55a76c841f40cfa32003f79ec97f27, type: 2}
+  - {fileID: 11400000, guid: 79e011a8aa14471784afe3150d0631f9, type: 2}
+  - {fileID: 11400000, guid: 1fc93d1bcae64e40b86ef6f36072281a, type: 2}
   _regions:
   - {fileID: 11400000, guid: 64bd9c77f54f5f64f904b9a057f13bad, type: 2}
+  - {fileID: 11400000, guid: 4dcd2c8c3b284983a4d03fce7db21aff, type: 2}
   _tasks:
   - {fileID: 11400000, guid: 13f7193403b0af742b37211ed0380205, type: 2}
+  - {fileID: 11400000, guid: d50f99438fa84966b9a67bd2acc18f2b, type: 2}
   _legacyDevelopments:
   - fishing_dock
   _startingItems:

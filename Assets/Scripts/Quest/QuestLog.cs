@@ -80,6 +80,27 @@ public class QuestLog
         return true;
     }
 
+    /// <summary>
+    /// 저장된 기록으로 다시 센 값으로 진행을 맞춘다 (만난 해달, 다 지은 건물). 같은 기록을 두 번 세지 않도록 더하지 않고,
+    /// 줄이지도 않으며, 이미 달성했거나 받은 퀘스트는 그대로.
+    /// </summary>
+    /// <returns>수치가 바뀌었으면 true</returns>
+    public bool SetProgressAtLeast(QuestDefinition quest, int value)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+        if (GetStatus(quest) != QuestStatus.InProgress)
+            return false;
+
+        var record = GetRecord(quest);
+        int progress = Math.Min(Math.Max(0, value), quest.Goal);
+        if (progress <= record.Progress)
+            return false;
+        _records[quest.QuestId] = new QuestRecord(progress, false);
+        OnChanged?.Invoke(quest);
+        return true;
+    }
+
     /// <summary>보상 받음으로 표시. 목표를 달성했고 아직 받지 않았을 때만.</summary>
     /// <param name="level">받는 순간의 왕국 레벨 (목록에서 "이번 레벨에 받은 퀘스트"를 가려내는 데 씀)</param>
     /// <returns>받음으로 바뀌었으면 true (보상 지급은 호출한 쪽이 한다)</returns>

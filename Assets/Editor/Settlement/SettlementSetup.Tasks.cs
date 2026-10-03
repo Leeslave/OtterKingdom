@@ -7,8 +7,9 @@ using static CollectionSetup;
 using static GlobalUISetup;
 
 /// <summary>
-/// P1 개간 지역 · 주민 작업: 데이터(작업, 지역, 꾸미기 해금 조건), 작업 화면(전역 UI), 광산의 정비 현장.
-/// 광산 = 첫 개간 지역 샘플: 나무·돌 직접 치움 → 주민 1명이 "광산 주변 정리"(30초) → 운영 (Lv.3, 새 해달, 광산 꾸미기 구역).
+/// P1 개간 지역 · 주민 작업: 데이터(작업, 지역, 꾸미기 해금 조건), 작업 화면(전역 UI), 광산·밭의 정비 현장.
+/// 광산: 나무·돌 직접 치움 → 주민 1명이 "광산 주변 정리"(30초) → 운영 (Lv.3, 광부 방문, 광산 꾸미기 구역) → 광부 배치 → 채굴.
+/// 밭: 잡목·바위 직접 치움 → 주민 2명이 "농경지 개간"(45초, 골드·목재·돌) → 운영 (농부 방문) → 농부 배치 → 농사.
 /// </summary>
 public static partial class SettlementSetup
 {
@@ -18,13 +19,32 @@ public static partial class SettlementSetup
     private const string MineDecorRegionPath = "Assets/Scriptable Obejects/Decor/Regions/Region_mine_base.asset";
     private const string MinePlayerClearDevelopment = "mine_path_open";
     private const string MineOperationalDevelopment = "mine_cleared";
+    private const string FarmRegionPath = DataFolder + "/Regions/Region_farm.asset";
+    // 농경지는 새 이웃의 집을 지으면 발견 (밭 장소도 이때부터 갈 수 있음 = 개간되지 않은 농경지)
+    internal const string FarmDiscoverDevelopment = "house_2";
+    private const string FarmPlayerClearDevelopment = "farm_path_open";
+    internal const string FarmOperationalDevelopment = "farmland";
 
-    // (ID, 제목, 설명, 끝났을 때 안내, 필요한 주민 수, 초, 필요 발전, 결과 발전)
+    // (ID, 제목, 설명, 끝났을 때 안내, 필요한 주민 수, 초, 필요 발전, 결과 발전, 골드, 목재, 돌)
     private static readonly (string id, string title, string description, string message, int workers, float seconds,
-        string requires, string result)[] Tasks =
+        string requires, string result, int gold, int wood, int stone)[] Tasks =
     {
         ("task_mine_tidy", "광산 주변 정리", "치운 나무와 돌 부스러기를 모으고\n입구 앞 땅을 다져요.", "광산 주변 정리가 끝났어요!",
-            1, 30f, MinePlayerClearDevelopment, "mine_tidy"),
+            1, 30f, MinePlayerClearDevelopment, "mine_tidy", 0, 0, 0),
+        // 비용은 예전 농경지 개간 건설과 같음 (골드 200, 목재 16, 돌 10)
+        ("task_farm_till", "농경지 개간", "치운 자리의 흙을 갈아엎고\n고랑을 내서 밭을 만들어요.", "농경지 개간이 끝났어요!",
+            2, 45f, FarmPlayerClearDevelopment, "farm_tilled", 200, 16, 10),
+    };
+
+    // (에셋, ID, 이름, 장소, 발견 발전, 직접 개척 발전, 운영 발전, 생산 발전(전문 해달이 일하면), 후속 정비 작업, 꾸미기 격자, 꾸미기 구역)
+    private static readonly (string path, string id, string name, string zone, string discover, string playerClear, string operational,
+        string production, string[] tasks, string decorBoard, string decorRegion)[] Regions =
+    {
+        (MineRegionPath, "region_mine", "광산", MineZonePath, "chair", MinePlayerClearDevelopment, MineOperationalDevelopment,
+            SettlementQuestGate.MineProductionDevelopment, new[] { "task_mine_tidy" }, MineDecorBoardPath, MineDecorRegionPath),
+        // 밭 꾸미기 구역은 처음부터 열려 있던 구역이라 그대로 둠
+        (FarmRegionPath, "region_farm", "밭", FarmZonePath, FarmDiscoverDevelopment, FarmPlayerClearDevelopment, FarmOperationalDevelopment,
+            SettlementQuestGate.FarmProductionDevelopment, new[] { "task_farm_till" }, null, null),
     };
 
     // 광산 정비 현장 (광산 씬 월드 좌표): 치운 자리 가운데에서 일하고, 화면 아래 길로 들어오고 나감
@@ -42,7 +62,9 @@ public static partial class SettlementSetup
         EnsureFolder($"{DataFolder}/Tasks");
         EnsureFolder($"{DataFolder}/Regions");
 
-        var tasks = new List<SettlementTaskDefinition>();
+        var wood = AssetDatabase.LoadAssetAtPath<ItemDefinition>(WoodItemPath);
+        var stone = AssetDatabase.LoadAssetAtPath<ItemDefinition>(StoneItemPath);
+        var tasks = new Dictionary<string, SettlementTaskDefinition>();
         foreach (var t in Tasks)
         {
             var task = LoadOrCreate<SettlementTaskDefinition>($"{DataFolder}/Tasks/{t.id}.asset").asset;
@@ -55,32 +77,51 @@ public static partial class SettlementSetup
             so.FindProperty("_durationSeconds").floatValue = t.seconds;
             so.FindProperty("_requiredDevelopment").stringValue = t.requires;
             so.FindProperty("_resultDevelopment").stringValue = t.result;
+            so.FindProperty("_requiredGold").intValue = t.gold;
+            var items = so.FindProperty("_requiredItems");
+            items.arraySize = 0;
+            AddItemAmount(items, wood, t.wood);
+            AddItemAmount(items, stone, t.stone);
             so.ApplyModifiedPropertiesWithoutUndo();
-            tasks.Add(task);
+            tasks[t.id] = task;
         }
 
-        var board = AssetDatabase.LoadAssetAtPath<DecorBoardDefinition>(MineDecorBoardPath);
-        var decorRegion = AssetDatabase.LoadAssetAtPath<DecorRegionDefinition>(MineDecorRegionPath);
-        if (board == null || decorRegion == null)
-            Debug.LogWarning("[SettlementSetup] 광산 꾸미기 격자가 없습니다. Tools/Decor/Setup Decor를 먼저 실행하세요.");
-        else
-            LockDecorRegionUntilOperational(decorRegion);
+        var regions = new List<DevelopableRegionDefinition>();
+        foreach (var r in Regions)
+        {
+            DecorBoardDefinition board = null;
+            DecorRegionDefinition decorRegion = null;
+            if (r.decorBoard != null)
+            {
+                board = AssetDatabase.LoadAssetAtPath<DecorBoardDefinition>(r.decorBoard);
+                decorRegion = AssetDatabase.LoadAssetAtPath<DecorRegionDefinition>(r.decorRegion);
+                if (board == null || decorRegion == null)
+                    Debug.LogWarning($"[SettlementSetup] {r.name} 꾸미기 격자가 없습니다. Tools/Decor/Setup Decor를 먼저 실행하세요.");
+                else
+                    LockDecorRegionUntilOperational(decorRegion);
+            }
 
-        var region = LoadOrCreate<DevelopableRegionDefinition>(MineRegionPath).asset;
-        var regionSo = new SerializedObject(region);
-        regionSo.FindProperty("_regionId").stringValue = "region_mine";
-        regionSo.FindProperty("_displayName").stringValue = "광산";
-        regionSo.FindProperty("_zone").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ZoneDefinition>(MineZonePath);
-        regionSo.FindProperty("_discoverDevelopment").stringValue = "chair";
-        regionSo.FindProperty("_playerClearDevelopment").stringValue = MinePlayerClearDevelopment;
-        regionSo.FindProperty("_operationalDevelopment").stringValue = MineOperationalDevelopment;
-        SetList(regionSo.FindProperty("_preparationTasks"), tasks);
-        regionSo.FindProperty("_decorBoard").objectReferenceValue = board;
-        regionSo.FindProperty("_decorRegion").objectReferenceValue = decorRegion;
-        regionSo.ApplyModifiedPropertiesWithoutUndo();
+            var region = LoadOrCreate<DevelopableRegionDefinition>(r.path).asset;
+            var regionSo = new SerializedObject(region);
+            regionSo.FindProperty("_regionId").stringValue = r.id;
+            regionSo.FindProperty("_displayName").stringValue = r.name;
+            regionSo.FindProperty("_zone").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ZoneDefinition>(r.zone);
+            regionSo.FindProperty("_discoverDevelopment").stringValue = r.discover;
+            regionSo.FindProperty("_playerClearDevelopment").stringValue = r.playerClear;
+            regionSo.FindProperty("_operationalDevelopment").stringValue = r.operational;
+            regionSo.FindProperty("_productionDevelopment").stringValue = r.production;
+            var regionTasks = new List<SettlementTaskDefinition>();
+            foreach (var id in r.tasks)
+                regionTasks.Add(tasks[id]);
+            SetList(regionSo.FindProperty("_preparationTasks"), regionTasks);
+            regionSo.FindProperty("_decorBoard").objectReferenceValue = board;
+            regionSo.FindProperty("_decorRegion").objectReferenceValue = decorRegion;
+            regionSo.ApplyModifiedPropertiesWithoutUndo();
+            regions.Add(region);
+        }
 
-        SetList(configSo.FindProperty("_regions"), new List<DevelopableRegionDefinition> { region });
-        SetList(configSo.FindProperty("_tasks"), tasks);
+        SetList(configSo.FindProperty("_regions"), regions);
+        SetList(configSo.FindProperty("_tasks"), new List<SettlementTaskDefinition>(tasks.Values));
     }
 
     // 광산 앞마당 꾸미기 구역: 처음엔 잠겨 있고 "광산 정비를 마치면" 열림 (운영되면 SettlementManager가 엶)
@@ -249,28 +290,34 @@ public static partial class SettlementSetup
     #region 광산 정비 현장
 
     // 망치 표지판(주민을 기다릴 때) · 일할 자리 · 남은 시간 말풍선. 해달 크기는 광부 해달에 맞춤
-    private static void BuildTaskSite(Transform root, MinerOtterController miner)
+    private static void BuildTaskSite(Transform root, MinerOtterController miner) =>
+        BuildTaskSite(root, MineRegionPath, miner.GetComponent<SpriteRenderer>(), "hint_mine_workers", "광산 주변 정리\n0:30",
+            MineStandPoints, MineLookPoint, MineEntryPoint, MineMarkerPoint, MineProgressPoint);
+
+    // 지역의 후속 정비 현장 (광산·밭 공용). sizeRef = 그 장소 해달의 그림 (일하러 온 주민의 크기를 맞춤)
+    private static void BuildTaskSite(Transform root, string regionPath, SpriteRenderer sizeRef, string hintFlag, string sampleText,
+        Vector2[] standPoints, Vector2 lookPoint, Vector2 entryPoint, Vector2 markerPoint, Vector2 progressPoint)
     {
         var site = new GameObject("PreparationSite").transform;
         site.SetParent(root, false);
 
         var stands = new List<Transform>();
-        for (int i = 0; i < MineStandPoints.Length; i++)
-            stands.Add(Point(site, $"Stand{i + 1}", MineStandPoints[i]));
-        var look = Point(site, "LookPoint", MineLookPoint);
-        var entry = Point(site, "EntryPoint", MineEntryPoint);
+        for (int i = 0; i < standPoints.Length; i++)
+            stands.Add(Point(site, $"Stand{i + 1}", standPoints[i]));
+        var look = Point(site, "LookPoint", lookPoint);
+        var entry = Point(site, "EntryPoint", entryPoint);
 
-        var marker = CreateSprite("Marker", site, LoadPropArt("UI_Bubble_Hammer"), MineMarkerPoint, false);
+        var marker = CreateSprite("Marker", site, LoadPropArt("UI_Bubble_Hammer"), markerPoint, false);
         marker.sortingOrder = OverlayOrder - 5;
         var tap = marker.gameObject.AddComponent<CircleCollider2D>();
         tap.radius = 0.8f;
         tap.offset = new Vector2(0f, 0.45f);
-        var hint = CreateTapHint(site, "hint_mine_workers", "눌러서 해달을 보내요!", (Vector3)MineMarkerPoint + new Vector3(0f, 1.1f, 0f));
+        var hint = CreateTapHint(site, hintFlag, "눌러서 해달을 보내요!", (Vector3)markerPoint + new Vector3(0f, 1.1f, 0f));
 
-        var bubble = CreateSprite("ProgressBubble", site, LoadPropArt("UI_Bubble_Speech"), MineProgressPoint, false);
+        var bubble = CreateSprite("ProgressBubble", site, LoadPropArt("UI_Bubble_Speech"), progressPoint, false);
         bubble.transform.localScale = Vector3.one * 0.85f;
         bubble.sortingOrder = OverlayOrder - 4;
-        var progress = CreateWorldText("Text", bubble.transform, new Vector3(0f, 1.05f, 0f), "광산 주변 정리\n0:30");
+        var progress = CreateWorldText("Text", bubble.transform, new Vector3(0f, 1.05f, 0f), sampleText);
         progress.outlineWidth = 0f;
         progress.fontSize = 2.6f;
         progress.enableAutoSizing = true;
@@ -279,14 +326,13 @@ public static partial class SettlementSetup
         progress.rectTransform.sizeDelta = new Vector2(3.4f, 1.2f);
         progress.sortingOrder = OverlayOrder - 3;
 
-        var minerRenderer = miner.GetComponent<SpriteRenderer>();
-        float minerHeight = minerRenderer != null && minerRenderer.sprite != null ? minerRenderer.bounds.size.y : 1f;
+        float refHeight = sizeRef != null && sizeRef.sprite != null ? sizeRef.bounds.size.y : 1f;
         var settings = AssetDatabase.LoadAssetAtPath<PlazaSettings>(PlazaSettingsPath);
         float plazaHeight = settings != null ? settings.otterHeight : 1.67f;
 
         var view = site.gameObject.AddComponent<RegionTaskSiteView>();
         var so = new SerializedObject(view);
-        so.FindProperty("_region").objectReferenceValue = AssetDatabase.LoadAssetAtPath<DevelopableRegionDefinition>(MineRegionPath);
+        so.FindProperty("_region").objectReferenceValue = AssetDatabase.LoadAssetAtPath<DevelopableRegionDefinition>(regionPath);
         SetList(so.FindProperty("_standPoints"), stands);
         so.FindProperty("_lookPoint").objectReferenceValue = look;
         so.FindProperty("_entryPoint").objectReferenceValue = entry;
@@ -295,8 +341,8 @@ public static partial class SettlementSetup
         so.FindProperty("_hint").objectReferenceValue = hint;
         so.FindProperty("_progressBubble").objectReferenceValue = bubble.gameObject;
         so.FindProperty("_progressText").objectReferenceValue = progress;
-        so.FindProperty("_workerScale").floatValue = minerHeight / plazaHeight;
-        so.FindProperty("_workerHeight").floatValue = minerHeight;
+        so.FindProperty("_workerScale").floatValue = refHeight / plazaHeight;
+        so.FindProperty("_workerHeight").floatValue = refHeight;
         so.FindProperty("_depthBase").intValue = MineDepthBase;
         so.FindProperty("_speechBubble").objectReferenceValue = LoadPropArt("UI_Bubble_Speech");
         so.FindProperty("_alertBubble").objectReferenceValue = LoadPropArt("UI_Bubble_Alert");

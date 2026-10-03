@@ -14,6 +14,10 @@ public static class ZoneTutorials
 
     public static readonly string[] AllIds = { Plaza, Farm, Fishing, Mine };
 
+    // 기능 튜토리얼: 장소의 첫 방문과 따로, 그 기능이 열린 뒤에 한 번 (완료 기록은 장소 튜토리얼과 같은 목록)
+    public const string FairyShop = "FairyShop";
+    public static readonly string[] FeatureIds = { FairyShop };
+
     public static bool Has(string sceneName) => System.Array.IndexOf(AllIds, sceneName) >= 0;
 
     public static List<TutorialStep> For(string sceneName, GameUI gameUI)
@@ -34,8 +38,7 @@ public static class ZoneTutorials
     {
         var topBar = Object.FindAnyObjectByType<TopBarView>();
         var navBar = Object.FindAnyObjectByType<NavBarView>();
-        var fairy = Object.FindAnyObjectByType<FairyNpcView>();
-        var board = Object.FindAnyObjectByType<SettlementBoardPropView>();
+        var board =Object.FindAnyObjectByType<SettlementBoardPropView>();
         var otter = NearestToScreenCenter(Object.FindObjectsByType<OtterWanderAgent>(FindObjectsSortMode.None));
         // Gold의 CurrencyID는 "Gold"가 아니라서 GameManager가 쓰는 에셋과 직접 비교
         var gold = GameManager.Instance.GoldCurrency;
@@ -70,9 +73,7 @@ public static class ZoneTutorials
             TutorialStep.At("이동",
                 "밭, 낚시터, 광산 같은\n다른 장소로 갈 수 있어요.\n잠긴 곳은 왕국이 커지면 열려요.",
                 () => TutorialTargets.Ui(navBar != null ? navBar.TravelButton : null)),
-            TutorialStep.At("요정 상점",
-                "요정을 누르면 상점이 열려요.\n왕국에 필요한 물건을 살 수 있어요.",
-                () => TutorialTargets.World(fairy)),
+            // 요정 상점은 밭이 열린 뒤에 나타나므로 따로 안내 (FairyShopSteps)
             TutorialStep.At("해달 친구들",
                 "광장을 돌아다니는 해달들이에요.\n가끔은 처음 보는 해달이 놀러 오기도 해요!",
                 () => TutorialTargets.World(otter)),
@@ -81,6 +82,20 @@ public static class ZoneTutorials
             TutorialStep.At("해달 게시판",
                 "해달들의 부탁과 방명록이 붙어 있어요.\n게시판을 눌러 첫 부탁을 확인해 봐요!",
                 () => TutorialTargets.World(board)),
+        };
+    }
+
+    /// <summary>요정 상점이 열렸을 때 (밭이 열리면 광장에 요정이 옴). 광장 첫 튜토리얼과 따로 한 번</summary>
+    public static List<TutorialStep> FairyShopSteps(FairyNpcView fairy)
+    {
+        return new List<TutorialStep>
+        {
+            TutorialStep.At("요정이 찾아왔어요!",
+                "밭이 열리자 모종을 파는 요정이\n광장에 찾아왔어요.",
+                () => TutorialTargets.World(fairy)),
+            TutorialStep.At("요정 상점",
+                "요정을 누르면 상점이 열려요.\n모종과 왕국에 필요한 물건을 살 수 있어요.\n한번 눌러 보세요!",
+                () => TutorialTargets.World(fairy)),
         };
     }
 

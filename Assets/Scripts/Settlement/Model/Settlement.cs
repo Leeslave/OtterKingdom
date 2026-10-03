@@ -45,8 +45,23 @@ public class ConstructionJob
     public bool IsDue(long nowUtcTicks) => !WaitingForWorker && nowUtcTicks >= EndUtcTicks;
 }
 
+/// <summary>전문 해달 한 마리의 기록 (처지, 배치한 지역, 일하기 시작한 시각)</summary>
+public readonly struct SpecialistRecord
+{
+    public readonly SpecialistState State;
+    public readonly string RegionId;
+    public readonly long WorkingSinceUtcTicks;
+
+    public SpecialistRecord(SpecialistState state, string regionId, long workingSinceUtcTicks)
+    {
+        State = state;
+        RegionId = regionId;
+        WorkingSinceUtcTicks = workingSinceUtcTicks;
+    }
+}
+
 /// <summary>
-/// 정착 진행 상태 (순수 C#): 왕국 단계, 해달별 처지, 끝낸 부탁, 열린 발전, 방명록, 진행 중인 건설, 주민 작업.
+/// 정착 진행 상태 (순수 C#): 왕국 단계, 해달별 처지, 끝낸 부탁, 열린 발전, 방명록, 진행 중인 건설, 주민 작업, 전문 해달, 만난 해달.
 /// 규칙(언제 무엇이 열리는지)은 SettlementRules, 비용·시간은 SettlementManager가 다룬다.
 /// </summary>
 public class Settlement
@@ -61,6 +76,8 @@ public class Settlement
     private readonly HashSet<string> _flags = new HashSet<string>();
     private readonly Dictionary<string, SettlementTaskJob> _tasks = new Dictionary<string, SettlementTaskJob>();
     private readonly HashSet<string> _completedTasks = new HashSet<string>();
+    private readonly Dictionary<string, SpecialistRecord> _specialists = new Dictionary<string, SpecialistRecord>();
+    private readonly HashSet<string> _metOtters = new HashSet<string>();
 
     public int Stage { get; private set; }
     public bool Initialized { get; private set; }
@@ -73,6 +90,10 @@ public class Settlement
     public IReadOnlyCollection<string> Developments => _developments;
     /// <summary>진행 중인 주민 작업</summary>
     public IReadOnlyCollection<SettlementTaskJob> TaskJobs => _tasks.Values;
+    /// <summary>광장에서 처음 만난 해달</summary>
+    public IReadOnlyCollection<string> MetOtters => _metOtters;
+    /// <summary>끝낸 부탁</summary>
+    public IReadOnlyCollection<string> CompletedRequests => _completedRequests;
 
     /// <summary>주민 수 (Resident만)</summary>
     public int ResidentCount
@@ -126,6 +147,19 @@ public class Settlement
             : TimeSpan.Zero;
 
     public bool IsTaskCompleted(string taskId) => _completedTasks.Contains(taskId);
+
+    /// <summary>전문 해달의 기록 (아직 없으면 false)</summary>
+    public bool TryGetSpecialist(string otterId, out SpecialistRecord record)
+    {
+        record = default;
+        return !string.IsNullOrEmpty(otterId) && _specialists.TryGetValue(otterId, out record);
+    }
+
+    /// <summary>전문 해달의 처지 (기록이 없으면 NotArrived)</summary>
+    public SpecialistState GetSpecialistState(string otterId) =>
+        TryGetSpecialist(otterId, out var record) ? record.State : SpecialistState.NotArrived;
+
+    public bool HasMet(string otterId) => !string.IsNullOrEmpty(otterId) && _metOtters.Contains(otterId);
 
     /// <summary>진행 중인 작업 (없으면 false)</summary>
     public bool TryGetTaskJob(string taskId, out SettlementTaskJob job)
@@ -333,6 +367,38 @@ public class Settlement
         OnChanged?.Invoke();
     }
 
+    /// <summary>
+    /// 전문 해달의 처지를 앞으로만 옮긴다 (광장 → 배치 → 일함). 같거나 뒤로 가는 호출은 무시해서
+    /// 배치 버튼을 여러 번 눌러도 한 번만 바뀐다. 지역·시작 시각은 비어 있으면 원래 값을 지킨다
+    /// </summary>
+    /// <returns>바뀌었으면 true</returns>
+    public bool AdvanceSpecialist(string otterId, SpecialistState state, string regionId = null, long workingSinceUtcTicks = 0)
+    {
+        if (string.IsNullOrEmpty(otterId))
+            throw new ArgumentNullException(nameof(otterId));
+        TryGetSpecialist(otterId, out var current);
+        if (state <= current.State && _specialists.ContainsKey(otterId))
+            return false;
+
+        string region = string.IsNullOrEmpty(regionId) ? current.RegionId : regionId;
+        long since = workingSinceUtcTicks > 0 ? workingSinceUtcTicks : current.WorkingSinceUtcTicks;
+        _specialists[otterId] = new SpecialistRecord(state, region, since);
+        OnChanged?.Invoke();
+        return true;
+    }
+
+    /// <summary>광장에서 이 해달을 처음 만났음</summary>
+    /// <returns>처음이면 true (같은 해달은 한 번만)</returns>
+    public bool MarkMet(string otterId)
+    {
+        if (string.IsNullOrEmpty(otterId))
+            throw new ArgumentNullException(nameof(otterId));
+        if (!_metOtters.Add(otterId))
+            return false;
+        OnChanged?.Invoke();
+        return true;
+    }
+
     #endregion
 
     #region 세이브
@@ -351,6 +417,8 @@ public class Settlement
         _flags.Clear();
         _tasks.Clear();
         _completedTasks.Clear();
+        _specialists.Clear();
+        _metOtters.Clear();
         Job = null;
 
         Initialized = saved.initialized;
@@ -431,6 +499,26 @@ public class Settlement
                 _tasks[t.taskId] = new SettlementTaskJob(t.taskId, t.assignedOtterIds, t.startUtcTicks, t.endUtcTicks);
             }
         }
+        if (saved.specialists != null)
+        {
+            foreach (var s in saved.specialists)
+            {
+                // 같은 해달이 두 번 있으면 앞으로 더 간 쪽을 남김
+                if (s == null || string.IsNullOrEmpty(s.otterId) || s.state == SpecialistState.NotArrived && string.IsNullOrEmpty(s.regionId))
+                    continue;
+                if (_specialists.TryGetValue(s.otterId, out var existing) && existing.State >= s.state)
+                    continue;
+                _specialists[s.otterId] = new SpecialistRecord(s.state, s.regionId, s.workingSinceUtcTicks);
+            }
+        }
+        if (saved.metOtters != null)
+        {
+            foreach (var id in saved.metOtters)
+            {
+                if (!string.IsNullOrEmpty(id))
+                    _metOtters.Add(id);
+            }
+        }
 
         OnChanged?.Invoke();
     }
@@ -489,6 +577,21 @@ public class Settlement
         result.tasks.Sort((a, b) => string.CompareOrdinal(a.taskId, b.taskId));
         result.completedTasks = new List<string>(_completedTasks);
         result.completedTasks.Sort(StringComparer.Ordinal);
+
+        result.specialists = new List<SpecialistSaveData>();
+        foreach (var pair in _specialists)
+        {
+            result.specialists.Add(new SpecialistSaveData
+            {
+                otterId = pair.Key,
+                state = pair.Value.State,
+                regionId = pair.Value.RegionId,
+                workingSinceUtcTicks = pair.Value.WorkingSinceUtcTicks,
+            });
+        }
+        result.specialists.Sort((a, b) => string.CompareOrdinal(a.otterId, b.otterId));
+        result.metOtters = new List<string>(_metOtters);
+        result.metOtters.Sort(StringComparer.Ordinal);
     }
 
     #endregion

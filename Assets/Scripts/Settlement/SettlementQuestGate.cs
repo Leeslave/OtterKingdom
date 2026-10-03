@@ -4,9 +4,12 @@
 /// </summary>
 public static class SettlementQuestGate
 {
-    // 목표 종류 → 필요한 발전 (SettlementSetup의 건설 결과 ID)
+    // 목표 종류 → 필요한 발전 (SettlementSetup의 건설 결과 ID, 지역의 생산 발전 ID)
     public const string FarmDevelopment = "farmland";
     public const string FishingDevelopment = "fishing_dock";
+    // 농부·광부가 일하기 시작하면 열림 (그 전에는 수확·채굴을 할 수 없음)
+    public const string FarmProductionDevelopment = "farm_working";
+    public const string MineProductionDevelopment = "mine_working";
 
     public static bool IsReachable(QuestDefinition quest)
     {
@@ -24,7 +27,9 @@ public static class SettlementQuestGate
         switch (quest.GoalType)
         {
             case QuestGoalType.Harvest:
-                return FarmDevelopment;
+                return FarmProductionDevelopment;
+            case QuestGoalType.Mine:
+                return MineProductionDevelopment;
             case QuestGoalType.Catch:
                 return FishingDevelopment;
             // 요정 상점은 밭이 열릴 때 광장에 나옴

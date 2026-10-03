@@ -23,15 +23,12 @@ MonoBehaviour:
   _minResidents: 0
   _construction: {fileID: 11400000, guid: 92cf1293d39320d4c87b74c9bf6d767f, type: 2}
   _clearZone: {fileID: 11400000, guid: 897a2ebd5e2af3948a55b391e6f66476, type: 2}
+  _assignSpecialist: {fileID: 0}
   _settles: []
   _arrivals:
-  - _otter: {fileID: 11400000, guid: b0187b75dfd9a104b8c3725c8a4f5e91, type: 2}
-    _state: 1
-  - _otter: {fileID: 11400000, guid: 09ada72536705ff4c80b2fc67cae7e65, type: 2}
+  - _otter: {fileID: 11400000, guid: 01434be3ebf84ed69c1bbf9c0735c9c9, type: 2}
     _state: 3
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: cb31b40de040c1548b6ab53a9e6843ea, type: 2}
-  _completionMessage: "\uAD11\uC0B0 \uC815\uBE44\uAC00 \uB05D\uB098 \uAD11\uC0B0\uC744
-    \uC4F8 \uC218 \uC788\uC5B4\uC694!\n\uC18C\uC2DD\uC744 \uB4E3\uACE0 \uC0C8 \uD574\uB2EC\uB4E4\uC774
-    \uCC3E\uC544\uC654\uC5B4\uC694."
+  _completionMessage: "\uAD11\uC0B0 \uC815\uBE44\uAC00 \uB05D\uB0AC\uC5B4\uC694!\n\uC18C\uC2DD\uC744 \uB4E3\uACE0 \uAD11\uBD80 \uD574\uB2EC\uC774 \uAD11\uC7A5\uC5D0 \uCC3E\uC544\uC654\uC5B4\uC694."
   _kingdomLevel: 3

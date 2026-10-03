@@ -16,14 +16,10 @@ MonoBehaviour:
   _displayName: "\uB18D\uACBD\uC9C0 \uAC1C\uAC04"
   _icon: {fileID: 21300000, guid: d385ccec0040cad4ab1f52dd7d5acedd, type: 3}
   _targetType: 1
-  _requiredGold: 200
-  _requiredItems:
-  - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
-    _amount: 16
-  - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
-    _amount: 10
-  _durationSeconds: 45
-  _needsBuilder: 1
-  _progressLabel: "\uB18D\uACBD\uC9C0 \uAC1C\uAC04 \uC911"
-  _progressHint: "\uC644\uB8CC\uD558\uBA74 \uCCAB \uBC2D\uC774 \uC5F4\uB824\uC694"
+  _requiredGold: 0
+  _requiredItems: []
+  _durationSeconds: 0
+  _needsBuilder: 0
+  _progressLabel: 
+  _progressHint: 
   _unlockResultId: farmland

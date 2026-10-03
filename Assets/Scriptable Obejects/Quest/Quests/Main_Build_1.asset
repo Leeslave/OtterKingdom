@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: Main_Build_1
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_build_1
+  _title: "\uCCAB \uBCF4\uAE08\uC790\uB9AC"
+  _description: "\uC9D1 1\uCC44 \uC9D3\uAE30"
+  _sortOrder: 40
+  _kind: 0
+  _requiredLevel: 1
+  _prerequisite: {fileID: 0}
+  _icon: {fileID: 21300000, guid: cdc5e4e4057a059438fddb5ca2478ae2, type: 3}
+  _goalType: 9
+  _goal: 1
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions:
+  - {fileID: 11400000, guid: 45c4958c9aedc574d9aa4cae7ca1e883, type: 2}
+  - {fileID: 11400000, guid: 3edf24a8c96a5944dbbcbc65adcba0ad, type: 2}
+  _builderOnly: 0
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 50
+  _expReward: 40
+  _expPercentOfLevel: 0

@@ -160,6 +160,15 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
+        // 배치한 전문 해달: 일하는 곳에 가면 생산 안내 뒤 일을 시작함
+        var assigned = _manager.AssignedNotWorking;
+        if (assigned != null && assigned.WorkRegion.Zone != null && !IsIn(assigned.WorkRegion.Zone))
+        {
+            string place = assigned.WorkRegion.DisplayName;
+            _guide.Show($"{place}에 가서 {assigned.DisplayName}의 일을 시작해요", "가 보기");
+            return;
+        }
+
         var current = _manager.CurrentRequest;
         if (current != null)
         {
@@ -189,7 +198,7 @@ public class SettlementPresenter : MonoBehaviour
         _guide.Hide();
     }
 
-    // 길을 다 치운 지역: 주민 해달을 보내야 함 / 정비 중 남은 시간
+    // 길을 다 치운 지역: 주민 해달을 보내야 함 (그 장소에서만) / 정비 중 남은 시간
     private bool TryShowPreparationGuide(BoardRequestDefinition request)
     {
         var task = PreparationOf(request, out var state);
@@ -197,8 +206,10 @@ public class SettlementPresenter : MonoBehaviour
             return false;
         if (state == RegionProgressState.WorkerPreparing)
             _guide.Show($"{task.Title}  {FormatTime(_manager.GetTaskJob(task).Remaining(SettlementManager.NowTicks))}", "보기");
-        else
+        else if (IsIn(request.ClearZone))
             _guide.Show($"{task.Title}: 주민을 보내요", "보내기");
+        else
+            _guide.Show($"{task.Title}: {request.ClearZone.DisplayName}에서 주민을 보내요", "가 보기");
         return true;
     }
 
@@ -215,17 +226,36 @@ public class SettlementPresenter : MonoBehaviour
         return _manager.CurrentPreparation(region);
     }
 
-    private bool IsInGoalZone => _navigator != null && _navigator.CurrentZone == _goalZone;
+    private bool IsInGoalZone => IsIn(_goalZone);
+
+    private bool IsIn(ZoneDefinition zone) => _navigator != null && zone != null && _navigator.CurrentZone == zone;
 
     private void HandleGuideClicked()
     {
+        var assigned = _manager.AssignedNotWorking;
+        if (assigned != null && assigned.WorkRegion.Zone != null && !IsIn(assigned.WorkRegion.Zone))
+        {
+            if (_navigator != null)
+                _navigator.TryGo(assigned.WorkRegion.Zone);
+            return;
+        }
+
         var current = _manager.CurrentRequest;
         if (current != null)
         {
             if (!_manager.Settlement.BoardVisited)
+            {
                 _manager.RequestBoard(false);
-            else
-                OpenConstruction(current);
+                return;
+            }
+            // 주민을 보낼 차례인데 그 장소에 있지 않음 → 바로 그 장소로 (작업은 현장의 망치 표지판에서)
+            if (PreparationOf(current, out var regionState) != null && regionState == RegionProgressState.AwaitingWorkers
+                && !IsIn(current.ClearZone) && _navigator != null)
+            {
+                _navigator.TryGo(current.ClearZone);
+                return;
+            }
+            OpenConstruction(current);
             return;
         }
 
@@ -320,14 +350,21 @@ public class SettlementPresenter : MonoBehaviour
 
     private void OpenConstruction(BoardRequestDefinition request)
     {
-        if (request == null || request.Construction == null)
+        if (request == null)
             return;
         if (!_glyphsReady)
             PrepareGlyphs();
 
-        var construction = request.Construction;
         var status = _manager.GetStatus(request);
         if (status == RequestStatus.Completed)
+            return;
+        if (request.AssignSpecialist != null)
+        {
+            OpenAssignment(request, status);
+            return;
+        }
+        var construction = request.Construction;
+        if (construction == null)
             return;
         if (request.ClearZone != null)
         {
@@ -385,11 +422,14 @@ public class SettlementPresenter : MonoBehaviour
         _construction.Show(request, speaker, line, _costs, note, startLabel, canStart);
     }
 
-    // 장소를 직접 치우는 부탁 (광산 길 열기): 비용 없이 [가 보기]로 그 장소에 감. 다 치운 뒤에는 주민 작업 화면
+    // 장소를 직접 치우는 부탁 (광산 길 열기, 농경지 개간): 비용 없이 [가 보기]로 그 장소에 감.
+    // 다 치운 뒤 주민 해달을 보내는 작업도 그 장소(망치 표지판)에서 시작한다. 그 장소에 있으면 바로 작업 화면, 아니면 [가 보기]
     private void OpenClearing(BoardRequestDefinition request, RequestStatus status)
     {
-        var task = PreparationOf(request, out _);
-        if (task != null)
+        var zone = request.ClearZone;
+        bool here = IsIn(zone);
+        var task = PreparationOf(request, out var regionState);
+        if (task != null && here)
         {
             if (_board.IsOpen)
                 _board.Hide();
@@ -399,15 +439,63 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
-        var zone = request.ClearZone;
-        bool here = _navigator != null && _navigator.CurrentZone == zone;
-        string note = status == RequestStatus.Locked ? "아직 할 수 없어요."
-            : here ? "길을 막은 나무와 돌을 톡톡 눌러 치워요!"
-            : $"{zone.DisplayName}에 가서 길을 막은 나무와 돌을 치워요.";
+        string note;
+        if (status == RequestStatus.Locked)
+            note = "아직 할 수 없어요.";
+        else if (task != null && regionState == RegionProgressState.WorkerPreparing)
+            note = $"주민 해달이 {zone.DisplayName}에서 일하고 있어요 · {FormatTime(_manager.GetTaskJob(task).Remaining(SettlementManager.NowTicks))}";
+        else if (task != null)
+            note = $"{zone.DisplayName}에 가서 망치 표지판을 눌러 주민 해달을 보내요.";
+        else if (here)
+            note = "길을 막은 나무와 돌을 톡톡 눌러 치워요!";
+        else
+            note = $"{zone.DisplayName}에 가서 길을 막은 나무와 돌을 치워요.";
         _costs.Clear();
         _construction.Show(request, request.Requester, request.Description, _costs, note, "가 보기",
             status == RequestStatus.Available && !here);
     }
+
+    // 배치 부탁 (광산에서 일할 친구): 광장으로 돌아가 새로 찾아온 전문 해달을 만나 대화로 배치. 부탁 화면에서는 배치하지 않음
+    private void OpenAssignment(BoardRequestDefinition request, RequestStatus status)
+    {
+        var otter = request.AssignSpecialist;
+        string name = otter.DisplayName;
+        string place = otter.WorkRegion != null ? otter.WorkRegion.DisplayName : string.Empty;
+        bool inPlaza = SettlementPlazaView.Active != null;
+        string note;
+        string button;
+        bool canPress;
+        if (status == RequestStatus.Locked)
+        {
+            note = "아직 할 수 없어요.";
+            button = "보기";
+            canPress = false;
+        }
+        else if (!inPlaza)
+        {
+            note = $"광장으로 돌아가 새로 찾아온 {name}{KoreanParticle.ObjectParticle(name)} 만나 보세요.";
+            button = "광장으로";
+            canPress = PlazaZone != null;
+        }
+        else if (_manager.CanAssignSpecialist(otter))
+        {
+            note = $"{name}에게 말을 걸어 {place}에 배치해 주세요.";
+            button = "만나러 가기";
+            canPress = true;
+        }
+        else
+        {
+            note = $"{name}{KoreanParticle.SubjectParticle(name)} 광장으로 오고 있어요.";
+            button = "만나러 가기";
+            canPress = true;
+        }
+        _costs.Clear();
+        _construction.Show(request, otter, request.Description, _costs, note, button, canPress);
+    }
+
+    // 광장 (배치 부탁이 데려가는 곳)
+    private ZoneDefinition PlazaZone =>
+        GlobalUIRoot.Instance != null ? ZoneLookup.FindByScene(GlobalUIRoot.Instance.Zones, ZoneTutorials.Plaza) : null;
 
     // 공사를 직접 할 해달(부탁한 해달)이 주민 작업에 가 있음
     private bool IsRequesterAtWork(BoardRequestDefinition request) =>
@@ -434,6 +522,18 @@ public class SettlementPresenter : MonoBehaviour
     private void HandleStartClicked()
     {
         var request = _construction.Request;
+        if (request.AssignSpecialist != null)
+        {
+            _construction.Hide();
+            if (_board.IsOpen)
+                _board.Hide();
+            var plaza = SettlementPlazaView.Active;
+            if (plaza != null)
+                plaza.FocusOtter(request.AssignSpecialist.OtterId);
+            else if (PlazaZone != null && _navigator != null)
+                _navigator.TryGo(PlazaZone);
+            return;
+        }
         if (request.ClearZone != null)
         {
             _construction.Hide();
@@ -499,17 +599,24 @@ public class SettlementPresenter : MonoBehaviour
         var construction = request.Construction;
         _paid.Clear();
         var gold = _manager.Config.GoldCurrency;
-        if (construction.RequiredGold > 0)
+        if (construction != null && construction.RequiredGold > 0)
             _paid.Add((gold != null ? gold.Icon : null, construction.RequiredGold));
-        foreach (var cost in construction.RequiredItems)
+        if (construction != null)
         {
-            if (cost != null && cost.Item != null && cost.Amount > 0)
-                _paid.Add((cost.Item.Icon, cost.Amount));
+            foreach (var cost in construction.RequiredItems)
+            {
+                if (cost != null && cost.Item != null && cost.Amount > 0)
+                    _paid.Add((cost.Item.Icon, cost.Amount));
+            }
         }
 
+        // 배치 부탁처럼 건설이 없는 부탁은 부탁 제목·그림 (배치한 해달 얼굴)
+        string title = construction != null ? construction.DisplayName : request.Title;
+        Sprite icon = construction != null && construction.Icon != null ? construction.Icon
+            : request.AssignSpecialist != null && request.AssignSpecialist.Portrait != null ? request.AssignSpecialist.Portrait
+            : request.Icon;
         int stage = _manager.Settlement.Stage;
-        _complete.Show($"{stage + 1:00} · {_manager.StageName}", construction.DisplayName, _paid, request.CompletionMessage,
-            construction.Icon != null ? construction.Icon : request.Icon);
+        _complete.Show($"{stage + 1:00} · {_manager.StageName}", title, _paid, request.CompletionMessage, icon);
     }
 
     #endregion
@@ -571,7 +678,7 @@ public class SettlementPresenter : MonoBehaviour
     private void PrepareGlyphs()
     {
         var config = _manager.Config;
-        var text = new StringBuilder("0123456789:/ ,.!?%·가는 중시간분초 보기진행중완료확인하기짓기건설개간시작해달게시판방명록의부탁방문기록새로운이도착했어요골드가모자라요개더필요해요아직할수없어요다른공사끝나면있어요바로지을걸려요주민가열렸어요집을짓고길을열어요");
+        var text = new StringBuilder("0123456789:/ ,.!?%·가는 중시간분초 보기진행중완료확인하기짓기건설개간시작해달게시판방명록의부탁방문기록새로운이도착했어요골드가모자라요개더필요해요아직할수없어요다른공사끝나면있어요바로지을걸려요주민가열렸어요집을짓고길을열어요광장으로돌아가찾아온만나보세요에게말을걸어배치해주세요오고있어요러가기을를서일의망치표지판눌러보내요하고");
         foreach (var request in config.Requests)
         {
             if (request == null)
@@ -588,7 +695,7 @@ public class SettlementPresenter : MonoBehaviour
         foreach (var otter in config.Otters)
         {
             if (otter != null)
-                text.Append(otter.DisplayName);
+                text.Append(otter.DisplayName).Append(otter.WorkRegion != null ? otter.WorkRegion.DisplayName : string.Empty);
         }
         for (int i = 0; i < config.StageCount; i++)
             text.Append(config.StageName(i));

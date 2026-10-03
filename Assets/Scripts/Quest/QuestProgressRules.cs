@@ -24,8 +24,45 @@ public static class QuestProgressRules
             || (quest.GoalType == QuestGoalType.Gather && e.Reason == ItemChangeReason.Gather);
         if (!matchesReason)
             return 0;
+        if (quest.Item != null && quest.Item != e.Item)
+            return 0;
 
         return quest.ItemFilter == null || quest.ItemFilter.Contains(e.Item) ? e.Delta : 0;
+    }
+
+    /// <summary>
+    /// 건설 완료: 다 지은 건물 기록 중 이 퀘스트가 세는 수 (건물 목록 필터, 건설 해달 참여).
+    /// 기록으로 다시 세는 값이라 진행 수치를 이 값으로 맞춘다 (더하지 않음)
+    /// </summary>
+    public static int CountBuildings(QuestDefinition quest, System.Collections.Generic.IEnumerable<ConstructionDefinition> completed)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        if (completed == null) throw new ArgumentNullException(nameof(completed));
+        if (quest.GoalType != QuestGoalType.CompleteConstruction)
+            return 0;
+
+        int count = 0;
+        foreach (var construction in completed)
+        {
+            if (construction == null || construction.TargetType == ConstructionTarget.Clearing)
+                continue;
+            if (quest.BuilderOnly && !construction.NeedsBuilder)
+                continue;
+            if (quest.Constructions.Count > 0 && !Contains(quest.Constructions, construction))
+                continue;
+            count++;
+        }
+        return count;
+    }
+
+    private static bool Contains(System.Collections.Generic.IReadOnlyList<ConstructionDefinition> list, ConstructionDefinition target)
+    {
+        foreach (var c in list)
+        {
+            if (c == target)
+                return true;
+        }
+        return false;
     }
 
     /// <summary>판매로 번 골드</summary>

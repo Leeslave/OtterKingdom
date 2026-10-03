@@ -2490,6 +2490,7 @@ MonoBehaviour:
   - {fileID: 989453129}
   _hiddenUntilCleared:
   - {fileID: 601074094}
+  - {fileID: 1283258948}
   _guide: "\uAE38\uC744 \uB9C9\uC740 \uB098\uBB34\uC640 \uB3CC\uC744 \uD1A1\uD1A1
     \uB20C\uB7EC \uCE58\uC6CC\uC694!"
   _awaitingWorkersGuide: "\uAE38\uC774 \uC5F4\uB838\uC5B4\uC694! \uC8FC\uBBFC \uD574\uB2EC\uC744

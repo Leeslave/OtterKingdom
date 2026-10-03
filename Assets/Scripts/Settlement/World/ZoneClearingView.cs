@@ -2,17 +2,18 @@
 using UnityEngine;
 
 /// <summary>
-/// 장소 개척 (광산 길 열기): 길을 막은 나무·돌(ClearingObstacleView)을 플레이어가 직접 다 치운다.
+/// 장소 개척 (광산 길 열기, 농경지 개간): 길을 막은 나무·돌(ClearingObstacleView)을 플레이어가 직접 다 치운다.
 /// - 개간 지역(DevelopableRegionDefinition)이 있는 장소: 다 치우면 "길은 열렸지만 정비가 필요" →
-///   주민 해달이 후속 정비(RegionTaskSiteView)를 끝내야 운영되고 그때 게시판 부탁이 끝난다 (왕국 레벨·새 해달)
+///   주민 해달이 후속 정비(RegionTaskSiteView)를 끝내야 운영되고 그때 게시판 부탁이 끝난다 (왕국 레벨·전문 해달 방문)
 /// - 지역이 없는 장소: 다 치우면 바로 게시판 부탁을 끝냄
-/// 운영 전에는 기능 오브젝트(광산 입구)를 숨기고 단계에 맞는 안내 말풍선을 띄운다. 장소 튜토리얼은 운영 뒤에 (IsWaiting).
+/// 운영되어도 그 지역의 전문 해달(광부·농부)을 광장에서 배치하기 전까지는 "광장에서 만나 배치해 주세요" 안내만 하고
+/// 기능 오브젝트(광산 입구·광부, 밭·농부)를 숨긴다. 장소 튜토리얼(= 생산 안내)은 배치한 뒤에 (IsWaiting).
 /// </summary>
 public class ZoneClearingView : MonoBehaviour
 {
     public static ZoneClearingView Active { get; private set; }
 
-    /// <summary>이 씬이 개척을 기다리는 중인지 (장소 튜토리얼을 미룸)</summary>
+    /// <summary>이 씬이 개척이나 전문 해달 배치를 기다리는 중인지 (장소 튜토리얼을 미룸)</summary>
     public static bool IsWaiting => Active != null && !Active._cleared;
 
     [Header("장소")]
@@ -23,7 +24,7 @@ public class ZoneClearingView : MonoBehaviour
     [Tooltip("길을 막은 장애물들")]
     [SerializeField] private List<ClearingObstacleView> _obstacles = new List<ClearingObstacleView>();
 
-    [Tooltip("운영 전에는 숨기는 기능 오브젝트 (광산 입구)")]
+    [Tooltip("운영되고 전문 해달을 배치하기 전에는 숨기는 기능 오브젝트 (광산 입구·광부, 밭·농부)")]
     [SerializeField] private List<GameObject> _hiddenUntilCleared = new List<GameObject>();
 
     [Header("안내")]
@@ -35,6 +36,9 @@ public class ZoneClearingView : MonoBehaviour
 
     [Tooltip("주민 해달이 정비하는 중")]
     [SerializeField] private string _preparingGuide = "주민 해달이 주변을 정리하고 있어요";
+
+    [Tooltip("운영되었지만 전문 해달을 아직 배치하지 않음. {0} = 해달 이름+을/를, {1} = 장소 이름")]
+    [SerializeField] private string _awaitingSpecialistGuide = "광장에서 {0} 만나 {1}에 배치해 주세요";
 
     private bool _cleared;
     private bool _applied;
@@ -74,6 +78,8 @@ public class ZoneClearingView : MonoBehaviour
         if (cleared)
             ClearLeftoverObstacles(manager);
         bool canClear = !cleared && manager.CanClearZone(_zone);
+        foreach (var obstacle in _obstacles)
+            obstacle.ZoneCleared = cleared;
         var region = manager.FindRegion(_zone);
         if (region == null)
         {
@@ -90,8 +96,18 @@ public class ZoneClearingView : MonoBehaviour
             canClear = false;
             cleared = manager.IsZoneCleared(_zone);
         }
+        // 운영돼도 전문 해달을 배치하기 전에는 기능을 열지 않음
+        var waiting = cleared ? manager.WaitingSpecialist(_zone) : null;
+        if (waiting != null)
+        {
+            Apply(false, false, SpecialistGuide(waiting));
+            return;
+        }
         Apply(cleared, canClear, GuideFor(manager.GetRegionState(region)));
     }
+
+    private string SpecialistGuide(SettlementOtterDefinition otter) =>
+        string.Format(_awaitingSpecialistGuide, otter.DisplayName + KoreanParticle.ObjectParticle(otter.DisplayName), _zone.DisplayName);
 
     private string GuideFor(RegionProgressState state)
     {

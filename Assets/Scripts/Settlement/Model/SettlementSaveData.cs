@@ -48,6 +48,27 @@ public class SettlementTaskSaveData
     public List<string> assignedOtterIds = new List<string>();
 }
 
+/// <summary>전문 해달(광부·농부)의 처지. 세이브에 숫자로 저장되므로 순서를 바꾸지 않는다</summary>
+public enum SpecialistState
+{
+    NotArrived = 0, // 아직 광장에서 만나지 않음 (찾아오기로 했어도 광장에 나타나기 전)
+    AtPlaza = 1,    // 광장에 와 있음 → 말을 걸어 일할 곳에 배치
+    Assigned = 2,   // 배치함 (일할 곳의 생산 안내를 끝내기 전이라 아직 생산하지 않음)
+    Working = 3,    // 일하는 중 (생산)
+}
+
+/// <summary>전문 해달 한 마리의 처지. 화면의 해달 오브젝트가 아니라 이 기록이 원본이다</summary>
+[Serializable]
+public class SpecialistSaveData
+{
+    public string otterId;
+    public SpecialistState state;
+    // 배치한 지역 (예: region_mine)
+    public string regionId;
+    // 일하기 시작한 시각(UTC). 그 전 시간은 생산에 넣지 않음
+    public long workingSinceUtcTicks;
+}
+
 /// <summary>
 /// 정착 진행 세이브 (SaveData.settlement). SettlementManager가 읽고 쓴다.
 /// 개간 지역의 단계는 따로 저장하지 않는다: 열린 발전(unlockedDevelopments)과 작업(tasks, completedTasks)으로 정해짐.
@@ -74,4 +95,8 @@ public class SettlementSaveData
     public List<SettlementTaskSaveData> tasks = new List<SettlementTaskSaveData>();
     // 끝낸 주민 작업
     public List<string> completedTasks = new List<string>();
+    // 전문 해달 (광부·농부. 옛 세이브는 없음 = 불러올 때 이미 운영 중인 지역이면 바로 일하는 중으로)
+    public List<SpecialistSaveData> specialists = new List<SpecialistSaveData>();
+    // 광장에서 처음 만난 해달 (새 해달 만나기 퀘스트. 한 번만 셈)
+    public List<string> metOtters = new List<string>();
 }
