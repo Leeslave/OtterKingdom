@@ -377,7 +377,6 @@ public static partial class SettlementSetup
         tap.offset = new Vector2(0f, 0.45f);
 
         var weakSpot = CreateSprite("WeakSpot", node, LoadPropArt("FX_Sparkle"), position + new Vector3(0f, 0.6f, 0f), false);
-        weakSpot.sortingOrder = OverlayOrder - 1;
 
         var view = node.gameObject.AddComponent<RockNodeView>();
         var so = new SerializedObject(view);
@@ -657,6 +656,8 @@ public static partial class SettlementSetup
         so.FindProperty("_bubbleAnchor").objectReferenceValue = bubbleAnchor;
         so.FindProperty("_dustSprite").objectReferenceValue = LoadPropArt("FX_Dust");
         so.FindProperty("_dustWidth").floatValue = dustWidth;
+        so.FindProperty("_twinkleSprite").objectReferenceValue = LoadPropArt("FX_Twinkle");
+        so.FindProperty("_glowMaterial").objectReferenceValue = GlowMaterial();
         return (view, so);
     }
 

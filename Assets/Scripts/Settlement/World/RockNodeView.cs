@@ -220,6 +220,8 @@ public class RockNodeView : MonoBehaviour
         var center = Center;
         var offset = Random.insideUnitCircle;
         _weakSpot.transform.position = new Vector3(center.x + offset.x * _weakSpotArea.x, center.y + offset.y * _weakSpotArea.y, center.z);
+        // 바위 바로 위 (바위 앞을 지나가는 해달은 반짝이를 가림)
+        _weakSpot.sortingOrder = _renderer.sortingOrder + 1;
         _weakSpot.gameObject.SetActive(true);
         _weakSpotTimer = _weakSpotSeconds;
     }

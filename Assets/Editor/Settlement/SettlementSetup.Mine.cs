@@ -13,8 +13,8 @@ public static partial class SettlementSetup
     private const string MineClearingName = "MineClearing";
     private const string PlazaTreeArtPath = "Assets/Art/Plaza/Props/Prop_Tree.png";
     private const float MineTreeScale = 0.32f;
-    // 광산 배경(0)·입구 동그라미(1) 위, 광부 말풍선(3) 아래. 광산은 광장식 깊이 정렬(PlazaProp)을 쓰지 않음
-    private const int MineObstacleOrder = 2;
+    // 광부 해달과 나무·돌은 발밑 높이로 앞뒤 정렬 (GroundDepthSort). 광산 배경(0)·입구 동그라미(1)·그림자(1) 위 구간
+    private const int MineDepthBase = 1000;
     private const string MineHintObstacle = "mine_rock_01";
 
     // 입구(0.76, 3.83)로 가는 모래 길 가운데를 가로막음 (카메라 고정, 화면 위쪽은 안내 말풍선 자리라 피함)
@@ -54,9 +54,11 @@ public static partial class SettlementSetup
         var obstacles = new System.Collections.Generic.List<ClearingObstacleView>();
         foreach (var o in MineObstacles)
             obstacles.Add(BuildObstacle(root, o.id, o.kind, o.position, o.kind == ObstacleKind.Rock ? stone : wood, walkable));
+        var miner = Object.FindAnyObjectByType<MinerOtterController>(FindObjectsInactive.Include);
+        AddGroundDepthSort(miner.GetComponent<SpriteRenderer>(), true);
 
-        // 광산: 배경(0) 위·장애물(2) 아래 그림자, 나비 한 마리, 구름 그림자는 없음 (바위로 둘러싸인 곳)
-        BuildAmbience(root, 1, 1, 6, 0, 0, 3);
+        // 광산: 배경(0) 위 그림자(1), 나비 한 마리는 맨 위, 구름 그림자는 없음 (바위로 둘러싸인 곳)
+        BuildAmbience(root, 1, 1, OverlayOrder - 10, 0, 0, 3);
 
         var view = root.gameObject.AddComponent<ZoneClearingView>();
         var so = new SerializedObject(view);
@@ -102,6 +104,21 @@ public static partial class SettlementSetup
         Debug.Log("[SettlementSetup] 밭·낚시터 분위기 연출 배치 완료");
     }
 
+    // 발밑 높이로 앞뒤 정렬 (여러 번 실행해도 하나만)
+    private static void AddGroundDepthSort(SpriteRenderer renderer, bool moves)
+    {
+        var sort = renderer.GetComponent<GroundDepthSort>();
+        if (sort == null)
+            sort = renderer.gameObject.AddComponent<GroundDepthSort>();
+        var so = new SerializedObject(sort);
+        so.FindProperty("_baseOrder").intValue = MineDepthBase;
+        so.FindProperty("_moves").boolValue = moves;
+        so.FindProperty("_renderer").objectReferenceValue = renderer;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        // 에디터 화면에서도 같은 순서로 보이게 (실행 중에는 GroundDepthSort가 정함)
+        renderer.sortingOrder = GroundDepthSort.OrderFor(MineDepthBase, renderer.transform.position.y);
+    }
+
     private static ClearingObstacleView BuildObstacle(Transform root, string id, ObstacleKind kind, Vector2 position, ItemDefinition reward,
         PlazaWalkableArea walkable)
     {
@@ -112,7 +129,7 @@ public static partial class SettlementSetup
         bool rock = kind == ObstacleKind.Rock;
         var sprite = rock ? LoadPropArt("Prop_Rock_0") : AssetDatabase.LoadAssetAtPath<Sprite>(PlazaTreeArtPath);
         var visual = CreateSprite("Visual", node, sprite, position, false);
-        visual.sortingOrder = MineObstacleOrder;
+        AddGroundDepthSort(visual, false);
         if (!rock)
             visual.transform.localScale = Vector3.one * MineTreeScale;
         var footprint = AddFootprint(node, rock ? RockFootprint : new Rect(-0.5f, -0.15f, 1.0f, 0.5f));

@@ -14,6 +14,9 @@ using UnityEngine;
 [DefaultExecutionOrder(50)]
 public class SettlementPlazaView : MonoBehaviour
 {
+    // 완성 순간 카메라가 현장으로 미끄러져 가는 시간 (별빛은 그 뒤에)
+    private const float CameraArriveSeconds = 0.6f;
+
     public static SettlementPlazaView Active { get; private set; }
 
     [Header("광장")]
@@ -146,13 +149,20 @@ public class SettlementPlazaView : MonoBehaviour
         }
     }
 
-    // 완성 순간 먼지가 펑 (집은 DevelopmentGate가 통 튀어나오게 함)
+    // 완성 순간: 먼지가 펑 (집은 DevelopmentGate가 통 튀어나오게 함), 카메라가 현장에 살짝 다가간 뒤 집 위로 별빛
+    // 완료 팝업은 이 순간을 본 뒤에 뜸 (SettlementPresenter가 CelebrationSeconds만큼 기다림)
     private void HandleRequestCompleted(BoardRequestDefinition request)
     {
         var site = request.Construction != null ? FindSite(request.Construction.ConstructionId) : null;
-        if (site != null)
-            site.PlayCompleteBurst();
+        if (site == null)
+            return;
+        site.PlayCompleteBurst(CameraArriveSeconds);
+        _camera.Celebrate((Vector2)site.transform.position + Vector2.up * 1.2f);
     }
+
+    /// <summary>이 부탁의 완성 순간을 광장에서 보여 주는지 (완료 팝업을 조금 늦게 띄우려고)</summary>
+    public bool CelebratesHere(BoardRequestDefinition request) =>
+        request.Construction != null && FindSite(request.Construction.ConstructionId) != null;
 
     // 건설 해달이 일하러 가는 모습이 보이도록 현장을 비춤
     private void HandleConstructionStarted(BoardRequestDefinition request)

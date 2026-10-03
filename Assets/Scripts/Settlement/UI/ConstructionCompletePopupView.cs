@@ -48,5 +48,6 @@ public class ConstructionCompletePopupView : MonoBehaviour
         }
         _messageText.text = message;
         _animator.Show();
+        PopupGlow.Play(_animator, _titleText.rectTransform);
     }
 }
