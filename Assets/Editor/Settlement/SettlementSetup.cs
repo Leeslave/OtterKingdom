@@ -27,6 +27,7 @@ public static partial class SettlementSetup
     private const string GoldPath = "Assets/Scriptable Obejects/Gold.asset";
     private const string GemPath = "Assets/Scriptable Obejects/Gem.asset";
     private const string MineZonePath = "Assets/Scriptable Obejects/Navigation/Zone_Mine.asset";
+    private const string FarmZonePath = "Assets/Scriptable Obejects/Navigation/Zone_Farm.asset";
     private const string PlazaPrefabFolder = "Assets/Prefabs/Plaza";
 
     // 왕국 단계 이름 (상단바 아래 칩)
@@ -35,13 +36,24 @@ public static partial class SettlementSetup
     // 옛 세이브에 부탁과 별도로 열어 줄 발전 (아직 부탁이 없는 낚시터)
     internal const string FishingDevelopment = "fishing_dock";
 
-    // (에셋, ID, 이름, 얼굴 아이콘, 광장 프리팹, 건설 해달, 처음 왔을 때 방명록)
+    // (에셋, ID, 이름, 얼굴 아이콘(Art/Settlement 또는 Art/Otter), 광장 프리팹, 건설 해달, 처음 왔을 때 방명록)
+    // 광부·농부: 광장 그림은 광산·밭에서 쓰는 그림 그대로 (광부 = SpecialistOtterSetup이 만드는 PlazaOtter_Miner, 농부 = 농부 모습의 PlazaOtter)
     private static readonly (string asset, string id, string name, string portrait, string prefab, bool builder, string arrival)[] Otters =
     {
         ("Otter_First", "otter_first", "몽실", "ICON_Otter_Snack", "PlazaOtter_Snack", false, "gb_first_arrival"),
         ("Otter_Painter", "otter_painter", "물감이", "ICON_Otter_Painter", "PlazaOtter_Painter", false, "gb_painter_arrival"),
         ("Otter_Sleepy", "otter_sleepy", "꾸벅이", "ICON_Otter_Sleepy", "PlazaOtter_Sleepy", false, "gb_sleepy_arrival"),
         ("Otter_Builder", "otter_builder", "뚝딱이", "ICON_Otter_Builder", null, true, "gb_builder_arrival"),
+        ("Otter_Miner", "otter_miner", "깡깡이", "ICON_Otter_Miner", "PlazaOtter_Miner", false, "gb_miner_arrival"),
+        ("Otter_Farmer", "otter_farmer", "새싹이", "ICON_Otter_Farmer", "PlazaOtter", false, "gb_farmer_arrival"),
+    };
+
+    // 전문 해달: (ID, 일할 지역 에셋, 배치하면 등록되는 도감 항목 에셋, 광장에서 배치 전에 하는 말)
+    private const string CollectionEntryFolder = "Assets/Scriptable Obejects/Collection/Entries";
+    private static readonly (string otter, string region, string entry, string assignLine)[] Specialists =
+    {
+        ("otter_miner", MineRegionPath, "Entry_OtterMiner", "광산 소식을 듣고 왔어요!\n광산에서 일하고 싶어요."),
+        ("otter_farmer", FarmRegionPath, "Entry_OtterFarmer", "밭이 생겼다고 들었어요!\n밭에서 일하고 싶어요."),
     };
 
     // 광장에서 눌렀을 때 하는 말, 정착 후보의 첫 이야기와 그걸 들으면 열리는 발전 (집 부탁의 조건)
@@ -54,6 +66,8 @@ public static partial class SettlementSetup
             "저도 여기 살고 싶어요!\n집을 지어 주실래요?", PainterIntroDevelopment) },
         { "otter_sleepy", (new[] { "하암… 졸려요…", "햇살이 따뜻해요…", "조금만 더 잘게요…" }, "", "") },
         { "otter_builder", (new[] { "뚝딱뚝딱!", "뭐든 지어 드릴게요!", "재료만 주면 뚝딱!" }, "", "") },
+        { "otter_miner", (new[] { "깡깡! 오늘도 반짝이는 돌을 찾아요.", "광산은 시원해서 좋아요.", "다이아몬드는 어디 숨었을까?" }, "", "") },
+        { "otter_farmer", (new[] { "새싹이 쑥쑥 자라요!", "당근이 제일 좋아요.", "흙냄새가 좋아요~" }, "", "") },
     };
 
     // (ID, 남긴 해달, 표시, 말)
@@ -67,7 +81,11 @@ public static partial class SettlementSetup
         ("gb_sleepy_arrival", "otter_sleepy", "방문", "햇살이 따뜻해서…\n낮잠 자기 딱 좋네요."),
         ("gb_builder_arrival", "otter_builder", "도착", "집 짓는 건 저한테 맡겨요!\n뚝딱뚝딱!"),
         ("gb_neighbor_settle", "otter_painter", "정착", "새 집 정말 고마워요!\n창문에 그림을 걸어 둘게요."),
-        ("gb_farmland", "otter_builder", "개간", "길을 열었어요!\n이제 밭에서 먹거리를 길러요."),
+        ("gb_farmland", "otter_first", "개간", "농경지를 일궜어요!\n이제 밭에서 먹거리를 길러요."),
+        ("gb_miner_arrival", "otter_miner", "방문", "광산이 열렸다는 소식을 듣고 왔어요.\n곡괭이는 제가 챙겨 왔어요!"),
+        ("gb_miner_assigned", "otter_miner", "배치", "오늘부터 광산은 제게 맡겨요!\n깡깡!"),
+        ("gb_farmer_arrival", "otter_farmer", "방문", "밭이 생겼다고 해서 달려왔어요.\n씨앗 냄새가 나요!"),
+        ("gb_farmer_assigned", "otter_farmer", "배치", "밭은 제가 돌볼게요.\n첫 당근을 같이 거둬요!"),
     };
 
     // (ID, 이름, 아이콘, 종류, 골드, 목재, 돌, 초, 건설 해달, 진행 제목, 진행 안내, 결과 발전)
@@ -82,37 +100,48 @@ public static partial class SettlementSetup
             "", "", "mine_cleared"),
         ("con_house_2", "새 이웃의 집", "ICON_House_Red", ConstructionTarget.House, 150, 18, 8, 30f, true,
             "새 이웃의 집 짓는 중", "다 지으면 새 이웃이 정착해요", "house_2"),
-        ("con_farmland", "농경지 개간", "ICON_Clearing", ConstructionTarget.Clearing, 200, 16, 10, 45f, true,
-            "농경지 개간 중", "완료하면 첫 밭이 열려요", "farmland"),
+        // 농경지: 밭에서 직접 치우고 주민이 개간(비용은 주민 작업 task_farm_till)하면 끝나는 부탁 (광산 길 열기와 같은 방식)
+        ("con_farmland", "농경지 개간", "ICON_Clearing", ConstructionTarget.Clearing, 0, 0, 0, 0f, false,
+            "", "", FarmOperationalDevelopment),
     };
 
-    // 개척 기획(2026-10-02): 첫 집 → 의자(왕국 Lv.2, 동굴 발견) → 광산 길 열기(직접 치움 → 주민 정비, Lv.3, 새 해달) → 새 이웃의 집 → 농경지
+    // 개척 기획(2026-10-02): 첫 집 → 의자(왕국 Lv.2, 동굴 발견) → 광산 길 열기(직접 치움 → 주민 정비, Lv.3, 광부 방문)
+    // → 광부 배치(물감이·뚝딱이 방문) → 새 이웃의 집 → 농경지(밭에서 직접 치움 → 주민 개간, 농부 방문) → 농부 배치
     // P1: 광산 길 열기는 나무·돌을 다 치운 뒤 주민 해달이 "광산 주변 정리"를 끝내야 완료 (SettlementSetup.Tasks)
-    // (ID, 순서, 제목, 설명, 아이콘, 부탁한 해달, 필요 발전, 필요 주민, 건설, 정착, 찾아옴(해달:상태), 단계, 완료 기록, 완료 문구, 왕국 레벨, 직접 치울 장소)
+    // 배치 부탁: 건설 없이, 광장에서 그 전문 해달과 대화해 배치하면 완료
+    // (ID, 순서, 제목, 설명, 아이콘, 부탁한 해달, 필요 발전, 필요 주민, 건설, 정착, 찾아옴(해달:상태), 단계, 완료 기록, 완료 문구, 왕국 레벨, 직접 치울 장소, 배치할 전문 해달)
     private static readonly (string id, int order, string title, string description, string icon, string requester,
         string requires, int residents, string construction, string[] settles, (string otter, ResidentState state)[] arrivals,
-        int stage, string entry, string message, int level, string zone)[] Requests =
+        int stage, string entry, string message, int level, string zone, string assign)[] Requests =
     {
         ("req_first_house", 0, "첫 번째 집 만들기", "몽실이가 머물 작은 집이 필요해요.\n목재와 돌로 지어 줘요.", "ICON_House_Blue",
             "otter_first", "", 0, "con_house_1", new[] { "otter_first" },
             new[] { ("otter_sleepy", ResidentState.Visitor) },
-            1, "gb_first_settle", "첫 주민이 정착했어요!", 0, ""),
+            1, "gb_first_settle", "첫 주민이 정착했어요!", 0, "", ""),
         ("req_chair", 1, "쉬어 갈 의자", "몽실이가 나무 그늘에서 쉴 의자를 갖고 싶대요.\n목재와 골드로 만들어 줘요.", "ICON_Chair",
             "otter_first", "house_1", 0, "con_chair", new string[0],
             new (string, ResidentState)[0],
-            -1, "gb_chair", "의자 완성! 몽실이가 숲 너머에서\n동굴을 발견했어요.", 2, ""),
+            -1, "gb_chair", "의자 완성! 몽실이가 숲 너머에서\n동굴을 발견했어요.", 2, "", ""),
         ("req_mine_path", 2, "광산 길 열기", "몽실이가 찾은 동굴은 광산이었어요!\n길을 막은 나무와 돌을 치워 줘요.", "ICON_MinePath",
             "otter_first", "chair", 0, "con_mine_path", new string[0],
+            new[] { ("otter_miner", ResidentState.SpecialNpc) },
+            -1, "gb_mine_open", "광산 정비가 끝났어요!\n소식을 듣고 광부 해달이 광장에 찾아왔어요.", 3, MineZonePath, ""),
+        ("req_assign_miner", 3, "광산에서 일할 친구", "광산 소식을 듣고 광부 해달 깡깡이가 찾아왔어요.\n광장에서 만나 광산에 배치해 주세요.", "ICON_Otter_Miner",
+            "otter_miner", MineOperationalDevelopment, 0, "", new string[0],
             new[] { ("otter_painter", ResidentState.SettlementCandidate), ("otter_builder", ResidentState.SpecialNpc) },
-            -1, "gb_mine_open", "광산 정비가 끝나 광산을 쓸 수 있어요!\n소식을 듣고 새 해달들이 찾아왔어요.", 3, MineZonePath),
-        ("req_neighbor_house", 3, "새 이웃의 집", "물감이가 이웃이 되고 싶대요.\n건설 해달과 집을 지어 줘요.", "ICON_House_Red",
+            -1, "gb_miner_assigned", "깡깡이가 광산에서 일하기 시작해요!\n소식을 듣고 새 해달들이 찾아왔어요.", 0, "", "otter_miner"),
+        ("req_neighbor_house", 4, "새 이웃의 집", "물감이가 이웃이 되고 싶대요.\n건설 해달과 집을 지어 줘요.", "ICON_House_Red",
             "otter_painter", PainterIntroDevelopment, 0, "con_house_2", new[] { "otter_painter", "otter_builder" },
             new (string, ResidentState)[0],
-            2, "gb_neighbor_settle", "새 이웃이 정착했어요!\n주민이 3명이 됐어요.", 0, ""),
-        ("req_farmland", 4, "먹거리를 길러요", "주민이 늘었어요.\n농경지를 개간해 밭을 만들어요.", "ICON_Clearing",
-            "otter_first", "house_2", 3, "con_farmland", new string[0],
+            2, "gb_neighbor_settle", "새 이웃이 정착했어요!\n주민이 늘었어요.", 0, "", ""),
+        ("req_farmland", 5, "먹거리를 길러요", "주민이 늘었어요.\n밭에 가서 잡목과 바위를 치우고\n주민과 함께 농경지를 개간해요.", "ICON_Clearing",
+            "otter_first", FarmDiscoverDevelopment, 3, "con_farmland", new string[0],
+            new[] { ("otter_farmer", ResidentState.SpecialNpc) },
+            3, "gb_farmland", "농경지 개간이 끝났어요!\n소식을 듣고 농부 해달이 광장에 찾아왔어요.", 0, FarmZonePath, ""),
+        ("req_assign_farmer", 6, "농사를 지을 해달이 필요해요", "광장으로 돌아가 새로 찾아온 농부 해달 새싹이를 만나 보세요.\n밭에 배치하면 농사를 시작해요.", "ICON_Otter_Farmer",
+            "otter_farmer", FarmOperationalDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
-            3, "gb_farmland", "농경지가 열렸어요!\n이제 밭에 갈 수 있어요.", 0, ""),
+            -1, "gb_farmer_assigned", "새싹이가 밭에서 일하기 시작해요!\n당근을 심어 첫 수확을 해 봐요.", 0, "", "otter_farmer"),
     };
 
     // 새 게임 시작 재료 = 첫 집 비용 (시안 1: 목재 8, 돌 5)
@@ -147,7 +176,7 @@ public static partial class SettlementSetup
             var so = new SerializedObject(otter);
             so.FindProperty("_otterId").stringValue = o.id;
             so.FindProperty("_displayName").stringValue = o.name;
-            so.FindProperty("_portrait").objectReferenceValue = LoadArt(o.portrait);
+            so.FindProperty("_portrait").objectReferenceValue = LoadPortrait(o.portrait);
             so.FindProperty("_plazaPrefab").objectReferenceValue = o.prefab != null
                 ? AssetDatabase.LoadAssetAtPath<GameObject>($"{PlazaPrefabFolder}/{o.prefab}.prefab")
                 : null;
@@ -206,11 +235,13 @@ public static partial class SettlementSetup
             so.FindProperty("_order").intValue = r.order;
             so.FindProperty("_title").stringValue = r.title;
             so.FindProperty("_description").stringValue = r.description;
-            so.FindProperty("_icon").objectReferenceValue = LoadArt(r.icon);
+            so.FindProperty("_icon").objectReferenceValue = LoadPortrait(r.icon);
             so.FindProperty("_requester").objectReferenceValue = otters[r.requester];
             so.FindProperty("_requiredDevelopment").stringValue = r.requires;
             so.FindProperty("_minResidents").intValue = r.residents;
-            so.FindProperty("_construction").objectReferenceValue = constructions[r.construction];
+            so.FindProperty("_construction").objectReferenceValue =
+                string.IsNullOrEmpty(r.construction) ? null : constructions[r.construction];
+            so.FindProperty("_assignSpecialist").objectReferenceValue = string.IsNullOrEmpty(r.assign) ? null : otters[r.assign];
 
             var settles = so.FindProperty("_settles");
             settles.arraySize = r.settles.Length;
@@ -260,9 +291,30 @@ public static partial class SettlementSetup
         configSo.FindProperty("_gatherCooldownSeconds").floatValue = 60f;
         CreateRegionData(configSo);
         configSo.ApplyModifiedPropertiesWithoutUndo();
+        LinkSpecialists(otters);
 
         AssetDatabase.SaveAssets();
     }
+
+    // 전문 해달 ↔ 일할 지역·도감 항목 (지역은 CreateRegionData가 만든 뒤에)
+    private static void LinkSpecialists(Dictionary<string, SettlementOtterDefinition> otters)
+    {
+        foreach (var s in Specialists)
+        {
+            var so = new SerializedObject(otters[s.otter]);
+            so.FindProperty("_workRegion").objectReferenceValue = AssetDatabase.LoadAssetAtPath<DevelopableRegionDefinition>(s.region);
+            var entry = AssetDatabase.LoadAssetAtPath<CollectionEntry>($"{CollectionEntryFolder}/{s.entry}.asset");
+            if (entry == null)
+                Debug.LogWarning($"[SettlementSetup] 도감 항목이 없습니다: {s.entry} (CollectionSetup.CreateData를 먼저 실행하세요)");
+            so.FindProperty("_collectionEntry").objectReferenceValue = entry;
+            so.FindProperty("_assignLine").stringValue = s.assignLine;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+    }
+
+    // 얼굴·부탁 그림: 정착 그림 폴더에 없으면 해달 그림 폴더 (광부·농부 아이콘)
+    private static Sprite LoadPortrait(string name) =>
+        File.Exists($"{ArtFolder}/{name}.png") ? LoadArt(name) : ImportSprite(OtterFolder, name);
 
     private static void AddItemAmount(SerializedProperty list, ItemDefinition item, int amount)
     {

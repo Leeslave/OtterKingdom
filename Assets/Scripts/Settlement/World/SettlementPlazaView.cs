@@ -5,7 +5,10 @@ using UnityEngine;
 /// <summary>
 /// 광장을 정착 진행에 맞춘다 (광장 씬에 하나).
 /// - 발전에 따라 집·벤치·잡목 등을 켜고 끔 (DevelopmentGate) → 걷기 영역 다시 계산
-/// - 정착 해달(첫 해달, 방문 해달, 정착 후보)을 광장에 내보냄 (재접속해도 한 마리씩)
+/// - 정착 해달(첫 해달, 방문 해달, 정착 후보, 배치를 기다리는 전문 해달)을 광장에 내보냄 (재접속해도 한 마리씩).
+///   처음 내보내는 해달은 광장 가장자리에서 걸어 들어오고, 이때가 그 해달을 "처음 만난" 순간 (SettlementManager.Meet)
+/// - 완료 팝업·레벨업이 떠 있는 동안에는 새 해달을 내보내지 않고 기다림 (팝업을 본 뒤에 찾아옴)
+/// - 배치한 전문 해달은 길 끝으로 걸어 나가 광장에서 빠짐 (그 뒤로는 일하는 곳에만 있음)
 /// - 건설 해달을 내보내고, 건설 중이면 현장으로 보내 일하게 함 (건설 해달이 필요 없는 첫 집은 부탁한 해달이 직접)
 /// - 정착 해달에 말풍선(탭하면 한마디, 정착 후보의 "!")을 붙임
 /// 기존 광장 코드(PlazaController 배회, A*, 깊이 정렬)는 그대로 쓰고 그 위에서 켜고 끄기만 한다.
@@ -53,8 +56,11 @@ public class SettlementPlazaView : MonoBehaviour
     // 주민 작업에 보낸 해달이 광장을 떠나기 시작한 시각 (길을 못 찾아도 이만큼 지나면 내보냄)
     private readonly Dictionary<string, float> _leavingSince = new Dictionary<string, float>();
     private const float LeaveLimitSeconds = 12f;
+    private readonly List<SettlementOtterDefinition> _justMet = new List<SettlementOtterDefinition>();
     private SettlementManager _manager;
     private bool _builderInitialized;
+    // 팝업이 떠 있어 새 해달을 아직 내보내지 않음
+    private bool _spawnDeferred;
 
     private void Awake()
     {
@@ -91,6 +97,11 @@ public class SettlementPlazaView : MonoBehaviour
     {
         if (_manager == null || !_manager.IsLoaded)
             return;
+        if (_spawnDeferred && !IsPopupShowing)
+        {
+            _spawnDeferred = false;
+            SpawnSettlementOtters(true);
+        }
         RemoveOttersAtWork();
         var job = _manager.Settlement.Job;
         var site = job != null ? FindSite(job.ConstructionId) : null;
@@ -179,9 +190,13 @@ public class SettlementPlazaView : MonoBehaviour
 
     private void HandleChanged()
     {
-        SpawnSettlementOtters(true);
+        // 새 해달은 다음 Update에서: 부탁 완료로 해달이 찾아오는 순간에는 완료 팝업이 아직 줄에 들어오기 전이라,
+        // 한 프레임 미뤄야 완료 팝업(지역 완료·새 해달 소식)과 레벨업을 다 본 뒤에 찾아옴
+        _spawnDeferred = true;
         UpdateConstruction();
     }
+
+    private static bool IsPopupShowing => SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy;
 
     private void ApplyAll(bool animate)
     {
@@ -211,29 +226,63 @@ public class SettlementPlazaView : MonoBehaviour
             return;
 
         var config = _manager.Config;
-        foreach (var otterId in _manager.Settlement.ResidentOrder)
+        var settlement = _manager.Settlement;
+        _justMet.Clear();
+        foreach (var otterId in settlement.ResidentOrder)
         {
             var otter = config.FindOtter(otterId);
             if (otter == null)
                 continue;
+            // 처음 보는 해달은 (다른 장소에 있는 동안 찾아왔어도) 광장 가장자리에서 걸어 들어옴.
+            // 아무도 만난 적 없는 새 게임의 첫 해달·옛 세이브는 모인 곳에서 시작 (첫 화면)
+            bool firstVisit = !settlement.HasMet(otterId) && settlement.MetOtters.Count > 0;
 
             if (otter.IsBuilder)
             {
-                ShowBuilder(arriving);
+                if (ShowBuilder(arriving || firstVisit))
+                    _justMet.Add(otter);
                 continue;
             }
             if (otter.PlazaPrefab == null || _spawned.ContainsKey(otterId))
                 continue;
-            // 주민 작업을 하러 다른 장소에 가 있음 (끝나면 광장 가장자리에서 돌아옴)
-            if (_manager.Settlement.GetWorkState(otterId) == ResidentWorkState.Working)
+            // 주민 작업을 하러 다른 장소에 가 있거나, 배치한 전문 해달 (일하는 곳에 있음)
+            if (IsAway(otter))
                 continue;
 
-            if (TryFindSpawnPoint(arriving, out Vector2 position))
-                Spawn(otter, position);
+            if (TryFindSpawnPoint(arriving || firstVisit, out Vector2 position) && Spawn(otter, position))
+                _justMet.Add(otter);
         }
+
+        // 다 내보낸 뒤에 만남을 기록. 기록이 바뀌면 OnChanged로 이 메서드가 다시 불려 목록을 비우므로 복사해서 돎
+        if (_justMet.Count == 0)
+            return;
+        var met = _justMet.ToArray();
+        _justMet.Clear();
+        SettlementOtterDefinition newSpecialist = null;
+        foreach (var otter in met)
+        {
+            if (otter.IsSpecialist && !settlement.HasMet(otter.OtterId) && newSpecialist == null)
+                newSpecialist = otter;
+            _manager.Meet(otter);
+        }
+        // 새로 찾아온 전문 해달 쪽을 비춤 (말을 걸어 배치하도록)
+        if (newSpecialist != null)
+            FocusOtter(newSpecialist.OtterId);
     }
 
-    private void Spawn(SettlementOtterDefinition otter, Vector2 position)
+    // 광장에 없는 해달: 주민 작업을 하러 갔거나, 배치되어 일하는 곳으로 간 전문 해달
+    private bool IsAway(SettlementOtterDefinition otter) =>
+        _manager.Settlement.GetWorkState(otter.OtterId) == ResidentWorkState.Working
+        || (otter.IsSpecialist && !_manager.IsVisitingPlaza(otter));
+
+    private bool IsAway(string otterId)
+    {
+        var otter = _manager.Config.FindOtter(otterId);
+        return otter != null && IsAway(otter);
+    }
+
+    /// <returns>내보냈으면 true</returns>
+    private bool Spawn(SettlementOtterDefinition otter, Vector2 position)
     {
         var instance = Instantiate(otter.PlazaPrefab, new Vector3(position.x, position.y, 0f), Quaternion.identity, _otterRoot);
         instance.name = $"Settlement_{otter.OtterId}";
@@ -242,11 +291,12 @@ public class SettlementPlazaView : MonoBehaviour
         {
             Debug.LogError($"[SettlementPlazaView] '{otter.name}'의 광장 프리팹에 OtterWanderAgent가 없습니다.", otter);
             Destroy(instance);
-            return;
+            return false;
         }
         agent.Initialize(_walkableArea, _plazaSettings);
         _spawned[otter.OtterId] = agent;
         _views[otter.OtterId] = AttachView(instance, otter);
+        return true;
     }
 
     private SettlementOtterView AttachView(GameObject target, SettlementOtterDefinition otter)
@@ -288,10 +338,11 @@ public class SettlementPlazaView : MonoBehaviour
         return _walkableArea.TryGetRandomPoint(out position);
     }
 
-    private void ShowBuilder(bool arriving)
+    /// <returns>이번에 처음 내보냈으면 true</returns>
+    private bool ShowBuilder(bool arriving)
     {
         if (_builderInitialized)
-            return;
+            return false;
         _builderInitialized = true;
 
         if (TryFindSpawnPoint(arriving, out Vector2 position))
@@ -302,6 +353,7 @@ public class SettlementPlazaView : MonoBehaviour
         var builderDef = _manager.Config.FindBuilder();
         if (builderDef != null && !_views.ContainsKey(builderDef.OtterId))
             _views[builderDef.OtterId] = AttachView(_builder.gameObject, builderDef);
+        return true;
     }
 
     #endregion
@@ -330,8 +382,8 @@ public class SettlementPlazaView : MonoBehaviour
             if (pair.Value == null)
                 continue;
             bool working = pair.Key == workerId;
-            // 주민 작업에 보낸 해달은 광장 가장자리 길로 걸어 나감 (도착하면 사라짐)
-            if (_manager.Settlement.GetWorkState(pair.Key) == ResidentWorkState.Working)
+            // 주민 작업에 보낸 해달·배치한 전문 해달은 광장 가장자리 길로 걸어 나감 (도착하면 사라짐)
+            if (IsAway(pair.Key))
                 pair.Value.AssignTask(_arrivalPoint.position, _arrivalPoint.position);
             else if (working)
                 pair.Value.AssignTask(jobSite.StandPoint, jobSite.LookPoint);
@@ -346,13 +398,13 @@ public class SettlementPlazaView : MonoBehaviour
         _builder.SetWorkSite(jobSite != null && byBuilder ? jobSite : null);
     }
 
-    // 주민 작업에 보낸 해달이 광장 가장자리에 닿으면 광장에서 내보냄 (길을 못 찾아 오래 걸려도 내보냄)
+    // 주민 작업에 보낸 해달·배치한 전문 해달이 광장 가장자리에 닿으면 광장에서 내보냄 (길을 못 찾아 오래 걸려도 내보냄)
     private void RemoveOttersAtWork()
     {
         _leftForWork.Clear();
         foreach (var pair in _spawned)
         {
-            if (pair.Value == null || _manager.Settlement.GetWorkState(pair.Key) != ResidentWorkState.Working)
+            if (pair.Value == null || !IsAway(pair.Key))
             {
                 _leavingSince.Remove(pair.Key);
                 continue;

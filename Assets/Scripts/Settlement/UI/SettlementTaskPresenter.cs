@@ -107,14 +107,34 @@ public class SettlementTaskPresenter : MonoBehaviour
         }
 
         int need = task.RequiredWorkers;
+        string missing = _manager.TaskMissingText(task);
+        string cost = CostText(task);
         string note;
         if (available < need)
-            note = _residents.Count < need ? $"주민이 {need}명 있어야 해요." : $"쉬고 있는 주민이 {need}명 있어야 해요.";
+            note = _residents.Count < need
+                ? $"주민이 {need}명 있어야 해요. 집을 지어 주민을 늘려요."
+                : $"쉬고 있는 주민이 {need}명 있어야 해요. 다른 작업이 끝나면 보낼 수 있어요.";
         else if (_selected.Count < need)
             note = $"보낼 해달을 {need - _selected.Count}명 더 골라요.";
+        else if (missing != null)
+            note = cost != null ? $"{cost}\n{missing}" : missing;
         else
-            note = "해달이 걸어가서 일을 시작해요.";
-        _popup.ShowAssign(task, _rows, note, _selected.Count == need);
+            note = cost != null ? $"{cost}\n해달이 걸어가서 일을 시작해요." : "해달이 걸어가서 일을 시작해요.";
+        _popup.ShowAssign(task, _rows, note, _selected.Count == need && missing == null);
+    }
+
+    // "비용: 골드 200 · 목재 16 · 돌 10" (비용이 없으면 null)
+    private string CostText(SettlementTaskDefinition task)
+    {
+        var parts = new List<string>();
+        if (task.RequiredGold > 0)
+            parts.Add($"골드 {task.RequiredGold:N0}");
+        foreach (var item in task.RequiredItems)
+        {
+            if (item != null && item.Item != null && item.Amount > 0)
+                parts.Add($"{item.Item.DisplayName} {item.Amount}");
+        }
+        return parts.Count > 0 ? "비용: " + string.Join(" · ", parts) : null;
     }
 
     private void ShowWorking(SettlementTaskDefinition task)
@@ -169,6 +189,11 @@ public class SettlementTaskPresenter : MonoBehaviour
             case TaskStartResult.WorkerBusy:
                 ShowAssign(task);
                 _popup.ShowFailed("다른 일을 하는 해달이 있어요.");
+                break;
+            case TaskStartResult.NotEnoughGold:
+            case TaskStartResult.NotEnoughItems:
+                ShowAssign(task);
+                _popup.ShowFailed(_manager.TaskMissingText(task) ?? "비용이 모자라요.");
                 break;
             default:
                 Refresh(task);

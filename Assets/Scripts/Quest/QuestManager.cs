@@ -109,12 +109,16 @@ public class QuestManager : MonoBehaviour
         if (_profileManager != null)
             _profileManager.OnLevelUp += HandleLevelUp;
 
-        // 밭·낚시터가 열리면 그 퀘스트가 나타남
+        // 밭·낚시터가 열리면 그 퀘스트가 나타남. 만난 해달·다 지은 건물은 정착 기록으로 다시 셈
         _settlementManager = SettlementManager.Instance;
         if (_settlementManager != null)
+        {
             _settlementManager.OnDevelopmentUnlocked += HandleDevelopmentUnlocked;
+            _settlementManager.OnChanged += RefreshRecordGoals;
+        }
 
         CheckDailyReset();
+        RefreshRecordGoals();
     }
 
     private void OnDisable()
@@ -132,7 +136,10 @@ public class QuestManager : MonoBehaviour
         if (_profileManager != null)
             _profileManager.OnLevelUp -= HandleLevelUp;
         if (_settlementManager != null)
+        {
             _settlementManager.OnDevelopmentUnlocked -= HandleDevelopmentUnlocked;
+            _settlementManager.OnChanged -= RefreshRecordGoals;
+        }
     }
 
     private void OnDestroy()
@@ -190,8 +197,12 @@ public class QuestManager : MonoBehaviour
             AddProgress(quest, QuestProgressRules.From(quest, placed));
     }
 
-    // 레벨이 올라 새 퀘스트가 열림 → 목록 갱신
-    private void HandleLevelUp(int level) => OnChanged?.Invoke();
+    // 레벨이 올라 새 퀘스트가 열림 → 앞서 만난 해달·지은 건물을 넣고 목록 갱신
+    private void HandleLevelUp(int level)
+    {
+        RefreshRecordGoals();
+        OnChanged?.Invoke();
+    }
 
     private void HandleDevelopmentUnlocked(string developmentId) => OnChanged?.Invoke();
 
@@ -199,6 +210,43 @@ public class QuestManager : MonoBehaviour
     {
         if (amount > 0 && IsAvailable(quest))
             Log.AddProgress(quest, amount);
+    }
+
+    private readonly List<ConstructionDefinition> _buildings = new List<ConstructionDefinition>();
+
+    /// <summary>
+    /// 기록으로 세는 퀘스트(새 해달 만나기, 건설 완료)를 정착 기록에서 다시 센다. 퀘스트가 열리기 전에 만난 해달·지은 건물도
+    /// 들어가고(소급), 같은 기록을 두 번 세지 않는다 (더하지 않고 맞춤). 받은 보상은 그대로라 다시 받을 수 없다.
+    /// 불러오기·레벨업·보상 받기·정착 변화 때 부른다
+    /// </summary>
+    public void RefreshRecordGoals()
+    {
+        var settlement = _settlementManager != null ? _settlementManager : SettlementManager.Instance;
+        if (settlement == null || !settlement.IsLoaded || Log == null)
+            return;
+
+        _buildings.Clear();
+        bool buildingsReady = false;
+        foreach (var quest in _database.Quests)
+        {
+            if (quest == null || !quest.CountsFromRecords || !IsAvailable(quest))
+                continue;
+            int value;
+            if (quest.GoalType == QuestGoalType.MeetOtter)
+            {
+                value = settlement.MetOtterCount;
+            }
+            else
+            {
+                if (!buildingsReady)
+                {
+                    settlement.CollectCompletedBuildings(_buildings);
+                    buildingsReady = true;
+                }
+                value = QuestProgressRules.CountBuildings(quest, _buildings);
+            }
+            Log.SetProgressAtLeast(quest, value);
+        }
     }
 
     #endregion
@@ -248,6 +296,8 @@ public class QuestManager : MonoBehaviour
         if (_profileManager != null && exp > 0)
             _profileManager.AddExp(exp);
 
+        // 앞 단계를 받아 열린 다음 단계가 이미 이룬 기록을 바로 반영
+        RefreshRecordGoals();
         return true;
     }
 
@@ -276,6 +326,7 @@ public class QuestManager : MonoBehaviour
     {
         QuestSaveConverter.Read(saved, Log);
         CheckDailyReset();
+        RefreshRecordGoals();
         OnChanged?.Invoke();
     }
 

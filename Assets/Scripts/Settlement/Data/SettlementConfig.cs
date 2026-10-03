@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 정착 진행(P0: 빈 광장 → 첫 집 → 건설 해달 → 농경지 개간 → 밭 해금, P1: 개간 지역 · 주민 작업)에 쓰는 데이터 묶음.
+/// 정착 진행(P0: 빈 광장 → 첫 집 → 건설 해달 → 농경지 개간 → 밭 해금, P1: 개간 지역 · 주민 작업 · 전문 해달 배치)에 쓰는 데이터 묶음.
 /// </summary>
 [CreateAssetMenu(fileName = "SettlementConfig", menuName = "Game Data/Settlement/Config")]
 public class SettlementConfig : ScriptableObject
@@ -141,6 +141,32 @@ public class SettlementConfig : ScriptableObject
                 if (t == task)
                     return region;
             }
+        }
+        return null;
+    }
+
+    /// <summary>이 지역에서 일할 전문 해달 (없으면 null)</summary>
+    public SettlementOtterDefinition FindSpecialist(DevelopableRegionDefinition region)
+    {
+        if (region == null)
+            return null;
+        foreach (var otter in _otters)
+        {
+            if (otter != null && otter.WorkRegion == region)
+                return otter;
+        }
+        return null;
+    }
+
+    /// <summary>장소 ID(예: Mine)의 개간 지역 (없으면 null)</summary>
+    public DevelopableRegionDefinition FindRegionByZoneId(string zoneId)
+    {
+        if (string.IsNullOrEmpty(zoneId))
+            return null;
+        foreach (var region in _regions)
+        {
+            if (region != null && region.Zone != null && region.Zone.ZoneId == zoneId)
+                return region;
         }
         return null;
     }

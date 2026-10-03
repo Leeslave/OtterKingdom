@@ -20,10 +20,10 @@ MonoBehaviour:
   _requiredLevel: 3
   _prerequisite: {fileID: 0}
   _icon: {fileID: 21300000, guid: ab9ca150b50f0a748ae2419bcadb71f3, type: 3}
-  _goalType: 4
+  _goalType: 10
   _goal: 1
   _itemFilter: {fileID: 0}
-  _collectionTab: {fileID: 11400000, guid: e57bb4e159ee155448fc7c02082cbb58, type: 2}
+  _collectionTab: {fileID: 0}
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 200
   _expReward: 120

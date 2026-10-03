@@ -181,6 +181,8 @@ public class FarmerOtterController : MonoBehaviour
     {
         if (isHarvesting) return;
         if (GameManager.Instance == null || GameManager.Instance.FarmService == null) return;
+        // Placed but the farm's first-time guide isn't done yet: no harvesting.
+        if (!GameManager.CanProduceIn(GameManager.FarmZoneId)) return;
 
         if (!FindNearestAwaitingHarvestSlot(out int plotIndex, out int slotIndex)) return;
 

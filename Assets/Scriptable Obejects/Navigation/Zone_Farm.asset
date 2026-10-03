@@ -19,7 +19,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 6f94875465a48ea498a43b677de0b768, type: 3}
   _sceneName: Farm
   _isAvailable: 1
-  _requiredDevelopment: farmland
-  _developmentLockedSubtitle: "\uB18D\uACBD\uC9C0\uB97C \uAC1C\uAC04\uD558\uBA74
+  _requiredDevelopment: house_2
+  _developmentLockedSubtitle: "\uC0C8 \uC774\uC6C3\uC758 \uC9D1\uC744 \uC9C0\uC73C\uBA74
     \uC5F4\uB824\uC694"
   _sortOrder: 1

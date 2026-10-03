@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// 개간 지역 하나의 진행 규칙: 발견 → 플레이어가 길을 막은 것을 직접 치움 → 주민 해달이 후속 정비(작업) → 운영.
-/// 운영되면 그 장소의 기능(광산 채굴 등)과 꾸미기 구역이 열린다.
+/// 운영되면 꾸미기 구역이 열리고, 그 지역의 전문 해달(광부·농부)이 찾아온다. 생산은 그 해달을 배치해 일하기 시작해야 한다.
 /// 지도상의 위치·그림·연결선은 넣지 않는다 (지도는 나중에 따로 이 지역을 regionId로 가리킴).
 /// 단계는 발전(development)으로 정해지므로 세이브는 SettlementSaveData의 발전·작업에 들어 있다.
 /// </summary>
@@ -29,6 +29,9 @@ public class DevelopableRegionDefinition : ScriptableObject
     [Tooltip("운영 = 이 발전이 열림 (예: mine_cleared). 직접 치우는 부탁이 있으면 그 부탁을 끝내서 열림")]
     [SerializeField] private string _operationalDevelopment;
 
+    [Tooltip("전문 해달이 일하기 시작하면 열리는 발전 (예: mine_working). 퀘스트가 생산을 할 수 있는지 볼 때 씀. 비우면 없음")]
+    [SerializeField] private string _productionDevelopment;
+
     [Header("후속 정비")]
     [Tooltip("플레이어가 다 치운 뒤 주민 해달이 할 작업 (모두 끝내면 운영)")]
     [SerializeField] private List<SettlementTaskDefinition> _preparationTasks = new List<SettlementTaskDefinition>();
@@ -46,6 +49,7 @@ public class DevelopableRegionDefinition : ScriptableObject
     public string DiscoverDevelopment => _discoverDevelopment;
     public string PlayerClearDevelopment => _playerClearDevelopment;
     public string OperationalDevelopment => _operationalDevelopment;
+    public string ProductionDevelopment => _productionDevelopment;
     public IReadOnlyList<SettlementTaskDefinition> PreparationTasks => _preparationTasks;
     public DecorBoardDefinition DecorBoard => _decorBoard;
     public DecorRegionDefinition DecorRegion => _decorRegion;

@@ -60,6 +60,18 @@ public class QuestDefinition : ScriptableObject
     [SerializeField]
     private CollectionTab _collectionTab;
 
+    [Tooltip("수확·낚시·채굴만: 이 아이템만 센다 (예: 당근). 비우면 분류 필터만 봄")]
+    [SerializeField]
+    private ItemDefinition _item;
+
+    [Tooltip("건설 완료만: 이 건물들만 센다 (예: 집 두 채). 비우면 개간을 뺀 모든 건물")]
+    [SerializeField]
+    private ConstructionDefinition[] _constructions;
+
+    [Tooltip("건설 완료만: 건설 해달이 참여한 공사만 센다")]
+    [SerializeField]
+    private bool _builderOnly;
+
     [Header("보상")]
     [Tooltip("보상 재화 (골드)")]
     [SerializeField]
@@ -89,6 +101,13 @@ public class QuestDefinition : ScriptableObject
     public int Goal => Mathf.Max(1, _goal);
     public ItemCategory ItemFilter => _itemFilter;
     public CollectionTab CollectionTab => _collectionTab;
+    public ItemDefinition Item => _item;
+    public System.Collections.Generic.IReadOnlyList<ConstructionDefinition> Constructions =>
+        _constructions ?? System.Array.Empty<ConstructionDefinition>();
+    public bool BuilderOnly => _builderOnly;
+
+    /// <summary>진행이 알림으로 쌓이지 않고 저장된 기록(만난 해달, 다 지은 건물)으로 매번 다시 세는지</summary>
+    public bool CountsFromRecords => _goalType == QuestGoalType.CompleteConstruction || _goalType == QuestGoalType.MeetOtter;
     public Currency RewardCurrency => _rewardCurrency;
     public int RewardAmount => _rewardAmount;
     public QuestKind Kind => _kind;

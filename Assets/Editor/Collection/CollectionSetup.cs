@@ -50,6 +50,9 @@ public static class CollectionSetup
             "밭을 돌보는 부지런한 친구", "작은 새싹을 보면 그냥 지나치지 못해요.", "당근"),
         ("Entry_OtterFisher", "otter_fisher", "Tab_Otter", "낚시꾼 해달", "", "ICON_Otter_Fisher", "SIL_Otter",
             "낚시를 좋아하는 느긋한 친구", "파도 소리를 들으며 찌가 움직이길 기다려요.", "고등어"),
+        // 광부 해달: 광장에서 만나 광산에 배치하면 등록 (농부 해달도 같음)
+        ("Entry_OtterMiner", "otter_miner", "Tab_Otter", "광부 해달", "", "ICON_Otter_Miner", "SIL_Otter",
+            "광산을 지키는 듬직한 친구", "곡괭이 소리만 들어도 신이 나요.", "다이아몬드"),
     };
 
     #region 데이터

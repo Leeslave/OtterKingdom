@@ -45,10 +45,15 @@ public class SettlementQuestTests
     [Test]
     public void LockedZoneQuests_NeedTheirDevelopment()
     {
-        Assert.AreEqual(SettlementQuestGate.FarmDevelopment, SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Harvest)));
+        // 수확·채굴은 농부·광부가 일하기 시작해야 (밭이 열린 것만으로는 수확할 수 없음)
+        Assert.AreEqual(SettlementQuestGate.FarmProductionDevelopment, SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Harvest)));
         Object.DestroyImmediate(_quest);
         Assert.AreEqual(SettlementQuestGate.FishingDevelopment, SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Catch)));
         Object.DestroyImmediate(_quest);
-        Assert.IsNull(SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Mine)), "광산은 처음부터");
+        Assert.AreEqual(SettlementQuestGate.MineProductionDevelopment, SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Mine)));
+        Object.DestroyImmediate(_quest);
+        Assert.IsNull(SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.MeetOtter)), "새 해달 만나기는 언제든");
+        Object.DestroyImmediate(_quest);
+        Assert.IsNull(SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.CompleteConstruction)), "건설은 언제든");
     }
 }

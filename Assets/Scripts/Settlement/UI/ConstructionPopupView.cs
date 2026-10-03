@@ -53,10 +53,11 @@ public class ConstructionPopupView : MonoBehaviour
         _speakerName.text = speaker != null ? speaker.DisplayName : string.Empty;
         _speakerLine.text = speakerLine;
 
+        // 배치 부탁처럼 건설이 없는 부탁은 부탁 그림·제목
         var construction = request.Construction;
-        _icon.sprite = construction.Icon != null ? construction.Icon : request.Icon;
+        _icon.sprite = construction != null && construction.Icon != null ? construction.Icon : request.Icon;
         _icon.enabled = _icon.sprite != null;
-        _nameText.text = construction.DisplayName;
+        _nameText.text = construction != null ? construction.DisplayName : request.Title;
         BindCosts(costs);
 
         _noteText.text = note;

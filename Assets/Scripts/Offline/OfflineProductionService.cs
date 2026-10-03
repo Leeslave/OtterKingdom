@@ -67,14 +67,17 @@ public class OfflineProductionService
         return count;
     }
 
-    public OfflineReport Run(SaveData save, double elapsedSec, IOfflineBag bag)
+    // farmAllowed / miningAllowed: whether that zone's specialist (farmer /
+    // miner) is working. Until then the zone produces nothing offline either.
+    public OfflineReport Run(SaveData save, double elapsedSec, IOfflineBag bag,
+        bool farmAllowed = true, bool miningAllowed = true)
     {
         var report = new OfflineReport { ElapsedSec = elapsedSec };
         if (elapsedSec <= 0) return report;
 
-        if (IsFarmUnlocked(save)) RunFarm(save, elapsedSec, bag, report);
+        if (farmAllowed && IsFarmUnlocked(save)) RunFarm(save, elapsedSec, bag, report);
         if (IsFishingUnlocked(save)) RunFishing(save, elapsedSec, bag, report);
-        if (IsMiningUnlocked(save)) RunMining(save, elapsedSec, bag, report);
+        if (miningAllowed && IsMiningUnlocked(save)) RunMining(save, elapsedSec, bag, report);
         RunOtterVisits(save, elapsedSec, report);
         return report;
     }

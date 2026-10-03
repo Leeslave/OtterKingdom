@@ -22,12 +22,15 @@ public enum TaskStartResult
     NotAvailable,      // 잠김 / 이미 하는 중 / 끝남
     WrongWorkerCount,  // 필요한 수만큼 고르지 않음
     WorkerBusy,        // 주민이 아니거나 다른 일을 하는 중
+    NotEnoughGold,     // 작업 비용 (농경지 개간)
+    NotEnoughItems,
 }
 
 /// <summary>
 /// 정착 진행(Settlement)의 주인. 전역 UI(GlobalUI) 루트에 붙어 씬을 넘어 유지된다.
 /// 게시판 부탁의 건설 비용(골드·재료)을 받고, 시간이 지나면 완료 처리하고, 장소 해금(밭 등)을 알려 준다.
 /// 개간 지역(P1): 플레이어가 길을 다 치우면 주민 해달을 작업에 보내고, 작업이 끝나면 지역을 운영(부탁 완료·꾸미기 구역 해금)한다.
+/// 전문 해달: 운영되면 그 지역의 전문 해달(광부·농부)이 광장에 찾아오고, 플레이어가 배치한 뒤 그 장소의 안내를 끝내면 생산이 시작된다.
 /// 기존 시스템(밭·가방·재화·퀘스트) 앞에서 진행만 제어하는 상위 레이어 — 그 내부 로직은 건드리지 않는다.
 /// - 세이브: GameManager가 LoadFromSave / WriteToSave를 호출. 부탁을 끝내면 SaveRequested로 바로 저장을 부탁한다
 /// </summary>
@@ -77,6 +80,12 @@ public class SettlementManager : MonoBehaviour
 
     /// <summary>작업 화면을 열어 달라는 부탁 (광산의 정비 표지판, 게시판). 작업 화면이 듣는다</summary>
     public event Action<SettlementTaskDefinition> OnTaskRequested;
+
+    /// <summary>광장에서 해달을 처음 만났을 때 (새 해달 만나기 퀘스트). 인자: 해달 ID</summary>
+    public event Action<string> OnOtterMet;
+
+    /// <summary>전문 해달을 일할 곳에 배치했을 때 (광장의 그 해달이 길 끝으로 걸어 나감)</summary>
+    public event Action<SettlementOtterDefinition> OnSpecialistAssigned;
 
     // 일할 해달이 도착하지 못해도 이만큼 지나면 공사를 시작함 (길이 막히는 등)
     private const float WorkerWaitLimitSeconds = 25f;
@@ -190,15 +199,19 @@ public class SettlementManager : MonoBehaviour
     public bool HasEnoughGold(ConstructionDefinition construction) =>
         construction.RequiredGold <= 0 || GoldBalance >= construction.RequiredGold;
 
-    public bool HasEnoughItems(ConstructionDefinition construction)
+    public bool HasEnoughItems(ConstructionDefinition construction) => HasEnoughItems(construction.RequiredItems);
+
+    public bool HasEnoughItems(IReadOnlyList<ItemAmount> items)
     {
-        foreach (var cost in construction.RequiredItems)
+        foreach (var cost in items)
         {
             if (cost != null && cost.Item != null && ItemCount(cost.Item) < cost.Amount)
                 return false;
         }
         return true;
     }
+
+    public bool HasEnoughGold(int gold) => gold <= 0 || GoldBalance >= gold;
 
     #endregion
 
@@ -252,13 +265,15 @@ public class SettlementManager : MonoBehaviour
     }
 
     // 확인을 다 한 뒤에만 부름: 골드 → 재료 순서로 낸다
-    private void PayCost(ConstructionDefinition construction)
+    private void PayCost(ConstructionDefinition construction) => PayCost(construction.RequiredGold, construction.RequiredItems);
+
+    private void PayCost(int gold, IReadOnlyList<ItemAmount> items)
     {
-        if (construction.RequiredGold > 0)
-            CurrencyManager.Instance.TrySpend(_config.GoldCurrency, construction.RequiredGold, TransactionSource.Construction);
+        if (gold > 0)
+            CurrencyManager.Instance.TrySpend(_config.GoldCurrency, gold, TransactionSource.Construction);
 
         var bag = InventoryManager.Instance.Inventory;
-        foreach (var cost in construction.RequiredItems)
+        foreach (var cost in items)
         {
             if (cost != null && cost.Item != null && cost.Amount > 0)
                 bag.TryRemove(cost.Item, cost.Amount, ItemChangeReason.Construction);
@@ -485,7 +500,7 @@ public class SettlementManager : MonoBehaviour
         OnTaskRequested?.Invoke(task);
     }
 
-    /// <summary>작업에 보낼 수 있는 주민 해달 후보 (온 순서대로, 건설 해달 제외). 지금 바쁜 해달도 들어 있음 → CanAssign으로 확인</summary>
+    /// <summary>작업에 보낼 수 있는 주민 해달 후보 (온 순서대로, 건설 해달·전문 해달 제외). 지금 바쁜 해달도 들어 있음 → CanAssign으로 확인</summary>
     public void CollectResidents(List<SettlementOtterDefinition> result)
     {
         if (result == null)
@@ -494,7 +509,8 @@ public class SettlementManager : MonoBehaviour
         foreach (var otterId in Settlement.ResidentOrder)
         {
             var otter = _config.FindOtter(otterId);
-            if (otter != null && !otter.IsBuilder && Settlement.TryGetResidentState(otterId, out var state) && state == ResidentState.Resident)
+            if (otter != null && !otter.IsBuilder && !otter.IsSpecialist
+                && Settlement.TryGetResidentState(otterId, out var state) && state == ResidentState.Resident)
                 result.Add(otter);
         }
     }
@@ -511,7 +527,7 @@ public class SettlementManager : MonoBehaviour
             && request.Requester != null && request.Requester.OtterId == otter.OtterId;
     }
 
-    /// <summary>주민 해달을 보내 작업을 시작한다. 끝나는 시각을 저장해 게임을 꺼 둔 동안에도 진행된다</summary>
+    /// <summary>주민 해달을 보내 작업을 시작한다. 비용이 있으면 이때 내고, 끝나는 시각을 저장해 게임을 꺼 둔 동안에도 진행된다</summary>
     public TaskStartResult TryStartTask(SettlementTaskDefinition task, IReadOnlyList<SettlementOtterDefinition> workers)
     {
         if (task == null)
@@ -531,7 +547,12 @@ public class SettlementManager : MonoBehaviour
                 return TaskStartResult.WorkerBusy;
             ids.Add(worker.OtterId);
         }
+        if (!HasEnoughGold(task.RequiredGold))
+            return TaskStartResult.NotEnoughGold;
+        if (!HasEnoughItems(task.RequiredItems))
+            return TaskStartResult.NotEnoughItems;
 
+        PayCost(task.RequiredGold, task.RequiredItems);
         long now = NowTicks;
         Settlement.StartTask(task.TaskId, ids, now, now + TimeSpan.FromSeconds(task.DurationSeconds).Ticks);
         OnTaskStarted?.Invoke(task);
@@ -618,6 +639,239 @@ public class SettlementManager : MonoBehaviour
         decor.UnlockDirectly(region.DecorBoard, region.DecorRegion.RegionId);
     }
 
+    /// <summary>작업 비용 중 모자란 것 한 줄 (넉넉하거나 비용이 없으면 null)</summary>
+    public string TaskMissingText(SettlementTaskDefinition task)
+    {
+        if (task == null)
+            throw new ArgumentNullException(nameof(task));
+        int goldShort = task.RequiredGold - GoldBalance;
+        if (task.RequiredGold > 0 && goldShort > 0)
+            return $"골드가 {goldShort:N0} 모자라요.";
+        foreach (var cost in task.RequiredItems)
+        {
+            if (cost == null || cost.Item == null)
+                continue;
+            int itemShort = cost.Amount - ItemCount(cost.Item);
+            if (itemShort > 0)
+                return $"{cost.Item.DisplayName} {itemShort}개가 더 필요해요.";
+        }
+        return null;
+    }
+
+    #endregion
+
+    #region 전문 해달 (광부·농부)
+
+    public SettlementOtterDefinition FindSpecialist(DevelopableRegionDefinition region) => _config.FindSpecialist(region);
+
+    /// <summary>찾아와서 배치를 기다리는 전문 해달 (온 순서대로 첫 번째. 없으면 null)</summary>
+    public SettlementOtterDefinition VisitingSpecialist
+    {
+        get
+        {
+            foreach (var otterId in Settlement.ResidentOrder)
+            {
+                var otter = _config.FindOtter(otterId);
+                if (otter != null && IsVisitingPlaza(otter))
+                    return otter;
+            }
+            return null;
+        }
+    }
+
+    public SpecialistState GetSpecialistState(SettlementOtterDefinition otter) =>
+        otter != null ? Settlement.GetSpecialistState(otter.OtterId) : SpecialistState.NotArrived;
+
+    /// <summary>광장에 나와야 하는 전문 해달인지 (찾아왔고 아직 배치 전)</summary>
+    public bool IsVisitingPlaza(SettlementOtterDefinition otter) =>
+        otter != null && SettlementRegionRules.IsVisitingPlaza(otter, Settlement);
+
+    /// <summary>광장에서 말을 걸면 배치할 수 있는지</summary>
+    public bool CanAssignSpecialist(SettlementOtterDefinition otter) =>
+        otter != null && SettlementRegionRules.CanAssign(otter, Settlement);
+
+    /// <summary>
+    /// 이 장소(ZoneId, 예: Mine)에서 생산할 수 있는지. 개간 지역이 없는 장소(낚시터)는 늘 됨.
+    /// 정착 진행을 아직 불러오지 않았으면 false (불러온 뒤 다시 봄)
+    /// </summary>
+    public bool CanProduceIn(string zoneId)
+    {
+        if (!IsLoaded)
+            return false;
+        var region = _config.FindRegionByZoneId(zoneId);
+        return region == null || SettlementRegionRules.CanProduce(region, _config.FindSpecialist(region), Settlement);
+    }
+
+    /// <summary>이 장소의 지역은 운영 중인데 전문 해달을 아직 배치하지 않았으면 그 해달 (아니면 null)</summary>
+    public SettlementOtterDefinition WaitingSpecialist(ZoneDefinition zone)
+    {
+        var region = zone != null ? _config.FindRegion(zone) : null;
+        if (region == null)
+            return null;
+        var specialist = _config.FindSpecialist(region);
+        return SettlementRegionRules.IsWaitingForSpecialist(region, specialist, Settlement) ? specialist : null;
+    }
+
+    /// <summary>배치했지만 아직 일하는 곳에 가 보지 않은 전문 해달 (안내 띠 "광산에 가서 일을 시작해요". 없으면 null)</summary>
+    public SettlementOtterDefinition AssignedNotWorking
+    {
+        get
+        {
+            foreach (var otter in _config.Otters)
+            {
+                if (otter != null && otter.IsSpecialist && GetSpecialistState(otter) == SpecialistState.Assigned)
+                    return otter;
+            }
+            return null;
+        }
+    }
+
+    /// <summary>이 장소에 배치되었지만 아직 일을 시작하지 않은 전문 해달 (생산 안내를 기다림. 없으면 null)</summary>
+    public SettlementOtterDefinition AssignedSpecialist(string zoneId)
+    {
+        var region = _config.FindRegionByZoneId(zoneId);
+        var specialist = region != null ? _config.FindSpecialist(region) : null;
+        return specialist != null && GetSpecialistState(specialist) == SpecialistState.Assigned ? specialist : null;
+    }
+
+    /// <summary>
+    /// 광장에서 해달을 처음 만남 (광장이 그 해달을 처음 내보낼 때). 전문 해달은 광장에 와 있는 처지가 된다.
+    /// 같은 해달은 한 번만 센다 (재방문·씬 재진입)
+    /// </summary>
+    public void Meet(SettlementOtterDefinition otter)
+    {
+        if (otter == null)
+            throw new ArgumentNullException(nameof(otter));
+        var before = Settlement.GetSpecialistState(otter.OtterId);
+        bool first = SettlementRegionRules.Meet(otter, Settlement);
+        if (!first && Settlement.GetSpecialistState(otter.OtterId) == before)
+            return;
+        if (first)
+            OnOtterMet?.Invoke(otter.OtterId);
+        SaveRequested?.Invoke();
+    }
+
+    /// <summary>새 해달 만나기 퀘스트가 세는 수: 광장에서 만난 해달 (처음부터 함께한 첫 해달은 뺌)</summary>
+    public int MetOtterCount
+    {
+        get
+        {
+            int count = 0;
+            string first = _config.FirstOtter != null ? _config.FirstOtter.OtterId : null;
+            foreach (var otterId in Settlement.MetOtters)
+            {
+                if (otterId != first)
+                    count++;
+            }
+            return count;
+        }
+    }
+
+    /// <summary>
+    /// 광장에 와 있는 전문 해달을 일할 지역에 배치 (광장에서 해달과 대화). 배치는 바로 저장되고,
+    /// 그 해달의 배치 부탁이 끝나며, 도감에 등록된다. 여러 번 눌러도 한 번만 된다
+    /// </summary>
+    /// <returns>이번에 배치했으면 true</returns>
+    public bool TryAssignSpecialist(SettlementOtterDefinition otter)
+    {
+        if (otter == null)
+            throw new ArgumentNullException(nameof(otter));
+        if (!SettlementRegionRules.Assign(otter, Settlement))
+            return false;
+
+        if (otter.CollectionEntry != null && CollectionManager.Instance != null)
+            CollectionManager.Instance.Register(otter.CollectionEntry.EntryId);
+        OnSpecialistAssigned?.Invoke(otter);
+
+        bool completed = false;
+        foreach (var request in _config.Requests)
+        {
+            if (request != null && request.AssignSpecialist == otter && !Settlement.IsCompleted(request.RequestId))
+            {
+                // Complete가 저장까지 부탁함
+                Complete(request);
+                completed = true;
+            }
+        }
+        if (!completed)
+            SaveRequested?.Invoke();
+        return true;
+    }
+
+    /// <summary>이 장소(ZoneId)에 배치된 전문 해달이 일하기 시작함 (그 장소의 생산 안내를 끝냈을 때)</summary>
+    /// <returns>이번에 시작했으면 true</returns>
+    public bool StartSpecialistWork(string zoneId)
+    {
+        var specialist = AssignedSpecialist(zoneId);
+        if (specialist == null || !SettlementRegionRules.StartWork(specialist, Settlement, NowTicks))
+            return false;
+        SaveRequested?.Invoke();
+        return true;
+    }
+
+    /// <summary>
+    /// 배치한 전문 해달을 도감에 등록 (옛 세이브를 옮긴 경우 등). 도감은 정착보다 늦게 불러오므로
+    /// GameManager가 도감을 불러온 뒤에 부른다. 이미 등록했으면 그대로
+    /// </summary>
+    public void SyncSpecialistCollection()
+    {
+        var collection = CollectionManager.Instance;
+        if (collection == null || !IsLoaded)
+            return;
+        foreach (var otter in _config.Otters)
+        {
+            if (otter != null && otter.CollectionEntry != null && GetSpecialistState(otter) >= SpecialistState.Assigned
+                && collection.Collection.GetState(otter.CollectionEntry) != CollectionState.Collected)
+                collection.Register(otter.CollectionEntry.EntryId);
+        }
+    }
+
+    // 전문 해달이 생기기 전 세이브: 이미 운영 중인 지역은 그 해달이 일하는 중으로 (부탁은 조용히 끝냄, 팝업·보상 없음)
+    private void MigrateSpecialists()
+    {
+        foreach (var otter in _config.Otters)
+        {
+            if (otter == null || !otter.IsSpecialist)
+                continue;
+            bool assignDone = false;
+            foreach (var request in _config.Requests)
+            {
+                if (request != null && request.AssignSpecialist == otter && Settlement.IsCompleted(request.RequestId))
+                    assignDone = true;
+            }
+            if (!SettlementRegionRules.MigrateLegacy(otter, assignDone, Settlement, NowTicks))
+                continue;
+            foreach (var request in _config.Requests)
+            {
+                if (request != null && request.AssignSpecialist == otter)
+                    SettlementRules.ApplyCompletion(request, Settlement);
+            }
+            Debug.Log($"[SettlementManager] 옛 세이브: '{otter.DisplayName}'을(를) 이미 운영 중인 {otter.WorkRegion.DisplayName}에서 일하는 중으로 옮겼습니다.");
+        }
+    }
+
+    #endregion
+
+    #region 건설 기록 (퀘스트)
+
+    /// <summary>
+    /// 다 지은 건물 (끝낸 부탁의 건설 중 개간이 아닌 것). 퀘스트가 이 기록으로 다시 센다.
+    /// 끝낸 부탁 = 저장된 고유 기록이라 같은 건물을 두 번 세지 않는다
+    /// </summary>
+    public void CollectCompletedBuildings(List<ConstructionDefinition> result)
+    {
+        if (result == null)
+            throw new ArgumentNullException(nameof(result));
+        result.Clear();
+        foreach (var request in _config.Requests)
+        {
+            var construction = request != null ? request.Construction : null;
+            if (construction != null && construction.TargetType != ConstructionTarget.Clearing
+                && Settlement.IsCompleted(request.RequestId) && !result.Contains(construction))
+                result.Add(construction);
+        }
+    }
+
     #endregion
 
     #region 자리를 비운 동안
@@ -684,6 +938,9 @@ public class SettlementManager : MonoBehaviour
             var current = CurrentRequest;
             if (current != null)
                 return current.Title;
+            var visiting = VisitingSpecialist;
+            if (visiting != null)
+                return $"광장에서 {visiting.DisplayName} 만나기";
             var intro = PendingIntroOtter;
             return intro != null ? $"{intro.DisplayName}의 이야기 듣기" : null;
         }
@@ -719,8 +976,9 @@ public class SettlementManager : MonoBehaviour
             GrantStartingItems();
         }
 
+        // 지역·작업·전문 해달을 먼저 맞춘 뒤 (옛 세이브 옮기기) 꺼 둔 동안 끝난 건설·주민 작업을 처리
+        MigrateSpecialists();
         IsLoaded = true;
-        // 꺼 둔 동안 끝난 건설·주민 작업
         if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
             FinishJob();
         FinishDueTasks();

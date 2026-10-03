@@ -22,8 +22,8 @@ public class OtterArrival
 }
 
 /// <summary>
-/// 게시판 "해달의 부탁" 하나 = 세계를 바꾸는 진행 (집 짓기, 개간). 반복 보상인 퀘스트와는 따로 간다.
-/// 조건(앞선 발전, 주민 수)이 되면 나타나고, 건설을 끝내면 완료된다.
+/// 게시판 "해달의 부탁" 하나 = 세계를 바꾸는 진행 (집 짓기, 개간, 전문 해달 배치). 반복 보상인 퀘스트와는 따로 간다.
+/// 조건(앞선 발전, 주민 수)이 되면 나타나고, 건설을 끝내거나 전문 해달을 배치하면 완료된다.
 /// </summary>
 [CreateAssetMenu(fileName = "BoardRequest", menuName = "Game Data/Settlement/Board Request")]
 public class BoardRequestDefinition : ScriptableObject
@@ -59,6 +59,9 @@ public class BoardRequestDefinition : ScriptableObject
     [Tooltip("직접 치우러 갈 장소 (설정하면 [가 보기]로 그 장소에 가고, 그곳의 장애물을 다 치우면 완료. 건설은 비용 0·바로 끝남으로)")]
     [SerializeField] private ZoneDefinition _clearZone;
 
+    [Tooltip("배치 부탁: 이 전문 해달을 일할 곳에 배치하면 완료 (광장에서 해달과 대화해 배치). 설정하면 건설은 비움")]
+    [SerializeField] private SettlementOtterDefinition _assignSpecialist;
+
     [Header("완료하면")]
     [Tooltip("주민이 되는 해달")]
     [SerializeField] private List<SettlementOtterDefinition> _settles = new List<SettlementOtterDefinition>();
@@ -88,6 +91,7 @@ public class BoardRequestDefinition : ScriptableObject
     public int MinResidents => _minResidents;
     public ConstructionDefinition Construction => _construction;
     public ZoneDefinition ClearZone => _clearZone;
+    public SettlementOtterDefinition AssignSpecialist => _assignSpecialist;
     public IReadOnlyList<SettlementOtterDefinition> Settles => _settles;
     public IReadOnlyList<OtterArrival> Arrivals => _arrivals;
     public int StageOnComplete => _stageOnComplete;
@@ -99,7 +103,9 @@ public class BoardRequestDefinition : ScriptableObject
     {
         if (string.IsNullOrWhiteSpace(_requestId))
             Debug.LogWarning($"[{name}] RequestId가 비어 있습니다.", this);
-        if (_construction == null)
-            Debug.LogWarning($"[{name}] 건설이 비어 있습니다.", this);
+        if (_construction == null && _assignSpecialist == null)
+            Debug.LogWarning($"[{name}] 건설과 배치할 전문 해달이 모두 비어 있습니다.", this);
+        if (_assignSpecialist != null && !_assignSpecialist.IsSpecialist)
+            Debug.LogWarning($"[{name}] '{_assignSpecialist.name}'에 일할 지역이 없어 배치할 수 없습니다.", this);
     }
 }

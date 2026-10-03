@@ -51,10 +51,10 @@ public class ClearingObstacleView : MonoBehaviour
     [SerializeField] private PlazaNodeFx _fx;
 
     [Header("길 막기")]
-    [Tooltip("해달이 못 지나가는 발자국 (치우면 꺼짐)")]
+    [Tooltip("해달이 못 지나가는 발자국 (치우면 꺼짐. 걷기 영역이 없는 장소는 비움)")]
     [SerializeField] private GameObject _footprint;
 
-    [Tooltip("발자국이 꺼지면 다시 계산할 걷기 영역")]
+    [Tooltip("발자국이 꺼지면 다시 계산할 걷기 영역 (없는 장소는 비움)")]
     [SerializeField] private PlazaWalkableArea _walkableArea;
 
     [Header("처음 안내 (선택)")]
@@ -68,6 +68,9 @@ public class ClearingObstacleView : MonoBehaviour
 
     /// <summary>ZoneClearingView가 정함 (부탁이 열려 있을 때만 치울 수 있음)</summary>
     public bool Interactable { get; set; }
+
+    /// <summary>ZoneClearingView가 정함: 장소 개척이 이미 끝났으면 (옛 세이브 등 하나하나 치운 기록이 없어도) 치운 것으로 보임</summary>
+    public bool ZoneCleared { get; set; }
 
     private int _done;
     private float _shakeTimer;
@@ -95,14 +98,15 @@ public class ClearingObstacleView : MonoBehaviour
             return;
         }
 
-        bool cleared = manager.IsObstacleCleared(_obstacleId);
+        bool cleared = ZoneCleared || manager.IsObstacleCleared(_obstacleId);
         if (cleared && _hint != null)
             _hint.Allowed = false;
-        if (cleared && _footprint.activeSelf)
+        if (cleared && _footprint != null && _footprint.activeSelf)
         {
-            // 치운 자리는 다시 걸을 수 있음
+            // 치운 자리는 다시 걸을 수 있음 (걷기 영역이 없는 장소(밭)는 발자국만 끔)
             _footprint.SetActive(false);
-            _walkableArea.Rebuild();
+            if (_walkableArea != null)
+                _walkableArea.Rebuild();
         }
         if (_renderer.enabled == cleared)
         {

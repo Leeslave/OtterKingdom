@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
-/// 주민 작업 하나 (예: 광산 주변 정리). 정착한 해달을 필요한 수만큼 보내면 시간이 지나 끝난다.
+/// 주민 작업 하나 (예: 광산 주변 정리, 농경지 개간). 정착한 해달을 필요한 수만큼 보내면 시간이 지나 끝난다. 비용이 있으면 시작할 때 낸다.
 /// 게시판 부탁(메인 진행) · 퀘스트(반복 보상)와 따로 간다: 작업 = 주민의 노동력을 쓰는 후속 정비.
 /// 앞선 발전이 열려야 할 수 있고, 끝나면 결과 발전이 열린다 (그걸로 지역이 운영되거나 다음 작업이 열림).
 /// </summary>
@@ -30,6 +31,13 @@ public class SettlementTaskDefinition : ScriptableObject
     [Min(0f)]
     [SerializeField] private float _durationSeconds = 30f;
 
+    [Header("비용 (시작할 때 냄)")]
+    [Tooltip("골드 (재화는 SettlementConfig의 골드). 0이면 없음")]
+    [Min(0)]
+    [SerializeField] private int _requiredGold;
+
+    [SerializeField] private List<ItemAmount> _requiredItems = new List<ItemAmount>();
+
     [Header("조건과 결과")]
     [Tooltip("이 발전이 열려야 할 수 있음 (비우면 처음부터)")]
     [SerializeField] private string _requiredDevelopment;
@@ -43,6 +51,8 @@ public class SettlementTaskDefinition : ScriptableObject
     public string CompletionMessage => _completionMessage;
     public int RequiredWorkers => Mathf.Max(1, _requiredWorkers);
     public float DurationSeconds => Mathf.Max(0f, _durationSeconds);
+    public int RequiredGold => Mathf.Max(0, _requiredGold);
+    public IReadOnlyList<ItemAmount> RequiredItems => _requiredItems;
     public string RequiredDevelopment => _requiredDevelopment;
     public string ResultDevelopment => _resultDevelopment;
 

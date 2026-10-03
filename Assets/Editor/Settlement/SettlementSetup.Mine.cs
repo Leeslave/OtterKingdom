@@ -5,7 +5,7 @@ using static CollectionSetup;
 
 /// <summary>
 /// 광산 씬에 개척을 배치한다: 입구 앞을 막은 나무·돌(ClearingObstacleView)과 ZoneClearingView.
-/// 다 치우기 전에는 광산 입구를 숨긴다. 여러 번 실행해도 결과가 같음.
+/// 다 치우고 광부 해달을 배치하기 전에는 광산 입구와 광부를 숨긴다. 여러 번 실행해도 결과가 같음.
 /// </summary>
 public static partial class SettlementSetup
 {
@@ -66,7 +66,8 @@ public static partial class SettlementSetup
         var so = new SerializedObject(view);
         so.FindProperty("_zone").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ZoneDefinition>(MineZonePath);
         SetList(so.FindProperty("_obstacles"), obstacles);
-        SetList(so.FindProperty("_hiddenUntilCleared"), new System.Collections.Generic.List<GameObject> { entrance.gameObject });
+        // 광부는 광장에서 만나 배치한 뒤에만 광산에 있음
+        SetList(so.FindProperty("_hiddenUntilCleared"), new System.Collections.Generic.List<GameObject> { entrance.gameObject, miner.gameObject });
         so.ApplyModifiedPropertiesWithoutUndo();
 
         EditorSceneManager.MarkSceneDirty(scene);
@@ -121,8 +122,9 @@ public static partial class SettlementSetup
         renderer.sortingOrder = GroundDepthSort.OrderFor(MineDepthBase, renderer.transform.position.y);
     }
 
+    // walkable이 없는 장소(밭)는 발자국 없이 (해달이 웨이포인트로만 걸음)
     private static ClearingObstacleView BuildObstacle(Transform root, string id, ObstacleKind kind, Vector2 position, ItemDefinition reward,
-        PlazaWalkableArea walkable)
+        PlazaWalkableArea walkable, string hintId = MineHintObstacle)
     {
         var node = new GameObject($"Obstacle_{id}").transform;
         node.SetParent(root, false);
@@ -134,7 +136,7 @@ public static partial class SettlementSetup
         AddGroundDepthSort(visual, false);
         if (!rock)
             visual.transform.localScale = Vector3.one * MineTreeScale;
-        var footprint = AddFootprint(node, rock ? RockFootprint : new Rect(-0.5f, -0.15f, 1.0f, 0.5f));
+        var footprint = walkable != null ? AddFootprint(node, rock ? RockFootprint : new Rect(-0.5f, -0.15f, 1.0f, 0.5f)) : null;
 
         var tap = node.gameObject.AddComponent<CircleCollider2D>();
         tap.radius = rock ? 0.85f : 1.1f;
@@ -158,7 +160,7 @@ public static partial class SettlementSetup
         so.FindProperty("_footprint").objectReferenceValue = footprint;
         so.FindProperty("_walkableArea").objectReferenceValue = walkable;
         // 화면 가운데 바위 하나에만 처음 안내
-        if (id == MineHintObstacle)
+        if (id == hintId)
             so.FindProperty("_hint").objectReferenceValue = CreateTapHint(node, "hint_obstacle", "톡톡 눌러 치워요!", new Vector3(0f, 1.35f, 0f));
         so.ApplyModifiedPropertiesWithoutUndo();
         return view;
