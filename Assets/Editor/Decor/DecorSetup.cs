@@ -27,7 +27,7 @@ public static class DecorSetup
     // (에셋, 아이템 ID, 이름, 설명, 아이콘, 놀이 반응, 동시 인원)
     private static readonly (string asset, string id, string name, string description, string icon, DecorPlayStyle style, int players)[] Toys =
     {
-        ("SoccerBall", "toy_soccerball", "축구공", "해달들이 통통 차며 노는 공이에요.", "ICON_Toy_SoccerBall", DecorPlayStyle.Bounce, 2),
+        ("SoccerBall", "toy_soccerball", "축구공", "해달들이 통통 차며 노는 공이에요.", "ICON_Toy_SoccerBall", DecorPlayStyle.Bounce, 1),
         ("Puzzle", "toy_puzzle", "퍼즐", "조각을 맞추며 시간을 보내요.", "ICON_Toy_Puzzle", DecorPlayStyle.Wiggle, 1),
     };
 

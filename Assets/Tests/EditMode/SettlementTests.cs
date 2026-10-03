@@ -260,6 +260,35 @@ public class SettlementTests
     }
 
     [Test]
+    public void Job_WaitsForWorker_ThenRunsFromArrival()
+    {
+        var settlement = new Settlement();
+        settlement.StartJob("req_house_2", "con_house_2", 100, 400, waitingForWorker: true);
+
+        var job = settlement.Job;
+        Assert.IsTrue(job.WaitingForWorker);
+        Assert.AreEqual(0f, job.Progress(10_000), "도착 전에는 시간이 흐르지 않음");
+        Assert.IsFalse(job.IsDue(10_000));
+        Assert.AreEqual(300, job.Remaining(10_000).Ticks, "남은 시간 = 걸리는 시간 그대로");
+
+        Assert.IsTrue(settlement.BeginJobWork(1_000));
+        job = settlement.Job;
+        Assert.IsFalse(job.WaitingForWorker);
+        Assert.AreEqual(1_000, job.StartUtcTicks, "도착한 때부터 잼");
+        Assert.AreEqual(1_300, job.EndUtcTicks);
+        Assert.IsFalse(settlement.BeginJobWork(2_000), "이미 시작했으면 그대로");
+
+        // 세이브를 거쳐도 기다리는 중인지 남음
+        settlement.FinishJob();
+        settlement.StartJob("req_house_2", "con_house_2", 0, 300, waitingForWorker: true);
+        var saved = new SettlementSaveData();
+        settlement.Write(saved);
+        var loaded = new Settlement();
+        loaded.Load(JsonUtility.FromJson<SettlementSaveData>(JsonUtility.ToJson(saved)));
+        Assert.IsTrue(loaded.Job.WaitingForWorker);
+    }
+
+    [Test]
     public void EmptySave_FromOldVersion_LoadsAsFreshState()
     {
         var loaded = new Settlement();

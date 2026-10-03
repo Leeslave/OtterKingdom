@@ -25,6 +25,8 @@ public class ConstructionJobSaveData
     public string constructionId;
     public long startUtcTicks;
     public long endUtcTicks;
+    // 일할 해달이 아직 가는 중 (옛 세이브는 없음 = 이미 시작)
+    public bool waitingForWorker;
 }
 
 /// <summary>주운 나뭇가지가 다시 생기는 시각</summary>

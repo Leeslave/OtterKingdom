@@ -768,7 +768,8 @@ public class GameManager : MonoBehaviour
         // A zone that still has to be cleared (the mine before its path is
         // open) teaches its real controls only after the player opens it.
         while (ZoneClearingView.IsWaiting) yield return null;
-        while (gameUI.IsModalOpen) yield return null;
+        // ...and after the "path opened" and level-up popups, not on top of them.
+        while (gameUI.IsModalOpen || SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy) yield return null;
 
         TutorialOverlay.Play(ZoneTutorials.For(CurrentZoneId, gameUI), CompleteZoneTutorial);
     }

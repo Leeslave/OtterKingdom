@@ -102,10 +102,10 @@ public static partial class SettlementSetup
         var stone = AssetDatabase.LoadAssetAtPath<ItemDefinition>(StoneItemPath);
         var gem = AssetDatabase.LoadAssetAtPath<Currency>(GemPath);
         for (int i = 0; i < RockPixels.Length; i++)
-            BuildRockNode(root, $"rock_{i + 1:00}", ToWorld(RockPixels[i]), stone, gem);
+            BuildRockNode(root, $"rock_{i + 1:00}", ToWorld(RockPixels[i]), stone, gem, i == 0);
         var apple = AssetDatabase.LoadAssetAtPath<ItemDefinition>(AppleItemPath);
         for (int i = 0; i < TreePixels.Length; i++)
-            BuildTreeNode(root, $"tree_{i + 1:00}", ToWorld(TreePixels[i]), apple);
+            BuildTreeNode(root, $"tree_{i + 1:00}", ToWorld(TreePixels[i]), apple, i == 0);
 
         var siteViews = new List<ConstructionSiteView>();
         foreach (var h in HouseSites)
@@ -141,17 +141,9 @@ public static partial class SettlementSetup
             AddGate(fairy.gameObject, "farmland", true);
 
         // 걷기 영역이 게시판·잡목 발자국도 보게
-        var areaSo = new SerializedObject(walkable);
-        var roots = areaSo.FindProperty("polygonRoots");
-        bool hasRoot = false;
-        for (int i = 0; i < roots.arraySize; i++)
-            hasRoot |= roots.GetArrayElementAtIndex(i).objectReferenceValue == root;
-        if (!hasRoot)
-        {
-            roots.arraySize++;
-            roots.GetArrayElementAtIndex(roots.arraySize - 1).objectReferenceValue = root;
-        }
-        areaSo.ApplyModifiedPropertiesWithoutUndo();
+        AddPolygonRoot(walkable, root);
+        BuildAmbience(root, PlazaDepth.FlatPropOrder + 1, 3, OverlayOrder - 10, 2, OverlayOrder - 20, 6);
+        BuildNightLights(root, props);
 
         // 광장 해달은 정착 진행이 내보냄 (아무나 5마리 → 첫 해달 한 마리부터)
         var settings = AssetDatabase.LoadAssetAtPath<PlazaSettings>(PlazaSettingsPath);
@@ -273,7 +265,28 @@ public static partial class SettlementSetup
         return renderer;
     }
 
-    private static void AddFootprint(Transform parent, Rect localRect)
+    /// <summary>걷기 영역이 이 루트 아래의 막힌 발자국도 보게 (지난 배치에서 지운 루트가 남긴 빈 칸은 정리)</summary>
+    private static void AddPolygonRoot(PlazaWalkableArea walkable, Transform root)
+    {
+        var areaSo = new SerializedObject(walkable);
+        var roots = areaSo.FindProperty("polygonRoots");
+        for (int i = roots.arraySize - 1; i >= 0; i--)
+        {
+            if (roots.GetArrayElementAtIndex(i).objectReferenceValue == null)
+                roots.DeleteArrayElementAtIndex(i);
+        }
+        bool hasRoot = false;
+        for (int i = 0; i < roots.arraySize; i++)
+            hasRoot |= roots.GetArrayElementAtIndex(i).objectReferenceValue == root;
+        if (!hasRoot)
+        {
+            roots.arraySize++;
+            roots.GetArrayElementAtIndex(roots.arraySize - 1).objectReferenceValue = root;
+        }
+        areaSo.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static GameObject AddFootprint(Transform parent, Rect localRect)
     {
         var go = new GameObject("Footprint");
         go.transform.SetParent(parent, false);
@@ -287,6 +300,7 @@ public static partial class SettlementSetup
         for (int i = 0; i < corners.Length; i++)
             points.GetArrayElementAtIndex(i).vector2Value = corners[i];
         so.ApplyModifiedPropertiesWithoutUndo();
+        return go;
     }
 
     private static void AddDecorBlock(Transform parent, Vector2 localCenter, Vector2 size)
@@ -347,14 +361,16 @@ public static partial class SettlementSetup
     }
 
     // 여러 번 쳐서 깨는 바위 (금 간 그림 3단계 + 자갈, 약점 반짝이, 드물게 조개)
-    private static void BuildRockNode(Transform root, string pointId, Vector3 position, ItemDefinition stone, Currency gem)
+    private static void BuildRockNode(Transform root, string pointId, Vector3 position, ItemDefinition stone, Currency gem, bool hint)
     {
         var node = new GameObject($"Rock_{pointId}").transform;
         node.SetParent(root, false);
         node.position = position;
 
         var visual = CreateSprite("Visual", node, LoadPropArt("Prop_Rock_0"), position, true);
-        AddFootprint(node, new Rect(-0.75f, -0.05f, 1.5f, 0.45f));
+        // 바위가 바닥을 차지하는 만큼 (해달이 올라서지 않게). 깨져 자갈만 남아도 그대로 (다시 솟을 자리)
+        AddFootprint(node, RockFootprint);
+        var timer = CreateRegrowTimer(node, position + new Vector3(0f, 0.75f, 0f));
 
         var tap = node.gameObject.AddComponent<CircleCollider2D>();
         tap.radius = 0.85f;
@@ -374,22 +390,29 @@ public static partial class SettlementSetup
             cracks.GetArrayElementAtIndex(i).objectReferenceValue = LoadPropArt($"Prop_Rock_{i}");
         so.FindProperty("_rubbleSprite").objectReferenceValue = LoadPropArt("Prop_Rock_Rubble");
         so.FindProperty("_chipSprite").objectReferenceValue = LoadPropArt("FX_StoneChip");
+        so.FindProperty("_timer").objectReferenceValue = timer;
+        SetRegrowSprites(so.FindProperty("_timerSprites"));
         so.FindProperty("_renderer").objectReferenceValue = visual;
         so.FindProperty("_weakSpot").objectReferenceValue = weakSpot;
         so.FindProperty("_tapArea").objectReferenceValue = tap;
         so.FindProperty("_fx").objectReferenceValue = CreateNodeFx(node);
+        if (hint)
+            so.FindProperty("_hint").objectReferenceValue = CreateTapHint(node, "hint_rock", "톡톡 쳐서 돌을 캐요!", new Vector3(0f, 1.35f, 0f));
+        so.FindProperty("_weakSpotHint").objectReferenceValue =
+            CreateTapHint(node, "hint_weak_spot", "반짝이는 곳을 치면 3배!", new Vector3(0f, 0.45f, 0f), weakSpot.transform);
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     // 흔들면 나뭇가지·사과가 떨어지는 사과나무 (다 흔들면 잎이 성긴 그림)
-    private static void BuildTreeNode(Transform root, string pointId, Vector3 position, ItemDefinition fruit)
+    private static void BuildTreeNode(Transform root, string pointId, Vector3 position, ItemDefinition fruit, bool hint)
     {
         var node = new GameObject($"Tree_{pointId}").transform;
         node.SetParent(root, false);
         node.position = position;
 
         var visual = CreateSprite("Visual", node, LoadPropArt("Prop_AppleTree_0"), position, true);
-        AddFootprint(node, new Rect(-0.4f, -0.1f, 0.8f, 0.4f));
+        AddFootprint(node, TreeFootprint);
+        var timer = CreateRegrowTimer(node, position + new Vector3(0.85f, 0.45f, 0f));
 
         var tap = node.gameObject.AddComponent<CircleCollider2D>();
         tap.radius = 1.4f;
@@ -403,10 +426,178 @@ public static partial class SettlementSetup
         so.FindProperty("_restSprite").objectReferenceValue = LoadPropArt("Prop_AppleTree_1");
         so.FindProperty("_branchSprite").objectReferenceValue = LoadPropArt("Prop_Branches");
         so.FindProperty("_leafSprite").objectReferenceValue = LoadPropArt("FX_Leaf");
+        so.FindProperty("_timer").objectReferenceValue = timer;
+        SetRegrowSprites(so.FindProperty("_timerSprites"));
         so.FindProperty("_renderer").objectReferenceValue = visual;
         so.FindProperty("_tapArea").objectReferenceValue = tap;
         so.FindProperty("_fx").objectReferenceValue = CreateNodeFx(node);
+        if (hint)
+            so.FindProperty("_hint").objectReferenceValue = CreateTapHint(node, "hint_tree", "흔들면 나뭇가지가 떨어져요!", new Vector3(0f, 2.5f, 0f));
         so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private const string WindShaderPath = "Assets/Art/Shaders/SpriteWindSway.shader";
+    private const string WindMaterialPath = "Assets/Art/Shaders/SpriteWindSway.mat";
+
+    // 바람 셰이더 재질 (없으면 만듦)
+    private static Material WindMaterial()
+    {
+        var material = AssetDatabase.LoadAssetAtPath<Material>(WindMaterialPath);
+        if (material != null)
+            return material;
+        var shader = AssetDatabase.LoadAssetAtPath<Shader>(WindShaderPath);
+        if (shader == null)
+        {
+            Debug.LogError($"[SettlementSetup] 바람 셰이더가 없습니다: {WindShaderPath}");
+            return null;
+        }
+        material = new Material(shader);
+        AssetDatabase.CreateAsset(material, WindMaterialPath);
+        return material;
+    }
+
+    // 분위기 연출: 발밑 그림자·살랑임·나비·구름 그림자 (AmbienceDirector가 실행 중에 붙이고 만듦)
+    private static void BuildAmbience(Transform root, int shadowOrder, int butterflies, int butterflyOrder, int clouds, int cloudOrder, int fireflies)
+    {
+        var go = new GameObject("Ambience");
+        go.transform.SetParent(root, false);
+        var view = go.AddComponent<AmbienceDirector>();
+        var so = new SerializedObject(view);
+        so.FindProperty("_shadowSprite").objectReferenceValue = LoadPropArt("FX_Shadow");
+        so.FindProperty("_shadowOrder").intValue = shadowOrder;
+        so.FindProperty("_windMaterial").objectReferenceValue = WindMaterial();
+        var frames = so.FindProperty("_butterflyFrames");
+        frames.arraySize = 2;
+        frames.GetArrayElementAtIndex(0).objectReferenceValue = LoadPropArt("FX_Butterfly_0");
+        frames.GetArrayElementAtIndex(1).objectReferenceValue = LoadPropArt("FX_Butterfly_1");
+        so.FindProperty("_butterflyCount").intValue = butterflies;
+        so.FindProperty("_butterflyOrder").intValue = butterflyOrder;
+        so.FindProperty("_fireflySprite").objectReferenceValue = LoadPropArt("FX_Firefly");
+        so.FindProperty("_glowMaterial").objectReferenceValue = GlowMaterial();
+        so.FindProperty("_fireflyCount").intValue = fireflies;
+        so.FindProperty("_fireflyOrder").intValue = butterflyOrder + 1;
+        so.FindProperty("_cloudSprite").objectReferenceValue = LoadPropArt("FX_CloudShadow");
+        so.FindProperty("_cloudCount").intValue = clouds;
+        so.FindProperty("_cloudOrder").intValue = cloudOrder;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        var lighting = go.AddComponent<TimeOfDayLighting>();
+        var lightingSo = new SerializedObject(lighting);
+        lightingSo.FindProperty("_litMaterial").objectReferenceValue =
+            AssetDatabase.LoadAssetAtPath<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
+        lightingSo.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    // 조명을 받지 않는 기본 스프라이트 재질 (밤 불빛·반딧불이 어둠 속에서도 빛나게)
+    private static Material GlowMaterial() =>
+        AssetDatabase.LoadAssetAtPath<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat");
+
+    // 밤 불빛: 집 창문·가로등 유리 그림(night_glow.py) + 주변을 비추는 점 조명. 소품이 보일 때만 켜짐
+    private static readonly (string prop, string art, float lightX, float lightY, float radius)[] NightLights =
+    {
+        // 조명 위치는 소품 그림 영역의 비율 (왼쪽 아래 0,0)
+        ("House_Blue", "Night_House_Blue", 0.55f, 0.35f, 3.2f),
+        ("House_Red", "Night_House_Red", 0.55f, 0.35f, 3.2f),
+        ("Lamp", "Night_Lamp", 0.2f, 0.55f, 2.6f),
+    };
+
+    private static void BuildNightLights(Transform root, Transform props)
+    {
+        var parent = new GameObject("NightLights").transform;
+        parent.SetParent(root, false);
+        foreach (var n in NightLights)
+        {
+            foreach (Transform prop in props)
+            {
+                if (!prop.name.StartsWith(n.prop + "_"))
+                    continue;
+                var propRenderer = prop.GetComponent<SpriteRenderer>();
+                var sprite = ImportStageSprite(n.art, propRenderer.sprite);
+                if (sprite == null)
+                    continue;
+
+                var go = new GameObject($"NightGlow_{prop.name}");
+                go.transform.SetParent(parent, false);
+                go.transform.position = prop.position;
+                go.transform.localScale = prop.lossyScale;
+                var glow = go.AddComponent<SpriteRenderer>();
+                glow.sprite = sprite;
+                glow.sharedMaterial = GlowMaterial();
+                glow.sortingOrder = propRenderer.sortingOrder + 1;
+                glow.color = new Color(1f, 1f, 1f, 0f);
+
+                var bounds = propRenderer.bounds;
+                var lightGo = new GameObject("Light");
+                lightGo.transform.SetParent(go.transform, false);
+                lightGo.transform.position = new Vector3(bounds.min.x + bounds.size.x * n.lightX, bounds.min.y + bounds.size.y * n.lightY, 0f);
+                var light = lightGo.AddComponent<UnityEngine.Rendering.Universal.Light2D>();
+                light.lightType = UnityEngine.Rendering.Universal.Light2D.LightType.Point;
+                light.pointLightOuterRadius = n.radius;
+                light.pointLightInnerRadius = n.radius * 0.15f;
+                light.color = new Color(1f, 0.8f, 0.48f);
+                light.intensity = 0f;
+                light.targetSortingLayers = SortingLayer.layers.Select(l => l.id).ToArray();
+
+                var view = go.AddComponent<NightGlow>();
+                var so = new SerializedObject(view);
+                so.FindProperty("_glow").objectReferenceValue = glow;
+                so.FindProperty("_light").objectReferenceValue = light;
+                so.FindProperty("_followActive").objectReferenceValue = prop.gameObject;
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
+        }
+    }
+
+    // 바위·나무가 바닥을 차지하는 만큼 (발 위치 기준, 해달이 올라서거나 그늘 밑을 지나가지 않게)
+    private static readonly Rect RockFootprint = new Rect(-0.9f, -0.15f, 1.8f, 0.8f);
+    private static readonly Rect TreeFootprint = new Rect(-0.8f, -0.15f, 1.6f, 0.7f);
+
+    // 다시 생기기까지 작은 시계 (쉬는 동안만 켜짐)
+    private static SpriteRenderer CreateRegrowTimer(Transform node, Vector3 position)
+    {
+        var timer = CreateSprite("RegrowTimer", node, LoadPropArt("FX_Regrow_0"), position, false);
+        timer.sortingOrder = OverlayOrder - 3;
+        timer.gameObject.SetActive(false);
+        return timer;
+    }
+
+    private static void SetRegrowSprites(SerializedProperty list)
+    {
+        list.arraySize = 8;
+        for (int i = 0; i < 8; i++)
+            list.GetArrayElementAtIndex(i).objectReferenceValue = LoadPropArt($"FX_Regrow_{i}");
+    }
+
+    // 처음 한 번 보이는 안내 말풍선 (해달 말풍선 그림 + 글자). follow가 있으면 그 대상을 따라다님 (약점 반짝이)
+    private static TapHintView CreateTapHint(Transform parent, string flag, string text, Vector3 offset, Transform follow = null)
+    {
+        var go = new GameObject("TapHint");
+        go.transform.SetParent(parent, false);
+
+        var bubble = new GameObject("Bubble");
+        bubble.transform.SetParent(go.transform, false);
+        bubble.transform.localPosition = offset;
+        bubble.transform.localScale = Vector3.one * 0.85f;
+        var sprite = bubble.AddComponent<SpriteRenderer>();
+        sprite.sprite = LoadPropArt("UI_Bubble_Speech");
+        sprite.sortingOrder = OverlayOrder;
+
+        var label = CreateWorldText("Text", bubble.transform, new Vector3(0f, 1.05f, 0f), text);
+        label.outlineWidth = 0f;
+        label.fontSize = 3f;
+        label.enableAutoSizing = true;
+        label.fontSizeMin = 2f;
+        label.fontSizeMax = 3f;
+        label.rectTransform.sizeDelta = new Vector2(3.4f, 1.1f);
+        label.sortingOrder = OverlayOrder + 1;
+
+        var view = go.AddComponent<TapHintView>();
+        var so = new SerializedObject(view);
+        so.FindProperty("_flag").stringValue = flag;
+        so.FindProperty("_bubble").objectReferenceValue = bubble;
+        so.FindProperty("_follow").objectReferenceValue = follow;
+        so.FindProperty("_offset").vector3Value = offset;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return view;
     }
 
     // 튀는 조각·떠오르는 글자 (바위·나무 공용)
@@ -695,5 +886,6 @@ public static partial class SettlementSetup
         GlobalUISetup.Run();
         PlacePlaza();
         PlaceMine();
+        PlaceZoneAmbience();
     }
 }

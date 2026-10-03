@@ -77,6 +77,7 @@ public class GatherPointView : MonoBehaviour
 
         _visual.SetActive(false);
         ShowPopup($"+{added} {item.DisplayName}");
+        RewardFly.FromWorld(item.Icon, transform.position + Vector3.up * 0.4f, RewardTarget.Bag, added);
     }
 
     private void ShowPopup(string text)

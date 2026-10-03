@@ -1,4 +1,5 @@
-# 광장 바위·나무의 작은 연출 그림: 튀는 돌 조각 / 나뭇잎 / 약점 반짝이
+# 광장 바위·나무의 작은 연출 그림: 튀는 돌 조각 / 나뭇잎 / 약점 반짝이 / 다시 생기기까지 작은 시계(FX_Regrow_0~7)
+# 분위기 연출: 발밑 그림자(FX_Shadow) / 나비 두 장(FX_Butterfly_0~1, 색은 코드에서 입힘) / 구름 그림자(FX_CloudShadow)
 # (바위·사과나무·사과는 GPT 그림 → fit_plaza_nodes.py)
 # 실행: python Tools/UIGen/plaza_nodes_art.py
 import math
@@ -69,7 +70,83 @@ def sparkle():
 
 
 
+# 다시 생기기까지 남은 정도를 보여 주는 작은 시계: 크림 원에 초록 부채꼴이 12시부터 시계 방향으로 참
+REGROW_STEPS = 8
+
+
+def regrow_clock():
+    s = 64 * SS
+    for step in range(REGROW_STEPS):
+        img = Image.new("RGBA", (s, s), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        o = 5 * SS
+        d.ellipse([0, 0, s - 1, s - 1], fill=COCOA)
+        d.ellipse([o, o, s - 1 - o, s - 1 - o], fill=(0xFF, 0xF4, 0xE6, 255))
+        fill = (step + 1) / REGROW_STEPS
+        inner = o + 3 * SS
+        if fill > 0:
+            d.pieslice([inner, inner, s - 1 - inner, s - 1 - inner], -90, -90 + 360 * fill, fill=(0x8C, 0xC8, 0x4B, 255))
+        # 바늘
+        d.line([(s / 2, s / 2), (s / 2, inner + 2 * SS)], fill=COCOA, width=4 * SS)
+        d.ellipse([s / 2 - 4 * SS, s / 2 - 4 * SS, s / 2 + 4 * SS, s / 2 + 4 * SS], fill=COCOA)
+        down(img, (64, 64)).save(os.path.join(OUT, f"FX_Regrow_{step}.png"))
+
+
+def soft_ellipse(w, h, power):
+    """가운데가 진하고 가장자리로 갈수록 흐려지는 타원 (흰색, 알파만)"""
+    img = Image.new("RGBA", (w, h), (255, 255, 255, 0))
+    px = img.load()
+    for y in range(h):
+        for x in range(w):
+            dx = (x + 0.5 - w / 2) / (w / 2)
+            dy = (y + 0.5 - h / 2) / (h / 2)
+            d = (dx * dx + dy * dy) ** 0.5
+            if d < 1:
+                px[x, y] = (255, 255, 255, int(255 * (1 - d) ** power))
+    return img
+
+
+def shadow():
+    soft_ellipse(128, 64, 0.55).save(os.path.join(OUT, "FX_Shadow.png"))
+
+
+def cloud_shadow():
+    # 몽글몽글한 구름 모양: 타원 몇 개를 겹쳐 흐리게
+    w, h = 512, 256
+    img = Image.new("RGBA", (w, h), (255, 255, 255, 0))
+    for cx, cy, rw, rh in ((0.35, 0.55, 0.32, 0.36), (0.55, 0.42, 0.30, 0.34), (0.70, 0.58, 0.26, 0.30), (0.50, 0.65, 0.36, 0.28)):
+        blob = soft_ellipse(int(w * rw * 2), int(h * rh * 2), 1.2)
+        img.alpha_composite(blob, (int(w * cx - blob.width / 2), int(h * cy - blob.height / 2)))
+    img.save(os.path.join(OUT, "FX_CloudShadow.png"))
+
+
+def butterfly():
+    # 날개를 편 것 / 접은 것 두 장. 날개는 밝은 흰색 (코드에서 분홍·노랑·하늘색을 곱함)
+    s = 64 * SS
+    for frame, spread in enumerate((1.0, 0.45)):
+        img = Image.new("RGBA", (s, s), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        c = s / 2
+        o = 4 * SS
+        for side in (-1, 1):
+            # 윗날개, 아랫날개
+            for (wx, wy, rw, rh) in ((0.20, -0.10, 0.20, 0.20), (0.15, 0.13, 0.14, 0.14)):
+                x = c + side * wx * s * spread
+                y = c + wy * s
+                rx = rw * s * spread
+                ry = rh * s
+                d.ellipse([x - rx, y - ry, x + rx, y + ry], fill=COCOA)
+                d.ellipse([x - rx + o, y - ry + o, x + rx - o, y + ry - o], fill=(255, 255, 255, 255))
+                d.ellipse([x - rx * 0.3, y - ry * 0.3, x + rx * 0.3, y + ry * 0.3], fill=(255, 236, 214, 255))
+        d.rounded_rectangle([c - 3 * SS, c - 0.18 * s, c + 3 * SS, c + 0.2 * s], radius=3 * SS, fill=COCOA)
+        down(img, (64, 64)).save(os.path.join(OUT, f"FX_Butterfly_{frame}.png"))
+
+
 def main():
+    shadow()
+    cloud_shadow()
+    butterfly()
+    regrow_clock()
     chip()
     leaf()
     sparkle()

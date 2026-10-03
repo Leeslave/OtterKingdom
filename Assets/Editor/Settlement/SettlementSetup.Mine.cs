@@ -15,6 +15,7 @@ public static partial class SettlementSetup
     private const float MineTreeScale = 0.32f;
     // 광산 배경(0)·입구 동그라미(1) 위, 광부 말풍선(3) 아래. 광산은 광장식 깊이 정렬(PlazaProp)을 쓰지 않음
     private const int MineObstacleOrder = 2;
+    private const string MineHintObstacle = "mine_rock_01";
 
     // 입구(0.76, 3.83)로 가는 모래 길 가운데를 가로막음 (카메라 고정, 화면 위쪽은 안내 말풍선 자리라 피함)
     private static readonly (string id, ObstacleKind kind, Vector2 position)[] MineObstacles =
@@ -47,9 +48,15 @@ public static partial class SettlementSetup
 
         var stone = AssetDatabase.LoadAssetAtPath<ItemDefinition>(StoneItemPath);
         var wood = AssetDatabase.LoadAssetAtPath<ItemDefinition>(WoodItemPath);
+        // 광부 해달이 장애물 위를 걷지 않게: 걷기 영역이 장애물 발자국을 보고, 치우면 다시 계산
+        var walkable = Object.FindAnyObjectByType<PlazaWalkableArea>();
+        AddPolygonRoot(walkable, root);
         var obstacles = new System.Collections.Generic.List<ClearingObstacleView>();
         foreach (var o in MineObstacles)
-            obstacles.Add(BuildObstacle(root, o.id, o.kind, o.position, o.kind == ObstacleKind.Rock ? stone : wood));
+            obstacles.Add(BuildObstacle(root, o.id, o.kind, o.position, o.kind == ObstacleKind.Rock ? stone : wood, walkable));
+
+        // 광산: 배경(0) 위·장애물(2) 아래 그림자, 나비 한 마리, 구름 그림자는 없음 (바위로 둘러싸인 곳)
+        BuildAmbience(root, 1, 1, 6, 0, 0, 3);
 
         var view = root.gameObject.AddComponent<ZoneClearingView>();
         var so = new SerializedObject(view);
@@ -63,7 +70,40 @@ public static partial class SettlementSetup
         Debug.Log("[SettlementSetup] 광산 개척 배치 완료");
     }
 
-    private static ClearingObstacleView BuildObstacle(Transform root, string id, ObstacleKind kind, Vector2 position, ItemDefinition reward)
+    // 밭·낚시터 분위기 연출: (씬, 그림자 순서, 나비 수, 구름 그림자 수). 두 씬 모두 배경 0 이하, 해달 2
+    private static readonly (string scene, int shadowOrder, int butterflies, int clouds, int fireflies)[] ZoneAmbience =
+    {
+        ("Assets/Scenes/Farm.unity", 1, 2, 1, 4),    // 밭: 고랑 0, 작물 칸 1 → 그림자는 작물 칸과 같은 높이(작물 위에 살짝 드리워짐)
+        ("Assets/Scenes/Fishing.unity", 1, 1, 2, 3), // 낚시터: 배경 0, 낚시 자리 동그라미 1
+    };
+
+    [MenuItem("Tools/Settlement/Setup Zone Ambience")]
+    public static void PlaceZoneAmbience()
+    {
+        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            return;
+
+        ImportArt();
+        foreach (var z in ZoneAmbience)
+        {
+            var scene = EditorSceneManager.OpenScene(z.scene, OpenSceneMode.Single);
+            var old = GameObject.Find("Ambience");
+            if (old != null)
+                Object.DestroyImmediate(old);
+            var root = new GameObject("AmbienceRoot").transform;
+            BuildAmbience(root, z.shadowOrder, z.butterflies, 9, z.clouds, 10, z.fireflies);
+            // 루트 이름을 Ambience로 (BuildAmbience가 만든 자식을 올림)
+            var ambience = root.Find("Ambience");
+            ambience.SetParent(null, true);
+            Object.DestroyImmediate(root.gameObject);
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+        }
+        Debug.Log("[SettlementSetup] 밭·낚시터 분위기 연출 배치 완료");
+    }
+
+    private static ClearingObstacleView BuildObstacle(Transform root, string id, ObstacleKind kind, Vector2 position, ItemDefinition reward,
+        PlazaWalkableArea walkable)
     {
         var node = new GameObject($"Obstacle_{id}").transform;
         node.SetParent(root, false);
@@ -75,6 +115,7 @@ public static partial class SettlementSetup
         visual.sortingOrder = MineObstacleOrder;
         if (!rock)
             visual.transform.localScale = Vector3.one * MineTreeScale;
+        var footprint = AddFootprint(node, rock ? RockFootprint : new Rect(-0.5f, -0.15f, 1.0f, 0.5f));
 
         var tap = node.gameObject.AddComponent<CircleCollider2D>();
         tap.radius = rock ? 0.85f : 1.1f;
@@ -95,6 +136,11 @@ public static partial class SettlementSetup
         so.FindProperty("_renderer").objectReferenceValue = visual;
         so.FindProperty("_tapArea").objectReferenceValue = tap;
         so.FindProperty("_fx").objectReferenceValue = CreateNodeFx(node);
+        so.FindProperty("_footprint").objectReferenceValue = footprint;
+        so.FindProperty("_walkableArea").objectReferenceValue = walkable;
+        // 화면 가운데 바위 하나에만 처음 안내
+        if (id == MineHintObstacle)
+            so.FindProperty("_hint").objectReferenceValue = CreateTapHint(node, "hint_obstacle", "톡톡 눌러 치워요!", new Vector3(0f, 1.35f, 0f));
         so.ApplyModifiedPropertiesWithoutUndo();
         return view;
     }

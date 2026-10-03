@@ -17,5 +17,5 @@ MonoBehaviour:
   _canRotate: 1
   _playStyle: 0
   _playSeconds: {x: 4, y: 7}
-  _maxPlayers: 2
+  _maxPlayers: 1
   _worldSprite: {fileID: 0}

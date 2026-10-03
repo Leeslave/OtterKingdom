@@ -86,8 +86,21 @@ public class SettlementPlazaView : MonoBehaviour
             return;
         var job = _manager.Settlement.Job;
         var site = job != null ? FindSite(job.ConstructionId) : null;
-        if (site != null)
-            site.SetProgress(job.Progress(SettlementManager.NowTicks), true);
+        if (site == null)
+            return;
+        // 일할 해달이 현장에 도착하면 그때부터 공사 시간이 흐름
+        if (job.WaitingForWorker && IsWorkerAtSite())
+            _manager.BeginJobWork();
+        site.SetProgress(job.Progress(SettlementManager.NowTicks), true);
+    }
+
+    private bool IsWorkerAtSite()
+    {
+        var request = _manager.JobRequest;
+        if (request == null || request.Construction.NeedsBuilder)
+            return _builderInitialized && _builder.IsWorking;
+        return request.Requester != null && _spawned.TryGetValue(request.Requester.OtterId, out var agent)
+            && agent != null && agent.IsOnTask;
     }
 
     private void OnDestroy()
@@ -282,7 +295,8 @@ public class SettlementPlazaView : MonoBehaviour
         var job = _manager.Settlement.Job;
         foreach (var site in _sites)
         {
-            bool building = job != null && job.ConstructionId == site.ConstructionId;
+            // 터·먼지는 해달이 도착해 일을 시작하면
+            bool building = job != null && job.ConstructionId == site.ConstructionId && !job.WaitingForWorker;
             site.SetBuilding(building);
             if (building)
                 site.SetProgress(job.Progress(SettlementManager.NowTicks), false);

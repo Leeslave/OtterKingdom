@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-/// <summary>진행 중인 건설</summary>
+/// <summary>
+/// 진행 중인 건설. 일할 해달이 현장에 도착하기 전(WaitingForWorker)에는 시간이 흐르지 않는다:
+/// 시작·끝 시각은 걸리는 시간만 담고, 도착하면 그때부터 다시 잰다 (Settlement.BeginJobWork).
+/// </summary>
 public class ConstructionJob
 {
     public string RequestId { get; }
@@ -9,17 +12,26 @@ public class ConstructionJob
     public long StartUtcTicks { get; }
     public long EndUtcTicks { get; }
 
-    public ConstructionJob(string requestId, string constructionId, long startUtcTicks, long endUtcTicks)
+    /// <summary>일할 해달이 아직 현장에 가는 중 (시간이 흐르지 않음)</summary>
+    public bool WaitingForWorker { get; }
+
+    public ConstructionJob(string requestId, string constructionId, long startUtcTicks, long endUtcTicks, bool waitingForWorker = false)
     {
         RequestId = requestId;
         ConstructionId = constructionId;
         StartUtcTicks = startUtcTicks;
         EndUtcTicks = endUtcTicks;
+        WaitingForWorker = waitingForWorker;
     }
+
+    /// <summary>걸리는 시간 (도착 전에도 같음)</summary>
+    public TimeSpan Duration => TimeSpan.FromTicks(Math.Max(0, EndUtcTicks - StartUtcTicks));
 
     /// <summary>0~1 진행 비율</summary>
     public float Progress(long nowUtcTicks)
     {
+        if (WaitingForWorker)
+            return 0f;
         long total = EndUtcTicks - StartUtcTicks;
         if (total <= 0)
             return 1f;
@@ -27,9 +39,10 @@ public class ConstructionJob
         return (float)Math.Max(0d, Math.Min(1d, ratio));
     }
 
-    public TimeSpan Remaining(long nowUtcTicks) => TimeSpan.FromTicks(Math.Max(0, EndUtcTicks - nowUtcTicks));
+    public TimeSpan Remaining(long nowUtcTicks) =>
+        WaitingForWorker ? Duration : TimeSpan.FromTicks(Math.Max(0, EndUtcTicks - nowUtcTicks));
 
-    public bool IsDue(long nowUtcTicks) => nowUtcTicks >= EndUtcTicks;
+    public bool IsDue(long nowUtcTicks) => !WaitingForWorker && nowUtcTicks >= EndUtcTicks;
 }
 
 /// <summary>
@@ -99,6 +112,12 @@ public class Settlement
     /// <summary>이 자리의 나뭇가지가 있는지</summary>
     public bool IsGatherReady(string pointId, long nowUtcTicks) =>
         !_gatherReady.TryGetValue(pointId, out long ready) || nowUtcTicks >= ready;
+
+    /// <summary>이 자리가 다시 생기기까지 남은 시간 (이미 있으면 0)</summary>
+    public TimeSpan GatherRemaining(string pointId, long nowUtcTicks) =>
+        _gatherReady.TryGetValue(pointId, out long ready) && ready > nowUtcTicks
+            ? TimeSpan.FromTicks(ready - nowUtcTicks)
+            : TimeSpan.Zero;
 
     /// <summary>from 뒤로 to까지 사이에 다시 생긴 줍기 자리 수 (자리를 비운 동안의 소식)</summary>
     public int CountGatherRegrown(long fromUtcTicks, long toUtcTicks)
@@ -170,16 +189,28 @@ public class Settlement
         return true;
     }
 
-    public void StartJob(string requestId, string constructionId, long startUtcTicks, long endUtcTicks)
+    /// <param name="waitingForWorker">true면 일할 해달이 도착할 때까지 시간이 흐르지 않음 (BeginJobWork)</param>
+    public void StartJob(string requestId, string constructionId, long startUtcTicks, long endUtcTicks, bool waitingForWorker = false)
     {
         if (Job != null)
             throw new InvalidOperationException("이미 진행 중인 건설이 있습니다.");
         if (string.IsNullOrEmpty(requestId))
             throw new ArgumentNullException(nameof(requestId));
 
-        Job = new ConstructionJob(requestId, constructionId, startUtcTicks, endUtcTicks);
+        Job = new ConstructionJob(requestId, constructionId, startUtcTicks, endUtcTicks, waitingForWorker);
         OnConstructionStarted?.Invoke(Job);
         OnChanged?.Invoke();
+    }
+
+    /// <summary>일할 해달이 현장에 도착: 지금부터 걸리는 시간만큼 잰다</summary>
+    /// <returns>기다리던 건설이 있어서 시작했으면 true</returns>
+    public bool BeginJobWork(long nowUtcTicks)
+    {
+        if (Job == null || !Job.WaitingForWorker)
+            return false;
+        Job = new ConstructionJob(Job.RequestId, Job.ConstructionId, nowUtcTicks, nowUtcTicks + Job.Duration.Ticks);
+        OnChanged?.Invoke();
+        return true;
     }
 
     /// <summary>진행 중인 건설을 끝낸 것으로 치우고 알린다 (부탁 완료 처리는 따로)</summary>
@@ -300,7 +331,7 @@ public class Settlement
         }
         var job = saved.construction;
         if (job != null && !string.IsNullOrEmpty(job.requestId))
-            Job = new ConstructionJob(job.requestId, job.constructionId, job.startUtcTicks, job.endUtcTicks);
+            Job = new ConstructionJob(job.requestId, job.constructionId, job.startUtcTicks, job.endUtcTicks, job.waitingForWorker);
         if (saved.gatherCooldowns != null)
         {
             foreach (var g in saved.gatherCooldowns)
@@ -350,6 +381,7 @@ public class Settlement
                 constructionId = Job.ConstructionId,
                 startUtcTicks = Job.StartUtcTicks,
                 endUtcTicks = Job.EndUtcTicks,
+                waitingForWorker = Job.WaitingForWorker,
             };
 
         result.gatherCooldowns = new List<GatherCooldownSaveData>();
