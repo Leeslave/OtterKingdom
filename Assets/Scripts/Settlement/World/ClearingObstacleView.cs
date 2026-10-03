@@ -50,6 +50,17 @@ public class ClearingObstacleView : MonoBehaviour
 
     [SerializeField] private PlazaNodeFx _fx;
 
+    [Header("길 막기")]
+    [Tooltip("해달이 못 지나가는 발자국 (치우면 꺼짐)")]
+    [SerializeField] private GameObject _footprint;
+
+    [Tooltip("발자국이 꺼지면 다시 계산할 걷기 영역")]
+    [SerializeField] private PlazaWalkableArea _walkableArea;
+
+    [Header("처음 안내 (선택)")]
+    [Tooltip("처음 한 번 \"톡톡 눌러 치워요!\" (장애물 하나에만, 비우면 없음)")]
+    [SerializeField] private TapHintView _hint;
+
     [Header("글자 색")]
     [SerializeField] private Color _textColor = new Color32(0x4B, 0x2E, 0x22, 0xFF);
 
@@ -85,6 +96,14 @@ public class ClearingObstacleView : MonoBehaviour
         }
 
         bool cleared = manager.IsObstacleCleared(_obstacleId);
+        if (cleared && _hint != null)
+            _hint.Allowed = false;
+        if (cleared && _footprint.activeSelf)
+        {
+            // 치운 자리는 다시 걸을 수 있음
+            _footprint.SetActive(false);
+            _walkableArea.Rebuild();
+        }
         if (_renderer.enabled == cleared)
         {
             _renderer.enabled = !cleared;
@@ -93,6 +112,8 @@ public class ClearingObstacleView : MonoBehaviour
         if (cleared)
             return;
 
+        if (_hint != null)
+            _hint.Allowed = Interactable;
         AnimateShake();
         if (Interactable && PlazaTapInput.TryGetTap(out Vector2 world) && _tapArea.OverlapPoint(world))
             Hit(manager, world);
@@ -100,6 +121,8 @@ public class ClearingObstacleView : MonoBehaviour
 
     private void Hit(SettlementManager manager, Vector2 world)
     {
+        if (_hint != null)
+            _hint.MarkDone();
         _done++;
         _shakeTimer = ShakeSeconds;
         for (int i = 0; i < 4; i++)
@@ -129,6 +152,7 @@ public class ClearingObstacleView : MonoBehaviour
             for (int i = 0; i < added; i++)
                 _fx.Burst(_reward.Icon, Center, new Vector2(Random.Range(-2f, 2f), Random.Range(5f, 7f)), 0.45f, transform.position.y - Random.Range(0.1f, 0.4f), 1.2f);
             _fx.ShowText($"+{added} {_reward.DisplayName}", Center + Vector3.up * 0.8f, _textColor);
+            RewardFly.FromWorld(_reward.Icon, Center, RewardTarget.Bag, added);
         }
         _tapArea.enabled = false;
         _fallTimer = 0f;

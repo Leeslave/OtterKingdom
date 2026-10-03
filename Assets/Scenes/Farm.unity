@@ -2951,6 +2951,94 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1816208962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1816208965}
+  - component: {fileID: 1816208964}
+  - component: {fileID: 1816208963}
+  m_Layer: 0
+  m_Name: Ambience
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1816208963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816208962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1b93ee696e9ed4d82fb8719c3a88aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::TimeOfDayLighting
+  _litMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+--- !u!114 &1816208964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816208962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bdb74884af9eae4f8ad8b349746627d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::AmbienceDirector
+  _shadowSprite: {fileID: 21300000, guid: 2ac04aad6d348904d9621608ad69c9a2, type: 3}
+  _shadowOrder: 1
+  _shadowColor: {r: 0.29, g: 0.18, b: 0.13, a: 0.4}
+  _noShadowNames:
+  - Scaffold
+  _swayNames:
+  - Tree
+  - Bush
+  _windMaterial: {fileID: 2100000, guid: 481d0068d18057b4f80b5d64e0d3e4a4, type: 2}
+  _butterflyFrames:
+  - {fileID: 21300000, guid: e2e65bc2161fb1a47b7eeabd476c0d70, type: 3}
+  - {fileID: 21300000, guid: 6a722df056dbd3b4cb4427f670664376, type: 3}
+  _butterflyCount: 2
+  _butterflyOrder: 9
+  _butterflySize: 0.6
+  _butterflyTints:
+  - {r: 1, g: 0.84, b: 0.9, a: 1}
+  - {r: 1, g: 0.96, b: 0.74, a: 1}
+  - {r: 0.84, g: 0.92, b: 1, a: 1}
+  _fireflySprite: {fileID: 21300000, guid: 6c06d091ff257a340b6843b02380700c, type: 3}
+  _glowMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  _fireflyCount: 4
+  _fireflyOrder: 10
+  _fireflySize: 0.35
+  _cloudSprite: {fileID: 21300000, guid: 6bb251b9e71a1f941af89a51acfd556a, type: 3}
+  _cloudCount: 1
+  _cloudOrder: 10
+  _cloudColor: {r: 0.22, g: 0.2, b: 0.35, a: 0.1}
+  _cloudWidth: 9
+  _cloudSpeed: 0.25
+--- !u!4 &1816208965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816208962}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1936967809
 GameObject:
   m_ObjectHideFlags: 0
@@ -3339,3 +3427,4 @@ SceneRoots:
   - {fileID: 1013876387}
   - {fileID: 1265397618}
   - {fileID: 1602835713}
+  - {fileID: 1816208965}

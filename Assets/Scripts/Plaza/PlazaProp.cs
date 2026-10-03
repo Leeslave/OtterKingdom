@@ -20,6 +20,7 @@ public class PlazaProp : MonoBehaviour
     [SerializeField] private float depthOffset;
 
     public float DepthOffset => depthOffset;
+    public bool IsFlat => flat;
 
     // Runtime copies (a house being built) sort like the real prop.
     public void SetDepthOffset(float offset)

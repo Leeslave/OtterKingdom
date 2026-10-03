@@ -63,6 +63,17 @@ public class TreeShakeView : MonoBehaviour
 
     [SerializeField] private PlazaNodeFx _fx;
 
+    [Header("다시 흔들 수 있기까지")]
+    [Tooltip("쉬는 동안 밑동 옆 작은 시계 (채워질수록 곧 다시 흔들 수 있음)")]
+    [SerializeField] private SpriteRenderer _timer;
+
+    [Tooltip("시계 그림 (덜 참 → 다 참 순서)")]
+    [SerializeField] private Sprite[] _timerSprites;
+
+    [Header("처음 안내 (선택)")]
+    [Tooltip("처음 한 번 \"흔들면 나뭇가지가 떨어져요!\" (첫 나무에만, 비우면 없음)")]
+    [SerializeField] private TapHintView _hint;
+
     [Header("글자 색")]
     [SerializeField] private Color _textColor = new Color32(0x4B, 0x2E, 0x22, 0xFF);
     [SerializeField] private Color _fruitColor = new Color32(0xD9, 0x4F, 0x45, 0xFF);
@@ -79,9 +90,12 @@ public class TreeShakeView : MonoBehaviour
             return;
 
         bool ready = manager.IsGatherReady(_pointId);
+        if (_hint != null)
+            _hint.Allowed = ready;
         var sprite = ready ? _readySprite : _restSprite;
         if (_renderer.sprite != sprite)
             _renderer.sprite = sprite;
+        RefreshTimer(manager, ready);
         Sway();
 
         if (PlazaTapInput.TryGetTap(out Vector2 world) && _tapArea.OverlapPoint(world))
@@ -89,12 +103,14 @@ public class TreeShakeView : MonoBehaviour
             if (ready)
                 Shake(manager);
             else
-                Rest();
+                Rest(manager);
         }
     }
 
     private void Shake(SettlementManager manager)
     {
+        if (_hint != null)
+            _hint.MarkDone();
         var wood = _wood != null ? _wood : manager.Config.GatherItem;
         Shaken.TryGetValue(_pointId, out int index);
         index = Mathf.Clamp(index, 0, _shakesPerRest - 1);
@@ -117,22 +133,36 @@ public class TreeShakeView : MonoBehaviour
 
         for (int i = 0; i < added; i++)
             Drop(_branchSprite, 0.6f);
+        RewardFly.FromWorld(wood.Icon, TextPoint, RewardTarget.Bag, added);
         string text = $"+{added} {wood.DisplayName}";
 
         if (_fruit != null && Random.value < _fruitChance && manager.GatherExtra(_fruit, 1) > 0)
         {
             Drop(_fruit.Icon, 0.5f);
+            RewardFly.FromWorld(_fruit.Icon, TextPoint, RewardTarget.Bag, 1);
             _fx.ShowText($"+1 {_fruit.DisplayName}", TextPoint + Vector3.up * 0.5f, _fruitColor);
         }
         _fx.ShowText(text, TextPoint, _textColor);
     }
 
-    // 쉬는 중에 누르면 살짝만 흔들리고 알려 줌
-    private void Rest()
+    // 쉬는 중에 누르면 살짝만 흔들리고 언제 다시 흔들 수 있는지 알려 줌
+    private void Rest(SettlementManager manager)
     {
         StartSway(2f);
         Leaves(1);
-        _fx.ShowText("잎이 다시 자라는 중", TextPoint, _textColor);
+        _fx.ShowText($"{SettlementManager.FormatShort(manager.GatherRemaining(_pointId))} 뒤에 다시 흔들 수 있어요", TextPoint, _textColor);
+    }
+
+    // 쉬는 동안만 작은 시계: 남은 시간만큼 초록이 차오름
+    private void RefreshTimer(SettlementManager manager, bool ready)
+    {
+        if (_timer.gameObject.activeSelf == ready)
+            _timer.gameObject.SetActive(!ready);
+        if (ready)
+            return;
+        float left = (float)manager.GatherRemaining(_pointId).TotalSeconds;
+        float done = 1f - Mathf.Clamp01(left / _restSeconds);
+        _timer.sprite = _timerSprites[Mathf.Min(_timerSprites.Length - 1, (int)(done * _timerSprites.Length))];
     }
 
     private Vector3 TextPoint
@@ -169,7 +199,7 @@ public class TreeShakeView : MonoBehaviour
         _swayAmplitude = degrees;
     }
 
-    // 밑동을 축으로 좌우로 흔들리다 잦아듦
+    // 흔들면 밑동을 축으로 좌우로 흔들리다 잦아듦 (평소 바람 살랑임은 셰이더 IdleSway가)
     private void Sway()
     {
         if (_swayTimer <= 0f)

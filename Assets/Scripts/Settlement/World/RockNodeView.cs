@@ -78,6 +78,20 @@ public class RockNodeView : MonoBehaviour
 
     [SerializeField] private PlazaNodeFx _fx;
 
+    [Header("다시 솟기까지")]
+    [Tooltip("깨진 동안 자갈 위 작은 시계 (채워질수록 곧 다시 솟음)")]
+    [SerializeField] private SpriteRenderer _timer;
+
+    [Tooltip("시계 그림 (덜 참 → 다 참 순서)")]
+    [SerializeField] private Sprite[] _timerSprites;
+
+    [Header("처음 안내 (선택)")]
+    [Tooltip("처음 한 번 \"톡톡 쳐서 돌을 캐요!\" (첫 바위에만, 비우면 없음)")]
+    [SerializeField] private TapHintView _hint;
+
+    [Tooltip("처음 한 번 약점 옆 \"반짝이는 곳을 치면 3배!\" (비우면 없음)")]
+    [SerializeField] private TapHintView _weakSpotHint;
+
     [Header("글자 색")]
     [SerializeField] private Color _textColor = new Color32(0x4B, 0x2E, 0x22, 0xFF);
     [SerializeField] private Color _critColor = new Color32(0xE0, 0x8A, 0x1E, 0xFF);
@@ -109,11 +123,32 @@ public class RockNodeView : MonoBehaviour
         if (ready && !_wasReady)
             _popInTimer = PopInSeconds;
         _wasReady = ready;
+        if (_hint != null)
+            _hint.Allowed = ready;
         RefreshSprite(ready);
         Animate();
 
-        if (ready && PlazaTapInput.TryGetTap(out Vector2 world) && _tapArea.OverlapPoint(world))
-            Hit(manager, world);
+        RefreshTimer(manager, ready);
+
+        if (PlazaTapInput.TryGetTap(out Vector2 world) && _tapArea.OverlapPoint(world))
+        {
+            if (ready)
+                Hit(manager, world);
+            else
+                _fx.ShowText($"{SettlementManager.FormatShort(manager.GatherRemaining(_pointId))} 뒤에 다시 솟아요", Center + Vector3.up * 0.6f, _textColor);
+        }
+    }
+
+    // 깨진 동안만 작은 시계: 남은 시간만큼 초록이 차오름
+    private void RefreshTimer(SettlementManager manager, bool ready)
+    {
+        if (_timer.gameObject.activeSelf == ready)
+            _timer.gameObject.SetActive(!ready);
+        if (ready)
+            return;
+        float left = (float)manager.GatherRemaining(_pointId).TotalSeconds;
+        float done = 1f - Mathf.Clamp01(left / _regrowSeconds);
+        _timer.sprite = _timerSprites[Mathf.Min(_timerSprites.Length - 1, (int)(done * _timerSprites.Length))];
     }
 
     private void Hit(SettlementManager manager, Vector2 world)
@@ -121,8 +156,12 @@ public class RockNodeView : MonoBehaviour
         int level = GameManager.Instance != null ? GameManager.Instance.MiningService.PickaxeLevel : 1;
         bool crit = _weakSpot.gameObject.activeSelf && Vector2.Distance(world, _weakSpot.transform.position) <= _weakSpotRadius;
         int damage = crit ? PlazaNodeRules.CritDamage(level) : PlazaNodeRules.Damage(level);
+        if (_hint != null)
+            _hint.MarkDone();
         if (crit)
         {
+            if (_weakSpotHint != null)
+                _weakSpotHint.MarkDone();
             HideWeakSpot();
             _fx.ShowText("딱!", (Vector3)world + Vector3.up * 0.3f, _critColor);
         }
@@ -164,12 +203,14 @@ public class RockNodeView : MonoBehaviour
         for (int i = 0; i < added; i++)
             _fx.Burst(_item.Icon, Center, new Vector2(Random.Range(-2f, 2f), Random.Range(5f, 7f)), 0.45f, GroundY - Random.Range(0.1f, 0.4f), 1.2f);
         _fx.ShowText($"+{added} {_item.DisplayName}", Center + Vector3.up * 0.6f, _textColor);
+        RewardFly.FromWorld(_item.Icon, Center, RewardTarget.Bag, added);
 
         if (_rareCurrency != null && Random.value < _rareChance)
         {
             manager.GrantPlazaFind(_rareCurrency, 1);
             _fx.Burst(_rareCurrency.Icon, Center, new Vector2(0f, 7f), 0.5f, GroundY - 0.2f, 1.4f);
             _fx.ShowText($"반짝! {_rareCurrency.DisplayName} +1", Center + Vector3.up * 1.2f, _critColor);
+            RewardFly.FromWorld(_rareCurrency.Icon, Center, RewardTarget.Gem, 1);
         }
         _wasReady = false;
     }

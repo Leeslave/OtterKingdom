@@ -32,6 +32,13 @@ public class ZoneClearingView : MonoBehaviour
     private bool _applied;
     private bool _guideShown;
 
+    // 씬이 열리자마자 숨겨서 입구의 Start(곡괭이 강화 버튼 띄우기)가 개척 전에 돌지 않게. 개척됐으면 첫 Update에서 켬
+    private void Awake()
+    {
+        foreach (var go in _hiddenUntilCleared)
+            go.SetActive(false);
+    }
+
     private void OnEnable()
     {
         Active = this;

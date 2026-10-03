@@ -58,6 +58,10 @@ public class SettlementManager : MonoBehaviour
     /// <summary>게시판을 열어 달라는 부탁 (광장 게시판·안내 띠). 게시판 화면이 듣는다. 인자: 부탁 탭으로 열지</summary>
     public event Action<bool> OnBoardRequested;
 
+    // 일할 해달이 도착하지 못해도 이만큼 지나면 공사를 시작함 (길이 막히는 등)
+    private const float WorkerWaitLimitSeconds = 25f;
+    private float _workerWaitSeconds;
+
     // 끝난 건설 (부탁, 끝난 시각). 돌아옴 팝업이 자리를 비운 동안 끝난 것만 골라 알리고 비운다
     private readonly List<(BoardRequestDefinition request, long endTicks)> _finishedJobs = new List<(BoardRequestDefinition, long)>();
 
@@ -81,8 +85,30 @@ public class SettlementManager : MonoBehaviour
 
     private void Update()
     {
-        if (IsLoaded && Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
+        if (!IsLoaded || Settlement.Job == null)
+            return;
+
+        if (Settlement.Job.WaitingForWorker)
+            WaitForWorker();
+        else if (Settlement.Job.IsDue(NowTicks))
             FinishJob();
+    }
+
+    // 일할 해달이 현장에 가는 중: 광장의 SettlementPlazaView가 도착을 알려 줌(BeginJobWork).
+    // 광장에 없거나(다른 장소·꺼 둔 동안) 너무 오래 못 오면 그냥 시작 (공사가 멈춰 있지 않게)
+    private void WaitForWorker()
+    {
+        _workerWaitSeconds += Time.unscaledDeltaTime;
+        if (SettlementPlazaView.Active == null || _workerWaitSeconds >= WorkerWaitLimitSeconds)
+            BeginJobWork();
+    }
+
+    /// <summary>일할 해달이 현장에 도착: 지금부터 공사 시간이 흐른다</summary>
+    public void BeginJobWork()
+    {
+        _workerWaitSeconds = 0f;
+        if (Settlement.BeginJobWork(NowTicks))
+            SaveRequested?.Invoke();
     }
 
     #region 조회
@@ -182,7 +208,8 @@ public class SettlementManager : MonoBehaviour
 
         long now = NowTicks;
         long end = now + TimeSpan.FromSeconds(construction.DurationSeconds).Ticks;
-        Settlement.StartJob(request.RequestId, construction.ConstructionId, now, end);
+        _workerWaitSeconds = 0f;
+        Settlement.StartJob(request.RequestId, construction.ConstructionId, now, end, waitingForWorker: true);
         OnConstructionStarted?.Invoke(request);
         SaveRequested?.Invoke();
         return ConstructionStartResult.Started;
@@ -282,6 +309,16 @@ public class SettlementManager : MonoBehaviour
 
     public bool IsGatherReady(string pointId) => Settlement.IsGatherReady(pointId, NowTicks);
 
+    /// <summary>이 자리가 다시 생기기까지 남은 시간 (이미 있으면 0)</summary>
+    public TimeSpan GatherRemaining(string pointId) => Settlement.GatherRemaining(pointId, NowTicks);
+
+    /// <summary>"1:23" 처럼 짧게 (한 시간이 넘으면 "1시간 5분")</summary>
+    public static string FormatShort(TimeSpan time)
+    {
+        int seconds = (int)Math.Ceiling(time.TotalSeconds);
+        return seconds >= 3600 ? $"{seconds / 3600}시간 {seconds / 60 % 60}분" : $"{seconds / 60}:{seconds % 60:00}";
+    }
+
     /// <summary>설정의 기본값(나뭇가지: 목재 2개, 60초)으로 줍는다</summary>
     public int TryGather(string pointId) =>
         TryGather(pointId, _config.GatherItem, _config.GatherAmount, _config.GatherCooldownSeconds);
@@ -371,6 +408,18 @@ public class SettlementManager : MonoBehaviour
     }
 
     private static string ObstacleFlag(string obstacleId) => "cleared_" + obstacleId;
+
+    /// <summary>처음 한 번 보여 주는 안내(TapHintView)를 이미 봤는지</summary>
+    public bool HasSeen(string hintFlag) => Settlement.HasFlag(hintFlag);
+
+    /// <summary>안내한 조작을 해 봤음 (세이브에 남아 다시 안 보임)</summary>
+    public void MarkSeen(string hintFlag)
+    {
+        if (string.IsNullOrEmpty(hintFlag))
+            throw new ArgumentNullException(nameof(hintFlag));
+        if (Settlement.SetFlag(hintFlag))
+            SaveRequested?.Invoke();
+    }
 
     #endregion
 

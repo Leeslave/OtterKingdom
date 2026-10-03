@@ -37,8 +37,14 @@ public class SettlementPresenter : MonoBehaviour
     private float _guideTimer;
     private bool _glyphsReady;
 
+    private static SettlementPresenter _active;
+
+    /// <summary>완료 팝업이 떠 있거나 차례를 기다리는 중 (레벨업 팝업·장소 튜토리얼은 그 뒤에)</summary>
+    public static bool IsCelebrating => _active != null && (_active._complete.IsOpen || _active._completed.Count > 0);
+
     private void OnEnable()
     {
+        _active = this;
         _guide.OnClicked += HandleGuideClicked;
         _board.OnRequestClicked += OpenConstruction;
         _board.OnTabChanged += HandleTabChanged;
@@ -68,6 +74,8 @@ public class SettlementPresenter : MonoBehaviour
 
     private void OnDisable()
     {
+        if (_active == this)
+            _active = null;
         _guide.OnClicked -= HandleGuideClicked;
         _board.OnRequestClicked -= OpenConstruction;
         _board.OnTabChanged -= HandleTabChanged;
@@ -139,7 +147,7 @@ public class SettlementPresenter : MonoBehaviour
             string label = building != null && !string.IsNullOrEmpty(building.Construction.ProgressLabel)
                 ? building.Construction.ProgressLabel
                 : "공사 중";
-            _guide.Show($"{label}  {FormatTime(job.Remaining(SettlementManager.NowTicks))}", null);
+            _guide.Show($"{label}  {JobTime(job)}", null);
             return;
         }
 
@@ -257,7 +265,7 @@ public class SettlementPresenter : MonoBehaviour
             var status = _manager.GetStatus(request);
             if (status == RequestStatus.Locked)
                 continue;
-            string time = status == RequestStatus.Building ? FormatTime(_manager.Settlement.Job.Remaining(now)) : null;
+            string time = status == RequestStatus.Building ? JobTime(_manager.Settlement.Job) : null;
             _rows.Add((request, status, time));
         }
         _rows.Sort((a, b) => a.Item1.Order.CompareTo(b.Item1.Order));
@@ -305,7 +313,7 @@ public class SettlementPresenter : MonoBehaviour
         bool canStart = false;
         if (status == RequestStatus.Building)
         {
-            note = $"{construction.ProgressLabel}  {FormatTime(_manager.Settlement.Job.Remaining(SettlementManager.NowTicks))}";
+            note = $"{construction.ProgressLabel}  {JobTime(_manager.Settlement.Job)}";
             startLabel = "진행 중";
         }
         else if (status == RequestStatus.Locked)
@@ -457,12 +465,16 @@ public class SettlementPresenter : MonoBehaviour
             _progress.Root.anchoredPosition = local;
 
         long now = SettlementManager.NowTicks;
-        _progress.SetProgress(job.Progress(now), FormatTime(job.Remaining(now)));
+        _progress.SetProgress(job.Progress(now), JobTime(job));
     }
 
     #endregion
 
     #region 글자
+
+    // 남은 시간 (일할 해달이 아직 가는 중이면 그 안내)
+    private static string JobTime(ConstructionJob job) =>
+        job.WaitingForWorker ? "가는 중" : FormatTime(job.Remaining(SettlementManager.NowTicks));
 
     private static string FormatTime(TimeSpan remaining)
     {
@@ -484,7 +496,7 @@ public class SettlementPresenter : MonoBehaviour
     private void PrepareGlyphs()
     {
         var config = _manager.Config;
-        var text = new StringBuilder("0123456789:/ ,.!?%·시간분초 보기진행중완료확인하기짓기건설개간시작해달게시판방명록의부탁방문기록새로운이도착했어요골드가모자라요개더필요해요아직할수없어요다른공사끝나면있어요바로지을걸려요주민가열렸어요집을짓고길을열어요");
+        var text = new StringBuilder("0123456789:/ ,.!?%·가는 중시간분초 보기진행중완료확인하기짓기건설개간시작해달게시판방명록의부탁방문기록새로운이도착했어요골드가모자라요개더필요해요아직할수없어요다른공사끝나면있어요바로지을걸려요주민가열렸어요집을짓고길을열어요");
         foreach (var request in config.Requests)
         {
             if (request == null)
