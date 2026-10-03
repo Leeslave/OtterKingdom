@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 정착 진행(P0: 빈 광장 → 첫 집 → 건설 해달 → 농경지 개간 → 밭 해금)에 쓰는 데이터 묶음.
+/// 정착 진행(P0: 빈 광장 → 첫 집 → 건설 해달 → 농경지 개간 → 밭 해금, P1: 개간 지역 · 주민 작업)에 쓰는 데이터 묶음.
 /// </summary>
 [CreateAssetMenu(fileName = "SettlementConfig", menuName = "Game Data/Settlement/Config")]
 public class SettlementConfig : ScriptableObject
@@ -25,6 +25,13 @@ public class SettlementConfig : ScriptableObject
     [SerializeField] private List<BoardRequestDefinition> _requests = new List<BoardRequestDefinition>();
 
     [SerializeField] private List<GuestbookEntryDefinition> _guestbookEntries = new List<GuestbookEntryDefinition>();
+
+    [Header("개간 지역 · 주민 작업")]
+    [Tooltip("발견 → 직접 개척 → 주민 정비 → 운영으로 가는 지역")]
+    [SerializeField] private List<DevelopableRegionDefinition> _regions = new List<DevelopableRegionDefinition>();
+
+    [Tooltip("주민 해달을 보내는 작업 전부 (지역의 후속 정비 포함. 세이브의 작업 ID를 찾을 때 씀)")]
+    [SerializeField] private List<SettlementTaskDefinition> _tasks = new List<SettlementTaskDefinition>();
 
     [Header("옛 세이브")]
     [Tooltip("정착 진행 전 세이브에 부탁과 별도로 열어 줄 발전 (예: 아직 부탁이 없는 낚시터 fishing_dock)")]
@@ -52,6 +59,8 @@ public class SettlementConfig : ScriptableObject
     public IReadOnlyList<SettlementOtterDefinition> Otters => _otters;
     public IReadOnlyList<BoardRequestDefinition> Requests => _requests;
     public IReadOnlyList<GuestbookEntryDefinition> GuestbookEntries => _guestbookEntries;
+    public IReadOnlyList<DevelopableRegionDefinition> Regions => _regions;
+    public IReadOnlyList<SettlementTaskDefinition> Tasks => _tasks;
     public IReadOnlyList<ItemAmount> StartingItems => _startingItems;
     public int StartingGold => _startingGold;
     public IReadOnlyList<string> LegacyDevelopments => _legacyDevelopments;
@@ -93,6 +102,45 @@ public class SettlementConfig : ScriptableObject
         {
             if (entry != null && entry.EntryId == entryId)
                 return entry;
+        }
+        return null;
+    }
+
+    public SettlementTaskDefinition FindTask(string taskId)
+    {
+        foreach (var task in _tasks)
+        {
+            if (task != null && task.TaskId == taskId)
+                return task;
+        }
+        return null;
+    }
+
+    /// <summary>이 장소의 개간 지역 (없으면 null)</summary>
+    public DevelopableRegionDefinition FindRegion(ZoneDefinition zone)
+    {
+        if (zone == null)
+            return null;
+        foreach (var region in _regions)
+        {
+            if (region != null && region.Zone == zone)
+                return region;
+        }
+        return null;
+    }
+
+    /// <summary>이 작업을 후속 정비로 가진 지역 (없으면 null)</summary>
+    public DevelopableRegionDefinition FindRegionOf(SettlementTaskDefinition task)
+    {
+        foreach (var region in _regions)
+        {
+            if (region == null)
+                continue;
+            foreach (var t in region.PreparationTasks)
+            {
+                if (t == task)
+                    return region;
+            }
         }
         return null;
     }

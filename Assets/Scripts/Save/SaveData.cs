@@ -135,4 +135,7 @@ public class SaveData
     // Owned by SettlementManager (GlobalUI): kingdom stage, residents, board
     // requests, construction. Missing in saves before schema 4.
     public SettlementSaveData settlement = new SettlementSaveData();
+    // Owned by DecorManager (GlobalUI): toys placed on each zone's grid and
+    // unlocked decor regions. Missing in older saves -> nothing placed.
+    public DecorSaveData decor = new DecorSaveData();
 }

@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     private static QuestManager loadedQuests;
     private static ProfileManager loadedProfile;
     private static SettlementManager loadedSettlement;
+    private static DecorManager loadedDecor;
 
     // Offline production covers the time the app was closed, which ends when
     // the app starts — not when the first zone scene with a GameManager opens
@@ -257,6 +258,7 @@ public class GameManager : MonoBehaviour
         if (Instance != this) return;
         SceneNavigator.BeforeLeave += SaveNow;
         SettlementManager.SaveRequested += SaveNow;
+        DecorManager.SaveRequested += SaveNow;
         InventoryManager.Instance.OnItemSold += HandleItemSold;
     }
 
@@ -264,6 +266,7 @@ public class GameManager : MonoBehaviour
     {
         SceneNavigator.BeforeLeave -= SaveNow;
         SettlementManager.SaveRequested -= SaveNow;
+        DecorManager.SaveRequested -= SaveNow;
         if (InventoryManager.Instance != null) InventoryManager.Instance.OnItemSold -= HandleItemSold;
     }
 
@@ -365,6 +368,16 @@ public class GameManager : MonoBehaviour
             loadedProfile = profile;
             save.profile ??= new ProfileSaveData();
             profile.LoadFromSave(save.profile);
+        }
+
+        // Placed toys and decor regions: after the bag (storage = owned - placed),
+        // before the settlement (an operational region unlocks its decor region).
+        var decor = DecorManager.Instance;
+        if (decor != null && loadedDecor != decor)
+        {
+            loadedDecor = decor;
+            save.decor ??= new DecorSaveData();
+            decor.LoadFromSave(save.decor);
         }
 
         // After the bag (the new-game materials go in it), before quests.
@@ -624,6 +637,7 @@ public class GameManager : MonoBehaviour
         if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);
         if (ProfileManager.Instance != null) ProfileManager.Instance.WriteToSave(save.profile ??= new ProfileSaveData());
         if (SettlementManager.Instance != null) SettlementManager.Instance.WriteToSave(save.settlement ??= new SettlementSaveData());
+        if (DecorManager.Instance != null) DecorManager.Instance.WriteToSave(save.decor ??= new DecorSaveData());
         saveService.Save(save);
     }
 

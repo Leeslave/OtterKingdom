@@ -2,9 +2,11 @@
 using UnityEngine;
 
 /// <summary>
-/// 장소 개척 (광산 길 열기): 길을 막은 나무·돌(ClearingObstacleView)을 플레이어가 직접 다 치우면
-/// 그 장소의 게시판 부탁을 끝낸다 → 왕국 레벨이 오르고 새 해달이 찾아옴 (부탁 데이터대로).
-/// 개척 전에는 기능 오브젝트(광산 입구)를 숨기고 안내 말풍선을 띄운다. 장소 튜토리얼은 개척 뒤에 (IsWaiting).
+/// 장소 개척 (광산 길 열기): 길을 막은 나무·돌(ClearingObstacleView)을 플레이어가 직접 다 치운다.
+/// - 개간 지역(DevelopableRegionDefinition)이 있는 장소: 다 치우면 "길은 열렸지만 정비가 필요" →
+///   주민 해달이 후속 정비(RegionTaskSiteView)를 끝내야 운영되고 그때 게시판 부탁이 끝난다 (왕국 레벨·새 해달)
+/// - 지역이 없는 장소: 다 치우면 바로 게시판 부탁을 끝냄
+/// 운영 전에는 기능 오브젝트(광산 입구)를 숨기고 단계에 맞는 안내 말풍선을 띄운다. 장소 튜토리얼은 운영 뒤에 (IsWaiting).
 /// </summary>
 public class ZoneClearingView : MonoBehaviour
 {
@@ -21,18 +23,24 @@ public class ZoneClearingView : MonoBehaviour
     [Tooltip("길을 막은 장애물들")]
     [SerializeField] private List<ClearingObstacleView> _obstacles = new List<ClearingObstacleView>();
 
-    [Tooltip("개척 전에는 숨기는 기능 오브젝트 (광산 입구)")]
+    [Tooltip("운영 전에는 숨기는 기능 오브젝트 (광산 입구)")]
     [SerializeField] private List<GameObject> _hiddenUntilCleared = new List<GameObject>();
 
     [Header("안내")]
-    [Tooltip("개척 전 화면 아래 말풍선")]
+    [Tooltip("직접 치우는 중 화면 아래 말풍선")]
     [SerializeField] private string _guide = "길을 막은 나무와 돌을 톡톡 눌러 치워요!";
+
+    [Tooltip("다 치운 뒤 주민 해달을 보내야 할 때")]
+    [SerializeField] private string _awaitingWorkersGuide = "길이 열렸어요! 주민 해달을 보내 정비해요";
+
+    [Tooltip("주민 해달이 정비하는 중")]
+    [SerializeField] private string _preparingGuide = "주민 해달이 주변을 정리하고 있어요";
 
     private bool _cleared;
     private bool _applied;
-    private bool _guideShown;
+    private string _shownGuide;
 
-    // 씬이 열리자마자 숨겨서 입구의 Start(곡괭이 강화 버튼 띄우기)가 개척 전에 돌지 않게. 개척됐으면 첫 Update에서 켬
+    // 씬이 열리자마자 숨겨서 입구의 Start(곡괭이 강화 버튼 띄우기)가 개척 전에 돌지 않게. 운영되면 첫 Update에서 켬
     private void Awake()
     {
         foreach (var go in _hiddenUntilCleared)
@@ -56,7 +64,7 @@ public class ZoneClearingView : MonoBehaviour
         if (manager == null)
         {
             // 정착 진행이 없는 테스트 씬: 처음부터 열린 곳
-            Apply(true, false);
+            Apply(true, false, null);
             return;
         }
         if (!manager.IsLoaded)
@@ -64,9 +72,34 @@ public class ZoneClearingView : MonoBehaviour
 
         bool cleared = manager.IsZoneCleared(_zone);
         bool canClear = !cleared && manager.CanClearZone(_zone);
+        var region = manager.FindRegion(_zone);
+        if (region == null)
+        {
+            if (canClear && AllObstaclesCleared(manager))
+                cleared = manager.TryClearZone(_zone);
+            Apply(cleared, canClear && !cleared, canClear && !cleared ? _guide : null);
+            return;
+        }
+
+        canClear &= manager.GetRegionState(region) == RegionProgressState.PlayerClearing;
         if (canClear && AllObstaclesCleared(manager))
-            cleared = manager.TryClearZone(_zone);
-        Apply(cleared, canClear && !cleared);
+        {
+            manager.MarkRegionPlayerCleared(region);
+            canClear = false;
+            cleared = manager.IsZoneCleared(_zone);
+        }
+        Apply(cleared, canClear, GuideFor(manager.GetRegionState(region)));
+    }
+
+    private string GuideFor(RegionProgressState state)
+    {
+        switch (state)
+        {
+            case RegionProgressState.PlayerClearing: return _guide;
+            case RegionProgressState.AwaitingWorkers: return _awaitingWorkersGuide;
+            case RegionProgressState.WorkerPreparing: return _preparingGuide;
+            default: return null;
+        }
     }
 
     private bool AllObstaclesCleared(SettlementManager manager)
@@ -79,17 +112,18 @@ public class ZoneClearingView : MonoBehaviour
         return true;
     }
 
-    private void Apply(bool cleared, bool canClear)
+    private void Apply(bool cleared, bool canClear, string guide)
     {
         foreach (var obstacle in _obstacles)
             obstacle.Interactable = canClear;
 
-        bool showGuide = canClear && GameManager.Instance != null;
-        if (showGuide != _guideShown)
+        if (GameManager.Instance == null)
+            guide = null;
+        if (guide != _shownGuide)
         {
-            _guideShown = showGuide;
-            if (showGuide)
-                GameManager.Instance.ShowGuide(_guide);
+            _shownGuide = guide;
+            if (guide != null)
+                GameManager.Instance.ShowGuide(guide);
             else if (GameManager.Instance != null)
                 GameManager.Instance.HideGuide();
         }

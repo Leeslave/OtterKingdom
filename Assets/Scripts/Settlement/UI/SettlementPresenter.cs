@@ -106,7 +106,7 @@ public class SettlementPresenter : MonoBehaviour
             return;
         _guideTimer = GuideRefreshSeconds;
 
-        // 남은 시간이 매초 바뀌므로 안내 띠·열린 팝업을 짧은 간격으로 다시 그림
+        // 남은 시간이 매초 바뀌므로 안내 띠·열린 팝업을 짧은 간격으로 다시 그림 (공사·주민 작업)
         if (_manager.Settlement.Job != null)
         {
             RefreshGuide();
@@ -114,6 +114,12 @@ public class SettlementPresenter : MonoBehaviour
                 FillRequests();
             if (_construction.IsOpen)
                 OpenConstruction(_construction.Request);
+        }
+        else if (_manager.Settlement.TaskJobs.Count > 0)
+        {
+            RefreshGuide();
+            if (_board.IsOpen && _board.IsRequestTab)
+                FillRequests();
         }
     }
 
@@ -159,7 +165,7 @@ public class SettlementPresenter : MonoBehaviour
         {
             if (!settlement.BoardVisited)
                 _guide.Show("게시판을 확인해요", "확인하기");
-            else
+            else if (!TryShowPreparationGuide(current))
                 _guide.Show(current.Title, "보기");
             return;
         }
@@ -181,6 +187,32 @@ public class SettlementPresenter : MonoBehaviour
         }
 
         _guide.Hide();
+    }
+
+    // 길을 다 치운 지역: 주민 해달을 보내야 함 / 정비 중 남은 시간
+    private bool TryShowPreparationGuide(BoardRequestDefinition request)
+    {
+        var task = PreparationOf(request, out var state);
+        if (task == null)
+            return false;
+        if (state == RegionProgressState.WorkerPreparing)
+            _guide.Show($"{task.Title}  {FormatTime(_manager.GetTaskJob(task).Remaining(SettlementManager.NowTicks))}", "보기");
+        else
+            _guide.Show($"{task.Title}: 주민을 보내요", "보내기");
+        return true;
+    }
+
+    // 직접 치우는 부탁의 지역이 후속 정비 단계면 지금 손댈 작업 (아니면 null)
+    private SettlementTaskDefinition PreparationOf(BoardRequestDefinition request, out RegionProgressState state)
+    {
+        state = RegionProgressState.Locked;
+        var region = request.ClearZone != null ? _manager.FindRegion(request.ClearZone) : null;
+        if (region == null)
+            return null;
+        state = _manager.GetRegionState(region);
+        if (state != RegionProgressState.AwaitingWorkers && state != RegionProgressState.WorkerPreparing)
+            return null;
+        return _manager.CurrentPreparation(region);
     }
 
     private bool IsInGoalZone => _navigator != null && _navigator.CurrentZone == _goalZone;
@@ -269,6 +301,13 @@ public class SettlementPresenter : MonoBehaviour
             if (status == RequestStatus.Locked)
                 continue;
             string time = status == RequestStatus.Building ? JobTime(_manager.Settlement.Job) : null;
+            // 주민 해달이 정비하는 중이면 카드도 "진행 중" + 남은 시간
+            var task = PreparationOf(request, out var regionState);
+            if (status == RequestStatus.Available && task != null && regionState == RegionProgressState.WorkerPreparing)
+            {
+                status = RequestStatus.Building;
+                time = FormatTime(_manager.GetTaskJob(task).Remaining(now));
+            }
             _rows.Add((request, status, time));
         }
         _rows.Sort((a, b) => a.Item1.Order.CompareTo(b.Item1.Order));
@@ -331,6 +370,10 @@ public class SettlementPresenter : MonoBehaviour
         {
             note = "다른 공사가 끝나면 시작할 수 있어요.";
         }
+        else if (IsRequesterAtWork(request))
+        {
+            note = $"{request.Requester.DisplayName}{KoreanParticle.SubjectParticle(request.Requester.DisplayName)} 작업하러 가 있어요. 끝나면 시작할 수 있어요.";
+        }
         else
         {
             note = MissingText(construction);
@@ -342,9 +385,20 @@ public class SettlementPresenter : MonoBehaviour
         _construction.Show(request, speaker, line, _costs, note, startLabel, canStart);
     }
 
-    // 장소를 직접 치우는 부탁 (광산 길 열기): 비용 없이 [가 보기]로 그 장소에 감
+    // 장소를 직접 치우는 부탁 (광산 길 열기): 비용 없이 [가 보기]로 그 장소에 감. 다 치운 뒤에는 주민 작업 화면
     private void OpenClearing(BoardRequestDefinition request, RequestStatus status)
     {
+        var task = PreparationOf(request, out _);
+        if (task != null)
+        {
+            if (_board.IsOpen)
+                _board.Hide();
+            if (_construction.IsOpen)
+                _construction.Hide();
+            _manager.RequestTask(task);
+            return;
+        }
+
         var zone = request.ClearZone;
         bool here = _navigator != null && _navigator.CurrentZone == zone;
         string note = status == RequestStatus.Locked ? "아직 할 수 없어요."
@@ -354,6 +408,11 @@ public class SettlementPresenter : MonoBehaviour
         _construction.Show(request, request.Requester, request.Description, _costs, note, "가 보기",
             status == RequestStatus.Available && !here);
     }
+
+    // 공사를 직접 할 해달(부탁한 해달)이 주민 작업에 가 있음
+    private bool IsRequesterAtWork(BoardRequestDefinition request) =>
+        !request.Construction.IsInstant && !request.Construction.NeedsBuilder && request.Requester != null
+        && _manager.Settlement.GetWorkState(request.Requester.OtterId) == ResidentWorkState.Working;
 
     // 모자란 것 한 줄 (넉넉하면 null)
     private string MissingText(ConstructionDefinition construction)
@@ -449,7 +508,8 @@ public class SettlementPresenter : MonoBehaviour
         }
 
         int stage = _manager.Settlement.Stage;
-        _complete.Show($"{stage + 1:00} · {_manager.StageName}", construction.DisplayName, _paid, request.CompletionMessage);
+        _complete.Show($"{stage + 1:00} · {_manager.StageName}", construction.DisplayName, _paid, request.CompletionMessage,
+            construction.Icon != null ? construction.Icon : request.Icon);
     }
 
     #endregion

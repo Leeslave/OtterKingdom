@@ -12,11 +12,22 @@ public enum ConstructionStartResult
     NoBuilder,      // 건설 해달이 아직 없음
     NotEnoughGold,
     NotEnoughItems,
+    WorkerBusy,     // 일할 해달이 주민 작업에 가 있음
+}
+
+/// <summary>주민 작업을 시작하지 못한 이유</summary>
+public enum TaskStartResult
+{
+    Started,
+    NotAvailable,      // 잠김 / 이미 하는 중 / 끝남
+    WrongWorkerCount,  // 필요한 수만큼 고르지 않음
+    WorkerBusy,        // 주민이 아니거나 다른 일을 하는 중
 }
 
 /// <summary>
 /// 정착 진행(Settlement)의 주인. 전역 UI(GlobalUI) 루트에 붙어 씬을 넘어 유지된다.
 /// 게시판 부탁의 건설 비용(골드·재료)을 받고, 시간이 지나면 완료 처리하고, 장소 해금(밭 등)을 알려 준다.
+/// 개간 지역(P1): 플레이어가 길을 다 치우면 주민 해달을 작업에 보내고, 작업이 끝나면 지역을 운영(부탁 완료·꾸미기 구역 해금)한다.
 /// 기존 시스템(밭·가방·재화·퀘스트) 앞에서 진행만 제어하는 상위 레이어 — 그 내부 로직은 건드리지 않는다.
 /// - 세이브: GameManager가 LoadFromSave / WriteToSave를 호출. 부탁을 끝내면 SaveRequested로 바로 저장을 부탁한다
 /// </summary>
@@ -58,12 +69,24 @@ public class SettlementManager : MonoBehaviour
     /// <summary>게시판을 열어 달라는 부탁 (광장 게시판·안내 띠). 게시판 화면이 듣는다. 인자: 부탁 탭으로 열지</summary>
     public event Action<bool> OnBoardRequested;
 
+    /// <summary>주민 작업을 시작했을 때 (광장의 해달이 일하러 떠남)</summary>
+    public event Action<SettlementTaskDefinition> OnTaskStarted;
+
+    /// <summary>주민 작업이 끝났을 때. 인자: 이 작업으로 지역이 운영되었는지 (그러면 부탁 완료 팝업이 대신 알림)</summary>
+    public event Action<SettlementTaskDefinition, bool> OnTaskFinished;
+
+    /// <summary>작업 화면을 열어 달라는 부탁 (광산의 정비 표지판, 게시판). 작업 화면이 듣는다</summary>
+    public event Action<SettlementTaskDefinition> OnTaskRequested;
+
     // 일할 해달이 도착하지 못해도 이만큼 지나면 공사를 시작함 (길이 막히는 등)
     private const float WorkerWaitLimitSeconds = 25f;
     private float _workerWaitSeconds;
 
     // 끝난 건설 (부탁, 끝난 시각). 돌아옴 팝업이 자리를 비운 동안 끝난 것만 골라 알리고 비운다
     private readonly List<(BoardRequestDefinition request, long endTicks)> _finishedJobs = new List<(BoardRequestDefinition, long)>();
+    // 끝난 주민 작업 (작업, 끝난 시각). 돌아옴 팝업용
+    private readonly List<(SettlementTaskDefinition task, long endTicks)> _finishedTasks = new List<(SettlementTaskDefinition, long)>();
+    private readonly List<SettlementTaskJob> _dueTasks = new List<SettlementTaskJob>();
 
     private void Awake()
     {
@@ -85,7 +108,10 @@ public class SettlementManager : MonoBehaviour
 
     private void Update()
     {
-        if (!IsLoaded || Settlement.Job == null)
+        if (!IsLoaded)
+            return;
+        FinishDueTasks();
+        if (Settlement.Job == null)
             return;
 
         if (Settlement.Job.WaitingForWorker)
@@ -134,11 +160,18 @@ public class SettlementManager : MonoBehaviour
         {
             foreach (var request in _config.Requests)
             {
-                if (request != null && GetStatus(request) == RequestStatus.Available)
+                if (request != null && GetStatus(request) == RequestStatus.Available && !IsBeingPrepared(request))
                     return true;
             }
             return false;
         }
+    }
+
+    // 직접 치우는 부탁의 지역을 주민 해달이 정비하는 중 (플레이어가 할 일이 없음)
+    private bool IsBeingPrepared(BoardRequestDefinition request)
+    {
+        var region = request.ClearZone != null ? _config.FindRegion(request.ClearZone) : null;
+        return region != null && GetRegionState(region) == RegionProgressState.WorkerPreparing;
     }
 
     /// <summary>이 장소에 갈 수 있는지 (정착 조건만. 씬 준비 여부는 ZoneDefinition.IsAvailable)</summary>
@@ -191,6 +224,9 @@ public class SettlementManager : MonoBehaviour
             return ConstructionStartResult.NotAvailable;
         if (Settlement.Job != null && !construction.IsInstant)
             return ConstructionStartResult.Busy;
+        if (!construction.IsInstant && !construction.NeedsBuilder && request.Requester != null
+            && Settlement.GetWorkState(request.Requester.OtterId) == ResidentWorkState.Working)
+            return ConstructionStartResult.WorkerBusy;
         if (construction.NeedsBuilder && !HasBuilder)
             return ConstructionStartResult.NoBuilder;
         if (!HasEnoughGold(construction))
@@ -423,6 +459,167 @@ public class SettlementManager : MonoBehaviour
 
     #endregion
 
+    #region 개간 지역 · 주민 작업
+
+    public RegionProgressState GetRegionState(DevelopableRegionDefinition region) =>
+        SettlementRegionRules.GetRegionState(region, Settlement);
+
+    /// <summary>이 장소의 개간 지역 (없으면 null)</summary>
+    public DevelopableRegionDefinition FindRegion(ZoneDefinition zone) => _config.FindRegion(zone);
+
+    public SettlementTaskState GetTaskState(SettlementTaskDefinition task) => SettlementRegionRules.GetTaskState(task, Settlement);
+
+    /// <summary>진행 중인 작업 (없으면 null)</summary>
+    public SettlementTaskJob GetTaskJob(SettlementTaskDefinition task) =>
+        task != null && Settlement.TryGetTaskJob(task.TaskId, out var job) ? job : null;
+
+    /// <summary>이 지역에서 지금 손댈 후속 정비 (없으면 null)</summary>
+    public SettlementTaskDefinition CurrentPreparation(DevelopableRegionDefinition region) =>
+        SettlementRegionRules.CurrentPreparation(region, Settlement);
+
+    /// <summary>작업 화면을 연다 (작업 화면이 듣고 염)</summary>
+    public void RequestTask(SettlementTaskDefinition task)
+    {
+        if (task == null)
+            throw new ArgumentNullException(nameof(task));
+        OnTaskRequested?.Invoke(task);
+    }
+
+    /// <summary>작업에 보낼 수 있는 주민 해달 후보 (온 순서대로, 건설 해달 제외). 지금 바쁜 해달도 들어 있음 → CanAssign으로 확인</summary>
+    public void CollectResidents(List<SettlementOtterDefinition> result)
+    {
+        if (result == null)
+            throw new ArgumentNullException(nameof(result));
+        result.Clear();
+        foreach (var otterId in Settlement.ResidentOrder)
+        {
+            var otter = _config.FindOtter(otterId);
+            if (otter != null && !otter.IsBuilder && Settlement.TryGetResidentState(otterId, out var state) && state == ResidentState.Resident)
+                result.Add(otter);
+        }
+    }
+
+    /// <summary>지금 작업에 보낼 수 있는지 (주민 · 다른 작업 없음 · 공사하러 가 있지 않음)</summary>
+    public bool CanAssign(SettlementOtterDefinition otter) =>
+        SettlementRegionRules.CanWork(otter, Settlement) && !IsConstructionWorker(otter);
+
+    /// <summary>진행 중인 공사를 직접 하는 해달인지 (건설 해달이 필요 없는 공사는 부탁한 해달이 일함)</summary>
+    public bool IsConstructionWorker(SettlementOtterDefinition otter)
+    {
+        var request = JobRequest;
+        return otter != null && request != null && !request.Construction.NeedsBuilder
+            && request.Requester != null && request.Requester.OtterId == otter.OtterId;
+    }
+
+    /// <summary>주민 해달을 보내 작업을 시작한다. 끝나는 시각을 저장해 게임을 꺼 둔 동안에도 진행된다</summary>
+    public TaskStartResult TryStartTask(SettlementTaskDefinition task, IReadOnlyList<SettlementOtterDefinition> workers)
+    {
+        if (task == null)
+            throw new ArgumentNullException(nameof(task));
+        if (workers == null)
+            throw new ArgumentNullException(nameof(workers));
+
+        if (GetTaskState(task) != SettlementTaskState.Available)
+            return TaskStartResult.NotAvailable;
+        if (workers.Count != task.RequiredWorkers)
+            return TaskStartResult.WrongWorkerCount;
+
+        var ids = new List<string>(workers.Count);
+        foreach (var worker in workers)
+        {
+            if (worker == null || ids.Contains(worker.OtterId) || !CanAssign(worker))
+                return TaskStartResult.WorkerBusy;
+            ids.Add(worker.OtterId);
+        }
+
+        long now = NowTicks;
+        Settlement.StartTask(task.TaskId, ids, now, now + TimeSpan.FromSeconds(task.DurationSeconds).Ticks);
+        OnTaskStarted?.Invoke(task);
+        SaveRequested?.Invoke();
+        return TaskStartResult.Started;
+    }
+
+    /// <summary>플레이어가 지역의 길을 막은 것을 다 치움 → 후속 정비를 기다림 (정비할 작업이 없으면 바로 운영)</summary>
+    /// <returns>이번에 바뀌었으면 true</returns>
+    public bool MarkRegionPlayerCleared(DevelopableRegionDefinition region)
+    {
+        if (region == null)
+            throw new ArgumentNullException(nameof(region));
+        if (GetRegionState(region) != RegionProgressState.PlayerClearing)
+            return false;
+
+        Settlement.UnlockDevelopment(region.PlayerClearDevelopment);
+        TryOperate(region);
+        SaveRequested?.Invoke();
+        return true;
+    }
+
+    private void FinishDueTasks()
+    {
+        long now = NowTicks;
+        _dueTasks.Clear();
+        foreach (var job in Settlement.TaskJobs)
+        {
+            if (job.IsDue(now))
+                _dueTasks.Add(job);
+        }
+        foreach (var job in _dueTasks)
+            FinishTask(job);
+    }
+
+    private void FinishTask(SettlementTaskJob job)
+    {
+        var task = _config.FindTask(job.TaskId);
+        if (task == null)
+            Debug.LogWarning($"[SettlementManager] 진행 중이던 작업 '{job.TaskId}'을(를) 찾을 수 없어 해달을 돌려보냅니다.");
+        Settlement.FinishTask(job.TaskId, task != null ? task.ResultDevelopment : null);
+        if (task != null)
+        {
+            _finishedTasks.Add((task, job.EndUtcTicks));
+            var region = _config.FindRegionOf(task);
+            bool operated = region != null && TryOperate(region);
+            OnTaskFinished?.Invoke(task, operated);
+        }
+        SaveRequested?.Invoke();
+    }
+
+    // 길을 다 치웠고 후속 정비도 다 끝남 → 운영. 직접 치우는 부탁이 있으면 그 부탁을 끝내서(왕국 레벨·새 해달) 연다
+    private bool TryOperate(DevelopableRegionDefinition region)
+    {
+        if (GetRegionState(region) == RegionProgressState.Operational
+            || !Settlement.HasDevelopment(region.PlayerClearDevelopment)
+            || !SettlementRegionRules.ArePreparationsDone(region, Settlement))
+            return false;
+
+        var request = SettlementRules.FindClearing(_config, region.Zone);
+        if (request != null && GetStatus(request) == RequestStatus.Available)
+            TryStart(request);
+        if (!Settlement.HasDevelopment(region.OperationalDevelopment))
+            Settlement.UnlockDevelopment(region.OperationalDevelopment);
+        UnlockRegionDecor(region);
+        return true;
+    }
+
+    // 운영되는 지역의 꾸미기 구역을 연다 (불러온 세이브에도 맞춤. 이미 열려 있으면 그대로)
+    private void SyncRegionDecor()
+    {
+        foreach (var region in _config.Regions)
+        {
+            if (region != null && GetRegionState(region) == RegionProgressState.Operational)
+                UnlockRegionDecor(region);
+        }
+    }
+
+    private static void UnlockRegionDecor(DevelopableRegionDefinition region)
+    {
+        var decor = DecorManager.Instance;
+        if (decor == null || region.DecorBoard == null || region.DecorRegion == null)
+            return;
+        decor.UnlockDirectly(region.DecorBoard, region.DecorRegion.RegionId);
+    }
+
+    #endregion
+
     #region 자리를 비운 동안
 
     /// <summary>
@@ -457,6 +654,20 @@ public class SettlementManager : MonoBehaviour
         var building = JobRequest;
         if (building != null)
             lines.Add($"{building.Construction.ProgressLabel} · {FormatRemaining(Settlement.Job.Remaining(now))} 남았어요");
+
+        FinishDueTasks();
+        foreach (var (task, endTicks) in _finishedTasks)
+        {
+            if (endTicks >= leftAt)
+                lines.Add(string.IsNullOrEmpty(task.CompletionMessage) ? $"{task.Title} 끝!" : task.CompletionMessage);
+        }
+        _finishedTasks.Clear();
+        foreach (var job in Settlement.TaskJobs)
+        {
+            var task = _config.FindTask(job.TaskId);
+            if (task != null)
+                lines.Add($"{task.Title} · {FormatRemaining(job.Remaining(now))} 남았어요");
+        }
 
         int regrown = Settlement.CountGatherRegrown(leftAt, now);
         if (regrown > 0)
@@ -509,9 +720,11 @@ public class SettlementManager : MonoBehaviour
         }
 
         IsLoaded = true;
-        // 꺼 둔 동안 끝난 건설
+        // 꺼 둔 동안 끝난 건설·주민 작업
         if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
             FinishJob();
+        FinishDueTasks();
+        SyncRegionDecor();
 
         ApplyLevelCap();
         OnLoaded?.Invoke();
@@ -549,6 +762,15 @@ public class SettlementManager : MonoBehaviour
     {
         if (Settlement.Job != null)
             FinishJob();
+    }
+
+    /// <summary>진행 중인 주민 작업을 모두 바로 끝낸다 (테스트용)</summary>
+    public void DevFinishTasks()
+    {
+        _dueTasks.Clear();
+        _dueTasks.AddRange(Settlement.TaskJobs);
+        foreach (var job in _dueTasks)
+            FinishTask(job);
     }
 
     #endregion

@@ -40,6 +40,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d616fbca7b3ace543b85158c08436dc4, type: 2}
   - {fileID: 11400000, guid: fb35d679dbaa3bf44ba0fe37ec87c5ef, type: 2}
   - {fileID: 11400000, guid: f9b73a8d51966a54e9420ef04052e970, type: 2}
+  _regions:
+  - {fileID: 11400000, guid: 64bd9c77f54f5f64f904b9a057f13bad, type: 2}
+  _tasks:
+  - {fileID: 11400000, guid: 13f7193403b0af742b37211ed0380205, type: 2}
   _legacyDevelopments:
   - fishing_dock
   _startingItems:
