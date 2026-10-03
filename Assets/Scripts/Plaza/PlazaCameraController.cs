@@ -146,6 +146,45 @@ public class PlazaCameraController : MonoBehaviour
         UpdatePan();
     }
 
+    // Celebration (house finished): briefly glide in closer, hold, then ease
+    // back to the zoom the player chose. Stored separately from zoomSize so
+    // the player's own zoom is never lost.
+    private float celebrateTime = -1f;
+    private float celebrateDuration;
+    private float celebrateFactor = 1f;
+    private float celebrateZoom = 1f;
+
+    /// Glides to a world point and zooms in a little for a moment (about
+    /// `duration` seconds in total), then returns to the player's zoom.
+    public void Celebrate(Vector2 worldPoint, float zoomFactor = 0.8f, float duration = 2.4f)
+    {
+        PanTo(worldPoint);
+        celebrateFactor = zoomFactor;
+        celebrateDuration = Mathf.Max(0.1f, duration);
+        celebrateTime = 0f;
+    }
+
+    private void UpdateCelebrate()
+    {
+        if (celebrateTime < 0f)
+        {
+            celebrateZoom = 1f;
+            return;
+        }
+        celebrateTime += Time.unscaledDeltaTime;
+        float k = celebrateTime / celebrateDuration;
+        // in (0~25%) · hold · out (70~100%)
+        float amount = k < 0.25f ? Mathf.SmoothStep(0f, 1f, k / 0.25f)
+            : k < 0.7f ? 1f
+            : Mathf.SmoothStep(1f, 0f, (k - 0.7f) / 0.3f);
+        celebrateZoom = Mathf.Lerp(1f, celebrateFactor, amount);
+        if (k >= 1f)
+        {
+            celebrateTime = -1f;
+            celebrateZoom = 1f;
+        }
+    }
+
     /// Glides the view to centre on a world point (clamped into the map like
     /// any drag). A touch or drag by the player cancels it.
     public void PanTo(Vector2 worldPoint)
@@ -174,6 +213,7 @@ public class PlazaCameraController : MonoBehaviour
     // size changes are picked up without any change detection.
     private void LateUpdate()
     {
+        UpdateCelebrate();
         ApplyZoomAndClamp();
     }
 
@@ -461,7 +501,8 @@ public class PlazaCameraController : MonoBehaviour
     {
         bool hasBounds = TryGetBounds(out Rect bounds);
         GetZoomLimits(hasBounds, bounds, out float min, out float max);
-        cam.orthographicSize = Mathf.Clamp(zoomSize, min, max);
+        // A celebration may dip a little below the min zoom (it eases back)
+        cam.orthographicSize = Mathf.Clamp(zoomSize * celebrateZoom, min * celebrateZoom, max);
         if (!hasBounds) return;
 
         float halfHeight = cam.orthographicSize;

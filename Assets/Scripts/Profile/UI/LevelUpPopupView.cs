@@ -49,5 +49,6 @@ public class LevelUpPopupView : MonoBehaviour
         }
 
         _animator.Show();
+        PopupGlow.Play(_animator, _levelText.rectTransform);
     }
 }

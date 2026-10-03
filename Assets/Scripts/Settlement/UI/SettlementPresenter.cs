@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -14,6 +15,8 @@ public class SettlementPresenter : MonoBehaviour
 {
     private const string GoalVisitedFlag = "visited_goal_zone";
     private const float GuideRefreshSeconds = 0.25f;
+    // 집이 완성되는 순간(먼지 → 카메라가 다가간 뒤 별빛)을 보여 준 뒤 완료 팝업
+    private const float CelebrationSeconds = 1.9f;
 
     [Header("화면")]
     [SerializeField] private SettlementStatusView _status;
@@ -410,8 +413,20 @@ public class SettlementPresenter : MonoBehaviour
             _construction.Hide();
         if (_board.IsOpen)
             _board.Hide();
-        if (!_complete.IsOpen)
+        if (_complete.IsOpen)
+            return;
+        // 광장에서 완성되면 카메라가 다가가 집이 생기는 순간을 보여 준 뒤에 팝업
+        var plaza = SettlementPlazaView.Active;
+        if (plaza != null && plaza.CelebratesHere(request))
+            StartCoroutine(ShowCompletedAfter(CelebrationSeconds));
+        else
             ShowNextCompleted();
+    }
+
+    private IEnumerator ShowCompletedAfter(float seconds)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
+        ShowNextCompleted();
     }
 
     private void ShowNextCompleted()

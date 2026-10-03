@@ -4,8 +4,8 @@ using UnityEngine;
 
 /// <summary>
 /// 공사 현장 한 곳 (집 터, 농경지 개간 자리). 진행 비율에 따라 공사 과정을 단계로 보여 준다.
-/// - 집: 주춧돌 → 단계 그림(골조 → 벽 → 마무리, 완성될 집과 같은 크기)을 차례로 바꿔 끼움 → 완성되면 먼지가 펑
-///   (진짜 집은 DevelopmentGate가 띄움). 단계가 바뀔 때마다 통 튀고 먼지가 남
+/// - 집: 주춧돌 → 단계 그림(골조 → 벽 → 마무리, 완성될 집과 같은 크기)을 차례로 바꿔 끼움 → 완성되면 먼지가 펑,
+///   집 위로 별빛이 차례로 반짝 (진짜 집은 DevelopmentGate가 띄움). 단계가 바뀔 때마다 통 튀고 먼지가 남
 /// - 개간: 치울 것(덤불·돌·통나무)이 순서대로 먼지와 함께 사라짐
 /// 건설 해달이 설 자리와 진행 말풍선 위치도 알려 준다.
 /// </summary>
@@ -18,6 +18,10 @@ public class ConstructionSiteView : MonoBehaviour
     private const float DustSeconds = 0.7f;
     private const int DustPool = 8;
     private const int BurstCount = 7;
+    private const int GlintCount = 6;
+    private const float GlintInterval = 0.13f;
+    private const float GlintSeconds = 0.7f;
+    private static readonly Color GlintColor = new Color(1f, 0.98f, 0.86f, 1f);
 
     [Header("건설")]
     [Tooltip("ConstructionDefinition의 ID (예: con_house_2)")]
@@ -48,6 +52,13 @@ public class ConstructionSiteView : MonoBehaviour
     [SerializeField] private Sprite _dustSprite;
     [Tooltip("먼지가 피어오를 가로 폭 (월드 단위)")]
     [SerializeField] private float _dustWidth = 4f;
+
+    [Header("완성 빛")]
+    [Tooltip("완성될 때 집 위에서 차례로 반짝이는 별빛")]
+    [SerializeField] private Sprite _twinkleSprite;
+
+    [Tooltip("빛 재질 (조명을 받지 않아 밤에도 밝음)")]
+    [SerializeField] private Material _glowMaterial;
 
     public string ConstructionId => _constructionId;
     public Vector2 StandPoint => _standPoint.position;
@@ -144,8 +155,14 @@ public class ConstructionSiteView : MonoBehaviour
         }
     }
 
-    /// <summary>완성 순간 먼지가 펑</summary>
-    public void PlayCompleteBurst() => Burst(transform.position, BurstCount);
+    /// <summary>완성 순간: 먼지가 펑. lightDelay초 뒤(카메라가 다가온 뒤) 집 위로 별빛이 차례로 반짝</summary>
+    public void PlayCompleteBurst(float lightDelay)
+    {
+        Burst(transform.position, BurstCount);
+        var area = BuiltArea();
+        for (int i = 0; i < GlintCount; i++)
+            StartCoroutine(Glint(area, lightDelay + 0.15f + i * GlintInterval));
+    }
 
     // 이 진행 비율에서 보일 단계 그림 번호 (-1이면 주춧돌만)
     private int StageIndexFor(float progress)
@@ -191,6 +208,61 @@ public class ConstructionSiteView : MonoBehaviour
         }
         target.localScale = baseScale;
     }
+
+    #region 완성 빛
+
+    // 다 지은 것이 차지하는 곳: 집은 마지막 단계 그림(완성될 집과 같은 크기), 아니면 먼지 폭만큼 위로 (별빛이 뜰 곳)
+    private Rect BuiltArea()
+    {
+        var p = transform.position;
+        if (_stage == null || _stageSprites.Count == 0 || _stageSprites[_stageSprites.Count - 1] == null)
+            return new Rect(p.x - _dustWidth * 0.5f, p.y, _dustWidth, _dustWidth * 0.6f);
+
+        var bounds = _stageSprites[_stageSprites.Count - 1].bounds;
+        var stage = _stage.transform;
+        Vector2 a = stage.TransformPoint(bounds.min);
+        Vector2 b = stage.TransformPoint(bounds.max);
+        return Rect.MinMaxRect(Mathf.Min(a.x, b.x), Mathf.Min(a.y, b.y), Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y));
+    }
+
+    private SpriteRenderer CreateLight(string name, Sprite sprite, int order)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(transform, false);
+        var renderer = go.AddComponent<SpriteRenderer>();
+        renderer.sprite = sprite;
+        renderer.sharedMaterial = _glowMaterial;
+        renderer.sortingOrder = order;
+        return renderer;
+    }
+
+    // 집 윗부분 아무 곳에서 별빛이 톡 커졌다 돌며 사라짐
+    private IEnumerator Glint(Rect area, float delay)
+    {
+        for (float t = 0f; t < delay; t += Time.deltaTime)
+            yield return null;
+
+        var glint = CreateLight("Glint", _twinkleSprite, _baseOrder + 6);
+        glint.transform.position = new Vector3(
+            Random.Range(area.xMin + area.width * 0.15f, area.xMax - area.width * 0.15f),
+            Random.Range(area.yMin + area.height * 0.4f, area.yMax - area.height * 0.05f),
+            transform.position.z);
+        float size = Random.Range(0.6f, 1f) / _twinkleSprite.bounds.size.x;
+        for (float t = 0f; t < GlintSeconds; t += Time.deltaTime)
+        {
+            float k = t / GlintSeconds;
+            float shine = Mathf.Pow(Mathf.Sin(Mathf.PI * k), 1.5f);
+            glint.transform.localScale = Vector3.one * (size * shine);
+            glint.transform.localRotation = Quaternion.Euler(0f, 0f, 45f * k);
+            var color = GlintColor;
+            color.a = shine;
+            glint.color = color;
+            yield return null;
+        }
+        Destroy(glint.gameObject);
+    }
+
+    #endregion
 
     #region 먼지
 

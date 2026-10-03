@@ -386,6 +386,7 @@ public static partial class SettlementSetup
         ("UI_Bubble_Alert", 0.85f, 0f),
         ("UI_Bubble_Hammer", 0.85f, 0f),
         ("FX_Dust", 0.9f, 0.5f),
+        ("FX_Twinkle", 0.5f, 0.5f), // 집 완성: 집 위 별빛 (celebrate_fx.py)
         ("UI_Bubble_Speech", 1.75f, 0f), // 해달 말풍선 (꼬리 끝 피벗, 머리 위에 붙음)
     };
 
