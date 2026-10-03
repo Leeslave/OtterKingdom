@@ -444,7 +444,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5958150208365383190, guid: 9151fe4746f829e40b13e6e3edc02391, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 809086554}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7016598081870151973, guid: 9151fe4746f829e40b13e6e3edc02391, type: 3}
       insertIndex: -1
@@ -1208,6 +1211,109 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1957275069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &295196803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 295196804}
+  - component: {fileID: 295196805}
+  m_Layer: 0
+  m_Name: Petals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &295196804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295196803}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 375573525}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &295196805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295196803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19107ac8187a1947aa8f05160c8b5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DriftingPetals
+  _sprites:
+  - {fileID: 21300000, guid: c63e84bc0ed3bf242932d89ceacbaf9e, type: 3}
+  - {fileID: 21300000, guid: ffddea700257b2e4baa2e368bfc0d84b, type: 3}
+  _count: 6
+  _size: {x: 0.016, y: 0.026}
+  _crossSeconds: {x: 9, y: 15}
+  _sortingOrder: 31960
+--- !u!1 &295314632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 295314633}
+  - component: {fileID: 295314634}
+  m_Layer: 0
+  m_Name: ChimneySmoke
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &295314633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295314632}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1923563, y: 6.861859, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1376828946}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &295314634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295314632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ff2924319341e4c80ebf385c9f1717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::ChimneySmoke
+  _sprite: {fileID: 21300000, guid: bbcda45d0f17a004f91210104068f461, type: 3}
+  _color: {r: 1, g: 1, b: 1, a: 0.85}
+  _size: 1.9
+  _rise: 2.8
+  _drift: 1.2
+  _lifeSeconds: 3.2
+  _interval: 0.7
+  _sortingOrder: 31850
 --- !u!1 &309491929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,6 +1690,40 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &375573524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 375573525}
+  m_Layer: 0
+  m_Name: SceneLife
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &375573525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375573524}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 295196804}
+  - {fileID: 613654574}
+  - {fileID: 525851321}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &405808662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,6 +2534,54 @@ Material:
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!1 &525851320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 525851321}
+  - component: {fileID: 525851322}
+  m_Layer: 0
+  m_Name: Vignette
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &525851321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525851320}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 375573525}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &525851322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525851320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe91c6ae6bbb3a4439cd04680b019464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::WorldVignette
+  _sprite: {fileID: 21300000, guid: e5667eb36b7b3964b8f8ecbbadc840c2, type: 3}
+  _material: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  _strength: 0.3
+  _sortingOrder: 31999
 --- !u!1 &528140806
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,6 +3286,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 191430252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &613654573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613654574}
+  - component: {fileID: 613654575}
+  m_Layer: 0
+  m_Name: SunShafts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613654574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613654573}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 375573525}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &613654575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613654573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe2c0efb1f1a174a8e3ea4188c4e9f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::SunShafts
+  _sprite: {fileID: 21300000, guid: 1aad15e9b2c7f7b4dadcd647ce781bc7, type: 3}
+  _material: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  _alpha: 0.32
+  _pulseSpeed: 0.25
+  _sortingOrder: 31970
 --- !u!1 &626075676
 GameObject:
   m_ObjectHideFlags: 0
@@ -4124,6 +4361,58 @@ MonoBehaviour:
   _follow: {fileID: 0}
   _offset: {x: 0, y: 1.35, z: 0}
   _bobHeight: 0.1
+--- !u!1 &809086553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 809086554}
+  - component: {fileID: 809086555}
+  m_Layer: 0
+  m_Name: ChimneySmoke
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &809086554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809086553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1097065, y: 6.3620644, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 91317298}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &809086555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809086553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ff2924319341e4c80ebf385c9f1717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::ChimneySmoke
+  _sprite: {fileID: 21300000, guid: bbcda45d0f17a004f91210104068f461, type: 3}
+  _color: {r: 1, g: 1, b: 1, a: 0.85}
+  _size: 1.9
+  _rise: 2.8
+  _drift: 1.2
+  _lifeSeconds: 3.2
+  _interval: 0.7
+  _sortingOrder: 31850
 --- !u!1 &832545072
 GameObject:
   m_ObjectHideFlags: 0
@@ -7560,7 +7849,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8891011656612778222, guid: e5ee08f9ee05f0547a5c1247e61974ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 295314633}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1271293126931774428, guid: e5ee08f9ee05f0547a5c1247e61974ea, type: 3}
       insertIndex: -1
@@ -11760,3 +12052,4 @@ SceneRoots:
   - {fileID: 2085176133}
   - {fileID: 1580927326}
   - {fileID: 1570214738}
+  - {fileID: 375573525}

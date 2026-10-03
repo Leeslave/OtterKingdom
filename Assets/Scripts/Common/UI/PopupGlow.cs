@@ -201,7 +201,7 @@ public class PopupGlow : MonoBehaviour
         }
 
         float k = (local - cycle * period) / TwinkleSeconds;
-        float shine = k < 1f ? Mathf.Pow(Mathf.Sin(Mathf.PI * k), 1.5f) : 0f;
+        float shine = k < 1f ? Mathf.Pow(Mathf.Max(0f, Mathf.Sin(Mathf.PI * k)), 1.5f) : 0f;
         var rect = twinkle.Image.rectTransform;
         rect.anchoredPosition = Vector2.Scale(twinkle.Spot, panelSize) + twinkle.Offset;
         rect.sizeDelta = Vector2.one * (twinkle.Size * shine);

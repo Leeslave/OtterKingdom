@@ -251,7 +251,7 @@ public class ConstructionSiteView : MonoBehaviour
         for (float t = 0f; t < GlintSeconds; t += Time.deltaTime)
         {
             float k = t / GlintSeconds;
-            float shine = Mathf.Pow(Mathf.Sin(Mathf.PI * k), 1.5f);
+            float shine = Mathf.Pow(Mathf.Max(0f, Mathf.Sin(Mathf.PI * k)), 1.5f);
             glint.transform.localScale = Vector3.one * (size * shine);
             glint.transform.localRotation = Quaternion.Euler(0f, 0f, 45f * k);
             var color = GlintColor;

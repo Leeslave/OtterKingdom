@@ -71,6 +71,8 @@ public class ZoneClearingView : MonoBehaviour
             return;
 
         bool cleared = manager.IsZoneCleared(_zone);
+        if (cleared)
+            ClearLeftoverObstacles(manager);
         bool canClear = !cleared && manager.CanClearZone(_zone);
         var region = manager.FindRegion(_zone);
         if (region == null)
@@ -99,6 +101,16 @@ public class ZoneClearingView : MonoBehaviour
             case RegionProgressState.AwaitingWorkers: return _awaitingWorkersGuide;
             case RegionProgressState.WorkerPreparing: return _preparingGuide;
             default: return null;
+        }
+    }
+
+    // 이미 열린 장소에 남은 장애물 (옛 세이브는 부탁을 한꺼번에 끝내서 장애물 표시가 없음) → 치운 것으로 남겨 길을 막지 않게
+    private void ClearLeftoverObstacles(SettlementManager manager)
+    {
+        foreach (var obstacle in _obstacles)
+        {
+            if (!manager.IsObstacleCleared(obstacle.ObstacleId))
+                manager.MarkObstacleCleared(obstacle.ObstacleId);
         }
     }
 

@@ -1089,6 +1089,40 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &211155728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211155729}
+  m_Layer: 0
+  m_Name: SceneLife
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &211155729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211155728}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 541772128}
+  - {fileID: 930550749}
+  - {fileID: 1423860662}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &235923241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1841,6 +1875,80 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 2118812594}
   _sortingOrder: 31998
+--- !u!1 &541772127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 541772128}
+  - component: {fileID: 541772129}
+  m_Layer: 0
+  m_Name: CrystalSparkles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &541772128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541772127}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 211155729}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &541772129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541772127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94308d8ddd058f1479b6b4dc683ad2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::SparkleField
+  _area:
+    _points:
+    - {x: -4.16, y: 4.86}
+    - {x: -3.66, y: 4.97}
+    - {x: 0.4, y: 5.3}
+    - {x: 1.06, y: 5.4}
+    - {x: 2.14, y: 5.06}
+    - {x: 2.6, y: 3.38}
+    - {x: 3.78, y: 1.42}
+    - {x: 4.2, y: 1.5}
+    - {x: -3.82, y: -0.67}
+    - {x: -4.39, y: -1.17}
+    - {x: 4.24, y: -2.42}
+    - {x: 3.59, y: -2.84}
+    - {x: -3.33, y: -5.48}
+    _radius: 0.12
+    _gridTopLeft: {x: 0, y: 0}
+    _gridCell: 1
+    _gridRows: []
+  _sprite: {fileID: 21300000, guid: 3d6f4bb804b595141bc81c788436772b, type: 3}
+  _material: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  _color: {r: 1, g: 0.98, b: 1, a: 1}
+  _size: {x: 0.38, y: 0.62}
+  _lifeSeconds: 0.85
+  _interval: {x: 0.12, y: 0.4}
+  _nightAlpha: 1
+  _sortingOrder: 5
+  _haloSprite: {fileID: 21300000, guid: a3b3a1fc7a449504ca09c0df43ef6fa3, type: 3}
+  _haloScale: 2.6
+  _haloColor: {r: 0.78, g: 0.62, b: 1, a: 0.75}
 --- !u!1 &601074094
 GameObject:
   m_ObjectHideFlags: 0
@@ -2859,6 +2967,61 @@ MeshRenderer:
   m_SortingOrder: 32000
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &930550748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 930550749}
+  - component: {fileID: 930550750}
+  m_Layer: 0
+  m_Name: LanternGlow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &930550749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930550748}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 211155729}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &930550750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930550748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ecc572c8ea5c9f47b77c9da6b1108de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::GlowFlicker
+  _points:
+  - {x: -0.55, y: 5.3}
+  - {x: 2.75, y: 4.4}
+  _sprite: {fileID: 21300000, guid: a3b3a1fc7a449504ca09c0df43ef6fa3, type: 3}
+  _material: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  _color: {r: 1, g: 0.78, b: 0.4, a: 1}
+  _size: 1.6
+  _dayAlpha: 0.35
+  _nightAlpha: 0.9
+  _flickerSpeed: 3
+  _sortingOrder: 31900
 --- !u!1 &962804748
 GameObject:
   m_ObjectHideFlags: 0
@@ -4127,6 +4290,54 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1423860661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1423860662}
+  - component: {fileID: 1423860663}
+  m_Layer: 0
+  m_Name: Vignette
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1423860662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423860661}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 211155729}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1423860663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423860661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe91c6ae6bbb3a4439cd04680b019464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::WorldVignette
+  _sprite: {fileID: 21300000, guid: e5667eb36b7b3964b8f8ecbbadc840c2, type: 3}
+  _material: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  _strength: 0.34
+  _sortingOrder: 31999
 --- !u!1 &1425335993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5534,3 +5745,4 @@ SceneRoots:
   - {fileID: 1289671777}
   - {fileID: 304964781}
   - {fileID: 779818355}
+  - {fileID: 211155729}
