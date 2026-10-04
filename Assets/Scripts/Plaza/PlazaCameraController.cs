@@ -71,6 +71,7 @@ public class PlazaCameraController : MonoBehaviour
     // frame (not overwritten by them), so a temporary limit such as a rotated
     // screen doesn't lose it.
     private float zoomSize;
+    private Rect? boundsOverride;
 
     private bool tracking;
     private int trackedTouchId = -1; // -1 while tracking = mouse
@@ -183,6 +184,15 @@ public class PlazaCameraController : MonoBehaviour
             celebrateTime = -1f;
             celebrateZoom = 1f;
         }
+    }
+
+    /// Replaces the bound renderers with a fixed rectangle (e.g. the unlocked
+    /// part of a bigger map that is drawn as one sprite). null goes back to
+    /// the renderers. Applied immediately, so a shrinking area pulls the view in.
+    public void SetBoundsOverride(Rect? rect)
+    {
+        boundsOverride = rect;
+        if (cam != null) ApplyZoomAndClamp();
     }
 
     /// Glides the view to centre on a world point (clamped into the map like
@@ -533,9 +543,14 @@ public class PlazaCameraController : MonoBehaviour
         return min >= max ? center : Mathf.Clamp(value, min, max);
     }
 
-    // Union of the active bound renderers, shrunk by the inset.
+    // Union of the active bound renderers, shrunk by the inset (or the override).
     private bool TryGetBounds(out Rect rect)
     {
+        if (boundsOverride.HasValue)
+        {
+            rect = boundsOverride.Value;
+            return true;
+        }
         bool has = false;
         Bounds b = default;
         AddBounds(boundsSource, ref b, ref has);

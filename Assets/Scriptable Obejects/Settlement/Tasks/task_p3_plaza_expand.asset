@@ -16,7 +16,7 @@ MonoBehaviour:
   _title: "\uAD11\uC7A5 \uD655\uC7A5 \uC815\uBE44"
   _description: "\uB364\uBD88\uC744 \uAC77\uC5B4 \uB0B8 \uB545\uC744 \uACE0\uB974\uACE0\n\uC9D1
     \uC9C0\uC744 \uC790\uB9AC\uAE4C\uC9C0 \uAE38\uC744 \uB0B4\uC694."
-  _completionMessage: "\uAD11\uC7A5 \uB3D9\uCABD\uC774 \uB113\uC5B4\uC84C\uC5B4\uC694!"
+  _completionMessage: "\uAD11\uC7A5\uC774 \uB113\uC5B4\uC84C\uC5B4\uC694!"
   _requiredWorkers: 1
   _durationSeconds: 60
   _requiredGold: 0

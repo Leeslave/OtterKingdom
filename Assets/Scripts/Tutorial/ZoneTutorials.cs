@@ -32,7 +32,7 @@ public static class ZoneTutorials
         switch (sceneName)
         {
             case Plaza: return PlazaSteps();
-            case Farm: return FarmSteps();
+            case Farm: return FarmSteps(gameUI);
             case Fishing: return FishingSteps(gameUI);
             case Mine: return MineSteps(gameUI);
             default: return new List<TutorialStep>();
@@ -106,7 +106,7 @@ public static class ZoneTutorials
         };
     }
 
-    private static List<TutorialStep> FarmSteps()
+    private static List<TutorialStep> FarmSteps(GameUI gameUI)
     {
         PlotView firstPlot = null;
         PlotView lockedPlot = null;
@@ -134,6 +134,9 @@ public static class ZoneTutorials
             TutorialStep.At("잠긴 밭",
                 "코인을 모아 잠긴 밭을 누르면 해금할 수 있어요.\n밭이 넓어질수록 더 많이 거둬요.",
                 () => TutorialTargets.World(lockedPlot)),
+            TutorialStep.At("밭 강화",
+                "코인으로 밭을 강화하면\n작물이 더 빨리 자라요.\n레벨이 오르면 게임을 꺼 둔 동안에도 농사를 지어요.",
+                () => TutorialTargets.Ui(gameUI.FarmUpgradeButton)),
             TutorialStep.At("오프라인 농사",
                 "여기 작물을 등록해 두면\n게임을 꺼 둔 동안에도 농사를 지어요.",
                 () => TutorialTargets.World(offlineNpc)),

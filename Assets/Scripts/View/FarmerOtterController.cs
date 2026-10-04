@@ -124,6 +124,9 @@ public class FarmerOtterController : MonoBehaviour
 
     private void Start()
     {
+        // The farm upgrade belongs to the farm, so the button only exists in
+        // the farm scene (same as the mine's pickaxe button).
+        if (GameManager.Instance != null) GameManager.Instance.ShowFarmUpgradeButton();
         RegisterAnchors();
         activeRoutine = StartCoroutine(WanderRoutine());
     }

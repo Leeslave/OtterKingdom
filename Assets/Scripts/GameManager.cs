@@ -1095,6 +1095,20 @@ public class GameManager : MonoBehaviour
         SaveNow();
     }
 
+    // Called once by the farm scene (FarmerOtterController); other scenes have no farm button.
+    public void ShowFarmUpgradeButton()
+    {
+        gameUI.ShowFarmUpgradeButton();
+    }
+
+    // Same rules as the pickaxe/rod upgrade: coins, levels 1..5, offline farming from level 2.
+    public bool TryUpgradeFarm()
+    {
+        if (!farmService.TryUpgrade(CurrencyManager.Instance, goldCurrency)) return false;
+        SaveNow();
+        return true;
+    }
+
     // Called once by the mine scene; other scenes have no pickaxe button.
     public void ShowPickaxeUpgradeButton()
     {

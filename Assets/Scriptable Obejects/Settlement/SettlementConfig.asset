@@ -82,6 +82,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b005bbbe40bd6d24da6abfd32b9dc8d7, type: 2}
   - {fileID: 11400000, guid: 156d5847280c5304d88321217bf4c373, type: 2}
   - {fileID: 11400000, guid: 741939d959ed2134facded6b4d5d7147, type: 2}
+  - {fileID: 11400000, guid: 0e1d716526375e24d809a0244f7545e3, type: 2}
+  - {fileID: 11400000, guid: f5b1d855caaef5f44bb5a1a8a18869ee, type: 2}
+  - {fileID: 11400000, guid: 1714f73ffc3776740865cf8551e24480, type: 2}
+  - {fileID: 11400000, guid: b8aa8cd583633fe4384969043c1c7678, type: 2}
+  - {fileID: 11400000, guid: 530dbfac009933c4ab988042beac3beb, type: 2}
+  - {fileID: 11400000, guid: fdaabcf7454e2f246b30c6f6aba69973, type: 2}
+  - {fileID: 11400000, guid: 3a24ccb6dfaedb84589c73a3f23abf84, type: 2}
+  - {fileID: 11400000, guid: c9059088449304448a986dbf5d32cfb8, type: 2}
+  - {fileID: 11400000, guid: 002ee510f3f94774788b281c789c4108, type: 2}
+  - {fileID: 11400000, guid: 7f0b18e169606f04a91ae545d8d9b921, type: 2}
+  - {fileID: 11400000, guid: 61b31d7b1c213f34f82e3ffbf5f7b29f, type: 2}
+  - {fileID: 11400000, guid: ed8aff918a46b57429b33c88e6155b6a, type: 2}
+  - {fileID: 11400000, guid: 994db66c166cb75438a322ef619aad27, type: 2}
+  - {fileID: 11400000, guid: 9d96805879f38534e9f088496c8a8ba8, type: 2}
+  - {fileID: 11400000, guid: bfcf3870f76e2a44baa00e40bb89a3da, type: 2}
   _boardUpgradeDevelopment: board_upgraded
   _boardManagedDevelopment: receptionist_assigned
   _guildDevelopment: guild_office_built
@@ -93,7 +108,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 52fe9cb99cf6859459d62ddb1cdb2fcb, type: 2}
   _projects:
   - {fileID: 11400000, guid: e7163b0a1deb9534baf06ca5c340ca10, type: 2}
-  - {fileID: 11400000, guid: caa84a88abf6b224e82b58641d28cc96, type: 2}
   - {fileID: 11400000, guid: 029cf430a2e5b954f8b723a1245f4be0, type: 2}
   - {fileID: 11400000, guid: 38644c2290d1d444bb26ff8839e1f9f1, type: 2}
   - {fileID: 11400000, guid: 4b6e26cc84d42c04886123ef711f9282, type: 2}
@@ -112,6 +126,13 @@ MonoBehaviour:
   _lifeRequestLevel: 7
   _fairyInvitedDevelopment: fairy_invited
   _fairyArrivedDevelopment: fairy_arrived
+  _territories:
+  - {fileID: 11400000, guid: 6c0c328b9411dc141a705ac221abab8b, type: 2}
+  - {fileID: 11400000, guid: 30cecac7e8801ea49b12635187275a04, type: 2}
+  - {fileID: 11400000, guid: cc3fd2b7c2f8ef643a6baa196049120b, type: 2}
+  - {fileID: 11400000, guid: 1e025a2e26d1c3f449b857675c47ef80, type: 2}
+  - {fileID: 11400000, guid: fc6ab743ea060434ca4d5abbbee347f0, type: 2}
+  _territoryStartLevel: 6
   _legacyDevelopments:
   - fishing_dock
   _startingItems:

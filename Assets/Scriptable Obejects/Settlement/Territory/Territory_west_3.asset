@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3851747b9d35bb741a9bb6e784d9fa0d, type: 3}
+  m_Name: Territory_west_3
+  m_EditorClassIdentifier: OtterKingdom::TerritoryExpansionDefinition
+  _expansionId: territory_west_3
+  _direction: 0
+  _tier: 3
+  _displayName: "\uC11C\uCABD \uB05D \uC232"
+  _clearings:
+  - _task: {fileID: 11400000, guid: 3a24ccb6dfaedb84589c73a3f23abf84, type: 2}
+    _rewards:
+    - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+      _amount: 60
+  - _task: {fileID: 11400000, guid: c9059088449304448a986dbf5d32cfb8, type: 2}
+    _rewards:
+    - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+      _amount: 70
+  - _task: {fileID: 11400000, guid: 002ee510f3f94774788b281c789c4108, type: 2}
+    _rewards:
+    - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+      _amount: 80
+  _mission: {fileID: 11400000, guid: 95ddc215a73a100468a57686bd2786f3, type: 2}

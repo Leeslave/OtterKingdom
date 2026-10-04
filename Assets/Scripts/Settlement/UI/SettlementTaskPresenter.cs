@@ -211,9 +211,13 @@ public class SettlementTaskPresenter : MonoBehaviour
                 _popup.Hide();
             return;
         }
-        _popup.ShowDone(task, string.IsNullOrEmpty(task.CompletionMessage)
-            ? $"{task.Title}{KoreanParticle.SubjectParticle(task.Title)} 끝났어요!"
-            : task.CompletionMessage);
+        // 영토의 숲 개간: 몇 번째인지 · 받은 목재 · 다 끝났으면 미션 안내
+        string message = _manager.TerritoryDoneMessage(task);
+        if (message == null)
+            message = string.IsNullOrEmpty(task.CompletionMessage)
+                ? $"{task.Title}{KoreanParticle.SubjectParticle(task.Title)} 끝났어요!"
+                : task.CompletionMessage;
+        _popup.ShowDone(task, message);
     }
 
     private static string FormatTime(TimeSpan remaining)

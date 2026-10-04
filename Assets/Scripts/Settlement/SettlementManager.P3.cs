@@ -380,6 +380,8 @@ public partial class SettlementManager
     {
         if (!IsLoaded && !silent)
             return;
+        // 영토 확장 미션은 공동사업 순서와 따로 (땅이 열리면 새 이웃 맞이하기가 열림)
+        UpdateTerritory(silent);
         // 한 번에 여러 사업을 끝낼 수 있음 (불러올 때 소급). 무한 반복은 막음
         for (int guard = 0; guard < 16; guard++)
         {

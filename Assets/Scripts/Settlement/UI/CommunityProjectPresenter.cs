@@ -257,8 +257,17 @@ public class CommunityProjectPresenter : MonoBehaviour
 
     private void FillProject()
     {
+        // 납품으로 바로 끝나는 사업(영토 확장 미션)은 완료 알림에서 이미 화면을 닫음
         var project = _project;
+        if (project == null)
+            return;
         var status = _manager.GetProjectStatus(project);
+        if ((status.Phase == ProjectPhase.Completed || status.Phase == ProjectPhase.Locked) && _manager.IsTerritoryMission(project))
+        {
+            // 영토 확장 미션은 공동사업 순서와 따로: 끝났으면 닫음
+            CloseProject();
+            return;
+        }
         if (status.Phase == ProjectPhase.Completed || status.Phase == ProjectPhase.Locked)
         {
             // 끝났으면 다음 사업으로 (반복 사업은 다음 회차)
@@ -621,6 +630,12 @@ public class CommunityProjectPresenter : MonoBehaviour
         string message = string.IsNullOrEmpty(project.CompletionMessage) ? $"{project.Title} 완료!" : project.CompletionMessage;
         if (xp > 0)
             message += $"\n경험치 +{xp:N0}";
+        // 영토 확장: 새 땅은 광장이 비춰 줌 (다음 사업 버튼 없음)
+        if (_manager.IsTerritoryMission(project))
+        {
+            GameNotices.Post(new GameNotice(message));
+            return;
+        }
         var next = _manager.ActiveProject;
         GameNotices.Post(next != null && next != project
             ? new GameNotice(message, "다음 사업", () => _manager.RequestProject(_manager.ActiveProject ?? project))
@@ -783,7 +798,14 @@ public class CommunityProjectPresenter : MonoBehaviour
         var config = _manager.Config;
         var text = new StringBuilder("0123456789:/ ,.!?%·→✓[]()“”…+가능한만큼넣기닫기재료모으기넣음보유필요완성하면경험치조금완료기록건설시작현장보기주민배정만나러가기모임열기광장으로의뢰보기다음사업첫다시돌려받을수없어요넣을까요을를취소고른소품하나골라주세요비용시간은같아요치운것중대기지금공사가는끝나면있어요준비걸려요이미냈어요보낼명작업에게말걸어입주도와찾아오고있모두모였어마무리하는건네주기다른로보상골드개새집했함께일할늘었생활마쳤부터시작할Lv성장퀘스트생산으로모아요");
         text.Append(NoRefundNote);
-        foreach (var project in config.Projects)
+        var projects = new List<CommunityProjectDefinition>(config.Projects);
+        // 영토 확장 미션도 같은 화면에서 열림
+        foreach (var territory in config.Territories)
+        {
+            if (territory != null && territory.Mission != null)
+                projects.Add(territory.Mission);
+        }
+        foreach (var project in projects)
         {
             if (project == null)
                 continue;

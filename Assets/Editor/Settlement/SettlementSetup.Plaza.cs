@@ -84,7 +84,7 @@ public static partial class SettlementSetup
         var walkable = Object.FindAnyObjectByType<PlazaWalkableArea>();
         var controller = Object.FindAnyObjectByType<PlazaController>();
         var background = plazaRoot.Find("Background").GetComponent<SpriteRenderer>();
-        var bounds = background.bounds;
+        var bounds = GroundBounds(background);
         Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
         Vector2 ToPixel(Vector3 world) => new Vector2((world.x - bounds.min.x) * GroundPixelsPerUnit, (bounds.max.y - world.y) * GroundPixelsPerUnit);
 

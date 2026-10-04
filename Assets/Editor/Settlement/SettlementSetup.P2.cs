@@ -183,7 +183,7 @@ public static partial class SettlementSetup
             Debug.LogError("[SettlementSetup] 광장에 Settlement가 없습니다. Tools/Settlement/Setup Plaza를 먼저 실행하세요.");
             return;
         }
-        var bounds = plazaRoot.Find("Background").GetComponent<SpriteRenderer>().bounds;
+        var bounds = GroundBounds(plazaRoot.Find("Background").GetComponent<SpriteRenderer>());
         Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
         BuildP2(root, plazaRoot.Find("Props"), root.GetComponent<SettlementPlazaView>(), ToWorld);
 
