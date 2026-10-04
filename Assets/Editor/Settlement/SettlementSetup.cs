@@ -345,6 +345,7 @@ public static partial class SettlementSetup
         configSo.FindProperty("_gatherCooldownSeconds").floatValue = 60f;
         CreateRegionData(configSo);
         CreateP2Data(configSo, otters, requests);
+        CreateP3Data(configSo, otters);
         configSo.ApplyModifiedPropertiesWithoutUndo();
         LinkSpecialists(otters);
         LinkReceptionist(otters);

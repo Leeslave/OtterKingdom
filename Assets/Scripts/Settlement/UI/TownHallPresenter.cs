@@ -25,6 +25,8 @@ public class TownHallPresenter : MonoBehaviour
     private readonly List<(string title, MilestoneStepState state)> _stepRows = new List<(string, MilestoneStepState)>();
     private BoardRequestDefinition _milestoneTarget;
     private BoardRequestDefinition _hallTarget;
+    // P3: 회관의 다음 목표가 공동사업일 때 (메인 부탁을 다 끝낸 뒤)
+    private CommunityProjectDefinition _hallProject;
     private float _refreshTimer;
     private bool _glyphsReady;
 
@@ -147,7 +149,10 @@ public class TownHallPresenter : MonoBehaviour
             _manager.GetLaborSummary(), WorkText(), CompletedText());
 
         _hallTarget = _manager.CurrentRequest;
-        if (_manager.AreAllMainDone)
+        _hallProject = _hallTarget == null ? _manager.ActiveProject : null;
+        if (_hallProject != null)
+            _hall.ShowNext(_manager.ProjectTitle(_hallProject), ProjectNextText(_hallProject), true);
+        else if (_manager.AreAllMainDone)
             _hall.ShowAllDone(AllDoneMessage);
         else if (_hallTarget != null)
             _hall.ShowNext(_hallTarget.Title, _hallTarget.Description, true);
@@ -202,11 +207,42 @@ public class TownHallPresenter : MonoBehaviour
             if (_manager.Settlement.IsCompleted(request.RequestId))
                 names.Add(StepTitle(request));
         }
+        // P3: 끝낸 공동사업 (반복 사업은 끝낸 횟수)
+        foreach (var project in CommunityProjectRules.Sorted(_manager.Config))
+        {
+            if (!CommunityProjectRules.IsCompleted(project, _manager.Settlement))
+                continue;
+            names.Add(project.Repeatable ? $"{project.Title} ×{_manager.Settlement.ProjectCycle(project.ProjectId)}" : project.Title);
+        }
         return names.Count > 0 ? string.Join(" · ", names) : "아직 완료한 발전이 없어요.";
+    }
+
+    // 공동사업 한 줄: 주민 대사 + 지금 할 일 (레벨이 모자라면 필요한 레벨)
+    private string ProjectNextText(CommunityProjectDefinition project)
+    {
+        var status = _manager.GetProjectStatus(project);
+        string step;
+        if (status.Phase == ProjectPhase.NeedsLevel)
+            step = $"Lv.{project.RequiredLevel}부터 시작할 수 있어요 (지금 Lv.{_manager.PlayerLevel}).";
+        else if (status.Phase == ProjectPhase.Delivering)
+            step = "재료를 조금씩 나눠 넣을 수 있어요.";
+        else
+        {
+            var stage = _manager.CurrentStage(project);
+            step = stage != null ? $"지금 할 일: {stage.Label}" : "마무리하는 중이에요.";
+        }
+        return string.IsNullOrEmpty(project.Line) ? step : $"{project.Line}\n{step}";
     }
 
     private void HandleHallGo()
     {
+        if (_hallProject != null)
+        {
+            var project = _hallProject;
+            _hall.Hide();
+            _manager.RequestProject(project);
+            return;
+        }
         var target = _hallTarget;
         if (target == null)
             return;
@@ -271,6 +307,17 @@ public class TownHallPresenter : MonoBehaviour
         {
             if (group != null)
                 text.Append(group.Title).Append(group.Description);
+        }
+        text.Append("부터 시작할 수 있어요지금 Lv재료를 조금씩 나눠 넣을 수 있어요할 일마무리하는 중이에요×");
+        foreach (var project in config.Projects)
+        {
+            if (project == null)
+                continue;
+            text.Append(project.Title).Append(project.Line);
+            foreach (var title in project.CycleTitles)
+                text.Append(title);
+            foreach (var stage in project.Stages)
+                text.Append(stage.Label);
         }
         for (int i = 0; i < config.StageCount; i++)
             text.Append(config.StageName(i));

@@ -28,6 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01434be3ebf84ed69c1bbf9c0735c9c9, type: 2}
   - {fileID: 11400000, guid: d77a0cb424b64937aa0cf04256be1d97, type: 2}
   - {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
+  - {fileID: 11400000, guid: b93ad005e0c001b4da2eb2e220f88b21, type: 2}
   _requests:
   - {fileID: 11400000, guid: d5ddcf15a08ec3b44b1590e7df581403, type: 2}
   - {fileID: 11400000, guid: 1311babe897fada4f810827479de71e7, type: 2}
@@ -65,6 +66,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89f8370961c321946a97e38e82264ac4, type: 2}
   - {fileID: 11400000, guid: 4ae64d9e40ccf474c990f1db977259db, type: 2}
   - {fileID: 11400000, guid: 9c2b2f6d207bef6469652282d7838652, type: 2}
+  - {fileID: 11400000, guid: 1156dd9f0c3fc7e4894ce61f0c643296, type: 2}
+  - {fileID: 11400000, guid: 9e32fdb120fa474439370d07be8bc4c8, type: 2}
+  - {fileID: 11400000, guid: 006f5d82ab4990e4e91f304f43cc6b39, type: 2}
+  - {fileID: 11400000, guid: c9dcea93e2e935f488dda211d339a311, type: 2}
+  - {fileID: 11400000, guid: 1782bc09cf816d64c96e43aaa712cbce, type: 2}
+  - {fileID: 11400000, guid: 7ce106a61a92bf34cbc8427cbea833c6, type: 2}
   _regions:
   - {fileID: 11400000, guid: 64bd9c77f54f5f64f904b9a057f13bad, type: 2}
   - {fileID: 11400000, guid: 4dcd2c8c3b284983a4d03fce7db21aff, type: 2}
@@ -73,6 +80,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d50f99438fa84966b9a67bd2acc18f2b, type: 2}
   - {fileID: 11400000, guid: f8efba697e6a02c4683f56bd5a509afa, type: 2}
   - {fileID: 11400000, guid: b005bbbe40bd6d24da6abfd32b9dc8d7, type: 2}
+  - {fileID: 11400000, guid: 156d5847280c5304d88321217bf4c373, type: 2}
+  - {fileID: 11400000, guid: 741939d959ed2134facded6b4d5d7147, type: 2}
   _boardUpgradeDevelopment: board_upgraded
   _boardManagedDevelopment: receptionist_assigned
   _guildDevelopment: guild_office_built
@@ -82,6 +91,27 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 085d765cee5a78145ac88e54aecdb51b, type: 2}
   _milestoneGroups:
   - {fileID: 11400000, guid: 52fe9cb99cf6859459d62ddb1cdb2fcb, type: 2}
+  _projects:
+  - {fileID: 11400000, guid: e7163b0a1deb9534baf06ca5c340ca10, type: 2}
+  - {fileID: 11400000, guid: caa84a88abf6b224e82b58641d28cc96, type: 2}
+  - {fileID: 11400000, guid: 029cf430a2e5b954f8b723a1245f4be0, type: 2}
+  - {fileID: 11400000, guid: 38644c2290d1d444bb26ff8839e1f9f1, type: 2}
+  - {fileID: 11400000, guid: 4b6e26cc84d42c04886123ef711f9282, type: 2}
+  - {fileID: 11400000, guid: 3bec8eb8f2f72344ebb4011fcb01c42b, type: 2}
+  _projectRequests:
+  - {fileID: 11400000, guid: a78cebe982b9d134a823a8076a071e6b, type: 2}
+  - {fileID: 11400000, guid: 5dc900ba6bc6dfd48b10cc835d63ed5e, type: 2}
+  - {fileID: 11400000, guid: 292dc99f2d140724d89317b370ccd61d, type: 2}
+  - {fileID: 11400000, guid: 8cb5a9fb40209084891dd8448b31ffad, type: 2}
+  - {fileID: 11400000, guid: 7f96cfcb3f541d046974699580adffb2, type: 2}
+  _lifeRequests:
+  - {fileID: 11400000, guid: 69507eb37779f0b429eb1d7ba740d06a, type: 2}
+  - {fileID: 11400000, guid: 48eb6d2a5cacfd94dbc00c77c6951add, type: 2}
+  - {fileID: 11400000, guid: d767ca02f620be946b7717f4b690848c, type: 2}
+  _lifeRequestDevelopment: town_hall_built
+  _lifeRequestLevel: 7
+  _fairyInvitedDevelopment: fairy_invited
+  _fairyArrivedDevelopment: fairy_arrived
   _legacyDevelopments:
   - fishing_dock
   _startingItems:

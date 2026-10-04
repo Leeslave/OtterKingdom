@@ -41,6 +41,14 @@ public class SettlementOtterDefinition : ScriptableObject
     [TextArea]
     [SerializeField] private string _assignLine;
 
+    [Tooltip("배치(파견)가 저장되면 열리는 발전 (예: 농부 → fairy_invited = 요정 방문 예약). 비우면 없음")]
+    [SerializeField] private string _assignDevelopment;
+
+    [Header("입주 (P3 새 이웃)")]
+    [Tooltip("광장에서 만난 뒤 눌렀을 때 입주를 묻는 말 (예: 저 집에서 살아도 될까요?)")]
+    [TextArea]
+    [SerializeField] private string _moveInLine;
+
     [Header("말")]
     [Tooltip("광장에서 눌렀을 때 하는 말 (하나를 골라 말함)")]
     [TextArea]
@@ -63,6 +71,8 @@ public class SettlementOtterDefinition : ScriptableObject
     public bool IsSpecialist => _workRegion != null;
     public CollectionEntry CollectionEntry => _collectionEntry;
     public string AssignLine => _assignLine;
+    public string AssignDevelopment => _assignDevelopment;
+    public string MoveInLine => _moveInLine;
     public IReadOnlyList<string> Lines => _lines;
     public string IntroLine => _introLine;
     public string IntroDevelopment => _introDevelopment;

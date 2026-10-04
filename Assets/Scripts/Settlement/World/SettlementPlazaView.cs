@@ -16,6 +16,8 @@ using UnityEngine;
 /// - 광장 주민 작업(공동 공간 정비 등)에 보낸 해달은 광장의 그 현장에서 일함 (다른 장소 작업은 길 끝으로 나감)
 /// - 건설 해달을 내보내고, 건설 중이면 현장으로 보내 일하게 함 (건설 해달이 필요 없는 첫 집은 부탁한 해달이 직접)
 /// - 정착 해달에 말풍선(탭하면 한마디, 정착 후보의 "!")을 붙임
+/// - 요정(P3): 농부 파견으로 방문이 예약되면, 새 해달과 같은 대기 규칙으로 안전한 때(파견 대화·완료 팝업·화면 전환이 끝난 뒤) 나타남
+///   (요정 NPC의 DevelopmentGate가 도착 발전으로 켜지고 카메라가 비춤). 다른 장소에 있으면 다음 광장 방문의 안전한 때
 /// 기존 광장 코드(PlazaController 배회, A*, 깊이 정렬)는 그대로 쓰고 그 위에서 켜고 끄기만 한다.
 /// </summary>
 // GameManager.Start(0)가 세이브를 불러온 뒤, PlazaController.Start(0) 다음에 광장을 맞춤
@@ -57,6 +59,10 @@ public class SettlementPlazaView : MonoBehaviour
     [SerializeField] private List<PlazaTaskSiteView> _taskSites = new List<PlazaTaskSiteView>();
     [Tooltip("관리 해달의 근무 자리 (게시판 옆)")]
     [SerializeField] private List<ManagementStationView> _stations = new List<ManagementStationView>();
+
+    [Header("공동사업 (P3)")]
+    [Tooltip("공동사업 화면의 [현장 보기]가 비출 곳 (이름 = 사업 단계 ID, 예: clear_brush)")]
+    [SerializeField] private List<Transform> _focusPoints = new List<Transform>();
 
     [Header("해달 말풍선")]
     [SerializeField] private Sprite _speechBubble;
@@ -120,6 +126,9 @@ public class SettlementPlazaView : MonoBehaviour
             return;
         if (_visitQueue.Count > 0 && IsSafeToPresent())
             PresentVisitors();
+        // 요정은 새 해달이 다 들어온 다음 차례 (둘이 한꺼번에 화면을 차지하지 않게)
+        else if (_manager.IsFairyComing && IsSafeToPresent())
+            _manager.TryMarkFairyArrived();
         RemoveOttersAtWork();
         KeepManagersAtStation();
         var job = _manager.Settlement.Job;
@@ -171,8 +180,10 @@ public class SettlementPlazaView : MonoBehaviour
     private void HandleDevelopmentUnlocked(string developmentId)
     {
         // 새로 생긴 집은 통통 튀어나오고, 길이 바뀌었으니 걷기 영역을 다시 계산
+        // (튀는 동안은 크기가 0에서 시작해 발자국·걷기 다각형이 작게 잡히므로 다 튄 뒤 한 번 더)
         ApplyGates(_manager.HasDevelopment, true);
         _walkableArea.Rebuild();
+        StartCoroutine(RebuildWalkableAfterPop());
 
         foreach (var gate in _gates)
         {
@@ -183,6 +194,12 @@ public class SettlementPlazaView : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private System.Collections.IEnumerator RebuildWalkableAfterPop()
+    {
+        yield return new WaitForSeconds(DevelopmentGate.PopSeconds + 0.05f);
+        _walkableArea.Rebuild();
     }
 
     // 완성 순간: 먼지가 펑 (집은 DevelopmentGate가 통 튀어나오게 함), 카메라가 현장에 살짝 다가간 뒤 집 위로 별빛
@@ -288,6 +305,8 @@ public class SettlementPlazaView : MonoBehaviour
         if (TutorialOverlay.IsShowing)
             return false;
         if (GameManager.Instance != null && GameManager.Instance.IsModalOpen)
+            return false;
+        if (CommunityProjectPresenter.IsOpen || GatheringDirector.IsPlaying)
             return false;
         return FairyShopPresenter.Instance == null || !FairyShopPresenter.Instance.IsOpen;
     }
@@ -412,6 +431,30 @@ public class SettlementPlazaView : MonoBehaviour
             return false;
         _camera.PanTo((Vector2)target.position + Vector2.up * 1f);
         return true;
+    }
+
+    /// <summary>이 공사 현장 쪽으로 카메라를 옮김 (공동사업 [현장 보기])</summary>
+    public bool FocusSite(string constructionId)
+    {
+        var site = FindSite(constructionId);
+        if (site == null)
+            return false;
+        _camera.PanTo(site.StandPoint);
+        return true;
+    }
+
+    /// <summary>이름이 같은 공동사업 지점 쪽으로 카메라를 옮김 (장애물·정비 현장)</summary>
+    public bool FocusPoint(string pointName)
+    {
+        foreach (var point in _focusPoints)
+        {
+            if (point != null && point.name == pointName)
+            {
+                _camera.PanTo(point.position);
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>광장의 이 해달 (아직 안 나왔으면 null). 튜토리얼 강조 등</summary>
@@ -562,12 +605,12 @@ public class SettlementPlazaView : MonoBehaviour
         _builder.SetWorkSite(jobSite != null && byBuilder ? jobSite : null);
     }
 
-    // 광장 주민 작업에서 이 해달이 설 자리 (보낸 순서대로)
+    // 광장 주민 작업에서 이 해달이 설 자리 (보낸 순서대로). 생활 의뢰처럼 같은 작업 틀을 회차마다 하는 경우도 그 해달의 작업으로 찾음
     private bool TryGetTaskStand(SettlementTaskDefinition task, string otterId, out Vector2 stand, out Vector2 look)
     {
         stand = look = default;
         var site = FindTaskSite(task);
-        var job = _manager.GetTaskJob(task);
+        var job = _manager.Settlement.FindTaskJobOf(otterId);
         if (site == null || job == null)
             return false;
         int index = 0;

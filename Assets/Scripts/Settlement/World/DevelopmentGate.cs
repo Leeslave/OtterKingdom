@@ -7,7 +7,8 @@ using UnityEngine;
 /// </summary>
 public class DevelopmentGate : MonoBehaviour
 {
-    private const float PopSeconds = 0.35f;
+    /// <summary>새로 생길 때 통 튀는 시간 (걷기 영역은 이 뒤에 다시 계산 — 튀는 동안 크기가 0에서 시작하므로)</summary>
+    public const float PopSeconds = 0.35f;
 
     [Header("조건")]
     [Tooltip("이 발전 ID (예: house_1, farmland)")]
@@ -21,6 +22,9 @@ public class DevelopmentGate : MonoBehaviour
 
     [Tooltip("이 발전이 열리면 숨김 (같은 자리가 더 큰 건물로 바뀔 때: 접수소 → 마을회관). 비우면 없음")]
     [SerializeField] private string _supersededBy;
+
+    [Tooltip("켜면 통 튀지 않고 바로 나타남 (넓은 바닥 조각처럼 튀면 어색한 것)")]
+    [SerializeField] private bool _noPop;
 
     public string DevelopmentId => _developmentId;
     public bool FocusOnUnlock => _focusOnUnlock && _showWhenUnlocked;
@@ -45,7 +49,7 @@ public class DevelopmentGate : MonoBehaviour
 
         gameObject.SetActive(visible);
         // 부모가 꺼져 있으면(다른 발전 오브젝트 아래) 연출 없이
-        if (visible && animate && gameObject.activeInHierarchy)
+        if (visible && animate && !_noPop && gameObject.activeInHierarchy)
             StartCoroutine(Pop());
     }
 

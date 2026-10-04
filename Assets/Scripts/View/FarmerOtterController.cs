@@ -6,9 +6,12 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 // Drives the farmer otter NPC in the Farm scene: wanders between hand-placed
-// waypoints while nothing is ready to harvest, and breaks off to walk to and
-// harvest the nearest AwaitingHarvest slot across every unlocked plot as soon
-// as one appears (GameManager.HarvestSlot then replants the same crop).
+// waypoints while the farmer is idle, and breaks off to walk to the slot the
+// farmer is harvesting (FarmService.TryGetHarvestTarget) and play the harvest
+// animation there. It only shows the work: FarmService harvests and replants
+// on its own timer in every zone scene, so the animation finishing is never
+// what puts crops in the bag (being in the farm or elsewhere gives the same
+// result).
 // Waypoints are wired by hand in the Inspector. Slot anchors are registered
 // per plot in `plotSlotAnchors`: any unlocked plot with no entry is filled in
 // automatically on Start from that plot's FurrowSlotView objects, and plots
@@ -91,6 +94,9 @@ public class FarmerOtterController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Coroutine activeRoutine;
     private bool isHarvesting;
+    // The farmer's target this otter is showing (so a new target is noticed).
+    private int shownPlot = -1;
+    private int shownSlot = -1;
     private FarmService subscribedFarmService;
     private DecorPlaySession playSession;
     private readonly List<Vector2> detour = new List<Vector2>();
@@ -184,42 +190,21 @@ public class FarmerOtterController : MonoBehaviour
         // Placed but the farm's first-time guide isn't done yet: no harvesting.
         if (!GameManager.CanProduceIn(GameManager.FarmZoneId)) return;
 
-        if (!FindNearestAwaitingHarvestSlot(out int plotIndex, out int slotIndex)) return;
+        var farmService = GameManager.Instance.FarmService;
+        if (!farmService.TryGetHarvestTarget(out int plotIndex, out int slotIndex))
+        {
+            shownPlot = shownSlot = -1;
+            return;
+        }
+        // Already shown this harvest (the animation ended before the timer): wait for the next.
+        if (plotIndex == shownPlot && slotIndex == shownSlot) return;
+        var anchors = FindAnchors(plotIndex);
+        if (anchors == null || anchors.slotAnchors == null || slotIndex >= anchors.slotAnchors.Length
+            || anchors.slotAnchors[slotIndex] == null) return;
 
         if (activeRoutine != null) StopCoroutine(activeRoutine);
         ReleasePlay(); // harvesting beats playing
         activeRoutine = StartCoroutine(HarvestRoutine(plotIndex, slotIndex));
-    }
-
-    private bool FindNearestAwaitingHarvestSlot(out int bestPlot, out int bestSlot)
-    {
-        var farmService = GameManager.Instance.FarmService;
-        bestPlot = -1;
-        bestSlot = -1;
-        float bestDist = float.MaxValue;
-
-        foreach (var entry in plotSlotAnchors)
-        {
-            if (entry.slotAnchors == null || !farmService.IsPlotUnlocked(entry.plotIndex)) continue;
-
-            int count = Mathf.Min(entry.slotAnchors.Length, PlotSaveData.SlotCount);
-            for (int i = 0; i < count; i++)
-            {
-                if (entry.slotAnchors[i] == null) continue;
-                if (farmService.GetSlotState(entry.plotIndex, i) != FurrowSlotState.AwaitingHarvest) continue;
-                // Bag too full for this yield — the slot waits until the player sells.
-                if (!GameManager.Instance.CanStoreHarvest(entry.plotIndex, i)) continue;
-
-                float dist = Vector2.Distance(transform.position, entry.slotAnchors[i].position);
-                if (dist < bestDist)
-                {
-                    bestDist = dist;
-                    bestPlot = entry.plotIndex;
-                    bestSlot = i;
-                }
-            }
-        }
-        return bestPlot >= 0;
     }
 
     private IEnumerator WanderRoutine()
@@ -301,18 +286,21 @@ public class FarmerOtterController : MonoBehaviour
             animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !animator.IsInTransition(0));
     }
 
+    // Shows one harvest: walk to the slot, play the animation once. The crop
+    // goes into the bag on FarmService's timer, not here — if the farmer
+    // already moved on (or the player changed the crop) while we walked, the
+    // otter just goes back to wandering and picks up the current target.
     private IEnumerator HarvestRoutine(int plotIndex, int slotIndex)
     {
         isHarvesting = true;
+        shownPlot = plotIndex;
+        shownSlot = slotIndex;
 
         var farmService = GameManager.Instance.FarmService;
         Transform anchor = FindAnchors(plotIndex).slotAnchors[slotIndex];
         yield return MoveTo(anchor.position);
 
-        // Slot may have been harvested by something else (e.g. the debug
-        // panel button) or cleared by the player's crop change while we were
-        // walking over — bail out quietly.
-        if (farmService.GetSlotState(plotIndex, slotIndex) != FurrowSlotState.AwaitingHarvest)
+        if (!farmService.TryGetHarvestTarget(out int nowPlot, out int nowSlot) || nowPlot != plotIndex || nowSlot != slotIndex)
         {
             isHarvesting = false;
             activeRoutine = StartCoroutine(WanderRoutine());
@@ -327,8 +315,6 @@ public class FarmerOtterController : MonoBehaviour
         yield return null;
         yield return new WaitUntil(() =>
             !animator.GetCurrentAnimatorStateInfo(0).IsName("Harvest") && !animator.IsInTransition(0));
-
-        GameManager.Instance.HarvestSlot(plotIndex, slotIndex);
 
         isHarvesting = false;
         activeRoutine = StartCoroutine(WanderRoutine());

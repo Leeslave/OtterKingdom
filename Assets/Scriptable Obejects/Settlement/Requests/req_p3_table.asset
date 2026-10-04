@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_p3_table
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_p3_table
+  _order: 100
+  _category: 0
+  _contentVersion: 3
+  _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBAA8\uC784"
+  _description: 
+  _icon: {fileID: 21300000, guid: ad2aab974b612974ba832e82cc0b1c96, type: 3}
+  _requester: {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
+  _requiredDevelopment: p3_gathering_01_paid
+  _minResidents: 0
+  _construction: {fileID: 11400000, guid: dc9a670942016e6438d19ae775c808d4, type: 2}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _settles: []
+  _arrivals: []
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 0}
+  _completionMessage: "\uC2DD\uD0C1\uC774 \uC0DD\uAE30\uBA74 \uBAA8\uC784\uC744 \uC5F4
+    \uC218 \uC788\uC5B4\uC694"
+  _kingdomLevel: 0

@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b3971375a7a6642a80ea3695130172, type: 3}
+  m_Name: Project_p3_supply_01
+  m_EditorClassIdentifier: OtterKingdom::CommunityProjectDefinition
+  _projectId: p3_supply_01
+  _order: 1
+  _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBE44\uCD95"
+  _line: "\uD68C\uAD00\uC740 \uC0DD\uACBC\uB294\uB370 \uD568\uAED8 \uC4F8 \uC7AC\uB8CC\uAC00
+    \uC5C6\uB124. \uB2E4\uC74C \uACF5\uC0AC\uB97C \uC704\uD574 \uC870\uAE08\uC529
+    \uBAA8\uC544 \uB458\uAE4C?"
+  _requester: {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
+  _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
+  _resultPreview: "\uD68C\uAD00 \uC55E\uC5D0 \uBE44\uCD95 \uC0C1\uC790\uAC00 \uC0DD\uACA8\uC694"
+  _completionMessage: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBE44\uCD95\uC744
+    \uB9C8\uCCE4\uC5B4\uC694!\n\uD68C\uAD00 \uC55E\uC5D0 \uBE44\uCD95 \uC0C1\uC790\uAC00
+    \uC0DD\uACBC\uC5B4\uC694."
+  _requiredLevel: 7
+  _requiredDevelopment: town_hall_built
+  _gold: 300
+  _items:
+  - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+    _amount: 12
+  - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
+    _amount: 6
+  _stages:
+  - _stageId: build_box
+    _action: 0
+    _label: "\uC0C1\uC790 \uC124\uCE58"
+    _hint: "\uAC74\uC124 \uD574\uB2EC\uC774 \uD68C\uAD00 \uC55E\uC5D0 \uBE44\uCD95
+      \uC0C1\uC790\uB97C \uB193\uC544\uC694."
+    _construction: {fileID: 11400000, guid: a78cebe982b9d134a823a8076a071e6b, type: 2}
+    _options: []
+    _obstacleIds: []
+    _clearedDevelopment: 
+    _task: {fileID: 0}
+    _resident: {fileID: 0}
+    _houseSlotId: 
+  _resultDevelopment: supply_ready
+  _xpReward: 560
+  _completionEntry: {fileID: 11400000, guid: 1156dd9f0c3fc7e4894ce61f0c643296, type: 2}
+  _repeatable: 0
+  _cycleTitles: []
+  _cycleCosts: []
+  _costGrowthPerCycle: 0.25
+  _maxCostMultiplier: 2
+  _xpPercentOfLevel: 0
+  _milestoneCycles: 3
+  _milestoneDevelopment: 

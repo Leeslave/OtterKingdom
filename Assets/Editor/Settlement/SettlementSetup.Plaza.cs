@@ -135,10 +135,10 @@ public static partial class SettlementSetup
         arrivalPoint.SetParent(root, false);
         arrivalPoint.position = ToWorld(ArrivalPixel);
 
-        // 요정 상점은 밭이 열린 뒤 (모종을 사러)
+        // 요정 상점은 농부를 밭에 파견한 뒤 요정이 광장에 실제로 나타나면 (P3: 파견 → 방문 예약 → 안전한 때 도착)
         var fairy = Object.FindAnyObjectByType<FairyNpcView>(FindObjectsInactive.Include);
         if (fairy != null)
-            AddGate(fairy.gameObject, "farmland", true);
+            AddGate(fairy.gameObject, FairyArrivedDevelopment, true, true);
 
         // 걷기 영역이 게시판·잡목 발자국도 보게
         AddPolygonRoot(walkable, root);

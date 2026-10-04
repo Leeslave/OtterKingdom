@@ -14,4 +14,5 @@ public enum ItemChangeReason
     Mining, // 광산에서 캔 광석 (오프라인 채굴 포함)
     Gather, // 광장에서 주운 재료 (나뭇가지 → 목재)
     Construction, // 건설 재료로 씀
+    Delivery, // 공동사업·생활 의뢰에 납품 (P3)
 }

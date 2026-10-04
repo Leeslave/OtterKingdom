@@ -14,8 +14,9 @@ using UnityEngine.SceneManagement;
 // Every zone scene (Farm, Fishing, Mine, Plaza) has its own instance of the
 // GameManager prefab (OtterKingdom > Tools > Setup GameManager Prefab), so the
 // save, coins, inventory and sale UI are shared and the data can't drift. The
-// farm keeps ticking in every scene — crops grow wherever the player is, but
-// only the farm scene's otter harvests them.
+// farm keeps ticking in every scene — crops grow and the working farmer
+// harvests and replants them wherever the player is (FarmService); the farm
+// scene's otter only shows it.
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -102,7 +103,13 @@ public class GameManager : MonoBehaviour
 
     private float autoSaveTimer;
     private float pendingOfflineElapsedSec;
+    // The pending time includes the app being closed (first zone scene after
+    // launch): crops only grow through it. Otherwise it is a scene load, and
+    // the farmer keeps working through it like any online time.
+    private bool pendingElapsedIsLaunch;
     private double pendingAbsenceSec;
+    // The farmer harvested something this frame: save once at the end.
+    private bool farmChanged;
     // Set while the app is in the background (mobile), to measure the absence.
     private DateTime? pausedAtUtc;
 
@@ -160,7 +167,9 @@ public class GameManager : MonoBehaviour
         // After the bag, so the collection also marks what the bag holds, and
         // before Start's offline harvest, so quests count it.
         LoadGlobalProgressOnce();
-        farmService = new FarmService(save, cropDefinitions, farmBalance, GetSeedCount, TryConsumeSeed);
+        farmService = new FarmService(save, cropDefinitions, farmBalance, new FarmHost(this));
+        farmService.Harvested += HandleFarmHarvested;
+        farmService.NoticeRaised += HandleFarmNotice;
         fishingService = new FishingService(save, fishingBalance);
         miningService = new MiningService(save, miningBalance);
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
@@ -223,8 +232,12 @@ public class GameManager : MonoBehaviour
 
         if (pendingOfflineElapsedSec > 0f)
         {
-            farmService.Tick(pendingOfflineElapsedSec);
+            // App closed: growth only (offline production has its own rules).
+            // Scene load: the farmer kept working, like anywhere else.
+            if (pendingElapsedIsLaunch) farmService.Grow(pendingOfflineElapsedSec);
+            else farmService.Tick(pendingOfflineElapsedSec);
             pendingOfflineElapsedSec = 0f;
+            farmChanged = false;
             SaveNow();
         }
 
@@ -248,11 +261,54 @@ public class GameManager : MonoBehaviour
         TickMining(Time.deltaTime);
 
         autoSaveTimer += Time.deltaTime;
-        if (autoSaveTimer >= autoSaveIntervalSec)
+        if (farmChanged || autoSaveTimer >= autoSaveIntervalSec)
         {
             autoSaveTimer = 0f;
+            farmChanged = false;
             SaveNow();
         }
+    }
+
+    // ------------------------------------------------------------- farm work
+
+    // A harvest went into the bag (from any zone): saved at the end of the
+    // frame, so a crash can't hand it out twice or lose the replant.
+    private void HandleFarmHarvested(int plotIndex, int slotIndex, string cropId, int amount)
+    {
+        farmChanged = true;
+    }
+
+    // Seed shortage / full bag, once when it starts — a non-blocking notice
+    // in whichever zone the player is (GameNotices waits for a safe moment).
+    private void HandleFarmNotice(FarmNotice notice)
+    {
+        farmChanged = true;
+        GameNotices.Post(FarmNoticeText.Build(notice, cropId =>
+        {
+            var crop = farmService.GetCrop(cropId);
+            return crop != null ? crop.displayName : cropId;
+        }));
+    }
+
+    private class FarmHost : IFarmHost
+    {
+        private readonly GameManager game;
+
+        public FarmHost(GameManager game) => this.game = game;
+
+        public int SeedCount(string cropId) => game.GetSeedCount(cropId);
+
+        public bool TryConsumeSeed(string cropId) => game.TryConsumeSeed(cropId);
+
+        public bool CanStoreHarvest(string cropId, int amount) =>
+            game.TryFindItem(cropId, out var item) && game.Bag.GetAddableAmount(item) >= amount;
+
+        public void StoreHarvest(string cropId, int amount)
+        {
+            if (game.TryFindItem(cropId, out var item)) game.Bag.Add(item, amount, ItemChangeReason.Harvest);
+        }
+
+        public bool CanFarmerWork => CanProduceIn(FarmZoneId);
     }
 
     // The GameManager dies with its zone scene, so save before the navigator
@@ -302,7 +358,9 @@ public class GameManager : MonoBehaviour
         pausedAtUtc = null;
         if (away <= 0) return;
 
-        farmService.Tick((float)away);
+        // In the background the app is away like when it's closed: crops grow,
+        // the online farmer doesn't harvest (offline production covers it).
+        farmService.Grow((float)away);
         RunOfflineProduction(away);
     }
 
@@ -396,7 +454,10 @@ public class GameManager : MonoBehaviour
         {
             loadedSettlement = settlement;
             save.settlement ??= new SettlementSaveData();
-            settlement.LoadFromSave(save.settlement);
+            // P3 전 세이브: 요정 상점 안내를 이미 본 세이브는 요정을 그대로 둠 (농부 파견 전이어도)
+            bool fairyShopSeen = save.tutorialsDone != null &&
+                (save.tutorialsDone.Contains(ZoneTutorials.FairyShop) || save.tutorialsDone.Contains(ZoneTutorials.FairyShopIntro));
+            settlement.LoadFromSave(save.settlement, fairyShopSeen);
         }
 
         var collection = CollectionManager.Instance;
@@ -555,6 +616,7 @@ public class GameManager : MonoBehaviour
         if (!launchAbsenceHandled)
         {
             launchAbsenceHandled = true;
+            pendingElapsedIsLaunch = true;
             pendingAbsenceSec = Math.Max(0, (appLaunchUtc - last.ToUniversalTime()).TotalSeconds);
         }
     }
@@ -717,7 +779,10 @@ public class GameManager : MonoBehaviour
         gameUI.ShowUnlockPrompt(plotIndex);
     }
 
-    public static string NoSeedMessage(CropDefinition crop) => $"{crop.displayName}의 모종이 없습니다!";
+    // Planting by hand with no seed. Points at the fairy shop, or says the
+    // fairy who sells seeds is on her way if she hasn't come to the plaza yet.
+    public static string NoSeedMessage(CropDefinition crop) =>
+        $"{crop.displayName} 모종이 없어요.\n" + FarmNoticeText.WhereToBuySeeds;
 
     public PlantResult PlantFromPrompt(int plotIndex, int slotIndex, string cropId)
     {
@@ -1110,8 +1175,8 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    // Whether the whole yield of this ready slot fits in the bag. The farmer
-    // otter skips slots that don't, so it doesn't walk to them forever.
+    // Whether the whole yield of this ready slot fits in the bag (the farmer
+    // skips slots that don't; they wait until the player sells).
     public bool CanStoreHarvest(int plotIndex, int slotIndex)
     {
         var crop = farmService.GetSlotCrop(plotIndex, slotIndex);
@@ -1119,30 +1184,13 @@ public class GameManager : MonoBehaviour
                Bag.GetAddableAmount(item) >= crop.yieldCount;
     }
 
-    // Shared harvest entry point — used by the debug-panel button and by
-    // FarmerOtterController once its harvest animation finishes. If the yield
-    // doesn't fit in the bag nothing happens and the slot stays ready. A
-    // successful harvest immediately replants the same crop; if a consumable
-    // crop is out of seeds the slot is left empty and the player is told.
+    // Debug-panel harvest: the same model harvest the farmer does (bag,
+    // replant or wait for seeds), right now. The farmer otter never calls
+    // this — FarmService harvests on its own wherever the player is.
     public void HarvestSlot(int plotIndex, int slotIndex)
     {
-        if (!CanProduceIn(FarmZoneId) || !CanStoreHarvest(plotIndex, slotIndex)) return;
-
-        var crop = farmService.GetSlotCrop(plotIndex, slotIndex);
-        var harvested = farmService.Harvest(plotIndex, slotIndex);
-        if (harvested.Count == 0) return;
-
-        foreach (var stack in harvested)
-        {
-            if (TryFindItem(stack.itemId, out var item)) Bag.Add(item, stack.quantity, ItemChangeReason.Harvest);
-        }
-
-        if (crop != null && farmService.Plant(plotIndex, slotIndex, crop.cropId) == PlantResult.NoSeed)
-        {
-            gameUI.ShowAlert(NoSeedMessage(crop));
-        }
-
-        SaveNow();
+        if (!CanProduceIn(FarmZoneId)) return;
+        if (farmService.HarvestNow(plotIndex, slotIndex)) SaveNow();
     }
 
     // A slot is "covered" by a screen point if that point lands inside any

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1490e855a9528204ea3daf75a822df84, type: 3}
+  m_Name: con_p3_house
+  m_EditorClassIdentifier: OtterKingdom::ConstructionDefinition
+  _constructionId: con_p3_house
+  _displayName: "\uC0C8 \uC774\uC6C3\uC758 \uC9D1"
+  _icon: {fileID: 21300000, guid: cdc5e4e4057a059438fddb5ca2478ae2, type: 3}
+  _targetType: 0
+  _requiredGold: 0
+  _requiredItems: []
+  _durationSeconds: 90
+  _needsBuilder: 1
+  _progressLabel: "\uC774\uC6C3\uC9D1 \uC9D3\uB294 \uC911"
+  _progressHint: "\uC644\uC131\uB418\uBA74 \uC0C8 \uC774\uC6C3\uC774 \uCC3E\uC544\uC640\uC694"
+  _unlockResultId: p3_house_built

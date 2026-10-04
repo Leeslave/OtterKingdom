@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b3971375a7a6642a80ea3695130172, type: 3}
+  m_Name: Project_p3_plaza_01
+  m_EditorClassIdentifier: OtterKingdom::CommunityProjectDefinition
+  _projectId: p3_plaza_01
+  _order: 2
+  _title: "\uAD11\uC7A5 \uCCAB \uD655\uC7A5"
+  _line: "\uC0C8 \uCE5C\uAD6C\uAC00 \uC0B4 \uC790\uB9AC\uAC00 \uD544\uC694\uD558\uACA0\uC5B4.
+    \uD68C\uAD00 \uC606\uC758 \uB364\uBD88\uBD80\uD130 \uC815\uB9AC\uD574 \uBCF4\uC790."
+  _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
+  _icon: {fileID: 21300000, guid: d385ccec0040cad4ab1f52dd7d5acedd, type: 3}
+  _resultPreview: "\uAD11\uC7A5 \uB3D9\uCABD\uC774 \uC5F4\uB824 \uC9D1 \uC9C0\uC744
+    \uC790\uB9AC\uAC00 \uC0DD\uACA8\uC694"
+  _completionMessage: "\uAD11\uC7A5 \uB3D9\uCABD\uC774 \uB113\uC5B4\uC84C\uC5B4\uC694!\n\uC0C8
+    \uC9D1\uC744 \uC9C0\uC744 \uC790\uB9AC\uAC00 \uC0DD\uACBC\uC5B4\uC694."
+  _requiredLevel: 8
+  _requiredDevelopment: supply_ready
+  _gold: 500
+  _items:
+  - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+    _amount: 18
+  - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
+    _amount: 12
+  _stages:
+  - _stageId: clear_brush
+    _action: 1
+    _label: "\uB364\uBD88 \uCE58\uC6B0\uAE30"
+    _hint: "\uD68C\uAD00 \uC624\uB978\uCABD(\uB3D9\uCABD) \uAE38\uC744 \uB9C9\uC740
+      \uB364\uBD88\xB7\uBC14\uC704\uB97C \uD1A1\uD1A1 \uB20C\uB7EC \uCE58\uC6CC\uC694."
+    _construction: {fileID: 0}
+    _options: []
+    _obstacleIds:
+    - p3_brush_01
+    - p3_brush_02
+    - p3_brush_03
+    - p3_brush_04
+    _clearedDevelopment: p3_plaza_obstacles_cleared
+    _task: {fileID: 0}
+    _resident: {fileID: 0}
+    _houseSlotId: 
+  - _stageId: prepare_ground
+    _action: 2
+    _label: "\uC8FC\uBBFC \uC815\uBE44"
+    _hint: "\uC8FC\uBBFC \uD55C \uBA85\uC774 \uB545\uC744 \uACE0\uB974\uACE0 \uAE38\uC744
+      \uB0B4\uC694."
+    _construction: {fileID: 0}
+    _options: []
+    _obstacleIds: []
+    _clearedDevelopment: 
+    _task: {fileID: 11400000, guid: 156d5847280c5304d88321217bf4c373, type: 2}
+    _resident: {fileID: 0}
+    _houseSlotId: 
+  _resultDevelopment: plaza_expand_01
+  _xpReward: 735
+  _completionEntry: {fileID: 11400000, guid: 9e32fdb120fa474439370d07be8bc4c8, type: 2}
+  _repeatable: 0
+  _cycleTitles: []
+  _cycleCosts: []
+  _costGrowthPerCycle: 0.25
+  _maxCostMultiplier: 2
+  _xpPercentOfLevel: 0
+  _milestoneCycles: 3
+  _milestoneDevelopment: 

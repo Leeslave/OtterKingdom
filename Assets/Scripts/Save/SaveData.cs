@@ -22,6 +22,32 @@ public class FurrowSlotSaveData
     public string cropId;
     public FurrowSlotState state;
     public float remainingSec;
+    // Empty slot whose automatic replant ran out of seeds: the crop to plant
+    // again once the seed is back in the bag (null = nothing waiting).
+    public string waitingSeedCropId;
+}
+
+// The farmer's current harvest, kept in the save so it carries over scene
+// changes (every zone's GameManager ticks the farm, not only the farm's).
+[Serializable]
+public class FarmerWorkSaveData
+{
+    public bool active;
+    public int plotIndex;
+    public int slotIndex;
+    public float remainingSec;
+}
+
+// Which farm problems the player was already told about, so a notice comes
+// once when the problem starts — not again on every scene change or launch.
+// initialized false = a save from before this existed: taken from the farm
+// as it is, without announcing anything.
+[Serializable]
+public class FarmNoticeSaveData
+{
+    public bool initialized;
+    public bool seedShortage;
+    public bool storageFull;
 }
 
 [Serializable]
@@ -99,6 +125,9 @@ public class SaveData
     public List<string> tutorialsDone = new List<string>();
     public string lastSaveUtc;
     public List<PlotSaveData> plots = new List<PlotSaveData>();
+    // Farmer's harvest in progress (FarmService). Missing in older saves = none.
+    public FarmerWorkSaveData farmerWork = new FarmerWorkSaveData();
+    public FarmNoticeSaveData farmNotice = new FarmNoticeSaveData();
     public List<ItemStack> inventory = new List<ItemStack>();
     // Unlocked bag slots. 0 (saves from before the bag had a limit) means
     // InventoryConfig's initial capacity.

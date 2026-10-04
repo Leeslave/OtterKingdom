@@ -10,6 +10,7 @@ public enum ObstacleKind
 /// <summary>
 /// 새 장소의 길을 막은 나무·돌 하나 (광산 길 열기). 몇 번 눌러 치우면 재료를 조금 주고 사라진다.
 /// 치운 것은 세이브에 남아 다시 나타나지 않는다. 다 치웠는지는 ZoneClearingView가 본다.
+/// 공동사업 장애물(P3 광장 확장)은 사업의 장애물 단계일 때만 치울 수 있고, 치우면 사업이 기록한다 (SettlementManager.TryClearProjectObstacle).
 /// 기획 원칙: 직접 개척은 짧게 (장애물 2~4개, 하나에 몇 번).
 /// </summary>
 public class ClearingObstacleView : MonoBehaviour
@@ -21,6 +22,9 @@ public class ClearingObstacleView : MonoBehaviour
     [Header("식별")]
     [Tooltip("세이브에 저장되는 장애물 ID (게임 전체에서 겹치지 않게, 예: mine_rock_01)")]
     [SerializeField] private string _obstacleId;
+
+    [Tooltip("공동사업 장애물 (광장 확장): 사업의 장애물 단계일 때만 치울 수 있음. ZoneClearingView 없이 스스로 정함")]
+    [SerializeField] private bool _projectObstacle;
 
     [Header("치우기")]
     [SerializeField] private ObstacleKind _kind = ObstacleKind.Rock;
@@ -98,6 +102,8 @@ public class ClearingObstacleView : MonoBehaviour
             return;
         }
 
+        if (_projectObstacle)
+            Interactable = manager.IsProjectObstacleActive(_obstacleId);
         bool cleared = ZoneCleared || manager.IsObstacleCleared(_obstacleId);
         if (cleared && _hint != null)
             _hint.Allowed = false;
@@ -144,7 +150,10 @@ public class ClearingObstacleView : MonoBehaviour
             return;
         }
 
-        manager.MarkObstacleCleared(_obstacleId);
+        if (_projectObstacle)
+            manager.TryClearProjectObstacle(_obstacleId);
+        else
+            manager.MarkObstacleCleared(_obstacleId);
         if (_kind == ObstacleKind.Rock)
         {
             for (int i = 0; i < 8; i++)

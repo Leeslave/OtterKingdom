@@ -21,6 +21,10 @@ public class SettlementPresenter : MonoBehaviour
     // 게시판 화면 카드 키
     private const string MilestoneEntryPrefix = "milestone:";
     private const string TownHallEntry = "townhall";
+    // P3: 공동사업 카드 · 첫 모임 기념 · 생활 의뢰 (회차)
+    private const string ProjectEntry = "p3project";
+    private const string MemoryEntry = "p3memory";
+    private const string LifeEntryPrefix = "life:";
     private const string MainSectionTitle = "지금 할 부탁";
     private const string ResidentSectionTitle = "주민들의 부탁";
     private const string CompletedSectionTitle = "완료한 부탁";
@@ -215,7 +219,45 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
+        // P3: 마을회관 뒤 지금 공동사업 (반복 사업은 띠에 띄우지 않음 — 회관·게시판에서 고름)
+        var project = _manager.ActiveProject;
+        if (project != null && !project.Repeatable)
+        {
+            _guide.Show(ProjectGuideText(project), "보기");
+            return;
+        }
+
         _guide.Hide();
+    }
+
+    // "우리 마을의 첫 비축: 재료 모으기" / "광장 첫 확장: 주민 정비 01:20"
+    private string ProjectGuideText(CommunityProjectDefinition project) => $"{project.Title}: {ProjectStepText(project)}";
+
+    // 지금 단계 한 줄 (재료 모으기 / 상자 설치 / 주민 정비 01:20)
+    private string ProjectStepText(CommunityProjectDefinition project)
+    {
+        var status = _manager.GetProjectStatus(project);
+        string step;
+        switch (status.Phase)
+        {
+            case ProjectPhase.NeedsLevel:
+                step = $"Lv.{project.RequiredLevel}부터";
+                break;
+            case ProjectPhase.Delivering:
+                step = "재료 모으기";
+                break;
+            default:
+                var stage = status.StageIndex < project.Stages.Count ? project.Stages[status.StageIndex] : null;
+                step = stage != null ? stage.Label : "마무리";
+                if (status.StageState == ProjectStageState.Working && stage != null)
+                {
+                    var taskJob = stage.Task != null ? _manager.GetTaskJob(stage.Task) : null;
+                    if (taskJob != null)
+                        step += "  " + FormatTime(taskJob.Remaining(SettlementManager.NowTicks));
+                }
+                break;
+        }
+        return step;
     }
 
     // 길을 다 치운 지역: 주민 해달을 보내야 함 (그 장소에서만) / 정비 중 남은 시간. 광장 주민 작업 부탁은 작업 중 남은 시간
@@ -294,6 +336,15 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
+        bool goalOpen = _goalZone != null && ZoneAccess.IsOpen(_goalZone);
+        bool goalPending = goalOpen && !_manager.Settlement.HasFlag(GoalVisitedFlag) && !IsInGoalZone;
+        var project = _manager.ActiveProject;
+        if (!goalPending && project != null)
+        {
+            _manager.RequestProject(project);
+            return;
+        }
+
         if (_goalZone != null && _navigator != null)
             _navigator.TryGo(_goalZone);
     }
@@ -314,6 +365,7 @@ public class SettlementPresenter : MonoBehaviour
     {
         if (!_glyphsReady)
             PrepareGlyphs();
+        _manager.EnsureLifeRequests();
         _board.SetRequestDot(_manager.HasActionableRequest);
         _board.Show(requestTab);
     }
@@ -381,10 +433,54 @@ public class SettlementPresenter : MonoBehaviour
             }
             _rows.Add(BoardRow.ForRequest(request, status, time));
         }
+        if (sections)
+            AddLifeRequests();
         _board.BindRows(_rows);
     }
 
-    // 큰 부탁 "마을 회의소 마련하기 3/5", 마을 발전 현황 (마을회관이 생긴 뒤)
+    // 생활 의뢰(P3)를 "주민들의 부탁" 구역에 (기존 주민 부탁이 쓰고 남은 칸). 구역 제목이 없으면 완료 구역 앞에 만듦.
+    // 빈 칸 채우기는 게시판을 열기 전·기록이 바뀐 다음 프레임에 매니저가 함 (여기서 바꾸면 그리는 도중 다시 그려짐)
+    private void AddLifeRequests()
+    {
+        var requests = _manager.Settlement.LifeRequests;
+        if (requests.Count == 0)
+            return;
+
+        int insertAt = _rows.Count;
+        bool hasHeader = false;
+        for (int i = 0; i < _rows.Count; i++)
+        {
+            if (_rows[i].Kind != BoardRow.RowKind.Header)
+                continue;
+            if (_rows[i].Text == ResidentSectionTitle)
+                hasHeader = true;
+            else if (_rows[i].Text == CompletedSectionTitle)
+            {
+                insertAt = i;
+                break;
+            }
+        }
+        var entries = new List<BoardRow>();
+        if (!hasHeader)
+            entries.Add(BoardRow.Header(ResidentSectionTitle));
+        long now = SettlementManager.NowTicks;
+        foreach (var record in requests)
+        {
+            var template = _manager.FindLifeTemplate(record);
+            if (template == null)
+                continue;
+            var item = _manager.LifeRequestItem(record);
+            var job = _manager.LifeWorkJob(record);
+            string description = job != null
+                ? $"{template.Task.Title} 중 · {FormatTime(job.Remaining(now))}"
+                : LifeRequestRules.Line(template, item, record.Amount);
+            var icon = template.Icon != null ? template.Icon : item != null ? item.Icon : null;
+            entries.Add(BoardRow.Entry(LifeEntryPrefix + record.Serial, icon, template.Title, description, job != null ? "보기" : "하기"));
+        }
+        _rows.InsertRange(insertAt, entries);
+    }
+
+    // 큰 부탁 "마을 회의소 마련하기 3/5", 마을 발전 현황 (마을회관이 생긴 뒤), 공동사업 · 첫 모임 기념 (P3)
     private void AddTownEntries(bool sections)
     {
         var group = _manager.VisibleMilestone;
@@ -393,6 +489,12 @@ public class SettlementPresenter : MonoBehaviour
             return;
         if (sections)
             _rows.Add(BoardRow.Header(TownSectionTitle));
+        var project = _manager.ActiveProject;
+        if (project != null)
+            _rows.Add(BoardRow.Entry(ProjectEntry, project.Icon != null ? project.Icon : _townHallIcon, _manager.ProjectTitle(project),
+                ProjectStepText(project), "보기"));
+        if (_manager.HasHeldGathering)
+            _rows.Add(BoardRow.Entry(MemoryEntry, _townHallIcon, "첫 마을 모임 기념", "광장에서 모임을 다시 볼 수 있어요.", "다시 보기"));
         if (group != null)
         {
             var settlement = _manager.Settlement;
@@ -422,6 +524,32 @@ public class SettlementPresenter : MonoBehaviour
         if (key == TownHallEntry)
         {
             _manager.RequestTownHall();
+            return;
+        }
+        if (key == ProjectEntry)
+        {
+            var project = _manager.ActiveProject;
+            if (project != null)
+            {
+                _board.Hide();
+                _manager.RequestProject(project);
+            }
+            return;
+        }
+        if (key == MemoryEntry)
+        {
+            _board.Hide();
+            if (SettlementPlazaView.Active != null)
+                _manager.RequestGatheringReplay();
+            else
+                GameNotices.Post(new GameNotice("첫 모임은 광장에서 다시 볼 수 있어요."));
+            return;
+        }
+        if (key.StartsWith(LifeEntryPrefix, StringComparison.Ordinal)
+            && int.TryParse(key.Substring(LifeEntryPrefix.Length), out int serial))
+        {
+            _board.Hide();
+            _manager.RequestLifeRequest(serial);
             return;
         }
         if (!key.StartsWith(MilestoneEntryPrefix, StringComparison.Ordinal))
@@ -917,6 +1045,31 @@ public class SettlementPresenter : MonoBehaviour
             text.Append(config.StageName(i));
         if (config.GatherItem != null)
             text.Append(config.GatherItem.DisplayName);
+        // P3: 공동사업 카드 · 생활 의뢰 · 기념 기록
+        text.Append("재료 모으기마무리부터첫 마을 모임 기념광장에서 모임을 다시 볼 수 있어요하기중Lv");
+        foreach (var project in config.Projects)
+        {
+            if (project == null)
+                continue;
+            text.Append(project.Title);
+            foreach (var title in project.CycleTitles)
+                text.Append(title);
+            foreach (var stage in project.Stages)
+                text.Append(stage.Label);
+        }
+        foreach (var template in config.LifeRequests)
+        {
+            if (template == null)
+                continue;
+            text.Append(template.Title).Append(template.Line);
+            if (template.Task != null)
+                text.Append(template.Task.Title);
+            foreach (var item in template.Items)
+            {
+                if (item != null)
+                    text.Append(item.DisplayName);
+            }
+        }
         if (_goalZone != null)
             text.Append(_goalZone.DisplayName);
 

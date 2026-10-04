@@ -60,7 +60,23 @@ public class PlotRuntime
         slot.cropId = cropId;
         slot.state = FurrowSlotState.Growing;
         slot.remainingSec = ComputeDuration(crop, levelDurationMultiplier);
+        // Planted (by the player or the replant) = no longer waiting for seeds.
+        slot.waitingSeedCropId = null;
         return true;
+    }
+
+    // Empty slot whose automatic replant is waiting for this crop's seeds (null = none).
+    public string GetWaitingSeedCrop(int slotIndex) =>
+        slotIndex >= 0 && slotIndex < Data.slots.Count ? Data.slots[slotIndex].waitingSeedCropId : null;
+
+    // The replant after a harvest found no seed: the slot stays empty and
+    // waits for this crop (FarmService plants it once the seed is back).
+    public void MarkWaitingForSeed(int slotIndex, string cropId)
+    {
+        if (slotIndex < 0 || slotIndex >= Data.slots.Count) return;
+        var slot = Data.slots[slotIndex];
+        if (slot.state != FurrowSlotState.Empty) return;
+        slot.waitingSeedCropId = cropId;
     }
 
     // Throws away whatever is in the slot (growing or awaiting harvest) with
@@ -75,6 +91,7 @@ public class PlotRuntime
         slot.cropId = null;
         slot.state = FurrowSlotState.Empty;
         slot.remainingSec = 0f;
+        slot.waitingSeedCropId = null;
         return true;
     }
 

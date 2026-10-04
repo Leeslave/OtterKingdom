@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde64cb29026ea4a985d0e677b28392, type: 3}
+  m_Name: Otter_Neighbor
+  m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
+  _otterId: otter_p3_neighbor
+  _displayName: "\uD3EC\uADFC\uC774"
+  _portrait: {fileID: 21300000, guid: 4951d4902ad1b814cbbff2ea208b0a11, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: 9a19223946c51b4428033532af21aab7, type: 3}
+  _isBuilder: 0
+  _arrivalEntry: {fileID: 11400000, guid: 006f5d82ab4990e4e91f304f43cc6b39, type: 2}
+  _workRegion: {fileID: 0}
+  _collectionEntry: {fileID: 0}
+  _assignLine: 
+  _assignDevelopment: 
+  _moveInLine: "\uC0C8 \uC9D1\uC774 \uC0DD\uACBC\uB2E4\uACE0 \uB4E4\uC5C8\uC5B4\uC694!\n\uC800
+    \uC9D1\uC5D0\uC11C \uC0B4\uC544\uB3C4 \uB420\uAE4C\uC694?"
+  _lines:
+  - "\uC5EC\uAE30 \uC815\uB9D0 \uC0B4\uAE30 \uC88B\uC544\uC694!"
+  - "\uC774\uC6C3\uC774 \uB9CE\uC544\uC11C \uB4E0\uB4E0\uD574\uC694."
+  - "\uC624\uB298\uC740 \uBB58 \uB3C4\uC640\uC904\uAE4C\uC694?"
+  _introLine: 
+  _introDevelopment: 

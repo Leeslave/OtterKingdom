@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8640e1dbaeb55f45b9085eea5f1c4ed, type: 3}
+  m_Name: task_p3_plaza_expand
+  m_EditorClassIdentifier: OtterKingdom::SettlementTaskDefinition
+  _taskId: task_p3_plaza_expand
+  _title: "\uAD11\uC7A5 \uD655\uC7A5 \uC815\uBE44"
+  _description: "\uB364\uBD88\uC744 \uAC77\uC5B4 \uB0B8 \uB545\uC744 \uACE0\uB974\uACE0\n\uC9D1
+    \uC9C0\uC744 \uC790\uB9AC\uAE4C\uC9C0 \uAE38\uC744 \uB0B4\uC694."
+  _completionMessage: "\uAD11\uC7A5 \uB3D9\uCABD\uC774 \uB113\uC5B4\uC84C\uC5B4\uC694!"
+  _requiredWorkers: 1
+  _durationSeconds: 60
+  _requiredGold: 0
+  _requiredItems: []
+  _requiredDevelopment: p3_plaza_obstacles_cleared
+  _resultDevelopment: plaza_expand_01

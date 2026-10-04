@@ -80,18 +80,64 @@ public class RoleAssignmentSaveData
 }
 
 /// <summary>
+/// 공동사업 한 회차의 진행 (P3). 단계 완료는 저장하지 않는다 (건설·장애물·작업·입주·모임의 원본 기록에서 계산).
+/// 여기에는 원본이 없는 것만: 납품한 양, 고른 소품, 끝냈는지
+/// </summary>
+[Serializable]
+public class ProjectSaveData
+{
+    public string projectId;
+    // 반복 사업의 회차 (0부터). 한 번만 하는 사업은 0
+    public int cycle;
+    // 지금까지 넣은 골드
+    public int gold;
+    // 지금까지 넣은 아이템 (itemId, 개수)
+    public List<ItemStack> items = new List<ItemStack>();
+    // 고른 환영 소품의 건설 부탁 ID (고르기 전 = 비어 있음)
+    public string choice;
+    // 모든 단계를 끝내 결과를 받았음
+    public bool completed;
+}
+
+/// <summary>집 한 채 (같은 집 정의를 여러 채 쓸 수 있게 인스턴스와 배치 자리를 나눔)</summary>
+[Serializable]
+public class HouseSaveData
+{
+    public string instanceId;
+    // 집의 종류 (건설 ID, 예: con_p3_house)
+    public string definitionId;
+    // 광장의 배치 자리 (예: slot_plaza_expand_01_house)
+    public string slotId;
+    // 입주한 해달 (입주 전 = 비어 있음)
+    public string residentId;
+}
+
+/// <summary>생활 의뢰 하나 (회차로 틀·아이템·개수가 정해져 재접속해도 다시 뽑지 않음)</summary>
+[Serializable]
+public class LifeRequestSaveData
+{
+    // 몇 번째 의뢰인지 (0부터). 작업 기록 ID가 이 값을 씀
+    public int serial;
+    public string templateId;
+    // 건네줄 아이템 (주민 작업 의뢰는 비어 있음)
+    public string itemId;
+    public int amount;
+}
+
+/// <summary>
 /// 정착 진행 세이브 (SaveData.settlement). SettlementManager가 읽고 쓴다.
 /// 개간 지역의 단계는 따로 저장하지 않는다: 열린 발전(unlockedDevelopments)과 작업(tasks, completedTasks)으로 정해짐.
 /// 게시판 등급·큰 부탁 단계도 저장하지 않는다: 발전·끝낸 부탁·역할 기록으로 정해짐.
+/// 공동사업 단계도 저장하지 않는다: 건설·장애물·작업·집의 입주민·모임 기록으로 정해짐 (납품량·고른 소품·보상 기록만 저장).
 /// </summary>
 [Serializable]
 public class SettlementSaveData
 {
     /// <summary>
-    /// 정착 세이브 버전. 0 = P2 전 (필드가 없던 세이브), 2 = P2 (관리 역할).
+    /// 정착 세이브 버전. 0 = P2 전 (필드가 없던 세이브), 2 = P2 (관리 역할), 3 = P3 (공동사업·집·생활 의뢰·요정 방문 순서).
     /// 불러올 때 낮은 버전이면 SettlementManager가 한 번 옮기고 이 값으로 올린다
     /// </summary>
-    public const int CurrentVersion = 2;
+    public const int CurrentVersion = 3;
 
     public int version;
     // 새 게임 처리(첫 해달 도착, 시작 재료)를 했는지. 재접속 때 다시 하지 않게
@@ -119,4 +165,16 @@ public class SettlementSaveData
     public List<string> metOtters = new List<string>();
     // 관리 역할을 맡은 해달 (P2. 옛 세이브는 없음 = 아무에게도 맡기지 않음)
     public List<RoleAssignmentSaveData> roles = new List<RoleAssignmentSaveData>();
+    // 공동사업 진행 (P3. 옛 세이브는 없음 = 첫 사업부터)
+    public List<ProjectSaveData> projects = new List<ProjectSaveData>();
+    // 받은 사업·의뢰 보상 (예: p3_supply_01#0). 경험치를 한 번만 주는 기록
+    public List<string> rewardKeys = new List<string>();
+    // 집 인스턴스 (P3 새 이웃의 집부터)
+    public List<HouseSaveData> houses = new List<HouseSaveData>();
+    // 지금 게시판에 걸린 생활 의뢰
+    public List<LifeRequestSaveData> lifeRequests = new List<LifeRequestSaveData>();
+    // 다음 생활 의뢰의 회차
+    public int lifeRequestSerial;
+    // 끝낸 생활 의뢰 수
+    public int lifeRequestsDone;
 }
