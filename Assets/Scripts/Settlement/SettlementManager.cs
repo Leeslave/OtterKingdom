@@ -146,6 +146,7 @@ public partial class SettlementManager : MonoBehaviour
         {
             // 공동사업의 단계·완료는 기록에서 계산하므로, 무엇이 바뀌든 다음 프레임에 다시 봄 (바꾸는 도중에 다시 바꾸지 않게)
             _projectsDirty = true;
+            _territoryVersion++;
             OnChanged?.Invoke();
         };
         Settlement.OnDevelopmentUnlocked += id => OnDevelopmentUnlocked?.Invoke(id);
@@ -168,6 +169,8 @@ public partial class SettlementManager : MonoBehaviour
         {
             _seenLevel = level;
             _projectsDirty = true;
+            // 레벨이 오르면 숲 개간 기회가 생김
+            _territoryVersion++;
         }
         if (_projectsDirty)
         {
@@ -550,7 +553,9 @@ public partial class SettlementManager : MonoBehaviour
     /// <summary>이 장소의 개간 지역 (없으면 null)</summary>
     public DevelopableRegionDefinition FindRegion(ZoneDefinition zone) => _config.FindRegion(zone);
 
-    public SettlementTaskState GetTaskState(SettlementTaskDefinition task) => SettlementRegionRules.GetTaskState(task, Settlement);
+    /// <summary>작업 상태. 영토의 숲 개간은 기회가 있고 다른 개간이 없을 때만 Available (TerritoryRules)</summary>
+    public SettlementTaskState GetTaskState(SettlementTaskDefinition task) =>
+        TerritoryTaskState(task, SettlementRegionRules.GetTaskState(task, Settlement));
 
     /// <summary>진행 중인 작업 (없으면 null)</summary>
     public SettlementTaskJob GetTaskJob(SettlementTaskDefinition task) =>
@@ -700,6 +705,8 @@ public partial class SettlementManager : MonoBehaviour
         if (task != null)
         {
             _finishedTasks.Add((task, job.EndUtcTicks));
+            // 영토의 숲 개간: 목재를 주고, 3번 다 끝냈으면 영토 확장 미션이 열림 (SettlementManager.Territory)
+            FinishTerritoryClearing(task);
             var region = _config.FindRegionOf(task);
             bool operated = region != null && TryOperate(region);
             // 주민 작업 부탁: 실제 작업 완료 기록으로 끝냄 (완료 팝업이 알림)
@@ -1191,6 +1198,7 @@ public partial class SettlementManager : MonoBehaviour
         // 지역·작업·전문 해달을 먼저 맞춘 뒤 (옛 세이브 옮기기) 꺼 둔 동안 끝난 건설·주민 작업을 처리
         MigrateSpecialists();
         MigrateVersion(fairyShopSeen);
+        MigrateTerritory();
         ReconcileRecords();
         IsLoaded = true;
         if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))

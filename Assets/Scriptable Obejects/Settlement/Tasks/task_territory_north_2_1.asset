@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8640e1dbaeb55f45b9085eea5f1c4ed, type: 3}
+  m_Name: task_territory_north_2_1
+  m_EditorClassIdentifier: OtterKingdom::SettlementTaskDefinition
+  _taskId: task_territory_north_2_1
+  _title: "\uBD81\uCABD \uAE4A\uC740 \uC232 \uAC1C\uAC04"
+  _description: "\uC232\uC758 \uB098\uBB34\uB97C \uBCA0\uC5B4 \uB113\uD790 \uB545\uC744
+    \uB9C8\uB828\uD574\uC694.\n\uB05D\uB098\uBA74 \uBAA9\uC7AC\uB97C \uC794\uB729
+    \uC5BB\uC5B4\uC694."
+  _completionMessage: "\uBD81\uCABD \uAE4A\uC740 \uC232 \uAC1C\uAC04 1/3 \uB05D!"
+  _requiredWorkers: 1
+  _durationSeconds: 360
+  _requiredGold: 0
+  _requiredItems: []
+  _requiredDevelopment: 
+  _resultDevelopment: territory_north_2_c1

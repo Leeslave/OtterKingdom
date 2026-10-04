@@ -45,6 +45,7 @@ public class GameUI : MonoBehaviour
     private RuntimeUIStyle style;
     private Button rodUpgradeButton;
     private Button pickaxeUpgradeButton;
+    private Button farmUpgradeButton;
     private RectTransform guideBubble;
     private RectTransform screenLayer;
     private GameObject offlineReportModal;
@@ -60,6 +61,8 @@ public class GameUI : MonoBehaviour
     public RectTransform RodUpgradeButton => rodUpgradeButton != null ? (RectTransform)rodUpgradeButton.transform : null;
     public RectTransform PickaxeUpgradeButton =>
         pickaxeUpgradeButton != null ? (RectTransform)pickaxeUpgradeButton.transform : null;
+    public RectTransform FarmUpgradeButton =>
+        farmUpgradeButton != null ? (RectTransform)farmUpgradeButton.transform : null;
 
     public static GameUI Create(GameManager game)
     {
@@ -526,6 +529,50 @@ public class GameUI : MonoBehaviour
                 : $"{current}\n최대 레벨이에요!";
             balanceLabel.text = $"보유 코인 : {game.CoinBalance}";
             upgradeButton.interactable = mining.CanUpgradePickaxe;
+        });
+    }
+
+    // ------------------------------------------------------------------ farm
+
+    // Same corner button and prompt as the pickaxe/rod upgrade.
+    public void ShowFarmUpgradeButton()
+    {
+        if (farmUpgradeButton != null) return;
+
+        farmUpgradeButton = CreateButton(screenLayer, "밭 강화", ShowFarmUpgradePrompt, kind: ButtonKind.Feature);
+        var rect = (RectTransform)farmUpgradeButton.transform;
+        rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 0f);
+        rect.sizeDelta = new Vector2(340f, ButtonHeight);
+        rect.anchoredPosition = new Vector2(40f, FeatureButtonBottom);
+    }
+
+    private void ShowFarmUpgradePrompt()
+    {
+        CloseAllModals();
+        var farm = game.FarmService;
+        var modal = OpenModal("밭 강화", out var content);
+
+        var infoLabel = CreateLabel(content, "");
+        var balanceLabel = CreateLabel(content, "");
+        var row = CreateRow(content, ButtonHeight);
+        var upgradeButton = CreateButton(row, "강화", () =>
+        {
+            if (!game.TryUpgradeFarm()) ShowAlert("코인이 부족해요!");
+        }, flexible: true, kind: ButtonKind.Primary);
+        CreateButton(row, "닫기", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
+
+        // Stays open after an upgrade so the new level/grow time shows right away.
+        SetRefresher(modal, () =>
+        {
+            int level = farm.FarmLevel;
+            string current = $"현재 Lv.{level} (자라는 시간 {Percent(farm.DurationMultiplierAt(level))})";
+            string offline = level + 1 == farm.OfflineUnlockLevel ? "\n강화하면 게임을 꺼 둔 동안에도 농사를 지어요." : "";
+            infoLabel.text = farm.CanUpgrade
+                ? $"{current}\n다음 Lv.{level + 1} (자라는 시간 {Percent(farm.DurationMultiplierAt(level + 1))}){offline}\n" +
+                  $"강화 비용 : {farm.NextUpgradeCost} 코인"
+                : $"{current}\n최대 레벨이에요!";
+            balanceLabel.text = $"보유 코인 : {game.CoinBalance}";
+            upgradeButton.interactable = farm.CanUpgrade;
         });
     }
 

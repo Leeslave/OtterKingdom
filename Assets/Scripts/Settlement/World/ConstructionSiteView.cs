@@ -114,6 +114,9 @@ public class ConstructionSiteView : MonoBehaviour
         AnimateDust();
     }
 
+    /// <summary>현장이 옮겨졌을 때 (영토에 따라 자리가 정해지는 이웃집) 앞뒤 정렬 기준을 다시 잡음</summary>
+    public void RefreshDepth() => _baseOrder = PlazaDepth.SortingOrderFor(transform.position.y);
+
     /// <summary>건설 중인지 (터·올라오는 집을 켜고 끔)</summary>
     public void SetBuilding(bool building)
     {

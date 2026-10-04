@@ -82,6 +82,14 @@ public class SettlementConfig : ScriptableObject
     [Tooltip("요정이 광장에 실제로 나타난 발전 (요정 NPC·상점의 조건)")]
     [SerializeField] private string _fairyArrivedDevelopment;
 
+    [Header("영토 확장 (서쪽·북쪽 숲 개간)")]
+    [Tooltip("방향별 단계 (숲 개간 3번 → 마을회관 영토 확장 미션 → 땅이 열림)")]
+    [SerializeField] private List<TerritoryExpansionDefinition> _territories = new List<TerritoryExpansionDefinition>();
+
+    [Tooltip("이 왕국 레벨에 첫 개간 기회가 생기고, 그 뒤 레벨이 오를 때마다 한 번씩 쌓임")]
+    [Min(1)]
+    [SerializeField] private int _territoryStartLevel = 6;
+
     [Header("옛 세이브")]
     [Tooltip("정착 진행 전 세이브에 부탁과 별도로 열어 줄 발전 (예: 아직 부탁이 없는 낚시터 fishing_dock)")]
     [SerializeField] private List<string> _legacyDevelopments = new List<string>();
@@ -131,6 +139,15 @@ public class SettlementConfig : ScriptableObject
     public int LifeRequestLevel => Mathf.Max(1, _lifeRequestLevel);
     public string FairyInvitedDevelopment => _fairyInvitedDevelopment;
     public string FairyArrivedDevelopment => _fairyArrivedDevelopment;
+    public IReadOnlyList<TerritoryExpansionDefinition> Territories => _territories;
+    public int TerritoryStartLevel => Mathf.Max(1, _territoryStartLevel);
+
+    /// <summary>테스트·설정 도구용: 영토 확장 데이터</summary>
+    public void SetupTerritory(IEnumerable<TerritoryExpansionDefinition> territories, int startLevel)
+    {
+        _territories = territories != null ? new List<TerritoryExpansionDefinition>(territories) : new List<TerritoryExpansionDefinition>();
+        _territoryStartLevel = startLevel;
+    }
 
     /// <summary>테스트·설정 도구용: P3 데이터를 한 번에 넣음</summary>
     public void SetupP3(IEnumerable<CommunityProjectDefinition> projects, IEnumerable<BoardRequestDefinition> projectRequests,
@@ -244,6 +261,17 @@ public class SettlementConfig : ScriptableObject
         {
             if (task != null && task.TaskId == templateId)
                 return task;
+        }
+        // 영토의 숲 개간 (작업 목록에 넣지 않았어도 찾음)
+        foreach (var territory in _territories)
+        {
+            if (territory == null)
+                continue;
+            foreach (var step in territory.Clearings)
+            {
+                if (step != null && step.Task != null && step.Task.TaskId == templateId)
+                    return step.Task;
+            }
         }
         return null;
     }

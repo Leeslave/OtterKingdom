@@ -27,6 +27,8 @@ public class TownHallPresenter : MonoBehaviour
     private BoardRequestDefinition _hallTarget;
     // P3: 회관의 다음 목표가 공동사업일 때 (메인 부탁을 다 끝낸 뒤)
     private CommunityProjectDefinition _hallProject;
+    // 영토 확장 미션 (숲 개간을 다 끝낸 단계가 있을 때)
+    private CommunityProjectDefinition _territoryMission;
     private float _refreshTimer;
     private bool _glyphsReady;
 
@@ -37,6 +39,7 @@ public class TownHallPresenter : MonoBehaviour
         _hall.OnTravelClicked += HandleTravel;
         _hall.OnDecorClicked += HandleDecor;
         _hall.OnCodexClicked += HandleCodex;
+        _hall.OnTerritoryClicked += HandleTerritory;
     }
 
     // SettlementManager가 같은 오브젝트에 붙어 있어 깨어나는 순서가 같을 수 있으므로 Start에서 연결
@@ -57,6 +60,7 @@ public class TownHallPresenter : MonoBehaviour
         _hall.OnTravelClicked -= HandleTravel;
         _hall.OnDecorClicked -= HandleDecor;
         _hall.OnCodexClicked -= HandleCodex;
+        _hall.OnTerritoryClicked -= HandleTerritory;
         if (_manager != null)
         {
             _manager.OnMilestoneRequested -= OpenMilestone;
@@ -158,6 +162,37 @@ public class TownHallPresenter : MonoBehaviour
             _hall.ShowNext(_hallTarget.Title, _hallTarget.Description, true);
         else
             _hall.ShowNext("다음 발전을 준비하고 있어요", "진행 중인 일이 끝나면 새 부탁이 열려요.", false);
+        ShowTerritory();
+    }
+
+    // 영토 확장 카드: 미션이 열려 있으면 [가 보기], 아니면 개간 기회 안내 (개간 레벨 전·다 넓혔으면 숨김)
+    private void ShowTerritory()
+    {
+        var missions = _manager.OpenTerritoryMissions;
+        _territoryMission = missions.Count > 0 ? missions[0] : null;
+        if (_territoryMission != null)
+        {
+            var status = _manager.GetProjectStatus(_territoryMission);
+            string step = status.Phase == ProjectPhase.Delivering ? "숲 개간을 마쳤어요. 재료를 나눠 넣으면 땅이 열려요." : "마무리하는 중이에요.";
+            _hall.ShowTerritory(_territoryMission.Title, string.IsNullOrEmpty(_territoryMission.Line) ? step : $"{_territoryMission.Line}\n{step}", true);
+            return;
+        }
+        bool anyLeft = _manager.CurrentTerritory(TerritoryDirection.West) != null || _manager.CurrentTerritory(TerritoryDirection.North) != null;
+        if (!anyLeft || _manager.Config.Territories.Count == 0 || _manager.PlayerLevel < _manager.Config.TerritoryStartLevel)
+        {
+            _hall.HideTerritory();
+            return;
+        }
+        _hall.ShowTerritory("숲 개간", _manager.TerritoryChanceText(), false);
+    }
+
+    private void HandleTerritory()
+    {
+        var mission = _territoryMission;
+        if (mission == null)
+            return;
+        _hall.Hide();
+        _manager.RequestProject(mission);
     }
 
     // 지금 하는 일: 건설 한 건 + 주민 작업과 남은 시간
@@ -213,6 +248,12 @@ public class TownHallPresenter : MonoBehaviour
             if (!CommunityProjectRules.IsCompleted(project, _manager.Settlement))
                 continue;
             names.Add(project.Repeatable ? $"{project.Title} ×{_manager.Settlement.ProjectCycle(project.ProjectId)}" : project.Title);
+        }
+        // 넓힌 영토
+        foreach (var territory in _manager.Config.Territories)
+        {
+            if (territory != null && territory.Mission != null && TerritoryRules.IsExpanded(territory, _manager.Settlement))
+                names.Add(territory.Mission.Title);
         }
         return names.Count > 0 ? string.Join(" · ", names) : "아직 완료한 발전이 없어요.";
     }
@@ -321,6 +362,21 @@ public class TownHallPresenter : MonoBehaviour
         }
         for (int i = 0; i < config.StageCount; i++)
             text.Append(config.StageName(i));
+        text.Append("영토 확장숲 개간을 마쳤어요. 재료를 나눠 넣으면 땅이 열려요.부터 광장 가장자리의 숲을 개간할 수 있어요.")
+            .Append("개간 기회번 · 광장 가장자리의 점선 원을 눌러 해달을 보내요.레벨이 오르면 개간 기회가 생겨요.중이에요.");
+        foreach (var territory in config.Territories)
+        {
+            if (territory == null)
+                continue;
+            text.Append(territory.DisplayName);
+            if (territory.Mission != null)
+                text.Append(territory.Mission.Title).Append(territory.Mission.Line);
+            foreach (var step in territory.Clearings)
+            {
+                if (step != null && step.Task != null)
+                    text.Append(step.Task.Title);
+            }
+        }
 
         var fonts = new HashSet<TMP_FontAsset>();
         foreach (var root in new Component[] { _milestone, _hall })

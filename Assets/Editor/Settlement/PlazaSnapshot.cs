@@ -35,7 +35,7 @@ public static class PlazaSnapshot
     {
         EditorSceneManager.OpenScene(PlazaScenePath, OpenSceneMode.Single);
         var background = GameObject.Find("PlazaRoot").transform.Find("Background").GetComponent<SpriteRenderer>();
-        var b = background.bounds;
+        var b = SettlementSetup.GroundBounds(background);
         var lines = new List<string>();
         foreach (var r in UnityEngine.Object.FindObjectsByType<Renderer>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         {
@@ -81,7 +81,22 @@ public static class PlazaSnapshot
             gate.Apply(id => allUnlocked || string.IsNullOrEmpty(id) || developments != null && developments.Contains(id), false);
 
         var background = GameObject.Find("PlazaRoot").transform.Find("Background").GetComponent<SpriteRenderer>();
-        var bounds = background.bounds;
+        var bounds = SettlementSetup.GroundBounds(background);
+        // 영토 전체 지도까지. -snapshotRect x0,y0,x1,y1 (바닥 픽셀)이면 그 부분만, -snapshotScale로 배율 (기본 0.75)
+        var worldMap = GameObject.Find("PlazaRoot").transform.Find("Settlement/Territory/WorldMap");
+        if (worldMap != null)
+            bounds.Encapsulate(worldMap.GetComponent<SpriteRenderer>().bounds);
+        string rectArg = Arg("-snapshotRect");
+        if (!string.IsNullOrEmpty(rectArg))
+        {
+            var ground = SettlementSetup.GroundBounds(background);
+            var v = Array.ConvertAll(rectArg.Split(','), s => float.Parse(s, System.Globalization.CultureInfo.InvariantCulture));
+            var a = new Vector3(ground.min.x + v[0] / PixelsPerUnit, ground.max.y - v[3] / PixelsPerUnit, 0f);
+            var c = new Vector3(ground.min.x + v[2] / PixelsPerUnit, ground.max.y - v[1] / PixelsPerUnit, 0f);
+            bounds = new Bounds((a + c) * 0.5f, c - a);
+        }
+        float scale = float.TryParse(Arg("-snapshotScale"), System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture, out float parsed) ? parsed : 0.75f;
         // 확장 바닥 조각까지 (켜진 것만)
         var camera = UnityEngine.Object.FindAnyObjectByType<PlazaCameraController>();
         if (camera != null)
@@ -101,8 +116,8 @@ public static class PlazaSnapshot
         foreach (var sprite in UnityEngine.Object.FindObjectsByType<SpriteRenderer>(FindObjectsSortMode.None))
             sprite.sharedMaterial = unlit;
 
-        int width = Mathf.RoundToInt(bounds.size.x * PixelsPerUnit * 0.75f);
-        int height = Mathf.RoundToInt(bounds.size.y * PixelsPerUnit * 0.75f);
+        int width = Mathf.RoundToInt(bounds.size.x * PixelsPerUnit * scale);
+        int height = Mathf.RoundToInt(bounds.size.y * PixelsPerUnit * scale);
         // 씬의 광장 카메라를 씀 (URP 2D 렌더러·조명 설정이 그대로라 스프라이트가 제대로 그려짐)
         var cam = camera != null ? camera.GetComponent<Camera>() : Camera.main;
         if (cam == null)

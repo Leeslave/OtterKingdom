@@ -86,6 +86,8 @@ public class FarmService
         this.balance = balance;
         this.host = host ?? throw new ArgumentNullException(nameof(host));
         cropsById = crops.Where(c => c != null).ToDictionary(c => c.cropId, c => c);
+        // Same as the pickaxe level: keep an old/odd save inside the current table
+        save.farmLevel = Math.Clamp(save.farmLevel, 1, MaxFarmLevel);
 
         save.farmerWork ??= new FarmerWorkSaveData();
         save.farmNotice ??= new FarmNoticeSaveData();
@@ -138,9 +140,19 @@ public class FarmService
 
     public CropDefinition GetCrop(string id) => LookupCrop(id);
 
-    public bool CanUpgrade => save.farmLevel < balance.maxFarmLevel;
+    public int FarmLevel => save.farmLevel;
+
+    // Max level is capped by the cost table too, so a shorter table can't index past its end.
+    public int MaxFarmLevel => Math.Min(balance.maxFarmLevel, balance.upgradeCostByLevel.Length + 1);
+
+    public bool CanUpgrade => save.farmLevel < MaxFarmLevel;
 
     public int NextUpgradeCost => CanUpgrade ? balance.upgradeCostByLevel[save.farmLevel - 1] : -1;
+
+    // Grow time at this farm level as a fraction of the crop's base time (1 = no reduction).
+    public float DurationMultiplierAt(int farmLevel) => balance.DurationMultiplierAt(farmLevel);
+
+    public int OfflineUnlockLevel => balance.offlineUnlockLevel;
 
     public float FarmerHarvestSec => Math.Max(0.1f, balance.farmerHarvestSec);
 

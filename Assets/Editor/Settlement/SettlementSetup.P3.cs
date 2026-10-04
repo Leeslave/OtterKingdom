@@ -9,11 +9,12 @@ using static GlobalUISetup;
 
 /// <summary>
 /// P3 공동사업 · 생활 의뢰 · 요정 방문 순서 (기획: 해달왕국_P3_기획서.md, 작업기록: Docs/P3_공동사업_작업기록.md).
-/// - 데이터: 공동사업 6개(첫 비축 → 광장 확장 → 새 이웃 → 환영 소품 → 첫 모임 → 반복 "마을 생활 준비"), 사업 건설 부탁·건설(비용 0),
-///   광장 확장 정비·회관 주변 정리 작업, 새 이웃 해달, 방명록, 생활 의뢰 3종, 요정 방문 발전 (농부 파견 → 예약)
-/// - 그림: Tools/UIGen/p3_art.py가 만든 임시 소품(비축 상자·공동 식탁·화분·빨랫줄)과 동쪽 확장 바닥
-/// - 광장: 회관 앞 비축 상자·식탁·모임 연출, 동쪽 길을 막은 덤불·바위 4개, 확장 정비 현장, 확장 바닥·걷기 영역·카메라 범위,
-///   이웃집 자리(같은 집 그림 재사용), 화분·빨랫줄 자리, 회관 앞 장식(반복 사업 3회), 회관 주변 정리 자리, 요정은 도착 발전으로
+/// - 데이터: 공동사업 5개(첫 비축 → 새 이웃 → 환영 소품 → 첫 모임 → 반복 "마을 생활 준비"), 사업 건설 부탁·건설(비용 0),
+///   회관 주변 정리 작업, 새 이웃 해달, 방명록, 생활 의뢰 3종, 요정 방문 발전 (농부 파견 → 예약)
+///   광장 확장은 영토 확장(SettlementSetup.Territory: 서쪽·북쪽 숲 개간)으로 바뀜 — 새 이웃 맞이하기는 처음 땅을 넓힌 뒤
+/// - 그림: Tools/UIGen/p3_art.py가 만든 임시 소품(비축 상자·공동 식탁·화분·빨랫줄)
+/// - 광장: 회관 앞 비축 상자·식탁·모임 연출, 이웃집 묶음(집·화분·빨랫줄·공사 현장 — 처음 넓힌 영토 쪽으로 옮겨짐, TerritoryAnchor),
+///   회관 앞 장식(반복 사업 3회), 회관 주변 정리 자리, 요정은 도착 발전으로, 끝에 영토(지도·숲·걷기 칸·개간 자리·카메라 범위)
 /// 한 번에 적용: Tools/Settlement/Apply P3 Projects (여러 번 실행해도 결과가 같음). Setup Plaza · Apply P2를 다시 돌려도 P3 배치가 함께 다시 만들어짐
 /// </summary>
 public static partial class SettlementSetup
@@ -40,35 +41,15 @@ public static partial class SettlementSetup
     private const string CarrotItemPath = "Assets/Scriptable Obejects/Inventory/Items/Farming/당근.asset";
     private const string CucumberItemPath = "Assets/Scriptable Obejects/Inventory/Items/Farming/오이.asset";
     private const string BushArtPath = "Assets/Art/Plaza/Props/Prop_Bush.png";
-    private const string GroundEastPath = "Assets/Art/Plaza/Plaza_Ground_East.png";
     private const float P3PropPixelsPerUnit = 90f;
-
-    // 광장 확장을 막은 덤불·바위 (바닥 픽셀): 가로등과 회관 사이 동쪽 끝
-    private static readonly (string id, ObstacleKind kind, Vector2 pixel)[] P3Obstacles =
-    {
-        ("p3_brush_01", ObstacleKind.Tree, new Vector2(992, 588)),
-        ("p3_brush_02", ObstacleKind.Rock, new Vector2(1010, 636)),
-        ("p3_brush_03", ObstacleKind.Tree, new Vector2(986, 680)),
-        ("p3_brush_04", ObstacleKind.Rock, new Vector2(1012, 552)),
-    };
-
-    // 확장 뒤 걸을 수 있는 동쪽 땅 (바닥 픽셀, 기존 바닥 오른쪽 끝 = 1024). 아래쪽은 뒤집힌 바닷가보다 위
-    private static readonly Vector2[] EastWalkablePixels =
-    {
-        new Vector2(962, 560), new Vector2(1000, 470), new Vector2(1040, 300), new Vector2(1090, 120),
-        new Vector2(1480, 110), new Vector2(1492, 560), new Vector2(1470, 830), new Vector2(1320, 870),
-        new Vector2(1180, 845), new Vector2(1060, 805), new Vector2(992, 765), new Vector2(962, 700),
-    };
 
     private static readonly Vector2 SupplyPixel = new Vector2(905, 795);
     private static readonly Vector2 TablePixel = new Vector2(720, 808);
     private static readonly Vector2[] HallDecorPixels = { new Vector2(765, 730), new Vector2(885, 730) };
-    private static readonly Vector2 HouseP3Pixel = new Vector2(1250, 520);
-    private static readonly Vector2 FlowerPotPixel = new Vector2(1150, 548);
-    private static readonly Vector2 ClotheslinePixel = new Vector2(1365, 565);
-    private static readonly Vector2 ExpandMarkerPixel = new Vector2(948, 612);
-    private static readonly Vector2[] ExpandStandPixels = { new Vector2(1000, 604), new Vector2(1012, 652) };
-    private static readonly Vector2 ExpandLookPixel = new Vector2(1080, 620);
+    // 이웃집 묶음: territory_layout.json의 homes (서쪽 / 북쪽 첫 땅). 화분·빨랫줄은 집 기준 (예전 동쪽 배치와 같은 간격)
+    private static readonly Vector2 HouseFallbackPixel = new Vector2(-520, 560);
+    private static readonly Vector2 FlowerPotOffset = new Vector2(-100, 28);
+    private static readonly Vector2 ClotheslineOffset = new Vector2(115, 45);
     private static readonly Vector2[] TidyStandPixels = { new Vector2(795, 748), new Vector2(855, 752) };
     private static readonly Vector2 TidyLookPixel = new Vector2(825, 700);
 
@@ -81,6 +62,7 @@ public static partial class SettlementSetup
             return;
 
         ImportP3Art();
+        ImportTerritoryArt(LoadTerritoryLayout());
         var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>(ConfigPath);
         if (config == null)
         {
@@ -98,17 +80,16 @@ public static partial class SettlementSetup
         configSo.ApplyModifiedPropertiesWithoutUndo();
         AssetDatabase.SaveAssets();
         PlaceP3Plaza();
-        Debug.Log("[SettlementSetup] P3 적용 완료: 공동사업·생활 의뢰 데이터, 요정 방문 순서, 광장 P3 배치");
+        Debug.Log("[SettlementSetup] P3 적용 완료: 공동사업·생활 의뢰·영토 확장 데이터, 요정 방문 순서, 광장 P3·영토 배치");
     }
 
     #region 그림
 
-    // 소품: 아래 가운데 피벗, 기존 소품과 비슷한 크기(PPU 90). 동쪽 바닥: 기존 바닥과 같은 PPU 40 · 가운데 피벗
+    // 소품: 아래 가운데 피벗, 기존 소품과 비슷한 크기(PPU 90)
     private static void ImportP3Art()
     {
         foreach (var name in new[] { "Prop_SupplyBox", "Prop_CommunityTable", "Prop_FlowerPot", "Prop_Clothesline" })
             ImportP3Sprite($"{ArtFolder}/{name}.png", P3PropPixelsPerUnit, new Vector2(0.5f, 0.08f));
-        ImportP3Sprite(GroundEastPath, GroundPixelsPerUnit, new Vector2(0.5f, 0.5f));
     }
 
     private static Sprite ImportP3Sprite(string path, float pixelsPerUnit, Vector2 pivot)
@@ -163,7 +144,7 @@ public static partial class SettlementSetup
         (string id, string otter, string tag, string message)[] entryTable =
         {
             ("gb_p3_supply", "otter_receptionist", "첫 비축", "회관 앞에 우리 마을의 첫 비축 상자가 생겼어요."),
-            ("gb_p3_plaza", "otter_first", "광장 확장", "회관 동쪽 덤불을 걷어 내니 광장이 훨씬 넓어졌어요!"),
+            ("gb_p3_plaza", "otter_first", "광장 확장", "숲을 걷어 내니 광장이 훨씬 넓어졌어요!"),
             ("gb_p3_neighbor_arrival", NeighborOtterId, "첫 방문", "새 집이 생겼다는 소식을 듣고 찾아왔어요."),
             ("gb_p3_neighbor", NeighborOtterId, "입주", "짐을 풀고 나니 이제 정말 우리 집 같아요."),
             ("gb_p3_welcome", NeighborOtterId, "환영", "문 앞이 환해졌어요. 반겨 줘서 고마워요!"),
@@ -196,9 +177,9 @@ public static partial class SettlementSetup
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
-        // 작업: 광장 확장 정비(사업 단계) · 회관 주변 정리(생활 의뢰 틀)
+        // 작업: 광장 확장 정비(예전 동쪽 확장 — 정비 중이던 세이브가 이어서 끝낼 수 있게만 남김) · 회관 주변 정리(생활 의뢰 틀)
         var expandTask = CreateP3Task(ExpandTaskId, "광장 확장 정비", "덤불을 걷어 낸 땅을 고르고\n집 지을 자리까지 길을 내요.",
-            "광장 동쪽이 넓어졌어요!", 1, 60f, ObstaclesClearedDevelopment, PlazaExpandDevelopment);
+            "광장이 넓어졌어요!", 1, 60f, ObstaclesClearedDevelopment, PlazaExpandDevelopment);
         var tidyTask = CreateP3Task(HallTidyTaskId, "회관 주변 정리", "회관 앞을 쓸고 물건을 가지런히 놓아요.",
             "회관 앞이 깔끔해졌어요!", 1, 20f, "", "");
 
@@ -232,23 +213,12 @@ public static partial class SettlementSetup
             new[] { new ProjectStageDefinition("build_box", ProjectActionKind.CompleteConstruction, "상자 설치")
                 .With(construction: reqSupply, hint: "건설 해달이 회관 앞에 비축 상자를 놓아요.") },
             "supply_ready", 560, entries["gb_p3_supply"]);
-        var plaza = CreateProject("p3_plaza_01", 2, "광장 첫 확장",
-            "새 친구가 살 자리가 필요하겠어. 회관 옆의 덤불부터 정리해 보자.", first, LoadArt("ICON_Clearing"),
-            "광장 동쪽이 열려 집 지을 자리가 생겨요", "광장 동쪽이 넓어졌어요!\n새 집을 지을 자리가 생겼어요.",
-            8, "supply_ready", 500, new[] { (wood, 18), (stone, 12) },
-            new[]
-            {
-                new ProjectStageDefinition("clear_brush", ProjectActionKind.ClearObstacles, "덤불 치우기")
-                    .With(obstacleIds: P3Obstacles.Select(o => o.id), clearedDevelopment: ObstaclesClearedDevelopment,
-                        hint: "회관 오른쪽(동쪽) 길을 막은 덤불·바위를 톡톡 눌러 치워요."),
-                new ProjectStageDefinition("prepare_ground", ProjectActionKind.CompleteRegionTask, "주민 정비")
-                    .With(task: expandTask, hint: "주민 한 명이 땅을 고르고 길을 내요."),
-            },
-            PlazaExpandDevelopment, 735, entries["gb_p3_plaza"]);
+        // 영토 확장 (광장 첫 확장 대신): 서쪽·북쪽 숲 개간 → 마을회관 영토 확장 미션. 처음 넓힌 땅에 새 이웃의 집 자리
+        CreateTerritoryData(configSo, first, entries["gb_p3_plaza"]);
         var neighborProject = CreateProject("p3_neighbor_01", 3, "새 이웃 맞이하기",
             "넓어진 곳에 집을 지으면 새 친구가 찾아올 거예요.", builder, LoadArt("ICON_House_Blue"),
             "집 한 채와 새 주민이 생겨요 (일손 +1)", "포근이가 새 집에 자리 잡았어요!\n함께 일할 주민이 늘었어요.",
-            9, PlazaExpandDevelopment, 800, new[] { (wood, 24), (stone, 16) },
+            9, TerritoryRules.FirstDevelopment, 800, new[] { (wood, 24), (stone, 16) },
             new[]
             {
                 new ProjectStageDefinition("build_house", ProjectActionKind.CompleteConstruction, "이웃집 짓기")
@@ -313,7 +283,7 @@ public static partial class SettlementSetup
             AddUnique(configSo.FindProperty("_guestbookEntries"), entry);
         AddUnique(configSo.FindProperty("_tasks"), expandTask);
         AddUnique(configSo.FindProperty("_tasks"), tidyTask);
-        SetList(configSo.FindProperty("_projects"), new List<CommunityProjectDefinition> { supply, plaza, neighborProject, welcome, gathering, repeat });
+        SetList(configSo.FindProperty("_projects"), new List<CommunityProjectDefinition> { supply, neighborProject, welcome, gathering, repeat });
         SetList(configSo.FindProperty("_projectRequests"), new List<BoardRequestDefinition> { reqSupply, reqHouse, reqPot, reqLine, reqTable });
         SetList(configSo.FindProperty("_lifeRequests"), new List<LifeRequestTemplate> { snack, tidy, repair });
         configSo.FindProperty("_lifeRequestDevelopment").stringValue = TownHallDevelopment;
@@ -460,7 +430,7 @@ public static partial class SettlementSetup
             return;
         }
         var background = plazaRoot.Find("Background").GetComponent<SpriteRenderer>();
-        var bounds = background.bounds;
+        var bounds = GroundBounds(background);
         Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
         BuildP3(root, plazaRoot.Find("Props"), root.GetComponent<SettlementPlazaView>(), background, ToWorld);
 
@@ -479,7 +449,6 @@ public static partial class SettlementSetup
         var p3 = new GameObject(P3RootName).transform;
         p3.SetParent(root, false);
         var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>(ConfigPath);
-        var walkable = Object.FindAnyObjectByType<PlazaWalkableArea>();
         var camera = Object.FindAnyObjectByType<PlazaCameraController>();
         var sites = new List<ConstructionSiteView>();
         var taskSites = new List<PlazaTaskSiteView>();
@@ -528,86 +497,50 @@ public static partial class SettlementSetup
             Object.DestroyImmediate(tidyHint.gameObject);
         taskSites.Add(tidy);
 
-        // 6) 광장 확장: 동쪽 길을 막은 덤불·바위 (사업의 장애물 단계에서만 치움)
-        var obstacles = new GameObject("ExpandObstacles").transform;
-        obstacles.SetParent(p3, false);
-        foreach (var o in P3Obstacles)
-            BuildP3Obstacle(obstacles, o.id, o.kind, toWorld(o.pixel), walkable, o.id == P3Obstacles[0].id);
-        var obstacleFocus = Point(p3, "clear_brush", toWorld(new Vector2(995, 615)));
-        focus.Add(obstacleFocus);
+        // 6) 이웃집 묶음 (집 · 환영 소품 · 공사 현장): 처음 넓힌 영토 쪽으로 옮겨짐 (서쪽 / 북쪽 첫 땅)
+        var layout = LoadTerritoryLayout();
+        Vector2 westHome = layout != null && layout.homes != null ? new Vector2(layout.homes.west[0], layout.homes.west[1]) : HouseFallbackPixel;
+        Vector2 northHome = layout != null && layout.homes != null ? new Vector2(layout.homes.north[0], layout.homes.north[1]) : HouseFallbackPixel;
+        var neighborhood = new GameObject("Neighborhood").transform;
+        neighborhood.SetParent(p3, false);
+        neighborhood.position = toWorld(westHome);
+        var anchor = neighborhood.gameObject.AddComponent<TerritoryAnchor>();
+        var anchorSo = new SerializedObject(anchor);
+        anchorSo.FindProperty("_westPosition").vector3Value = toWorld(westHome);
+        anchorSo.FindProperty("_northPosition").vector3Value = toWorld(northHome);
+        anchorSo.FindProperty("_northDevelopment").stringValue = TerritoryRules.HomeDevelopment(TerritoryDirection.North);
+        anchorSo.ApplyModifiedPropertiesWithoutUndo();
 
-        // 7) 확장 정비 현장 (주민 1명): 장애물을 다 치우면 망치 표지판
-        var expand = BuildPlazaTaskSite(p3, "TaskSite_PlazaExpand", ExpandTaskId, config, toWorld(ExpandMarkerPixel) + new Vector3(0f, 0.4f, 0f),
-            ExpandStandPixels.Select(toWorld).ToArray(), toWorld(ExpandLookPixel), "hint_plaza_expand");
-        taskSites.Add(expand);
-        focus.Add(Point(p3, "prepare_ground", toWorld(new Vector2(1000, 615))));
-
-        // 8) 확장된 땅: 동쪽 바닥 조각(카메라 범위가 넓어짐) + 걷기 영역
-        var expanded = new GameObject("Expansion").transform;
-        expanded.SetParent(p3, false);
-        var groundSprite = AssetDatabase.LoadAssetAtPath<Sprite>(GroundEastPath);
-        var ground = new GameObject("Ground_East").AddComponent<SpriteRenderer>();
-        ground.transform.SetParent(expanded, false);
-        ground.sprite = groundSprite;
-        ground.sortingLayerID = background.sortingLayerID;
-        ground.sortingOrder = background.sortingOrder;
-        ground.sharedMaterial = background.sharedMaterial;
-        var bounds = background.bounds;
-        float eastWidth = groundSprite != null ? groundSprite.bounds.size.x : bounds.size.x * 0.5f;
-        ground.transform.position = new Vector3(bounds.max.x + eastWidth * 0.5f, bounds.center.y, background.transform.position.z);
-        var area = new GameObject("Walkable_East").AddComponent<PlazaAreaPolygon>();
-        area.transform.SetParent(expanded, false);
-        var areaSo = new SerializedObject(area);
-        areaSo.FindProperty("kind").enumValueIndex = (int)PlazaAreaKind.Walkable;
-        var points = areaSo.FindProperty("points");
-        points.arraySize = EastWalkablePixels.Length;
-        for (int i = 0; i < EastWalkablePixels.Length; i++)
-            points.GetArrayElementAtIndex(i).vector2Value = area.transform.InverseTransformPoint(toWorld(EastWalkablePixels[i]));
-        areaSo.ApplyModifiedPropertiesWithoutUndo();
-        AddGate(expanded.gameObject, PlazaExpandDevelopment, true);
-        var expandedGate = new SerializedObject(expanded.GetComponent<DevelopmentGate>());
-        expandedGate.FindProperty("_noPop").boolValue = true;
-        expandedGate.ApplyModifiedPropertiesWithoutUndo();
-        if (camera != null)
-        {
-            var cameraSo = new SerializedObject(camera);
-            var extras = cameraSo.FindProperty("extraBoundsSources");
-            for (int i = extras.arraySize - 1; i >= 0; i--)
-            {
-                if (extras.GetArrayElementAtIndex(i).objectReferenceValue == null)
-                    extras.DeleteArrayElementAtIndex(i);
-            }
-            AddUnique(extras, ground);
-            cameraSo.ApplyModifiedPropertiesWithoutUndo();
-        }
-
-        // 9) 이웃집 자리 (같은 집 그림을 거울처럼 뒤집어 재사용) + 공사 현장
-        Vector3 housePos = toWorld(HouseP3Pixel);
-        var house = InstantiateProp("House_Blue", p3, housePos, PropScale(props, "House_Blue"), true);
+        // 이웃집 (같은 집 그림을 거울처럼 뒤집어 재사용) + 공사 현장
+        Vector3 housePos = toWorld(westHome);
+        var house = InstantiateProp("House_Blue", neighborhood, housePos, PropScale(props, "House_Blue"), true);
         house.name = "House_Blue_P3";
         var houseRenderer = house.GetComponent<SpriteRenderer>();
         float depth = FootprintDepthOffset(house.transform);
         SetDepthOffset(houseRenderer, depth);
         AddGate(house, HouseBuiltDevelopment, true, true);
-        sites.Add(BuildHouseSite(p3, "Site_P3House", "con_p3_house", houseRenderer, depth));
+        sites.Add(BuildHouseSite(neighborhood, "Site_P3House", "con_p3_house", houseRenderer, depth));
 
-        // 10) 환영 소품 자리 (고른 것 하나만 지어짐)
-        Vector3 pot = toWorld(FlowerPotPixel);
-        var potProp = P3Prop(p3, "WelcomePot", "Prop_FlowerPot", pot, 1f, new Rect(-0.55f, -0.1f, 1.1f, 0.45f));
+        // 환영 소품 자리 (고른 것 하나만 지어짐)
+        Vector3 pot = toWorld(westHome + FlowerPotOffset);
+        var potProp = P3Prop(neighborhood, "WelcomePot", "Prop_FlowerPot", pot, 1f, new Rect(-0.55f, -0.1f, 1.1f, 0.45f));
         AddGate(potProp.gameObject, FlowerPotDevelopment, true, true);
-        var (potSite, potSiteSo) = CreateSite(p3, "Site_WelcomePot", "con_p3_flowerpot", pot,
+        var (potSite, potSiteSo) = CreateSite(neighborhood, "Site_WelcomePot", "con_p3_flowerpot", pot,
             pot + new Vector3(-1.2f, -0.3f, 0f), pot + new Vector3(0f, 2.2f, 0f), 1.4f);
         potSiteSo.ApplyModifiedPropertiesWithoutUndo();
         sites.Add(potSite);
-        Vector3 line = toWorld(ClotheslinePixel);
-        var lineProp = P3Prop(p3, "WelcomeClothesline", "Prop_Clothesline", line, 1f, new Rect(-1.7f, -0.1f, 3.4f, 0.4f));
+        Vector3 line = toWorld(westHome + ClotheslineOffset);
+        var lineProp = P3Prop(neighborhood, "WelcomeClothesline", "Prop_Clothesline", line, 1f, new Rect(-1.7f, -0.1f, 3.4f, 0.4f));
         AddGate(lineProp.gameObject, ClotheslineDevelopment, true, true);
-        var (lineSite, lineSiteSo) = CreateSite(p3, "Site_WelcomeClothesline", "con_p3_clothesline", line,
+        var (lineSite, lineSiteSo) = CreateSite(neighborhood, "Site_WelcomeClothesline", "con_p3_clothesline", line,
             line + new Vector3(-2.2f, -0.3f, 0f), line + new Vector3(0f, 3f, 0f), 3f);
         lineSiteSo.ApplyModifiedPropertiesWithoutUndo();
         sites.Add(lineSite);
 
         LinkP3ToView(view, sites, taskSites, focus);
+
+        // 7) 영토: 전체 지도 · 숲 · 칸별 걷기 영역 · 개간 자리 · 카메라 범위
+        BuildTerritory(root, view, background, toWorld);
     }
 
     // 새 소품: 그림(아래 가운데 피벗, 앞뒤 정렬) + 바닥 발자국 + 장난감을 못 놓는 자리
@@ -618,46 +551,6 @@ public static partial class SettlementSetup
         AddFootprint(renderer.transform, footprint);
         AddDecorBlock(renderer.transform, new Vector2(footprint.center.x, footprint.center.y), new Vector2(footprint.width, Mathf.Max(0.8f, footprint.height)));
         return renderer;
-    }
-
-    // 확장을 막은 덤불(쓰러짐)·바위(깨짐). 광장 바위·나무처럼 앞뒤 정렬하고, 치우면 발자국이 꺼져 걷기 영역이 다시 계산됨
-    private static void BuildP3Obstacle(Transform root, string id, ObstacleKind kind, Vector3 position, PlazaWalkableArea walkable, bool hint)
-    {
-        var node = new GameObject($"Obstacle_{id}").transform;
-        node.SetParent(root, false);
-        node.position = position;
-        bool rock = kind == ObstacleKind.Rock;
-        var sprite = rock ? LoadPropArt("Prop_Rock_0") : AssetDatabase.LoadAssetAtPath<Sprite>(BushArtPath);
-        var visual = CreateSprite("Visual", node, sprite, position, true);
-        visual.transform.localScale = Vector3.one * (rock ? 0.75f : 0.55f);
-        var footprint = AddFootprint(node, rock ? new Rect(-0.6f, -0.15f, 1.2f, 0.5f) : new Rect(-0.8f, -0.15f, 1.6f, 0.6f));
-
-        var tap = node.gameObject.AddComponent<CircleCollider2D>();
-        tap.radius = rock ? 0.8f : 1f;
-        tap.offset = new Vector2(0f, rock ? 0.45f : 0.8f);
-
-        var view = node.gameObject.AddComponent<ClearingObstacleView>();
-        var so = new SerializedObject(view);
-        so.FindProperty("_obstacleId").stringValue = id;
-        so.FindProperty("_projectObstacle").boolValue = true;
-        so.FindProperty("_kind").enumValueIndex = (int)kind;
-        so.FindProperty("_hits").intValue = rock ? 4 : 3;
-        so.FindProperty("_reward").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ItemDefinition>(rock ? StoneItemPath : WoodItemPath);
-        so.FindProperty("_rewardAmount").intValue = 2;
-        var sprites = so.FindProperty("_sprites");
-        sprites.arraySize = rock ? 3 : 1;
-        for (int i = 0; i < sprites.arraySize; i++)
-            sprites.GetArrayElementAtIndex(i).objectReferenceValue = rock ? LoadPropArt($"Prop_Rock_{i}") : sprite;
-        so.FindProperty("_pieceSprite").objectReferenceValue = LoadPropArt(rock ? "FX_StoneChip" : "FX_Leaf");
-        so.FindProperty("_renderer").objectReferenceValue = visual;
-        so.FindProperty("_tapArea").objectReferenceValue = tap;
-        so.FindProperty("_fx").objectReferenceValue = CreateNodeFx(node);
-        so.FindProperty("_footprint").objectReferenceValue = footprint;
-        so.FindProperty("_walkableArea").objectReferenceValue = walkable;
-        if (hint)
-            so.FindProperty("_hint").objectReferenceValue =
-                CreateTapHint(node, "hint_p3_obstacle", "톡톡 눌러 치워요!", new Vector3(0f, 1.8f, 0f));
-        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     // 모임 연출: 식탁 둘레 자리 4개 (왼쪽·오른쪽·앞 두 자리)

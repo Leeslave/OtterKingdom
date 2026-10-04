@@ -60,6 +60,10 @@ public class SettlementPlazaView : MonoBehaviour
     [Tooltip("관리 해달의 근무 자리 (게시판 옆)")]
     [SerializeField] private List<ManagementStationView> _stations = new List<ManagementStationView>();
 
+    [Header("영토 확장")]
+    [Tooltip("숲 개간 자리 (방향마다 하나). 개간하러 보낸 해달은 그 자리에서 숲을 향해 일함")]
+    [SerializeField] private List<TerritorySiteView> _territorySites = new List<TerritorySiteView>();
+
     [Header("공동사업 (P3)")]
     [Tooltip("공동사업 화면의 [현장 보기]가 비출 곳 (이름 = 사업 단계 ID, 예: clear_brush)")]
     [SerializeField] private List<Transform> _focusPoints = new List<Transform>();
@@ -71,6 +75,7 @@ public class SettlementPlazaView : MonoBehaviour
     [SerializeField] private TMP_FontAsset _speechFont;
 
     private readonly List<DevelopmentGate> _gates = new List<DevelopmentGate>();
+    private readonly List<TerritoryAnchor> _anchors = new List<TerritoryAnchor>();
     private readonly Dictionary<string, OtterWanderAgent> _spawned = new Dictionary<string, OtterWanderAgent>();
     private readonly Dictionary<string, SettlementOtterView> _views = new Dictionary<string, SettlementOtterView>();
     private readonly List<string> _leftForWork = new List<string>();
@@ -93,7 +98,10 @@ public class SettlementPlazaView : MonoBehaviour
         foreach (var root in _gateRoots)
         {
             if (root != null)
+            {
                 _gates.AddRange(root.GetComponentsInChildren<DevelopmentGate>(true));
+                _anchors.AddRange(root.GetComponentsInChildren<TerritoryAnchor>(true));
+            }
         }
         _builder.gameObject.SetActive(false);
     }
@@ -243,6 +251,12 @@ public class SettlementPlazaView : MonoBehaviour
 
     private void ApplyGates(System.Func<string, bool> isUnlocked, bool animate)
     {
+        // 처음 넓힌 영토 쪽으로 이웃집 묶음을 먼저 옮김 (그 뒤에 걷기 영역을 계산하므로)
+        foreach (var anchor in _anchors)
+        {
+            if (anchor != null)
+                anchor.Apply(isUnlocked);
+        }
         foreach (var gate in _gates)
         {
             if (gate != null)
@@ -610,8 +624,9 @@ public class SettlementPlazaView : MonoBehaviour
     {
         stand = look = default;
         var site = FindTaskSite(task);
+        var territorySite = site == null ? FindTerritorySite(task) : null;
         var job = _manager.Settlement.FindTaskJobOf(otterId);
-        if (site == null || job == null)
+        if (site == null && territorySite == null || job == null)
             return false;
         int index = 0;
         for (int i = 0; i < job.OtterIds.Count; i++)
@@ -619,9 +634,19 @@ public class SettlementPlazaView : MonoBehaviour
             if (job.OtterIds[i] == otterId)
                 index = i;
         }
-        stand = site.StandPoint(index);
-        look = site.LookPoint;
+        stand = site != null ? site.StandPoint(index) : territorySite.StandPoint(index);
+        look = site != null ? site.LookPoint : territorySite.LookPoint;
         return true;
+    }
+
+    private TerritorySiteView FindTerritorySite(SettlementTaskDefinition task)
+    {
+        foreach (var site in _territorySites)
+        {
+            if (site != null && site.Handles(task))
+                return site;
+        }
+        return null;
     }
 
     private PlazaTaskSiteView FindTaskSite(SettlementTaskDefinition task)

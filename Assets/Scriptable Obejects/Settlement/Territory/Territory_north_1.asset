@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3851747b9d35bb741a9bb6e784d9fa0d, type: 3}
+  m_Name: Territory_north_1
+  m_EditorClassIdentifier: OtterKingdom::TerritoryExpansionDefinition
+  _expansionId: territory_north_1
+  _direction: 1
+  _tier: 1
+  _displayName: "\uBD81\uCABD \uC232"
+  _clearings:
+  - _task: {fileID: 11400000, guid: 7f0b18e169606f04a91ae545d8d9b921, type: 2}
+    _rewards:
+    - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+      _amount: 30
+  - _task: {fileID: 11400000, guid: 61b31d7b1c213f34f82e3ffbf5f7b29f, type: 2}
+    _rewards:
+    - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+      _amount: 35
+  - _task: {fileID: 11400000, guid: ed8aff918a46b57429b33c88e6155b6a, type: 2}
+    _rewards:
+    - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+      _amount: 40
+  _mission: {fileID: 11400000, guid: f3973c9ab2aa6f14e80099e275c83d2a, type: 2}

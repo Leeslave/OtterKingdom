@@ -24,7 +24,7 @@ MonoBehaviour:
   _completionMessage: "\uD3EC\uADFC\uC774\uAC00 \uC0C8 \uC9D1\uC5D0 \uC790\uB9AC
     \uC7A1\uC558\uC5B4\uC694!\n\uD568\uAED8 \uC77C\uD560 \uC8FC\uBBFC\uC774 \uB298\uC5C8\uC5B4\uC694."
   _requiredLevel: 9
-  _requiredDevelopment: plaza_expand_01
+  _requiredDevelopment: territory_first
   _gold: 800
   _items:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
