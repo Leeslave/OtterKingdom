@@ -53,12 +53,13 @@ public readonly struct LaborSummary
 /// 개간 지역(P1): 플레이어가 길을 다 치우면 주민 해달을 작업에 보내고, 작업이 끝나면 지역을 운영(부탁 완료·꾸미기 구역 해금)한다.
 /// 전문 해달: 운영되면 그 지역의 전문 해달(광부·농부)이 광장에 찾아오고, 플레이어가 배치한 뒤 그 장소의 안내를 끝내면 생산이 시작된다.
 /// 게시판 성장(P2): 게시판 보강 → 관리 해달 방문·역할 맡김 → 주민 부탁(광장 주민 작업) → 접수소(큰 부탁 묶음) → 마을회관(발전 현황).
+/// 공동사업·생활 의뢰·요정 방문(P3): SettlementManager.P3.cs.
 /// 기존 시스템(밭·가방·재화·퀘스트) 앞에서 진행만 제어하는 상위 레이어 — 그 내부 로직은 건드리지 않는다.
 /// - 세이브: GameManager가 LoadFromSave / WriteToSave를 호출. 부탁을 끝내면 SaveRequested로 바로 저장을 부탁한다
 /// </summary>
 // 매니저들(-100)이 준비된 뒤, GameManager가 세이브를 불러오기 전에 준비
 [DefaultExecutionOrder(-80)]
-public class SettlementManager : MonoBehaviour
+public partial class SettlementManager : MonoBehaviour
 {
     public static SettlementManager Instance { get; private set; }
 
@@ -141,7 +142,12 @@ public class SettlementManager : MonoBehaviour
 
         Instance = this;
         Settlement = new Settlement();
-        Settlement.OnChanged += () => OnChanged?.Invoke();
+        Settlement.OnChanged += () =>
+        {
+            // 공동사업의 단계·완료는 기록에서 계산하므로, 무엇이 바뀌든 다음 프레임에 다시 봄 (바꾸는 도중에 다시 바꾸지 않게)
+            _projectsDirty = true;
+            OnChanged?.Invoke();
+        };
         Settlement.OnDevelopmentUnlocked += id => OnDevelopmentUnlocked?.Invoke(id);
     }
 
@@ -156,6 +162,18 @@ public class SettlementManager : MonoBehaviour
         if (!IsLoaded)
             return;
         FinishDueTasks();
+        // 레벨이 오르면 다음 사업·생활 의뢰가 열릴 수 있음
+        int level = PlayerLevel;
+        if (level != _seenLevel)
+        {
+            _seenLevel = level;
+            _projectsDirty = true;
+        }
+        if (_projectsDirty)
+        {
+            _projectsDirty = false;
+            UpdateProjects(false);
+        }
         if (Settlement.Job == null)
             return;
 
@@ -322,11 +340,11 @@ public class SettlementManager : MonoBehaviour
         if (gold > 0)
             CurrencyManager.Instance.TrySpend(_config.GoldCurrency, gold, TransactionSource.Construction);
 
-        var bag = InventoryManager.Instance.Inventory;
         foreach (var cost in items)
         {
+            // 비용이 없는 공사(공동사업 단계: 재료는 납품으로 이미 냄)는 가방을 건드리지 않음
             if (cost != null && cost.Item != null && cost.Amount > 0)
-                bag.TryRemove(cost.Item, cost.Amount, ItemChangeReason.Construction);
+                InventoryManager.Instance.Inventory.TryRemove(cost.Item, cost.Amount, ItemChangeReason.Construction);
         }
     }
 
@@ -669,6 +687,12 @@ public class SettlementManager : MonoBehaviour
 
     private void FinishTask(SettlementTaskJob job)
     {
+        // 생활 의뢰의 주민 작업 (틀ID#회차): 결과 발전 없이 의뢰 보상 (SettlementManager.P3)
+        if (SettlementConfig.IsTaskInstance(job.TaskId))
+        {
+            FinishLifeWork(job);
+            return;
+        }
         var task = _config.FindTask(job.TaskId);
         if (task == null)
             Debug.LogWarning($"[SettlementManager] 진행 중이던 작업 '{job.TaskId}'을(를) 찾을 수 없어 해달을 돌려보냅니다.");
@@ -863,6 +887,9 @@ public class SettlementManager : MonoBehaviour
         if (!SettlementRegionRules.Assign(otter, Settlement))
             return false;
 
+        // 파견이 저장되는 순간 열리는 발전 (농부 → 요정 방문 예약). 배치와 같은 저장에 남음
+        if (!string.IsNullOrEmpty(otter.AssignDevelopment))
+            Settlement.UnlockDevelopment(otter.AssignDevelopment);
         if (otter.CollectionEntry != null && CollectionManager.Instance != null)
             CollectionManager.Instance.Register(otter.CollectionEntry.EntryId);
         OnSpecialistAssigned?.Invoke(otter);
@@ -1143,7 +1170,8 @@ public class SettlementManager : MonoBehaviour
     #region 세이브
 
     /// <summary>게임 시작 시 한 번. 새 게임이면 첫 해달이 오고 시작 재료를 받는다</summary>
-    public void LoadFromSave(SettlementSaveData saved)
+    /// <param name="fairyShopSeen">요정 상점 안내를 이미 봤는지 (P3 전 세이브에서 요정을 그대로 두기 위해. GameManager의 튜토리얼 기록)</param>
+    public void LoadFromSave(SettlementSaveData saved, bool fairyShopSeen = false)
     {
         if (saved == null)
             throw new ArgumentNullException(nameof(saved));
@@ -1162,23 +1190,27 @@ public class SettlementManager : MonoBehaviour
 
         // 지역·작업·전문 해달을 먼저 맞춘 뒤 (옛 세이브 옮기기) 꺼 둔 동안 끝난 건설·주민 작업을 처리
         MigrateSpecialists();
-        MigrateVersion();
+        MigrateVersion(fairyShopSeen);
         ReconcileRecords();
         IsLoaded = true;
         if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
             FinishJob();
         FinishDueTasks();
         SyncRegionDecor();
+        // 공동사업: 기록에서 단계·완료를 다시 계산 (꺼진 사이 끝난 건설·정비, 주다 만 보상). 알림 없이
+        UpdateProjects(true);
 
         ApplyLevelCap();
         OnLoaded?.Invoke();
         OnChanged?.Invoke();
     }
 
-    // 세이브 버전을 한 번 옮김 (P2 콘텐츠는 자동으로 주지 않음)
-    private void MigrateVersion()
+    // 세이브 버전을 한 번 옮김 (P2·P3 콘텐츠는 자동으로 주지 않음. P3 전 세이브에서 이미 와 있던 요정은 그대로)
+    private void MigrateVersion(bool fairyShopSeen)
     {
         int from = Settlement.Version;
+        if (SettlementMigration.MigrateFairy(_config, Settlement, from, fairyShopSeen))
+            Debug.Log("[SettlementManager] P3 전 세이브: 이미 광장에 있던 요정을 그대로 둡니다.");
         if (SettlementMigration.MigrateToCurrent(Settlement) && from > 0)
             Debug.Log($"[SettlementManager] 정착 세이브를 버전 {from} → {SettlementSaveData.CurrentVersion}으로 옮겼습니다.");
     }
@@ -1190,6 +1222,9 @@ public class SettlementManager : MonoBehaviour
         SettlementMigration.ReconcileRecords(_config, Settlement, completed);
         foreach (var request in completed)
             Debug.Log($"[SettlementManager] 기록에 맞춰 부탁 '{request.RequestId}'을(를) 끝낸 것으로 맞췄습니다.");
+        // 파견은 했는데 파견 발전(요정 방문 예약)이 없는 세이브: 한 번 맞춤
+        foreach (var otter in SettlementMigration.ReconcileAssignDevelopments(_config, Settlement))
+            Debug.Log($"[SettlementManager] 기록에 맞춰 '{otter.DisplayName}' 파견 발전 '{otter.AssignDevelopment}'을(를) 열었습니다.");
     }
 
     private void GrantStartingItems()

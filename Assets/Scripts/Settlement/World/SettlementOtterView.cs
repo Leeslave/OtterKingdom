@@ -8,6 +8,7 @@ using UnityEngine;
 /// - 광장에 와 있는 전문 해달(광부·농부)은 탭하면 "일하고 싶어요" + [배치] 확인 → 일할 곳에 배치
 /// - 만난 관리 해달은 탭하면 "게시판 일을 도와도 될까요?" + [게시판 관리 맡기기] 확인 → 근무 자리로 감.
 ///   역할을 맡은 뒤에는 탭하면 한마디 + 게시판의 부탁 탭이 열림
+/// - 새 집이 생겨 찾아온 이웃(P3)은 탭하면 "저 집에서 살아도 될까요?" + [입주] 확인 → 그 집에 입주
 /// - 할 말이 있는 정착 후보·배치를 기다리는 전문 해달·역할을 기다리는 관리 해달은 머리 위에 "!"
 /// - 공사를 맡으면 망치 말풍선
 /// </summary>
@@ -110,7 +111,8 @@ public class SettlementOtterView : MonoBehaviour
             speaking = false;
         }
 
-        bool attention = !speaking && (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter) || manager.CanAssignRole(_otter));
+        bool attention = !speaking && (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter) || manager.CanAssignRole(_otter)
+            || manager.CanMoveIn(_otter));
         if (_attention.gameObject.activeSelf != attention)
             _attention.gameObject.SetActive(attention);
         if (attention)
@@ -124,7 +126,12 @@ public class SettlementOtterView : MonoBehaviour
     {
         string line;
         var assignedRole = manager.AssignedRoleOf(_otter);
-        if (manager.CanAssignSpecialist(_otter))
+        if (manager.CanMoveIn(_otter))
+        {
+            line = string.IsNullOrEmpty(_otter.MoveInLine) ? PickLine() : _otter.MoveInLine;
+            AskToMoveIn(manager);
+        }
+        else if (manager.CanAssignSpecialist(_otter))
         {
             line = string.IsNullOrEmpty(_otter.AssignLine) ? PickLine() : _otter.AssignLine;
             AskToAssign(manager);
@@ -185,6 +192,21 @@ public class SettlementOtterView : MonoBehaviour
         game.ShowConfirm(title,
             $"{name}에게 {roleName}{KoreanParticle.ObjectParticle(roleName)} 맡길까요?\n맡기면 게시판 옆에서 일해요.",
             () => manager.TryAssignRole(role));
+    }
+
+    // 새 이웃: [예]를 누르면 그 집에 입주 (집의 입주민 기록이 원본. 여러 번 눌러도 한 번만 됨)
+    private void AskToMoveIn(SettlementManager manager)
+    {
+        var game = GameManager.Instance;
+        if (game == null)
+        {
+            manager.TryMoveIn(_otter);
+            return;
+        }
+        string name = _otter.DisplayName;
+        game.ShowConfirm("새 이웃의 입주",
+            $"{name}{KoreanParticle.SubjectParticle(name)} 새 집에 입주할까요?\n입주하면 마을 주민이 되어 함께 일해요.",
+            () => manager.TryMoveIn(_otter));
     }
 
     // 같은 말을 연달아 하지 않게

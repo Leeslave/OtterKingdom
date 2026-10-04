@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1490e855a9528204ea3daf75a822df84, type: 3}
+  m_Name: con_p3_supply_box
+  m_EditorClassIdentifier: OtterKingdom::ConstructionDefinition
+  _constructionId: con_p3_supply_box
+  _displayName: "\uBE44\uCD95 \uC0C1\uC790"
+  _icon: {fileID: 21300000, guid: 5cff65a313a279449bedd6d94591e6a2, type: 3}
+  _targetType: 0
+  _requiredGold: 0
+  _requiredItems: []
+  _durationSeconds: 30
+  _needsBuilder: 1
+  _progressLabel: "\uBE44\uCD95 \uC0C1\uC790 \uB193\uB294 \uC911"
+  _progressHint: "\uB2E4 \uB193\uC73C\uBA74 \uCCAB \uBE44\uCD95 \uC644\uB8CC!"
+  _unlockResultId: p3_supply_box_built

@@ -77,9 +77,10 @@ public readonly struct RoleAssignment
 
 /// <summary>
 /// 정착 진행 상태 (순수 C#): 왕국 단계, 해달별 처지, 끝낸 부탁, 열린 발전, 방명록, 진행 중인 건설, 주민 작업, 전문 해달, 만난 해달, 관리 역할.
+/// P3 공동사업·집·생활 의뢰는 Settlement.P3.cs.
 /// 규칙(언제 무엇이 열리는지)은 SettlementRules, 비용·시간은 SettlementManager가 다룬다.
 /// </summary>
-public class Settlement
+public partial class Settlement
 {
     private readonly Dictionary<string, ResidentState> _residents = new Dictionary<string, ResidentState>();
     // 온 순서대로 (광장에 나오는 순서, 세이브 순서를 지키기 위해)
@@ -606,6 +607,7 @@ public class Settlement
                 _roles[r.roleId] = new RoleAssignment(r.roleId, r.otterId, r.stationId);
             }
         }
+        LoadP3(saved);
 
         OnChanged?.Invoke();
     }
@@ -685,6 +687,7 @@ public class Settlement
         foreach (var role in _roles.Values)
             result.roles.Add(new RoleAssignmentSaveData { roleId = role.RoleId, otterId = role.OtterId, stationId = role.StationId });
         result.roles.Sort((a, b) => string.CompareOrdinal(a.roleId, b.roleId));
+        WriteP3(result);
     }
 
     #endregion

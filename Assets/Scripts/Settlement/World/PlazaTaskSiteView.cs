@@ -15,6 +15,9 @@ public class PlazaTaskSiteView : MonoBehaviour
     [Header("작업")]
     [SerializeField] private SettlementTaskDefinition _task;
 
+    [Tooltip("생활 의뢰처럼 같은 작업 틀을 회차마다 하는 현장: 망치 표지판 없이(의뢰 화면에서 보냄) 진행 중인 회차만 보여 줌")]
+    [SerializeField] private bool _repeatedWork;
+
     [Header("자리")]
     [Tooltip("주민 해달이 일할 자리 (보낸 수만큼. 모자라면 앞 자리 옆에 섬)")]
     [SerializeField] private List<Transform> _standPoints = new List<Transform>();
@@ -68,6 +71,12 @@ public class PlazaTaskSiteView : MonoBehaviour
         if (manager == null || !manager.IsLoaded || _task == null)
             return;
 
+        if (_repeatedWork)
+        {
+            UpdateMarker(manager, false);
+            UpdateProgress(manager.FindRepeatedTaskJob(_task));
+            return;
+        }
         var state = manager.GetTaskState(_task);
         UpdateMarker(manager, state == SettlementTaskState.Available);
         UpdateProgress(state == SettlementTaskState.Working ? manager.GetTaskJob(_task) : null);

@@ -302,6 +302,9 @@ public static partial class SettlementSetup
         sites.Add(restSite);
 
         LinkP2ToView(view, sites, taskSites, new List<ManagementStationView> { station });
+
+        // P3 (공동사업 현장·광장 확장): P2 목록을 다시 쓴 뒤에 붙임
+        BuildP3(root, props, view, root.parent.Find("Background").GetComponent<SpriteRenderer>(), toWorld);
     }
 
     // 지난 P2(지운 것) 칸을 빼고 새 현장을 붙임

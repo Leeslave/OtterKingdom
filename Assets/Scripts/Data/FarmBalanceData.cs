@@ -16,6 +16,12 @@ public class FarmBalanceData : ScriptableObject
     // Coin cost to unlock each locked plot (plot 1 starts unlocked).
     public int plotUnlockCost = 100;
 
+    [Header("Farmer")]
+    [Tooltip("Seconds the farmer spends on one ready slot (walk + harvest) before the crop is in the bag. " +
+             "One slot at a time, wherever the player is — the farm scene's otter only shows it.")]
+    [Min(0.1f)]
+    public float farmerHarvestSec = 10f;
+
     [Header("Offline")]
     [Tooltip("Farm level at which the crops registered with the farm NPC keep growing while the game is closed.")]
     public int offlineUnlockLevel = 2;

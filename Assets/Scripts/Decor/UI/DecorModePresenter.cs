@@ -24,6 +24,7 @@ public class DecorModePresenter : MonoBehaviour
     private const string HintNoRoom = "놓을 자리가 없어요";
     private const string HintEmpty = "보관함에 남은 게 없어요";
     private const string HintShop = "상점은 준비 중이에요";
+    private const string HintFairyComing = "상점을 여는 요정이 아직 오지 않았어요";
     private const string HintOccupied = "다른 물건이 있는 자리예요";
     private const string HintUnavailable = "여기에는 놓을 수 없어요";
     private const string HintLocked = "아직 열리지 않은 구역이에요";
@@ -85,13 +86,18 @@ public class DecorModePresenter : MonoBehaviour
         _storage.OnTabChanged += RefreshStorage;
     }
 
-    // 보관함 [+ 상점] → 요정 상점을 꾸미기 물건 탭으로 (상점이 없으면 안내만)
+    // 보관함 [+ 상점] → 요정 상점을 꾸미기 물건 탭으로 (상점이 없거나 요정이 아직 광장에 오지 않았으면 안내만)
     private void OpenShop()
     {
         var shop = FairyShopPresenter.Instance;
         if (shop == null)
         {
             _view.ShowHint(HintShop);
+            return;
+        }
+        if (!FairyAccess.IsShopOpen)
+        {
+            _view.ShowHint(HintFairyComing);
             return;
         }
 
@@ -480,7 +486,7 @@ public class DecorModePresenter : MonoBehaviour
     {
         var text = new StringBuilder("0123456789x()·!,. 전체배치됨상점꾸미기모드완료보관함");
         text.Append(HintIdle).Append(HintPlace).Append(HintPlaced).Append(HintStored).Append(HintNoRoom)
-            .Append(HintEmpty).Append(HintShop).Append(HintOccupied).Append(HintUnavailable).Append(HintLocked);
+            .Append(HintEmpty).Append(HintShop).Append(HintFairyComing).Append(HintOccupied).Append(HintUnavailable).Append(HintLocked);
         foreach (var decor in DecorManager.Instance.Catalog.Decors)
         {
             if (decor != null)

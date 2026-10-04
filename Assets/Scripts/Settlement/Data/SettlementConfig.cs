@@ -3,7 +3,8 @@ using UnityEngine;
 
 /// <summary>
 /// 정착 진행(P0: 빈 광장 → 첫 집 → 건설 해달 → 농경지 개간 → 밭 해금, P1: 개간 지역 · 주민 작업 · 전문 해달 배치,
-/// P2: 게시판 성장 → 관리 해달 → 주민 부탁 · 공동 작업 → 접수소 · 큰 부탁 → 마을회관)에 쓰는 데이터 묶음.
+/// P2: 게시판 성장 → 관리 해달 → 주민 부탁 · 공동 작업 → 접수소 · 큰 부탁 → 마을회관,
+/// P3: 공동사업(첫 비축 → 광장 확장 → 새 이웃 · 환영 소품 → 첫 마을 모임 → 반복 사업) · 생활 의뢰 · 요정 방문 순서)에 쓰는 데이터 묶음.
 /// </summary>
 [CreateAssetMenu(fileName = "SettlementConfig", menuName = "Game Data/Settlement/Config")]
 public class SettlementConfig : ScriptableObject
@@ -57,6 +58,30 @@ public class SettlementConfig : ScriptableObject
     [Tooltip("큰 부탁 묶음 (마을 회의소 마련하기 등)")]
     [SerializeField] private List<MilestoneGroupDefinition> _milestoneGroups = new List<MilestoneGroupDefinition>();
 
+    [Header("공동사업 · 생활 의뢰 (P3)")]
+    [Tooltip("순서대로 열리는 공동사업 (마지막은 반복 사업)")]
+    [SerializeField] private List<CommunityProjectDefinition> _projects = new List<CommunityProjectDefinition>();
+
+    [Tooltip("공동사업 단계가 쓰는 건설 부탁 (게시판에 보이지 않음. 비용 0 — 재료는 사업 납품으로 냄)")]
+    [SerializeField] private List<BoardRequestDefinition> _projectRequests = new List<BoardRequestDefinition>();
+
+    [Tooltip("생활 의뢰의 틀 (이 순서대로 돌아가며 나옴)")]
+    [SerializeField] private List<LifeRequestTemplate> _lifeRequests = new List<LifeRequestTemplate>();
+
+    [Tooltip("생활 의뢰가 열리는 발전 (마을회관)")]
+    [SerializeField] private string _lifeRequestDevelopment;
+
+    [Tooltip("생활 의뢰가 열리는 플레이어 레벨")]
+    [Min(1)]
+    [SerializeField] private int _lifeRequestLevel = 7;
+
+    [Header("요정 방문 (P3)")]
+    [Tooltip("요정 방문이 예약된 발전 (농부를 밭에 파견하면 열림: 농부 해달의 '배치하면 열리는 발전')")]
+    [SerializeField] private string _fairyInvitedDevelopment;
+
+    [Tooltip("요정이 광장에 실제로 나타난 발전 (요정 NPC·상점의 조건)")]
+    [SerializeField] private string _fairyArrivedDevelopment;
+
     [Header("옛 세이브")]
     [Tooltip("정착 진행 전 세이브에 부탁과 별도로 열어 줄 발전 (예: 아직 부탁이 없는 낚시터 fishing_dock)")]
     [SerializeField] private List<string> _legacyDevelopments = new List<string>();
@@ -99,6 +124,47 @@ public class SettlementConfig : ScriptableObject
     public int ResidentRequestSlots => Mathf.Max(0, _residentRequestSlots);
     public IReadOnlyList<ManagementRoleDefinition> Roles => _roles;
     public IReadOnlyList<MilestoneGroupDefinition> MilestoneGroups => _milestoneGroups;
+    public IReadOnlyList<CommunityProjectDefinition> Projects => _projects;
+    public IReadOnlyList<BoardRequestDefinition> ProjectRequests => _projectRequests;
+    public IReadOnlyList<LifeRequestTemplate> LifeRequests => _lifeRequests;
+    public string LifeRequestDevelopment => _lifeRequestDevelopment;
+    public int LifeRequestLevel => Mathf.Max(1, _lifeRequestLevel);
+    public string FairyInvitedDevelopment => _fairyInvitedDevelopment;
+    public string FairyArrivedDevelopment => _fairyArrivedDevelopment;
+
+    /// <summary>테스트·설정 도구용: P3 데이터를 한 번에 넣음</summary>
+    public void SetupP3(IEnumerable<CommunityProjectDefinition> projects, IEnumerable<BoardRequestDefinition> projectRequests,
+        IEnumerable<LifeRequestTemplate> lifeRequests, string lifeRequestDevelopment, int lifeRequestLevel,
+        string fairyInvited, string fairyArrived)
+    {
+        _projects = projects != null ? new List<CommunityProjectDefinition>(projects) : new List<CommunityProjectDefinition>();
+        _projectRequests = projectRequests != null ? new List<BoardRequestDefinition>(projectRequests) : new List<BoardRequestDefinition>();
+        _lifeRequests = lifeRequests != null ? new List<LifeRequestTemplate>(lifeRequests) : new List<LifeRequestTemplate>();
+        _lifeRequestDevelopment = lifeRequestDevelopment;
+        _lifeRequestLevel = lifeRequestLevel;
+        _fairyInvitedDevelopment = fairyInvited;
+        _fairyArrivedDevelopment = fairyArrived;
+    }
+
+    public CommunityProjectDefinition FindProject(string projectId)
+    {
+        foreach (var project in _projects)
+        {
+            if (project != null && project.ProjectId == projectId)
+                return project;
+        }
+        return null;
+    }
+
+    public LifeRequestTemplate FindLifeRequest(string templateId)
+    {
+        foreach (var template in _lifeRequests)
+        {
+            if (template != null && template.TemplateId == templateId)
+                return template;
+        }
+        return null;
+    }
 
     /// <summary>이 해달이 맡는 관리 역할 (없으면 null)</summary>
     public ManagementRoleDefinition FindRoleFor(SettlementOtterDefinition otter)
@@ -140,9 +206,15 @@ public class SettlementConfig : ScriptableObject
         return null;
     }
 
+    /// <summary>게시판 부탁 또는 공동사업의 건설 부탁 (진행 중인 건설·완료 기록이 둘 다 같은 ID 공간을 씀)</summary>
     public BoardRequestDefinition FindRequest(string requestId)
     {
         foreach (var request in _requests)
+        {
+            if (request != null && request.RequestId == requestId)
+                return request;
+        }
+        foreach (var request in _projectRequests)
         {
             if (request != null && request.RequestId == requestId)
                 return request;
@@ -160,15 +232,31 @@ public class SettlementConfig : ScriptableObject
         return null;
     }
 
+    /// <summary>
+    /// 작업 정의. 생활 의뢰처럼 같은 작업을 여러 번 하는 경우 진행 기록의 ID는 "틀ID#회차"라서 틀 ID로 찾는다
+    /// </summary>
     public SettlementTaskDefinition FindTask(string taskId)
     {
+        if (string.IsNullOrEmpty(taskId))
+            return null;
+        string templateId = TaskTemplateId(taskId);
         foreach (var task in _tasks)
         {
-            if (task != null && task.TaskId == taskId)
+            if (task != null && task.TaskId == templateId)
                 return task;
         }
         return null;
     }
+
+    /// <summary>"틀ID#회차" → 틀ID (회차가 없으면 그대로)</summary>
+    public static string TaskTemplateId(string taskId)
+    {
+        int hash = taskId.IndexOf('#');
+        return hash > 0 ? taskId.Substring(0, hash) : taskId;
+    }
+
+    /// <summary>회차가 붙은 작업 기록인지 (생활 의뢰의 주민 작업)</summary>
+    public static bool IsTaskInstance(string taskId) => !string.IsNullOrEmpty(taskId) && taskId.IndexOf('#') > 0;
 
     /// <summary>이 장소의 개간 지역 (없으면 null)</summary>
     public DevelopableRegionDefinition FindRegion(ZoneDefinition zone)
