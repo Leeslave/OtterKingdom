@@ -23,6 +23,8 @@ public static partial class SettlementSetup
         public ConstructionPopupView construction;
         public SettlementTaskPopupView task;
         public ConstructionCompletePopupView complete;
+        public MilestonePopupView milestone;
+        public TownHallPopupView hall;
     }
 
     /// <summary>HUD 요소(칩·안내 띠·진행 말풍선)</summary>
@@ -36,10 +38,13 @@ public static partial class SettlementSetup
         };
     }
 
-    /// <summary>팝업 (게시판 → 건설 → 주민 작업 → 완료 순서로 위에 그려짐)</summary>
+    /// <summary>팝업 (게시판 → 큰 부탁 → 마을회관 → 건설 → 주민 작업 → 완료 순서로 위에 그려짐)</summary>
     public static void BuildPopups(RectTransform canvas, ref Screens screens)
     {
         screens.board = BuildBoard(canvas);
+        // 게시판 카드에서 열고, [가 보기]가 건설·작업 화면을 그 위에 엶
+        screens.milestone = BuildMilestonePopup(canvas);
+        screens.hall = BuildTownHallPopup(canvas);
         screens.construction = BuildConstructionPopup(canvas);
         screens.task = BuildTaskPopup(canvas);
         screens.complete = BuildCompletePopup(canvas);
@@ -375,6 +380,7 @@ public static partial class SettlementSetup
         requestPage.offsetMax = new Vector2(-44, -214);
         var requestContent = BuildList(requestPage, 18);
         var requestCard = BuildRequestCard(requestContent);
+        var sectionHeader = BuildSectionHeader(requestContent);
         var empty = Label("Empty", requestPage, _bodyFont, "아직 부탁이 없어요.", 30, LightBrown);
         Stretch(empty.rectTransform, 0);
         requestPage.gameObject.SetActive(false);
@@ -400,6 +406,7 @@ public static partial class SettlementSetup
         Set(view, "_requestCardPrefab", requestCard);
         Set(view, "_requestParent", requestContent);
         Set(view, "_emptyRequests", empty.gameObject);
+        Set(view, "_sectionHeaderPrefab", sectionHeader);
         Set(view, "_closeButton", close);
 
         CornerClose(close);
@@ -658,7 +665,22 @@ public static partial class SettlementSetup
         Set(presenter, "_goalZone", goalZone);
         Set(presenter, "_navigator", navigator);
 
+        Set(presenter, "_townHallIcon", LoadArt("ICON_TownHall"));
+
         var tasks = root.AddComponent<SettlementTaskPresenter>();
         Set(tasks, "_popup", screens.task);
+
+        // 큰 부탁 · 마을회관 (전역 UI 연결은 GlobalUIPresenter를 만든 뒤 LinkGlobalUI)
+        var town = root.AddComponent<TownHallPresenter>();
+        Set(town, "_milestone", screens.milestone);
+        Set(town, "_hall", screens.hall);
+    }
+
+    /// <summary>마을회관의 "모두 마쳤어요" 버튼이 이동·꾸미기·도감을 열도록 전역 UI를 연결 (GlobalUISetup이 GlobalUIPresenter를 만든 뒤 부름)</summary>
+    public static void LinkGlobalUI(GameObject root, GlobalUIPresenter presenter)
+    {
+        var town = root.GetComponent<TownHallPresenter>();
+        if (town != null)
+            Set(town, "_globalUI", presenter);
     }
 }

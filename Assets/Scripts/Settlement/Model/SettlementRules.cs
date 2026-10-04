@@ -15,6 +15,12 @@ public enum RequestStatus
 /// </summary>
 public static class SettlementRules
 {
+    /// <summary>
+    /// 정착 진행 전 세이브(모든 부탁을 끝낸 것으로 옮김)가 완료로 받는 부탁의 콘텐츠 버전 상한.
+    /// 그 뒤에 들어온 부탁(P2 = 2)은 옛 세이브에서도 처음부터 진행한다
+    /// </summary>
+    public const int LegacyContentVersion = 1;
+
     public static RequestStatus GetStatus(BoardRequestDefinition request, Settlement settlement)
     {
         if (request == null)
@@ -25,6 +31,9 @@ public static class SettlementRules
         if (settlement.IsCompleted(request.RequestId))
             return RequestStatus.Completed;
         if (settlement.Job != null && settlement.Job.RequestId == request.RequestId)
+            return RequestStatus.Building;
+        // 주민 작업 부탁: 그 작업을 하는 중이면 진행 중
+        if (request.CompletionTask != null && settlement.TryGetTaskJob(request.CompletionTask.TaskId, out _))
             return RequestStatus.Building;
         if (!settlement.HasDevelopment(request.RequiredDevelopment) || settlement.ResidentCount < request.MinResidents)
             return RequestStatus.Locked;
@@ -65,6 +74,20 @@ public static class SettlementRules
         settlement.MarkInitialized();
     }
 
+    /// <summary>부탁을 끝내면 열리는 발전: 건설의 결과, 맡긴 역할의 결과, 끝낸 주민 작업의 결과 (전문 해달 배치는 없음)</summary>
+    public static string CompletionDevelopment(BoardRequestDefinition request)
+    {
+        if (request == null)
+            throw new ArgumentNullException(nameof(request));
+        if (request.Construction != null)
+            return request.Construction.UnlockResultId;
+        if (request.AssignRole != null)
+            return request.AssignRole.ResultDevelopment;
+        if (request.CompletionTask != null)
+            return request.CompletionTask.ResultDevelopment;
+        return null;
+    }
+
     /// <summary>부탁 완료: 발전을 열고, 해달이 정착하거나 찾아오고, 단계가 오르고, 방명록에 남긴다</summary>
     /// <returns>새로 끝냈으면 true</returns>
     public static bool ApplyCompletion(BoardRequestDefinition request, Settlement settlement)
@@ -72,8 +95,7 @@ public static class SettlementRules
         if (request == null)
             throw new ArgumentNullException(nameof(request));
 
-        string development = request.Construction != null ? request.Construction.UnlockResultId : null;
-        if (!settlement.CompleteRequest(request.RequestId, development))
+        if (!settlement.CompleteRequest(request.RequestId, CompletionDevelopment(request)))
             return false;
 
         foreach (var otter in request.Settles)
@@ -93,18 +115,23 @@ public static class SettlementRules
         return true;
     }
 
-    /// <summary>정착 진행이 생기기 전 세이브: 모든 부탁을 끝낸 것으로 (밭 등 이미 쓰던 장소를 다시 잠그지 않게)</summary>
+    /// <summary>
+    /// 정착 진행이 생기기 전 세이브: 그때 있던 부탁(콘텐츠 버전 LegacyContentVersion 이하)을 끝낸 것으로 (밭 등 이미 쓰던 장소를 다시 잠그지 않게).
+    /// 나중에 들어온 부탁(게시판 성장·마을회관 등)은 그대로 두어 처음부터 진행한다
+    /// </summary>
     public static void CompleteAll(SettlementConfig config, Settlement settlement)
     {
         InitializeNewGame(config, settlement);
 
-        var requests = new List<BoardRequestDefinition>(config.Requests);
+        var requests = new List<BoardRequestDefinition>();
+        foreach (var request in config.Requests)
+        {
+            if (request != null && request.ContentVersion <= LegacyContentVersion)
+                requests.Add(request);
+        }
         requests.Sort((a, b) => a.Order.CompareTo(b.Order));
         foreach (var request in requests)
-        {
-            if (request != null)
-                ApplyCompletion(request, settlement);
-        }
+            ApplyCompletion(request, settlement);
         foreach (var development in config.LegacyDevelopments)
         {
             if (!string.IsNullOrEmpty(development))
@@ -145,13 +172,16 @@ public static class SettlementRules
         return null;
     }
 
-    /// <summary>지금 게시판에서 다음으로 할 부탁 (건설 중인 것 우선, 없으면 열린 것 중 순서가 빠른 것). 없으면 null</summary>
+    /// <summary>
+    /// 지금 게시판에서 다음으로 할 메인 부탁 (진행 중인 것 우선, 없으면 열린 것 중 순서가 빠른 것). 없으면 null.
+    /// 주민 부탁은 선택이라 안내 띠·다음 목표에 나오지 않는다
+    /// </summary>
     public static BoardRequestDefinition FindCurrent(SettlementConfig config, Settlement settlement)
     {
         BoardRequestDefinition best = null;
         foreach (var request in config.Requests)
         {
-            if (request == null)
+            if (request == null || request.Category != RequestCategory.Main)
                 continue;
             var status = GetStatus(request, settlement);
             if (status == RequestStatus.Building)

@@ -18,6 +18,7 @@ MonoBehaviour:
   - "\uCCAB \uC815\uCC29"
   - "\uC791\uC740 \uC815\uCC29\uC9C0"
   - "\uC790\uAE09 \uC2DC\uC791"
+  - "\uC791\uC740 \uB9C8\uC744"
   _firstOtter: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   _otters:
   - {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
@@ -26,14 +27,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09ada72536705ff4c80b2fc67cae7e65, type: 2}
   - {fileID: 11400000, guid: 01434be3ebf84ed69c1bbf9c0735c9c9, type: 2}
   - {fileID: 11400000, guid: d77a0cb424b64937aa0cf04256be1d97, type: 2}
+  - {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
   _requests:
   - {fileID: 11400000, guid: d5ddcf15a08ec3b44b1590e7df581403, type: 2}
   - {fileID: 11400000, guid: 1311babe897fada4f810827479de71e7, type: 2}
   - {fileID: 11400000, guid: 2d2e95483cb26fe408ec80a641ef116f, type: 2}
+  - {fileID: 11400000, guid: 20890445c1b3437aa04cbc47a24877d3, type: 2}
   - {fileID: 11400000, guid: f6bb9bebc0ee9e94f9192c2fcb886631, type: 2}
   - {fileID: 11400000, guid: 330d3ce7e7f44574384032e31b4fec34, type: 2}
-  - {fileID: 11400000, guid: 20890445c1b3437aa04cbc47a24877d3, type: 2}
   - {fileID: 11400000, guid: 0e841b5c82fa49e89ea9a660d3e62d19, type: 2}
+  - {fileID: 11400000, guid: cff15f546a1e1994e850708b35632ed6, type: 2}
+  - {fileID: 11400000, guid: 5b35dd1ccbe30bf48afbf6e7e59baabe, type: 2}
+  - {fileID: 11400000, guid: 4b0c5e3237c4cd44781f8b663b77d1fd, type: 2}
+  - {fileID: 11400000, guid: c472e21e218891c46b9dd0cd9e751c05, type: 2}
+  - {fileID: 11400000, guid: c6f96170303a4bd4982c3aaf48e304fd, type: 2}
+  - {fileID: 11400000, guid: 2f27f1438276c04468987c378407e830, type: 2}
+  - {fileID: 11400000, guid: ef7a37d086c14f54fa69de04193905d7, type: 2}
   _guestbookEntries:
   - {fileID: 11400000, guid: 33c4ddbf79f82ec4295cddd2da782dfe, type: 2}
   - {fileID: 11400000, guid: 26cb5157adbe284468d965b7886dcf4c, type: 2}
@@ -48,12 +57,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c55a76c841f40cfa32003f79ec97f27, type: 2}
   - {fileID: 11400000, guid: 79e011a8aa14471784afe3150d0631f9, type: 2}
   - {fileID: 11400000, guid: 1fc93d1bcae64e40b86ef6f36072281a, type: 2}
+  - {fileID: 11400000, guid: e24b807c843a7b144899ce74d8f0da96, type: 2}
+  - {fileID: 11400000, guid: f777f024e797f0147ab08362820dec2f, type: 2}
+  - {fileID: 11400000, guid: a7785037f3a5d5848903426ca96319dc, type: 2}
+  - {fileID: 11400000, guid: a622011ea55652c479a5ed0815da0c34, type: 2}
+  - {fileID: 11400000, guid: e248910d82d593f45bbf510bae9dab45, type: 2}
+  - {fileID: 11400000, guid: 89f8370961c321946a97e38e82264ac4, type: 2}
+  - {fileID: 11400000, guid: 4ae64d9e40ccf474c990f1db977259db, type: 2}
+  - {fileID: 11400000, guid: 9c2b2f6d207bef6469652282d7838652, type: 2}
   _regions:
   - {fileID: 11400000, guid: 64bd9c77f54f5f64f904b9a057f13bad, type: 2}
   - {fileID: 11400000, guid: 4dcd2c8c3b284983a4d03fce7db21aff, type: 2}
   _tasks:
   - {fileID: 11400000, guid: 13f7193403b0af742b37211ed0380205, type: 2}
   - {fileID: 11400000, guid: d50f99438fa84966b9a67bd2acc18f2b, type: 2}
+  - {fileID: 11400000, guid: f8efba697e6a02c4683f56bd5a509afa, type: 2}
+  - {fileID: 11400000, guid: b005bbbe40bd6d24da6abfd32b9dc8d7, type: 2}
+  _boardUpgradeDevelopment: board_upgraded
+  _boardManagedDevelopment: receptionist_assigned
+  _guildDevelopment: guild_office_built
+  _townHallDevelopment: town_hall_built
+  _residentRequestSlots: 2
+  _roles:
+  - {fileID: 11400000, guid: 085d765cee5a78145ac88e54aecdb51b, type: 2}
+  _milestoneGroups:
+  - {fileID: 11400000, guid: 52fe9cb99cf6859459d62ddb1cdb2fcb, type: 2}
   _legacyDevelopments:
   - fishing_dock
   _startingItems:

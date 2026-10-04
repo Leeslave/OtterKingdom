@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     public static readonly Rect DebugPanelRect = new Rect(20, 20, 440, 560);
 
     public bool IsDebugPanelOpen => showDebugPanel;
+    // A zone popup (offline report, confirm, alert) is up — e.g. new plaza
+    // visitors wait for it to close before walking in.
+    public bool IsModalOpen => gameUI != null && gameUI.IsModalOpen;
     public FarmService FarmService => farmService;
     public IReadOnlyList<CropDefinition> Crops => cropDefinitions;
     public FishingService FishingService => fishingService;
@@ -264,6 +267,7 @@ public class GameManager : MonoBehaviour
         SceneNavigator.BeforeLeave += SaveNow;
         SettlementManager.SaveRequested += SaveNow;
         DecorManager.SaveRequested += SaveNow;
+        FairyShopPresenter.Opened += HandleFairyShopOpened;
         InventoryManager.Instance.OnItemSold += HandleItemSold;
     }
 
@@ -272,6 +276,7 @@ public class GameManager : MonoBehaviour
         SceneNavigator.BeforeLeave -= SaveNow;
         SettlementManager.SaveRequested -= SaveNow;
         DecorManager.SaveRequested -= SaveNow;
+        FairyShopPresenter.Opened -= HandleFairyShopOpened;
         if (InventoryManager.Instance != null) InventoryManager.Instance.OnItemSold -= HandleItemSold;
     }
 
@@ -847,9 +852,15 @@ public class GameManager : MonoBehaviour
     // The fairy shop opens later than the plaza's first tutorial (with the
     // farm), so it gets its own short guide: in the plaza, once the fairy is
     // there and nothing else (zone tutorial, popups, level-up, travel) is on
-    // screen. Not finished = shown again on the next plaza visit. A player
-    // who opens the shop on their own before it shows counts as done.
+    // screen. Flow: a short intro card → a highlight on the fairy that
+    // doesn't block input → the player actually opens the shop = done.
+    // Reading or skipping the card is not completion: only a real shop open
+    // (FairyShopPresenter.Opened, from anywhere, before or after the guide)
+    // saves FairyShop. Skip hides the guide for this plaza visit; leaving the
+    // plaza or quitting also leaves it unfinished, so it comes back on the
+    // next visit (the intro card only once: FairyShopIntro).
     private const float FeatureTutorialPollSeconds = 0.5f;
+    private TutorialPointer fairyPointer;
 
     private IEnumerator PlayFairyShopTutorialWhenReady()
     {
@@ -865,12 +876,35 @@ public class GameManager : MonoBehaviour
                 yield break;
             }
             if (zoneTutorialPending || gameUI.IsModalOpen || (navigator != null && navigator.IsTraveling)) continue;
-            if (SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy) continue;
+            if (SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy || TutorialOverlay.IsShowing) continue;
             fairy = FindAnyObjectByType<FairyNpcView>();
             if (fairy != null) break;
         }
 
-        TutorialOverlay.Play(ZoneTutorials.FairyShopSteps(fairy), CompleteFairyShopTutorial);
+        if (!save.tutorialsDone.Contains(ZoneTutorials.FairyShopIntro))
+        {
+            bool finished = false;
+            bool skipped = false;
+            TutorialOverlay.Play(ZoneTutorials.FairyShopSteps(fairy), wasSkipped =>
+            {
+                finished = true;
+                skipped = wasSkipped;
+            });
+            while (!finished) yield return null;
+            if (skipped || save.tutorialsDone.Contains(ZoneTutorials.FairyShop)) yield break;
+            save.tutorialsDone.Add(ZoneTutorials.FairyShopIntro);
+            SaveNow();
+        }
+
+        if (fairy == null || save.tutorialsDone.Contains(ZoneTutorials.FairyShop)) yield break;
+        fairyPointer = TutorialPointer.Show(() => TutorialTargets.World(fairy), ZoneTutorials.FairyShopPointerMessage);
+    }
+
+    private void HandleFairyShopOpened()
+    {
+        CompleteFairyShopTutorial();
+        if (fairyPointer != null) fairyPointer.Close();
+        fairyPointer = null;
     }
 
     private void CompleteFairyShopTutorial()

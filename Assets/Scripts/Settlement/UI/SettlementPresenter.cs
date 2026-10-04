@@ -9,6 +9,7 @@ using UnityEngine;
 /// 정착 진행 화면들을 SettlementManager와 잇는다 (전역 UI 루트에 붙음).
 /// - 상단바 아래 칩(단계 · 주민 수), 오른쪽 위 안내 띠(지금 할 일)
 /// - 게시판 팝업(방명록 / 해달의 부탁) → 건설 팝업 → 완료 팝업
+///   부탁 탭은 게시판 등급에 따라: 기본은 한 목록, 관리 해달이 맡은 뒤 메인 / 주민 부탁 / 완료 구역, 접수소가 생기면 큰 부탁·발전 현황 카드
 /// - 공사 현장 위 진행 말풍선 (광장에 있을 때)
 /// </summary>
 public class SettlementPresenter : MonoBehaviour
@@ -17,6 +18,13 @@ public class SettlementPresenter : MonoBehaviour
     private const float GuideRefreshSeconds = 0.25f;
     // 집이 완성되는 순간(먼지 → 카메라가 다가간 뒤 별빛)을 보여 준 뒤 완료 팝업
     private const float CelebrationSeconds = 1.9f;
+    // 게시판 화면 카드 키
+    private const string MilestoneEntryPrefix = "milestone:";
+    private const string TownHallEntry = "townhall";
+    private const string MainSectionTitle = "지금 할 부탁";
+    private const string ResidentSectionTitle = "주민들의 부탁";
+    private const string CompletedSectionTitle = "완료한 부탁";
+    private const string TownSectionTitle = "마을 발전";
 
     [Header("화면")]
     [SerializeField] private SettlementStatusView _status;
@@ -31,9 +39,14 @@ public class SettlementPresenter : MonoBehaviour
     [SerializeField] private ZoneDefinition _goalZone;
     [SerializeField] private SceneNavigator _navigator;
 
+    [Header("마을 발전 카드")]
+    [Tooltip("게시판의 \"마을 발전 현황\" 카드 그림")]
+    [SerializeField] private Sprite _townHallIcon;
+
     private SettlementManager _manager;
     private readonly Queue<BoardRequestDefinition> _completed = new Queue<BoardRequestDefinition>();
-    private readonly List<(BoardRequestDefinition, RequestStatus, string)> _rows = new List<(BoardRequestDefinition, RequestStatus, string)>();
+    private readonly List<BoardRow> _rows = new List<BoardRow>();
+    private readonly List<BoardRequestRow> _requestRows = new List<BoardRequestRow>();
     private readonly List<GuestbookEntryDefinition> _entries = new List<GuestbookEntryDefinition>();
     private readonly List<(Sprite, int, int)> _costs = new List<(Sprite, int, int)>();
     private readonly List<(Sprite, int)> _paid = new List<(Sprite, int)>();
@@ -45,11 +58,15 @@ public class SettlementPresenter : MonoBehaviour
     /// <summary>완료 팝업이 떠 있거나 차례를 기다리는 중 (레벨업 팝업·장소 튜토리얼은 그 뒤에)</summary>
     public static bool IsCelebrating => _active != null && (_active._complete.IsOpen || _active._completed.Count > 0);
 
+    /// <summary>게시판·건설 팝업이 열려 있음 (새 해달 방문은 닫힌 뒤에)</summary>
+    public static bool IsPopupOpen => _active != null && (_active._board.IsOpen || _active._construction.IsOpen);
+
     private void OnEnable()
     {
         _active = this;
         _guide.OnClicked += HandleGuideClicked;
         _board.OnRequestClicked += OpenConstruction;
+        _board.OnEntryClicked += HandleEntryClicked;
         _board.OnTabChanged += HandleTabChanged;
         _construction.OnStartClicked += HandleStartClicked;
         _complete.OnClosed += ShowNextCompleted;
@@ -72,6 +89,7 @@ public class SettlementPresenter : MonoBehaviour
         _manager.OnBoardRequested += OpenBoard;
         _manager.OnRequestCompleted += HandleRequestCompleted;
         _manager.OnConstructionStarted += HandleConstructionStarted;
+        _manager.OnRequestOpenRequested += OpenConstruction;
         Refresh();
     }
 
@@ -81,6 +99,7 @@ public class SettlementPresenter : MonoBehaviour
             _active = null;
         _guide.OnClicked -= HandleGuideClicked;
         _board.OnRequestClicked -= OpenConstruction;
+        _board.OnEntryClicked -= HandleEntryClicked;
         _board.OnTabChanged -= HandleTabChanged;
         _construction.OnStartClicked -= HandleStartClicked;
         _complete.OnClosed -= ShowNextCompleted;
@@ -91,6 +110,7 @@ public class SettlementPresenter : MonoBehaviour
             _manager.OnBoardRequested -= OpenBoard;
             _manager.OnRequestCompleted -= HandleRequestCompleted;
             _manager.OnConstructionStarted -= HandleConstructionStarted;
+            _manager.OnRequestOpenRequested -= OpenConstruction;
         }
     }
 
@@ -198,9 +218,16 @@ public class SettlementPresenter : MonoBehaviour
         _guide.Hide();
     }
 
-    // 길을 다 치운 지역: 주민 해달을 보내야 함 (그 장소에서만) / 정비 중 남은 시간
+    // 길을 다 치운 지역: 주민 해달을 보내야 함 (그 장소에서만) / 정비 중 남은 시간. 광장 주민 작업 부탁은 작업 중 남은 시간
     private bool TryShowPreparationGuide(BoardRequestDefinition request)
     {
+        var plazaJob = request.CompletionTask != null ? _manager.GetTaskJob(request.CompletionTask) : null;
+        if (plazaJob != null)
+        {
+            _guide.Show($"{request.CompletionTask.Title}  {FormatTime(plazaJob.Remaining(SettlementManager.NowTicks))}", "보기");
+            return true;
+        }
+
         var task = PreparationOf(request, out var state);
         if (task == null)
             return false;
@@ -319,18 +346,32 @@ public class SettlementPresenter : MonoBehaviour
             actionable && current.Requester != null ? current.Requester.Portrait : null);
     }
 
+    // 부탁 탭: 게시판 등급에 따라 한 목록 또는 구역(메인 / 주민 / 완료). 접수소·마을회관이 생기면 맨 위에 화면 카드
     private void FillRequests()
     {
         _rows.Clear();
         long now = SettlementManager.NowTicks;
-        foreach (var request in _manager.Config.Requests)
+        bool sections = SettlementBoardRules.ShowsSections(_manager.BoardTier);
+
+        AddTownEntries(sections);
+
+        _manager.CollectBoardRows(_requestRows);
+        BoardSection? section = null;
+        foreach (var row in _requestRows)
         {
-            if (request == null)
-                continue;
-            var status = _manager.GetStatus(request);
-            if (status == RequestStatus.Locked)
-                continue;
-            string time = status == RequestStatus.Building ? JobTime(_manager.Settlement.Job) : null;
+            if (sections && row.Section != section)
+            {
+                section = row.Section;
+                _rows.Add(BoardRow.Header(SectionTitle(row.Section)));
+            }
+            var request = row.Request;
+            var status = row.Status;
+            string time = null;
+            if (status == RequestStatus.Building)
+            {
+                var taskJob = request.CompletionTask != null ? _manager.GetTaskJob(request.CompletionTask) : null;
+                time = taskJob != null ? FormatTime(taskJob.Remaining(now)) : JobTime(_manager.Settlement.Job);
+            }
             // 주민 해달이 정비하는 중이면 카드도 "진행 중" + 남은 시간
             var task = PreparationOf(request, out var regionState);
             if (status == RequestStatus.Available && task != null && regionState == RegionProgressState.WorkerPreparing)
@@ -338,10 +379,62 @@ public class SettlementPresenter : MonoBehaviour
                 status = RequestStatus.Building;
                 time = FormatTime(_manager.GetTaskJob(task).Remaining(now));
             }
-            _rows.Add((request, status, time));
+            _rows.Add(BoardRow.ForRequest(request, status, time));
         }
-        _rows.Sort((a, b) => a.Item1.Order.CompareTo(b.Item1.Order));
-        _board.BindRequests(_rows);
+        _board.BindRows(_rows);
+    }
+
+    // 큰 부탁 "마을 회의소 마련하기 3/5", 마을 발전 현황 (마을회관이 생긴 뒤)
+    private void AddTownEntries(bool sections)
+    {
+        var group = _manager.VisibleMilestone;
+        bool hall = _manager.IsTownHallOpen;
+        if (group == null && !hall)
+            return;
+        if (sections)
+            _rows.Add(BoardRow.Header(TownSectionTitle));
+        if (group != null)
+        {
+            var settlement = _manager.Settlement;
+            int done = SettlementBoardRules.CountDone(group, settlement);
+            var step = SettlementBoardRules.CurrentStep(group, settlement);
+            string description = step != null
+                ? $"{done} / {group.Steps.Count} 단계 · 다음: {step.Title}"
+                : $"{done} / {group.Steps.Count} 단계 · 모두 마쳤어요!";
+            _rows.Add(BoardRow.Entry(MilestoneEntryPrefix + group.GroupId, group.Icon, group.Title, description, "보기"));
+        }
+        if (hall)
+            _rows.Add(BoardRow.Entry(TownHallEntry, _townHallIcon, "마을 발전 현황", "발전 · 주민 · 지금 하는 일을 한눈에 봐요.", "보기"));
+    }
+
+    private static string SectionTitle(BoardSection section)
+    {
+        switch (section)
+        {
+            case BoardSection.Resident: return ResidentSectionTitle;
+            case BoardSection.Completed: return CompletedSectionTitle;
+            default: return MainSectionTitle;
+        }
+    }
+
+    private void HandleEntryClicked(string key)
+    {
+        if (key == TownHallEntry)
+        {
+            _manager.RequestTownHall();
+            return;
+        }
+        if (!key.StartsWith(MilestoneEntryPrefix, StringComparison.Ordinal))
+            return;
+        string groupId = key.Substring(MilestoneEntryPrefix.Length);
+        foreach (var group in _manager.Config.MilestoneGroups)
+        {
+            if (group != null && group.GroupId == groupId)
+            {
+                _manager.RequestMilestone(group);
+                return;
+            }
+        }
     }
 
     #endregion
@@ -361,6 +454,16 @@ public class SettlementPresenter : MonoBehaviour
         if (request.AssignSpecialist != null)
         {
             OpenAssignment(request, status);
+            return;
+        }
+        if (request.AssignRole != null)
+        {
+            OpenRoleAssignment(request, status);
+            return;
+        }
+        if (request.CompletionTask != null)
+        {
+            OpenResidentTask(request, status);
             return;
         }
         var construction = request.Construction;
@@ -493,6 +596,78 @@ public class SettlementPresenter : MonoBehaviour
         _construction.Show(request, otter, request.Description, _costs, note, button, canPress);
     }
 
+    // 역할 부탁 (게시판을 맡아 줄 친구): 광장에서 만난 관리 해달에게 대화로 맡김. 부탁 화면에서는 맡기지 않음
+    private void OpenRoleAssignment(BoardRequestDefinition request, RequestStatus status)
+    {
+        var role = request.AssignRole;
+        var otter = role.Otter;
+        string name = otter != null ? otter.DisplayName : string.Empty;
+        bool inPlaza = SettlementPlazaView.Active != null;
+        string note;
+        string button = "만나러 가기";
+        bool canPress = true;
+        if (status == RequestStatus.Locked || otter == null)
+        {
+            note = "아직 할 수 없어요.";
+            button = "보기";
+            canPress = false;
+        }
+        else if (!inPlaza)
+        {
+            note = $"광장으로 돌아가 새로 찾아온 {name}{KoreanParticle.ObjectParticle(name)} 만나 보세요.";
+            button = "광장으로";
+            canPress = PlazaZone != null;
+        }
+        else if (_manager.CanAssignRole(otter))
+            note = $"{name}에게 말을 걸어 {role.DisplayName}{KoreanParticle.ObjectParticle(role.DisplayName)} 맡겨 주세요.";
+        else
+            note = $"{name}{KoreanParticle.SubjectParticle(name)} 광장으로 오고 있어요.";
+        _costs.Clear();
+        _construction.Show(request, otter, request.Description, _costs, note, button, canPress);
+    }
+
+    // 주민 작업 부탁 (공동 공간 정비 등): 광장에 있으면 바로 작업 화면(주민 고르기 · 남은 시간), 아니면 [광장으로]
+    private void OpenResidentTask(BoardRequestDefinition request, RequestStatus status)
+    {
+        var task = request.CompletionTask;
+        var taskState = _manager.GetTaskState(task);
+        bool inPlaza = SettlementPlazaView.Active != null;
+        if (inPlaza && (taskState == SettlementTaskState.Available || taskState == SettlementTaskState.Working))
+        {
+            if (_board.IsOpen)
+                _board.Hide();
+            if (_construction.IsOpen)
+                _construction.Hide();
+            _manager.RequestTask(task);
+            return;
+        }
+
+        _costs.Clear();
+        var gold = _manager.Config.GoldCurrency;
+        if (task.RequiredGold > 0)
+            _costs.Add((gold != null ? gold.Icon : null, task.RequiredGold, _manager.GoldBalance));
+        foreach (var cost in task.RequiredItems)
+        {
+            if (cost != null && cost.Item != null && cost.Amount > 0)
+                _costs.Add((cost.Item.Icon, cost.Amount, _manager.ItemCount(cost.Item)));
+        }
+
+        string note;
+        string button = "광장으로";
+        bool canPress = PlazaZone != null;
+        if (status == RequestStatus.Locked || taskState == SettlementTaskState.Locked)
+        {
+            note = "아직 할 수 없어요.";
+            button = "보기";
+            canPress = false;
+        }
+        else if (taskState == SettlementTaskState.Working)
+            note = $"주민 해달이 광장에서 일하고 있어요 · {FormatTime(_manager.GetTaskJob(task).Remaining(SettlementManager.NowTicks))}";
+        else
+            note = $"광장의 망치 표지판에서 주민 해달 {task.RequiredWorkers}명을 보내요.";
+        _construction.Show(request, request.Requester, request.Description, _costs, note, button, canPress);
+    }
+
     // 광장 (배치 부탁이 데려가는 곳)
     private ZoneDefinition PlazaZone =>
         GlobalUIRoot.Instance != null ? ZoneLookup.FindByScene(GlobalUIRoot.Instance.Zones, ZoneTutorials.Plaza) : null;
@@ -522,16 +697,24 @@ public class SettlementPresenter : MonoBehaviour
     private void HandleStartClicked()
     {
         var request = _construction.Request;
-        if (request.AssignSpecialist != null)
+        var meet = request.AssignSpecialist != null ? request.AssignSpecialist
+            : request.AssignRole != null ? request.AssignRole.Otter
+            : null;
+        if (meet != null || request.CompletionTask != null)
         {
             _construction.Hide();
             if (_board.IsOpen)
                 _board.Hide();
             var plaza = SettlementPlazaView.Active;
-            if (plaza != null)
-                plaza.FocusOtter(request.AssignSpecialist.OtterId);
-            else if (PlazaZone != null && _navigator != null)
-                _navigator.TryGo(PlazaZone);
+            if (plaza == null)
+            {
+                if (PlazaZone != null && _navigator != null)
+                    _navigator.TryGo(PlazaZone);
+            }
+            else if (meet != null)
+                plaza.FocusOtter(meet.OtterId);
+            else
+                _manager.RequestTask(request.CompletionTask);
             return;
         }
         if (request.ClearZone != null)
@@ -610,10 +793,25 @@ public class SettlementPresenter : MonoBehaviour
             }
         }
 
-        // 배치 부탁처럼 건설이 없는 부탁은 부탁 제목·그림 (배치한 해달 얼굴)
+        // 주민 작업 부탁은 작업을 시작할 때 낸 비용
+        var task = request.CompletionTask;
+        if (task != null)
+        {
+            if (task.RequiredGold > 0)
+                _paid.Add((gold != null ? gold.Icon : null, task.RequiredGold));
+            foreach (var cost in task.RequiredItems)
+            {
+                if (cost != null && cost.Item != null && cost.Amount > 0)
+                    _paid.Add((cost.Item.Icon, cost.Amount));
+            }
+        }
+        // 배치·역할 부탁처럼 건설이 없는 부탁은 부탁 제목·그림 (배치한·맡긴 해달 얼굴)
+        var otter = request.AssignSpecialist != null ? request.AssignSpecialist
+            : request.AssignRole != null ? request.AssignRole.Otter
+            : null;
         string title = construction != null ? construction.DisplayName : request.Title;
         Sprite icon = construction != null && construction.Icon != null ? construction.Icon
-            : request.AssignSpecialist != null && request.AssignSpecialist.Portrait != null ? request.AssignSpecialist.Portrait
+            : otter != null && otter.Portrait != null ? otter.Portrait
             : request.Icon;
         int stage = _manager.Settlement.Stage;
         _complete.Show($"{stage + 1:00} · {_manager.StageName}", title, _paid, request.CompletionMessage, icon);
@@ -696,6 +894,24 @@ public class SettlementPresenter : MonoBehaviour
         {
             if (otter != null)
                 text.Append(otter.DisplayName).Append(otter.WorkRegion != null ? otter.WorkRegion.DisplayName : string.Empty);
+        }
+        // 게시판 성장: 구역 제목, 화면 카드, 역할·주민 작업·큰 부탁 문구
+        text.Append(MainSectionTitle).Append(ResidentSectionTitle).Append(CompletedSectionTitle).Append(TownSectionTitle)
+            .Append("마을 발전 현황 · 지금 하는 일을 한눈에 봐요 단계 다음: 모두 마쳤어요 광장의 망치 표지판에서 명을 맡겨 주세요 광장으로 오고");
+        foreach (var task in config.Tasks)
+        {
+            if (task != null)
+                text.Append(task.Title).Append(task.Description).Append(task.CompletionMessage);
+        }
+        foreach (var role in config.Roles)
+        {
+            if (role != null)
+                text.Append(role.DisplayName).Append(role.AskLine).Append(role.ConfirmLabel);
+        }
+        foreach (var group in config.MilestoneGroups)
+        {
+            if (group != null)
+                text.Append(group.Title).Append(group.Description);
         }
         for (int i = 0; i < config.StageCount; i++)
             text.Append(config.StageName(i));

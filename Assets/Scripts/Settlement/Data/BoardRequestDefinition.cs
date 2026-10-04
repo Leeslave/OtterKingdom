@@ -21,9 +21,26 @@ public class OtterArrival
     }
 }
 
+/// <summary>게시판에서 부탁이 놓이는 곳. 세이브에 저장하지 않지만 에셋에 숫자로 들어가므로 순서를 바꾸지 않는다</summary>
+public enum RequestCategory
+{
+    Main = 0,     // 메인 발전 (늘 보임)
+    Resident = 1, // 주민 부탁 (선택. 게시판을 맡은 해달이 생긴 뒤 정해진 수만큼 보임)
+}
+
+/// <summary>부탁을 끝내는 행동. 따로 저장하지 않고 어떤 칸을 채웠는지로 정해진다 (한 부탁에 하나만)</summary>
+public enum RequestAction
+{
+    None,             // 아무 행동도 없음 (데이터 실수)
+    Construction,     // 건설을 끝냄 (직접 치우는 장소 포함)
+    AssignSpecialist, // 전문 해달을 일할 곳에 배치
+    AssignRole,       // 관리 역할을 해달에게 맡김
+    ResidentTask,     // 주민 작업을 끝냄
+}
+
 /// <summary>
-/// 게시판 "해달의 부탁" 하나 = 세계를 바꾸는 진행 (집 짓기, 개간, 전문 해달 배치). 반복 보상인 퀘스트와는 따로 간다.
-/// 조건(앞선 발전, 주민 수)이 되면 나타나고, 건설을 끝내거나 전문 해달을 배치하면 완료된다.
+/// 게시판 "해달의 부탁" 하나 = 세계를 바꾸는 진행 (집 짓기, 개간, 전문 해달 배치, 관리 역할, 주민 작업). 반복 보상인 퀘스트와는 따로 간다.
+/// 조건(앞선 발전, 주민 수)이 되면 나타나고, 건설을 끝내거나 해달을 배치하거나 역할을 맡기거나 주민 작업을 끝내면 완료된다.
 /// </summary>
 [CreateAssetMenu(fileName = "BoardRequest", menuName = "Game Data/Settlement/Board Request")]
 public class BoardRequestDefinition : ScriptableObject
@@ -34,6 +51,12 @@ public class BoardRequestDefinition : ScriptableObject
 
     [Tooltip("게시판 정렬 순서 (작을수록 위)")]
     [SerializeField] private int _order;
+
+    [Tooltip("메인 발전 / 주민 부탁 (주민 부탁은 선택이라 메인 진행의 조건이 되지 않음)")]
+    [SerializeField] private RequestCategory _category;
+
+    [Tooltip("이 부탁이 들어온 콘텐츠 버전 (0 = P0·P1, 2 = P2). 정착 진행 전 세이브는 SettlementRules.LegacyContentVersion까지만 완료로 옮김")]
+    [SerializeField] private int _contentVersion;
 
     [Header("내용")]
     [SerializeField] private string _title;
@@ -62,6 +85,12 @@ public class BoardRequestDefinition : ScriptableObject
     [Tooltip("배치 부탁: 이 전문 해달을 일할 곳에 배치하면 완료 (광장에서 해달과 대화해 배치). 설정하면 건설은 비움")]
     [SerializeField] private SettlementOtterDefinition _assignSpecialist;
 
+    [Tooltip("역할 부탁: 이 관리 역할을 해달에게 맡기면 완료 (광장에서 해달과 대화). 설정하면 건설은 비움")]
+    [SerializeField] private ManagementRoleDefinition _assignRole;
+
+    [Tooltip("주민 작업 부탁: 이 주민 작업이 끝나면 완료 (주민 해달을 보내 시작). 설정하면 건설은 비움")]
+    [SerializeField] private SettlementTaskDefinition _completionTask;
+
     [Header("완료하면")]
     [Tooltip("주민이 되는 해달")]
     [SerializeField] private List<SettlementOtterDefinition> _settles = new List<SettlementOtterDefinition>();
@@ -83,6 +112,8 @@ public class BoardRequestDefinition : ScriptableObject
 
     public string RequestId => _requestId;
     public int Order => _order;
+    public RequestCategory Category => _category;
+    public int ContentVersion => _contentVersion;
     public string Title => _title;
     public string Description => _description;
     public Sprite Icon => _icon;
@@ -92,6 +123,8 @@ public class BoardRequestDefinition : ScriptableObject
     public ConstructionDefinition Construction => _construction;
     public ZoneDefinition ClearZone => _clearZone;
     public SettlementOtterDefinition AssignSpecialist => _assignSpecialist;
+    public ManagementRoleDefinition AssignRole => _assignRole;
+    public SettlementTaskDefinition CompletionTask => _completionTask;
     public IReadOnlyList<SettlementOtterDefinition> Settles => _settles;
     public IReadOnlyList<OtterArrival> Arrivals => _arrivals;
     public int StageOnComplete => _stageOnComplete;
@@ -99,12 +132,37 @@ public class BoardRequestDefinition : ScriptableObject
     public string CompletionMessage => _completionMessage;
     public int KingdomLevel => _kingdomLevel;
 
+    /// <summary>이 부탁을 끝내는 행동 (행동 칸이 둘 이상 채워져 있으면 None — IsValidAction으로 확인)</summary>
+    public RequestAction Action
+    {
+        get
+        {
+            if (ActionCount != 1)
+                return RequestAction.None;
+            if (_assignSpecialist != null)
+                return RequestAction.AssignSpecialist;
+            if (_assignRole != null)
+                return RequestAction.AssignRole;
+            if (_completionTask != null)
+                return RequestAction.ResidentTask;
+            return RequestAction.Construction;
+        }
+    }
+
+    /// <summary>행동 칸(건설·전문 해달 배치·역할·주민 작업)이 정확히 하나만 채워져 있는지</summary>
+    public bool IsValidAction => ActionCount == 1;
+
+    private int ActionCount =>
+        (_construction != null ? 1 : 0) + (_assignSpecialist != null ? 1 : 0) + (_assignRole != null ? 1 : 0) + (_completionTask != null ? 1 : 0);
+
     private void OnValidate()
     {
         if (string.IsNullOrWhiteSpace(_requestId))
             Debug.LogWarning($"[{name}] RequestId가 비어 있습니다.", this);
-        if (_construction == null && _assignSpecialist == null)
-            Debug.LogWarning($"[{name}] 건설과 배치할 전문 해달이 모두 비어 있습니다.", this);
+        if (ActionCount == 0)
+            Debug.LogWarning($"[{name}] 건설·배치할 전문 해달·역할·주민 작업이 모두 비어 있습니다.", this);
+        else if (ActionCount > 1)
+            Debug.LogWarning($"[{name}] 건설·배치할 전문 해달·역할·주민 작업 중 하나만 채워야 합니다.", this);
         if (_assignSpecialist != null && !_assignSpecialist.IsSpecialist)
             Debug.LogWarning($"[{name}] '{_assignSpecialist.name}'에 일할 지역이 없어 배치할 수 없습니다.", this);
     }

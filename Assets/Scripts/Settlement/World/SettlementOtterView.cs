@@ -1,11 +1,14 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
 /// 광장의 정착 해달 한 마리에 붙는 말풍선·표시 (SettlementPlazaView가 내보낼 때 붙임).
 /// - 탭하면 한마디 (정착 후보는 처음 누르면 "저도 여기 살고 싶어요!" → 그 해달의 집 부탁이 열림)
 /// - 광장에 와 있는 전문 해달(광부·농부)은 탭하면 "일하고 싶어요" + [배치] 확인 → 일할 곳에 배치
-/// - 할 말이 있는 정착 후보·배치를 기다리는 전문 해달은 머리 위에 "!"
+/// - 만난 관리 해달은 탭하면 "게시판 일을 도와도 될까요?" + [게시판 관리 맡기기] 확인 → 근무 자리로 감.
+///   역할을 맡은 뒤에는 탭하면 한마디 + 게시판의 부탁 탭이 열림
+/// - 할 말이 있는 정착 후보·배치를 기다리는 전문 해달·역할을 기다리는 관리 해달은 머리 위에 "!"
 /// - 공사를 맡으면 망치 말풍선
 /// </summary>
 public class SettlementOtterView : MonoBehaviour
@@ -107,7 +110,7 @@ public class SettlementOtterView : MonoBehaviour
             speaking = false;
         }
 
-        bool attention = !speaking && (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter));
+        bool attention = !speaking && (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter) || manager.CanAssignRole(_otter));
         if (_attention.gameObject.activeSelf != attention)
             _attention.gameObject.SetActive(attention);
         if (attention)
@@ -120,10 +123,23 @@ public class SettlementOtterView : MonoBehaviour
     private void Speak(SettlementManager manager)
     {
         string line;
+        var assignedRole = manager.AssignedRoleOf(_otter);
         if (manager.CanAssignSpecialist(_otter))
         {
             line = string.IsNullOrEmpty(_otter.AssignLine) ? PickLine() : _otter.AssignLine;
             AskToAssign(manager);
+        }
+        else if (manager.CanAssignRole(_otter))
+        {
+            var role = manager.FindRole(_otter);
+            line = string.IsNullOrEmpty(role.AskLine) ? PickLine() : role.AskLine;
+            AskToAssignRole(manager, role);
+        }
+        else if (assignedRole != null)
+        {
+            // 근무 중인 관리 해달: 한마디 하고 게시판의 부탁 탭을 엶
+            line = PickLine(assignedRole.WorkingLines);
+            manager.RequestBoard(true);
         }
         else if (manager.TryHearIntro(_otter))
             line = _otter.IntroLine;
@@ -154,16 +170,37 @@ public class SettlementOtterView : MonoBehaviour
             () => manager.TryAssignSpecialist(_otter));
     }
 
-    // 같은 말을 연달아 하지 않게
-    private string PickLine()
+    // 관리 해달: [예]를 누르면 역할을 맡김 (역할 기록이 저장의 원본. 여러 번 눌러도 한 번만 됨)
+    private void AskToAssignRole(SettlementManager manager, ManagementRoleDefinition role)
     {
-        int count = _otter.Lines.Count;
+        var game = GameManager.Instance;
+        if (game == null)
+        {
+            manager.TryAssignRole(role);
+            return;
+        }
+        string name = _otter.DisplayName;
+        string roleName = role.DisplayName;
+        string title = string.IsNullOrEmpty(role.ConfirmLabel) ? $"{roleName} 맡기기" : role.ConfirmLabel;
+        game.ShowConfirm(title,
+            $"{name}에게 {roleName}{KoreanParticle.ObjectParticle(roleName)} 맡길까요?\n맡기면 게시판 옆에서 일해요.",
+            () => manager.TryAssignRole(role));
+    }
+
+    // 같은 말을 연달아 하지 않게
+    private string PickLine() => PickLine(_otter.Lines);
+
+    private string PickLine(IReadOnlyList<string> lines)
+    {
+        int count = lines.Count;
         if (count == 0)
-            return string.Empty;
+            return PickFallbackLine();
         int index = Random.Range(0, count);
         if (count > 1 && index == _lastLine)
             index = (index + 1) % count;
         _lastLine = index;
-        return _otter.Lines[index];
+        return lines[index];
     }
+
+    private string PickFallbackLine() => _otter.Lines.Count > 0 ? _otter.Lines[0] : string.Empty;
 }

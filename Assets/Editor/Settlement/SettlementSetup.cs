@@ -30,8 +30,8 @@ public static partial class SettlementSetup
     private const string FarmZonePath = "Assets/Scriptable Obejects/Navigation/Zone_Farm.asset";
     private const string PlazaPrefabFolder = "Assets/Prefabs/Plaza";
 
-    // 왕국 단계 이름 (상단바 아래 칩)
-    private static readonly string[] StageNames = { "빈터", "첫 정착", "작은 정착지", "자급 시작" };
+    // 왕국 단계 이름 (상단바 아래 칩). 4 = 마을회관을 지으면 (P2)
+    private static readonly string[] StageNames = { "빈터", "첫 정착", "작은 정착지", "자급 시작", "작은 마을" };
 
     // 옛 세이브에 부탁과 별도로 열어 줄 발전 (아직 부탁이 없는 낚시터)
     internal const string FishingDevelopment = "fishing_dock";
@@ -46,6 +46,8 @@ public static partial class SettlementSetup
         ("Otter_Builder", "otter_builder", "뚝딱이", "ICON_Otter_Builder", null, true, "gb_builder_arrival"),
         ("Otter_Miner", "otter_miner", "깡깡이", "ICON_Otter_Miner", "PlazaOtter_Miner", false, "gb_miner_arrival"),
         ("Otter_Farmer", "otter_farmer", "새싹이", "ICON_Otter_Farmer", "PlazaOtter", false, "gb_farmer_arrival"),
+        // 관리 해달 (P2): 게시판을 보강하면 찾아와 게시판 관리를 맡음. 그림은 임시 (물감이 그림을 물들인 것 — SettlementSetup.P2)
+        ("Otter_Receptionist", ReceptionistOtterId, "또박이", ClerkPortraitName, "PlazaOtter_Clerk", false, "gb_receptionist_arrival"),
     };
 
     // 전문 해달: (ID, 일할 지역 에셋, 배치하면 등록되는 도감 항목 에셋, 광장에서 배치 전에 하는 말)
@@ -68,6 +70,7 @@ public static partial class SettlementSetup
         { "otter_builder", (new[] { "뚝딱뚝딱!", "뭐든 지어 드릴게요!", "재료만 주면 뚝딱!" }, "", "") },
         { "otter_miner", (new[] { "깡깡! 오늘도 반짝이는 돌을 찾아요.", "광산은 시원해서 좋아요.", "다이아몬드는 어디 숨었을까?" }, "", "") },
         { "otter_farmer", (new[] { "새싹이 쑥쑥 자라요!", "당근이 제일 좋아요.", "흙냄새가 좋아요~" }, "", "") },
+        { ReceptionistOtterId, (new[] { "부탁은 차곡차곡!", "글씨는 또박또박 써야죠.", "게시판에 부탁이 잔뜩이네요!" }, "", "") },
     };
 
     // (ID, 남긴 해달, 표시, 말)
@@ -86,6 +89,15 @@ public static partial class SettlementSetup
         ("gb_miner_assigned", "otter_miner", "배치", "오늘부터 광산은 제게 맡겨요!\n깡깡!"),
         ("gb_farmer_arrival", "otter_farmer", "방문", "밭이 생겼다고 해서 달려왔어요.\n씨앗 냄새가 나요!"),
         ("gb_farmer_assigned", "otter_farmer", "배치", "밭은 제가 돌볼게요.\n첫 당근을 같이 거둬요!"),
+        // P2: 게시판 성장 → 관리 해달 → 공동 공간 → 접수소 → 마을회관 (+ 선택 주민 부탁 2개)
+        ("gb_board_upgrade", "otter_first", "발전", "게시판이 튼튼해졌어요!\n이제 부탁을 더 많이 붙일 수 있어요."),
+        ("gb_receptionist_arrival", ReceptionistOtterId, "방문", "게시판에 부탁이 잔뜩이네요!\n제가 정리해 드려도 될까요?"),
+        ("gb_receptionist_assigned", ReceptionistOtterId, "담당", "오늘부터 게시판은 제가 맡을게요.\n부탁은 차곡차곡 정리해 둘게요!"),
+        ("gb_common_space", "otter_painter", "정비", "다 같이 쉴 자리가 생겼어요!\n여기서 그림을 그려도 되겠죠?"),
+        ("gb_guild_office", ReceptionistOtterId, "개소", "접수소가 문을 열었어요.\n큰 부탁도 함께 받아요!"),
+        ("gb_town_hall", "otter_first", "완공", "우리 마을에 회의소가 생겼어요!\n모두 모여 이야기해요."),
+        ("gb_rest_corner", "otter_sleepy", "휴식", "바닷가 벤치에 앉으니…\n하암, 딱 좋아요."),
+        ("gb_board_area", ReceptionistOtterId, "정리", "게시판 주변이 깔끔해졌어요!\n부탁 읽기가 한결 편해요."),
     };
 
     // (ID, 이름, 아이콘, 종류, 골드, 목재, 돌, 초, 건설 해달, 진행 제목, 진행 안내, 결과 발전)
@@ -103,6 +115,15 @@ public static partial class SettlementSetup
         // 농경지: 밭에서 직접 치우고 주민이 개간(비용은 주민 작업 task_farm_till)하면 끝나는 부탁 (광산 길 열기와 같은 방식)
         ("con_farmland", "농경지 개간", "ICON_Clearing", ConstructionTarget.Clearing, 0, 0, 0, 0f, false,
             "", "", FarmOperationalDevelopment),
+        // P2 (구현 지시서 6.1의 QA용 제안값. 출시 밸런스 확정값 아님). 벤치는 기존 의자 아이콘
+        ("con_board_upgrade", "튼튼한 마을 게시판", "ICON_BoardUpgrade", ConstructionTarget.House, 300, 12, 6, 30f, true,
+            "게시판 보강 중", "다 지으면 게시판을 맡을 해달이 찾아와요", BoardUpgradeDevelopment),
+        ("con_guild_office", "길드 접수소", "ICON_GuildOffice", ConstructionTarget.House, 600, 24, 12, 60f, true,
+            "접수소 짓는 중", "다 지으면 큰 부탁을 묶어서 볼 수 있어요", GuildDevelopment),
+        ("con_town_hall", "마을회관", "ICON_TownHall", ConstructionTarget.House, 1200, 36, 24, 120f, true,
+            "마을회관 넓히는 중", "다 지으면 마을 발전 현황을 볼 수 있어요", TownHallDevelopment),
+        ("con_rest_corner", "바닷가 벤치", "ICON_Chair", ConstructionTarget.House, 150, 8, 4, 20f, true,
+            "벤치 만드는 중", "다 만들면 해달들이 쉬어 가요", RestCornerDevelopment),
     };
 
     // 개척 기획(2026-10-02): 첫 집 → 의자(왕국 Lv.2, 동굴 발견) → 광산 길 열기(직접 치움 → 주민 정비, Lv.3, 광부 방문)
@@ -143,6 +164,38 @@ public static partial class SettlementSetup
             "otter_farmer", FarmOperationalDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_farmer_assigned", "새싹이가 밭에서 일하기 시작해요!\n당근을 심어 첫 수확을 해 봐요.", 0, "", "otter_farmer"),
+
+        // P2 게시판 성장 · 관리 해달 · 마을회관: 농부가 일하기 시작하면(farm_working) 열림. 첫 수확 퀘스트 보상과는 상관없음.
+        // 분류(메인/주민)·역할·주민 작업·콘텐츠 버전은 P2Requests 표 (SettlementSetup.P2)
+        ("req_upgrade_board", 7, "부탁이 많아졌어요", "게시판에 부탁이 넘쳐요!\n건설 해달과 함께 게시판을 튼튼하게 보강해요.", "ICON_BoardUpgrade",
+            "otter_first", SettlementQuestGate.FarmProductionDevelopment, 0, "con_board_upgrade", new string[0],
+            new[] { (ReceptionistOtterId, ResidentState.SpecialNpc) },
+            -1, "gb_board_upgrade", "게시판이 튼튼해졌어요!\n소식을 듣고 게시판을 맡아 줄 해달이 찾아왔어요.", 0, "", ""),
+        ("req_assign_receptionist", 8, "게시판을 맡아 줄 친구", "게시판을 정리해 줄 또박이가 찾아왔어요.\n광장에서 만나 게시판 관리를 맡겨 주세요.", ClerkPortraitName,
+            ReceptionistOtterId, BoardUpgradeDevelopment, 0, "", new string[0],
+            new (string, ResidentState)[0],
+            -1, "gb_receptionist_assigned", "또박이가 게시판을 맡았어요!\n이제 주민들의 부탁도 게시판에 붙어요.", 0, "", ""),
+        ("req_prepare_common_space", 9, "다 같이 쉴 자리를 정리해요", "광장 한쪽에 흩어진 통나무와 돌을 치우고\n다 같이 쉴 자리를 만들어요.", "ICON_CommonSpace",
+            "otter_painter", BoardManagedDevelopment, 0, "", new string[0],
+            new (string, ResidentState)[0],
+            -1, "gb_common_space", "다 같이 쉴 자리가 생겼어요!\n광장이 한결 아늑해졌어요.", 0, "", ""),
+        ("req_build_guild_office", 10, "큰 부탁도 함께 받아요", "큰 부탁을 함께 관리할 접수소를 지어요.\n건설 해달이 필요해요.", "ICON_GuildOffice",
+            ReceptionistOtterId, CommonSpaceDevelopment, 0, "con_guild_office", new string[0],
+            new (string, ResidentState)[0],
+            -1, "gb_guild_office", "접수소가 문을 열었어요!\n접수소를 누르면 큰 부탁을 볼 수 있어요.", 0, "", ""),
+        ("req_upgrade_town_hall", 11, "우리 마을의 회의소", "접수소를 넓혀 마을회관으로 만들어요.\n마을이 얼마나 자랐는지 한눈에 볼 수 있어요.", "ICON_TownHall",
+            "otter_first", GuildDevelopment, 0, "con_town_hall", new string[0],
+            new (string, ResidentState)[0],
+            4, "gb_town_hall", "마을회관이 완성됐어요!\n회관을 누르면 마을 발전 현황을 볼 수 있어요.", 0, "", ""),
+        // 선택 주민 부탁 (메인 진행의 조건이 아님)
+        ("req_rest_corner", 20, "쉬어 갈 자리를 마련해 주세요", "꾸벅이가 바닷가에서 쉬어 갈 벤치를 갖고 싶대요.", "ICON_Chair",
+            "otter_sleepy", BoardManagedDevelopment, 0, "con_rest_corner", new string[0],
+            new (string, ResidentState)[0],
+            -1, "gb_rest_corner", "바닷가에 쉬어 갈 벤치가 생겼어요!", 0, "", ""),
+        ("req_tidy_board_area", 21, "게시판 주변을 정리해 주세요", "게시판 앞에 쌓인 낙엽과 잔돌을 쓸어 모아요.", "ICON_TidyBoard",
+            ReceptionistOtterId, BoardManagedDevelopment, 0, "", new string[0],
+            new (string, ResidentState)[0],
+            -1, "gb_board_area", "게시판 주변이 깔끔해졌어요!", 0, "", ""),
     };
 
     // 새 게임 시작 재료 = 첫 집 비용 (시안 1: 목재 8, 돌 5)
@@ -291,8 +344,10 @@ public static partial class SettlementSetup
         configSo.FindProperty("_gatherAmount").intValue = 2;
         configSo.FindProperty("_gatherCooldownSeconds").floatValue = 60f;
         CreateRegionData(configSo);
+        CreateP2Data(configSo, otters, requests);
         configSo.ApplyModifiedPropertiesWithoutUndo();
         LinkSpecialists(otters);
+        LinkReceptionist(otters);
 
         AssetDatabase.SaveAssets();
     }
@@ -452,6 +507,10 @@ public static partial class SettlementSetup
         ("FX_Sunbeams", 10f, 0.5f),
         ("FX_Vignette", 10f, 0.5f),
         ("UI_Bubble_Speech", 1.75f, 0f), // 해달 말풍선 (꼬리 끝 피벗, 머리 위에 붙음)
+        // P2 (SettlementSetup.P2Art가 p2_sources에서 만듦): 보강 게시판(원래 게시판 2.7보다 조금 큼), 접수소 < 집(약 6.5) < 마을회관
+        ("Prop_Board_Upgraded", 2.9f, 0.04f),
+        ("Prop_GuildOffice", 5.8f, 0.05f),
+        ("Prop_TownHall", 7.2f, 0.04f),
     };
 
     private static void ImportArt()

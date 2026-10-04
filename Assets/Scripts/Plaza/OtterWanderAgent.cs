@@ -87,6 +87,16 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
         if (initialized && !same) EnterIdle(0f);
     }
 
+    // Put the otter on its task spot right away (restoring a manager at its
+    // station on scene load, or a walk there that never arrived).
+    public void WarpToTask()
+    {
+        if (!hasTask) return;
+        ReleasePlay();
+        SetFeetPosition(taskStandPoint);
+        if (initialized) EnterTask();
+    }
+
     public void ClearTask()
     {
         if (!hasTask) return;

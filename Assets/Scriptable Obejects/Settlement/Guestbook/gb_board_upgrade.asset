@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21bf3c5778b2f79489589cdca7cb1806, type: 3}
+  m_Name: gb_board_upgrade
+  m_EditorClassIdentifier: OtterKingdom::GuestbookEntryDefinition
+  _entryId: gb_board_upgrade
+  _otter: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
+  _tag: "\uBC1C\uC804"
+  _message: "\uAC8C\uC2DC\uD310\uC774 \uD2BC\uD2BC\uD574\uC84C\uC5B4\uC694!\n\uC774\uC81C
+    \uBD80\uD0C1\uC744 \uB354 \uB9CE\uC774 \uBD99\uC77C \uC218 \uC788\uC5B4\uC694."

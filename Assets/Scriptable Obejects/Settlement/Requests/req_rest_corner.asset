@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_rest_corner
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_rest_corner
+  _order: 20
+  _category: 1
+  _contentVersion: 2
+  _title: "\uC26C\uC5B4 \uAC08 \uC790\uB9AC\uB97C \uB9C8\uB828\uD574 \uC8FC\uC138\uC694"
+  _description: "\uAFB8\uBC85\uC774\uAC00 \uBC14\uB2F7\uAC00\uC5D0\uC11C \uC26C\uC5B4
+    \uAC08 \uBCA4\uCE58\uB97C \uAC16\uACE0 \uC2F6\uB300\uC694."
+  _icon: {fileID: 21300000, guid: c965ba9ca8006aa458ac8be800e48a59, type: 3}
+  _requester: {fileID: 11400000, guid: 8ff3e80563dfd8a4cbf590e6056ddc02, type: 2}
+  _requiredDevelopment: receptionist_assigned
+  _minResidents: 0
+  _construction: {fileID: 11400000, guid: a1637af1d6661014db67d74380460edf, type: 2}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _settles: []
+  _arrivals: []
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: 4ae64d9e40ccf474c990f1db977259db, type: 2}
+  _completionMessage: "\uBC14\uB2F7\uAC00\uC5D0 \uC26C\uC5B4 \uAC08 \uBCA4\uCE58\uAC00
+    \uC0DD\uACBC\uC5B4\uC694!"
+  _kingdomLevel: 0

@@ -53,6 +53,9 @@ public static class CollectionSetup
         // 광부 해달: 광장에서 만나 광산에 배치하면 등록 (농부 해달도 같음)
         ("Entry_OtterMiner", "otter_miner", "Tab_Otter", "광부 해달", "", "ICON_Otter_Miner", "SIL_Otter",
             "광산을 지키는 듬직한 친구", "곡괭이 소리만 들어도 신이 나요.", "다이아몬드"),
+        // 게시판 해달 (P2): 광장에서 만나 게시판 관리를 맡기면 등록. 그림은 임시 (SettlementSetup.P2가 만듦)
+        ("Entry_OtterClerk", "otter_receptionist", "Tab_Otter", "게시판 해달", "", "ICON_Otter_Clerk", "SIL_Otter",
+            "게시판을 맡은 꼼꼼한 친구", "부탁을 받으면 또박또박 적어 둬요.", "게시판"),
     };
 
     #region 데이터

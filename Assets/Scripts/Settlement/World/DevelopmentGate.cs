@@ -19,20 +19,33 @@ public class DevelopmentGate : MonoBehaviour
     [Tooltip("새로 보이게 될 때 광장 카메라가 이쪽을 비춤 (집, 밭 표지판)")]
     [SerializeField] private bool _focusOnUnlock;
 
+    [Tooltip("이 발전이 열리면 숨김 (같은 자리가 더 큰 건물로 바뀔 때: 접수소 → 마을회관). 비우면 없음")]
+    [SerializeField] private string _supersededBy;
+
     public string DevelopmentId => _developmentId;
     public bool FocusOnUnlock => _focusOnUnlock && _showWhenUnlocked;
 
     public bool ShouldBeVisible(bool unlocked) => unlocked == _showWhenUnlocked;
 
+    /// <param name="has">발전이 열렸는지</param>
     /// <param name="animate">새로 생길 때 통통 튀어나오는 연출</param>
-    public void Apply(bool unlocked, bool animate)
+    public void Apply(System.Func<string, bool> has, bool animate)
     {
-        bool visible = ShouldBeVisible(unlocked);
+        bool superseded = !string.IsNullOrEmpty(_supersededBy) && has(_supersededBy);
+        SetVisible(ShouldBeVisible(has(_developmentId)) && !superseded, animate);
+    }
+
+    /// <param name="animate">새로 생길 때 통통 튀어나오는 연출</param>
+    public void Apply(bool unlocked, bool animate) => SetVisible(ShouldBeVisible(unlocked), animate);
+
+    private void SetVisible(bool visible, bool animate)
+    {
         if (gameObject.activeSelf == visible)
             return;
 
         gameObject.SetActive(visible);
-        if (visible && animate)
+        // 부모가 꺼져 있으면(다른 발전 오브젝트 아래) 연출 없이
+        if (visible && animate && gameObject.activeInHierarchy)
             StartCoroutine(Pop());
     }
 

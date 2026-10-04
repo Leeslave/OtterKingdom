@@ -36,7 +36,7 @@ public class OtterVisualController : MonoBehaviour
     private static readonly string[] PlayTriggerNames =
     {
         "Squat", "Stretch", "Net", "Eat",
-        "Happy", "Yawn", "Sleep", "Paint", "Wave",
+        "Happy", "Yawn", "Sleep", "Paint", "Wave", "Write",
     };
     // Short breather in Idle between two play actions.
     private const float PlayActionGapSeconds = 0.4f;

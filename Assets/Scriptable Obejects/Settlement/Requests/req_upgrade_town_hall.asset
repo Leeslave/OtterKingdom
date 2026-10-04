@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_upgrade_town_hall
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_upgrade_town_hall
+  _order: 11
+  _category: 0
+  _contentVersion: 2
+  _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uD68C\uC758\uC18C"
+  _description: "\uC811\uC218\uC18C\uB97C \uB113\uD600 \uB9C8\uC744\uD68C\uAD00\uC73C\uB85C
+    \uB9CC\uB4E4\uC5B4\uC694.\n\uB9C8\uC744\uC774 \uC5BC\uB9C8\uB098 \uC790\uB790\uB294\uC9C0
+    \uD55C\uB208\uC5D0 \uBCFC \uC218 \uC788\uC5B4\uC694."
+  _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
+  _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
+  _requiredDevelopment: guild_office_built
+  _minResidents: 0
+  _construction: {fileID: 11400000, guid: 7c8396b5a53326d4b8d73bd3f4563cfa, type: 2}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _settles: []
+  _arrivals: []
+  _stageOnComplete: 4
+  _completionEntry: {fileID: 11400000, guid: 89f8370961c321946a97e38e82264ac4, type: 2}
+  _completionMessage: "\uB9C8\uC744\uD68C\uAD00\uC774 \uC644\uC131\uB410\uC5B4\uC694!\n\uD68C\uAD00\uC744
+    \uB204\uB974\uBA74 \uB9C8\uC744 \uBC1C\uC804 \uD604\uD669\uC744 \uBCFC \uC218
+    \uC788\uC5B4\uC694."
+  _kingdomLevel: 0

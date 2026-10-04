@@ -51,18 +51,30 @@ public class TutorialOverlay : MonoBehaviour
     private TextMeshProUGUI _nextLabel;
 
     private IReadOnlyList<TutorialStep> _steps;
-    private Action _onFinished;
+    private Action<bool> _onFinished;
     private int _index = -1;
     private int _shownCount;
     private int _shownTotal;
     private float _stepShownAt;
     private bool _finished;
 
-    public static TutorialOverlay Play(IReadOnlyList<TutorialStep> steps, Action onFinished)
+    private static int _showingCount;
+
+    /// <summary>튜토리얼이 화면을 덮고 있는지 (새 해달 방문 등은 끝날 때까지 기다림)</summary>
+    public static bool IsShowing => _showingCount > 0;
+
+    /// <param name="onFinished">끝까지 보거나 건너뛰었을 때 (둘을 가리지 않음)</param>
+    public static TutorialOverlay Play(IReadOnlyList<TutorialStep> steps, Action onFinished) =>
+        Play(steps, _ => onFinished?.Invoke());
+
+    /// <param name="onFinished">끝났을 때. 인자: [건너뛰기]로 끝냈는지</param>
+    public static TutorialOverlay Play(IReadOnlyList<TutorialStep> steps, Action<bool> onFinished)
     {
         var go = new GameObject(nameof(TutorialOverlay),
             typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         var overlay = go.AddComponent<TutorialOverlay>();
+        _showingCount++;
+        overlay._counted = true;
         overlay._steps = steps;
         overlay._onFinished = onFinished;
         overlay.Build();
@@ -70,6 +82,21 @@ public class TutorialOverlay : MonoBehaviour
         overlay.Advance();
         return overlay;
     }
+
+    // 씬과 함께 사라져도 덮고 있다는 표시가 남지 않게
+    private void OnDestroy()
+    {
+        if (!_counted)
+            return;
+        _counted = false;
+        _showingCount = Mathf.Max(0, _showingCount - 1);
+    }
+
+    private bool _counted;
+
+    // 플레이 모드를 다시 시작해도(도메인 다시 불러오기 없이) 지난 판의 수가 남지 않게
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetCount() => _showingCount = 0;
 
     private void Update()
     {
@@ -115,7 +142,7 @@ public class TutorialOverlay : MonoBehaviour
 
         if (_index >= _steps.Count)
         {
-            Finish();
+            Finish(false);
             return;
         }
 
@@ -139,12 +166,14 @@ public class TutorialOverlay : MonoBehaviour
         return true;
     }
 
-    private void Finish()
+    private void Finish(bool skipped)
     {
         if (_finished) return;
         _finished = true;
+        // 콜백이 바로 다음 튜토리얼을 열 수 있으므로 덮고 있다는 표시는 먼저 내림
+        OnDestroy();
         Destroy(gameObject);
-        _onFinished?.Invoke();
+        _onFinished?.Invoke(skipped);
     }
 
     #endregion
@@ -308,7 +337,7 @@ public class TutorialOverlay : MonoBehaviour
         rowLayout.childForceExpandWidth = false;
         rowLayout.childForceExpandHeight = true;
 
-        var skipLabel = CreateButton(row.transform, _style.SkipButton, FallbackSkipColor, 260f, Finish);
+        var skipLabel = CreateButton(row.transform, _style.SkipButton, FallbackSkipColor, 260f, () => Finish(true));
         skipLabel.text = "건너뛰기";
         skipLabel.color = _style.SubColor;
         _nextLabel = CreateButton(row.transform, _style.NextButton, FallbackNextColor, -1f, HandleTap);

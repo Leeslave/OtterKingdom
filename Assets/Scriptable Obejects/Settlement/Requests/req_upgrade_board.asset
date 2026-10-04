@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_upgrade_board
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_upgrade_board
+  _order: 7
+  _category: 0
+  _contentVersion: 2
+  _title: "\uBD80\uD0C1\uC774 \uB9CE\uC544\uC84C\uC5B4\uC694"
+  _description: "\uAC8C\uC2DC\uD310\uC5D0 \uBD80\uD0C1\uC774 \uB118\uCCD0\uC694!\n\uAC74\uC124
+    \uD574\uB2EC\uACFC \uD568\uAED8 \uAC8C\uC2DC\uD310\uC744 \uD2BC\uD2BC\uD558\uAC8C
+    \uBCF4\uAC15\uD574\uC694."
+  _icon: {fileID: 21300000, guid: b6946c2833b4858488525be2b085b78b, type: 3}
+  _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
+  _requiredDevelopment: farm_working
+  _minResidents: 0
+  _construction: {fileID: 11400000, guid: 5e77e94bb45e3e94f861edd634fb117a, type: 2}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _settles: []
+  _arrivals:
+  - _otter: {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
+    _state: 3
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: e24b807c843a7b144899ce74d8f0da96, type: 2}
+  _completionMessage: "\uAC8C\uC2DC\uD310\uC774 \uD2BC\uD2BC\uD574\uC84C\uC5B4\uC694!\n\uC18C\uC2DD\uC744
+    \uB4E3\uACE0 \uAC8C\uC2DC\uD310\uC744 \uB9E1\uC544 \uC904 \uD574\uB2EC\uC774
+    \uCC3E\uC544\uC654\uC5B4\uC694."
+  _kingdomLevel: 0

@@ -109,6 +109,19 @@ public static class OtterVisitorSpriteSetup
         },
     };
 
+    // Ttobagi, the notice-board keeper (P2): same grid and clips as the
+    // visitors, built on its own by BuildClerk (SettlementSetup.ApplyP2Progression)
+    // and kept out of PlazaSettings' random pool — the settlement spawns it.
+    private static readonly VisitorDef Clerk = new VisitorDef
+    {
+        name = "Clerk",
+        actions = new[]
+        {
+            new ClipDef { row = 4, name = "Write", frames = AllFrames, fps = 4f, loops = 2, isAction = true },
+            new ClipDef { row = 5, name = "Wave", frames = AllFrames, fps = 4f, loops = 2, isAction = true },
+        }
+    };
+
     private static ClipDef[] BaseClips => new[]
     {
         new ClipDef { row = 0, name = "Idle", frames = IdleFrames, fps = IdleFps },
@@ -154,6 +167,35 @@ public static class OtterVisitorSpriteSetup
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log($"[OtterVisitorSpriteSetup] Done — {prefabs.Count} visitor prefab(s) in {PrefabDir}.");
+    }
+
+    // Rebuilds only the clerk (its sheet must already be re-packed to the grid:
+    // SettlementSetup.ImportP2Art). Replaces the earlier placeholder prefab
+    // variant (the painter tinted blue) with a regular prefab.
+    public static GameObject BuildClerk()
+    {
+        string dir = $"{AnimDir}/{Clerk.name}";
+        if (AssetDatabase.IsValidFolder(dir)) AssetDatabase.DeleteAsset(dir);
+        Directory.CreateDirectory(dir);
+        AssetDatabase.Refresh();
+
+        var grid = SliceSheet($"{SpriteDir}/{Clerk.name}.png");
+        if (grid == null) return null;
+
+        var clips = new Dictionary<string, AnimationClip>();
+        foreach (var def in BaseClips.Concat(Clerk.actions))
+        {
+            clips[def.name] = BuildClip($"{dir}/{Clerk.name}_{def.name}.anim", def, grid[def.row]);
+        }
+        var controller = BuildController($"{dir}/{Clerk.name}.controller", clips, Clerk.actions);
+
+        string prefabPath = $"{PrefabDir}/PlazaOtter_{Clerk.name}.prefab";
+        var existing = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+        if (existing != null && PrefabUtility.GetPrefabAssetType(existing) == PrefabAssetType.Variant)
+            AssetDatabase.DeleteAsset(prefabPath);
+        var prefab = BuildOrUpdatePrefab(Clerk.name, controller, grid[0][0]);
+        AssetDatabase.SaveAssets();
+        return prefab;
     }
 
     // Slices the uniform Cols x Rows grid and returns grid[row][col]. Sprites

@@ -69,13 +69,31 @@ public class SpecialistSaveData
     public long workingSinceUtcTicks;
 }
 
+/// <summary>관리 역할을 맡은 해달 하나 (게시판 관리 등). 역할 ID가 있으면 맡긴 것</summary>
+[Serializable]
+public class RoleAssignmentSaveData
+{
+    public string roleId;
+    public string otterId;
+    // 근무 자리 (예: station_board)
+    public string stationId;
+}
+
 /// <summary>
 /// 정착 진행 세이브 (SaveData.settlement). SettlementManager가 읽고 쓴다.
 /// 개간 지역의 단계는 따로 저장하지 않는다: 열린 발전(unlockedDevelopments)과 작업(tasks, completedTasks)으로 정해짐.
+/// 게시판 등급·큰 부탁 단계도 저장하지 않는다: 발전·끝낸 부탁·역할 기록으로 정해짐.
 /// </summary>
 [Serializable]
 public class SettlementSaveData
 {
+    /// <summary>
+    /// 정착 세이브 버전. 0 = P2 전 (필드가 없던 세이브), 2 = P2 (관리 역할).
+    /// 불러올 때 낮은 버전이면 SettlementManager가 한 번 옮기고 이 값으로 올린다
+    /// </summary>
+    public const int CurrentVersion = 2;
+
+    public int version;
     // 새 게임 처리(첫 해달 도착, 시작 재료)를 했는지. 재접속 때 다시 하지 않게
     public bool initialized;
     // 정착 진행이 생기기 전 세이브: 불러올 때 모든 부탁을 끝낸 것으로 처리 (이미 하던 밭을 다시 잠그지 않게)
@@ -99,4 +117,6 @@ public class SettlementSaveData
     public List<SpecialistSaveData> specialists = new List<SpecialistSaveData>();
     // 광장에서 처음 만난 해달 (새 해달 만나기 퀘스트. 한 번만 셈)
     public List<string> metOtters = new List<string>();
+    // 관리 역할을 맡은 해달 (P2. 옛 세이브는 없음 = 아무에게도 맡기지 않음)
+    public List<RoleAssignmentSaveData> roles = new List<RoleAssignmentSaveData>();
 }
