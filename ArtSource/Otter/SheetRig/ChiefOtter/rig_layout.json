@@ -1,0 +1,741 @@
+{
+  "source": "Assets/Sprites/Characters/FarmerOtter/FarmerOtter_Sheet.png",
+  "note": "Pixels are 2x the sheet. rect = atlas rect with Unity bottom-left origin. pivot = normalized joint position (Unity convention). position = joint relative to the feet centre (Root), y up. Parents are listed before children; order = sorting order.",
+  "character": "Chief",
+  "atlas": {
+    "file": "ChiefOtter_SheetRigParts.png",
+    "width": 1024,
+    "height": 660
+  },
+  "bones": [
+    {
+      "view": "Front",
+      "name": "Root",
+      "parent": null,
+      "part": null,
+      "position": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "view": "Front",
+      "name": "Leg_L",
+      "parent": "Root",
+      "part": "Leg_L",
+      "position": [
+        -36.0,
+        64.0
+      ]
+    },
+    {
+      "view": "Front",
+      "name": "Leg_R",
+      "parent": "Root",
+      "part": "Leg_R",
+      "position": [
+        36.0,
+        64.0
+      ]
+    },
+    {
+      "view": "Front",
+      "name": "Body",
+      "parent": "Root",
+      "part": "Body",
+      "position": [
+        0.0,
+        60.0
+      ]
+    },
+    {
+      "view": "Front",
+      "name": "Arm_L",
+      "parent": "Body",
+      "part": "Arm_L",
+      "position": [
+        -72.0,
+        168.0
+      ]
+    },
+    {
+      "view": "Front",
+      "name": "Arm_R",
+      "parent": "Body",
+      "part": "Arm_R",
+      "position": [
+        74.0,
+        168.0
+      ]
+    },
+    {
+      "view": "Front",
+      "name": "Head",
+      "parent": "Body",
+      "part": "Head",
+      "position": [
+        0.0,
+        178.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Root",
+      "parent": null,
+      "part": null,
+      "position": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Hip",
+      "parent": "Root",
+      "part": null,
+      "position": [
+        2.0,
+        80.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Leg_Far",
+      "parent": "Hip",
+      "part": "Leg_Far",
+      "position": [
+        -10.0,
+        80.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Foot_Far",
+      "parent": "Leg_Far",
+      "part": "Foot_Far",
+      "position": [
+        -10.0,
+        38.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Leg_Near",
+      "parent": "Hip",
+      "part": "Leg_Near",
+      "position": [
+        12.0,
+        80.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Foot_Near",
+      "parent": "Leg_Near",
+      "part": "Foot_Near",
+      "position": [
+        12.0,
+        38.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Body",
+      "parent": "Hip",
+      "part": "Body",
+      "position": [
+        0.0,
+        56.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Arm_Far",
+      "parent": "Body",
+      "part": "Arm_Far",
+      "position": [
+        2.0,
+        158.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Tail",
+      "parent": "Body",
+      "part": "Tail",
+      "position": [
+        -72.0,
+        80.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Arm_Near",
+      "parent": "Body",
+      "part": "Arm_Near",
+      "position": [
+        -12.0,
+        154.0
+      ]
+    },
+    {
+      "view": "Side",
+      "name": "Head",
+      "parent": "Body",
+      "part": "Head",
+      "position": [
+        8.0,
+        174.0
+      ]
+    },
+    {
+      "view": "Back",
+      "name": "Root",
+      "parent": null,
+      "part": null,
+      "position": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "view": "Back",
+      "name": "Leg_L",
+      "parent": "Root",
+      "part": "Leg_L",
+      "position": [
+        -40.0,
+        58.0
+      ]
+    },
+    {
+      "view": "Back",
+      "name": "Leg_R",
+      "parent": "Root",
+      "part": "Leg_R",
+      "position": [
+        40.0,
+        58.0
+      ]
+    },
+    {
+      "view": "Back",
+      "name": "Body",
+      "parent": "Root",
+      "part": "Body",
+      "position": [
+        0.0,
+        60.0
+      ]
+    },
+    {
+      "view": "Back",
+      "name": "Tail",
+      "parent": "Body",
+      "part": "Tail",
+      "position": [
+        0.0,
+        96.0
+      ]
+    },
+    {
+      "view": "Back",
+      "name": "Arm_L",
+      "parent": "Body",
+      "part": "Arm_L",
+      "position": [
+        -64.0,
+        168.0
+      ]
+    },
+    {
+      "view": "Back",
+      "name": "Arm_R",
+      "parent": "Body",
+      "part": "Arm_R",
+      "position": [
+        64.0,
+        168.0
+      ]
+    },
+    {
+      "view": "Back",
+      "name": "Head",
+      "parent": "Body",
+      "part": "Head",
+      "position": [
+        0.0,
+        178.0
+      ]
+    }
+  ],
+  "parts": [
+    {
+      "name": "Front_Leg_L",
+      "view": "Front",
+      "bone": "Leg_L",
+      "parent": "Root",
+      "order": 0,
+      "rect": [
+        924,
+        313,
+        91,
+        103
+      ],
+      "pivot": [
+        0.5165,
+        0.7087
+      ],
+      "position": [
+        -36.0,
+        64.0
+      ]
+    },
+    {
+      "name": "Front_Leg_R",
+      "view": "Front",
+      "bone": "Leg_R",
+      "parent": "Root",
+      "order": 0,
+      "rect": [
+        4,
+        105,
+        91,
+        103
+      ],
+      "pivot": [
+        0.4835,
+        0.7087
+      ],
+      "position": [
+        36.0,
+        64.0
+      ]
+    },
+    {
+      "name": "Front_Body",
+      "view": "Front",
+      "bone": "Body",
+      "parent": "Root",
+      "order": 10,
+      "rect": [
+        369,
+        253,
+        184,
+        163
+      ],
+      "pivot": [
+        0.5,
+        0.0307
+      ],
+      "position": [
+        0.0,
+        60.0
+      ]
+    },
+    {
+      "name": "Front_Arm_L",
+      "view": "Front",
+      "bone": "Arm_L",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        199,
+        10,
+        69,
+        91
+      ],
+      "pivot": [
+        0.6812,
+        0.7912
+      ],
+      "position": [
+        -72.0,
+        168.0
+      ]
+    },
+    {
+      "name": "Front_Arm_R",
+      "view": "Front",
+      "bone": "Arm_R",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        99,
+        106,
+        73,
+        102
+      ],
+      "pivot": [
+        0.3014,
+        0.8137
+      ],
+      "position": [
+        74.0,
+        168.0
+      ]
+    },
+    {
+      "name": "Front_Head",
+      "view": "Front",
+      "bone": "Head",
+      "parent": "Body",
+      "order": 30,
+      "rect": [
+        4,
+        420,
+        377,
+        236
+      ],
+      "pivot": [
+        0.4881,
+        0.0381
+      ],
+      "position": [
+        0.0,
+        178.0
+      ]
+    },
+    {
+      "name": "Side_Leg_Far",
+      "view": "Side",
+      "bone": "Leg_Far",
+      "parent": "Hip",
+      "order": 2,
+      "rect": [
+        176,
+        107,
+        72,
+        101
+      ],
+      "pivot": [
+        0.5278,
+        0.6337
+      ],
+      "position": [
+        -10.0,
+        80.0
+      ]
+    },
+    {
+      "name": "Side_Foot_Far",
+      "view": "Side",
+      "bone": "Foot_Far",
+      "parent": "Leg_Far",
+      "order": 1,
+      "rect": [
+        272,
+        45,
+        82,
+        56
+      ],
+      "pivot": [
+        0.4878,
+        0.8214
+      ],
+      "position": [
+        -10.0,
+        38.0
+      ]
+    },
+    {
+      "name": "Side_Leg_Near",
+      "view": "Side",
+      "bone": "Leg_Near",
+      "parent": "Hip",
+      "order": 4,
+      "rect": [
+        252,
+        107,
+        72,
+        101
+      ],
+      "pivot": [
+        0.5278,
+        0.6337
+      ],
+      "position": [
+        12.0,
+        80.0
+      ]
+    },
+    {
+      "name": "Side_Foot_Near",
+      "view": "Side",
+      "bone": "Foot_Near",
+      "parent": "Leg_Near",
+      "order": 3,
+      "rect": [
+        358,
+        45,
+        82,
+        56
+      ],
+      "pivot": [
+        0.4878,
+        0.8214
+      ],
+      "position": [
+        12.0,
+        38.0
+      ]
+    },
+    {
+      "name": "Side_Body",
+      "view": "Side",
+      "bone": "Body",
+      "parent": "Hip",
+      "order": 10,
+      "rect": [
+        557,
+        261,
+        182,
+        155
+      ],
+      "pivot": [
+        0.467,
+        0.0581
+      ],
+      "position": [
+        0.0,
+        56.0
+      ]
+    },
+    {
+      "name": "Side_Arm_Far",
+      "view": "Side",
+      "bone": "Arm_Far",
+      "parent": "Body",
+      "order": 0,
+      "rect": [
+        585,
+        109,
+        89,
+        99
+      ],
+      "pivot": [
+        0.4494,
+        0.8586
+      ],
+      "position": [
+        2.0,
+        158.0
+      ]
+    },
+    {
+      "name": "Side_Tail",
+      "view": "Side",
+      "bone": "Tail",
+      "parent": "Body",
+      "order": 6,
+      "rect": [
+        771,
+        111,
+        153,
+        97
+      ],
+      "pivot": [
+        0.817,
+        0.3608
+      ],
+      "position": [
+        -72.0,
+        80.0
+      ],
+      "tail_tip": [
+        -188.0,
+        112.0
+      ],
+      "tail_bones": 3
+    },
+    {
+      "name": "Side_Arm_Near",
+      "view": "Side",
+      "bone": "Arm_Near",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        678,
+        109,
+        89,
+        99
+      ],
+      "pivot": [
+        0.4494,
+        0.8586
+      ],
+      "position": [
+        -12.0,
+        154.0
+      ]
+    },
+    {
+      "name": "Side_Head",
+      "view": "Side",
+      "bone": "Head",
+      "parent": "Body",
+      "order": 30,
+      "rect": [
+        385,
+        425,
+        321,
+        231
+      ],
+      "pivot": [
+        0.5078,
+        0.026
+      ],
+      "position": [
+        8.0,
+        174.0
+      ]
+    },
+    {
+      "name": "Back_Leg_L",
+      "view": "Back",
+      "bone": "Leg_L",
+      "parent": "Root",
+      "order": 0,
+      "rect": [
+        328,
+        108,
+        84,
+        100
+      ],
+      "pivot": [
+        0.5,
+        0.66
+      ],
+      "position": [
+        -40.0,
+        58.0
+      ]
+    },
+    {
+      "name": "Back_Leg_R",
+      "view": "Back",
+      "bone": "Leg_R",
+      "parent": "Root",
+      "order": 0,
+      "rect": [
+        416,
+        108,
+        84,
+        100
+      ],
+      "pivot": [
+        0.5,
+        0.66
+      ],
+      "position": [
+        40.0,
+        58.0
+      ]
+    },
+    {
+      "name": "Back_Body",
+      "view": "Back",
+      "bone": "Body",
+      "parent": "Root",
+      "order": 10,
+      "rect": [
+        743,
+        261,
+        177,
+        155
+      ],
+      "pivot": [
+        0.4972,
+        0.0581
+      ],
+      "position": [
+        0.0,
+        60.0
+      ]
+    },
+    {
+      "name": "Back_Tail",
+      "view": "Back",
+      "bone": "Tail",
+      "parent": "Body",
+      "order": 15,
+      "rect": [
+        4,
+        6,
+        109,
+        95
+      ],
+      "pivot": [
+        0.4862,
+        0.8842
+      ],
+      "position": [
+        0.0,
+        96.0
+      ]
+    },
+    {
+      "name": "Back_Arm_L",
+      "view": "Back",
+      "bone": "Arm_L",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        504,
+        108,
+        77,
+        100
+      ],
+      "pivot": [
+        0.8701,
+        0.89
+      ],
+      "position": [
+        -64.0,
+        168.0
+      ]
+    },
+    {
+      "name": "Back_Arm_R",
+      "view": "Back",
+      "bone": "Arm_R",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        117,
+        7,
+        78,
+        94
+      ],
+      "pivot": [
+        0.1923,
+        0.8723
+      ],
+      "position": [
+        64.0,
+        168.0
+      ]
+    },
+    {
+      "name": "Back_Head",
+      "view": "Back",
+      "bone": "Head",
+      "parent": "Body",
+      "order": 30,
+      "rect": [
+        4,
+        212,
+        361,
+        204
+      ],
+      "pivot": [
+        0.4931,
+        0.0343
+      ],
+      "position": [
+        0.0,
+        178.0
+      ]
+    }
+  ]
+}
