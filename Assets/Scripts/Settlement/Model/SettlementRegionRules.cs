@@ -74,14 +74,14 @@ public static class SettlementRegionRules
 
     /// <summary>
     /// 작업에 보낼 수 있는 해달인지: 주민(Resident)이고, 지금 다른 작업 중이 아님.
-    /// 건설 해달은 큰 공사 담당, 전문 해달(광부·농부)은 맡은 곳에서만 일하므로 주민 작업에 보내지 않는다.
+    /// 건설 해달은 큰 공사 담당, 전문 해달(광부·농부)은 맡은 곳에서만, 관리 해달은 맡은 시설 옆에서만 일하므로 주민 작업에 보내지 않는다.
     /// 공사 중인 해달은 SettlementManager가 따로 뺀다.
     /// </summary>
     public static bool CanWork(SettlementOtterDefinition otter, Settlement settlement)
     {
         if (otter == null)
             throw new ArgumentNullException(nameof(otter));
-        if (otter.IsBuilder || otter.IsSpecialist)
+        if (otter.IsBuilder || otter.IsSpecialist || settlement.HasRole(otter.OtterId))
             return false;
         return settlement.TryGetResidentState(otter.OtterId, out var state)
             && state == ResidentState.Resident

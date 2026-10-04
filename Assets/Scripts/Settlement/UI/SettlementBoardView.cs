@@ -4,10 +4,49 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>게시판 부탁 탭의 한 줄: 구역 제목, 부탁 카드, 화면으로 가는 카드(큰 부탁·발전 현황)</summary>
+public readonly struct BoardRow
+{
+    public enum RowKind { Header, Request, Entry }
+
+    public readonly RowKind Kind;
+    public readonly string Text;          // 구역 제목 / 화면 카드 제목
+    public readonly BoardRequestDefinition Request;
+    public readonly RequestStatus Status;
+    public readonly string Time;          // 진행 중 남은 시간
+    public readonly string EntryKey;      // 화면 카드 키
+    public readonly Sprite Icon;
+    public readonly string Description;
+    public readonly string ButtonLabel;
+
+    private BoardRow(RowKind kind, string text, BoardRequestDefinition request, RequestStatus status, string time,
+        string entryKey, Sprite icon, string description, string buttonLabel)
+    {
+        Kind = kind;
+        Text = text;
+        Request = request;
+        Status = status;
+        Time = time;
+        EntryKey = entryKey;
+        Icon = icon;
+        Description = description;
+        ButtonLabel = buttonLabel;
+    }
+
+    public static BoardRow Header(string text) => new BoardRow(RowKind.Header, text, null, RequestStatus.Locked, null, null, null, null, null);
+
+    public static BoardRow ForRequest(BoardRequestDefinition request, RequestStatus status, string time) =>
+        new BoardRow(RowKind.Request, null, request, status, time, null, null, null, null);
+
+    public static BoardRow Entry(string key, Sprite icon, string title, string description, string buttonLabel) =>
+        new BoardRow(RowKind.Entry, title, null, RequestStatus.Available, null, key, icon, description, buttonLabel);
+}
+
 /// <summary>
 /// "해달 게시판" 팝업: [방명록] / [해달의 부탁] 두 탭.
 /// 방명록 = 기록 카드 목록 + 방문 기록 수 + 아래쪽 "새로운 부탁이 도착했어요 [부탁 보기]" 알림.
-/// 부탁 = 부탁 카드 목록. 받은 값만 그리고 카드·알림 클릭을 알린다.
+/// 부탁 = 부탁 카드 목록 (관리 해달이 맡은 뒤에는 메인 / 주민 부탁 / 완료 구역 제목과 큰 부탁·발전 현황 카드가 섞임).
+/// 받은 값만 그리고 카드·알림 클릭을 알린다.
 /// </summary>
 public class SettlementBoardView : MonoBehaviour
 {
@@ -43,16 +82,22 @@ public class SettlementBoardView : MonoBehaviour
     [Tooltip("보일 부탁이 없을 때")]
     [SerializeField] private GameObject _emptyRequests;
 
+    [Tooltip("구역 제목 템플릿 (메인 발전 / 주민 부탁 / 완료한 부탁)")]
+    [SerializeField] private TextMeshProUGUI _sectionHeaderPrefab;
+
     [Header("버튼")]
     [SerializeField] private Button _closeButton;
 
     private readonly List<GuestbookCardView> _guestbookCards = new List<GuestbookCardView>();
     private readonly List<BoardRequestCardView> _requestCards = new List<BoardRequestCardView>();
+    private readonly List<TextMeshProUGUI> _headers = new List<TextMeshProUGUI>();
 
     public bool IsOpen => _animator.IsOpen;
     public bool IsRequestTab { get; private set; }
 
     public event Action<BoardRequestDefinition> OnRequestClicked;
+    /// <summary>화면 카드(큰 부탁·발전 현황)를 눌렀을 때. 인자: 카드 키</summary>
+    public event Action<string> OnEntryClicked;
     /// <summary>탭이 바뀌었을 때 (presenter가 그 탭 내용을 채움)</summary>
     public event Action<bool> OnTabChanged;
 
@@ -112,22 +157,67 @@ public class SettlementBoardView : MonoBehaviour
         _noticePortrait.enabled = portrait != null;
     }
 
-    public void BindRequests(IReadOnlyList<(BoardRequestDefinition request, RequestStatus status, string time)> rows)
+    /// <summary>부탁 탭 목록을 순서대로 그림 (구역 제목·부탁 카드·화면 카드)</summary>
+    public void BindRows(IReadOnlyList<BoardRow> rows)
     {
-        while (_requestCards.Count < rows.Count)
+        int cardsUsed = 0;
+        int headersUsed = 0;
+        bool anyRequest = false;
+        foreach (var row in rows)
         {
-            var card = Instantiate(_requestCardPrefab, _requestParent);
-            card.OnClicked += c => OnRequestClicked?.Invoke(c.Request);
-            _requestCards.Add(card);
+            if (row.Kind == BoardRow.RowKind.Header)
+            {
+                var header = NextHeader(headersUsed++);
+                header.text = row.Text;
+                header.transform.SetAsLastSibling();
+                continue;
+            }
+
+            var card = NextCard(cardsUsed++);
+            if (row.Kind == BoardRow.RowKind.Entry)
+                card.BindEntry(row.EntryKey, row.Icon, row.Text, row.Description, row.ButtonLabel);
+            else
+            {
+                card.Bind(row.Request, row.Status, row.Time);
+                anyRequest = true;
+            }
+            card.transform.SetAsLastSibling();
         }
 
-        for (int i = 0; i < _requestCards.Count; i++)
+        for (int i = cardsUsed; i < _requestCards.Count; i++)
+            _requestCards[i].gameObject.SetActive(false);
+        for (int i = headersUsed; i < _headers.Count; i++)
+            _headers[i].gameObject.SetActive(false);
+        _emptyRequests.SetActive(!anyRequest && cardsUsed == 0);
+    }
+
+    private BoardRequestCardView NextCard(int index)
+    {
+        if (index >= _requestCards.Count)
         {
-            bool used = i < rows.Count;
-            _requestCards[i].gameObject.SetActive(used);
-            if (used)
-                _requestCards[i].Bind(rows[i].request, rows[i].status, rows[i].time);
+            var created = Instantiate(_requestCardPrefab, _requestParent);
+            created.OnClicked += HandleCardClicked;
+            _requestCards.Add(created);
         }
-        _emptyRequests.SetActive(rows.Count == 0);
+        var card = _requestCards[index];
+        card.gameObject.SetActive(true);
+        return card;
+    }
+
+    private TextMeshProUGUI NextHeader(int index)
+    {
+        if (index >= _headers.Count)
+            _headers.Add(Instantiate(_sectionHeaderPrefab, _requestParent));
+        var header = _headers[index];
+        header.gameObject.SetActive(true);
+        return header;
+    }
+
+    private void HandleCardClicked(BoardRequestCardView card)
+    {
+        if (card.Request != null)
+            OnRequestClicked?.Invoke(card.Request);
+        else if (!string.IsNullOrEmpty(card.EntryKey))
+            OnEntryClicked?.Invoke(card.EntryKey);
     }
 }

@@ -278,7 +278,7 @@ public static class GlobalUISetup
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
         // 그리는 순서: 상단바·하단 바(정착 칩·안내 띠 포함) → 공사 진행 말풍선 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 설정
-        //            → 게시판 → 건설 → 건설 완료 → 레벨업 → 이동 팝업 → 페이드
+        //            → 게시판 → 큰 부탁 → 마을회관 → 건설 → 주민 작업 → 건설 완료 → 레벨업 → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
         hud.gameObject.AddComponent<SafeAreaFltter>();
@@ -384,6 +384,7 @@ public static class GlobalUISetup
         Set(presenter, "_quest", quest.presenter);
         Set(presenter, "_questScreen", quest.screen);
         Set(presenter, "_decorMode", decorMode);
+        SettlementSetup.LinkGlobalUI(root, presenter);
 
         PrefabUtility.SaveAsPrefabAsset(root, GlobalUIPrefabPath);
         Object.DestroyImmediate(root);

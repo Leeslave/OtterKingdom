@@ -15,8 +15,15 @@ public static class ZoneTutorials
     public static readonly string[] AllIds = { Plaza, Farm, Fishing, Mine };
 
     // 기능 튜토리얼: 장소의 첫 방문과 따로, 그 기능이 열린 뒤에 한 번 (완료 기록은 장소 튜토리얼과 같은 목록)
+    // 요정 상점은 실제로 상점을 열어야 완료 (설명만 넘겨서는 완료가 아님)
     public const string FairyShop = "FairyShop";
     public static readonly string[] FeatureIds = { FairyShop };
+
+    // 요정 상점 소개 설명을 끝까지 봤음 (완료가 아님). 다음 광장 방문부터는 설명 없이 요정 강조만 다시 보여 줌.
+    // 이 기록이 없는 세이브(이전 버전)는 처음 보는 것으로 = 기본값 "안 봄"
+    public const string FairyShopIntro = "FairyShop.Intro";
+
+    public const string FairyShopPointerMessage = "요정을 눌러 상점을 열어 보세요!";
 
     public static bool Has(string sceneName) => System.Array.IndexOf(AllIds, sceneName) >= 0;
 
@@ -85,16 +92,16 @@ public static class ZoneTutorials
         };
     }
 
-    /// <summary>요정 상점이 열렸을 때 (밭이 열리면 광장에 요정이 옴). 광장 첫 튜토리얼과 따로 한 번</summary>
+    /// <summary>
+    /// 요정 상점 소개 설명 (밭이 열리면 광장에 요정이 옴). 광장 첫 튜토리얼과 따로.
+    /// 설명이 끝나면 화면을 막지 않는 요정 강조(TutorialPointer)로 넘어가고, 실제로 상점을 열어야 완료된다
+    /// </summary>
     public static List<TutorialStep> FairyShopSteps(FairyNpcView fairy)
     {
         return new List<TutorialStep>
         {
             TutorialStep.At("요정이 찾아왔어요!",
-                "밭이 열리자 모종을 파는 요정이\n광장에 찾아왔어요.",
-                () => TutorialTargets.World(fairy)),
-            TutorialStep.At("요정 상점",
-                "요정을 누르면 상점이 열려요.\n모종과 왕국에 필요한 물건을 살 수 있어요.\n한번 눌러 보세요!",
+                "밭이 열리자 모종을 파는 요정이\n광장에 찾아왔어요.\n모종과 왕국에 필요한 물건을 살 수 있어요.",
                 () => TutorialTargets.World(fairy)),
         };
     }

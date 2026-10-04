@@ -58,6 +58,21 @@ public class GlobalUIPresenter : MonoBehaviour
         _questScreen.OnHidden -= HandleQuestHidden;
     }
 
+    #region 다른 화면에서 열기 (마을회관의 "모두 마쳤어요" 버튼)
+
+    /// <summary>이동 팝업을 엶 (생산하러 밭·광산으로)</summary>
+    public void OpenTravel()
+    {
+        if (!_travelPopup.IsOpen)
+            ToggleTravel();
+    }
+
+    public void OpenDecor() => OpenDecorMode();
+
+    public void OpenCodex() => OpenCollection();
+
+    #endregion
+
     #region 도감
 
     private void OpenCollection()

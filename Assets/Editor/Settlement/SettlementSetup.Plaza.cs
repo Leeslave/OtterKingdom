@@ -174,6 +174,9 @@ public static partial class SettlementSetup
         viewSo.FindProperty("_speechFont").objectReferenceValue = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(TitleFontAssetPath);
         viewSo.ApplyModifiedPropertiesWithoutUndo();
 
+        // P2: 게시판 보강·관리 해달 근무 자리·광장 주민 작업·접수소 → 마을회관·바닷가 벤치 (SettlementSetup.P2)
+        BuildP2(root, props, view, ToWorld);
+
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
         AssetDatabase.SaveAssets();

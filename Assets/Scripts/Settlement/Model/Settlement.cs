@@ -60,8 +60,23 @@ public readonly struct SpecialistRecord
     }
 }
 
+/// <summary>관리 역할을 맡은 해달 하나 (역할, 해달, 근무 자리)</summary>
+public readonly struct RoleAssignment
+{
+    public readonly string RoleId;
+    public readonly string OtterId;
+    public readonly string StationId;
+
+    public RoleAssignment(string roleId, string otterId, string stationId)
+    {
+        RoleId = roleId;
+        OtterId = otterId;
+        StationId = stationId;
+    }
+}
+
 /// <summary>
-/// 정착 진행 상태 (순수 C#): 왕국 단계, 해달별 처지, 끝낸 부탁, 열린 발전, 방명록, 진행 중인 건설, 주민 작업, 전문 해달, 만난 해달.
+/// 정착 진행 상태 (순수 C#): 왕국 단계, 해달별 처지, 끝낸 부탁, 열린 발전, 방명록, 진행 중인 건설, 주민 작업, 전문 해달, 만난 해달, 관리 역할.
 /// 규칙(언제 무엇이 열리는지)은 SettlementRules, 비용·시간은 SettlementManager가 다룬다.
 /// </summary>
 public class Settlement
@@ -78,7 +93,11 @@ public class Settlement
     private readonly HashSet<string> _completedTasks = new HashSet<string>();
     private readonly Dictionary<string, SpecialistRecord> _specialists = new Dictionary<string, SpecialistRecord>();
     private readonly HashSet<string> _metOtters = new HashSet<string>();
+    // 역할 ID → 맡은 해달
+    private readonly Dictionary<string, RoleAssignment> _roles = new Dictionary<string, RoleAssignment>();
 
+    /// <summary>세이브 버전 (SettlementSaveData.CurrentVersion까지 옮겼는지)</summary>
+    public int Version { get; private set; }
     public int Stage { get; private set; }
     public bool Initialized { get; private set; }
     public bool LegacyComplete { get; private set; }
@@ -94,6 +113,8 @@ public class Settlement
     public IReadOnlyCollection<string> MetOtters => _metOtters;
     /// <summary>끝낸 부탁</summary>
     public IReadOnlyCollection<string> CompletedRequests => _completedRequests;
+    /// <summary>관리 역할을 맡은 해달</summary>
+    public IReadOnlyCollection<RoleAssignment> Roles => _roles.Values;
 
     /// <summary>주민 수 (Resident만)</summary>
     public int ResidentCount
@@ -169,15 +190,44 @@ public class Settlement
     }
 
     /// <summary>이 해달이 지금 작업 중인지</summary>
-    public ResidentWorkState GetWorkState(string otterId)
+    public ResidentWorkState GetWorkState(string otterId) =>
+        FindTaskJobOf(otterId) != null ? ResidentWorkState.Working : ResidentWorkState.Idle;
+
+    /// <summary>이 해달이 하고 있는 작업 (없으면 null)</summary>
+    public SettlementTaskJob FindTaskJobOf(string otterId)
     {
         foreach (var job in _tasks.Values)
         {
             if (job.HasOtter(otterId))
-                return ResidentWorkState.Working;
+                return job;
         }
-        return ResidentWorkState.Idle;
+        return null;
     }
+
+    /// <summary>이 역할을 맡은 해달 (아직 아무도 없으면 false)</summary>
+    public bool TryGetRole(string roleId, out RoleAssignment assignment)
+    {
+        assignment = default;
+        return !string.IsNullOrEmpty(roleId) && _roles.TryGetValue(roleId, out assignment);
+    }
+
+    /// <summary>이 해달이 맡은 역할 (없으면 false)</summary>
+    public bool TryGetRoleOf(string otterId, out RoleAssignment assignment)
+    {
+        foreach (var role in _roles.Values)
+        {
+            if (role.OtterId == otterId)
+            {
+                assignment = role;
+                return true;
+            }
+        }
+        assignment = default;
+        return false;
+    }
+
+    /// <summary>관리 역할을 맡은 해달인지</summary>
+    public bool HasRole(string otterId) => !string.IsNullOrEmpty(otterId) && TryGetRoleOf(otterId, out _);
 
     /// <summary>from 뒤로 to까지 사이에 다시 생긴 줍기 자리 수 (자리를 비운 동안의 소식)</summary>
     public int CountGatherRegrown(long fromUtcTicks, long toUtcTicks)
@@ -399,6 +449,30 @@ public class Settlement
         return true;
     }
 
+    /// <summary>관리 역할을 해달에게 맡긴다. 이미 누가 맡은 역할이거나 이미 다른 역할을 맡은 해달이면 그대로 (연타해도 한 번만)</summary>
+    /// <returns>이번에 맡겼으면 true</returns>
+    public bool AssignRole(string roleId, string otterId, string stationId)
+    {
+        if (string.IsNullOrEmpty(roleId))
+            throw new ArgumentNullException(nameof(roleId));
+        if (string.IsNullOrEmpty(otterId))
+            throw new ArgumentNullException(nameof(otterId));
+        if (_roles.ContainsKey(roleId) || HasRole(otterId))
+            return false;
+        _roles[roleId] = new RoleAssignment(roleId, otterId, stationId);
+        OnChanged?.Invoke();
+        return true;
+    }
+
+    /// <summary>세이브를 이 버전까지 옮겼음 (낮추지 않음)</summary>
+    public void SetVersion(int version)
+    {
+        if (version <= Version)
+            return;
+        Version = version;
+        OnChanged?.Invoke();
+    }
+
     #endregion
 
     #region 세이브
@@ -419,8 +493,10 @@ public class Settlement
         _completedTasks.Clear();
         _specialists.Clear();
         _metOtters.Clear();
+        _roles.Clear();
         Job = null;
 
+        Version = Math.Max(0, saved.version);
         Initialized = saved.initialized;
         LegacyComplete = saved.legacyComplete;
         BoardVisited = saved.boardVisited;
@@ -519,6 +595,17 @@ public class Settlement
                     _metOtters.Add(id);
             }
         }
+        if (saved.roles != null)
+        {
+            foreach (var r in saved.roles)
+            {
+                // 같은 역할이 두 번이거나 한 해달이 두 역할이면 앞의 것만 (해달이 두 자리에 묶이지 않게)
+                if (r == null || string.IsNullOrEmpty(r.roleId) || string.IsNullOrEmpty(r.otterId)
+                    || _roles.ContainsKey(r.roleId) || HasRole(r.otterId))
+                    continue;
+                _roles[r.roleId] = new RoleAssignment(r.roleId, r.otterId, r.stationId);
+            }
+        }
 
         OnChanged?.Invoke();
     }
@@ -528,6 +615,7 @@ public class Settlement
         if (result == null)
             throw new ArgumentNullException(nameof(result));
 
+        result.version = Version;
         result.initialized = Initialized;
         result.legacyComplete = LegacyComplete;
         result.boardVisited = BoardVisited;
@@ -592,6 +680,11 @@ public class Settlement
         result.specialists.Sort((a, b) => string.CompareOrdinal(a.otterId, b.otterId));
         result.metOtters = new List<string>(_metOtters);
         result.metOtters.Sort(StringComparer.Ordinal);
+
+        result.roles = new List<RoleAssignmentSaveData>();
+        foreach (var role in _roles.Values)
+            result.roles.Add(new RoleAssignmentSaveData { roleId = role.RoleId, otterId = role.OtterId, stationId = role.StationId });
+        result.roles.Sort((a, b) => string.CompareOrdinal(a.roleId, b.roleId));
     }
 
     #endregion

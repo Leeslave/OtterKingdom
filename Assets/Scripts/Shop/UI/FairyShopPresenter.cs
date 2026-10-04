@@ -14,6 +14,9 @@ public class FairyShopPresenter : MonoBehaviour
 
     public static FairyShopPresenter Instance { get; private set; }
 
+    /// <summary>상점이 실제로 열렸을 때 (요정을 눌렀든, 꾸미기 보관함 [+ 상점]이든). 요정 상점 안내가 이걸로 끝난다</summary>
+    public static event System.Action Opened;
+
     [Header("데이터")]
     [SerializeField] private ShopCatalog _catalog;
     [Tooltip("요정 말풍선")]
@@ -64,6 +67,7 @@ public class FairyShopPresenter : MonoBehaviour
             PrepareGlyphs();
 
         _shop.Show(_catalog, _dialogue, category);
+        Opened?.Invoke();
     }
 
     private void HandleProductClicked(ShopProduct product)

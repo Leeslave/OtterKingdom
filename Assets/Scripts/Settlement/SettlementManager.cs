@@ -26,11 +26,33 @@ public enum TaskStartResult
     NotEnoughItems,
 }
 
+/// <summary>마을회관의 주민 현황: 정착 주민 수, 작업에 보낼 수 있는 주민 중 지금 쉬는 수 · 작업 중인 수</summary>
+public readonly struct LaborSummary
+{
+    /// <summary>정착 주민 (Resident 전부: 건설·전문 해달 포함)</summary>
+    public readonly int Settled;
+    /// <summary>작업에 보낼 수 있는 주민 (건설·전문·관리 해달 제외)</summary>
+    public readonly int Workforce;
+    /// <summary>지금 바로 보낼 수 있음 (작업 화면과 같은 판정)</summary>
+    public readonly int Available;
+    /// <summary>주민 작업 중</summary>
+    public readonly int Working;
+
+    public LaborSummary(int settled, int workforce, int available, int working)
+    {
+        Settled = settled;
+        Workforce = workforce;
+        Available = available;
+        Working = working;
+    }
+}
+
 /// <summary>
 /// 정착 진행(Settlement)의 주인. 전역 UI(GlobalUI) 루트에 붙어 씬을 넘어 유지된다.
 /// 게시판 부탁의 건설 비용(골드·재료)을 받고, 시간이 지나면 완료 처리하고, 장소 해금(밭 등)을 알려 준다.
 /// 개간 지역(P1): 플레이어가 길을 다 치우면 주민 해달을 작업에 보내고, 작업이 끝나면 지역을 운영(부탁 완료·꾸미기 구역 해금)한다.
 /// 전문 해달: 운영되면 그 지역의 전문 해달(광부·농부)이 광장에 찾아오고, 플레이어가 배치한 뒤 그 장소의 안내를 끝내면 생산이 시작된다.
+/// 게시판 성장(P2): 게시판 보강 → 관리 해달 방문·역할 맡김 → 주민 부탁(광장 주민 작업) → 접수소(큰 부탁 묶음) → 마을회관(발전 현황).
 /// 기존 시스템(밭·가방·재화·퀘스트) 앞에서 진행만 제어하는 상위 레이어 — 그 내부 로직은 건드리지 않는다.
 /// - 세이브: GameManager가 LoadFromSave / WriteToSave를 호출. 부탁을 끝내면 SaveRequested로 바로 저장을 부탁한다
 /// </summary>
@@ -75,7 +97,7 @@ public class SettlementManager : MonoBehaviour
     /// <summary>주민 작업을 시작했을 때 (광장의 해달이 일하러 떠남)</summary>
     public event Action<SettlementTaskDefinition> OnTaskStarted;
 
-    /// <summary>주민 작업이 끝났을 때. 인자: 이 작업으로 지역이 운영되었는지 (그러면 부탁 완료 팝업이 대신 알림)</summary>
+    /// <summary>주민 작업이 끝났을 때. 인자: 이 작업으로 지역이 운영되었거나 부탁이 끝났는지 (그러면 부탁 완료 팝업이 대신 알림)</summary>
     public event Action<SettlementTaskDefinition, bool> OnTaskFinished;
 
     /// <summary>작업 화면을 열어 달라는 부탁 (광산의 정비 표지판, 게시판). 작업 화면이 듣는다</summary>
@@ -87,6 +109,18 @@ public class SettlementManager : MonoBehaviour
     /// <summary>전문 해달을 일할 곳에 배치했을 때 (광장의 그 해달이 길 끝으로 걸어 나감)</summary>
     public event Action<SettlementOtterDefinition> OnSpecialistAssigned;
 
+    /// <summary>관리 역할을 맡겼을 때 (광장의 그 해달이 근무 자리로 걸어감)</summary>
+    public event Action<ManagementRoleDefinition> OnRoleAssigned;
+
+    /// <summary>이 부탁을 하러 가 달라는 부탁 (마을회관·큰 부탁의 [가 보기]). 게시판 화면 쪽이 듣고 알맞은 화면을 연다</summary>
+    public event Action<BoardRequestDefinition> OnRequestOpenRequested;
+
+    /// <summary>큰 부탁 화면을 열어 달라는 부탁 (게시판 카드, 접수소)</summary>
+    public event Action<MilestoneGroupDefinition> OnMilestoneRequested;
+
+    /// <summary>마을회관 발전 현황 화면을 열어 달라는 부탁 (게시판 카드, 마을회관)</summary>
+    public event Action OnTownHallRequested;
+
     // 일할 해달이 도착하지 못해도 이만큼 지나면 공사를 시작함 (길이 막히는 등)
     private const float WorkerWaitLimitSeconds = 25f;
     private float _workerWaitSeconds;
@@ -96,6 +130,8 @@ public class SettlementManager : MonoBehaviour
     // 끝난 주민 작업 (작업, 끝난 시각). 돌아옴 팝업용
     private readonly List<(SettlementTaskDefinition task, long endTicks)> _finishedTasks = new List<(SettlementTaskDefinition, long)>();
     private readonly List<SettlementTaskJob> _dueTasks = new List<SettlementTaskJob>();
+    private readonly List<BoardRequestRow> _boardRows = new List<BoardRequestRow>();
+    private readonly List<SettlementOtterDefinition> _laborCandidates = new List<SettlementOtterDefinition>();
 
     private void Awake()
     {
@@ -162,19 +198,33 @@ public class SettlementManager : MonoBehaviour
     /// <summary>진행 중인 건설의 부탁 (없으면 null)</summary>
     public BoardRequestDefinition JobRequest => Settlement.Job != null ? _config.FindRequest(Settlement.Job.RequestId) : null;
 
-    /// <summary>시작할 수 있는데 아직 손대지 않은 부탁이 있는지 (게시판 빨간 점)</summary>
+    /// <summary>게시판에 보이는 부탁 중 시작할 수 있는데 아직 손대지 않은 것이 있는지 (게시판 빨간 점)</summary>
     public bool HasActionableRequest
     {
         get
         {
-            foreach (var request in _config.Requests)
+            CollectBoardRows(_boardRows);
+            foreach (var row in _boardRows)
             {
-                if (request != null && GetStatus(request) == RequestStatus.Available && !IsBeingPrepared(request))
+                if (row.Status == RequestStatus.Available && !IsBeingPrepared(row.Request))
                     return true;
             }
             return false;
         }
     }
+
+    /// <summary>게시판 "해달의 부탁"에 보일 부탁과 구역 (등급·주민 부탁 칸 규칙: SettlementBoardRules)</summary>
+    public void CollectBoardRows(List<BoardRequestRow> rows)
+    {
+        // 데이터는 실행 중에 바뀌지 않으므로 정렬은 한 번만 (게시판 "!"가 매 프레임 물어봄)
+        _sortedRequests ??= SettlementBoardRules.SortRequests(_config);
+        SettlementBoardRules.CollectRows(_config, _sortedRequests, Settlement, rows);
+    }
+
+    private List<BoardRequestDefinition> _sortedRequests;
+
+    /// <summary>게시판 등급 (발전 기록에서 계산)</summary>
+    public BoardTier BoardTier => SettlementBoardRules.GetTier(_config, Settlement);
 
     // 직접 치우는 부탁의 지역을 주민 해달이 정비하는 중 (플레이어가 할 일이 없음)
     private bool IsBeingPrepared(BoardRequestDefinition request)
@@ -500,7 +550,7 @@ public class SettlementManager : MonoBehaviour
         OnTaskRequested?.Invoke(task);
     }
 
-    /// <summary>작업에 보낼 수 있는 주민 해달 후보 (온 순서대로, 건설 해달·전문 해달 제외). 지금 바쁜 해달도 들어 있음 → CanAssign으로 확인</summary>
+    /// <summary>작업에 보낼 수 있는 주민 해달 후보 (온 순서대로, 건설·전문·관리 해달 제외). 지금 바쁜 해달도 들어 있음 → CanAssign으로 확인</summary>
     public void CollectResidents(List<SettlementOtterDefinition> result)
     {
         if (result == null)
@@ -509,10 +559,39 @@ public class SettlementManager : MonoBehaviour
         foreach (var otterId in Settlement.ResidentOrder)
         {
             var otter = _config.FindOtter(otterId);
-            if (otter != null && !otter.IsBuilder && !otter.IsSpecialist
+            if (otter != null && !otter.IsBuilder && !otter.IsSpecialist && !Settlement.HasRole(otterId)
                 && Settlement.TryGetResidentState(otterId, out var state) && state == ResidentState.Resident)
                 result.Add(otter);
         }
+    }
+
+    /// <summary>
+    /// 마을회관의 주민 현황. 보낼 수 있는 수는 작업 화면과 같은 판정(CanAssign)으로 세므로 실제로 보낼 수 있는 인원과 같다
+    /// </summary>
+    public LaborSummary GetLaborSummary()
+    {
+        CollectResidents(_laborCandidates);
+        int available = 0;
+        int working = 0;
+        foreach (var otter in _laborCandidates)
+        {
+            if (CanAssign(otter))
+                available++;
+            else if (Settlement.GetWorkState(otter.OtterId) == ResidentWorkState.Working)
+                working++;
+        }
+        return new LaborSummary(Settlement.ResidentCount, _laborCandidates.Count, available, working);
+    }
+
+    /// <summary>광장에서 하는 주민 작업인지 (개간 지역의 후속 정비가 아님 → 그 장소로 떠나지 않고 광장 현장에서 일함)</summary>
+    public bool IsPlazaTask(SettlementTaskDefinition task) => task != null && _config.FindRegionOf(task) == null;
+
+    /// <summary>이 해달이 광장 현장에서 주민 작업 중이면 그 작업 (아니면 null)</summary>
+    public SettlementTaskDefinition PlazaTaskOf(string otterId)
+    {
+        var job = Settlement.FindTaskJobOf(otterId);
+        var task = job != null ? _config.FindTask(job.TaskId) : null;
+        return IsPlazaTask(task) ? task : null;
     }
 
     /// <summary>지금 작업에 보낼 수 있는지 (주민 · 다른 작업 없음 · 공사하러 가 있지 않음)</summary>
@@ -599,7 +678,12 @@ public class SettlementManager : MonoBehaviour
             _finishedTasks.Add((task, job.EndUtcTicks));
             var region = _config.FindRegionOf(task);
             bool operated = region != null && TryOperate(region);
-            OnTaskFinished?.Invoke(task, operated);
+            // 주민 작업 부탁: 실제 작업 완료 기록으로 끝냄 (완료 팝업이 알림)
+            var request = _config.FindRequestByTask(task);
+            bool completed = request != null && !Settlement.IsCompleted(request.RequestId);
+            if (completed)
+                Complete(request);
+            OnTaskFinished?.Invoke(task, operated || completed);
         }
         SaveRequested?.Invoke();
     }
@@ -852,6 +936,106 @@ public class SettlementManager : MonoBehaviour
 
     #endregion
 
+    #region 관리 해달 (게시판 관리)
+
+    /// <summary>이 해달이 맡는 관리 역할 (관리 해달이 아니면 null)</summary>
+    public ManagementRoleDefinition FindRole(SettlementOtterDefinition otter) => _config.FindRoleFor(otter);
+
+    /// <summary>광장에서 말을 걸면 역할을 맡길 수 있는지 (만났고, 앞선 발전이 열렸고, 아직 아무도 안 맡음)</summary>
+    public bool CanAssignRole(SettlementOtterDefinition otter)
+    {
+        var role = FindRole(otter);
+        return role != null && SettlementRoleRules.CanAssign(role, Settlement);
+    }
+
+    /// <summary>이 해달이 역할을 맡아 근무 중이면 그 역할 (아니면 null)</summary>
+    public ManagementRoleDefinition AssignedRoleOf(SettlementOtterDefinition otter)
+    {
+        var role = FindRole(otter);
+        return role != null && SettlementRoleRules.IsAssigned(role, Settlement) ? role : null;
+    }
+
+    /// <summary>
+    /// 광장에서 만난 관리 해달에게 역할을 맡긴다 (대화의 확인 버튼). 맡기면 바로 저장되고, 그 역할 부탁이 끝나며,
+    /// 도감에 등록된다. 여러 번 눌러도 한 번만 된다. 근무 자리로 걸어가는 것은 광장이 하고, 도착하지 못해도 맡긴 것은 그대로다
+    /// </summary>
+    /// <returns>이번에 맡겼으면 true</returns>
+    public bool TryAssignRole(ManagementRoleDefinition role)
+    {
+        if (role == null)
+            throw new ArgumentNullException(nameof(role));
+        if (!SettlementRoleRules.Assign(role, Settlement))
+            return false;
+
+        if (role.Otter.CollectionEntry != null && CollectionManager.Instance != null)
+            CollectionManager.Instance.Register(role.Otter.CollectionEntry.EntryId);
+        OnRoleAssigned?.Invoke(role);
+
+        bool completed = false;
+        foreach (var request in _config.Requests)
+        {
+            if (request != null && request.AssignRole == role && !Settlement.IsCompleted(request.RequestId))
+            {
+                // Complete가 저장까지 부탁함
+                Complete(request);
+                completed = true;
+            }
+        }
+        if (!completed)
+            SaveRequested?.Invoke();
+        return true;
+    }
+
+    #endregion
+
+    #region 게시판 성장 · 큰 부탁 · 마을회관
+
+    /// <summary>이 부탁을 하러 가는 화면을 열어 달라고 부탁 (마을회관·큰 부탁의 [가 보기])</summary>
+    public void RequestOpen(BoardRequestDefinition request)
+    {
+        if (request == null)
+            throw new ArgumentNullException(nameof(request));
+        OnRequestOpenRequested?.Invoke(request);
+    }
+
+    /// <summary>큰 부탁 화면을 연다 (보이는 큰 부탁일 때만)</summary>
+    public void RequestMilestone(MilestoneGroupDefinition group)
+    {
+        if (group == null)
+            throw new ArgumentNullException(nameof(group));
+        if (SettlementBoardRules.IsGroupVisible(group, Settlement))
+            OnMilestoneRequested?.Invoke(group);
+    }
+
+    /// <summary>마을회관이 생긴 뒤 발전 현황 화면을 연다</summary>
+    public void RequestTownHall()
+    {
+        if (IsTownHallOpen)
+            OnTownHallRequested?.Invoke();
+    }
+
+    /// <summary>마을회관이 있어 발전 현황 화면을 볼 수 있는지</summary>
+    public bool IsTownHallOpen => !string.IsNullOrEmpty(_config.TownHallDevelopment) && Settlement.HasDevelopment(_config.TownHallDevelopment);
+
+    /// <summary>지금 보이는 큰 부탁 (없으면 null)</summary>
+    public MilestoneGroupDefinition VisibleMilestone
+    {
+        get
+        {
+            foreach (var group in _config.MilestoneGroups)
+            {
+                if (SettlementBoardRules.IsGroupVisible(group, Settlement))
+                    return group;
+            }
+            return null;
+        }
+    }
+
+    /// <summary>준비된 메인 발전을 모두 끝냈는지</summary>
+    public bool AreAllMainDone => SettlementBoardRules.AreAllMainDone(_config, Settlement);
+
+    #endregion
+
     #region 건설 기록 (퀘스트)
 
     /// <summary>
@@ -978,6 +1162,8 @@ public class SettlementManager : MonoBehaviour
 
         // 지역·작업·전문 해달을 먼저 맞춘 뒤 (옛 세이브 옮기기) 꺼 둔 동안 끝난 건설·주민 작업을 처리
         MigrateSpecialists();
+        MigrateVersion();
+        ReconcileRecords();
         IsLoaded = true;
         if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
             FinishJob();
@@ -987,6 +1173,23 @@ public class SettlementManager : MonoBehaviour
         ApplyLevelCap();
         OnLoaded?.Invoke();
         OnChanged?.Invoke();
+    }
+
+    // 세이브 버전을 한 번 옮김 (P2 콘텐츠는 자동으로 주지 않음)
+    private void MigrateVersion()
+    {
+        int from = Settlement.Version;
+        if (SettlementMigration.MigrateToCurrent(Settlement) && from > 0)
+            Debug.Log($"[SettlementManager] 정착 세이브를 버전 {from} → {SettlementSaveData.CurrentVersion}으로 옮겼습니다.");
+    }
+
+    // 끝낸 주민 작업·맡긴 역할은 있는데 부탁이 안 끝난 세이브 (끝내는 도중에 꺼짐): 조용히 끝냄 (팝업·보상 없음)
+    private void ReconcileRecords()
+    {
+        var completed = new List<BoardRequestDefinition>();
+        SettlementMigration.ReconcileRecords(_config, Settlement, completed);
+        foreach (var request in completed)
+            Debug.Log($"[SettlementManager] 기록에 맞춰 부탁 '{request.RequestId}'을(를) 끝낸 것으로 맞췄습니다.");
     }
 
     private void GrantStartingItems()
