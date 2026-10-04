@@ -33,6 +33,13 @@ public class SettlementTaskPopupView : MonoBehaviour
     [Tooltip("주민 해달 칸 (남는 칸은 숨김)")]
     [SerializeField] private List<WorkerChipView> _workerChips = new List<WorkerChipView>();
 
+    [Header("필요 재료")]
+    [Tooltip("\"필요 재료\" 제목 + 재료 칸 줄 (비용이 없는 작업·작업 중·끝난 모습에서는 숨김)")]
+    [SerializeField] private GameObject _costGroup;
+
+    [Tooltip("재료 칸 (골드부터. 아이콘 + 가진 / 필요, 넉넉하면 체크·모자라면 빨강). 남는 칸은 숨김")]
+    [SerializeField] private List<CostChipView> _costChips = new List<CostChipView>();
+
     [Header("작업 중")]
     [SerializeField] private GameObject _progressGroup;
     [SerializeField] private ProgressBarView _bar;
@@ -78,8 +85,9 @@ public class SettlementTaskPopupView : MonoBehaviour
 
     /// <summary>보낼 해달 고르기</summary>
     /// <param name="workers">(해달, 골랐는지, 보낼 수 없는 이유 — 보낼 수 있으면 null)</param>
+    /// <param name="costs">(아이콘, 필요, 가진 것) — 골드부터. 비어 있으면 재료 줄을 숨김</param>
     public void ShowAssign(SettlementTaskDefinition task, IReadOnlyList<(SettlementOtterDefinition otter, bool selected, string busy)> workers,
-        string note, bool canStart)
+        IReadOnlyList<(Sprite icon, int need, int have)> costs, string note, bool canStart)
     {
         BindHeader(task, task.Description, true);
         _assignGroup.SetActive(true);
@@ -91,6 +99,7 @@ public class SettlementTaskPopupView : MonoBehaviour
             else
                 _workerChips[i].Hide();
         }
+        BindCosts(costs);
         _noteText.text = note;
         SetButton("작업 시작", canStart);
         Open();
@@ -102,6 +111,7 @@ public class SettlementTaskPopupView : MonoBehaviour
         BindHeader(task, task.Description, true);
         _assignGroup.SetActive(false);
         _progressGroup.SetActive(true);
+        BindCosts(null);
         _bar.SetRatio(progress);
         _timeText.text = $"남은 시간 {remaining}";
         _crewText.text = crew;
@@ -116,6 +126,7 @@ public class SettlementTaskPopupView : MonoBehaviour
         BindHeader(task, message, false);
         _assignGroup.SetActive(false);
         _progressGroup.SetActive(false);
+        BindCosts(null);
         _noteText.text = string.Empty;
         SetButton("확인", true);
         _done = true;
@@ -140,6 +151,22 @@ public class SettlementTaskPopupView : MonoBehaviour
         _infoRow.SetActive(showInfo);
         _workersText.text = $"{task.RequiredWorkers}명";
         _durationText.text = FormatDuration(task.DurationSeconds);
+    }
+
+    // 가진 / 필요 (넉넉하면 체크, 모자라면 빨강). 비용이 없으면 줄째 숨김
+    private void BindCosts(IReadOnlyList<(Sprite icon, int need, int have)> costs)
+    {
+        int count = costs != null ? costs.Count : 0;
+        // 화면을 새로 만들기 전의 프리팹(재료 줄 없음)에서도 동작하게
+        if (_costGroup != null)
+            _costGroup.SetActive(count > 0);
+        for (int i = 0; i < _costChips.Count; i++)
+        {
+            if (i < count)
+                _costChips[i].BindProgress(costs[i].icon, costs[i].have, costs[i].need);
+            else
+                _costChips[i].Hide();
+        }
     }
 
     private void SetButton(string label, bool interactable)

@@ -151,10 +151,42 @@ public static partial class SettlementSetup
 
     #region 작업 화면
 
+    private const string TaskPopupName = "SettlementTask";
+    private const string GlobalUIPrefabAssetPath = "Assets/Resources/GlobalUI.prefab";
+
+    /// <summary>
+    /// 전역 UI 프리팹의 작업 화면만 다시 만든다 (전역 UI 전체를 다시 만들지 않고, 같은 자리·순서에 넣고 presenter를 다시 연결).
+    /// 작업 화면 배치를 고친 뒤 이것만 실행하면 된다
+    /// </summary>
+    [MenuItem("Tools/Settlement/Rebuild Task Popup")]
+    public static void RebuildTaskPopup()
+    {
+        _titleFont ??= AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(TitleFontAssetPath);
+        _bodyFont ??= AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/NanumSquareRoundOTFR SDF.asset") ?? _titleFont;
+
+        var root = PrefabUtility.LoadPrefabContents(GlobalUIPrefabAssetPath);
+        var canvas = (RectTransform)root.transform;
+        var old = canvas.Find(TaskPopupName);
+        int index = old != null ? old.GetSiblingIndex() : canvas.childCount;
+        if (old != null)
+            Object.DestroyImmediate(old.gameObject);
+
+        var view = BuildTaskPopup(canvas);
+        view.transform.SetSiblingIndex(index);
+        var presenter = root.GetComponent<SettlementTaskPresenter>();
+        if (presenter != null)
+            Set(presenter, "_popup", view);
+
+        PrefabUtility.SaveAsPrefabAsset(root, GlobalUIPrefabAssetPath);
+        PrefabUtility.UnloadPrefabContents(root);
+        Debug.Log("[SettlementSetup] 작업 화면 다시 만들기 완료");
+    }
+
+    // 위에서부터: 제목 · 설명 · 필요 인원/시간 · 보낼 해달(작업 중이면 진행 막대) · 필요 재료 카드 · 안내 · [작업 시작]
     private static SettlementTaskPopupView BuildTaskPopup(RectTransform canvas)
     {
-        var (screen, panel, animator) = BuildPopupShell(canvas, "SettlementTask", LoadPanelSprite());
-        Place(panel, new Vector2(0.5f, 0f), new Vector2(0, 290), new Vector2(900, 820));
+        var (screen, panel, animator) = BuildPopupShell(canvas, TaskPopupName, LoadPanelSprite());
+        Place(panel, new Vector2(0.5f, 0f), new Vector2(0, 290), new Vector2(900, 990));
         var close = BuildCloseButton(panel);
 
         var title = Label("Title", panel, _titleFont, "광산 주변 정리", 46, Cocoa, TextAlignmentOptions.Center, 28);
@@ -200,8 +232,21 @@ public static partial class SettlementSetup
         var crew = Label("Crew", progress, _bodyFont, "몽실 작업 중", 28, Green, TextAlignmentOptions.Center, 18);
         TopBand(crew.rectTransform, 0, 0, 172, 48);
 
-        var note = Label("Note", panel, _bodyFont, "해달이 걸어가서 일을 시작해요.", 26, Body, TextAlignmentOptions.Center, 18);
-        TopBand(note.rectTransform, 60, 60, 604, 44);
+        // 필요 재료: 아이콘 + 가진 / 필요 (넉넉하면 체크, 모자라면 빨강). 비용이 없는 작업이면 카드째 숨김
+        var costCard = CreateImage("Costs", panel, Common("UI_Box_Inset"), false);
+        TopBand(costCard.rectTransform, 50, 50, 600, 150);
+        var costLabel = Label("Label", costCard.rectTransform, _titleFont, "필요 재료", 28, Cocoa, TextAlignmentOptions.Center, 20);
+        TopBand(costLabel.rectTransform, 0, 0, 10, 38);
+        var costRow = CreateRect("Chips", costCard.rectTransform);
+        TopBand(costRow, 4, 4, 54, 84);
+        Row(costRow, 12, TextAnchor.MiddleCenter);
+        var costChips = new List<CostChipView>();
+        for (int i = 0; i < 3; i++)
+            costChips.Add(BuildTaskCostChip(costRow, $"Cost{i + 1}"));
+
+        var note = Label("Note", panel, _bodyFont, "해달이 걸어가서 일을 시작해요.", 28, Body, TextAlignmentOptions.Center, 18);
+        note.textWrappingMode = TextWrappingModes.Normal;
+        TopBand(note.rectTransform, 60, 60, 764, 64);
 
         var (start, startLabel, startImage) = BuildButton(panel, "StartButton", Common("UI_Button_Coin"), "작업 시작", 40, Cocoa);
         Place(startImage.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, 32), new Vector2(520, 112));
@@ -216,7 +261,9 @@ public static partial class SettlementSetup
         Set(view, "_assignGroup", assign.gameObject);
         var so = new SerializedObject(view);
         SetList(so.FindProperty("_workerChips"), chips);
+        SetList(so.FindProperty("_costChips"), costChips);
         so.ApplyModifiedPropertiesWithoutUndo();
+        Set(view, "_costGroup", costCard.gameObject);
         Set(view, "_progressGroup", progress.gameObject);
         Set(view, "_bar", bar);
         Set(view, "_timeText", time);
@@ -228,6 +275,36 @@ public static partial class SettlementSetup
 
         CornerClose(close);
         screen.gameObject.SetActive(false);
+        return view;
+    }
+
+    // 필요 재료 칸: 아이콘 + "가진 / 필요" (글자 칸을 넓게), 넉넉하면 칸 오른쪽 위 모서리에 체크 배지 (해달 칸의 체크와 같은 자리)
+    private static CostChipView BuildTaskCostChip(RectTransform parent, string name)
+    {
+        var bg = CreateImage(name, parent, Common("UI_Chip_Normal"), false);
+        bg.pixelsPerUnitMultiplier = 1.4f;
+        var element = bg.gameObject.AddComponent<LayoutElement>();
+        element.preferredWidth = 252;
+        element.preferredHeight = 80;
+
+        var icon = CreateImage("Icon", bg.rectTransform, null, false);
+        icon.preserveAspect = true;
+        Place(icon.rectTransform, new Vector2(0, 0.5f), new Vector2(12, 0), new Vector2(58, 58));
+
+        var amount = Label("Amount", bg.rectTransform, _titleFont, "0 / 0", 32, Cocoa, TextAlignmentOptions.Center, 22);
+        amount.textWrappingMode = TextWrappingModes.NoWrap;
+        amount.rectTransform.anchorMin = Vector2.zero;
+        amount.rectTransform.anchorMax = Vector2.one;
+        amount.rectTransform.offsetMin = new Vector2(76, 4);
+        amount.rectTransform.offsetMax = new Vector2(-10, -2);
+
+        var check = CreateImage("Check", bg.rectTransform, Common("UI_Button_Confirm"), false);
+        Place(check.rectTransform, new Vector2(1, 1), new Vector2(10, 12), new Vector2(42, 42));
+
+        var view = bg.gameObject.AddComponent<CostChipView>();
+        Set(view, "_icon", icon);
+        Set(view, "_amountText", amount);
+        Set(view, "_check", check.gameObject);
         return view;
     }
 
