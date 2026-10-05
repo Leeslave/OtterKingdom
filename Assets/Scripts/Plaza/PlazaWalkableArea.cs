@@ -127,13 +127,7 @@ public class PlazaWalkableArea : MonoBehaviour
         int count = width * height;
 
         walkable = new bool[count];
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                walkable[y * width + x] = IsClearAt(CellCenter(x, y), walkPolys, blockPolys);
-            }
-        }
+        RasterizeClearCells(walkPolys, blockPolys);
 
         staticWalkable = (bool[])walkable.Clone();
         ApplyObstacleCells();
@@ -149,36 +143,90 @@ public class PlazaWalkableArea : MonoBehaviour
         Version++;
     }
 
-    // Centre plus a ring of 8 samples at `clearance`: cheap approximation of
-    // "a disc of this radius fits here" that is plenty at otter scale.
-    private bool IsClearAt(Vector2 p, List<List<Vector2>> walkPolys, List<List<Vector2>> blockPolys)
+    // A cell is walkable when its centre plus a ring of 8 samples at
+    // `clearance` are all inside some Walkable polygon and outside every
+    // Blocked one: cheap approximation of "a disc of this radius fits here"
+    // that is plenty at otter scale.
+    //
+    // Each sample offset is just the whole grid shifted, so it is filled one
+    // row at a time from that row's edge crossings instead of testing every
+    // point against every polygon — the per-point version took over a second
+    // in the editor on the full territory map.
+    private void RasterizeClearCells(List<List<Vector2>> walkPolys, List<List<Vector2>> blockPolys)
     {
-        if (!IsFreePoint(p, walkPolys, blockPolys)) return false;
-        if (clearance <= 0f) return true;
+        int count = walkable.Length;
+        var inWalk = new bool[count];
+        var inBlock = new bool[count];
+        var crossings = new List<float>();
+        int samples = clearance > 0f ? 9 : 1;
 
-        for (int i = 0; i < 8; i++)
+        for (int s = 0; s < samples; s++)
         {
-            float angle = i * Mathf.PI * 0.25f;
-            Vector2 sample = p + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * clearance;
-            if (!IsFreePoint(sample, walkPolys, blockPolys)) return false;
+            Vector2 offset = Vector2.zero;
+            if (s > 0)
+            {
+                float angle = (s - 1) * Mathf.PI * 0.25f;
+                offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * clearance;
+            }
+
+            System.Array.Clear(inWalk, 0, count);
+            System.Array.Clear(inBlock, 0, count);
+            foreach (var poly in walkPolys) FillPolygon(poly, offset, inWalk, crossings);
+            foreach (var poly in blockPolys) FillPolygon(poly, offset, inBlock, crossings);
+
+            for (int i = 0; i < count; i++)
+            {
+                bool free = inWalk[i] && !inBlock[i];
+                walkable[i] = s == 0 ? free : walkable[i] && free;
+            }
         }
-        return true;
     }
 
-    private static bool IsFreePoint(Vector2 p, List<List<Vector2>> walkPolys, List<List<Vector2>> blockPolys)
+    // Marks every cell whose sample point (centre + offset) is inside the
+    // polygon, with the same even-odd test as PlazaAreaPolygon.Contains: a
+    // point is inside when an odd number of edge crossings lie to its right.
+    private void FillPolygon(List<Vector2> polygon, Vector2 offset, bool[] mask, List<float> crossings)
     {
-        bool inWalk = false;
-        foreach (var poly in walkPolys)
+        Vector2 min = polygon[0];
+        Vector2 max = polygon[0];
+        foreach (var p in polygon)
         {
-            if (PlazaAreaPolygon.Contains(poly, p)) { inWalk = true; break; }
+            min = Vector2.Min(min, p);
+            max = Vector2.Max(max, p);
         }
-        if (!inWalk) return false;
 
-        foreach (var poly in blockPolys)
+        // Cells whose sample can fall inside the polygon's bounds (one spare
+        // cell each side; cells outside it see an even crossing count anyway).
+        int x0 = Mathf.Max(0, Mathf.FloorToInt((min.x - offset.x - origin.x) / cellSize) - 1);
+        int x1 = Mathf.Min(width - 1, Mathf.CeilToInt((max.x - offset.x - origin.x) / cellSize) + 1);
+        int y0 = Mathf.Max(0, Mathf.FloorToInt((min.y - offset.y - origin.y) / cellSize) - 1);
+        int y1 = Mathf.Min(height - 1, Mathf.CeilToInt((max.y - offset.y - origin.y) / cellSize) + 1);
+
+        for (int y = y0; y <= y1; y++)
         {
-            if (PlazaAreaPolygon.Contains(poly, p)) return false;
+            float py = CellCenter(0, y).y + offset.y;
+            crossings.Clear();
+            for (int i = 0, j = polygon.Count - 1; i < polygon.Count; j = i++)
+            {
+                Vector2 a = polygon[i];
+                Vector2 b = polygon[j];
+                if ((a.y > py) != (b.y > py))
+                {
+                    crossings.Add((b.x - a.x) * (py - a.y) / (b.y - a.y) + a.x);
+                }
+            }
+            if (crossings.Count == 0) continue;
+            crossings.Sort();
+
+            // Walking right, `passed` = crossings at or left of the sample.
+            int passed = 0;
+            for (int x = x0; x <= x1; x++)
+            {
+                float px = CellCenter(x, y).x + offset.x;
+                while (passed < crossings.Count && crossings[passed] <= px) passed++;
+                if (((crossings.Count - passed) & 1) == 1) mask[y * width + x] = true;
+            }
         }
-        return true;
     }
 
     private void LabelComponents()
