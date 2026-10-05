@@ -143,6 +143,49 @@ public static class SettlementRules
         settlement.ClearLegacyFlag();
     }
 
+    /// <summary>왕국 레벨에 닿은 발전을 연다 (불러올 때·레벨이 오를 때). 새로 연 항목을 opened에 넣는다</summary>
+    public static void UnlockLevelDevelopments(SettlementConfig config, Settlement settlement, int level, List<LevelDevelopment> opened)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+        if (opened == null)
+            throw new ArgumentNullException(nameof(opened));
+        opened.Clear();
+        foreach (var entry in config.LevelDevelopments)
+        {
+            if (entry == null || string.IsNullOrEmpty(entry.Development) || level < entry.Level
+                || settlement.HasDevelopment(entry.Development))
+                continue;
+            settlement.UnlockDevelopment(entry.Development);
+            opened.Add(entry);
+        }
+    }
+
+    /// <summary>
+    /// 아직 레벨이 모자라 잠긴 메인 부탁 중 순서가 가장 앞선 것 (조건 발전이 레벨로 열리는 부탁). 없으면 null.
+    /// 마을회관이 "왕국 Lv.○에 열려요"로 다음 목표를 알려 줄 때 쓴다
+    /// </summary>
+    public static BoardRequestDefinition FindLevelLocked(SettlementConfig config, Settlement settlement, out int level)
+    {
+        level = 0;
+        BoardRequestDefinition best = null;
+        foreach (var request in config.Requests)
+        {
+            if (request == null || request.Category != RequestCategory.Main || settlement.IsCompleted(request.RequestId)
+                || settlement.HasDevelopment(request.RequiredDevelopment))
+                continue;
+            var gate = config.FindLevelDevelopment(request.RequiredDevelopment);
+            if (gate != null && (best == null || request.Order < best.Order))
+            {
+                best = request;
+                level = gate.Level;
+            }
+        }
+        return best;
+    }
+
     /// <summary>
     /// 경험치로 오를 수 있는 왕국 레벨: 아직 안 끝낸 큰 발전(KingdomLevel이 있는 부탁) 중 가장 낮은 것의 바로 아래.
     /// 다 끝냈으면 제한 없음(int.MaxValue)

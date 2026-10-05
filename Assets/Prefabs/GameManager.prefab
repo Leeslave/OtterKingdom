@@ -49,9 +49,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba0406de5d2040659d12e38be242ba6b, type: 2}
   - {fileID: 11400000, guid: b7749fc528f04422a1d4961eddff8d83, type: 2}
   - {fileID: 11400000, guid: a633d9c83b754f9695e117876b5e2b47, type: 2}
+  - {fileID: 11400000, guid: 9f99786d03c2ac64e87e281518c70fdb, type: 2}
   farmBalance: {fileID: 0}
   fishingBalance: {fileID: 11400000, guid: 821d8ca2ca83e6f49b91a462ea19214a, type: 2}
   miningBalance: {fileID: 11400000, guid: 83ffdef1f57a2a5489c9bacc6dd0928b, type: 2}
   otterVisitBalance: {fileID: 0}
   autoSaveIntervalSec: 30
+  minOfflineAbsenceSec: 180
   goldCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}

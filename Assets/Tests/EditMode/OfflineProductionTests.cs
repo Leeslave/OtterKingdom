@@ -250,7 +250,10 @@ public class OfflineProductionTests
         var save = CreateSave(1);
         save.rodLevel = 2; // 55% fish
 
-        CreateService(seed: 42).Run(save, 100f * 1000, _bag);
+        // 한 번 비운 시간은 8시간까지라 1,000번 낚을 시간을 네 번에 나눠 (남은 시간은 이어짐)
+        var service = CreateService(seed: 42);
+        for (int i = 0; i < 4; i++)
+            service.Run(save, 100f * 1000 / 4, _bag);
 
         Assert.AreEqual(550, _bag.GetCount(_fishing.fishItemId), 50);
     }
@@ -287,7 +290,10 @@ public class OfflineProductionTests
         var save = CreateSave(1);
         save.pickaxeLevel = 2; // 35% diamond
 
-        CreateService(seed: 42).Run(save, 80f * 1000, _bag);
+        // 한 번 비운 시간은 8시간까지라 1,000번 캘 시간을 네 번에 나눠 (남은 시간은 이어짐)
+        var service = CreateService(seed: 42);
+        for (int i = 0; i < 4; i++)
+            service.Run(save, 80f * 1000 / 4, _bag);
 
         Assert.AreEqual(350, _bag.GetCount(_mining.diamondItemId), 50);
     }
@@ -334,5 +340,30 @@ public class OfflineProductionTests
         var report = CreateService().Run(save, 1800f * 10, _bag);
 
         Assert.AreEqual(0, report.OtterVisits.Count);
+    }
+
+    [Test]
+    public void LongAbsence_CountsAtMostEightHours()
+    {
+        const double eightHours = 8 * 3600;
+        var report = CreateService().Run(CreateSave(2, "crop_carrot"), eightHours * 9, _bag);
+        int afterThreeDays = _bag.GetCount("crop_carrot");
+        _bag.Counts.Clear();
+        CreateService().Run(CreateSave(2, "crop_carrot"), eightHours, _bag);
+
+        Assert.Greater(afterThreeDays, 0);
+        Assert.AreEqual(_bag.GetCount("crop_carrot"), afterThreeDays, "사흘을 비워도 8시간만큼");
+        Assert.IsTrue(report.Capped);
+        Assert.AreEqual(eightHours * 9, report.ElapsedSec, "비운 시간은 그대로 보여 줌");
+        Assert.AreEqual(eightHours, report.CreditedSec);
+    }
+
+    [Test]
+    public void ShortAbsence_NotCapped()
+    {
+        var report = CreateService().Run(CreateSave(2, "crop_carrot"), 3600, _bag);
+
+        Assert.IsFalse(report.Capped);
+        Assert.AreEqual(3600, report.CreditedSec);
     }
 }

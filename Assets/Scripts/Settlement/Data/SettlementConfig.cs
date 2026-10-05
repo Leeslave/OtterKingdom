@@ -1,5 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>왕국 레벨이 되면 열리는 발전 하나 (예: Lv.15에 낚시터 발견 → 선착장 부탁이 나타남)</summary>
+[Serializable]
+public class LevelDevelopment
+{
+    [Min(1)]
+    [SerializeField] private int _level = 1;
+    [SerializeField] private string _development;
+    [Tooltip("플레이 중에 열리면 화면 위쪽에 잠깐 보일 알림 (비우면 없음)")]
+    [SerializeField] private string _notice;
+
+    public int Level => Mathf.Max(1, _level);
+    public string Development => _development;
+    public string Notice => _notice;
+
+    public LevelDevelopment() { }
+
+    public LevelDevelopment(int level, string development, string notice = null)
+    {
+        _level = level;
+        _development = development;
+        _notice = notice;
+    }
+}
 
 /// <summary>
 /// 정착 진행(P0: 빈 광장 → 첫 집 → 건설 해달 → 농경지 개간 → 밭 해금, P1: 개간 지역 · 주민 작업 · 전문 해달 배치,
@@ -90,6 +115,10 @@ public class SettlementConfig : ScriptableObject
     [Min(1)]
     [SerializeField] private int _territoryStartLevel = 6;
 
+    [Header("레벨로 열리는 발전")]
+    [Tooltip("왕국 레벨이 되면 여는 발전 (부탁·지역의 조건으로 씀). 불러올 때와 레벨이 오를 때 맞춤")]
+    [SerializeField] private List<LevelDevelopment> _levelDevelopments = new List<LevelDevelopment>();
+
     [Header("옛 세이브")]
     [Tooltip("정착 진행 전 세이브에 부탁과 별도로 열어 줄 발전 (예: 아직 부탁이 없는 낚시터 fishing_dock)")]
     [SerializeField] private List<string> _legacyDevelopments = new List<string>();
@@ -141,6 +170,24 @@ public class SettlementConfig : ScriptableObject
     public string FairyArrivedDevelopment => _fairyArrivedDevelopment;
     public IReadOnlyList<TerritoryExpansionDefinition> Territories => _territories;
     public int TerritoryStartLevel => Mathf.Max(1, _territoryStartLevel);
+    public IReadOnlyList<LevelDevelopment> LevelDevelopments => _levelDevelopments;
+
+    /// <summary>이 발전이 왕국 레벨로 열리는 것이면 그 항목 (아니면 null)</summary>
+    public LevelDevelopment FindLevelDevelopment(string developmentId)
+    {
+        if (string.IsNullOrEmpty(developmentId))
+            return null;
+        foreach (var entry in _levelDevelopments)
+        {
+            if (entry != null && entry.Development == developmentId)
+                return entry;
+        }
+        return null;
+    }
+
+    /// <summary>테스트·설정 도구용: 레벨로 열리는 발전</summary>
+    public void SetupLevelDevelopments(IEnumerable<LevelDevelopment> entries) =>
+        _levelDevelopments = entries != null ? new List<LevelDevelopment>(entries) : new List<LevelDevelopment>();
 
     /// <summary>테스트·설정 도구용: 영토 확장 데이터</summary>
     public void SetupTerritory(IEnumerable<TerritoryExpansionDefinition> territories, int startLevel)

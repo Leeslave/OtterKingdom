@@ -4,7 +4,11 @@ using System.Collections.Generic;
 // holds one entry per item id, in the order the item first showed up.
 public class OfflineReport
 {
+    // Real time away, and the part of it that counted (capped at
+    // OfflineProductionService.MaxCreditedSec).
     public double ElapsedSec;
+    public double CreditedSec;
+    public bool Capped => ElapsedSec > CreditedSec;
     public readonly List<ItemStack> Received = new List<ItemStack>();
     // Harvested or caught but didn't fit in the bag.
     public readonly List<ItemStack> Lost = new List<ItemStack>();

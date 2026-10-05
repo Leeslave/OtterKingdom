@@ -52,7 +52,8 @@ public static class GlobalUISetup
     {
         // 새 이웃의 집을 지으면 농경지 발견 → 개간되지 않은 밭에 가서 직접 치우고 주민과 개간 (개척 기획)
         { "Farm", (SettlementSetup.FarmDiscoverDevelopment, "새 이웃의 집을 지으면 열려요") },
-        { "Fishing", (SettlementSetup.FishingDevelopment, "아직 갈 수 없어요") },
+        // 왕국 Lv.15에 낡은 선착장 발견 → 게시판에서 고치면 열림
+        { "Fishing", (SettlementSetup.FishingDevelopment, "선착장을 고치면 열려요") },
         { "Mine", ("chair", "개간되지 않은 구역") }, // 의자를 만들면 동굴 발견 → 길을 열면 채굴 (개척 기획)
     };
 
@@ -60,6 +61,7 @@ public static class GlobalUISetup
     private static readonly Dictionary<string, int> ZoneLevels = new Dictionary<string, int>
     {
         { "Mine", 2 },
+        { "Fishing", SettlementSetup.FishingLevel },
     };
 
     private static readonly string[] ZoneScenes = { "Assets/Scenes/Plaza.unity", "Assets/Scenes/Farm.unity", "Assets/Scenes/Fishing.unity", "Assets/Scenes/Mine.unity" };

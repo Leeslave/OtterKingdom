@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "감자"
   baseDurationSec: 60
   yieldCount: 3
-  sellPrice: 25
+  sellPrice: 50
   seedType: 1
   initialSeedCount: 5
   spriteTint: {r: 1, g: 1, b: 1, a: 1}

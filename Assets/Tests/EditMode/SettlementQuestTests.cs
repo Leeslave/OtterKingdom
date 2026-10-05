@@ -45,10 +45,10 @@ public class SettlementQuestTests
     [Test]
     public void LockedZoneQuests_NeedTheirDevelopment()
     {
-        // 수확·채굴은 농부·광부가 일하기 시작해야 (밭이 열린 것만으로는 수확할 수 없음)
+        // 수확·채굴·낚시는 농부·광부·낚시꾼이 일하기 시작해야 (밭이 열린 것만으로는 수확할 수 없음)
         Assert.AreEqual(SettlementQuestGate.FarmProductionDevelopment, SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Harvest)));
         Object.DestroyImmediate(_quest);
-        Assert.AreEqual(SettlementQuestGate.FishingDevelopment, SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Catch)));
+        Assert.AreEqual(SettlementQuestGate.FishingProductionDevelopment, SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Catch)), "낚시는 낚시꾼이 일해야");
         Object.DestroyImmediate(_quest);
         Assert.AreEqual(SettlementQuestGate.MineProductionDevelopment, SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.Mine)));
         Object.DestroyImmediate(_quest);

@@ -167,10 +167,14 @@ public partial class SettlementManager : MonoBehaviour
         int level = PlayerLevel;
         if (level != _seenLevel)
         {
+            // 처음 보는 레벨(씬을 연 직후)은 이미 맞춰 둔 것이라 알리지 않음
+            bool levelUp = _seenLevel > 0;
             _seenLevel = level;
             _projectsDirty = true;
             // 레벨이 오르면 숲 개간 기회가 생김
             _territoryVersion++;
+            // 레벨로 열리는 발전 (Lv.15 낚시터 발견 → 선착장 부탁)
+            SyncLevelDevelopments(levelUp);
         }
         if (_projectsDirty)
         {
@@ -327,7 +331,7 @@ public partial class SettlementManager : MonoBehaviour
         }
 
         long now = NowTicks;
-        long end = now + TimeSpan.FromSeconds(construction.DurationSeconds).Ticks;
+        long end = now + TimeSpan.FromSeconds(DevTimers.Duration(construction.DurationSeconds)).Ticks;
         _workerWaitSeconds = 0f;
         Settlement.StartJob(request.RequestId, construction.ConstructionId, now, end, waitingForWorker: true);
         OnConstructionStarted?.Invoke(request);
@@ -656,7 +660,7 @@ public partial class SettlementManager : MonoBehaviour
 
         PayCost(task.RequiredGold, task.RequiredItems);
         long now = NowTicks;
-        Settlement.StartTask(task.TaskId, ids, now, now + TimeSpan.FromSeconds(task.DurationSeconds).Ticks);
+        Settlement.StartTask(task.TaskId, ids, now, now + TimeSpan.FromSeconds(DevTimers.Duration(task.DurationSeconds)).Ticks);
         OnTaskStarted?.Invoke(task);
         SaveRequested?.Invoke();
         return TaskStartResult.Started;
@@ -806,7 +810,7 @@ public partial class SettlementManager : MonoBehaviour
         otter != null && SettlementRegionRules.CanAssign(otter, Settlement);
 
     /// <summary>
-    /// 이 장소(ZoneId, 예: Mine)에서 생산할 수 있는지. 개간 지역이 없는 장소(낚시터)는 늘 됨.
+    /// 이 장소(ZoneId, 예: Mine)에서 생산할 수 있는지. 개간 지역이 없는 장소는 늘 됨.
     /// 정착 진행을 아직 불러오지 않았으면 false (불러온 뒤 다시 봄)
     /// </summary>
     public bool CanProduceIn(string zoneId)
@@ -1068,6 +1072,9 @@ public partial class SettlementManager : MonoBehaviour
     /// <summary>준비된 메인 발전을 모두 끝냈는지</summary>
     public bool AreAllMainDone => SettlementBoardRules.AreAllMainDone(_config, Settlement);
 
+    /// <summary>왕국 레벨이 모자라 아직 안 보이는 다음 메인 부탁 (없으면 null). level = 열리는 레벨</summary>
+    public BoardRequestDefinition FindLevelLockedRequest(out int level) => SettlementRules.FindLevelLocked(_config, Settlement, out level);
+
     #endregion
 
     #region 건설 기록 (퀘스트)
@@ -1200,7 +1207,11 @@ public partial class SettlementManager : MonoBehaviour
         MigrateVersion(fairyShopSeen);
         MigrateTerritory();
         ReconcileRecords();
+        SyncLevelDevelopments(false);
         IsLoaded = true;
+        // 개발 메뉴 Fast Timers가 켜져 있으면 세이브에 남은 긴 건설·작업도 5초 안으로
+        if (DevTimers.Fast)
+            Settlement.ShortenTimers(NowTicks, TimeSpan.FromSeconds(DevTimers.FastSeconds));
         if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
             FinishJob();
         FinishDueTasks();
@@ -1233,6 +1244,27 @@ public partial class SettlementManager : MonoBehaviour
         // 파견은 했는데 파견 발전(요정 방문 예약)이 없는 세이브: 한 번 맞춤
         foreach (var otter in SettlementMigration.ReconcileAssignDevelopments(_config, Settlement))
             Debug.Log($"[SettlementManager] 기록에 맞춰 '{otter.DisplayName}' 파견 발전 '{otter.AssignDevelopment}'을(를) 열었습니다.");
+        // 옛 세이브에 따로 열어 준 장소(낚시터)를 짓는 부탁: 이미 열려 있으니 조용히 끝냄 (선착장을 다시 짓지 않게)
+        completed.Clear();
+        SettlementMigration.ReconcileLegacyConstructions(_config, Settlement, completed);
+        foreach (var request in completed)
+            Debug.Log($"[SettlementManager] 옛 세이브: 이미 열린 '{request.Construction.UnlockResultId}'의 부탁 '{request.RequestId}'을(를) 끝낸 것으로 맞췄습니다.");
+    }
+
+    private readonly List<LevelDevelopment> _openedByLevel = new List<LevelDevelopment>();
+
+    // 왕국 레벨에 닿은 발전을 연다. notify: 플레이 중 레벨이 올라 열렸으면 화면 위쪽 알림
+    private void SyncLevelDevelopments(bool notify)
+    {
+        SettlementRules.UnlockLevelDevelopments(_config, Settlement, PlayerLevel, _openedByLevel);
+        if (_openedByLevel.Count == 0)
+            return;
+        if (notify)
+        {
+            foreach (var entry in _openedByLevel)
+                GameNotices.Post(new GameNotice(entry.Notice));
+        }
+        SaveRequested?.Invoke();
     }
 
     private void GrantStartingItems()
@@ -1266,6 +1298,13 @@ public partial class SettlementManager : MonoBehaviour
     {
         if (Settlement.Job != null)
             FinishJob();
+    }
+
+    /// <summary>진행 중인 건설·주민 작업이 길어도 DevTimers.FastSeconds 안에 끝나게 줄인다 (개발 메뉴 Fast Timers를 켤 때)</summary>
+    public void DevShortenTimers()
+    {
+        if (IsLoaded && Settlement.ShortenTimers(NowTicks, TimeSpan.FromSeconds(DevTimers.FastSeconds)))
+            SaveRequested?.Invoke();
     }
 
     /// <summary>진행 중인 주민 작업을 모두 바로 끝낸다 (테스트용)</summary>

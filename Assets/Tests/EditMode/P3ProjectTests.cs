@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEditor;
@@ -505,7 +505,8 @@ public class P3ProjectTests
     {
         Profile(7);
         var settlement = HallDone();
-        settlement.StartJob("req_other", "con_other", SettlementManager.NowTicks, SettlementManager.NowTicks + 1000);
+        // 불러오는 동안 끝나지 않게 넉넉히 (1000틱 = 0.1ms라 느린 실행에서는 불러올 때 이미 끝나 있었음)
+        settlement.StartJob("req_other", "con_other", SettlementManager.NowTicks, SettlementManager.NowTicks + System.TimeSpan.TicksPerHour);
         var manager = Manager(Saved(settlement), RichWithItems());
         manager.TryDeliverAll(_supply);
 

@@ -18,5 +18,5 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 518282ed563ba1c4f87280f830653a3e, type: 3}
   _category: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
   _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
-  _sellPrice: 15
+  _sellPrice: 50
   _maxStack: 999

@@ -24,6 +24,7 @@ public static partial class SettlementSetup
     internal const string FarmDiscoverDevelopment = "house_2";
     private const string FarmPlayerClearDevelopment = "farm_path_open";
     internal const string FarmOperationalDevelopment = "farmland";
+    private const string FishingRegionPath = DataFolder + "/Regions/Region_fishing.asset";
 
     // (ID, 제목, 설명, 끝났을 때 안내, 필요한 주민 수, 초, 필요 발전, 결과 발전, 골드, 목재, 돌)
     private static readonly (string id, string title, string description, string message, int workers, float seconds,
@@ -50,6 +51,9 @@ public static partial class SettlementSetup
         // 밭 꾸미기 구역은 처음부터 열려 있던 구역이라 그대로 둠
         (FarmRegionPath, "region_farm", "밭", FarmZonePath, FarmDiscoverDevelopment, FarmPlayerClearDevelopment, FarmOperationalDevelopment,
             SettlementQuestGate.FarmProductionDevelopment, new[] { "task_farm_till" }, null, null),
+        // 낚시터: 직접 치우는 단계·정비 없이 선착장(건설)이 끝나면 운영. 낚시꾼을 배치하고 낚시터 안내를 끝내면 낚시
+        (FishingRegionPath, "region_fishing", "낚시터", FishingZonePath, FishingFoundDevelopment, "", FishingDevelopment,
+            SettlementQuestGate.FishingProductionDevelopment, new string[0], null, null),
     };
 
     // 광산 정비 현장 (광산 씬 월드 좌표): 치운 자리 가운데에서 일하고, 화면 아래 길로 들어오고 나감

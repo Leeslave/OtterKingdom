@@ -20,7 +20,9 @@ using System.Linq;
 // Mining (pickaxe level >= offlineUnlockPickaxeLevel): the same, one find
 // per OfflineSecPerFind rolled diamond/stone at the pickaxe's diamond chance.
 //
-// All three run offlineSlowdown times slower than online, with no time cap.
+// All three run offlineSlowdown times slower than online, and an absence
+// counts for at most MaxCreditedSec (8 hours): leaving longer, or pushing the
+// device clock forward, gives no more than that.
 //
 // Otter visits (always on): one roll per rollIntervalSec, each a
 // visitChancePerRoll chance that a random otter came by. Only reported for
@@ -31,6 +33,11 @@ using System.Linq;
 // reported.
 public class OfflineProductionService
 {
+    // Design doc 8.1: one absence earns at most 8 hours of offline production.
+    public const double MaxCreditedSec = 8 * 3600;
+
+    public static double Credited(double elapsedSec) => Math.Min(Math.Max(0, elapsedSec), MaxCreditedSec);
+
     private readonly Dictionary<string, CropDefinition> cropsById;
     private readonly FarmBalanceData farmBalance;
     private readonly FishingBalanceData fishingBalance;
@@ -67,16 +74,18 @@ public class OfflineProductionService
         return count;
     }
 
-    // farmAllowed / miningAllowed: whether that zone's specialist (farmer /
-    // miner) is working. Until then the zone produces nothing offline either.
+    // farmAllowed / miningAllowed / fishingAllowed: whether that zone's
+    // specialist (farmer / miner / fisher) is working. Until then the zone
+    // produces nothing offline either.
     public OfflineReport Run(SaveData save, double elapsedSec, IOfflineBag bag,
-        bool farmAllowed = true, bool miningAllowed = true)
+        bool farmAllowed = true, bool miningAllowed = true, bool fishingAllowed = true)
     {
-        var report = new OfflineReport { ElapsedSec = elapsedSec };
+        var report = new OfflineReport { ElapsedSec = elapsedSec, CreditedSec = Credited(elapsedSec) };
         if (elapsedSec <= 0) return report;
+        elapsedSec = report.CreditedSec;
 
         if (farmAllowed && IsFarmUnlocked(save)) RunFarm(save, elapsedSec, bag, report);
-        if (IsFishingUnlocked(save)) RunFishing(save, elapsedSec, bag, report);
+        if (fishingAllowed && IsFishingUnlocked(save)) RunFishing(save, elapsedSec, bag, report);
         if (miningAllowed && IsMiningUnlocked(save)) RunMining(save, elapsedSec, bag, report);
         RunOtterVisits(save, elapsedSec, report);
         return report;

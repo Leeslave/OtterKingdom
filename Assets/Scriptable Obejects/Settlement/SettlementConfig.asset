@@ -27,6 +27,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09ada72536705ff4c80b2fc67cae7e65, type: 2}
   - {fileID: 11400000, guid: 01434be3ebf84ed69c1bbf9c0735c9c9, type: 2}
   - {fileID: 11400000, guid: d77a0cb424b64937aa0cf04256be1d97, type: 2}
+  - {fileID: 11400000, guid: bcd9a0547c2a0104b8e28dcc3158fe61, type: 2}
   - {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
   - {fileID: 11400000, guid: b93ad005e0c001b4da2eb2e220f88b21, type: 2}
   _requests:
@@ -42,6 +43,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b0c5e3237c4cd44781f8b663b77d1fd, type: 2}
   - {fileID: 11400000, guid: c472e21e218891c46b9dd0cd9e751c05, type: 2}
   - {fileID: 11400000, guid: c6f96170303a4bd4982c3aaf48e304fd, type: 2}
+  - {fileID: 11400000, guid: c92a7ca91fa6d2940ac6a23db7790aaa, type: 2}
+  - {fileID: 11400000, guid: 2ae5fd9d960882b49b575e73c37f13b1, type: 2}
   - {fileID: 11400000, guid: 2f27f1438276c04468987c378407e830, type: 2}
   - {fileID: 11400000, guid: ef7a37d086c14f54fa69de04193905d7, type: 2}
   _guestbookEntries:
@@ -58,6 +61,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c55a76c841f40cfa32003f79ec97f27, type: 2}
   - {fileID: 11400000, guid: 79e011a8aa14471784afe3150d0631f9, type: 2}
   - {fileID: 11400000, guid: 1fc93d1bcae64e40b86ef6f36072281a, type: 2}
+  - {fileID: 11400000, guid: bad0db393e76753408a12ce5c51b9058, type: 2}
+  - {fileID: 11400000, guid: 8165141d3da63344a9e52ede60f41bef, type: 2}
+  - {fileID: 11400000, guid: c7ca3de4b2560e14aa9fc23d9169a91b, type: 2}
   - {fileID: 11400000, guid: e24b807c843a7b144899ce74d8f0da96, type: 2}
   - {fileID: 11400000, guid: f777f024e797f0147ab08362820dec2f, type: 2}
   - {fileID: 11400000, guid: a7785037f3a5d5848903426ca96319dc, type: 2}
@@ -75,6 +81,7 @@ MonoBehaviour:
   _regions:
   - {fileID: 11400000, guid: 64bd9c77f54f5f64f904b9a057f13bad, type: 2}
   - {fileID: 11400000, guid: 4dcd2c8c3b284983a4d03fce7db21aff, type: 2}
+  - {fileID: 11400000, guid: 6d13b4bce695b524882fb607f393c1bf, type: 2}
   _tasks:
   - {fileID: 11400000, guid: 13f7193403b0af742b37211ed0380205, type: 2}
   - {fileID: 11400000, guid: d50f99438fa84966b9a67bd2acc18f2b, type: 2}
@@ -133,6 +140,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e025a2e26d1c3f449b857675c47ef80, type: 2}
   - {fileID: 11400000, guid: fc6ab743ea060434ca4d5abbbee347f0, type: 2}
   _territoryStartLevel: 6
+  _levelDevelopments:
+  - _level: 15
+    _development: fishing_found
+    _notice: "\uC655\uAD6D Lv.15! \uBABD\uC2E4\uC774\uAC00 \uBC14\uB2F7\uAC00\uC5D0\uC11C
+      \uB0A1\uC740 \uC120\uCC29\uC7A5\uC744 \uCC3E\uC558\uC5B4\uC694.\n\uAC8C\uC2DC\uD310\uC5D0\uC11C
+      \uC120\uCC29\uC7A5\uC744 \uACE0\uCCD0 \uC918\uC694."
   _legacyDevelopments:
   - fishing_dock
   _startingItems:

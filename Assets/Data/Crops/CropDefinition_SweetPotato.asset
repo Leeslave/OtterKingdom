@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "고구마"
   baseDurationSec: 90
   yieldCount: 3
-  sellPrice: 35
+  sellPrice: 75
   seedType: 1
   initialSeedCount: 5
   spriteTint: {r: 1, g: 1, b: 1, a: 1}

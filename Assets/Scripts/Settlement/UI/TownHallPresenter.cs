@@ -160,6 +160,8 @@ public class TownHallPresenter : MonoBehaviour
             _hall.ShowAllDone(AllDoneMessage);
         else if (_hallTarget != null)
             _hall.ShowNext(_hallTarget.Title, _hallTarget.Description, true);
+        else if (_manager.FindLevelLockedRequest(out int lockedLevel) is BoardRequestDefinition locked)
+            _hall.ShowNext(locked.Title, $"왕국 Lv.{lockedLevel}에 열려요. 퀘스트로 레벨을 올려요.", false);
         else
             _hall.ShowNext("다음 발전을 준비하고 있어요", "진행 중인 일이 끝나면 새 부탁이 열려요.", false);
         ShowTerritory();

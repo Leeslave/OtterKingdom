@@ -20,5 +20,6 @@ MonoBehaviour:
   _sceneName: Fishing
   _isAvailable: 1
   _requiredDevelopment: fishing_dock
-  _developmentLockedSubtitle: "\uC544\uC9C1 \uAC08 \uC218 \uC5C6\uC5B4\uC694"
+  _developmentLockedSubtitle: "\uC120\uCC29\uC7A5\uC744 \uACE0\uCE58\uBA74 \uC5F4\uB824\uC694"
+  _requiredLevel: 15
   _sortOrder: 2

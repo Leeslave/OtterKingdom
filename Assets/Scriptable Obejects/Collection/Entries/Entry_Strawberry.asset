@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_Strawberry
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: crop_strawberry
+  _tab: {fileID: 11400000, guid: dcb3b9557d9798d4290580afb291c277, type: 2}
+  _displayName: 
+  _sortOrder: 4
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 56bd4ec10e014e440b307803d564d9af, type: 3}
+  _tagline: "\uC0C8\uCF64\uB2EC\uCF64\uD55C \uBE68\uAC04 \uC5F4\uB9E4."
+  _description: "\uC798 \uC775\uC740 \uB538\uAE30\uB97C \uBCF4\uBA74 \uD574\uB2EC\uB4E4\uC774
+    \uC11C\uB85C \uBA39\uACA0\uB2E4\uACE0 \uB2E4\uD248\uC694."
+  _extraValue: "\uBC2D"
+  _linkedItem: {fileID: 11400000, guid: 52b044dd060e85f4a81743b1db156a2d, type: 2}
