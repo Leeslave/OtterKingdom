@@ -6,19 +6,25 @@ using UnityEngine.Rendering;
 using static CollectionSetup;
 
 /// <summary>
-/// 전문 해달(광부·농부)과 밭 현장 개간:
-/// - 광부의 광장 프리팹 (광산의 광부 그림·클립 그대로, 광장 해달처럼 걷게)
+/// 전문 해달(광부·농부·낚시꾼)과 밭 현장 개간:
+/// - 광부·낚시꾼의 광장 프리팹 (광산·낚시터의 그림·클립 그대로, 광장 해달처럼 걷게)
 /// - 밭 씬의 개간 현장: 잡목·바위(직접 치움) + 주민 정비 현장 + 개간·농부 배치 전에는 밭·농부를 숨기는 ZoneClearingView
-/// - 한 번에 적용하는 메뉴 (Tools/Settlement/Apply Specialist Progression)
+/// - 낚시터 씬: 선착장을 고치고 낚시꾼을 배치하기 전에는 낚시 해달·낚시 자리를 숨기는 ZoneClearingView
+/// - 한 번에 적용하는 메뉴 (Tools/Settlement/Apply Specialist Progression, 낚시터만: Apply Fishing Dock)
 /// 데이터·프리팹·씬은 이미 저장소에 들어 있다. 이 메뉴는 표를 고친 뒤 다시 만들 때 쓴다 (여러 번 실행해도 결과가 같음).
 /// </summary>
 public static partial class SettlementSetup
 {
     private const string MinerPrefabPath = "Assets/Prefabs/Mine/MinerOtter.prefab";
     private const string MinerPlazaPrefabPath = PlazaPrefabFolder + "/PlazaOtter_Miner.prefab";
-    // 광부 그림(키 약 1.52)을 광장 해달 키(1.67)에 맞춤
+    private const string FisherPrefabPath = "Assets/Prefabs/Fishing/FishingOtter.prefab";
+    private const string FisherPlazaPrefabPath = PlazaPrefabFolder + "/PlazaOtter_Fisher.prefab";
+    // 광부·낚시꾼 그림(둘 다 PPU 145, 키 약 1.52)을 광장 해달 키(1.67)에 맞춤
     private const float MinerPlazaScale = 1.1f;
     private static readonly string[] MinerWalkClips = { "WalkRight", "WalkLeft", "WalkDown", "WalkUp" };
+
+    private const string FishingScenePath = "Assets/Scenes/Fishing.unity";
+    private const string FishingDockName = "FishingDock";
 
     private const string FarmScenePath = "Assets/Scenes/Farm.unity";
     private const string FarmClearingName = "FarmClearing";
@@ -49,32 +55,66 @@ public static partial class SettlementSetup
             return;
 
         BuildMinerPlazaPrefab();
+        BuildFisherPlazaPrefab();
         CollectionSetup.CreateData();
         CreateData();
         QuestSetup.CreateData();
         PlaceMine();
         PlaceFarm();
-        Debug.Log("[SettlementSetup] 전문 해달 진행 적용 완료: 광부 광장 프리팹, 도감, 정착 데이터, 퀘스트, 광산·밭 현장");
+        PlaceFishing();
+        Debug.Log("[SettlementSetup] 전문 해달 진행 적용 완료: 광부·낚시꾼 광장 프리팹, 도감, 정착 데이터, 퀘스트, 광산·밭·낚시터 현장");
     }
 
-    #region 광부 광장 프리팹
+    // 낚시터만 (Lv.15 선착장 → 낚시꾼 배치): 낚시꾼 광장 프리팹 → 정착 데이터 → 낚시터 씬
+    [MenuItem("Tools/Settlement/Apply Fishing Dock")]
+    public static void ApplyFishingDock()
+    {
+        if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            return;
+
+        BuildFisherPlazaPrefab();
+        CreateData();
+        SetFishingZone();
+        PlaceFishing();
+        Debug.Log("[SettlementSetup] 낚시터 적용 완료: 낚시꾼 광장 프리팹, 정착 데이터(선착장·낚시꾼·지역·Lv.15), 이동 화면 조건, 낚시터 씬");
+    }
+
+    // 이동 화면의 낚시터: 왕국 Lv.15 + 선착장 (전체는 Build Global UI가 같은 값으로 만듦)
+    private static void SetFishingZone()
+    {
+        var zone = AssetDatabase.LoadAssetAtPath<ZoneDefinition>(FishingZonePath);
+        var so = new SerializedObject(zone);
+        so.FindProperty("_requiredLevel").intValue = FishingLevel;
+        so.FindProperty("_requiredDevelopment").stringValue = FishingDevelopment;
+        so.FindProperty("_developmentLockedSubtitle").stringValue = "선착장을 고치면 열려요";
+        so.ApplyModifiedPropertiesWithoutUndo();
+        AssetDatabase.SaveAssets();
+    }
+
+    #region 광부·낚시꾼 광장 프리팹
 
     // 광산의 광부 프리팹(MinerOtter)이 쓰는 클립(SpriteFrameAnimator: 오른쪽/왼쪽/앞/뒤 걷기)을 그대로 쓰는 광장 해달.
     // OtterVisualController가 클립 이름으로 걷게 한다. 서 있을 때는 앞을 봄 (앞으로 걷기 첫 칸)
     [MenuItem("Tools/Settlement/Build Miner Plaza Otter")]
-    public static void BuildMinerPlazaPrefab()
+    public static void BuildMinerPlazaPrefab() => BuildSpecialistPlazaPrefab(MinerPrefabPath, MinerPlazaPrefabPath, "광부", "광산 씬 설정");
+
+    // 낚시터의 낚시 해달 프리팹(FishingOtter)도 같은 이름의 걷기 클립을 가져서 같은 방식
+    [MenuItem("Tools/Settlement/Build Fisher Plaza Otter")]
+    public static void BuildFisherPlazaPrefab() => BuildSpecialistPlazaPrefab(FisherPrefabPath, FisherPlazaPrefabPath, "낚시꾼", "낚시터 씬 설정");
+
+    private static void BuildSpecialistPlazaPrefab(string sourcePrefabPath, string plazaPrefabPath, string label, string setupName)
     {
-        var minePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(MinerPrefabPath);
-        var mineFrames = minePrefab != null ? minePrefab.GetComponent<SpriteFrameAnimator>() : null;
-        if (mineFrames == null)
+        var sourcePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(sourcePrefabPath);
+        var sourceAnimator = sourcePrefab != null ? sourcePrefab.GetComponent<SpriteFrameAnimator>() : null;
+        if (sourceAnimator == null)
         {
-            Debug.LogError($"[SettlementSetup] 광부 프리팹에 SpriteFrameAnimator가 없습니다: {MinerPrefabPath} (광산 씬 설정을 먼저 실행하세요)");
+            Debug.LogError($"[SettlementSetup] {label} 프리팹에 SpriteFrameAnimator가 없습니다: {sourcePrefabPath} ({setupName}을 먼저 실행하세요)");
             return;
         }
-        var sourceClips = new SerializedObject(mineFrames).FindProperty("clips");
+        var sourceClips = new SerializedObject(sourceAnimator).FindProperty("clips");
 
-        bool exists = AssetDatabase.LoadAssetAtPath<GameObject>(MinerPlazaPrefabPath) != null;
-        var root = exists ? PrefabUtility.LoadPrefabContents(MinerPlazaPrefabPath) : new GameObject("PlazaOtter_Miner");
+        bool exists = AssetDatabase.LoadAssetAtPath<GameObject>(plazaPrefabPath) != null;
+        var root = exists ? PrefabUtility.LoadPrefabContents(plazaPrefabPath) : new GameObject(System.IO.Path.GetFileNameWithoutExtension(plazaPrefabPath));
         var sortingGroup = GetOrAdd<SortingGroup>(root);
         GetOrAdd<OtterWanderAgent>(root);
         var visual = GetOrAdd<OtterVisualController>(root);
@@ -85,7 +125,7 @@ public static partial class SettlementSetup
             body = new GameObject("Visual").transform;
             body.SetParent(root.transform, false);
         }
-        // 광부 그림은 발밑 피벗이라 루트 = 발밑
+        // 광부·낚시꾼 그림은 발밑 피벗이라 루트 = 발밑
         body.localPosition = Vector3.zero;
         body.localScale = new Vector3(MinerPlazaScale, MinerPlazaScale, 1f);
         var oldAnimator = body.GetComponent<Animator>();
@@ -103,7 +143,7 @@ public static partial class SettlementSetup
             var source = FindClip(sourceClips, clipName);
             if (source == null)
             {
-                Debug.LogError($"[SettlementSetup] 광부 클립이 없습니다: {clipName}");
+                Debug.LogError($"[SettlementSetup] {label} 클립이 없습니다: {clipName}");
                 continue;
             }
             var sourceFrames = source.FindPropertyRelative("frames");
@@ -126,13 +166,13 @@ public static partial class SettlementSetup
         so.FindProperty("spriteFacesRight").boolValue = true;
         so.ApplyModifiedPropertiesWithoutUndo();
 
-        PrefabUtility.SaveAsPrefabAsset(root, MinerPlazaPrefabPath);
+        PrefabUtility.SaveAsPrefabAsset(root, plazaPrefabPath);
         if (exists)
             PrefabUtility.UnloadPrefabContents(root);
         else
             Object.DestroyImmediate(root);
         AssetDatabase.SaveAssets();
-        Debug.Log($"[SettlementSetup] 광부 광장 해달: {MinerPlazaPrefabPath}");
+        Debug.Log($"[SettlementSetup] {label} 광장 해달: {plazaPrefabPath}");
     }
 
     private static SerializedProperty FindClip(SerializedProperty clips, string clipName)
@@ -222,6 +262,44 @@ public static partial class SettlementSetup
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
         Debug.Log("[SettlementSetup] 밭 개간 현장 배치 완료");
+    }
+
+    #endregion
+
+    #region 낚시터 (선착장 · 낚시꾼 배치)
+
+    // 낚시터 씬: 치울 장애물은 없음. 선착장을 고치고(광장 게시판) 낚시꾼을 광장에서 배치하기 전에는
+    // 낚시 해달·낚시 자리를 숨기고 "광장에서 첨벙이를 만나 낚시터에 배치해 주세요" 안내. 배치하면 나타나고 낚시터 안내 → 낚시
+    [MenuItem("Tools/Settlement/Setup Fishing Dock")]
+    public static void PlaceFishing()
+    {
+        if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            return;
+
+        var scene = EditorSceneManager.OpenScene(FishingScenePath, OpenSceneMode.Single);
+        var fisher = Object.FindAnyObjectByType<FishingOtterController>(FindObjectsInactive.Include);
+        var spot = Object.FindAnyObjectByType<FishingSpotView>(FindObjectsInactive.Include);
+        if (fisher == null || spot == null)
+        {
+            Debug.LogError("[SettlementSetup] 낚시터 씬에 FishingOtterController 또는 FishingSpotView가 없습니다.");
+            return;
+        }
+
+        var old = GameObject.Find(FishingDockName);
+        if (old != null)
+            Object.DestroyImmediate(old);
+        var root = new GameObject(FishingDockName);
+
+        var view = root.AddComponent<ZoneClearingView>();
+        var so = new SerializedObject(view);
+        so.FindProperty("_zone").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ZoneDefinition>(FishingZonePath);
+        SetList(so.FindProperty("_obstacles"), new List<ClearingObstacleView>());
+        SetList(so.FindProperty("_hiddenUntilCleared"), new List<GameObject> { fisher.gameObject, spot.gameObject });
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        EditorSceneManager.MarkSceneDirty(scene);
+        EditorSceneManager.SaveScene(scene);
+        Debug.Log("[SettlementSetup] 낚시터 선착장 배치 완료");
     }
 
     #endregion

@@ -318,7 +318,9 @@ public class GameUI : MonoBehaviour
 
         var modal = OpenModal("자리를 비운 동안", out var content);
         offlineReportModal = modal;
-        CreateLabel(content, $"{FormatDuration(report.ElapsedSec)} 동안 있었던 일이에요.");
+        CreateLabel(content, report.Capped
+            ? $"{FormatDuration(report.ElapsedSec)} 동안 자리를 비웠어요.\n해달들은 최대 {report.CreditedSec / 3600:0}시간까지 일해 둬요."
+            : $"{FormatDuration(report.ElapsedSec)} 동안 있었던 일이에요.");
 
         if (report.SettlementNews.Count > 0) CreateLabel(content, "마을 소식\n" + string.Join("\n", report.SettlementNews));
 

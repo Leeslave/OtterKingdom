@@ -119,4 +119,30 @@ public static class SettlementMigration
                 completed?.Add(request);
         }
     }
+
+    /// <summary>
+    /// 옛 세이브에 부탁과 따로 열어 준 발전(SettlementConfig.LegacyDevelopments, 예: 낚시터 fishing_dock)을 결과로 짓는 부탁이
+    /// 안 끝나 있으면 조용히 끝낸다 → 이미 쓰던 장소를 다시 짓게 하지 않는다. 그 부탁으로 찾아오는 해달도 같이 온다
+    /// </summary>
+    /// <param name="completed">이번에 끝낸 부탁 (로그용, null이면 모으지 않음)</param>
+    public static void ReconcileLegacyConstructions(SettlementConfig config, Settlement settlement, List<BoardRequestDefinition> completed = null)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+
+        completed?.Clear();
+        foreach (var request in config.Requests)
+        {
+            var construction = request != null ? request.Construction : null;
+            if (construction == null || settlement.IsCompleted(request.RequestId) || string.IsNullOrEmpty(construction.UnlockResultId))
+                continue;
+            bool legacy = false;
+            foreach (var development in config.LegacyDevelopments)
+                legacy |= development == construction.UnlockResultId;
+            if (legacy && settlement.HasDevelopment(construction.UnlockResultId) && SettlementRules.ApplyCompletion(request, settlement))
+                completed?.Add(request);
+        }
+    }
 }

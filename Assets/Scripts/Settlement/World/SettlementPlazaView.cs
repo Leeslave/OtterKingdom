@@ -142,7 +142,12 @@ public class SettlementPlazaView : MonoBehaviour
         var job = _manager.Settlement.Job;
         var site = job != null ? FindSite(job.ConstructionId) : null;
         if (site == null)
+        {
+            // 현장이 광장에 없는 공사(낚시터 선착장): 일꾼이 걸어갈 곳이 없으니 기다리지 않고 바로 시작
+            if (job != null && job.WaitingForWorker)
+                _manager.BeginJobWork();
             return;
+        }
         // 일할 해달이 현장에 도착하면 그때부터 공사 시간이 흐름
         if (job.WaitingForWorker && IsWorkerAtSite())
             _manager.BeginJobWork();

@@ -410,6 +410,49 @@ public partial class Settlement
         return job;
     }
 
+    /// <summary>
+    /// 개발용: 진행 중인 건설·주민 작업이 지금부터 limit 안에 끝나게 줄인다 (진행 비율은 그대로).
+    /// 일할 해달을 기다리는 건설은 걸리는 시간만 줄인다 (도착하면 그 시간부터 잼)
+    /// </summary>
+    /// <returns>줄인 것이 있으면 true</returns>
+    public bool ShortenTimers(long nowUtcTicks, TimeSpan limit)
+    {
+        long max = Math.Max(0, limit.Ticks);
+        bool changed = false;
+        if (Job != null)
+        {
+            if (Job.WaitingForWorker)
+            {
+                if (Job.Duration.Ticks > max)
+                {
+                    Job = new ConstructionJob(Job.RequestId, Job.ConstructionId, Job.StartUtcTicks, Job.StartUtcTicks + max, waitingForWorker: true);
+                    changed = true;
+                }
+            }
+            else if (Job.EndUtcTicks - nowUtcTicks > max)
+            {
+                var (start, end) = Shorten(Job.Progress(nowUtcTicks), nowUtcTicks, max);
+                Job = new ConstructionJob(Job.RequestId, Job.ConstructionId, start, end);
+                changed = true;
+            }
+        }
+        foreach (var job in new List<SettlementTaskJob>(_tasks.Values))
+        {
+            if (job.EndUtcTicks - nowUtcTicks <= max)
+                continue;
+            var (start, end) = Shorten(job.Progress(nowUtcTicks), nowUtcTicks, max);
+            _tasks[job.TaskId] = new SettlementTaskJob(job.TaskId, job.OtterIds, start, end);
+            changed = true;
+        }
+        if (changed)
+            OnChanged?.Invoke();
+        return changed;
+    }
+
+    // 진행 비율은 그대로 두고 전체 시간만 max로 (막대가 뒤로 가지 않게)
+    private static (long start, long end) Shorten(float progress, long nowUtcTicks, long max) =>
+        (nowUtcTicks - (long)(progress * max), nowUtcTicks + (long)((1f - progress) * max));
+
     public void SetGatherReady(string pointId, long readyUtcTicks)
     {
         if (string.IsNullOrEmpty(pointId))

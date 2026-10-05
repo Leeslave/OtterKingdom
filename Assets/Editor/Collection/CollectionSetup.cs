@@ -44,6 +44,8 @@ public static class CollectionSetup
             "달콤한 보랏빛 뿌리채소.", "구우면 꿀처럼 달콤해져요.", "밭"),
         ("Entry_Cucumber", "crop_cucumber", "Tab_Vegetable", "", "Farming/오이", "", "SIL_Cucumber",
             "시원하고 아삭한 여름 채소.", "더운 날 해달들의 간식이에요.", "밭"),
+        ("Entry_Strawberry", "crop_strawberry", "Tab_Vegetable", "", "Farming/딸기", "", "SIL_Strawberry",
+            "새콤달콤한 빨간 열매.", "잘 익은 딸기를 보면 해달들이 서로 먹겠다고 다퉈요.", "밭"),
         ("Entry_Mackerel", "fish_mackerel", "Tab_Fish", "", "Fishing/고등어", "", "SIL_Mackerel",
             "푸른 줄무늬를 가진 바다 물고기.", "은빛 배를 반짝이며 바닷속을 헤엄쳐요.", "바다 낚시터"),
         ("Entry_OtterFarmer", "otter_farmer", "Tab_Otter", "농부 해달", "", "ICON_Otter_Farmer", "SIL_Otter",

@@ -28,13 +28,18 @@ public static partial class SettlementSetup
     private const string GemPath = "Assets/Scriptable Obejects/Gem.asset";
     private const string MineZonePath = "Assets/Scriptable Obejects/Navigation/Zone_Mine.asset";
     private const string FarmZonePath = "Assets/Scriptable Obejects/Navigation/Zone_Farm.asset";
+    private const string FishingZonePath = "Assets/Scriptable Obejects/Navigation/Zone_Fishing.asset";
     private const string PlazaPrefabFolder = "Assets/Prefabs/Plaza";
 
     // 왕국 단계 이름 (상단바 아래 칩). 4 = 마을회관을 지으면 (P2)
     private static readonly string[] StageNames = { "빈터", "첫 정착", "작은 정착지", "자급 시작", "작은 마을" };
 
-    // 옛 세이브에 부탁과 별도로 열어 줄 발전 (아직 부탁이 없는 낚시터)
+    // 낚시터: 왕국 Lv.15에 몽실이가 낡은 선착장을 발견(fishing_found) → 선착장 고치기(건설 해달) → 낚시꾼 해달 방문 → 광장에서 배치
+    // fishing_dock은 정착 진행 전 옛 세이브에도 따로 열어 줌 (그때부터 쓰던 낚시터를 잠그지 않게)
     internal const string FishingDevelopment = "fishing_dock";
+    internal const string FishingFoundDevelopment = "fishing_found";
+    internal const int FishingLevel = 15;
+    private const string FishingFoundNotice = "왕국 Lv.15! 몽실이가 바닷가에서 낡은 선착장을 찾았어요.\n게시판에서 선착장을 고쳐 줘요.";
 
     // (에셋, ID, 이름, 얼굴 아이콘(Art/Settlement 또는 Art/Otter), 광장 프리팹, 건설 해달, 처음 왔을 때 방명록)
     // 광부·농부: 광장 그림은 광산·밭에서 쓰는 그림 그대로 (광부 = SpecialistOtterSetup이 만드는 PlazaOtter_Miner, 농부 = 농부 모습의 PlazaOtter)
@@ -46,6 +51,8 @@ public static partial class SettlementSetup
         ("Otter_Builder", "otter_builder", "뚝딱이", "ICON_Otter_Builder", null, true, "gb_builder_arrival"),
         ("Otter_Miner", "otter_miner", "깡깡이", "ICON_Otter_Miner", "PlazaOtter_Miner", false, "gb_miner_arrival"),
         ("Otter_Farmer", "otter_farmer", "새싹이", "ICON_Otter_Farmer", "PlazaOtter", false, "gb_farmer_arrival"),
+        // 낚시꾼: 광장 그림은 낚시터 해달 그림 그대로 (BuildFisherPlazaPrefab이 만드는 PlazaOtter_Fisher)
+        ("Otter_Fisher", "otter_fisher", "첨벙이", "ICON_Otter_Fisher", "PlazaOtter_Fisher", false, "gb_fisher_arrival"),
         // 관리 해달 (P2): 게시판을 보강하면 찾아와 게시판 관리를 맡음. 그림은 임시 (물감이 그림을 물들인 것 — SettlementSetup.P2)
         ("Otter_Receptionist", ReceptionistOtterId, "또박이", ClerkPortraitName, "PlazaOtter_Clerk", false, "gb_receptionist_arrival"),
     };
@@ -56,6 +63,7 @@ public static partial class SettlementSetup
     {
         ("otter_miner", MineRegionPath, "Entry_OtterMiner", "광산 소식을 듣고 왔어요!\n광산에서 일하고 싶어요."),
         ("otter_farmer", FarmRegionPath, "Entry_OtterFarmer", "밭이 생겼다고 들었어요!\n밭에서 일하고 싶어요."),
+        ("otter_fisher", FishingRegionPath, "Entry_OtterFisher", "선착장을 고쳤다고 들었어요!\n낚시터에서 일하고 싶어요."),
     };
 
     // 광장에서 눌렀을 때 하는 말, 정착 후보의 첫 이야기와 그걸 들으면 열리는 발전 (집 부탁의 조건)
@@ -70,6 +78,7 @@ public static partial class SettlementSetup
         { "otter_builder", (new[] { "뚝딱뚝딱!", "뭐든 지어 드릴게요!", "재료만 주면 뚝딱!" }, "", "") },
         { "otter_miner", (new[] { "깡깡! 오늘도 반짝이는 돌을 찾아요.", "광산은 시원해서 좋아요.", "다이아몬드는 어디 숨었을까?" }, "", "") },
         { "otter_farmer", (new[] { "새싹이 쑥쑥 자라요!", "당근이 제일 좋아요.", "흙냄새가 좋아요~" }, "", "") },
+        { "otter_fisher", (new[] { "첨벙! 오늘은 뭐가 물릴까요?", "바닷바람이 시원해요.", "고등어 냄새가 나요~" }, "", "") },
         { ReceptionistOtterId, (new[] { "부탁은 차곡차곡!", "글씨는 또박또박 써야죠.", "게시판에 부탁이 잔뜩이네요!" }, "", "") },
     };
 
@@ -89,6 +98,9 @@ public static partial class SettlementSetup
         ("gb_miner_assigned", "otter_miner", "배치", "오늘부터 광산은 제게 맡겨요!\n깡깡!"),
         ("gb_farmer_arrival", "otter_farmer", "방문", "밭이 생겼다고 해서 달려왔어요.\n씨앗 냄새가 나요!"),
         ("gb_farmer_assigned", "otter_farmer", "배치", "밭은 제가 돌볼게요.\n첫 당근을 같이 거둬요!"),
+        ("gb_fishing_dock", "otter_first", "개척", "낡은 선착장을 고쳤어요!\n이제 바다로 나갈 수 있어요."),
+        ("gb_fisher_arrival", "otter_fisher", "방문", "선착장이 생겼다고 해서 왔어요.\n낚싯대는 제가 챙겨 왔어요!"),
+        ("gb_fisher_assigned", "otter_fisher", "배치", "낚시터는 제게 맡겨요!\n첨벙첨벙!"),
         // P2: 게시판 성장 → 관리 해달 → 공동 공간 → 접수소 → 마을회관 (+ 선택 주민 부탁 2개)
         ("gb_board_upgrade", "otter_first", "발전", "게시판이 튼튼해졌어요!\n이제 부탁을 더 많이 붙일 수 있어요."),
         ("gb_receptionist_arrival", ReceptionistOtterId, "방문", "게시판에 부탁이 잔뜩이네요!\n제가 정리해 드려도 될까요?"),
@@ -124,6 +136,9 @@ public static partial class SettlementSetup
             "마을회관 넓히는 중", "다 지으면 마을 발전 현황을 볼 수 있어요", TownHallDevelopment),
         ("con_rest_corner", "바닷가 벤치", "ICON_Chair", ConstructionTarget.House, 150, 8, 4, 20f, true,
             "벤치 만드는 중", "다 만들면 해달들이 쉬어 가요", RestCornerDevelopment),
+        // 낚시터 (Lv.15, 임시값): 현장이 광장 밖이라 건설 해달은 광장에 있고 시간만 흐름
+        ("con_fishing_dock", "바닷가 선착장", "ICON_FishingDock", ConstructionTarget.House, 2000, 60, 30, 180f, true,
+            "선착장 고치는 중", "다 고치면 낚시꾼 해달이 찾아와요", FishingDevelopment),
     };
 
     // 개척 기획(2026-10-02): 첫 집 → 의자(왕국 Lv.2, 동굴 발견) → 광산 길 열기(직접 치움 → 주민 정비, Lv.3, 광부 방문)
@@ -187,6 +202,16 @@ public static partial class SettlementSetup
             "otter_first", GuildDevelopment, 0, "con_town_hall", new string[0],
             new (string, ResidentState)[0],
             4, "gb_town_hall", "마을회관이 완성됐어요!\n회관을 누르면 마을 발전 현황을 볼 수 있어요.", 0, "", ""),
+        // 낚시터 (Lv.15): 레벨이 되면 몽실이가 선착장을 발견(SettlementConfig 레벨 발전) → 고치면 낚시꾼 첨벙이 방문 → 배치
+        // 콘텐츠 버전 0: 정착 진행 전 옛 세이브는 낚시터를 이미 쓰고 있었으므로 두 부탁 모두 끝낸 것으로 옮김
+        ("req_fishing_dock", 12, "바다로 나가는 선착장", "몽실이가 바닷가에서 낡은 선착장을 찾았어요.\n건설 해달과 함께 고치면 낚시터에 갈 수 있어요.", "ICON_FishingDock",
+            "otter_first", FishingFoundDevelopment, 0, "con_fishing_dock", new string[0],
+            new[] { ("otter_fisher", ResidentState.SpecialNpc) },
+            -1, "gb_fishing_dock", "선착장을 다 고쳤어요!\n소식을 듣고 낚시꾼 해달이 광장에 찾아왔어요.", 0, "", ""),
+        ("req_assign_fisher", 13, "낚시를 할 해달이 필요해요", "광장에서 새로 찾아온 낚시꾼 해달 첨벙이를 만나 보세요.\n낚시터에 배치하면 낚시를 시작해요.", "ICON_Otter_Fisher",
+            "otter_fisher", FishingDevelopment, 0, "", new string[0],
+            new (string, ResidentState)[0],
+            -1, "gb_fisher_assigned", "첨벙이가 낚시터에서 일하기 시작해요!\n낚시터에 가서 첫 낚시를 해 봐요.", 0, "", "otter_fisher"),
         // 선택 주민 부탁 (메인 진행의 조건이 아님)
         ("req_rest_corner", 20, "쉬어 갈 자리를 마련해 주세요", "꾸벅이가 바닷가에서 쉬어 갈 벤치를 갖고 싶대요.", "ICON_Chair",
             "otter_sleepy", BoardManagedDevelopment, 0, "con_rest_corner", new string[0],
@@ -343,6 +368,12 @@ public static partial class SettlementSetup
         configSo.FindProperty("_gatherItem").objectReferenceValue = wood;
         configSo.FindProperty("_gatherAmount").intValue = 2;
         configSo.FindProperty("_gatherCooldownSeconds").floatValue = 60f;
+        var levelDevelopments = configSo.FindProperty("_levelDevelopments");
+        levelDevelopments.arraySize = 1;
+        var fishingFound = levelDevelopments.GetArrayElementAtIndex(0);
+        fishingFound.FindPropertyRelative("_level").intValue = FishingLevel;
+        fishingFound.FindPropertyRelative("_development").stringValue = FishingFoundDevelopment;
+        fishingFound.FindPropertyRelative("_notice").stringValue = FishingFoundNotice;
         CreateRegionData(configSo);
         CreateP2Data(configSo, otters, requests);
         CreateP3Data(configSo, otters);

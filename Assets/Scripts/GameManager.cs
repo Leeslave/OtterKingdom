@@ -360,7 +360,8 @@ public class GameManager : MonoBehaviour
 
         // In the background the app is away like when it's closed: crops grow,
         // the online farmer doesn't harvest (offline production covers it).
-        farmService.Grow((float)away);
+        // Both count for at most 8 hours.
+        farmService.Grow((float)OfflineProductionService.Credited(away));
         RunOfflineProduction(away);
     }
 
@@ -596,9 +597,10 @@ public class GameManager : MonoBehaviour
 
     private void ComputePendingOfflineElapsed()
     {
-        // No 8h cap / monotonic-clock guard yet (design doc 8.2-8.3) — that
-        // hardening is M3 scope. A rolled-back clock just yields elapsed <= 0,
-        // which Tick() already treats as a no-op.
+        // Growth while away counts for at most 8 hours, like offline
+        // production (OfflineProductionService.MaxCreditedSec) — a clock
+        // pushed forward gets no more. A rolled-back clock just yields
+        // elapsed <= 0, which Tick() already treats as a no-op.
         if (string.IsNullOrEmpty(save.lastSaveUtc)) return;
 
         if (!DateTime.TryParse(save.lastSaveUtc, CultureInfo.InvariantCulture,
@@ -610,7 +612,7 @@ public class GameManager : MonoBehaviour
         double elapsed = (DateTime.UtcNow - last).TotalSeconds;
         if (elapsed > 0)
         {
-            pendingOfflineElapsedSec = (float)elapsed;
+            pendingOfflineElapsedSec = (float)OfflineProductionService.Credited(elapsed);
         }
 
         if (!launchAbsenceHandled)
@@ -629,9 +631,9 @@ public class GameManager : MonoBehaviour
     {
         if (absenceSec < minOfflineAbsenceSec) return;
 
-        // 전문 해달(농부·광부)이 일하기 전에는 그 장소의 오프라인 생산도 없음
+        // 전문 해달(농부·광부·낚시꾼)이 일하기 전에는 그 장소의 오프라인 생산도 없음
         var report = offlineProduction.Run(save, absenceSec, new OfflineBag(this),
-            CanProduceIn(FarmZoneId), CanProduceIn(MineZoneId));
+            CanProduceIn(FarmZoneId), CanProduceIn(MineZoneId), CanProduceIn(FishingZoneId));
         var settlement = SettlementManager.Instance;
         if (settlement != null)
         {
@@ -649,9 +651,10 @@ public class GameManager : MonoBehaviour
     // ------------------------------------------------------ production gate
 
     // Zone ids (= scene names) of the zones whose production waits for a
-    // specialist otter (farmer / miner) to be assigned and start working.
+    // specialist otter (farmer / miner / fisher) to be assigned and start working.
     public const string FarmZoneId = "Farm";
     public const string MineZoneId = "Mine";
+    public const string FishingZoneId = "Fishing";
 
     // The settlement decides: a zone with a developable region produces only
     // once its specialist is working there. Click, automatic and offline
@@ -1035,6 +1038,8 @@ public class GameManager : MonoBehaviour
     public void SetFishingActive(bool active)
     {
         if (fishingService.IsActive == active) return;
+        // Until the fisher is assigned and working there, the dock can't start.
+        if (active && !CanProduceIn(FishingZoneId)) return;
         fishingService.SetActive(active);
         SaveNow();
     }
