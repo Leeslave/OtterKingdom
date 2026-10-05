@@ -274,6 +274,8 @@ public static partial class SettlementSetup
             var stumpNode = new GameObject($"Stumps_{group.id}").transform;
             stumpNode.SetParent(cellNode, false);
             AddGate(stumpNode.gameObject, ForestDevelopment(group.id), true);
+            // 개간 뒤에만 보이는 것은 꺼 둔 채 저장 (켜기는 DevelopmentGate가 함)
+            stumpNode.gameObject.SetActive(false);
             foreach (var item in group.stumps)
                 ForestSprite(stumpNode, item, W(item.x, item.y), background);
         }
@@ -302,6 +304,8 @@ public static partial class SettlementSetup
             var gate = new SerializedObject(cellNode.GetComponent<DevelopmentGate>());
             gate.FindProperty("_noPop").boolValue = true;
             gate.ApplyModifiedPropertiesWithoutUndo();
+            // 꺼 둔 채 저장: 켜져 있으면 PlazaWalkableArea.Awake가 아직 안 열린 땅까지 지도 전체로 걷기 영역을 계산함
+            cellNode.gameObject.SetActive(false);
         }
 
         // 4) 개간 자리 (방향마다 하나, 단계마다 자리를 옮김)
