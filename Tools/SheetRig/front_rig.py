@@ -386,9 +386,9 @@ def stroke(shape, pts, width):
     return np.asarray(big.resize((w, h), Image.BOX)).astype(np.float32) / 255
 
 
-def blink_head(head, spec):
-    """Closed eyes: the eyes (+ brows) are the dark blobs inside the blink search boxes;
-    they are painted out with the surrounding fur and new lid arcs / brows drawn."""
+def erase_eyes(head, spec):
+    """Straight-alpha copy of the head with the eyes (+ brows) painted out: they are the
+    dark blobs inside the blink search boxes, replaced by the surrounding fur."""
     b = spec['blink']
     a = unpremul(head)
     lum = a[..., :3].mean(-1)
@@ -408,10 +408,25 @@ def blink_head(head, spec):
     fill = a[..., :3][iy, ix]
     fill = np.stack([ndimage.gaussian_filter(fill[..., i], 3.0) for i in range(3)], -1)
     a[..., :3] = a[..., :3] * (1 - cov[..., None]) + fill * cov[..., None]
-    for pts, wd in [(p, b['width']) for p in b['lids']] + [(p, b.get('brow_width', 10)) for p in b.get('brows', [])]:
-        c = stroke(cov.shape, pts, wd)[..., None]
+    return a
+
+
+def draw_lids(a, spec, brows=True):
+    """Closed-eye arcs (+ the spec's brows) on a straight-alpha head (spec coordinates)."""
+    b = spec['blink']
+    strokes = [(p, b['width']) for p in b['lids']]
+    if brows:
+        strokes += [(p, b.get('brow_width', 10)) for p in b.get('brows', [])]
+    a = a.copy()
+    for pts, wd in strokes:
+        c = stroke(a.shape[:2], pts, wd)[..., None]
         a[..., :3] = a[..., :3] * (1 - c) + np.array(spec['ink'], np.float32) * c
-    out = a.copy()
+    return a
+
+
+def blink_head(head, spec):
+    """Closed eyes: eyes painted out, lid arcs and brows drawn."""
+    out = draw_lids(erase_eyes(head, spec), spec)
     out[..., :3] *= out[..., 3:4] / 255
     return out
 

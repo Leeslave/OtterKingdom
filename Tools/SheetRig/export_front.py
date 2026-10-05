@@ -24,7 +24,13 @@ def export(name):
     parts, s = fr.cut(name)
     ims = fr.to_images(parts)
     bones, _, alts = fr.build(name, (ims, s))
-    out = os.path.join(ROOT_OUT, spec['prefix'])
+    export_rig(os.path.join(ROOT_OUT, spec['prefix']), spec['prefix'], spec['name'], name, ims, bones, alts, s,
+               f"ArtSource/Otter/FrontRig/Source/{spec['prefix']}_Front.png")
+
+
+def export_rig(out, prefix, title, character, ims, bones, alts, s, source):
+    """Writes parts/, the atlas, rig_layout.json and parts_overview.png for one rig.
+    ims: {part: PIL} on one canvas (working px); bones: rig.Bone list (rig units)."""
     os.makedirs(os.path.join(out, 'parts'), exist_ok=True)
     root = next(b for b in bones if b.name == 'Root').pivot
     k = fr.rig.S   # bone pivots are in rig units; images are in working px
@@ -56,12 +62,12 @@ def export(name):
     atlas = Image.new('RGBA', (ATLAS_W, atlas_h))
     for e in entries:
         atlas.paste(e['image'], e['xy'])
-    atlas_file = f"{spec['prefix']}_FrontRigParts.png"
+    atlas_file = f"{prefix}_FrontRigParts.png"
     atlas.save(os.path.join(out, atlas_file))
 
     layout = dict(
-        character=name,
-        source=f"ArtSource/Otter/FrontRig/Source/{spec['prefix']}_Front.png",
+        character=character,
+        source=source,
         note='Front view only. rect = atlas rect with Unity bottom-left origin. pivot = normalized joint '
              'position (Unity convention). position = joint relative to the feet centre (Root), px, y up. '
              'Parents are listed before children; order = sorting order. swaps = alternative sprites for a '
@@ -78,8 +84,8 @@ def export(name):
     )
     with open(os.path.join(out, 'rig_layout.json'), 'w', encoding='utf-8') as f:
         json.dump(layout, f, ensure_ascii=False, indent=2)
-    overview(entries, out, spec['name'])
-    print(f'{name}: {len(entries)} parts -> {out} (atlas {ATLAS_W}x{atlas_h})')
+    overview(entries, out, title)
+    print(f'{prefix}: {len(entries)} parts -> {out} (atlas {ATLAS_W}x{atlas_h})')
 
 
 def overview(entries, out, title):

@@ -1,0 +1,769 @@
+[
+  {
+    "prefix": "StargazerOtter",
+    "name": "별지기",
+    "role": "밤하늘 별을 세는 천문가",
+    "head": "Pajama",
+    "body": "Pajama",
+    "prop": true,
+    "eyes": "Pajama",
+    "fur": null,
+    "hat": [
+      72,
+      82,
+      142
+    ],
+    "colors": {
+      "main": [
+        100,
+        100,
+        170
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "long",
+    "hair": [
+      198,
+      208,
+      242
+    ],
+    "tie": null,
+    "items": [
+      "star"
+    ],
+    "body_items": [],
+    "icol": {},
+    "action": "wave"
+  },
+  {
+    "prefix": "StorytellerOtter",
+    "name": "동화 작가",
+    "role": "마을 아이들의 동화 작가",
+    "head": "Pajama",
+    "body": "Pajama",
+    "prop": true,
+    "eyes": "Pajama",
+    "fur": null,
+    "hat": [
+      150,
+      182,
+      140
+    ],
+    "colors": {
+      "main": [
+        166,
+        198,
+        152
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "braids",
+    "hair": [
+      142,
+      86,
+      56
+    ],
+    "tie": [
+      244,
+      204,
+      90
+    ],
+    "items": [
+      "pencil"
+    ],
+    "body_items": [],
+    "icol": {},
+    "action": "nod"
+  },
+  {
+    "prefix": "PillowMakerOtter",
+    "name": "베개 장인",
+    "role": "푹신한 베개 만드는 장인",
+    "head": "Pajama",
+    "body": "Pajama",
+    "prop": true,
+    "eyes": "Miner",
+    "fur": null,
+    "hat": [
+      246,
+      184,
+      150
+    ],
+    "colors": {
+      "main": [
+        248,
+        196,
+        166
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "pigtails",
+    "hair": [
+      244,
+      150,
+      182
+    ],
+    "tie": [
+      255,
+      250,
+      240
+    ],
+    "items": [],
+    "body_items": [],
+    "icol": {},
+    "action": "hop"
+  },
+  {
+    "prefix": "BlacksmithOtter",
+    "name": "대장장이",
+    "role": "마을 대장간 주인",
+    "head": "Chief",
+    "body": "Miner",
+    "prop": false,
+    "eyes": "Miner",
+    "fur": "dark",
+    "hat": null,
+    "colors": {
+      "denim": [
+        72,
+        72,
+        84
+      ]
+    },
+    "hair_front": "spiky",
+    "hair_back": "mane",
+    "hair": [
+      204,
+      70,
+      50
+    ],
+    "tie": null,
+    "items": [
+      "soot"
+    ],
+    "body_items": [],
+    "icol": {},
+    "action": "wave"
+  },
+  {
+    "prefix": "CarpenterOtter",
+    "name": "목수",
+    "role": "집 짓는 목수",
+    "head": "Miner",
+    "body": "Miner",
+    "prop": false,
+    "eyes": "Miner",
+    "fur": "caramel",
+    "hat": [
+      242,
+      150,
+      62
+    ],
+    "colors": {
+      "denim": [
+        192,
+        152,
+        104
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "ponytail",
+    "hair": [
+      52,
+      46,
+      54
+    ],
+    "tie": [
+      206,
+      72,
+      62
+    ],
+    "items": [
+      "pencil"
+    ],
+    "body_items": [],
+    "icol": {},
+    "action": "hop"
+  },
+  {
+    "prefix": "FossilHunterOtter",
+    "name": "화석 발굴가",
+    "role": "공룡 화석을 찾는 학자",
+    "head": "Miner",
+    "body": "Miner",
+    "prop": true,
+    "eyes": "Miner",
+    "fur": "sand",
+    "hat": [
+      198,
+      178,
+      122
+    ],
+    "colors": {
+      "denim": [
+        114,
+        122,
+        84
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "bob",
+    "hair": [
+      122,
+      82,
+      56
+    ],
+    "tie": null,
+    "items": [
+      "bandage"
+    ],
+    "body_items": [],
+    "icol": {},
+    "action": "mine"
+  },
+  {
+    "prefix": "MechanicOtter",
+    "name": "정비공",
+    "role": "수레 · 풍차 수리공",
+    "head": "Chief",
+    "body": "Miner",
+    "prop": false,
+    "eyes": "Fisher",
+    "fur": "slate",
+    "hat": null,
+    "colors": {
+      "denim": [
+        84,
+        96,
+        120
+      ]
+    },
+    "hair_front": "side_swoop",
+    "hair_back": "mane",
+    "hair": [
+      54,
+      58,
+      84
+    ],
+    "tie": null,
+    "items": [
+      "soot"
+    ],
+    "body_items": [],
+    "icol": {},
+    "action": "dance"
+  },
+  {
+    "prefix": "ExplorerOtter",
+    "name": "탐험가",
+    "role": "섬 구석구석 탐험가",
+    "head": "Fisher",
+    "body": "Fisher",
+    "prop": false,
+    "eyes": "Fisher",
+    "fur": "ginger",
+    "hat": [
+      192,
+      170,
+      118
+    ],
+    "colors": {
+      "vest": [
+        150,
+        110,
+        72
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "long",
+    "hair": [
+      250,
+      222,
+      132
+    ],
+    "tie": null,
+    "items": [],
+    "body_items": [],
+    "icol": {},
+    "action": "wave"
+  },
+  {
+    "prefix": "PhotographerOtter",
+    "name": "사진사",
+    "role": "마을 사진관 주인",
+    "head": "Fisher",
+    "body": "Fisher",
+    "prop": false,
+    "eyes": "Fisher",
+    "fur": "silver",
+    "hat": [
+      66,
+      66,
+      74
+    ],
+    "colors": {
+      "vest": [
+        132,
+        132,
+        142
+      ],
+      "jeans": [
+        62,
+        72,
+        112
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "pigtails",
+    "hair": [
+      172,
+      122,
+      222
+    ],
+    "tie": [
+      250,
+      220,
+      92
+    ],
+    "items": [],
+    "body_items": [
+      "camera"
+    ],
+    "icol": {},
+    "action": "hop"
+  },
+  {
+    "prefix": "EntomologistOtter",
+    "name": "곤충 박사",
+    "role": "곤충 도감 연구가",
+    "head": "Fisher",
+    "body": "Fisher",
+    "prop": false,
+    "eyes": "Pajama",
+    "fur": "chestnut",
+    "hat": [
+      112,
+      150,
+      92
+    ],
+    "colors": {
+      "vest": [
+        172,
+        162,
+        112
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "braids",
+    "hair": [
+      96,
+      150,
+      128
+    ],
+    "tie": [
+      244,
+      204,
+      90
+    ],
+    "items": [
+      "butterfly"
+    ],
+    "body_items": [],
+    "icol": {
+      "item": [
+        150,
+        192,
+        242
+      ]
+    },
+    "action": "dance"
+  },
+  {
+    "prefix": "GardenerOtter",
+    "name": "정원사",
+    "role": "꽃밭 정원사",
+    "head": "Chief",
+    "body": "Fisher",
+    "prop": false,
+    "eyes": "Chief",
+    "fur": "honey",
+    "hat": null,
+    "colors": {
+      "vest": [
+        110,
+        162,
+        92
+      ],
+      "jeans": [
+        122,
+        100,
+        82
+      ]
+    },
+    "hair_front": "puff",
+    "hair_back": null,
+    "hair": [
+      242,
+      152,
+      172
+    ],
+    "tie": null,
+    "items": [
+      "flower"
+    ],
+    "body_items": [],
+    "icol": {
+      "item": [
+        255,
+        250,
+        236
+      ]
+    },
+    "action": "wave"
+  },
+  {
+    "prefix": "BeekeeperOtter",
+    "name": "양봉가",
+    "role": "꿀벌 키우는 양봉가",
+    "head": "Fisher",
+    "body": "Fisher",
+    "prop": false,
+    "eyes": "Fisher",
+    "fur": "dark",
+    "hat": [
+      240,
+      240,
+      230
+    ],
+    "colors": {
+      "vest": [
+        242,
+        200,
+        72
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "ponytail",
+    "hair": [
+      252,
+      216,
+      122
+    ],
+    "tie": [
+      92,
+      72,
+      62
+    ],
+    "items": [
+      "bee"
+    ],
+    "body_items": [],
+    "icol": {},
+    "action": "hop"
+  },
+  {
+    "prefix": "PostmanOtter",
+    "name": "우체부",
+    "role": "편지 배달부",
+    "head": "Chief",
+    "body": "Chief",
+    "prop": true,
+    "eyes": "Chief",
+    "fur": "brown",
+    "hat": null,
+    "colors": {
+      "vest": [
+        198,
+        66,
+        58
+      ],
+      "scarf": [
+        62,
+        74,
+        132
+      ],
+      "pants": [
+        62,
+        68,
+        98
+      ]
+    },
+    "hair_front": "side_swoop",
+    "hair_back": null,
+    "hair": [
+      92,
+      60,
+      44
+    ],
+    "tie": null,
+    "items": [],
+    "body_items": [],
+    "icol": {},
+    "action": "hop"
+  },
+  {
+    "prefix": "TeacherOtter",
+    "name": "선생님",
+    "role": "마을 학교 선생님",
+    "head": "Chief",
+    "body": "Chief",
+    "prop": true,
+    "eyes": "Fisher",
+    "fur": "gray",
+    "hat": null,
+    "colors": {
+      "vest": [
+        152,
+        114,
+        84
+      ],
+      "scarf": [
+        92,
+        122,
+        92
+      ]
+    },
+    "hair_front": "bun",
+    "hair_back": null,
+    "hair": [
+      214,
+      214,
+      220
+    ],
+    "tie": null,
+    "items": [],
+    "body_items": [],
+    "icol": {},
+    "action": "nod"
+  },
+  {
+    "prefix": "BakerOtter",
+    "name": "제빵사",
+    "role": "빵집 주인",
+    "head": "Chief",
+    "body": "Chief",
+    "prop": true,
+    "eyes": "Chief",
+    "fur": "cream",
+    "hat": null,
+    "colors": {
+      "vest": [
+        236,
+        214,
+        180
+      ],
+      "scarf": [
+        242,
+        150,
+        72
+      ]
+    },
+    "hair_front": null,
+    "hair_back": "bob",
+    "hair": [
+      204,
+      122,
+      72
+    ],
+    "tie": null,
+    "items": [
+      "chef_hat"
+    ],
+    "body_items": [
+      "apron"
+    ],
+    "icol": {},
+    "action": "wave"
+  },
+  {
+    "prefix": "PainterOtter",
+    "name": "화가",
+    "role": "풍경화 그리는 화가",
+    "head": "Chief",
+    "body": "Chief",
+    "prop": true,
+    "eyes": "Chief",
+    "fur": "rose",
+    "hat": null,
+    "colors": {
+      "vest": [
+        132,
+        102,
+        172
+      ],
+      "scarf": [
+        250,
+        202,
+        92
+      ]
+    },
+    "hair_front": "bangs",
+    "hair_back": "long",
+    "hair": [
+      242,
+      150,
+      182
+    ],
+    "tie": null,
+    "items": [
+      "beret"
+    ],
+    "body_items": [],
+    "icol": {
+      "item": [
+        64,
+        84,
+        142
+      ]
+    },
+    "action": "dance"
+  },
+  {
+    "prefix": "MusicianOtter",
+    "name": "음악가",
+    "role": "광장 거리 음악가",
+    "head": "Chief",
+    "body": "Chief",
+    "prop": true,
+    "eyes": "Miner",
+    "fur": "charcoal",
+    "hat": null,
+    "colors": {
+      "vest": [
+        58,
+        58,
+        68
+      ],
+      "scarf": [
+        202,
+        52,
+        62
+      ]
+    },
+    "hair_front": "mohawk",
+    "hair_back": null,
+    "hair": [
+      92,
+      152,
+      232
+    ],
+    "tie": null,
+    "items": [],
+    "body_items": [],
+    "icol": {},
+    "action": "dance"
+  },
+  {
+    "prefix": "LibrarianOtter",
+    "name": "사서",
+    "role": "도서관 사서",
+    "head": "Chief",
+    "body": "Chief",
+    "prop": true,
+    "eyes": "Fisher",
+    "fur": "snow",
+    "hat": null,
+    "colors": {
+      "vest": [
+        62,
+        84,
+        126
+      ],
+      "scarf": [
+        152,
+        62,
+        72
+      ]
+    },
+    "hair_front": "bangs",
+    "hair_back": "bob",
+    "hair": [
+      52,
+      46,
+      54
+    ],
+    "tie": null,
+    "items": [],
+    "body_items": [],
+    "icol": {},
+    "action": "nod"
+  },
+  {
+    "prefix": "ShopkeeperOtter",
+    "name": "잡화점 주인",
+    "role": "잡화점 주인",
+    "head": "Chief",
+    "body": "Chief",
+    "prop": true,
+    "eyes": "Chief",
+    "fur": "tan",
+    "hat": null,
+    "colors": {
+      "vest": [
+        92,
+        142,
+        102
+      ],
+      "scarf": [
+        242,
+        142,
+        62
+      ]
+    },
+    "hair_front": "pompadour",
+    "hair_back": "mane",
+    "hair": [
+      122,
+      72,
+      46
+    ],
+    "tie": null,
+    "items": [],
+    "body_items": [],
+    "icol": {},
+    "action": "wave"
+  },
+  {
+    "prefix": "TailorOtter",
+    "name": "재봉사",
+    "role": "옷 짓는 재봉사",
+    "head": "Chief",
+    "body": "Chief",
+    "prop": true,
+    "eyes": "Pajama",
+    "fur": "lilac",
+    "hat": null,
+    "colors": {
+      "vest": [
+        186,
+        122,
+        146
+      ],
+      "scarf": [
+        246,
+        232,
+        202
+      ]
+    },
+    "hair_front": "twin_buns",
+    "hair_back": null,
+    "hair": [
+      122,
+      92,
+      172
+    ],
+    "tie": null,
+    "items": [
+      "bow"
+    ],
+    "body_items": [],
+    "icol": {
+      "item": [
+        250,
+        214,
+        92
+      ]
+    },
+    "action": "hop"
+  }
+]
