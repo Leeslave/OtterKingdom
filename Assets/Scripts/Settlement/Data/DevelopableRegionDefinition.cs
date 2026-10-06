@@ -23,7 +23,7 @@ public class DevelopableRegionDefinition : ScriptableObject
     [Tooltip("이 발전이 열리면 지역을 발견함 (예: chair)")]
     [SerializeField] private string _discoverDevelopment;
 
-    [Tooltip("플레이어가 길을 막은 것을 다 치우면 열리는 발전 (예: mine_path_open)")]
+    [Tooltip("플레이어가 길을 막은 것을 다 치우면 열리는 발전 (예: mine_path_open). 직접 치우는 단계 없이 건설만으로 여는 지역(낚시터 선착장)은 비움")]
     [SerializeField] private string _playerClearDevelopment;
 
     [Tooltip("운영 = 이 발전이 열림 (예: mine_cleared). 직접 치우는 부탁이 있으면 그 부탁을 끝내서 열림")]
@@ -58,7 +58,8 @@ public class DevelopableRegionDefinition : ScriptableObject
     {
         if (string.IsNullOrWhiteSpace(_regionId))
             Debug.LogWarning($"[{name}] RegionId가 비어 있습니다.", this);
-        if (string.IsNullOrWhiteSpace(_playerClearDevelopment) || string.IsNullOrWhiteSpace(_operationalDevelopment))
-            Debug.LogWarning($"[{name}] 직접 개척·운영 발전 ID가 비어 있습니다.", this);
+        // 직접 개척은 비워도 됨 (낚시터처럼 건설만으로 여는 지역). 운영은 생산 판정에 꼭 필요
+        if (string.IsNullOrWhiteSpace(_operationalDevelopment))
+            Debug.LogWarning($"[{name}] 운영 발전 ID가 비어 있습니다.", this);
     }
 }

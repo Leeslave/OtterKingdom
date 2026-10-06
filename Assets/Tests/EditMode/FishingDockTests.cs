@@ -21,10 +21,14 @@ public class FishingDockTests
     private SettlementOtterDefinition _fisher;
     private BoardRequestDefinition _dock;
     private BoardRequestDefinition _assign;
+    // 개발 메뉴 Fast Timers를 켜 둔 에디터에서도 테스트가 같은 결과를 내고, 끝나면 그 설정을 되돌림
+    private bool _fastBefore;
 
     [SetUp]
     public void SetUp()
     {
+        _fastBefore = DevTimers.Fast;
+        DevTimers.Fast = false;
         _fishing = Create<DevelopableRegionDefinition>();
         var regionSo = new SerializedObject(_fishing);
         regionSo.FindProperty("_regionId").stringValue = "region_fishing";
@@ -80,7 +84,7 @@ public class FishingDockTests
         foreach (var obj in _created)
             Object.DestroyImmediate(obj);
         _created.Clear();
-        DevTimers.Fast = false;
+        DevTimers.Fast = _fastBefore;
     }
 
     #region 만들기
