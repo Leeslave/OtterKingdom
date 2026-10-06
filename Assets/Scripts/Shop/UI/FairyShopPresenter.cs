@@ -17,6 +17,9 @@ public class FairyShopPresenter : MonoBehaviour
     /// <summary>상점이 실제로 열렸을 때 (요정을 눌렀든, 꾸미기 보관함 [+ 상점]이든). 요정 상점 안내가 이걸로 끝난다</summary>
     public static event System.Action Opened;
 
+    /// <summary>상품을 샀을 때 (상품, 산 수량 — 묶음이면 묶음 수). 구매 퀘스트가 센다</summary>
+    public static event System.Action<ShopProduct, int> Purchased;
+
     [Header("데이터")]
     [SerializeField] private ShopCatalog _catalog;
     [Tooltip("요정 말풍선")]
@@ -85,6 +88,7 @@ public class FairyShopPresenter : MonoBehaviour
         {
             case ShopPurchaseResult.Bought:
                 _popup.Hide();
+                Purchased?.Invoke(product, quantity);
                 break;
 
             case ShopPurchaseResult.BagFull:
