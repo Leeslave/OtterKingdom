@@ -69,12 +69,22 @@ public class FairyShopPresenter : MonoBehaviour
         if (!_glyphsReady)
             PrepareGlyphs();
 
-        _shop.Show(_catalog, _dialogue, category);
+        _shop.Show(_catalog, _dialogue, category, PlayerLevel);
         Opened?.Invoke();
     }
 
+    private static int PlayerLevel => ProfileManager.Instance != null ? ProfileManager.Instance.Level : 1;
+
     private void HandleProductClicked(ShopProduct product)
     {
+        // 아직 레벨이 안 된 상품: 사지 못하고 요정이 언제 파는지 알려 줌
+        if (product.IsLockedAt(PlayerLevel))
+        {
+            string name = product.Item.DisplayName;
+            _shop.Say($"{name}{KoreanParticle.ObjectParticle(name)} 왕국 레벨 {product.RequiredLevel}부터 팔게요!");
+            return;
+        }
+
         var inventory = InventoryManager.Instance.Inventory;
         int owned = inventory.GetCount(product.Item);
         int max = ShopPurchaseRules.MaxQuantity(product, inventory.GetAddableAmount(product.Item));
@@ -95,6 +105,10 @@ public class FairyShopPresenter : MonoBehaviour
                 _popup.ShowFailed(BagFullText);
                 break;
 
+            case ShopPurchaseResult.Locked:
+                _popup.Hide();
+                break;
+
             case ShopPurchaseResult.NotEnoughCurrency:
                 int need = ShopPurchaseRules.TotalPrice(product, quantity);
                 int have = CurrencyManager.Instance.GetCurrency(product.PriceCurrency);
@@ -106,6 +120,9 @@ public class FairyShopPresenter : MonoBehaviour
     /// <summary>가방 자리 확인 → 값 치르기 → 가방에 넣기. 실패하면 아무것도 바꾸지 않는다</summary>
     private static ShopPurchaseResult TryBuy(ShopProduct product, int quantity)
     {
+        if (product.IsLockedAt(PlayerLevel))
+            return ShopPurchaseResult.Locked;
+
         var inventory = InventoryManager.Instance.Inventory;
         int items = ShopPurchaseRules.TotalItems(product, quantity);
 

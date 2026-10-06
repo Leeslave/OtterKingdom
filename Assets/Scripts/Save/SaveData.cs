@@ -28,6 +28,9 @@ public class FurrowSlotSaveData
     // Empty slot whose automatic replant ran out of seeds: the crop to plant
     // again once the seed is back in the bag (null = nothing waiting).
     public string waitingSeedCropId;
+    // Furrows open one at a time: true = this furrow of an open plot isn't
+    // bought yet. False in older saves, so their open plots stay fully open.
+    public bool locked;
 }
 
 // The farmer's current harvest, kept in the save so it carries over scene

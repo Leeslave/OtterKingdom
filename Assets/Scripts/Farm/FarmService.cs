@@ -74,6 +74,9 @@ public class FarmService
     // things like the farmer otter can start covering it without a reload.
     public event Action<int> PlotUnlocked;
 
+    // A furrow was opened (plot, slot). PlotUnlocked also fires first when it opened its plot.
+    public event Action<int, int> FurrowUnlocked;
+
     // The farmer's harvest went into the bag (plot, slot, cropId, amount).
     public event Action<int, int, string, int> Harvested;
 
@@ -136,7 +139,74 @@ public class FarmService
     public bool IsPlotUnlocked(int plotIndex) =>
         plotIndex >= 0 && plotIndex < plots.Count && plots[plotIndex].Data.unlocked;
 
-    public int PlotUnlockCost => balance.plotUnlockCost;
+    // ---------------------------------------------------------------- furrows
+
+    // A furrow (slot) can be planted when its plot is open and the furrow
+    // itself is bought. Plot 1 starts fully open; the other furrows open one
+    // at a time in order (plot 2 left to right, then plot 3), each needing a
+    // kingdom level and gold (FarmBalanceData.furrowUnlocks).
+    public bool IsSlotOpen(int plotIndex, int slotIndex) =>
+        IsPlotUnlocked(plotIndex) && slotIndex >= 0 && slotIndex < plots[plotIndex].SlotCount
+        && !plots[plotIndex].Data.slots[slotIndex].locked;
+
+    public int OpenSlotCount
+    {
+        get
+        {
+            int count = 0;
+            for (int p = 0; p < plots.Count; p++)
+                for (int s = 0; s < plots[p].SlotCount; s++)
+                    if (IsSlotOpen(p, s)) count++;
+            return count;
+        }
+    }
+
+    // The next furrow to open and its price. False when every furrow is open.
+    public bool TryGetNextFurrow(out int plotIndex, out int slotIndex, out FarmBalanceData.FurrowUnlock unlock)
+    {
+        for (int p = 0; p < plots.Count; p++)
+        {
+            for (int s = 0; s < plots[p].SlotCount; s++)
+            {
+                if (IsSlotOpen(p, s)) continue;
+                plotIndex = p;
+                slotIndex = s;
+                unlock = balance.FurrowUnlockAt(p == 0 ? -1 : (p - 1) * plots[p].SlotCount + s);
+                return true;
+            }
+        }
+        plotIndex = -1;
+        slotIndex = -1;
+        unlock = default;
+        return false;
+    }
+
+    // Opens the next furrow if the kingdom level allows it and the gold can be
+    // paid. The first furrow of a locked plot opens the plot with its other
+    // furrows still locked. TrySpend rejects a zero cost (throws), so a free
+    // furrow skips it.
+    public FurrowUnlockResult TryUnlockNextFurrow(int kingdomLevel, CurrencyManager currencyManager, Currency currency)
+    {
+        if (!TryGetNextFurrow(out int p, out int s, out var unlock)) return FurrowUnlockResult.AllOpen;
+        if (kingdomLevel < unlock.requiredLevel) return FurrowUnlockResult.NeedLevel;
+        if (unlock.cost > 0 && !currencyManager.TrySpend(currency, unlock.cost, TransactionSource.PlotUnlock))
+            return FurrowUnlockResult.NotEnoughGold;
+
+        var plot = plots[p].Data;
+        bool plotOpened = !plot.unlocked;
+        if (plotOpened)
+        {
+            plot.unlocked = true;
+            for (int i = 0; i < plot.slots.Count; i++) plot.slots[i].locked = i != s;
+            PlotUnlocked?.Invoke(p);
+        }
+        else
+        {
+            plot.slots[s].locked = false;
+        }
+        FurrowUnlocked?.Invoke(p, s);
+        return FurrowUnlockResult.Opened;
+    }
 
     public CropDefinition GetCrop(string id) => LookupCrop(id);
 
@@ -279,6 +349,7 @@ public class FarmService
 
     private bool IsStorableReady(int plotIndex, int slotIndex)
     {
+        if (!IsSlotOpen(plotIndex, slotIndex)) return false;
         if (plots[plotIndex].GetSlotState(slotIndex) != FurrowSlotState.AwaitingHarvest) return false;
         var crop = plots[plotIndex].GetSlotCrop(slotIndex);
         return crop != null && host.CanStoreHarvest(crop.cropId, crop.yieldCount);
@@ -340,6 +411,7 @@ public class FarmService
             if (!plots[p].Data.unlocked) continue;
             for (int s = 0; s < plots[p].SlotCount; s++)
             {
+                if (!IsSlotOpen(p, s)) continue;
                 string cropId = plots[p].GetWaitingSeedCrop(s);
                 if (string.IsNullOrEmpty(cropId) || plots[p].GetSlotState(s) != FurrowSlotState.Empty) continue;
                 if (LookupCrop(cropId) == null)
@@ -355,7 +427,7 @@ public class FarmService
     // Empty slot waiting for this crop's seed (null if not waiting).
     public CropDefinition GetWaitingSeedCrop(int plotIndex, int slotIndex)
     {
-        if (!IsPlotUnlocked(plotIndex)) return null;
+        if (!IsSlotOpen(plotIndex, slotIndex)) return null;
         var slot = plots[plotIndex].Data.slots[slotIndex];
         return slot.state == FurrowSlotState.Empty ? LookupCrop(slot.waitingSeedCropId) : null;
     }
@@ -388,7 +460,7 @@ public class FarmService
             if (!plots[p].Data.unlocked) continue;
             for (int s = 0; s < plots[p].SlotCount; s++)
             {
-                if (plots[p].GetSlotState(s) != FurrowSlotState.AwaitingHarvest) continue;
+                if (!IsSlotOpen(p, s) || plots[p].GetSlotState(s) != FurrowSlotState.AwaitingHarvest) continue;
                 var crop = plots[p].GetSlotCrop(s);
                 if (crop == null || host.CanStoreHarvest(crop.cropId, crop.yieldCount)) continue;
                 count++;
@@ -438,7 +510,7 @@ public class FarmService
     // Consumable seeds cost 1 per slot planted.
     public PlantResult Plant(int plotIndex, int slotIndex, string cropId)
     {
-        if (plotIndex < 0 || plotIndex >= plots.Count) return PlantResult.Failed;
+        if (!IsSlotOpen(plotIndex, slotIndex)) return PlantResult.Failed;
 
         var crop = LookupCrop(cropId);
         if (crop == null) return PlantResult.Failed;
@@ -482,20 +554,6 @@ public class FarmService
         if (cost > 0 && !currencyManager.TrySpend(currency, cost, TransactionSource.FarmUpgrade)) return false;
 
         save.farmLevel++;
-        return true;
-    }
-
-    // TrySpend rejects a zero cost (throws), so a free unlock skips it.
-    public bool TryUnlockPlot(int plotIndex, CurrencyManager currencyManager, Currency currency)
-    {
-        if (plotIndex < 0 || plotIndex >= plots.Count) return false;
-        if (IsPlotUnlocked(plotIndex)) return false;
-
-        int cost = PlotUnlockCost;
-        if (cost > 0 && !currencyManager.TrySpend(currency, cost, TransactionSource.PlotUnlock)) return false;
-
-        plots[plotIndex].Data.unlocked = true;
-        PlotUnlocked?.Invoke(plotIndex);
         return true;
     }
 

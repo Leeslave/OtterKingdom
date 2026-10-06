@@ -5,6 +5,7 @@ public enum ShopPurchaseResult
     Bought,
     NotEnoughCurrency, // 재화 부족 → 부족 팝업에서 충전으로
     BagFull,           // 가방에 자리가 없음 (새 종류인데 빈 칸이 없거나, 최대 보유 수)
+    Locked,            // 아직 왕국 레벨이 안 됨 (ShopProduct.RequiredLevel)
 }
 
 /// <summary>

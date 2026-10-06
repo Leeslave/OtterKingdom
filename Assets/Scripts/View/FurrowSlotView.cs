@@ -9,13 +9,17 @@ using UnityEngine.InputSystem;
 // (FarmService, in every zone scene; FarmerOtterController only shows it and
 // finds its walk targets through these views). An empty slot whose replant
 // ran out of seeds keeps a "모종 없음" badge until the seed is back. Slots of
-// a locked plot stay hidden and unclickable until PlotView's unlock goes through.
+// a locked plot stay hidden; a furrow not bought yet in an open plot shows
+// greyed out with a "잠김" badge, and tapping it offers the next furrow.
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Collider2D))]
 public class FurrowSlotView : MonoBehaviour
 {
     private const string NoSeedBadgeText = "모종 없음";
+    private const string LockedBadgeText = "잠김";
     private static readonly Color BadgeColor = new Color32(0xD9, 0x4F, 0x45, 0xFF);
+    private static readonly Color LockedBadgeColor = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
+    private static readonly Color LockedTint = new Color(0.55f, 0.5f, 0.45f, 0.75f);
 
     [SerializeField] private int plotIndex;
     [SerializeField] private int slotIndex;
@@ -27,6 +31,7 @@ public class FurrowSlotView : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Camera mainCamera;
     private TMPro.TextMeshPro noSeedBadge;
+    private TMPro.TextMeshPro lockedBadge;
 
     private FurrowSlotState lastState = (FurrowSlotState)(-1);
     private SlotGrowthStage lastStage = (SlotGrowthStage)(-1);
@@ -43,10 +48,16 @@ public class FurrowSlotView : MonoBehaviour
         if (GameManager.Instance == null || GameManager.Instance.FarmService == null) return;
 
         var farmService = GameManager.Instance.FarmService;
-        bool unlocked = farmService.IsPlotUnlocked(plotIndex);
-        spriteRenderer.enabled = unlocked;
+        bool plotOpen = farmService.IsPlotUnlocked(plotIndex);
+        bool unlocked = farmService.IsSlotOpen(plotIndex, slotIndex);
+        spriteRenderer.enabled = plotOpen;
         RefreshNoSeedBadge(unlocked && farmService.GetWaitingSeedCrop(plotIndex, slotIndex) != null);
-        if (!unlocked) return;
+        RefreshLocked(plotOpen && !unlocked);
+        if (!unlocked)
+        {
+            if (plotOpen && WasTapped()) GameManager.Instance.RequestFurrowUnlockPrompt();
+            return;
+        }
 
         var state = farmService.GetSlotState(plotIndex, slotIndex);
         var stage = farmService.GetSlotStage(plotIndex, slotIndex);
@@ -62,25 +73,45 @@ public class FurrowSlotView : MonoBehaviour
         if (noSeedBadge == null)
         {
             if (!show) return;
-            var go = new GameObject("NoSeedBadge");
-            go.transform.SetParent(transform, false);
-            go.transform.localPosition = new Vector3(0f, 0.55f, 0f);
-            noSeedBadge = go.AddComponent<TMPro.TextMeshPro>();
-            var font = RuntimeUIKit.Style.TitleFont;
-            if (font != null)
-            {
-                font.TryAddCharacters(NoSeedBadgeText, out _);
-                noSeedBadge.font = font;
-            }
-            noSeedBadge.text = NoSeedBadgeText;
-            noSeedBadge.fontSize = 2.4f;
-            noSeedBadge.alignment = TMPro.TextAlignmentOptions.Center;
-            noSeedBadge.color = BadgeColor;
-            noSeedBadge.rectTransform.sizeDelta = new Vector2(3f, 0.8f);
-            noSeedBadge.sortingOrder = spriteRenderer.sortingOrder + 5;
+            noSeedBadge = CreateBadge("NoSeedBadge", NoSeedBadgeText, BadgeColor);
         }
         if (noSeedBadge.gameObject.activeSelf != show) noSeedBadge.gameObject.SetActive(show);
         if (show) noSeedBadge.transform.localScale = Vector3.one * (1f + Mathf.Sin(Time.time * 4f) * 0.04f);
+    }
+
+    // A furrow of an open plot that isn't bought yet: the empty furrow greyed
+    // out with "잠김". Forces a redraw once it opens.
+    private void RefreshLocked(bool locked)
+    {
+        if (locked)
+        {
+            spriteRenderer.sprite = emptySlotSprite;
+            spriteRenderer.color = LockedTint;
+            lastState = (FurrowSlotState)(-1);
+            if (lockedBadge == null) lockedBadge = CreateBadge("LockedBadge", LockedBadgeText, LockedBadgeColor);
+        }
+        if (lockedBadge != null && lockedBadge.gameObject.activeSelf != locked) lockedBadge.gameObject.SetActive(locked);
+    }
+
+    private TMPro.TextMeshPro CreateBadge(string name, string text, Color color)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(transform, false);
+        go.transform.localPosition = new Vector3(0f, 0.55f, 0f);
+        var badge = go.AddComponent<TMPro.TextMeshPro>();
+        var font = RuntimeUIKit.Style.TitleFont;
+        if (font != null)
+        {
+            font.TryAddCharacters(text, out _);
+            badge.font = font;
+        }
+        badge.text = text;
+        badge.fontSize = 2.4f;
+        badge.alignment = TMPro.TextAlignmentOptions.Center;
+        badge.color = color;
+        badge.rectTransform.sizeDelta = new Vector2(3f, 0.8f);
+        badge.sortingOrder = spriteRenderer.sortingOrder + 5;
+        return badge;
     }
 
     // Empty slots of the first-plant guide plot pulse with PlotView's highlight.
@@ -124,18 +155,24 @@ public class FurrowSlotView : MonoBehaviour
 
     private void HandleClick(FurrowSlotState state)
     {
-        var pointer = Pointer.current;
-        if (pointer == null || !pointer.press.wasPressedThisFrame) return;
-        if (mainCamera == null) return;
-
-        Vector2 screenPos = pointer.position.ReadValue();
-        if (GameManager.Instance.IsScreenPointOverUI(screenPos)) return;
-
-        Vector2 worldPos = mainCamera.ScreenToWorldPoint(screenPos);
-        var hit = Physics2D.OverlapPoint(worldPos);
-        if (hit == null || hit.gameObject != gameObject) return;
+        if (!WasTapped()) return;
 
         if (state == FurrowSlotState.Empty) GameManager.Instance.RequestPlantPrompt(plotIndex, slotIndex);
         else GameManager.Instance.RequestCropChangePrompt(plotIndex, slotIndex);
+    }
+
+    // This furrow was pressed this frame (not through UI).
+    private bool WasTapped()
+    {
+        var pointer = Pointer.current;
+        if (pointer == null || !pointer.press.wasPressedThisFrame) return false;
+        if (mainCamera == null) return false;
+
+        Vector2 screenPos = pointer.position.ReadValue();
+        if (GameManager.Instance.IsScreenPointOverUI(screenPos)) return false;
+
+        Vector2 worldPos = mainCamera.ScreenToWorldPoint(screenPos);
+        var hit = Physics2D.OverlapPoint(worldPos);
+        return hit != null && hit.gameObject == gameObject;
     }
 }

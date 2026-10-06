@@ -69,7 +69,16 @@ public class OfflineProductionService
         int count = 0;
         foreach (var plot in save.plots)
         {
-            if (plot.unlocked) count += PlotSaveData.SlotCount;
+            if (plot == null || !plot.unlocked) continue;
+            if (plot.slots == null || plot.slots.Count == 0)
+            {
+                count += PlotSaveData.SlotCount;
+                continue;
+            }
+            foreach (var slot in plot.slots)
+            {
+                if (slot != null && !slot.locked) count++;
+            }
         }
         return count;
     }

@@ -28,6 +28,7 @@ public static class SettlementQuestGate
         switch (quest.GoalType)
         {
             case QuestGoalType.Harvest:
+            case QuestGoalType.UnlockFurrow:
                 return FarmProductionDevelopment;
             case QuestGoalType.Mine:
                 return MineProductionDevelopment;

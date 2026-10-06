@@ -129,7 +129,7 @@ public static class ZoneTutorials
                 "다 자란 작물은 농부 해달이 알아서 수확하고,\n같은 작물을 다시 심어 줘요.\n수확한 작물은 가방에 들어가요.",
                 () => TutorialTargets.World(farmer)),
             TutorialStep.At("잠긴 밭",
-                "코인을 모아 잠긴 밭을 누르면 해금할 수 있어요.\n밭이 넓어질수록 더 많이 거둬요.",
+                "잠긴 밭을 누르면 코인으로 고랑을 한 칸씩 열 수 있어요.\n왕국 레벨이 오를수록 더 열 수 있어요.",
                 () => TutorialTargets.World(lockedPlot)),
             TutorialStep.At("밭 강화",
                 "코인으로 밭을 강화하면\n작물이 더 빨리 자라요.\n레벨이 오르면 게임을 꺼 둔 동안에도 농사를 지어요.",

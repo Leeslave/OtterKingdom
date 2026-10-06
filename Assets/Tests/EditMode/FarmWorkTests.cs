@@ -277,6 +277,49 @@ public class FarmWorkTests
         Assert.AreEqual(FurrowSlotState.Empty, farm.GetSlotState(0, 0));
     }
     [Test]
+    public void Furrows_OpenOneAtATime_InOrder_WhenTheLevelAllows()
+    {
+        // 값은 0골드로 (재화 없이 순서·레벨만 봄)
+        _balance.furrowUnlocks = new[]
+        {
+            new FarmBalanceData.FurrowUnlock(5, 0),
+            new FarmBalanceData.FurrowUnlock(6, 0),
+        };
+        var save = NewSave();
+        var farm = new FarmService(save, new[] { _carrot, _potato }, _balance, new FakeHost());
+
+        Assert.AreEqual(3, farm.OpenSlotCount, "밭 1의 세 칸만 열려 있음");
+        Assert.IsTrue(farm.TryGetNextFurrow(out int plot, out int slot, out var unlock));
+        Assert.AreEqual((1, 0, 5), (plot, slot, unlock.requiredLevel), "다음은 밭 2의 첫 칸, Lv.5");
+
+        Assert.AreEqual(FurrowUnlockResult.NeedLevel, farm.TryUnlockNextFurrow(4, null, null));
+        Assert.AreEqual(FurrowUnlockResult.Opened, farm.TryUnlockNextFurrow(5, null, null));
+
+        Assert.IsTrue(farm.IsPlotUnlocked(1), "첫 칸이 밭을 엶");
+        Assert.IsTrue(farm.IsSlotOpen(1, 0));
+        Assert.IsFalse(farm.IsSlotOpen(1, 1), "나머지 칸은 아직 잠김");
+        Assert.AreEqual(PlantResult.Failed, farm.Plant(1, 1, _carrot.cropId), "잠긴 칸에는 못 심음");
+        Assert.AreEqual(PlantResult.Planted, farm.Plant(1, 0, _carrot.cropId));
+        Assert.AreEqual(4, OfflineProductionService.RegistrationLimit(save), "오프라인 등록도 연 칸만큼");
+
+        Assert.IsTrue(farm.TryGetNextFurrow(out plot, out slot, out unlock));
+        Assert.AreEqual((1, 1, 6), (plot, slot, unlock.requiredLevel));
+        Assert.AreEqual(FurrowUnlockResult.NeedLevel, farm.TryUnlockNextFurrow(5, null, null));
+    }
+
+    [Test]
+    public void OldSave_OpenPlotsStayFullyOpen()
+    {
+        var save = NewSave();
+        save.plots.Add(new PlotSaveData { plotId = "plot_2", unlocked = true, slots = PlotSaveData.CreateEmptySlots() });
+        var farm = new FarmService(save, new[] { _carrot }, _balance, new FakeHost());
+
+        Assert.AreEqual(6, farm.OpenSlotCount, "고랑 잠금 전에 연 밭은 세 칸 모두");
+        Assert.IsTrue(farm.TryGetNextFurrow(out int plot, out int slot, out _));
+        Assert.AreEqual((2, 0), (plot, slot));
+    }
+
+    [Test]
     public void FirstCrop_GrowsInTenSecondsOnce_WithStagesFollowingThatTime()
     {
         var data = new PlotSaveData { plotId = "plot_0", unlocked = true, slots = PlotSaveData.CreateEmptySlots() };

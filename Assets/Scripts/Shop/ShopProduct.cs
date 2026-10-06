@@ -36,12 +36,22 @@ public class ShopProduct : ScriptableObject
     [SerializeField]
     private int _price = 1;
 
+    [Header("열림")]
+    [Tooltip("이 왕국 레벨부터 살 수 있다 (그 전에는 카드에 \"Lv.N\"이 보이고 눌러도 사지 못함)")]
+    [Min(1)]
+    [SerializeField]
+    private int _requiredLevel = 1;
+
     public string ProductId => _productId;
     public int SortOrder => _sortOrder;
     public ItemDefinition Item => _item;
     public int BundleSize => Mathf.Max(1, _bundleSize);
     public Currency PriceCurrency => _priceCurrency;
     public int Price => Mathf.Max(1, _price);
+    public int RequiredLevel => Mathf.Max(1, _requiredLevel);
+
+    /// <summary>이 레벨에서 아직 살 수 없는지</summary>
+    public bool IsLockedAt(int level) => level < RequiredLevel;
 
     /// <summary>카드에 보일 이름 (묶음이면 "지렁이 미끼 x10")</summary>
     public string DisplayName

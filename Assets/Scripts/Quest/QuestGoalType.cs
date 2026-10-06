@@ -14,11 +14,17 @@ public enum QuestGoalType
     Gather,             // 광장에서 주운 재료 개수 (나뭇가지, 돌무더기)
     CompleteConstruction, // 다 지은 건물 수 (집·의자. 개간 제외). 저장된 기록으로 다시 세므로 퀘스트를 늦게 받아도 앞서 지은 것이 들어감
     MeetOtter,          // 광장에서 처음 만난 해달 수 (처음부터 함께한 첫 해달 제외). 도감 등록과 별개, 기록으로 다시 셈
+    Milestone,          // 정착 진행 한 단계 (Target = 끝낸 부탁 ID 또는 열린 발전 ID). 이루면 1, 기록으로 다시 셈
+    VisitZone,          // 장소에 가 보기 (Target = 씬 이름). 도착하거나 이미 그곳에 있으면 1
+    UnlockFurrow,       // 밭 고랑 한 칸 열기 (연 횟수)
+    ExpandBag,          // 가방 칸 늘리기 (늘린 횟수)
+    CompleteDaily,      // 일일 퀘스트 보상 받기 (받은 수)
 }
 
 /// <summary>퀘스트 종류</summary>
 public enum QuestKind
 {
-    Main,  // 성장 퀘스트: 레벨과 앞 단계로 열리고, 한 번 받으면 끝
+    Main,  // 메인 퀘스트: 레벨마다 몇 개를 하나씩 순서대로. 경험치 합 = 그 레벨의 필요 경험치 (Docs/레벨별_메인퀘스트.md)
     Daily, // 일일 퀘스트: 매일 새벽 4시에 진행·수령이 초기화됨
+    Challenge, // 도전 퀘스트: 누적 목표 체인. 골드 보상만, 경험치 없음 (레벨은 메인으로)
 }
