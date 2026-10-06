@@ -140,6 +140,28 @@ public class SettlementConfig : ScriptableObject
     [Tooltip("주운 나뭇가지가 다시 생기기까지 (초)")]
     [SerializeField] private float _gatherCooldownSeconds = 60f;
 
+    [Header("장난감 방문 (P4)")]
+    [Tooltip("장난감 해달이 찾아오는 간격 (분). n번째 방문은 n번째 값, 넘치면 마지막 값")]
+    [SerializeField] private List<float> _toyVisitMinutes = new List<float> { 7f, 12f, 20f, 30f, 45f, 60f };
+
+    [Tooltip("빈 집이 없어 광장에 머무는 장난감 해달이 이만큼이면 다음 방문을 멈춤")]
+    [Min(1)]
+    [SerializeField] private int _maxWaitingVisitors = 2;
+
+    [Tooltip("광장 꾸미기 격자 ID (장난감 방문이 장난감을 세고, 건물을 짓는 격자)")]
+    [SerializeField] private string _plazaBoardId = "plaza";
+
+    public IReadOnlyList<float> ToyVisitMinutes => _toyVisitMinutes;
+    public int MaxWaitingVisitors => Mathf.Max(1, _maxWaitingVisitors);
+    public string PlazaBoardId => _plazaBoardId;
+
+    /// <summary>테스트·설정 도구용: 장난감 방문 수치</summary>
+    public void SetupToyVisits(IEnumerable<float> minutes, int maxWaiting)
+    {
+        _toyVisitMinutes = minutes != null ? new List<float>(minutes) : new List<float>();
+        _maxWaitingVisitors = maxWaiting;
+    }
+
     public Currency GoldCurrency => _goldCurrency;
     public SettlementOtterDefinition FirstOtter => _firstOtter;
     public IReadOnlyList<SettlementOtterDefinition> Otters => _otters;

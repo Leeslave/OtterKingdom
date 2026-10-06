@@ -426,6 +426,12 @@ public class SettlementPlazaView : MonoBehaviour
             return false;
         }
         agent.Initialize(_walkableArea, _plazaSettings);
+        if (otter.PlazaTint != Color.white)
+        {
+            // 같은 프리팹을 쓰는 해달 구분용 임시 색
+            foreach (var sprite in instance.GetComponentsInChildren<SpriteRenderer>(true))
+                sprite.color *= otter.PlazaTint;
+        }
         _spawned[otter.OtterId] = agent;
         _views[otter.OtterId] = AttachView(instance, otter);
         return true;

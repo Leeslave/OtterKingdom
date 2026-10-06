@@ -11,6 +11,8 @@ using UnityEngine.InputSystem;
 /// - 보관함 칸 → 화면 가운데 근처 빈자리에 미리보기
 /// - 미리보기를 끌거나, 빈 곳을 탭하면 그 자리로 옮김. 놓인 물건을 탭하면 들어 올림
 /// - [회전] [확인] [빼기]: 확인해야 격자가 바뀐다. 빼기는 새 물건이면 취소, 놓여 있던 물건이면 보관함으로
+/// - 건물 탭(광장만): 건물을 골라 자리를 정하고 [확인] → 비용 확인 → 공사 시작 (SettlementManager.TryStartBuilding).
+///   놓인 건물은 다 지은 뒤 옮길 수만 있고(빼기 없음), 해달이 걷는 길을 끊는 자리에는 놓거나 옮길 수 없다
 /// 들고 있는 동안 광장 카메라 드래그는 미리보기를 끌 때만 멈춘다.
 /// </summary>
 // 광장 카메라(-50)보다 먼저 눌림을 보고, 미리보기를 끌 때는 카메라를 멈춘다
@@ -28,6 +30,11 @@ public class DecorModePresenter : MonoBehaviour
     private const string HintOccupied = "다른 물건이 있는 자리예요";
     private const string HintUnavailable = "여기에는 놓을 수 없어요";
     private const string HintLocked = "아직 열리지 않은 구역이에요";
+    private const string HintBuildPlace = "자리를 고르고 [확인]을 누르면 공사를 시작해요";
+    private const string HintBuildStarted = "공사를 시작했어요!";
+    private const string HintMoved = "옮겼어요!";
+    private const string HintUnderConstruction = "공사가 끝나면 옮길 수 있어요";
+    private const string HintCutsPath = "해달이 지나갈 길이 막혀요. 다른 자리를 골라 주세요";
 
     // 이만큼(화면 짧은 변 대비) 움직이기 전까지는 탭으로 봄
     private const float TapThresholdScreenFraction = 0.02f;
@@ -49,6 +56,15 @@ public class DecorModePresenter : MonoBehaviour
     [SerializeField] private Sprite _tileBlockedSprite;
 
     public bool IsOpen => gameObject.activeSelf;
+
+    /// <summary>다른 화면(게시판 건물 부탁)이 이 건물을 짓게 꾸미기 모드를 열어 달라고 할 때 (전역 UI가 들음)</summary>
+    public static event Action<BuildingDefinition> BuildRequested;
+
+    public static void RequestBuild(BuildingDefinition building)
+    {
+        if (building != null)
+            BuildRequested?.Invoke(building);
+    }
 
     /// <summary>꾸미기 모드 중인지 (월드의 다른 탭 입력 — 요정 NPC 등 — 이 무시하도록)</summary>
     public static bool IsActive { get; private set; }
@@ -128,6 +144,7 @@ public class DecorModePresenter : MonoBehaviour
         _ghost.Hide();
 
         BuildTabs();
+        _storage.SetBuildingsTabVisible(CanBuildHere);
         _hud.SetActive(false);
         gameObject.SetActive(true);
         IsActive = true;
@@ -137,6 +154,18 @@ public class DecorModePresenter : MonoBehaviour
         _view.HideActions();
         _view.ShowHint(HintIdle);
         RefreshStorage();
+    }
+
+    /// <summary>꾸미기 모드를 열고(이미 열려 있으면 그대로) 건물 탭에서 이 건물의 자리 고르기를 시작</summary>
+    public void EnterForBuilding(BuildingDefinition building)
+    {
+        if (!IsOpen)
+            Enter();
+        if (!IsOpen || building == null || !CanBuildHere)
+            return;
+        _storage.SelectBuildingsTab();
+        RefreshStorage();
+        BeginNewBuilding(building);
     }
 
     public void Exit()
@@ -198,7 +227,54 @@ public class DecorModePresenter : MonoBehaviour
 
     private void RefreshStorage()
     {
-        _storage.Refresh(_manager.Catalog.Decors, _manager.StorageCount, _session != null && _session.IsNew ? _session.Decor : null);
+        var holding = _session != null && _session.IsNew ? _session.Decor : null;
+        if (_storage.ShowsBuildings && CanBuildHere)
+            _storage.RefreshBuildings(SettlementManager.Instance.BuildingCatalog, BuildingSlotInfo, holding);
+        else
+            _storage.Refresh(_manager.Catalog.Decors, _manager.StorageCount, holding);
+    }
+
+    // 건물은 광장 격자에만 지음
+    private bool CanBuildHere
+    {
+        get
+        {
+            var settlement = SettlementManager.Instance;
+            return settlement != null && settlement.IsLoaded && _board != null && _board.Board != null
+                && _board.Board.BoardId == settlement.Config.PlazaBoardId;
+        }
+    }
+
+    // 건물 칸 위쪽 한 줄: 열렸으면 골드 비용, 아니면 잠긴 이유를 짧게
+    private (string top, bool available) BuildingSlotInfo(BuildingDefinition building)
+    {
+        var settlement = SettlementManager.Instance;
+        switch (settlement.CheckBuildingUnlocked(building))
+        {
+            case BuildingBlock.None:
+                int gold = settlement.BuildingGoldCost(building);
+                return (gold > 0 ? $"{gold:N0}G" : "무료", true);
+            case BuildingBlock.Level:
+                return ($"Lv.{building.RequiredLevel}", false);
+            case BuildingBlock.Traits:
+                return (FirstMissingTrait(building), false);
+            case BuildingBlock.MaxCount:
+                return ("다 지음", false);
+            default:
+                return ("잠김", false);
+        }
+    }
+
+    private static string FirstMissingTrait(BuildingDefinition building)
+    {
+        var settlement = SettlementManager.Instance;
+        foreach (var requirement in building.Traits)
+        {
+            int have = settlement.TraitCount(requirement.Trait);
+            if (have < requirement.Count)
+                return $"{OtterTraits.DisplayName(requirement.Trait)} {have}/{requirement.Count}";
+        }
+        return "잠김";
     }
 
     #endregion
@@ -207,6 +283,11 @@ public class DecorModePresenter : MonoBehaviour
 
     private void BeginNew(DecorDefinition decor)
     {
+        if (decor is BuildingDefinition building)
+        {
+            BeginNewBuilding(building);
+            return;
+        }
         if (_manager.StorageCount(decor) <= 0)
         {
             _view.ShowHint(HintEmpty, true);
@@ -222,8 +303,38 @@ public class DecorModePresenter : MonoBehaviour
         RefreshStorage();
     }
 
+    // 건물 칸 → 열렸으면 화면 가운데 근처 빈자리에 미리보기 (비용·공사 자리는 [확인] 때 다시 확인)
+    private void BeginNewBuilding(BuildingDefinition building)
+    {
+        var settlement = SettlementManager.Instance;
+        var block = settlement.CheckBuildingUnlocked(building);
+        if (block != BuildingBlock.None)
+        {
+            _view.ShowHint(settlement.BuildingBlockText(building, block), true);
+            return;
+        }
+
+        CancelSession();
+        var center = _board.WorldToCell(_camera.transform.position);
+        bool found = DecorEditSession.TryFindFreeNear(_layout, building, center, DecorRotation.R0, out var origin);
+        _session = DecorEditSession.ForNew(building, origin);
+        _view.ShowHint(found ? $"{HintBuildPlace} ({settlement.BuildingCostText(building)})" : HintNoRoom, !found);
+        ShowSession();
+        RefreshStorage();
+    }
+
     private void BeginEditPlaced(PlacedDecor placed)
     {
+        // 공사 중인 건물은 옮기지 않음 (남은 시간만 알림)
+        var record = placed.Decor.IsBuilding && SettlementManager.Instance != null
+            ? SettlementManager.Instance.BuildingRecordOf(placed.InstanceId)
+            : null;
+        if (record != null && !record.Built)
+        {
+            _view.ShowHint($"{HintUnderConstruction} ({SettlementManager.FormatShort(record.Remaining(SettlementManager.NowTicks))} 남음)", true);
+            return;
+        }
+
         CancelSession();
         _session = DecorEditSession.ForPlaced(placed);
         _board.SetHidden(placed.InstanceId, true);
@@ -244,6 +355,11 @@ public class DecorModePresenter : MonoBehaviour
     {
         if (_session == null)
             return;
+        if (_session.Decor is BuildingDefinition building)
+        {
+            ConfirmBuilding(building);
+            return;
+        }
 
         var result = _session.IsNew
             ? _manager.TryPlaceFromStorage(_board.Board, _session.Decor, _session.Origin, _session.Rotation, out _)
@@ -261,10 +377,77 @@ public class DecorModePresenter : MonoBehaviour
         _view.ShowHint(HintPlaced);
     }
 
-    // 새 물건: 꺼낸 것을 취소 / 놓여 있던 물건: 보관함으로
+    // 건물: 새로 짓기 → 자리·길 확인 → 비용 확인 대화 → 공사 시작 / 놓인 건물 → 자리·길 확인 → 옮기기
+    private void ConfirmBuilding(BuildingDefinition building)
+    {
+        var check = _session.Check(_layout);
+        if (check != DecorPlacementResult.Ok)
+        {
+            _view.ShowHint(ReasonText(check), true);
+            return;
+        }
+        if (_board.WouldCutPath(_session.Area))
+        {
+            _view.ShowHint(HintCutsPath, true);
+            return;
+        }
+
+        if (!_session.IsNew)
+        {
+            var moved = _layout.TryMove(_session.InstanceId, _session.Origin, _session.Rotation);
+            if (moved != DecorPlacementResult.Ok)
+            {
+                _view.ShowHint(ReasonText(moved), true);
+                return;
+            }
+            _board.SetHidden(_session.InstanceId, false);
+            EndSession();
+            _view.ShowHint(HintMoved);
+            return;
+        }
+
+        var settlement = SettlementManager.Instance;
+        var block = settlement.CheckBuilding(building);
+        if (block != BuildingBlock.None)
+        {
+            _view.ShowHint(settlement.BuildingBlockText(building, block), true);
+            return;
+        }
+
+        var origin = _session.Origin;
+        string cost = settlement.BuildingCostText(building);
+        var game = GameManager.Instance;
+        if (game == null)
+        {
+            StartBuilding(building, origin);
+            return;
+        }
+        game.ShowConfirm($"{building.DisplayName} 짓기", $"{cost}\n이 자리에 지을까요?", () => StartBuilding(building, origin));
+    }
+
+    private void StartBuilding(BuildingDefinition building, Vector2Int origin)
+    {
+        var settlement = SettlementManager.Instance;
+        var block = settlement.TryStartBuilding(building, origin, out var placement);
+        if (block != BuildingBlock.None)
+        {
+            _view.ShowHint(settlement.BuildingBlockText(building, block), true);
+            return;
+        }
+        if (placement != DecorPlacementResult.Ok)
+        {
+            _view.ShowHint(ReasonText(placement), true);
+            return;
+        }
+        if (_session != null && _session.IsNew && _session.Decor == building)
+            EndSession();
+        _view.ShowHint(HintBuildStarted);
+    }
+
+    // 새 물건: 꺼낸 것을 취소 / 놓여 있던 물건: 보관함으로 (놓인 건물은 버튼이 없음)
     private void RemoveSession()
     {
-        if (_session == null)
+        if (_session == null || (_session.Decor.IsBuilding && !_session.IsNew))
             return;
 
         bool wasPlaced = !_session.IsNew;
@@ -297,7 +480,7 @@ public class DecorModePresenter : MonoBehaviour
 
     private void ShowSession()
     {
-        _view.ShowActions(_session.CanRotate);
+        _view.ShowActions(_session.CanRotate, !_session.Decor.IsBuilding || _session.IsNew);
         UpdateGhost();
     }
 
@@ -410,7 +593,10 @@ public class DecorModePresenter : MonoBehaviour
             _dragging = false;
             SetCameraDrag(true);
             var result = _session.Check(_layout);
-            _view.ShowHint(result == DecorPlacementResult.Ok ? HintPlace : ReasonText(result), result != DecorPlacementResult.Ok);
+            if (result == DecorPlacementResult.Ok && _session.Decor.IsBuilding && _board.WouldCutPath(_session.Area))
+                _view.ShowHint(HintCutsPath, true);
+            else
+                _view.ShowHint(result == DecorPlacementResult.Ok ? HintPlace : ReasonText(result), result != DecorPlacementResult.Ok);
             return;
         }
 
@@ -486,7 +672,16 @@ public class DecorModePresenter : MonoBehaviour
     {
         var text = new StringBuilder("0123456789x()·!,. 전체배치됨상점꾸미기모드완료보관함");
         text.Append(HintIdle).Append(HintPlace).Append(HintPlaced).Append(HintStored).Append(HintNoRoom)
-            .Append(HintEmpty).Append(HintShop).Append(HintFairyComing).Append(HintOccupied).Append(HintUnavailable).Append(HintLocked);
+            .Append(HintEmpty).Append(HintShop).Append(HintFairyComing).Append(HintOccupied).Append(HintUnavailable).Append(HintLocked)
+            .Append(HintBuildPlace).Append(HintBuildStarted).Append(HintMoved).Append(HintUnderConstruction).Append(HintCutsPath)
+            .Append("건물다지음잠김무료골드목재돌남음짓기이자리에지을까요?왕국레벨부터특성해달이모자라요더없어요다른건물을짓는중이에요건설재료Lv.G/");
+        foreach (var building in DecorManager.Instance.Catalog.Buildings)
+        {
+            if (building != null)
+                text.Append(building.DisplayName);
+        }
+        for (int i = 1; i <= OtterTraits.Count; i++)
+            text.Append(OtterTraits.DisplayName((OtterTrait)i));
         foreach (var decor in DecorManager.Instance.Catalog.Decors)
         {
             if (decor != null)

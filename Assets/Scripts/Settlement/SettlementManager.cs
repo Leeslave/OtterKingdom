@@ -150,12 +150,17 @@ public partial class SettlementManager : MonoBehaviour
             OnChanged?.Invoke();
         };
         Settlement.OnDevelopmentUnlocked += id => OnDevelopmentUnlocked?.Invoke(id);
+        // 왕국 보유 효과(특성 건물): 판매·개간·채굴·수확이 여기서 합계를 물음
+        KingdomBonus.Source = BonusPercent;
     }
 
     private void OnDestroy()
     {
         if (Instance == this)
+        {
             Instance = null;
+            KingdomBonus.Source = null;
+        }
     }
 
     private void Update()
@@ -181,6 +186,9 @@ public partial class SettlementManager : MonoBehaviour
             _projectsDirty = false;
             UpdateProjects(false);
         }
+        TickToyVisits();
+        FinishDueBuildings();
+        CompleteRecordRequests();
         if (Settlement.Job == null)
             return;
 
@@ -389,7 +397,7 @@ public partial class SettlementManager : MonoBehaviour
     {
         var profile = ProfileManager.Instance;
         if (profile != null)
-            profile.SetLevelCap(SettlementRules.LevelCap(_config, Settlement));
+            profile.SetLevelCap(SettlementRules.LevelCap(_config, Settlement, profile.Level));
     }
 
     #endregion
@@ -1151,6 +1159,9 @@ public partial class SettlementManager : MonoBehaviour
         int regrown = Settlement.CountGatherRegrown(leftAt, now);
         if (regrown > 0)
             lines.Add($"광장에 주울 나뭇가지·돌이 {regrown}곳 다시 생겼어요");
+
+        CollectBuildingNews(leftAt, now, lines);
+        CollectVisitNews(lines);
     }
 
     /// <summary>돌아옴 팝업 맨 아래의 다음 할 일 (지금 할 부탁 또는 정착 후보의 이야기. 짓는 중이거나 다 끝냈으면 null)</summary>
@@ -1207,6 +1218,7 @@ public partial class SettlementManager : MonoBehaviour
         MigrateVersion(fairyShopSeen);
         MigrateTerritory();
         ReconcileRecords();
+        ReconcileBuildings();
         SyncLevelDevelopments(false);
         IsLoaded = true;
         // 개발 메뉴 Fast Timers가 켜져 있으면 세이브에 남은 긴 건설·작업도 5초 안으로
@@ -1215,6 +1227,7 @@ public partial class SettlementManager : MonoBehaviour
         if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
             FinishJob();
         FinishDueTasks();
+        FinishDueBuildings(false);
         SyncRegionDecor();
         // 공동사업: 기록에서 단계·완료를 다시 계산 (꺼진 사이 끝난 건설·정비, 주다 만 보상). 알림 없이
         UpdateProjects(true);

@@ -77,7 +77,15 @@ public static partial class SettlementSetup
                 otters[otter.OtterId] = otter;
         }
         CreateP3Data(configSo, otters);
+        // 특성 · 장난감 해달 (P4) — 새 이웃(포근이)이 생긴 뒤에
+        CreateTraitData(configSo, otters);
         configSo.ApplyModifiedPropertiesWithoutUndo();
+        // 자리를 골라 짓는 건물 (P4)
+        CreateBuildingData();
+        // Lv.10~15 해달의 부탁 (P4 — 건물·장난감 해달이 생긴 뒤에)
+        var storySo = new SerializedObject(config);
+        CreateP4Story(storySo, otters);
+        storySo.ApplyModifiedPropertiesWithoutUndo();
         AssetDatabase.SaveAssets();
         PlaceP3Plaza();
         Debug.Log("[SettlementSetup] P3 적용 완료: 공동사업·생활 의뢰·영토 확장 데이터, 요정 방문 순서, 광장 P3·영토 배치");

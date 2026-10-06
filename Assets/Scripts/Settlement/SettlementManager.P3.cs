@@ -482,9 +482,11 @@ public partial class SettlementManager
         return stage != null && stage.Action == ProjectActionKind.SettleResident && stage.Resident == otter ? stage : null;
     }
 
-    /// <summary>광장에서 말을 걸면 입주를 물을 수 있는지 (집이 있고, 만났고, 아직 입주 전)</summary>
+    /// <summary>광장에서 말을 걸면 입주를 물을 수 있는지 (집이 있고, 만났고, 아직 입주 전). 장난감 해달은 빈 집에</summary>
     public bool CanMoveIn(SettlementOtterDefinition otter)
     {
+        if (ToyVisitRules.CanMoveIn(_config, Settlement, otter) || CanMoveInAsSettler(otter))
+            return true;
         var stage = MoveInStage(otter);
         return stage != null && Settlement.FindHouseBySlot(stage.HouseSlotId) != null && Settlement.HasMet(otter.OtterId)
             && !CommunityProjectRules.IsSettled(stage, Settlement);
@@ -494,6 +496,8 @@ public partial class SettlementManager
     /// <returns>이번에 입주했으면 true</returns>
     public bool TryMoveIn(SettlementOtterDefinition otter)
     {
+        if (otter != null && (otter.IsToyVisitor || CanMoveInAsSettler(otter)))
+            return TryMoveInHome(otter);
         if (!CanMoveIn(otter))
             return false;
         var stage = MoveInStage(otter);

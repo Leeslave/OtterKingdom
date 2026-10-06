@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 
         ComputePendingOfflineElapsed();
 
-        LoadGoldFromSave();
+        LoadCurrenciesFromSave();
         // Gold shows in GlobalUI's top bar now; the old CurrencyHud strip is no longer shown.
         bool seedsMoved = LoadInventoryOnce();
         // After the bag, so the collection also marks what the bag holds, and
@@ -318,7 +318,8 @@ public class GameManager : MonoBehaviour
         public void StoreHarvest(string cropId, int amount)
         {
             if (!game.TryFindItem(cropId, out var item)) return;
-            int added = game.Bag.Add(item, amount, ItemChangeReason.Harvest);
+            // Harvest bonus (granary, KingdomBonus) on the farmer's harvest only — offline farming stays as is.
+            int added = game.Bag.Add(item, KingdomBonus.Amount(KingdomBonusKind.HarvestYield, amount), ItemChangeReason.Harvest);
             if (added > 0) HarvestStored?.Invoke(item, added);
         }
 
@@ -741,7 +742,7 @@ public class GameManager : MonoBehaviour
 
     private void SaveNow()
     {
-        WriteGoldToSave();
+        WriteCurrenciesToSave();
         InventoryManager.Instance.WriteToSave(save.inventory);
         save.inventoryCapacity = Bag.Capacity;
         LoadGlobalProgressOnce();
@@ -753,23 +754,35 @@ public class GameManager : MonoBehaviour
         saveService.Save(save);
     }
 
-    // The currency system doesn't know about SaveData — the balance is
-    // copied in and out here. Only Gold is ours; other entries are kept.
-    private void LoadGoldFromSave()
+    // The currency system doesn't know about SaveData — balances are copied
+    // in and out here by currency ID. Every currency is saved (gold and
+    // shells); a currency this scene's CurrencyManager hasn't used yet keeps
+    // its saved entry untouched until it is first used.
+    private void LoadCurrenciesFromSave()
     {
-        var entry = save.currencies.Find(c => c.currencyId == goldCurrency.CurrencyID);
-        CurrencyManager.Instance.SetBalance(goldCurrency, entry != null ? entry.amount : 0);
+        var saved = new List<KeyValuePair<string, int>>();
+        foreach (var entry in save.currencies)
+        {
+            if (entry != null)
+                saved.Add(new KeyValuePair<string, int>(entry.currencyId, entry.amount));
+        }
+        CurrencyManager.Instance.LoadSavedBalances(saved);
+        // Gold always has a wallet (old behaviour: missing from the save = 0).
+        CurrencyManager.Instance.GetCurrency(goldCurrency);
     }
 
-    private void WriteGoldToSave()
+    private void WriteCurrenciesToSave()
     {
-        var entry = save.currencies.Find(c => c.currencyId == goldCurrency.CurrencyID);
-        if (entry == null)
+        foreach (var pair in CurrencyManager.Instance.Balances)
         {
-            entry = new CurrencyBalance { currencyId = goldCurrency.CurrencyID };
-            save.currencies.Add(entry);
+            var entry = save.currencies.Find(c => c.currencyId == pair.Key.CurrencyID);
+            if (entry == null)
+            {
+                entry = new CurrencyBalance { currencyId = pair.Key.CurrencyID };
+                save.currencies.Add(entry);
+            }
+            entry.amount = pair.Value;
         }
-        entry.amount = CurrencyManager.Instance.GetCurrency(goldCurrency);
     }
 
     public void ToggleDebugPanel()
@@ -1145,7 +1158,9 @@ public class GameManager : MonoBehaviour
 
         if (Bag.GetAddableAmount(item) > 0)
         {
-            Bag.Add(item, 1, ItemChangeReason.Mining);
+            // Stone bonus (quarry, KingdomBonus): sometimes one extra stone per find.
+            int count = itemId == miningBalance.stoneItemId ? KingdomBonus.Amount(KingdomBonusKind.StoneYield, 1) : 1;
+            Bag.Add(item, count, ItemChangeReason.Mining);
             fullBagFindAlertShown = false;
             SaveNow();
             return item;

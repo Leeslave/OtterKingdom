@@ -19,20 +19,20 @@ public class PlacedDecorView : MonoBehaviour
     private float _cellSize;
     private Coroutine _reaction;
 
-    public PlacedDecor Placed { get; private set; }
+    public PlacedDecor Placed { get; protected set; }
 
     /// <summary>지금 같이 놀고 있는 해달 수 (DecorBoardView가 예약·해제)</summary>
     public int Players { get; internal set; }
 
-    public bool HasRoom => Players < Placed.Decor.MaxPlayers;
+    public bool HasRoom => !Placed.Decor.IsBuilding && Players < Placed.Decor.MaxPlayers;
 
     /// <summary>물건이 땅에 닿는 자리 (차지한 칸 아래쪽 가운데)</summary>
     public Vector2 GroundPoint => transform.position;
 
     /// <summary>차지한 영역 (월드)</summary>
-    public Rect WorldRect { get; private set; }
+    public Rect WorldRect { get; protected set; }
 
-    internal void Init(PlacedDecor placed, Rect worldRect, float cellSize, float fill, int sortingOrder)
+    internal virtual void Init(PlacedDecor placed, Rect worldRect, float cellSize, float fill, int sortingOrder)
     {
         Placed = placed;
         _cellSize = cellSize;
@@ -50,7 +50,7 @@ public class PlacedDecorView : MonoBehaviour
     }
 
     // 칸에 맞춰 놓고 방향만큼 돌림 (옮기거나 돌린 뒤에도 다시 부름)
-    internal void Place(Rect worldRect, float fill)
+    internal virtual void Place(Rect worldRect, float fill)
     {
         StopReaction();
         WorldRect = worldRect;
@@ -67,7 +67,7 @@ public class PlacedDecorView : MonoBehaviour
         _reaction = null;
     }
 
-    internal void SetSortingOrder(int order) => _renderer.sortingOrder = order;
+    internal virtual void SetSortingOrder(int order) => _renderer.sortingOrder = order;
 
     /// <summary>가지고 노는 동안 반응 (이미 반응 중이면 시간을 늘림)</summary>
     public void PlayReaction(float seconds)

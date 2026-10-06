@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde64cb29026ea4a985d0e677b28392, type: 3}
+  m_Name: Otter_Toy_Degul
+  m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
+  _otterId: otter_toy_degul
+  _displayName: "\uB370\uAD74\uC774"
+  _portrait: {fileID: 21300000, guid: 5436b78cc2da9ae4b9c403c6b96b3d4d, type: 3}
+  _plazaPrefab: {fileID: 4823710553209184617, guid: c232c503b3514cd397048b6d52d74b4f, type: 3}
+  _plazaTint: {r: 0.82, g: 0.84, b: 0.95, a: 1}
+  _trait: 2
+  _toyVisitor: 1
+  _visitTier: 0
+  _homelessLine: "\uB3CC \uAD74\uB9AC\uBA70 \uAE30\uB2E4\uB9B4\uAC8C\uC694.\n\uBE48 \uC9D1\uC774 \uC0DD\uAE30\uBA74 \uBD88\uB7EC \uC918\uC694!"
+  _isBuilder: 0
+  _arrivalEntry: {fileID: 11400000, guid: a45a058813644e14a895f4f935471df1, type: 2}
+  _workRegion: {fileID: 0}
+  _collectionEntry: {fileID: 0}
+  _assignLine: 
+  _assignDevelopment: 
+  _moveInLine: "\uC5EC\uAE30 \uB3CC\uC774 \uB9CE\uC544\uC11C \uC88B\uC544\uC694.\n\uC800 \uC9D1\uC5D0\uC11C \uC0B4\uC544\uB3C4 \uB420\uAE4C\uC694?"
+  _lines:
+  - "\uB3D9\uAE00\uB3D9\uAE00\uD55C \uB3CC\uC774 \uC81C\uC77C \uC88B\uC544\uC694."
+  - "\uB370\uAD74\uB370\uAD74~"
+  - "\uAD11\uC0B0 \uB3CC\uC740 \uBC18\uC9DD\uC5EC\uC694!"
+  _introLine: 
+  _introDevelopment: 

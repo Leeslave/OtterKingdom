@@ -187,7 +187,8 @@ public class RockNodeView : MonoBehaviour
 
     private void Break(SettlementManager manager, int done)
     {
-        int added = manager.TryGather(_pointId, _item, _amount, _regrowSeconds);
+        // 돌 효과(채석 작업소, KingdomBonus)
+        int added = manager.TryGather(_pointId, _item, KingdomBonus.Amount(KingdomBonusKind.StoneYield, _amount), _regrowSeconds);
         if (added <= 0)
         {
             // 가방이 꽉 참: 깨지기 직전에서 멈춤

@@ -53,4 +53,21 @@ public class DecorStorageSlotView : MonoBehaviour
         _nameText.color = has ? _nameColor : _mutedColor;
         _selectRing.SetActive(selected);
     }
+
+    /// <summary>건물 칸: 그림, 위쪽 한 줄(비용 또는 잠긴 이유), 이름. 아직 못 짓는 건물은 흐리게</summary>
+    public void BindBuilding(BuildingDefinition building, string topText, bool available, bool selected)
+    {
+        if (building == null)
+            throw new ArgumentNullException(nameof(building));
+
+        Decor = building;
+        _background.sprite = available ? _filledSprite : _emptySprite;
+        _icon.sprite = building.Icon;
+        _icon.enabled = _icon.sprite != null;
+        _icon.color = new Color(1f, 1f, 1f, available ? 1f : _emptyIconAlpha);
+        _countText.text = topText;
+        _nameText.text = building.DisplayName;
+        _nameText.color = available ? _nameColor : _mutedColor;
+        _selectRing.SetActive(selected);
+    }
 }

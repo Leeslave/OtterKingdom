@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21bf3c5778b2f79489589cdca7cb1806, type: 3}
+  m_Name: gb_req_p4_granary
+  m_EditorClassIdentifier: OtterKingdom::GuestbookEntryDefinition
+  _entryId: gb_req_p4_granary
+  _otter: {fileID: 11400000, guid: d77a0cb424b64937aa0cf04256be1d97, type: 2}
+  _tag: "\uCC3D\uACE0"
+  _message: "\uBCF4\uB4E4\uC774\uB791 \uAC19\uC774 \uAC70\uB450\uB2C8 \uCC3D\uACE0\uAC00
+    \uAC00\uB4DD\uD574\uC694!"

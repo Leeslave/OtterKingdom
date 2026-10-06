@@ -16,6 +16,11 @@ MonoBehaviour:
   _displayName: "\uCCA8\uBC99\uC774"
   _portrait: {fileID: 21300000, guid: ab9ca150b50f0a748ae2419bcadb71f3, type: 3}
   _plazaPrefab: {fileID: 8522304396617631820, guid: b941634342409014b80d3ed3f19d1645, type: 3}
+  _plazaTint: {r: 1, g: 1, b: 1, a: 1}
+  _trait: 4
+  _toyVisitor: 0
+  _visitTier: 0
+  _homelessLine: 
   _isBuilder: 0
   _arrivalEntry: {fileID: 11400000, guid: 8165141d3da63344a9e52ede60f41bef, type: 2}
   _workRegion: {fileID: 11400000, guid: 6d13b4bce695b524882fb607f393c1bf, type: 2}

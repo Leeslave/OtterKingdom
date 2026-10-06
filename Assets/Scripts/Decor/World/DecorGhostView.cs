@@ -51,7 +51,10 @@ public class DecorGhostView : MonoBehaviour
         }
 
         // DecorVisual은 부모 원점이 칸 아래 가운데라고 보므로, 이 오브젝트(칸 왼쪽 아래)에서 가로 절반만큼 옮김
-        DecorVisual.Fit(_toyBody, _toy, decor, rotation, worldRect, fill);
+        if (decor is BuildingDefinition building)
+            BuildingVisual.Fit(_toyBody, _toy, building, building.WorldSprite, worldRect);
+        else
+            DecorVisual.Fit(_toyBody, _toy, decor, rotation, worldRect, fill);
         _toyBody.localPosition += new Vector3(worldRect.width * 0.5f, 0f, 0f);
 
         gameObject.SetActive(true);

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ec370d3e6141e2be98fb109a64cfe2, type: 3}
+  m_Name: Building_SmallHouse
+  m_EditorClassIdentifier: OtterKingdom::BuildingDefinition
+  _item: {fileID: 0}
+  _footprint: {x: 4, y: 3}
+  _canRotate: 0
+  _playStyle: 0
+  _playSeconds: {x: 4, y: 7}
+  _maxPlayers: 1
+  _worldSprite: {fileID: 21300000, guid: 5abb75a753e5025458c586827fa2dd27, type: 3}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _buildingId: bld_small_house
+  _buildingName: "\uC791\uC740 \uC9D1"
+  _description: "\uC7A5\uB09C\uAC10\uC744 \uBCF4\uACE0 \uCC3E\uC544\uC628 \uD574\uB2EC\uC774
+    \uC0B4 \uC218 \uC788\uB294 \uC9D1\uC774\uC5D0\uC694."
+  _icon: {fileID: 21300000, guid: cdc5e4e4057a059438fddb5ca2478ae2, type: 3}
+  _kind: 0
+  _requiredLevel: 0
+  _requiredDevelopment: town_hall_built
+  _traits: []
+  _maxCount: 0
+  _gold: 600
+  _items:
+  - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+    _amount: 20
+  - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
+    _amount: 10
+  _costGrowth: 0.3
+  _buildSeconds: 180
+  _stageSprites:
+  - {fileID: 21300000, guid: 5cbb87e8de7aeac4095e8a4d9a59684a, type: 3}
+  - {fileID: 21300000, guid: b0b5ec6f851d44c4a8596d2cf123780d, type: 3}
+  - {fileID: 21300000, guid: 1cc7a968f2babc0438e30009095f578b, type: 3}
+  - {fileID: 21300000, guid: 8e68b085425e8754db433da8ced5c70a, type: 3}
+  _bonuses: []
+  _hostsFairyShop: 0
+  _widthFill: 0.9

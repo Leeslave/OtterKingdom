@@ -80,7 +80,7 @@ public class SellPopupView : MonoBehaviour
         _maxButton.interactable = _quantity.CanIncrease;
 
         // 아이콘이 없으면 재화 이름으로 대신 표시 (예: "골드 150")
-        string amount = NumberFormatter.Short(_quantity.Total(_item.SellPrice));
+        string amount = NumberFormatter.Short(_quantity.Total(KingdomBonus.SellPrice(_item.SellPrice)));
         _totalText.text = _currency.Icon != null ? amount : $"{_currency.DisplayName} {amount}";
     }
 }

@@ -26,10 +26,24 @@ public class DecorBoardDefinition : ScriptableObject
     [SerializeField]
     private List<DecorRegionDefinition> _regions = new List<DecorRegionDefinition>();
 
+    [Tooltip("세이브 좌표의 기준 칸: 세이브에는 (칸 − 이 값)으로 저장한다. 격자를 왼쪽·아래로 넓히면 넓힌 칸 수만큼 올려서 옛 세이브의 자리가 그대로 맞게 한다")]
+    [SerializeField]
+    private Vector2Int _saveOrigin;
+
     public string BoardId => _boardId;
     public ZoneDefinition Zone => _zone;
     public Vector2Int Size => new Vector2Int(Mathf.Max(1, _size.x), Mathf.Max(1, _size.y));
     public IReadOnlyList<DecorRegionDefinition> Regions => _regions;
+    public Vector2Int SaveOrigin => _saveOrigin;
+
+    /// <summary>테스트·설정 도구용</summary>
+    public void Setup(string boardId, Vector2Int size, IEnumerable<DecorRegionDefinition> regions, Vector2Int saveOrigin)
+    {
+        _boardId = boardId;
+        _size = size;
+        _regions = regions != null ? new List<DecorRegionDefinition>(regions) : new List<DecorRegionDefinition>();
+        _saveOrigin = saveOrigin;
+    }
 
     private void OnValidate()
     {

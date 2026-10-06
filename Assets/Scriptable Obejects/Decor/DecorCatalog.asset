@@ -15,3 +15,9 @@ MonoBehaviour:
   _decors:
   - {fileID: 11400000, guid: a74ce065ea35313408fc84c4682a8b18, type: 2}
   - {fileID: 11400000, guid: 27f5a89fd896ec2448e08acb315e6e58, type: 2}
+  _buildings:
+  - {fileID: 11400000, guid: 778c24d56eda4ca280f37eb40957d768, type: 2}
+  - {fileID: 11400000, guid: f6132aa17635ef644a2c1a3a1dd18789, type: 2}
+  - {fileID: 11400000, guid: 4e15b5eb7cd015b44ab19f7b39aad7d3, type: 2}
+  - {fileID: 11400000, guid: 15ea4d6bf71774e4c8c38eabff7e72c6, type: 2}
+  - {fileID: 11400000, guid: 32a411fc79237534bae657f2e1667868, type: 2}

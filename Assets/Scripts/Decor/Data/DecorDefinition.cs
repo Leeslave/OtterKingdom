@@ -54,7 +54,14 @@ public class DecorDefinition : ScriptableObject
 
     public ItemDefinition Item => _item;
     public string ItemId => _item != null ? _item.ItemId : null;
-    public string DisplayName => _item != null ? _item.DisplayName : name;
+    public virtual string DisplayName => _item != null ? _item.DisplayName : name;
+
+    /// <summary>세이브에 남는 종류 ID (장난감 = 아이템 ID, 건물 = 건물 ID)</summary>
+    public virtual string SaveId => ItemId;
+
+    /// <summary>건물인지 (가방·보관함이 아니라 건설로 놓이고, 해달이 가지고 놀지 않음)</summary>
+    public virtual bool IsBuilding => false;
+
     public Vector2Int Footprint => new Vector2Int(Mathf.Max(1, _footprint.x), Mathf.Max(1, _footprint.y));
     public bool CanRotate => _canRotate;
     public DecorPlayStyle PlayStyle => _playStyle;
@@ -76,7 +83,15 @@ public class DecorDefinition : ScriptableObject
         return WorldSprite;
     }
 
-    private void OnValidate()
+    /// <summary>테스트·설정 도구용: 놓는 모습</summary>
+    public void SetupPlacement(Vector2Int footprint, bool canRotate, Sprite worldSprite)
+    {
+        _footprint = footprint;
+        _canRotate = canRotate;
+        _worldSprite = worldSprite;
+    }
+
+    protected virtual void OnValidate()
     {
         if (_item == null)
             Debug.LogWarning($"[{name}] 아이템이 비어 있습니다.", this);

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::DecorBoardDefinition
   _boardId: plaza
   _zone: {fileID: 11400000, guid: c58e59f71c343b648b46ce47894437b1, type: 2}
-  _size: {x: 24, y: 33}
+  _size: {x: 101, y: 90}
   _regions:
   - {fileID: 11400000, guid: e17d589f56270b940a354f1bac65124e, type: 2}
+  _saveOrigin: {x: 77, y: 3}

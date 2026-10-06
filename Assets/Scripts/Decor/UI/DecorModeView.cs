@@ -69,11 +69,12 @@ public class DecorModeView : MonoBehaviour
         }
     }
 
-    /// <summary>물건 위 버튼 보이기 (canRotate가 false면 회전 버튼 숨김)</summary>
-    public void ShowActions(bool canRotate)
+    /// <summary>물건 위 버튼 보이기 (canRotate가 false면 회전 버튼, canRemove가 false면 빼기 버튼 숨김 — 놓인 건물은 치울 수 없음)</summary>
+    public void ShowActions(bool canRotate, bool canRemove = true)
     {
         _actions.gameObject.SetActive(true);
         _rotateButton.gameObject.SetActive(canRotate);
+        _removeButton.gameObject.SetActive(canRemove);
     }
 
     public void HideActions() => _actions.gameObject.SetActive(false);

@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ec370d3e6141e2be98fb109a64cfe2, type: 3}
+  m_Name: Building_Granary
+  m_EditorClassIdentifier: OtterKingdom::BuildingDefinition
+  _item: {fileID: 0}
+  _footprint: {x: 4, y: 3}
+  _canRotate: 0
+  _playStyle: 0
+  _playSeconds: {x: 4, y: 7}
+  _maxPlayers: 1
+  _worldSprite: {fileID: 21300000, guid: 0df8850067a44be4d88237c1839fc692, type: 3}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _buildingId: bld_granary
+  _buildingName: "\uB18D\uC5C5 \uCC3D\uACE0"
+  _description: "\uBC2D\uC5D0\uC11C \uAC70\uB450\uB294 \uC791\uBB3C\uC774 \uB298\uC5B4\uB098\uC694."
+  _icon: {fileID: 0}
+  _kind: 1
+  _requiredLevel: 0
+  _requiredDevelopment: p4_farmer_settled
+  _traits:
+  - _trait: 3
+    _count: 2
+  _maxCount: 1
+  _gold: 5000
+  _items:
+  - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+    _amount: 80
+  - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
+    _amount: 50
+  _costGrowth: 0
+  _buildSeconds: 480
+  _stageSprites: []
+  _bonuses:
+  - _kind: 3
+    _percent: 10
+  _hostsFairyShop: 0
+  _widthFill: 0.95

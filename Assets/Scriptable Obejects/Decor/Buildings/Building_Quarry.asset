@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ec370d3e6141e2be98fb109a64cfe2, type: 3}
+  m_Name: Building_Quarry
+  m_EditorClassIdentifier: OtterKingdom::BuildingDefinition
+  _item: {fileID: 0}
+  _footprint: {x: 4, y: 3}
+  _canRotate: 0
+  _playStyle: 0
+  _playSeconds: {x: 4, y: 7}
+  _maxPlayers: 1
+  _worldSprite: {fileID: 21300000, guid: 6b20f96425287c94a99f247ddf4af2e3, type: 3}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _buildingId: bld_quarry
+  _buildingName: "\uCC44\uC11D \uC791\uC5C5\uC18C"
+  _description: "\uAD11\uC7A5 \uBC14\uC704\uC640 \uAD11\uC0B0\uC5D0\uC11C \uC5BB\uB294
+    \uB3CC\uC774 \uB298\uC5B4\uB098\uC694."
+  _icon: {fileID: 0}
+  _kind: 1
+  _requiredLevel: 0
+  _requiredDevelopment: p4_miner_settled
+  _traits:
+  - _trait: 2
+    _count: 2
+  _maxCount: 1
+  _gold: 4000
+  _items:
+  - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+    _amount: 60
+  - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
+    _amount: 60
+  _costGrowth: 0
+  _buildSeconds: 420
+  _stageSprites: []
+  _bonuses:
+  - _kind: 2
+    _percent: 20
+  _hostsFairyShop: 0
+  _widthFill: 0.95

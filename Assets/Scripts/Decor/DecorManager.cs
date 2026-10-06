@@ -66,7 +66,9 @@ public class DecorManager : MonoBehaviour
             layout.OnPlaced += placed =>
             {
                 OnStorageChanged?.Invoke();
-                OnDecorPlaced?.Invoke(placed);
+                // 건물은 장난감 놓기 퀘스트에 세지 않음
+                if (!placed.Decor.IsBuilding)
+                    OnDecorPlaced?.Invoke(placed);
             };
             layout.OnRemoved += _ => OnStorageChanged?.Invoke();
             _layouts.Add(board, layout);
@@ -166,8 +168,33 @@ public class DecorManager : MonoBehaviour
         return layout.TryPlace(decor, origin, rotation, out placed);
     }
 
-    /// <summary>놓인 물건을 보관함으로 되돌린다</summary>
-    public bool ReturnToStorage(DecorBoardDefinition board, int instanceId) => GetLayout(board).Remove(instanceId);
+    /// <summary>놓인 물건을 보관함으로 되돌린다 (건물은 치울 수 없음)</summary>
+    public bool ReturnToStorage(DecorBoardDefinition board, int instanceId)
+    {
+        var layout = GetLayout(board);
+        if (layout.TryGet(instanceId, out var placed) && placed.Decor.IsBuilding)
+            return false;
+        return layout.Remove(instanceId);
+    }
+
+    /// <summary>건물을 놓는다 (보관함과 상관없음. 비용·공사는 SettlementManager가 함께 처리)</summary>
+    public DecorPlacementResult TryPlaceBuilding(DecorBoardDefinition board, BuildingDefinition building, Vector2Int origin, out PlacedDecor placed)
+    {
+        if (building == null)
+            throw new ArgumentNullException(nameof(building));
+        return GetLayout(board).TryPlace(building, origin, DecorRotation.R0, out placed);
+    }
+
+    /// <returns>이름이 이 ID인 격자 (없으면 null)</returns>
+    public DecorBoardDefinition FindBoard(string boardId)
+    {
+        foreach (var board in _boards)
+        {
+            if (board != null && board.BoardId == boardId)
+                return board;
+        }
+        return null;
+    }
 
     // 가방에서 빠져(판매·삭제 등) 가진 수보다 많이 놓여 있으면 넘치는 만큼 치운다
     private void HandleItemChanged(ItemChangedEvent e)
@@ -270,7 +297,7 @@ public class DecorManager : MonoBehaviour
                     _unknownSavedBoards.Add(boardSave);
                     continue;
                 }
-                skipped += DecorSaveConverter.Read(boardSave, _layouts[board], _catalog);
+                skipped += DecorSaveConverter.Read(boardSave, _layouts[board], _catalog, board.SaveOrigin);
             }
         }
 
@@ -288,7 +315,7 @@ public class DecorManager : MonoBehaviour
         foreach (var pair in _layouts)
         {
             var boardSave = new DecorBoardSaveData { boardId = pair.Key.BoardId };
-            DecorSaveConverter.Write(pair.Value, boardSave);
+            DecorSaveConverter.Write(pair.Value, boardSave, pair.Key.SaveOrigin);
             result.boards.Add(boardSave);
         }
         result.boards.AddRange(_unknownSavedBoards);

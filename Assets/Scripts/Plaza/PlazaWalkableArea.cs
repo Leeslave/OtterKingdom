@@ -75,6 +75,11 @@ public class PlazaWalkableArea : MonoBehaviour
     // Bumped whenever runtime obstacles change the walkable cells.
     public int Version { get; private set; }
 
+    // Bumps only when the polygons are rebuilt (a house or a territory
+    // appearing), not when runtime obstacles change. Decor boards re-derive
+    // which grid cells are placeable from this.
+    public int StaticVersion { get; private set; }
+
     private void Awake()
     {
         Rebuild();
@@ -141,6 +146,7 @@ public class PlazaWalkableArea : MonoBehaviour
         // A runtime rebuild (a house appearing) can change the cells under a
         // walk in progress, same as an obstacle change.
         Version++;
+        StaticVersion++;
     }
 
     // A cell is walkable when its centre plus a ring of 8 samples at
@@ -292,6 +298,59 @@ public class PlazaWalkableArea : MonoBehaviour
         ApplyObstacleCells();
         LabelComponents();
         Version++;
+    }
+
+    // Number of connected walkable regions of at least `minCells` cells if
+    // the runtime obstacles were `rects` instead of the current ones. Used to
+    // refuse a building that would cut a path in two. Leaves the real grid
+    // untouched.
+    public int CountRegions(IReadOnlyList<Rect> rects, int minCells)
+    {
+        if (!EnsureBuilt() || walkable.Length == 0) return 0;
+
+        var real = walkable;
+        var realObstacles = new List<Rect>(obstacles);
+        try
+        {
+            walkable = (bool[])staticWalkable.Clone();
+            obstacles.Clear();
+            if (rects != null) obstacles.AddRange(rects);
+            ApplyObstacleCells();
+
+            var seen = new bool[walkable.Length];
+            var queue = new Queue<int>();
+            int regions = 0;
+            for (int start = 0; start < walkable.Length; start++)
+            {
+                if (!walkable[start] || seen[start]) continue;
+                int size = 0;
+                seen[start] = true;
+                queue.Enqueue(start);
+                while (queue.Count > 0)
+                {
+                    int cell = queue.Dequeue();
+                    size++;
+                    int cx = cell % width;
+                    int cy = cell / width;
+                    foreach (var o in NeighbourOffsets)
+                    {
+                        if (!CanStep(cx, cy, o.x, o.y)) continue;
+                        int n = (cy + o.y) * width + cx + o.x;
+                        if (seen[n]) continue;
+                        seen[n] = true;
+                        queue.Enqueue(n);
+                    }
+                }
+                if (size >= minCells) regions++;
+            }
+            return regions;
+        }
+        finally
+        {
+            walkable = real;
+            obstacles.Clear();
+            obstacles.AddRange(realObstacles);
+        }
     }
 
     // Walkable from the polygons alone, ignoring runtime obstacles. Used to

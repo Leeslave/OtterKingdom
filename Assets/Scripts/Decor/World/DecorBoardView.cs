@@ -70,8 +70,12 @@ public class DecorBoardView : MonoBehaviour
     /// <summary>꾸미기 모드 미리보기의 정렬 순서 (모든 것 위)</summary>
     public int GhostSortingOrder => _depthSorted ? short.MaxValue - 10 : _sortingOrder + 50;
 
+    // 길이 끊겼다고 보는 걷기 영역 크기 (걷기 칸 수). 이보다 작은 틈은 세지 않음
+    private const int MinRegionCells = 12;
+
     private readonly Dictionary<int, PlacedDecorView> _views = new Dictionary<int, PlacedDecorView>();
     private readonly List<Rect> _obstacles = new List<Rect>();
+    private int _appliedStaticVersion = -1;
     private readonly List<Vector2Int> _cornerBuffer = new List<Vector2Int>();
 
     private void OnEnable()
@@ -96,6 +100,8 @@ public class DecorBoardView : MonoBehaviour
 
         Layout = DecorManager.Instance.GetLayout(_board);
         ApplySceneBlockers();
+        if (_walkableArea != null)
+            _appliedStaticVersion = _walkableArea.StaticVersion;
 
         Layout.OnPlaced += HandlePlaced;
         Layout.OnMoved += HandleMoved;
@@ -114,6 +120,15 @@ public class DecorBoardView : MonoBehaviour
         Layout.OnPlaced -= HandlePlaced;
         Layout.OnMoved -= HandleMoved;
         Layout.OnRemoved -= HandleRemoved;
+    }
+
+    // 걷기 영역이 다시 만들어지면(영토가 넓어짐 · 집이 생김) 놓을 수 있는 칸도 다시 정함
+    private void Update()
+    {
+        if (Layout == null || _walkableArea == null || _walkableArea.StaticVersion == _appliedStaticVersion)
+            return;
+        _appliedStaticVersion = _walkableArea.StaticVersion;
+        ApplySceneBlockers();
     }
 
     #region 좌표
@@ -211,12 +226,26 @@ public class DecorBoardView : MonoBehaviour
 
     private void CreateView(PlacedDecor placed)
     {
-        var go = new GameObject($"Decor_{placed.Decor.ItemId}_{placed.InstanceId}");
+        var go = new GameObject($"Decor_{placed.Decor.SaveId}_{placed.InstanceId}");
         go.transform.SetParent(transform, true);
-        var view = go.AddComponent<PlacedDecorView>();
+        // 건물은 공사 단계·완성 그림을 그리는 뷰 (해달이 가지고 놀지 않음)
+        var view = placed.Decor.IsBuilding ? go.AddComponent<PlacedBuildingView>() : go.AddComponent<PlacedDecorView>();
         var rect = AreaWorldRect(placed.Area);
         view.Init(placed, rect, _cellSize, _fill, SortingOrderFor(rect));
         _views[placed.InstanceId] = view;
+    }
+
+    /// <summary>
+    /// 이 영역을 막으면 해달이 걷는 길이 둘로 끊기는지 (큰 건물을 놓기 전 확인). 지금 놓인 물건(숨긴 것 제외)에 영역 하나를 더해 본다.
+    /// 걷기 영역이 없는 장소는 늘 false
+    /// </summary>
+    public bool WouldCutPath(RectInt area)
+    {
+        if (_walkableArea == null)
+            return false;
+        int before = _walkableArea.CountRegions(_obstacles, MinRegionCells);
+        var withArea = new List<Rect>(_obstacles) { AreaWorldRect(area) };
+        return _walkableArea.CountRegions(withArea, MinRegionCells) > before;
     }
 
     /// <summary>꾸미기 모드에서 들어 올린 물건을 잠시 숨김 (미리보기가 대신 보임). 숨긴 물건은 놀이·장애물에서 빠진다</summary>

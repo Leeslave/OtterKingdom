@@ -12,12 +12,17 @@ public class DecorCatalog : ScriptableObject
     [SerializeField]
     private List<DecorDefinition> _decors = new List<DecorDefinition>();
 
+    [Tooltip("자리를 골라 짓는 건물 (보관함에는 나오지 않고 꾸미기 모드의 건물 탭에 나옴)")]
+    [SerializeField]
+    private List<BuildingDefinition> _buildings = new List<BuildingDefinition>();
+
     private Dictionary<string, DecorDefinition> _byId;
     private Dictionary<ItemDefinition, DecorDefinition> _byItem;
 
     public IReadOnlyList<DecorDefinition> Decors => _decors;
+    public IReadOnlyList<BuildingDefinition> Buildings => _buildings;
 
-    /// <summary>아이템 ID로 물건 찾기 (세이브 복원용)</summary>
+    /// <summary>세이브의 종류 ID(장난감 = 아이템 ID, 건물 = 건물 ID)로 물건 찾기 (세이브 복원용)</summary>
     public bool TryGetDecor(string itemId, out DecorDefinition decor)
     {
         if (itemId == null)
@@ -52,6 +57,32 @@ public class DecorCatalog : ScriptableObject
             _byId.Add(decor.ItemId, decor);
             _byItem[decor.Item] = decor;
         }
+        foreach (var building in _buildings)
+        {
+            if (building != null && !string.IsNullOrEmpty(building.BuildingId) && !_byId.ContainsKey(building.BuildingId))
+                _byId.Add(building.BuildingId, building);
+        }
+    }
+
+    /// <summary>건물 ID로 건물 찾기</summary>
+    public BuildingDefinition FindBuilding(string buildingId)
+    {
+        if (string.IsNullOrEmpty(buildingId))
+            return null;
+        foreach (var building in _buildings)
+        {
+            if (building != null && building.BuildingId == buildingId)
+                return building;
+        }
+        return null;
+    }
+
+    /// <summary>테스트·설정 도구용</summary>
+    public void Setup(IEnumerable<DecorDefinition> decors, IEnumerable<BuildingDefinition> buildings)
+    {
+        _decors = decors != null ? new List<DecorDefinition>(decors) : new List<DecorDefinition>();
+        _buildings = buildings != null ? new List<BuildingDefinition>(buildings) : new List<BuildingDefinition>();
+        _byId = null;
     }
 
     // 에디터에서 목록을 바꾸면 조회표를 다시 만들도록
