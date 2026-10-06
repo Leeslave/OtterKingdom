@@ -93,6 +93,8 @@ public class QuestManager : MonoBehaviour
             _collection = CollectionManager.Instance.Collection;
             _collection.OnStateChanged += HandleCollectionChanged;
         }
+
+        FairyShopPresenter.Purchased += HandleShopPurchased;
     }
 
     // 꾸미기·레벨 매니저는 같은 실행 순서(-80)라 OnEnable 시점에 아직 없을 수 있어 Start에서 연결
@@ -131,6 +133,7 @@ public class QuestManager : MonoBehaviour
             _currencyManager.OnTransaction -= HandleTransaction;
         if (_collection != null)
             _collection.OnStateChanged -= HandleCollectionChanged;
+        FairyShopPresenter.Purchased -= HandleShopPurchased;
         if (_decorManager != null)
             _decorManager.OnDecorPlaced -= HandleDecorPlaced;
         if (_profileManager != null)
@@ -197,6 +200,12 @@ public class QuestManager : MonoBehaviour
             AddProgress(quest, QuestProgressRules.From(quest, placed));
     }
 
+    private void HandleShopPurchased(ShopProduct product, int quantity)
+    {
+        foreach (var quest in _database.Quests)
+            AddProgress(quest, QuestProgressRules.FromShopPurchase(quest, quantity));
+    }
+
     // 레벨이 올라 새 퀘스트가 열림 → 앞서 만난 해달·지은 건물을 넣고 목록 갱신
     private void HandleLevelUp(int level)
     {
@@ -258,7 +267,7 @@ public class QuestManager : MonoBehaviour
 
     private void CheckDailyReset()
     {
-        int today = TodayNumber(DateTime.Now);
+        int today = TodayNumber(GameClock.Now);
         if (Log.DailyDay == today)
             return;
 

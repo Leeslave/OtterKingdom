@@ -37,6 +37,7 @@ public class LevelUpPopupView : MonoBehaviour
 
     public void Show(int level, Currency rewardCurrency, int rewardAmount, string note)
     {
+        SettingsManager.VibrateMoment();
         _levelText.text = $"Lv.{level}";
         _noteText.text = note;
 

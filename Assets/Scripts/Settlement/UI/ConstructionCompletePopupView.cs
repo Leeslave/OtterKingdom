@@ -42,6 +42,7 @@ public class ConstructionCompletePopupView : MonoBehaviour
     /// <param name="icon">비용이 없을 때 대신 보일 그림 (없으면 빈 채로)</param>
     public void Show(string chapter, string title, IReadOnlyList<(Sprite icon, int amount)> costs, string message, Sprite icon)
     {
+        SettingsManager.VibrateMoment();
         _icon.sprite = icon;
         _icon.gameObject.SetActive(costs.Count == 0 && icon != null);
         _chapterText.text = chapter;

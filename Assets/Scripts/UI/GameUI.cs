@@ -53,6 +53,8 @@ public class GameUI : MonoBehaviour
     private readonly List<GameObject> modals = new List<GameObject>();
     private readonly Dictionary<GameObject, Action> modalRefreshers = new Dictionary<GameObject, Action>();
     private readonly HashSet<string> openAlertMessages = new HashSet<string>();
+    // Alert modal -> its message, so closing it any way (OK, Android back) lets the same alert show again.
+    private readonly Dictionary<GameObject, string> alertModals = new Dictionary<GameObject, string>();
     private readonly List<RaycastResult> raycastResults = new List<RaycastResult>();
 
     public bool IsModalOpen => modals.Count > 0;
@@ -251,6 +253,7 @@ public class GameUI : MonoBehaviour
         if (!openAlertMessages.Add(message)) return;
 
         var modal = OpenModal("알림", out var content);
+        alertModals[modal] = message;
         CreateLabel(content, message);
         CreateButton(content, "확인", () =>
         {
@@ -632,7 +635,20 @@ public class GameUI : MonoBehaviour
     {
         modals.Remove(modal);
         modalRefreshers.Remove(modal);
+        if (alertModals.TryGetValue(modal, out var message))
+        {
+            alertModals.Remove(modal);
+            openAlertMessages.Remove(message);
+        }
         Destroy(modal);
+    }
+
+    // Android back: closes the modal on top. False if none is open.
+    public bool CloseTopModal()
+    {
+        if (modals.Count == 0) return false;
+        CloseModal(modals[modals.Count - 1]);
+        return true;
     }
 
     private void CloseAllModals()
@@ -640,6 +656,7 @@ public class GameUI : MonoBehaviour
         foreach (var modal in modals) Destroy(modal);
         modals.Clear();
         modalRefreshers.Clear();
+        alertModals.Clear();
         openAlertMessages.Clear();
     }
 

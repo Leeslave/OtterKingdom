@@ -8,6 +8,8 @@ using UnityEngine.UI;
 /// <summary>
 /// 튜토리얼 화면: 화면 전체를 어둡게 덮고, 설명할 대상만 뚫어서 반짝이는 테두리로 강조한 뒤
 /// 말풍선에 설명을 띄운다. 아무 곳이나 누르거나 [다음]을 누르면 다음 장, [건너뛰기]는 바로 끝.
+/// "직접 해 보기" 장은 뚫린 곳만 눌리고(그 입력은 아래 게임에 그대로 전해짐), 누르면 튜토리얼이 끝난다.
+/// 강조할 월드 대상이 화면 밖이면 광장 카메라를 그쪽으로 옮긴다.
 /// 모든 캔버스(전역 UI 100, 장소 UI 200)보다 위에 있고 입력을 전부 막으므로
 /// 튜토리얼 동안 월드·버튼이 눌리지 않는다. 월드는 멈추지 않아서 해달은 계속 돌아다닌다.
 /// GameUI처럼 코드로만 만들며, 장소 씬과 함께 사라진다.
@@ -45,6 +47,11 @@ public class TutorialOverlay : MonoBehaviour
     private RectTransform _frame;
     private Image _frameImage;
     private RectTransform _bubble;
+    private Image _catcher;
+    private Image[] _dimImages = new Image[4];
+    private GameObject _nextButton;
+    private bool _focused;
+    private bool _pressInHole;
     private TextMeshProUGUI _titleLabel;
     private TextMeshProUGUI _messageLabel;
     private TextMeshProUGUI _counterLabel;
@@ -102,9 +109,13 @@ public class TutorialOverlay : MonoBehaviour
     {
         if (_finished || _index < 0) return;
 
-        var hole = ToNormalized(_steps[_index].FindTarget());
+        var step = _steps[_index];
+        var target = step.FindTarget();
+        FocusIfOffscreen(step, target);
+        var hole = ToNormalized(target);
         LayoutHole(hole);
         LayoutBubble(hole);
+        UpdateTryIt(step, hole);
 
         // 테두리가 은은하게 숨쉬듯 깜빡임
         var color = _frameImage.color;
@@ -153,6 +164,8 @@ public class TutorialOverlay : MonoBehaviour
         _counterLabel.text = $"{_shownCount} / {Mathf.Max(_shownTotal, _shownCount)}";
         _nextLabel.text = IsLastShownStep() ? "알겠어요!" : "다음";
         _stepShownAt = Time.unscaledTime;
+        _focused = false;
+        _pressInHole = false;
         Update();
     }
 
@@ -164,6 +177,39 @@ public class TutorialOverlay : MonoBehaviour
             if (!_steps[i].NeedsTarget || _steps[i].FindTarget() != null) return false;
         }
         return true;
+    }
+
+    // 월드 대상이 화면에 다 들어오지 않으면 광장 카메라를 그쪽으로 (장마다 한 번)
+    private void FocusIfOffscreen(TutorialStep step, Rect? target)
+    {
+        if (_focused) return;
+        var focus = step.FindFocus();
+        if (focus == null) return;
+        _focused = true;
+        if (target.HasValue && target.Value.xMin >= 0f && target.Value.yMin >= 0f
+            && target.Value.xMax <= Screen.width && target.Value.yMax <= Screen.height) return;
+        var camera = FindAnyObjectByType<PlazaCameraController>();
+        if (camera != null && camera.isActiveAndEnabled) camera.PanTo(focus.Value);
+    }
+
+    // 직접 해 보기: 뚫린 곳만 입력을 받고(어두운 조각이 나머지를 막음), 뚫린 곳에서 누르고 떼면 끝.
+    // 대상이 안 보이면 막히지 않게 평소처럼 [알겠어요]로 넘김
+    private void UpdateTryIt(TutorialStep step, Rect? hole)
+    {
+        bool interactive = step.IsTryIt && hole.HasValue;
+        _catcher.raycastTarget = !interactive;
+        foreach (var dim in _dimImages) dim.raycastTarget = interactive;
+        if (_nextButton.activeSelf == interactive) _nextButton.SetActive(!interactive);
+        if (!interactive) return;
+
+        var pointer = UnityEngine.InputSystem.Pointer.current;
+        if (pointer == null) return;
+        var position = pointer.position.ReadValue();
+        var h = hole.Value;
+        bool inside = h.Contains(new Vector2(position.x / Screen.width, position.y / Screen.height));
+        if (pointer.press.wasPressedThisFrame) _pressInHole = inside;
+        // 누른 입력은 아래 게임(게시판·고랑·버튼)이 그대로 받고, 튜토리얼은 이 프레임이 끝나면 사라짐
+        if (pointer.press.wasReleasedThisFrame && _pressInHole && inside) Finish(false);
     }
 
     private void Finish(bool skipped)
@@ -271,15 +317,16 @@ public class TutorialOverlay : MonoBehaviour
         _root = (RectTransform)transform;
 
         // 투명한 전체 화면 버튼: 뚫린 곳까지 포함해 모든 입력을 받아 다음 장으로
-        var catcher = CreateImage("TapCatcher", _root, null, Color.clear);
-        SetAnchors(catcher.rectTransform, Vector2.zero, Vector2.one);
-        catcher.gameObject.AddComponent<Button>().onClick.AddListener(HandleTap);
+        _catcher = CreateImage("TapCatcher", _root, null, Color.clear);
+        SetAnchors(_catcher.rectTransform, Vector2.zero, Vector2.one);
+        _catcher.gameObject.AddComponent<Button>().onClick.AddListener(HandleTap);
 
         for (int i = 0; i < 4; i++)
         {
             var dim = CreateImage("Dim", _root, null, DimColor);
             dim.raycastTarget = false;
             _dims[i] = dim.rectTransform;
+            _dimImages[i] = dim;
         }
 
         _frameImage = CreateImage("Frame", _root, _style.Highlight, Color.white);
@@ -341,6 +388,7 @@ public class TutorialOverlay : MonoBehaviour
         skipLabel.text = "건너뛰기";
         skipLabel.color = _style.SubColor;
         _nextLabel = CreateButton(row.transform, _style.NextButton, FallbackNextColor, -1f, HandleTap);
+        _nextButton = _nextLabel.transform.parent.gameObject;
         _nextLabel.color = _style.NextLabelColor;
         _nextLabel.fontSize = 42f;
 

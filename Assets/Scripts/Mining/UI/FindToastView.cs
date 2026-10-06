@@ -34,6 +34,10 @@ public class FindToastView : MonoBehaviour
 
     public void Show(Sprite icon, string text)
     {
+        // HUD가 숨겨진 동안(꾸미기 모드 등)에는 알림을 건너뜀 (꺼진 오브젝트는 연출을 시작할 수 없음). 캔 것은 가방에 그대로 들어감
+        if (!isActiveAndEnabled)
+            return;
+
         _icon.sprite = icon;
         _icon.enabled = icon != null;
         _text.text = text;

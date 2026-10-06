@@ -28,6 +28,29 @@ public class PlaceholderAudioTests
     }
 
     [Test]
+    public void CreateSfx_EveryKindIsShortAndAudible()
+    {
+        foreach (SfxKind kind in System.Enum.GetValues(typeof(SfxKind)))
+        {
+            var clip = PlaceholderAudio.CreateSfx(kind);
+            try
+            {
+                Assert.Less(clip.length, 1f, $"{kind}: 짧게");
+                var samples = new float[clip.samples];
+                clip.GetData(samples, 0);
+                float peak = 0f;
+                foreach (var s in samples)
+                    peak = Mathf.Max(peak, Mathf.Abs(s));
+                Assert.That(peak, Is.InRange(0.1f, 1f), $"{kind}: 들리되 찢어지지 않음");
+            }
+            finally
+            {
+                Object.DestroyImmediate(clip);
+            }
+        }
+    }
+
+    [Test]
     public void CreateDing_IsShort()
     {
         var clip = PlaceholderAudio.CreateDing();

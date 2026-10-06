@@ -23,6 +23,9 @@ public class RewardFly : MonoBehaviour
     private const float FlySeconds = 0.55f;
     private const float Stagger = 0.07f;
     private const float PunchSeconds = 0.22f;
+    private const float LabelSeconds = 0.9f;
+    private const float LabelRise = 110f;
+    private static readonly Color LabelColor = new Color32(0x4B, 0x2E, 0x22, 0xFF);
 
     private static RewardFly _instance;
 
@@ -30,8 +33,8 @@ public class RewardFly : MonoBehaviour
     private readonly Dictionary<RectTransform, Coroutine> _punches = new Dictionary<RectTransform, Coroutine>();
     private readonly Dictionary<RectTransform, Vector3> _baseScales = new Dictionary<RectTransform, Vector3>();
 
-    /// <summary>world에서 아이콘 count개(최대 5)가 target으로 날아감</summary>
-    public static void FromWorld(Sprite icon, Vector3 world, RewardTarget target, int count)
+    /// <summary>world에서 아이콘 count개(최대 5)가 target으로 날아감. amountLabel이 있으면 그 자리에 "+N"이 떠올랐다 사라짐</summary>
+    public static void FromWorld(Sprite icon, Vector3 world, RewardTarget target, int count, int amountLabel = 0)
     {
         if (icon == null || count <= 0)
             return;
@@ -40,7 +43,10 @@ public class RewardFly : MonoBehaviour
         var to = fly != null ? fly.FindTarget(target) : null;
         if (fly == null || camera == null || to == null)
             return;
-        fly.Launch(icon, camera.WorldToScreenPoint(world), to, Mathf.Min(count, MaxIcons));
+        var screen = camera.WorldToScreenPoint(world);
+        fly.Launch(icon, screen, to, Mathf.Min(count, MaxIcons));
+        if (amountLabel > 0)
+            fly.StartCoroutine(fly.AmountLabel(screen, $"+{amountLabel}"));
     }
 
     private static RewardFly Instance()
@@ -101,6 +107,50 @@ public class RewardFly : MonoBehaviour
             var child = t.Find(childName);
             if (child != null)
                 return child as RectTransform;
+        }
+        return null;
+    }
+
+    // 얻은 자리에서 "+N"이 떠오르며 사라짐 (전역 UI의 글꼴을 빌림)
+    private IEnumerator AmountLabel(Vector3 fromScreen, string text)
+    {
+        var font = FindFont();
+        if (font == null)
+            yield break;
+        var go = new GameObject("RewardAmount", typeof(RectTransform));
+        var rect = (RectTransform)go.transform;
+        rect.SetParent(_layer, false);
+        rect.sizeDelta = new Vector2(240f, 80f);
+        var label = go.AddComponent<TMPro.TextMeshProUGUI>();
+        label.font = font;
+        label.text = text;
+        label.fontSize = 56f;
+        label.alignment = TMPro.TextAlignmentOptions.Center;
+        label.raycastTarget = false;
+        var start = fromScreen + Vector3.up * 40f;
+        for (float t = 0f; t < LabelSeconds; t += Time.unscaledDeltaTime)
+        {
+            float k = t / LabelSeconds;
+            rect.position = start + Vector3.up * (LabelRise * (1f - (1f - k) * (1f - k)));
+            rect.localScale = Vector3.one * (k < 0.15f ? Mathf.Lerp(0.6f, 1.1f, k / 0.15f) : 1f);
+            var color = LabelColor;
+            color.a = k < 0.6f ? 1f : 1f - (k - 0.6f) / 0.4f;
+            label.color = color;
+            yield return null;
+        }
+        Destroy(go);
+    }
+
+    private TMPro.TMP_FontAsset _font;
+
+    private TMPro.TMP_FontAsset FindFont()
+    {
+        if (_font != null)
+            return _font;
+        foreach (var text in GlobalUIRoot.Instance.GetComponentsInChildren<TMPro.TextMeshProUGUI>(true))
+        {
+            if (text.font != null)
+                return _font = text.font;
         }
         return null;
     }

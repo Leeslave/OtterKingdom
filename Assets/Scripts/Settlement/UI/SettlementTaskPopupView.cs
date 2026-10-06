@@ -130,6 +130,7 @@ public class SettlementTaskPopupView : MonoBehaviour
         _noteText.text = string.Empty;
         SetButton("확인", true);
         _done = true;
+        SettingsManager.VibrateMoment();
         Open();
     }
 

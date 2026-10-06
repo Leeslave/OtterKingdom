@@ -15,7 +15,7 @@ public enum SettingsMenu
 }
 
 /// <summary>
-/// 설정 화면: 배경음/효과음 슬라이더, 진동/푸시 스위치, 언어 선택, 메뉴 버튼 4개, 버전.
+/// 설정 화면: 배경음/효과음 슬라이더, 진동/푸시 스위치, 언어 선택, 메뉴 버튼 4개, 데이터 초기화, 버전.
 /// 받은 값을 그리고 바뀐 것을 알리기만 한다 (GameSettings를 모름).
 /// </summary>
 public class SettingsView : MonoBehaviour
@@ -41,6 +41,10 @@ public class SettingsView : MonoBehaviour
     [SerializeField] private Button _termsButton;
     [SerializeField] private Button _closeButton;
 
+    [Header("데이터 초기화")]
+    [Tooltip("모든 진행을 지우고 처음부터 (확인은 프레젠터가 두 번 받음)")]
+    [SerializeField] private Button _resetButton;
+
     [Header("기타")]
     [Tooltip("\"버전 0.1.0 · 해달 왕국\"")]
     [SerializeField] private TextMeshProUGUI _versionText;
@@ -58,6 +62,7 @@ public class SettingsView : MonoBehaviour
     public event Action<bool> OnPushToggled;
     public event Action<GameLanguage> OnLanguageChanged;
     public event Action<SettingsMenu> OnMenuClicked;
+    public event Action OnResetClicked;
 
     /// <summary>닫힘 연출이 끝났을 때 (저장 시점)</summary>
     public event Action OnHidden
@@ -122,6 +127,7 @@ public class SettingsView : MonoBehaviour
         _supportButton.onClick.AddListener(() => OnMenuClicked?.Invoke(SettingsMenu.Support));
         _termsButton.onClick.AddListener(() => OnMenuClicked?.Invoke(SettingsMenu.Terms));
         _closeButton.onClick.AddListener(Hide);
+        _resetButton.onClick.AddListener(() => OnResetClicked?.Invoke());
 
         _notice.alpha = 0f;
         _isInitialized = true;

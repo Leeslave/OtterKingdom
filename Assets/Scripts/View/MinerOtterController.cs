@@ -97,7 +97,10 @@ public class MinerOtterController : MonoBehaviour
 
     private void HandleMiningFound(ItemDefinition item)
     {
-        if (phase == Phase.Inside && emote != null) emote.ShowFind(item.Icon);
+        if (phase != Phase.Inside || emote == null) return;
+        emote.ShowFind(item.Icon);
+        // The find also flies from the bubble to the bag (with "+1").
+        RewardFly.FromWorld(item.Icon, emote.transform.position, RewardTarget.Bag, 1, 1);
     }
 
     private void Update()

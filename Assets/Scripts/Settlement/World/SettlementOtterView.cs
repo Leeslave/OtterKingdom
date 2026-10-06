@@ -111,6 +111,14 @@ public class SettlementOtterView : MonoBehaviour
             speaking = false;
         }
 
+        // 광산·밭을 치우고 정비하는 동안은 말을 걸지 않음 (장애물을 톡톡 누르다 해달이 말하지 않게)
+        if (ZoneClearingView.IsWaiting)
+        {
+            if (_attention.gameObject.activeSelf)
+                _attention.gameObject.SetActive(false);
+            return;
+        }
+
         bool attention = !speaking && (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter) || manager.CanAssignRole(_otter)
             || manager.CanMoveIn(_otter));
         if (_attention.gameObject.activeSelf != attention)

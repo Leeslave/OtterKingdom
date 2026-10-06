@@ -276,4 +276,26 @@ public class FarmWorkTests
         Assert.AreEqual(0, host.StoredOf("crop_carrot"));
         Assert.AreEqual(FurrowSlotState.Empty, farm.GetSlotState(0, 0));
     }
+    [Test]
+    public void FirstCrop_GrowsInTenSecondsOnce_WithStagesFollowingThatTime()
+    {
+        var data = new PlotSaveData { plotId = "plot_0", unlocked = true, slots = PlotSaveData.CreateEmptySlots() };
+        var plot = new PlotRuntime(data, id => id == _carrot.cropId ? _carrot : null);
+
+        Assert.IsTrue(plot.Plant(0, _carrot.cropId, 1f));
+        Assert.IsTrue(plot.SetGrowSeconds(0, 10f), "첫 작물은 10초");
+        Assert.AreEqual(10f, plot.GetSlotRemainingSec(0), 0.001f);
+        Assert.AreEqual(SlotGrowthStage.Seed, plot.GetGrowthStage(0, 1f), "바로 다 자란 모습이 되지 않음");
+
+        plot.Tick(4f);
+        Assert.AreEqual(SlotGrowthStage.Sprout, plot.GetGrowthStage(0, 1f), "10초 기준으로 단계가 넘어감");
+        plot.Tick(6f);
+        Assert.AreEqual(FurrowSlotState.AwaitingHarvest, plot.GetSlotState(0));
+
+        plot.Harvest(0);
+        Assert.IsTrue(plot.Plant(0, _carrot.cropId, 1f));
+        Assert.AreEqual(30f, plot.GetSlotRemainingSec(0), 0.001f, "다음부터는 원래 시간");
+        Assert.AreEqual(SlotGrowthStage.Seed, plot.GetGrowthStage(0, 1f));
+        Assert.IsFalse(plot.SetGrowSeconds(1, 10f), "빈 칸에는 못 정함");
+    }
 }

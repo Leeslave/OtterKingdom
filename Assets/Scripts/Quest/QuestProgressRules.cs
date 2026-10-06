@@ -13,9 +13,9 @@ public static class QuestProgressRules
         if (e.Delta <= 0)
             return 0;
 
-        // 요정 상점: 한 번 산 것 = 1 (개수가 아니라 횟수)
+        // 요정 상점은 가방이 아니라 구매 알림(FromShopPurchase)으로 셈 (묶음 상품의 개수가 아니라 산 수량)
         if (quest.GoalType == QuestGoalType.ShopPurchase)
-            return e.Reason == ItemChangeReason.Purchase ? 1 : 0;
+            return 0;
 
         bool matchesReason =
             (quest.GoalType == QuestGoalType.Harvest && e.Reason == ItemChangeReason.Harvest)
@@ -28,6 +28,13 @@ public static class QuestProgressRules
             return 0;
 
         return quest.ItemFilter == null || quest.ItemFilter.Contains(e.Item) ? e.Delta : 0;
+    }
+
+    /// <summary>요정 상점 구매: 한 번에 여러 개를 사면 산 수량만큼 (10개 묶음 상품 하나 = 1)</summary>
+    public static int FromShopPurchase(QuestDefinition quest, int quantity)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        return quest.GoalType == QuestGoalType.ShopPurchase && quantity > 0 ? quantity : 0;
     }
 
     /// <summary>

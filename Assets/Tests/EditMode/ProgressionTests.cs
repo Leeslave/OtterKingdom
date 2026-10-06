@@ -224,15 +224,22 @@ public class ProgressionTests
     }
 
     [Test]
-    public void ShopAndDecorGoals_CountOncePerAction()
+    public void ShopGoal_CountsQuantityBoughtAtOnce()
     {
         var shop = CreateQuest("shop");
         var shopSo = new SerializedObject(shop);
         shopSo.FindProperty("_goalType").enumValueIndex = (int)QuestGoalType.ShopPurchase;
         shopSo.ApplyModifiedPropertiesWithoutUndo();
 
-        Assert.AreEqual(1, QuestProgressRules.From(shop, new ItemChangedEvent(null, 0, 10, ItemChangeReason.Purchase)), "10개를 한 번에 사도 1번");
+        Assert.AreEqual(5, QuestProgressRules.FromShopPurchase(shop, 5), "한 번에 5개 사면 5");
+        Assert.AreEqual(1, QuestProgressRules.FromShopPurchase(shop, 1));
+        Assert.AreEqual(0, QuestProgressRules.FromShopPurchase(shop, 0));
+        Assert.AreEqual(0, QuestProgressRules.From(shop, new ItemChangedEvent(null, 0, 10, ItemChangeReason.Purchase)),
+            "가방에 들어온 개수로는 세지 않음 (묶음 상품이 부풀려지지 않게)");
         Assert.AreEqual(0, QuestProgressRules.From(shop, new ItemChangedEvent(null, 0, 3, ItemChangeReason.Harvest)));
+
+        var harvest = CreateQuest("harvest");
+        Assert.AreEqual(0, QuestProgressRules.FromShopPurchase(harvest, 5), "다른 퀘스트는 구매를 세지 않음");
     }
 
     #endregion

@@ -75,7 +75,7 @@ public partial class SettlementManager : MonoBehaviour
     /// <summary>세이브를 불러왔는지 (불러오기 전에는 새 게임 상태로 보임)</summary>
     public bool IsLoaded { get; private set; }
 
-    public static long NowTicks => DateTime.UtcNow.Ticks;
+    public static long NowTicks => GameClock.UtcNow.Ticks;
 
     /// <summary>세이브를 불러왔을 때 (광장이 집·해달을 맞춰 그림)</summary>
     public event Action OnLoaded;

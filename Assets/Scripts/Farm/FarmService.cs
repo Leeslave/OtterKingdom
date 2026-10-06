@@ -452,6 +452,13 @@ public class FarmService
         return PlantResult.Planted;
     }
 
+    // The first-plant guide's crop grows quickly so a new player sees a harvest right away.
+    public bool SetGrowSeconds(int plotIndex, int slotIndex, float seconds)
+    {
+        if (plotIndex < 0 || plotIndex >= plots.Count) return false;
+        return plots[plotIndex].SetGrowSeconds(slotIndex, seconds);
+    }
+
     public bool ClearSlot(int plotIndex, int slotIndex)
     {
         if (plotIndex < 0 || plotIndex >= plots.Count) return false;

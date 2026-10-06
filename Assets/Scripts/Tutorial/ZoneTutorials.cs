@@ -81,14 +81,14 @@ public static class ZoneTutorials
                 "밭, 낚시터, 광산 같은\n다른 장소로 갈 수 있어요.\n잠긴 곳은 왕국이 커지면 열려요.",
                 () => TutorialTargets.Ui(navBar != null ? navBar.TravelButton : null)),
             // 요정 상점은 밭이 열린 뒤에 나타나므로 따로 안내 (FairyShopSteps)
-            TutorialStep.At("해달 친구들",
+            TutorialStep.AtWorld("해달 친구들",
                 "광장을 돌아다니는 해달들이에요.\n가끔은 처음 보는 해달이 놀러 오기도 해요!",
-                () => TutorialTargets.World(otter)),
+                otter),
             TutorialStep.Info("광장 둘러보기",
                 "화면을 끌면 광장 여기저기를 볼 수 있어요.\n두 손가락을 벌리거나 모으면\n크게, 작게 볼 수 있어요."),
-            TutorialStep.At("해달 게시판",
+            TutorialStep.TryIt("해달 게시판",
                 "해달들의 부탁과 방명록이 붙어 있어요.\n게시판을 눌러 첫 부탁을 확인해 봐요!",
-                () => TutorialTargets.World(board)),
+                () => TutorialTargets.World(board), board),
         };
     }
 
@@ -125,9 +125,6 @@ public static class ZoneTutorials
         {
             TutorialStep.Info("여기는 밭이에요",
                 "작물을 심고 키워서 수확하는 곳이에요."),
-            TutorialStep.At("밭고랑",
-                "빈 칸을 누르면 심을 작물을 고를 수 있어요.\n모종이 필요한 작물은 가방의 모종을 써요.\n심어 둔 칸을 누르면 다른 작물로 바꿀 수 있어요.",
-                () => TutorialTargets.World(firstPlot)),
             TutorialStep.At("농부 해달",
                 "다 자란 작물은 농부 해달이 알아서 수확하고,\n같은 작물을 다시 심어 줘요.\n수확한 작물은 가방에 들어가요.",
                 () => TutorialTargets.World(farmer)),
@@ -143,6 +140,9 @@ public static class ZoneTutorials
             TutorialStep.At("수확물 팔기",
                 "수확한 작물은 가방에서 팔아\n코인으로 바꿀 수 있어요.",
                 () => TutorialTargets.Ui(navBar != null ? navBar.BagButton : null)),
+            TutorialStep.TryIt("밭고랑",
+                "빈 칸을 누르면 심을 작물을 고를 수 있어요.\n모종이 필요한 작물은 가방의 모종을 써요.\n이 고랑을 눌러 심어 봐요!",
+                () => TutorialTargets.World(firstPlot), firstPlot),
         };
     }
 
@@ -155,15 +155,15 @@ public static class ZoneTutorials
         {
             TutorialStep.Info("여기는 낚시터예요",
                 "해달이 물고기를 낚아 오는 곳이에요."),
-            TutorialStep.At("낚시 자리",
-                "동그라미를 누르면 해달이 걸어가서\n낚시를 시작해요.",
-                () => TutorialTargets.World(spot)),
             TutorialStep.At("낚시 해달",
                 "낚은 물고기는 가방에 들어가요.\n가끔 쓰레기가 걸리기도 해요!\n낚시 중인 해달을 누르면 낚시를 멈춰요.",
                 () => TutorialTargets.World(otter)),
             TutorialStep.At("낚싯대 강화",
                 "코인으로 낚싯대를 강화하면\n물고기가 더 잘 잡혀요.\n레벨이 오르면 게임을 꺼 둔 동안에도 낚시해요.",
                 () => TutorialTargets.Ui(gameUI.RodUpgradeButton)),
+            TutorialStep.TryIt("낚시 자리",
+                "동그라미를 누르면 해달이 걸어가서\n낚시를 시작해요. 눌러 봐요!",
+                () => TutorialTargets.World(spot), spot),
         };
     }
 
@@ -176,15 +176,15 @@ public static class ZoneTutorials
         {
             TutorialStep.Info("여기는 광산이에요",
                 "해달이 광산에 들어가 광석을 캐 오는 곳이에요."),
-            TutorialStep.At("광산 입구",
-                "입구의 동그라미를 누르면\n해달이 광산에 들어가 채굴을 시작해요.",
-                () => TutorialTargets.World(entrance)),
             TutorialStep.At("광부 해달",
                 "채굴하는 동안에는 말풍선으로\n캐낸 광석을 보여 줘요.\n다른 곳에 가 있어도 계속 캐요.\n말풍선을 누르면 채굴을 멈춰요.",
                 () => TutorialTargets.World(miner)),
             TutorialStep.At("곡괭이 강화",
                 "곡괭이를 강화하면\n다이아몬드가 나올 확률이 올라가요.",
                 () => TutorialTargets.Ui(gameUI.PickaxeUpgradeButton)),
+            TutorialStep.TryIt("광산 입구",
+                "입구의 동그라미를 누르면\n해달이 광산에 들어가 채굴을 시작해요. 눌러 봐요!",
+                () => TutorialTargets.World(entrance), entrance),
         };
     }
 

@@ -16,7 +16,9 @@ public enum SaveLoadStatus
 //   2. swap it in as save.json, rotating the old save.json to save.json.bak
 //      only if that old file is itself valid — a corrupt primary must never
 //      overwrite a good backup,
-//   3. unreadable files are renamed to *.corrupt-<timestamp>, never deleted.
+//   3. unreadable files are renamed to *.corrupt-<timestamp>. Only the
+//      newest KeptCorruptFiles of them are kept (cleaned up on load), so a
+//      save that keeps breaking can't fill the device.
 //
 // When every save file is unreadable, Load() reports Corrupted and all writes
 // are blocked until the player explicitly chooses to start over
@@ -29,9 +31,12 @@ public enum SaveLoadStatus
 // RestoreSnapshot copies a snapshot back — first snapshotting whatever save is
 // there now, so neither direction can lose progress.
 //
-// Still not handled: unknown-item-id migration and schemaVersion upgrades.
+// Unknown item ids are kept as they are (InventoryManager writes them back).
+// Still not handled: a general schemaVersion upgrade step list.
 public class SaveService
 {
+    public const int KeptCorruptFiles = 3;
+
     private readonly string fileName;
     private readonly string savePath;
     private readonly string backupPath;
@@ -146,8 +151,14 @@ public class SaveService
 
     public bool WritesBlocked { get; private set; }
 
+    // Every write is skipped while the player's data reset tears the game
+    // down (GameDataReset), so dying objects can't save the old progress back.
+    public static bool WritesFrozen { get; set; }
+
     public SaveLoadStatus Load(out SaveData data)
     {
+        CleanUpOldCorruptFiles();
+
         if (TryReadFrom(savePath, out data))
         {
             return SaveLoadStatus.Loaded;
@@ -189,6 +200,7 @@ public class SaveService
     // rewinds it to fake time away uses that.
     public bool Save(SaveData data, bool stampTime = true)
     {
+        if (WritesFrozen) return false;
         if (WritesBlocked)
         {
             if (!warnedBlocked)
@@ -199,7 +211,10 @@ public class SaveService
             return false;
         }
 
-        if (stampTime) data.lastSaveUtc = DateTime.UtcNow.ToString("o");
+        // On a device the stamp never goes back: a clock turned back keeps the
+        // later time, so turning it forward again doesn't pay offline hours
+        // twice (A3). The editor's dev tools move time freely.
+        if (stampTime) data.lastSaveUtc = Stamp(data.lastSaveUtc, GameClock.UtcNow, !Application.isEditor);
         string json = JsonUtility.ToJson(data, true);
 
         try
@@ -249,6 +264,51 @@ public class SaveService
             File.Copy(source, destination, true);
             File.Delete(source);
         }
+    }
+
+    // The save time to write: now, or the previous stamp if that's later and
+    // keepLatest is on (a clock turned back).
+    public static string Stamp(string previous, DateTime nowUtc, bool keepLatest)
+    {
+        if (keepLatest && !string.IsNullOrEmpty(previous)
+            && DateTime.TryParse(previous, System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.RoundtripKind, out var last)
+            && last.ToUniversalTime() > nowUtc)
+        {
+            return previous;
+        }
+        return nowUtc.ToString("o");
+    }
+
+    // Set-aside unreadable files: keep the newest few (by the time in their
+    // name) for inspection, delete the rest.
+    public void CleanUpOldCorruptFiles()
+    {
+        string dir = Path.GetDirectoryName(savePath);
+        if (!Directory.Exists(dir)) return;
+
+        var files = new List<string>(Directory.GetFiles(dir, fileName + "*.corrupt-*"));
+        if (files.Count <= KeptCorruptFiles) return;
+
+        files.Sort((a, b) => string.CompareOrdinal(CorruptStamp(b), CorruptStamp(a)));
+        for (int i = KeptCorruptFiles; i < files.Count; i++)
+        {
+            try
+            {
+                File.Delete(files[i]);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[SaveService] Couldn't delete old corrupt save {files[i]}: {e.Message}");
+            }
+        }
+    }
+
+    private static string CorruptStamp(string path)
+    {
+        string name = Path.GetFileName(path);
+        int at = name.LastIndexOf(".corrupt-", StringComparison.Ordinal);
+        return at >= 0 ? name.Substring(at + ".corrupt-".Length) : name;
     }
 
     private static void Quarantine(string path)
