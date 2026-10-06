@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_build_2
   _title: "\uC655\uAD6D\uC744 \uAC00\uAFB8\uB294 \uC190"
   _description: "\uAC74\uCD95\uBB3C 2\uAC1C \uC9D3\uAE30"
-  _sortOrder: 41
-  _kind: 0
+  _sortOrder: 73
+  _kind: 2
   _requiredLevel: 2
   _prerequisite: {fileID: 11400000, guid: 51ec5f4709ee424abf1dde80b0dcbb23, type: 2}
   _icon: {fileID: 21300000, guid: c965ba9ca8006aa458ac8be800e48a59, type: 3}
@@ -27,7 +27,8 @@ MonoBehaviour:
   _item: {fileID: 0}
   _constructions: []
   _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 100
-  _expReward: 60
+  _expReward: 0
   _expPercentOfLevel: 0

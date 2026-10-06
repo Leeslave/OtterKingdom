@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M11_Strawberry
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv11_strawberry
+  _title: "\uB538\uAE30 \uB18D\uC0AC"
+  _description: "\uB538\uAE30 100\uAC1C \uC218\uD655\uD558\uAE30"
+  _sortOrder: 42
+  _kind: 0
+  _requiredLevel: 11
+  _prerequisite: {fileID: 11400000, guid: 0ea1c407ad5ccca4f840ea48c40038ee, type: 2}
+  _icon: {fileID: 21300000, guid: 36663a2e1b0244b468a75d497e361228, type: 3}
+  _goalType: 0
+  _goal: 100
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 11400000, guid: 52b044dd060e85f4a81743b1db156a2d, type: 2}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 800
+  _expReward: 800
+  _expPercentOfLevel: 0

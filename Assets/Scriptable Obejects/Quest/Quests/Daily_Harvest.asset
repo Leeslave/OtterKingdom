@@ -15,16 +15,20 @@ MonoBehaviour:
   _questId: daily_harvest
   _title: "\uC624\uB298\uC758 \uC218\uD655"
   _description: "\uC791\uBB3C 30\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 32
+  _sortOrder: 94
   _kind: 1
-  _requiredLevel: 2
+  _requiredLevel: 9
   _prerequisite: {fileID: 0}
   _icon: {fileID: -5859083586626064994, guid: 125917c9ef5a91e478059e3954180ecc, type: 3}
   _goalType: 0
   _goal: 30
   _itemFilter: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 150
   _expReward: 0
-  _expPercentOfLevel: 10
+  _expPercentOfLevel: 0

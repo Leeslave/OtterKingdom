@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: quest_first_carrots
   _title: "\uCCAB \uC218\uD655\uC744 \uD574\uBD10\uC694"
   _description: "\uB2F9\uADFC 3\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 0
+  _sortOrder: 12
   _kind: 0
-  _requiredLevel: 1
-  _prerequisite: {fileID: 0}
+  _requiredLevel: 4
+  _prerequisite: {fileID: 11400000, guid: 093f4596dc524e740963b7df861ec0d3, type: 2}
   _icon: {fileID: -5859083586626064994, guid: 125917c9ef5a91e478059e3954180ecc, type: 3}
   _goalType: 0
   _goal: 3
@@ -27,7 +27,8 @@ MonoBehaviour:
   _item: {fileID: 11400000, guid: 75fe364f3d85172469c9d04a63806f2d, type: 2}
   _constructions: []
   _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 30
-  _expReward: 30
+  _expReward: 60
   _expPercentOfLevel: 0

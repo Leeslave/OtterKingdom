@@ -15,16 +15,20 @@ MonoBehaviour:
   _questId: daily_catch
   _title: "\uC624\uB298\uC758 \uB09A\uC2DC"
   _description: "\uBB3C\uACE0\uAE30 3\uB9C8\uB9AC \uB09A\uAE30"
-  _sortOrder: 33
+  _sortOrder: 95
   _kind: 1
-  _requiredLevel: 2
+  _requiredLevel: 9
   _prerequisite: {fileID: 0}
   _icon: {fileID: -8407166883477379423, guid: bfecfe2efbfe60549bf456b13140d3b6, type: 3}
   _goalType: 1
   _goal: 3
   _itemFilter: {fileID: 11400000, guid: 96098a6168fc46144942ab19a916aaa2, type: 2}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 150
   _expReward: 0
-  _expPercentOfLevel: 10
+  _expPercentOfLevel: 0

@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_catch_6
   _title: "\uBC14\uB2E4\uC758 \uC804\uC124"
   _description: "\uBB3C\uACE0\uAE30 250\uB9C8\uB9AC \uB09A\uAE30"
-  _sortOrder: 12
-  _kind: 0
+  _sortOrder: 70
+  _kind: 2
   _requiredLevel: 12
   _prerequisite: {fileID: 11400000, guid: 01af2db62f38dc14f8330a2b1a9f8097, type: 2}
   _icon: {fileID: -8407166883477379423, guid: bfecfe2efbfe60549bf456b13140d3b6, type: 3}
@@ -24,7 +24,11 @@ MonoBehaviour:
   _goal: 250
   _itemFilter: {fileID: 11400000, guid: 96098a6168fc46144942ab19a916aaa2, type: 2}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 2000
-  _expReward: 750
+  _expReward: 0
   _expPercentOfLevel: 0

@@ -15,16 +15,20 @@ MonoBehaviour:
   _questId: main_rock_1
   _title: "\uB3CC \uAE68\uB294 \uD574\uB2EC"
   _description: "\uAD11\uC7A5 \uBC14\uC704\uB97C \uAE68\uC11C \uB3CC 6\uAC1C \uC5BB\uAE30"
-  _sortOrder: 12
+  _sortOrder: 5
   _kind: 0
-  _requiredLevel: 1
-  _prerequisite: {fileID: 0}
+  _requiredLevel: 2
+  _prerequisite: {fileID: 11400000, guid: 6e6ac0bca30369443b6abc5a000de460, type: 2}
   _icon: {fileID: 21300000, guid: 5e32cc5d73137d5469cfdf69f9db3dbd, type: 3}
   _goalType: 8
   _goal: 6
   _itemFilter: {fileID: 11400000, guid: c0aaf6ff75ccefa499fe320afcbcbb59, type: 2}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 30
-  _expReward: 40
+  _expReward: 100
   _expPercentOfLevel: 0
