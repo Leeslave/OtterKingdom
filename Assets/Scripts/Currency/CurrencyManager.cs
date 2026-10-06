@@ -18,6 +18,13 @@ public class CurrencyManager : MonoBehaviour
     private readonly Dictionary<Currency, int> _wallets = new Dictionary<Currency, int>();
     [SerializeField] private List<Currency> _allCurrencies;
 
+    // 세이브에서 읽었지만 아직 지갑이 없는 재화 (재화 ID → 잔액). 씬마다 _allCurrencies가 달라(밭·낚시터는 골드만)
+    // 처음 시작한 씬이 모르는 재화(조개)도 처음 쓰는 순간 여기서 채우고, 끝까지 안 쓰면 저장할 때 그대로 남는다
+    private readonly Dictionary<string, int> _savedBalances = new Dictionary<string, int>();
+
+    /// <summary>지금 지갑이 있는 재화와 잔액 (세이브용)</summary>
+    public IEnumerable<KeyValuePair<Currency, int>> Balances => _wallets;
+
     private void InitializeWallets()
     {
         foreach (var currency in _allCurrencies)
@@ -74,7 +81,46 @@ public class CurrencyManager : MonoBehaviour
     {
         if (currency == null) throw new ArgumentNullException(nameof(currency));
 
-        return _wallets.TryGetValue(currency, out int balance) ? balance : 0;
+        EnsureWallet(currency);
+        return _wallets[currency];
+    }
+
+    /// <summary>
+    /// 세이브의 잔액을 불러온다 (재화 ID → 잔액). 이미 지갑이 있는 재화는 바로 그 값(세이브에 없으면 0)으로,
+    /// 아직 지갑이 없는 재화는 처음 쓰는 순간에 채운다. 거래가 아니므로 OnTransaction은 알리지 않는다
+    /// </summary>
+    public void LoadSavedBalances(IEnumerable<KeyValuePair<string, int>> saved)
+    {
+        _savedBalances.Clear();
+        if (saved != null)
+        {
+            foreach (var pair in saved)
+            {
+                if (!string.IsNullOrEmpty(pair.Key))
+                    _savedBalances[pair.Key] = pair.Value;
+            }
+        }
+
+        foreach (var currency in new List<Currency>(_wallets.Keys))
+        {
+            int amount = _savedBalances.TryGetValue(currency.CurrencyID, out int saved1) ? saved1 : 0;
+            _savedBalances.Remove(currency.CurrencyID);
+            SetBalance(currency, amount);
+        }
+    }
+
+    // 처음 보는 재화: 세이브에 있던 잔액(없으면 0)으로 지갑을 만든다
+    private void EnsureWallet(Currency currency)
+    {
+        if (_wallets.ContainsKey(currency))
+            return;
+        int amount = 0;
+        if (currency.CurrencyID != null && _savedBalances.TryGetValue(currency.CurrencyID, out int saved))
+        {
+            amount = Math.Clamp(saved, currency.MinCapacity, currency.MaxCapacity);
+            _savedBalances.Remove(currency.CurrencyID);
+        }
+        _wallets[currency] = amount;
     }
 
     /// <summary>

@@ -135,12 +135,14 @@ public partial class SettlementManager
         {
             if (reward == null || reward.Item == null || reward.Amount <= 0)
                 continue;
-            int added = bag != null ? bag.Add(reward.Item, reward.Amount, ItemChangeReason.Clearing) : 0;
+            // 개간 목재 효과(목공소, KingdomBonus)
+            int amount = KingdomBonus.Amount(KingdomBonusKind.ClearingWood, reward.Amount);
+            int added = bag != null ? bag.Add(reward.Item, amount, ItemChangeReason.Clearing) : 0;
             if (text.Length > 0)
                 text.Append(" · ");
             text.Append(reward.Item.DisplayName).Append(" +").Append(added);
-            if (bag != null && added < reward.Amount)
-                text.Append($" (가방이 가득해 {reward.Amount - added}개는 못 받았어요)");
+            if (bag != null && added < amount)
+                text.Append($" (가방이 가득해 {amount - added}개는 못 받았어요)");
         }
         _clearingRewardText[task.TaskId] = text.ToString();
         TerritoryRules.Sync(_config, Settlement);

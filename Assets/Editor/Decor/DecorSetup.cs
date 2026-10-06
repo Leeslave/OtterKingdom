@@ -35,9 +35,16 @@ public static class DecorSetup
     // 광장: 걷기 영역 전체 / 밭: 흙마당 (밭고랑은 DecorBlockArea) / 낚시터: 부두 뒤쪽 가장자리 한 줄 (해달은 앞쪽에서 놂)
     // 광산: 입구 아래 모래 마당 작은 칸 (P1 개간 지역 샘플). 구역은 잠긴 채 시작 → 광산 정비를 마치면 열림 (SettlementSetup.Tasks)
     // 광산은 광부·나무·돌이 1000 근처 순서로 앞뒤 정렬하므로 놓인 물건은 배경(0)·입구(1) 위 5에 고정
+    // 광장 격자는 영토 확장(P4 건물)으로 서쪽 77칸 · 북쪽 54칸 · 남쪽 3칸(서쪽 첫 땅이 광장보다 조금 아래로 내려감)을 넓혔다 (처음: (-12, -14.4)에서 24 × 33칸). 걷기 영역 밖은 막히므로 열린 땅에만 놓임
+    // 넓힌 격자: 세이브 좌표 기준 칸 (옛 세이브의 (0, 0) 칸 = 지금 칸). 이 표에 있는 격자는 씬 위치·칸 수·기본 구역을 실행할 때마다 맞춤
+    private static readonly Dictionary<string, Vector2Int> SaveOrigins = new Dictionary<string, Vector2Int>
+    {
+        { "plaza", new Vector2Int(77, 3) },
+    };
+
     private static readonly (string id, string zone, string scene, Vector2 origin, float cell, Vector2Int size, bool depth, int order, bool outside, bool blockWalk)[] Boards =
     {
-        ("plaza", "Zone_Plaza", "Assets/Scenes/Plaza.unity", new Vector2(-12f, -14.4f), 1f, new Vector2Int(24, 33), true, 0, false, true),
+        ("plaza", "Zone_Plaza", "Assets/Scenes/Plaza.unity", new Vector2(-89f, -17.4f), 1f, new Vector2Int(101, 90), true, 0, false, true),
         ("farm", "Zone_Farm", "Assets/Scenes/Farm.unity", new Vector2(-3.6f, -5.4f), 0.6f, new Vector2Int(13, 16), false, 1, true, false),
         ("fishing", "Zone_Fishing", "Assets/Scenes/Fishing.unity", new Vector2(-4.4f, 1.85f), 0.8f, new Vector2Int(6, 1), false, 1, true, false),
         ("mine", "Zone_Mine", "Assets/Scenes/Mine.unity", new Vector2(-2.0f, -3.6f), 0.8f, new Vector2Int(4, 2), false, 5, false, false),
@@ -182,7 +189,8 @@ public static class DecorSetup
     private static void CreateBoard(string id, string zoneAsset, Vector2Int size)
     {
         var (region, regionIsNew) = LoadOrCreate<DecorRegionDefinition>($"{DataFolder}/Regions/Region_{id}_base.asset");
-        if (regionIsNew)
+        bool expanded = SaveOrigins.TryGetValue(id, out var saveOrigin);
+        if (regionIsNew || expanded)
         {
             var so = new SerializedObject(region);
             so.FindProperty("_regionId").stringValue = $"{id}_base";
@@ -195,6 +203,13 @@ public static class DecorSetup
         }
 
         var (board, boardIsNew) = LoadOrCreate<DecorBoardDefinition>($"{DataFolder}/Boards/Board_{id}.asset");
+        if (expanded)
+        {
+            var so = new SerializedObject(board);
+            so.FindProperty("_size").vector2IntValue = size;
+            so.FindProperty("_saveOrigin").vector2IntValue = saveOrigin;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
         if (boardIsNew)
         {
             var so = new SerializedObject(board);
@@ -260,6 +275,9 @@ public static class DecorSetup
                 go.transform.position = b.origin;
                 view = go.AddComponent<DecorBoardView>();
             }
+
+            if (SaveOrigins.ContainsKey(b.id))
+                view.transform.position = b.origin;
 
             var so = new SerializedObject(view);
             so.FindProperty("_board").objectReferenceValue = board;

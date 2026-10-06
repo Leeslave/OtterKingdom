@@ -86,6 +86,15 @@ public class FairyNpcView : MonoBehaviour
             FairyShopPresenter.Instance.Open();
     }
 
+    /// <summary>요정이 다른 자리로 옮겨 감 (P4: 해달 상점을 다 지으면 그 앞으로 이사). 발밑 위치 기준으로 앞뒤 정렬을 다시 잡음</summary>
+    public void MoveTo(Vector2 foot)
+    {
+        transform.position = new Vector3(foot.x, foot.y, transform.position.z);
+        int order = PlazaDepth.SortingOrderFor(foot.y);
+        _fairy.sortingOrder = order;
+        _bubble.sortingOrder = order + 1;
+    }
+
     private static bool IsMultiTouch()
     {
         var touchscreen = Touchscreen.current;

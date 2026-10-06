@@ -31,4 +31,4 @@ MonoBehaviour:
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 200
   _expReward: 0
-  _expPercentOfLevel: 0
+  _expPercentOfLevel: 10

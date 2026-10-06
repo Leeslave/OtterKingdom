@@ -1,0 +1,225 @@
+using System;
+using System.Collections.Generic;
+
+/// <summary>장난감 방문 판정 결과</summary>
+public enum ToyVisitStep
+{
+    NoToy,       // 광장에 장난감이 없음 (돌던 시계는 그대로 멈춰 둠)
+    Full,        // 빈 집을 기다리는 장난감 해달이 가득함 (시계 멈춤)
+    NoCandidate, // 이 장난감 등급으로 올 해달이 더 없음 (시계 멈춤)
+    Counting,    // 시계가 도는 중 (이번에 시작했거나 아직 시간이 안 됨)
+    Arrived,     // 한 마리가 찾아옴
+}
+
+/// <summary>
+/// 장난감 방문 (P4, 성장곡선 기획서 3장 "장난감을 놓으면 그 등급의 해달이 방문"):
+/// 광장에 놓인 장난감 중 가장 높은 등급 이하의 장난감 해달이, 정해진 간격마다 한 마리씩 찾아온다 (Visitor).
+/// 고르기는 회차로 정하는 난수라 재접속해도 같은 해달이 온다.
+/// 빈 집(공동사업이 특정 해달에게 정해 둔 자리가 아닌, 입주민 없는 집)이 있으면 광장에서 말을 걸어 입주 → 주민.
+/// </summary>
+public static class ToyVisitRules
+{
+    /// <summary>장난감 등급과 같은 등급인 해달의 가중치</summary>
+    public const int SameTierWeight = 2;
+
+    /// <summary>왕국에 아직 없는 특성을 가진 해달의 가중치 (특성이 막혀 진행이 멈추지 않게)</summary>
+    public const int MissingTraitWeight = 3;
+
+    /// <summary>n번째(0부터) 방문까지 걸리는 시간</summary>
+    public static TimeSpan Interval(SettlementConfig config, int visitIndex)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        var minutes = config.ToyVisitMinutes;
+        if (minutes == null || minutes.Count == 0)
+            return TimeSpan.Zero;
+        float value = minutes[Math.Max(0, Math.Min(visitIndex, minutes.Count - 1))];
+        return TimeSpan.FromMinutes(Math.Max(0f, value));
+    }
+
+    /// <summary>빈 집이 없어 광장에 머무는 장난감 해달 수 (찾아왔지만 아직 입주 전)</summary>
+    public static int WaitingCount(SettlementConfig config, Settlement settlement)
+    {
+        int count = 0;
+        foreach (var otterId in settlement.ResidentOrder)
+        {
+            var otter = config.FindOtter(otterId);
+            if (otter != null && otter.IsToyVisitor && settlement.TryGetResidentState(otterId, out var state)
+                && state == ResidentState.Visitor)
+                count++;
+        }
+        return count;
+    }
+
+    /// <summary>이 장난감 등급으로 올 수 있는 해달: 아직 찾아온 적 없는 장난감 해달 중 등급이 장난감 이하 (데이터 순서)</summary>
+    public static void CollectCandidates(SettlementConfig config, Settlement settlement, int toyTier, List<SettlementOtterDefinition> result)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+        if (result == null)
+            throw new ArgumentNullException(nameof(result));
+
+        result.Clear();
+        if (toyTier < 0)
+            return;
+        foreach (var otter in config.Otters)
+        {
+            if (otter != null && otter.IsToyVisitor && otter.VisitTier <= toyTier
+                && !string.IsNullOrEmpty(otter.OtterId) && !settlement.TryGetResidentState(otter.OtterId, out _))
+                result.Add(otter);
+        }
+    }
+
+    /// <summary>후보의 가중치: 기본 1, 장난감과 같은 등급 ×2, 왕국에 아직 없는 특성 ×3</summary>
+    public static int Weight(SettlementOtterDefinition otter, int toyTier, int[] traitCounts)
+    {
+        if (otter == null)
+            return 0;
+        int weight = 1;
+        if (otter.VisitTier == toyTier)
+            weight *= SameTierWeight;
+        int index = (int)otter.Trait;
+        if (index > 0 && traitCounts != null && index < traitCounts.Length && traitCounts[index] == 0)
+            weight *= MissingTraitWeight;
+        return weight;
+    }
+
+    /// <summary>후보 중 한 마리를 고름 (회차로 정하는 난수 → 같은 회차·같은 후보면 늘 같은 해달)</summary>
+    public static SettlementOtterDefinition Pick(IReadOnlyList<SettlementOtterDefinition> candidates, int toyTier, int[] traitCounts, int serial)
+    {
+        if (candidates == null || candidates.Count == 0)
+            return null;
+
+        int total = 0;
+        foreach (var otter in candidates)
+            total += Weight(otter, toyTier, traitCounts);
+        if (total <= 0)
+            return candidates[0];
+
+        int roll = new Random(Seed(serial)).Next(total);
+        foreach (var otter in candidates)
+        {
+            roll -= Weight(otter, toyTier, traitCounts);
+            if (roll < 0)
+                return otter;
+        }
+        return candidates[candidates.Count - 1];
+    }
+
+    /// <summary>
+    /// 한 번 판정: 막혀 있으면 시계를 멈추고(장난감이 없을 때만 그대로 둠), 시계가 없으면 시작하고, 시간이 되면 한 마리가 찾아온다.
+    /// 찾아온 해달은 Visitor로 주민 목록 끝에 붙고 방명록이 남는다 (광장이 대기 줄로 걸어 들어오게 함)
+    /// </summary>
+    /// <param name="toyTier">광장 장난감 중 가장 높은 등급 (없으면 -1)</param>
+    public static ToyVisitStep Step(SettlementConfig config, Settlement settlement, int toyTier, long nowUtcTicks,
+        out SettlementOtterDefinition arrived)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+
+        arrived = null;
+        // 장난감이 없음: 시계를 지우지 않음 (꾸미기 중이거나 꾸미기 기록을 불러오기 전일 수 있음)
+        if (toyTier < 0)
+            return ToyVisitStep.NoToy;
+        if (WaitingCount(config, settlement) >= config.MaxWaitingVisitors)
+        {
+            settlement.SetToyVisitDue(0);
+            return ToyVisitStep.Full;
+        }
+
+        var candidates = new List<SettlementOtterDefinition>();
+        CollectCandidates(config, settlement, toyTier, candidates);
+        if (candidates.Count == 0)
+        {
+            settlement.SetToyVisitDue(0);
+            return ToyVisitStep.NoCandidate;
+        }
+
+        if (settlement.ToyVisitDueUtcTicks <= 0)
+        {
+            settlement.SetToyVisitDue(nowUtcTicks + Interval(config, settlement.ToyVisitSerial).Ticks);
+            return ToyVisitStep.Counting;
+        }
+        if (nowUtcTicks < settlement.ToyVisitDueUtcTicks)
+            return ToyVisitStep.Counting;
+
+        arrived = Pick(candidates, toyTier, TraitRules.CountAll(config, settlement), settlement.ToyVisitSerial);
+        settlement.CompleteToyVisit();
+        settlement.SetResident(arrived.OtterId, ResidentState.Visitor);
+        if (arrived.ArrivalEntry != null)
+            settlement.AddGuestbook(arrived.ArrivalEntry.EntryId);
+        return ToyVisitStep.Arrived;
+    }
+
+    /// <summary>
+    /// 장난감 해달이 들어갈 빈 집: 입주민이 없고, 공동사업이 특정 해달에게 정해 둔 자리(새 이웃의 집 등)가 아닌 집 (지은 순서대로 첫 집)
+    /// </summary>
+    public static HouseRecord FindFreeHome(SettlementConfig config, Settlement settlement)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+
+        foreach (var house in settlement.Houses)
+        {
+            if (house != null && string.IsNullOrEmpty(house.ResidentId) && !IsReservedSlot(config, house.SlotId))
+                return house;
+        }
+        return null;
+    }
+
+    /// <summary>공동사업의 입주 단계가 정해 둔 집 자리인지</summary>
+    public static bool IsReservedSlot(SettlementConfig config, string slotId)
+    {
+        if (string.IsNullOrEmpty(slotId))
+            return false;
+        foreach (var project in config.Projects)
+        {
+            if (project == null)
+                continue;
+            foreach (var stage in project.Stages)
+            {
+                if (stage != null && stage.Action == ProjectActionKind.SettleResident && stage.HouseSlotId == slotId)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>광장에서 말을 걸면 입주를 물을 수 있는 장난감 해달인지 (찾아와 만났고 아직 방문 중 + 빈 집이 있음)</summary>
+    public static bool CanMoveIn(SettlementConfig config, Settlement settlement, SettlementOtterDefinition otter) =>
+        IsHomelessVisitor(settlement, otter) && FindFreeHome(config, settlement) != null;
+
+    /// <summary>찾아와 만났지만 아직 집이 없는 장난감 해달인지</summary>
+    public static bool IsHomelessVisitor(Settlement settlement, SettlementOtterDefinition otter) =>
+        otter != null && otter.IsToyVisitor && settlement.HasMet(otter.OtterId)
+        && settlement.TryGetResidentState(otter.OtterId, out var state) && state == ResidentState.Visitor;
+
+    /// <summary>빈 집에 입주 (집의 입주민 + 주민 처지). 연타해도 한 번</summary>
+    /// <returns>이번에 입주했으면 true</returns>
+    public static bool MoveIn(SettlementConfig config, Settlement settlement, SettlementOtterDefinition otter) =>
+        CanMoveIn(config, settlement, otter) && MoveIntoFreeHome(config, settlement, otter);
+
+    /// <summary>
+    /// 해달이 빈 집에 들어가 주민이 된다 (장난감 해달인지는 보지 않음 — 입주 부탁이 기다리는 꾸벅이처럼 부른 쪽이 확인).
+    /// 이미 주민이거나 빈 집이 없으면 false
+    /// </summary>
+    public static bool MoveIntoFreeHome(SettlementConfig config, Settlement settlement, SettlementOtterDefinition otter)
+    {
+        if (otter == null || (settlement.TryGetResidentState(otter.OtterId, out var state) && state == ResidentState.Resident))
+            return false;
+        var home = FindFreeHome(config, settlement);
+        if (home == null || !settlement.SetHouseResident(home.InstanceId, otter.OtterId))
+            return false;
+        settlement.SetResident(otter.OtterId, ResidentState.Resident);
+        return true;
+    }
+
+    // 회차마다 다른 씨앗 (0회차도 0이 아니게)
+    private static int Seed(int serial) => unchecked(serial * 486187739 + 1013904223);
+}

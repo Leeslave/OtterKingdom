@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_p4_granary
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_p4_granary
+  _order: 38
+  _category: 0
+  _contentVersion: 4
+  _title: "\uBC2D \uC606 \uCC3D\uACE0"
+  _description: "\uAC70\uB454 \uC791\uBB3C\uC744 \uC798 \uBCF4\uAD00\uD560 \uCC3D\uACE0\uAC00
+    \uC788\uC73C\uBA74\n\uC218\uD655\uC774 \uD6E8\uC52C \uB109\uB109\uD574\uC9C8
+    \uAC70\uC608\uC694."
+  _icon: {fileID: 21300000, guid: 0df8850067a44be4d88237c1839fc692, type: 3}
+  _requester: {fileID: 11400000, guid: f67334a72b334d8fb371a7a4fe78ff5f, type: 2}
+  _requiredDevelopment: p4_farmer_settled
+  _minResidents: 0
+  _construction: {fileID: 0}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _building: {fileID: 11400000, guid: 32a411fc79237534bae657f2e1667868, type: 2}
+  _buildingCount: 1
+  _settleTargets: []
+  _resultDevelopment: p4_granary_built
+  _settles: []
+  _arrivals: []
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: 67108e59a537a494287a18760c9ab698, type: 2}
+  _completionMessage: "\uB18D\uC5C5 \uCC3D\uACE0\uAC00 \uC0DD\uACBC\uC5B4\uC694!
+    \uBC2D\uC5D0\uC11C \uAC70\uB450\uB294 \uC791\uBB3C\uC774 \uB298\uC5B4\uB098\uC694.
+    (\uC218\uD655\uB7C9 +10%)"
+  _kingdomLevel: 15

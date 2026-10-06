@@ -35,6 +35,7 @@ public class GlobalUIPresenter : MonoBehaviour
         _navBar.OnCodexClicked += OpenCollection;
         _navBar.OnQuestClicked += OpenQuest;
         _navBar.OnDecorateClicked += OpenDecorMode;
+        DecorModePresenter.BuildRequested += OpenDecorModeForBuilding;
         _navBar.OnBagClicked += OpenBag;
         _navBar.OnTravelClicked += ToggleTravel;
         _travelPopup.OnZoneSelected += HandleZoneSelected;
@@ -49,6 +50,7 @@ public class GlobalUIPresenter : MonoBehaviour
         _navBar.OnCodexClicked -= OpenCollection;
         _navBar.OnQuestClicked -= OpenQuest;
         _navBar.OnDecorateClicked -= OpenDecorMode;
+        DecorModePresenter.BuildRequested -= OpenDecorModeForBuilding;
         _navBar.OnBagClicked -= OpenBag;
         _navBar.OnTravelClicked -= ToggleTravel;
         _travelPopup.OnZoneSelected -= HandleZoneSelected;
@@ -121,6 +123,16 @@ public class GlobalUIPresenter : MonoBehaviour
 
         _travelPopup.Hide();
         _decorMode.Enter();
+    }
+
+    // 게시판 건물 부탁(P4) → 꾸미기 모드 건물 탭에서 그 건물 자리 고르기
+    private void OpenDecorModeForBuilding(BuildingDefinition building)
+    {
+        if (_navigator.IsTraveling || !_decorMode.CanEnter)
+            return;
+
+        _travelPopup.Hide();
+        _decorMode.EnterForBuilding(building);
     }
 
     #endregion

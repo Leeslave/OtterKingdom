@@ -80,7 +80,8 @@ public class InventoryManager : MonoBehaviour
         if (!Inventory.TryRemove(item, amount, ItemChangeReason.Sell))
             return false;
 
-        int total = (int)Math.Min((long)item.SellPrice * amount, int.MaxValue);
+        // 판매가 효과(해달 상점)는 KingdomBonus가 정함 — 화면의 가격과 같은 값
+        int total = (int)Math.Min((long)KingdomBonus.SellPrice(item.SellPrice) * amount, int.MaxValue);
         if (total > 0)
             CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(_config.SellCurrency, total, TransactionSource.ItemSale));
 
@@ -103,7 +104,7 @@ public class InventoryManager : MonoBehaviour
                 continue;
 
             if (TrySell(pair.Key, pair.Value))
-                sum += (long)pair.Key.SellPrice * pair.Value;
+                sum += (long)KingdomBonus.SellPrice(pair.Key.SellPrice) * pair.Value;
         }
         return (int)Math.Min(sum, int.MaxValue);
     }

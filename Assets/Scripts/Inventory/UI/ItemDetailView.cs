@@ -73,7 +73,7 @@ public class ItemDetailView : MonoBehaviour
         _nameText.text = item.DisplayName;
         _subText.text = BuildSubText(item);
         _countText.text = NumberFormatter.Short(count);
-        _priceText.text = NumberFormatter.Short(item.SellPrice);
+        _priceText.text = NumberFormatter.Short(KingdomBonus.SellPrice(item.SellPrice));
         _priceBox.SetActive(item.IsSellable);
         _sellButton.gameObject.SetActive(item.IsSellable);
         _descriptionText.text = item.Description;

@@ -79,8 +79,16 @@ public class ProgressionTests
         progress.Load(99, 5000, _curve);
         Assert.AreEqual(4, progress.Level);
 
-        progress.Load(2, 999, _curve);
-        Assert.AreEqual(199, progress.Exp, "다음 레벨 경험치를 넘을 수 없습니다.");
+        progress.Load(2, -5, _curve);
+        Assert.AreEqual(0, progress.Exp, "음수 경험치는 0");
+
+        // 필요 경험치를 넘는 값 = 레벨 제한 동안 모아 둔 것: 남겨 두고, 다음 판정(제한 다시 정하기)에서 반영
+        progress.Load(2, 250, _curve);
+        Assert.AreEqual(250, progress.Exp);
+        var reached = new List<int>();
+        progress.AddExp(0, _curve, reached);
+        Assert.AreEqual(3, progress.Level);
+        Assert.AreEqual(50, progress.Exp);
         Assert.Throws<ArgumentOutOfRangeException>(() => progress.AddExp(-1, _curve, new List<int>()));
     }
 
@@ -93,13 +101,32 @@ public class ProgressionTests
 
         progress.AddExp(250, _curve, reached);
         Assert.AreEqual(1, progress.Level, "큰 발전 전에는 경험치가 차도 레벨이 그대로");
-        Assert.AreEqual(100, progress.Exp, "막대는 꽉 찬 채로 기다림");
-        Assert.AreEqual(1f, progress.Ratio(_curve));
+        Assert.AreEqual(250, progress.Exp, "넘친 경험치도 버리지 않고 모아 둠");
+        Assert.AreEqual(1f, progress.Ratio(_curve), "막대는 꽉 찬 채로 기다림");
         Assert.IsEmpty(reached);
 
         progress.SetCap(int.MaxValue, _curve, reached);
         Assert.AreEqual(2, progress.Level, "제한이 풀리면 쌓아 둔 경험치로 바로 오름");
+        Assert.AreEqual(150, progress.Exp, "모아 둔 경험치가 다음 레벨로 이어짐 (250 − 100)");
         CollectionAssert.AreEqual(new[] { 2 }, reached);
+    }
+
+    [Test]
+    public void Cap_BankedExp_SurvivesSaveAndCarriesPastReachLevel()
+    {
+        var progress = new LevelProgress();
+        var reached = new List<int>();
+        progress.SetCap(1, _curve, reached);
+        progress.AddExp(180, _curve, reached);
+
+        var loaded = new LevelProgress();
+        loaded.Load(progress.Level, progress.Exp, _curve);
+        Assert.AreEqual(180, loaded.Exp, "세이브를 다시 불러와도 모아 둔 경험치는 남음");
+
+        // 큰 발전을 끝내 Lv.2로: 필요 100을 쓰고 남은 80이 이어짐
+        loaded.ReachLevel(2, _curve, reached);
+        Assert.AreEqual(2, loaded.Level);
+        Assert.AreEqual(80, loaded.Exp);
     }
 
     [Test]

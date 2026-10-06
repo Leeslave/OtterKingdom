@@ -594,6 +594,16 @@ public class SettlementPresenter : MonoBehaviour
             OpenResidentTask(request, status);
             return;
         }
+        if (request.Building != null)
+        {
+            OpenBuildRequest(request, status);
+            return;
+        }
+        if (request.SettleTargets.Count > 0)
+        {
+            OpenSettleRequest(request, status);
+            return;
+        }
         var construction = request.Construction;
         if (construction == null)
             return;
@@ -651,6 +661,121 @@ public class SettlementPresenter : MonoBehaviour
         }
 
         _construction.Show(request, speaker, line, _costs, note, startLabel, canStart);
+    }
+
+    // 건물 부탁 (P4: 짤랑이의 가게 등): 비용·조건을 보여 주고 [자리 고르기]로 꾸미기 모드의 그 건물을 엶. 짓기 시작은 꾸미기 모드에서
+    private void OpenBuildRequest(BoardRequestDefinition request, RequestStatus status)
+    {
+        var building = request.Building;
+        _costs.Clear();
+        var gold = _manager.Config.GoldCurrency;
+        int goldCost = _manager.BuildingGoldCost(building);
+        if (goldCost > 0)
+            _costs.Add((gold != null ? gold.Icon : null, goldCost, _manager.GoldBalance));
+        foreach (var cost in _manager.BuildingItemCosts(building))
+            _costs.Add((cost.Item.Icon, cost.Amount, _manager.ItemCount(cost.Item)));
+
+        string note;
+        string button = "자리 고르기";
+        bool canPress = false;
+        var active = _manager.ActiveBuildingOf(building);
+        if (status == RequestStatus.Locked)
+            note = "아직 할 수 없어요.";
+        else if (active != null)
+        {
+            note = $"{building.DisplayName} 짓는 중 · {FormatTime(active.Remaining(SettlementManager.NowTicks))}";
+            button = "진행 중";
+        }
+        else
+        {
+            var block = _manager.CheckBuilding(building);
+            canPress = block == BuildingBlock.None;
+            note = canPress
+                ? $"꾸미기 모드에서 {building.DisplayName}{KoreanParticle.ObjectParticle(building.DisplayName)} 지을 자리를 골라요 · {FormatDuration(building.BuildSeconds)} 걸려요"
+                : _manager.BuildingBlockText(building, block);
+            if (SettlementPlazaView.Active == null)
+            {
+                button = "광장으로";
+                canPress = canPress && PlazaZone != null;
+            }
+        }
+        _construction.Show(request, request.Requester, request.Description, _costs, note, button, canPress);
+    }
+
+    // 입주 부탁 (P4: 짤랑이가 살 집 등): 기다리는 해달에게 빈 집이 있으면 [만나러 가기], 없으면 [작은 집 짓기]
+    private void OpenSettleRequest(BoardRequestDefinition request, RequestStatus status)
+    {
+        var otter = WaitingSettler(request);
+        _costs.Clear();
+        string note;
+        string button = "만나러 가기";
+        bool canPress = true;
+        bool inPlaza = SettlementPlazaView.Active != null;
+        if (status == RequestStatus.Locked || otter == null)
+        {
+            note = otter == null ? "모두 입주했어요!" : "아직 할 수 없어요.";
+            button = "보기";
+            canPress = false;
+        }
+        else
+        {
+            string name = otter.DisplayName;
+            var home = _manager.HomeBuilding;
+            var building = home != null ? _manager.ActiveBuildingOf(home) : null;
+            if (!_manager.Settlement.HasMet(otter.OtterId))
+                note = $"{name}{KoreanParticle.SubjectParticle(name)} 광장으로 오고 있어요.";
+            else if (_manager.CanMoveIn(otter))
+                note = $"빈 집이 있어요! {name}에게 말을 걸어 입주를 도와주세요.";
+            else if (building != null)
+            {
+                note = $"{home.DisplayName} 짓는 중 · {FormatTime(building.Remaining(SettlementManager.NowTicks))}";
+                canPress = false;
+            }
+            else if (home != null)
+            {
+                var block = _manager.CheckBuilding(home);
+                button = $"{home.DisplayName} 짓기";
+                canPress = block == BuildingBlock.None;
+                note = canPress
+                    ? $"{name}{KoreanParticle.SubjectParticle(name)} 살 빈 집이 없어요. {home.DisplayName}{KoreanParticle.ObjectParticle(home.DisplayName)} 지어 주세요."
+                    : _manager.BuildingBlockText(home, block);
+            }
+            else
+            {
+                note = $"{name}{KoreanParticle.SubjectParticle(name)} 살 빈 집이 필요해요.";
+                canPress = false;
+            }
+            if (!inPlaza && canPress)
+            {
+                button = "광장으로";
+                canPress = PlazaZone != null;
+            }
+        }
+        _construction.Show(request, otter != null ? otter : request.Requester, request.Description, _costs, note, button, canPress);
+    }
+
+    // 입주 부탁에서 아직 주민이 아닌 첫 해달 (모두 입주했으면 null)
+    private SettlementOtterDefinition WaitingSettler(BoardRequestDefinition request)
+    {
+        foreach (var otter in request.SettleTargets)
+        {
+            if (otter != null && (!_manager.Settlement.TryGetResidentState(otter.OtterId, out var state) || state != ResidentState.Resident))
+                return otter;
+        }
+        return null;
+    }
+
+    // 꾸미기 모드의 건물 탭에서 이 건물 자리를 고르게 함 (광장이 아니면 광장으로)
+    private void GoBuild(BuildingDefinition building)
+    {
+        if (SettlementPlazaView.Active == null)
+        {
+            if (PlazaZone != null && _navigator != null)
+                _navigator.TryGo(PlazaZone);
+            return;
+        }
+        if (building != null)
+            DecorModePresenter.RequestBuild(building);
     }
 
     // 장소를 직접 치우는 부탁 (광산 길 열기, 농경지 개간): 비용 없이 [가 보기]로 그 장소에 감.
@@ -825,6 +950,27 @@ public class SettlementPresenter : MonoBehaviour
     private void HandleStartClicked()
     {
         var request = _construction.Request;
+        if (request.Building != null || request.SettleTargets.Count > 0)
+        {
+            _construction.Hide();
+            if (_board.IsOpen)
+                _board.Hide();
+            if (request.Building != null)
+            {
+                GoBuild(request.Building);
+                return;
+            }
+            // 입주: 빈 집이 있거나 아직 광장에 오는 중이면 그 해달 쪽, 아니면 집 짓기
+            var settler = WaitingSettler(request);
+            var plaza = SettlementPlazaView.Active;
+            if (plaza == null)
+                GoBuild(null);
+            else if (settler != null && (_manager.CanMoveIn(settler) || !_manager.Settlement.HasMet(settler.OtterId)))
+                plaza.FocusOtter(settler.OtterId);
+            else
+                GoBuild(_manager.HomeBuilding);
+            return;
+        }
         var meet = request.AssignSpecialist != null ? request.AssignSpecialist
             : request.AssignRole != null ? request.AssignRole.Otter
             : null;
@@ -1010,6 +1156,13 @@ public class SettlementPresenter : MonoBehaviour
             if (request == null)
                 continue;
             text.Append(request.Title).Append(request.Description).Append(request.CompletionMessage);
+            if (request.Building != null)
+                text.Append(request.Building.DisplayName).Append("자리 고르기 꾸미기 모드에서 지을 자리를 골라요 걸려요 짓는 중 진행");
+            foreach (var otter in request.SettleTargets)
+            {
+                if (otter != null)
+                    text.Append(otter.DisplayName).Append("빈 집이 있어요 없어요 입주를 도와주세요 살 지어 주세요 모두 입주했어요 작은 집 짓기");
+            }
             if (request.Construction != null)
                 text.Append(request.Construction.DisplayName).Append(request.Construction.ProgressLabel).Append(request.Construction.ProgressHint);
         }

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde64cb29026ea4a985d0e677b28392, type: 3}
+  m_Name: Otter_Toy_Kungkung
+  m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
+  _otterId: otter_toy_kungkung
+  _displayName: "\uCFF5\uCFF5\uC774"
+  _portrait: {fileID: 21300000, guid: 96122e84e50259244b42d66a1f5f18c2, type: 3}
+  _plazaPrefab: {fileID: 5447658792398674207, guid: 5d6ead5fdf9832d4083ad4403192a0ce, type: 3}
+  _plazaTint: {r: 0.86, g: 0.76, b: 0.66, a: 1}
+  _trait: 1
+  _toyVisitor: 1
+  _visitTier: 0
+  _homelessLine: "\uB369\uCE58\uAC00 \uCEE4\uC11C \uC9D1\uC774 \uAF2D \uD544\uC694\uD574\uC694.\n\uBE48 \uC9D1\uC774 \uC0DD\uAE30\uBA74 \uC54C\uB824 \uC918\uC694!"
+  _isBuilder: 0
+  _arrivalEntry: {fileID: 11400000, guid: 436c21b191a14f0d9695a52cd88c4719, type: 2}
+  _workRegion: {fileID: 0}
+  _collectionEntry: {fileID: 0}
+  _assignLine: 
+  _assignDevelopment: 
+  _moveInLine: "\uBE48 \uC9D1\uC774 \uC788\uB2E4\uACE0\uC694?\n\uC81C\uAC00 \uC0B4\uC544\uB3C4 \uB420\uAE4C\uC694?"
+  _lines:
+  - "\uB098\uBB34 \uD55C \uADF8\uB8E8\uCBE4\uC740 \uBC88\uCA4D!"
+  - "\uCFF5\uCFF5 \uAC78\uC73C\uBA74 \uB2E4\uB4E4 \uCCD0\uB2E4\uBD10\uC694."
+  - "\uC232 \uB0C4\uC0C8\uAC00 \uC88B\uC544\uC694."
+  _introLine: 
+  _introDevelopment: 

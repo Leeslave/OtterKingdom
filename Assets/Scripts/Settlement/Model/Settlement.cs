@@ -444,6 +444,8 @@ public partial class Settlement
             _tasks[job.TaskId] = new SettlementTaskJob(job.TaskId, job.OtterIds, start, end);
             changed = true;
         }
+        if (ShortenBuildings(nowUtcTicks, max))
+            changed = true;
         if (changed)
             OnChanged?.Invoke();
         return changed;
@@ -651,6 +653,8 @@ public partial class Settlement
             }
         }
         LoadP3(saved);
+        LoadVisits(saved);
+        LoadBuildings(saved);
 
         OnChanged?.Invoke();
     }
@@ -731,6 +735,8 @@ public partial class Settlement
             result.roles.Add(new RoleAssignmentSaveData { roleId = role.RoleId, otterId = role.OtterId, stationId = role.StationId });
         result.roles.Sort((a, b) => string.CompareOrdinal(a.roleId, b.roleId));
         WriteP3(result);
+        WriteVisits(result);
+        WriteBuildings(result);
     }
 
     #endregion

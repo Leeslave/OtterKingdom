@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde64cb29026ea4a985d0e677b28392, type: 3}
+  m_Name: Otter_Toy_Kongkong
+  m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
+  _otterId: otter_toy_kongkong
+  _displayName: "\uCF69\uCF69\uC774"
+  _portrait: {fileID: 21300000, guid: 5436b78cc2da9ae4b9c403c6b96b3d4d, type: 3}
+  _plazaPrefab: {fileID: 4823710553209184617, guid: c232c503b3514cd397048b6d52d74b4f, type: 3}
+  _plazaTint: {r: 1, g: 0.82, b: 0.72, a: 1}
+  _trait: 5
+  _toyVisitor: 1
+  _visitTier: 1
+  _homelessLine: "\uC9D1\uC774 \uC5C6\uC73C\uBA74 \uC81C\uAC00 \uC9C0\uC5B4\uB3C4 \uB418\uB294\uB370\u2026\n\uBE48 \uC9D1\uC774 \uC0DD\uAE30\uBA74 \uC54C\uB824 \uC918\uC694!"
+  _isBuilder: 0
+  _arrivalEntry: {fileID: 11400000, guid: 4c72a77c56c6434daad023665f54bdc1, type: 2}
+  _workRegion: {fileID: 0}
+  _collectionEntry: {fileID: 0}
+  _assignLine: 
+  _assignDevelopment: 
+  _moveInLine: "\uC798 \uC9C0\uC740 \uC9D1\uC774\uB124\uC694!\n\uC5EC\uAE30 \uC0B4\uC544\uB3C4 \uB420\uAE4C\uC694?"
+  _lines:
+  - "\uCF69\uCF69, \uBABB \uBC15\uB294 \uC18C\uB9AC \uC88B\uC544\uC694."
+  - "\uACE0\uCE60 \uB370 \uC788\uC73C\uBA74 \uBD88\uB7EC\uC694!"
+  - "\uD2BC\uD2BC\uD558\uAC8C \uC9C0\uC5B4\uC57C\uC8E0."
+  _introLine: 
+  _introDevelopment: 

@@ -177,4 +177,10 @@ public class SettlementSaveData
     public int lifeRequestSerial;
     // 끝낸 생활 의뢰 수
     public int lifeRequestsDone;
+    // 다음 장난감 해달이 찾아오는 시각 (UTC ticks, 0 = 시계가 돌지 않음. P4 — 옛 세이브는 0)
+    public long toyVisitDueUtcTicks;
+    // 찾아온 장난감 해달 수 (해달 고르기의 회차)
+    public int toyVisitSerial;
+    // 자리를 골라 지은 건물의 공사·완성 기록 (P4. 놓인 자리는 꾸미기 세이브)
+    public List<BuildingSaveData> buildings = new List<BuildingSaveData>();
 }

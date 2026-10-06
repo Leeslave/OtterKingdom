@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde64cb29026ea4a985d0e677b28392, type: 3}
+  m_Name: Otter_Toy_Duribeon
+  m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
+  _otterId: otter_toy_duribeon
+  _displayName: "\uB450\uB9AC\uBC88"
+  _portrait: {fileID: 21300000, guid: 2456492ce6202ca41a30a26547562ba4, type: 3}
+  _plazaPrefab: {fileID: 5833170307420288663, guid: e86c7eb151ead664abbc91e7cefe9682, type: 3}
+  _plazaTint: {r: 0.8, g: 1, b: 0.94, a: 1}
+  _trait: 9
+  _toyVisitor: 1
+  _visitTier: 1
+  _homelessLine: "\uB3CC\uC544\uC62C \uC9D1\uC774 \uC788\uC73C\uBA74 \uC88B\uACA0\uC5B4\uC694.\n\uBE48 \uC9D1\uC774 \uC0DD\uAE30\uBA74 \uC54C\uB824 \uC918\uC694!"
+  _isBuilder: 0
+  _arrivalEntry: {fileID: 11400000, guid: a9fcc2c68b294c0898a2315739494291, type: 2}
+  _workRegion: {fileID: 0}
+  _collectionEntry: {fileID: 0}
+  _assignLine: 
+  _assignDevelopment: 
+  _moveInLine: "\uC5EC\uAE30\uB97C \uBCA0\uC774\uC2A4\uCEA0\uD504\uB85C \uD560\uB798\uC694!\n\uC0B4\uC544\uB3C4 \uB420\uAE4C\uC694?"
+  _lines:
+  - "\uC800 \uB108\uBA38\uC5D4 \uBB50\uAC00 \uC788\uC744\uAE4C\uC694?"
+  - "\uAE38\uC740 \uC81C\uAC00 \uC798 \uCC3E\uC544\uC694."
+  - "\uB450\uB9AC\uBC88\uB450\uB9AC\uBC88\u2026"
+  _introLine: 
+  _introDevelopment: 

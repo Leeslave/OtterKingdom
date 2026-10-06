@@ -17,6 +17,8 @@ public class SettlementOtterView : MonoBehaviour
     private const float SpeechSeconds = 2.8f;
     private const float BobHeight = 0.08f;
     private const int OverlayOrder = 32000;
+    // 빈 집을 기다리는 장난감 해달의 기본 말
+    private const string HomelessFallbackLine = "여기 살고 싶어요!\n빈 집이 생기면 알려 주세요.";
 
     private SettlementOtterDefinition _otter;
     private Collider2D _tapArea;
@@ -158,6 +160,8 @@ public class SettlementOtterView : MonoBehaviour
         }
         else if (manager.TryHearIntro(_otter))
             line = _otter.IntroLine;
+        else if (manager.IsHomelessVisitor(_otter))
+            line = string.IsNullOrEmpty(_otter.HomelessLine) ? HomelessFallbackLine : _otter.HomelessLine;
         else if (_otter.Lines.Count > 0)
             line = PickLine();
         else

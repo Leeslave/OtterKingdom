@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>세이브 한 줄: 놓인 물건 하나 (배치 개체 ID, 물건 종류, 위치, 방향)</summary>
+/// <summary>세이브 한 줄: 놓인 물건 하나 (배치 개체 ID, 물건 종류 — 장난감은 아이템 ID · 건물은 건물 ID, 위치, 방향)</summary>
 [Serializable]
 public class PlacedDecorSaveEntry
 {
@@ -45,7 +45,8 @@ public class DecorSaveData
 /// </summary>
 public static class DecorSaveConverter
 {
-    public static void Write(DecorLayout layout, DecorBoardSaveData result)
+    /// <param name="saveOrigin">세이브 좌표의 기준 칸 (DecorBoardDefinition.SaveOrigin): 세이브 = 칸 − 기준</param>
+    public static void Write(DecorLayout layout, DecorBoardSaveData result, Vector2Int saveOrigin = default)
     {
         if (layout == null) throw new ArgumentNullException(nameof(layout));
         if (result == null) throw new ArgumentNullException(nameof(result));
@@ -54,7 +55,7 @@ public static class DecorSaveConverter
         var placed = new List<PlacedDecor>(layout.Placed);
         placed.Sort((a, b) => a.InstanceId.CompareTo(b.InstanceId));
         foreach (var p in placed)
-            result.placed.Add(new PlacedDecorSaveEntry(p.InstanceId, p.Decor.ItemId, p.Origin.x, p.Origin.y, p.Rotation));
+            result.placed.Add(new PlacedDecorSaveEntry(p.InstanceId, p.Decor.SaveId, p.Origin.x - saveOrigin.x, p.Origin.y - saveOrigin.y, p.Rotation));
 
         result.unlockedRegions.Clear();
         result.unlockedRegions.AddRange(layout.UnlockedRegions);
@@ -65,8 +66,9 @@ public static class DecorSaveConverter
     /// 저장된 구역·물건을 넣는다. 구역을 먼저 열어야 그 구역의 물건을 놓을 수 있다.
     /// 없는 물건이나 자리가 맞지 않는 물건은 건너뛴다 (보관함으로 돌아간 것처럼 됨)
     /// </summary>
+    /// <param name="saveOrigin">세이브 좌표의 기준 칸: 칸 = 세이브 + 기준</param>
     /// <returns>건너뛴 물건 수</returns>
-    public static int Read(DecorBoardSaveData saved, DecorLayout layout, DecorCatalog catalog)
+    public static int Read(DecorBoardSaveData saved, DecorLayout layout, DecorCatalog catalog, Vector2Int saveOrigin = default)
     {
         if (saved == null) throw new ArgumentNullException(nameof(saved));
         if (layout == null) throw new ArgumentNullException(nameof(layout));
@@ -88,7 +90,7 @@ public static class DecorSaveConverter
                 && !string.IsNullOrEmpty(line.itemId)
                 && Enum.IsDefined(typeof(DecorRotation), line.rotation)
                 && catalog.TryGetDecor(line.itemId, out var decor)
-                && layout.LoadPlaced(line.instanceId, decor, new Vector2Int(line.x, line.y), line.rotation);
+                && layout.LoadPlaced(line.instanceId, decor, new Vector2Int(line.x, line.y) + saveOrigin, line.rotation);
             if (!loaded)
                 skipped++;
         }

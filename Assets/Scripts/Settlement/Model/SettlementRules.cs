@@ -85,7 +85,63 @@ public static class SettlementRules
             return request.AssignRole.ResultDevelopment;
         if (request.CompletionTask != null)
             return request.CompletionTask.ResultDevelopment;
+        if (request.CompletesByRecord)
+            return request.ResultDevelopment;
         return null;
+    }
+
+    /// <summary>
+    /// 건물 · 입주 부탁(P4)의 조건이 기록으로 채워졌는지: 그 건물을 다 지은 수가 모자라지 않음 / 그 해달들이 모두 주민.
+    /// 다른 부탁은 늘 false (각자 행동으로 끝남)
+    /// </summary>
+    public static bool IsRecordComplete(BoardRequestDefinition request, Settlement settlement)
+    {
+        if (request == null)
+            throw new ArgumentNullException(nameof(request));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+        if (request.Building != null)
+            return settlement.CountBuilt(request.Building.BuildingId) >= request.BuildingCount;
+        if (!request.CompletesByRecord)
+            return false;
+        foreach (var otter in request.SettleTargets)
+        {
+            if (otter != null && (!settlement.TryGetResidentState(otter.OtterId, out var state) || state != ResidentState.Resident))
+                return false;
+        }
+        return true;
+    }
+
+    /// <summary>열려 있고 기록으로 조건을 채운 건물 · 입주 부탁 (끝낼 차례). 없으면 null</summary>
+    public static BoardRequestDefinition FindRecordComplete(SettlementConfig config, Settlement settlement)
+    {
+        foreach (var request in config.Requests)
+        {
+            if (request != null && request.CompletesByRecord && GetStatus(request, settlement) == RequestStatus.Available
+                && IsRecordComplete(request, settlement))
+                return request;
+        }
+        return null;
+    }
+
+    /// <summary>열린 입주 부탁이 기다리는 해달인지 (아직 주민이 아님 → 빈 집이 있으면 광장에서 입주를 물음)</summary>
+    public static bool IsAwaitedSettler(SettlementConfig config, Settlement settlement, SettlementOtterDefinition otter)
+    {
+        if (otter == null)
+            return false;
+        if (settlement.TryGetResidentState(otter.OtterId, out var state) && state == ResidentState.Resident)
+            return false;
+        foreach (var request in config.Requests)
+        {
+            if (request == null || request.SettleTargets.Count == 0 || GetStatus(request, settlement) != RequestStatus.Available)
+                continue;
+            foreach (var target in request.SettleTargets)
+            {
+                if (target == otter)
+                    return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>부탁 완료: 발전을 열고, 해달이 정착하거나 찾아오고, 단계가 오르고, 방명록에 남긴다</summary>
@@ -188,14 +244,17 @@ public static class SettlementRules
 
     /// <summary>
     /// 경험치로 오를 수 있는 왕국 레벨: 아직 안 끝낸 큰 발전(KingdomLevel이 있는 부탁) 중 가장 낮은 것의 바로 아래.
+    /// 이미 그 레벨을 넘은 세이브(큰 발전이 나중에 추가됨)는 그 부탁으로 묶지 않는다 — 지나간 이야기는 선택으로 남음.
     /// 다 끝냈으면 제한 없음(int.MaxValue)
     /// </summary>
-    public static int LevelCap(SettlementConfig config, Settlement settlement)
+    /// <param name="currentLevel">지금 왕국 레벨</param>
+    public static int LevelCap(SettlementConfig config, Settlement settlement, int currentLevel = 1)
     {
         int cap = int.MaxValue;
         foreach (var request in config.Requests)
         {
-            if (request == null || request.KingdomLevel <= 0 || settlement.IsCompleted(request.RequestId))
+            if (request == null || request.KingdomLevel <= 0 || settlement.IsCompleted(request.RequestId)
+                || request.KingdomLevel <= currentLevel)
                 continue;
             cap = Math.Min(cap, Math.Max(1, request.KingdomLevel - 1));
         }

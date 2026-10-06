@@ -36,6 +36,8 @@ public enum RequestAction
     AssignSpecialist, // 전문 해달을 일할 곳에 배치
     AssignRole,       // 관리 역할을 해달에게 맡김
     ResidentTask,     // 주민 작업을 끝냄
+    BuildBuilding,    // 자리를 골라 짓는 건물을 다 지음 (꾸미기 모드 건물 탭, P4)
+    SettleOtters,     // 해달들이 빈 집에 입주해 주민이 됨 (P4)
 }
 
 /// <summary>
@@ -91,6 +93,18 @@ public class BoardRequestDefinition : ScriptableObject
     [Tooltip("주민 작업 부탁: 이 주민 작업이 끝나면 완료 (주민 해달을 보내 시작). 설정하면 건설은 비움")]
     [SerializeField] private SettlementTaskDefinition _completionTask;
 
+    [Tooltip("건물 부탁(P4): 이 건물을 다 지은 수가 _buildingCount 이상이면 완료 (꾸미기 모드에서 자리를 골라 지음). 기록으로 셈 — 먼저 지어 두었으면 열리자마자 끝남")]
+    [SerializeField] private BuildingDefinition _building;
+
+    [Min(1)]
+    [SerializeField] private int _buildingCount = 1;
+
+    [Tooltip("입주 부탁(P4): 이 해달들이 모두 주민이 되면 완료 (빈 집이 있으면 광장에서 말을 걸어 입주). 기록으로 셈")]
+    [SerializeField] private List<SettlementOtterDefinition> _settleTargets = new List<SettlementOtterDefinition>();
+
+    [Tooltip("건물·입주 부탁을 끝내면 열리는 발전 (다음 부탁의 조건)")]
+    [SerializeField] private string _resultDevelopment;
+
     [Header("완료하면")]
     [Tooltip("주민이 되는 해달")]
     [SerializeField] private List<SettlementOtterDefinition> _settles = new List<SettlementOtterDefinition>();
@@ -125,6 +139,10 @@ public class BoardRequestDefinition : ScriptableObject
     public SettlementOtterDefinition AssignSpecialist => _assignSpecialist;
     public ManagementRoleDefinition AssignRole => _assignRole;
     public SettlementTaskDefinition CompletionTask => _completionTask;
+    public BuildingDefinition Building => _building;
+    public int BuildingCount => Mathf.Max(1, _buildingCount);
+    public IReadOnlyList<SettlementOtterDefinition> SettleTargets => _settleTargets;
+    public string ResultDevelopment => _resultDevelopment;
     public IReadOnlyList<SettlementOtterDefinition> Settles => _settles;
     public IReadOnlyList<OtterArrival> Arrivals => _arrivals;
     public int StageOnComplete => _stageOnComplete;
@@ -145,6 +163,10 @@ public class BoardRequestDefinition : ScriptableObject
                 return RequestAction.AssignRole;
             if (_completionTask != null)
                 return RequestAction.ResidentTask;
+            if (_building != null)
+                return RequestAction.BuildBuilding;
+            if (HasSettleTargets)
+                return RequestAction.SettleOtters;
             return RequestAction.Construction;
         }
     }
@@ -152,17 +174,33 @@ public class BoardRequestDefinition : ScriptableObject
     /// <summary>행동 칸(건설·전문 해달 배치·역할·주민 작업)이 정확히 하나만 채워져 있는지</summary>
     public bool IsValidAction => ActionCount == 1;
 
+    /// <summary>기록(지은 건물 · 주민 처지)만 보고 끝나는 부탁인지 (건물 · 입주)</summary>
+    public bool CompletesByRecord => _building != null || HasSettleTargets;
+
+    private bool HasSettleTargets => _settleTargets != null && _settleTargets.Exists(o => o != null);
+
     private int ActionCount =>
-        (_construction != null ? 1 : 0) + (_assignSpecialist != null ? 1 : 0) + (_assignRole != null ? 1 : 0) + (_completionTask != null ? 1 : 0);
+        (_construction != null ? 1 : 0) + (_assignSpecialist != null ? 1 : 0) + (_assignRole != null ? 1 : 0) + (_completionTask != null ? 1 : 0)
+        + (_building != null ? 1 : 0) + (HasSettleTargets ? 1 : 0);
+
+    /// <summary>테스트·설정 도구용: 건물 · 입주 부탁</summary>
+    public void SetupRecordAction(BuildingDefinition building, int buildingCount, IEnumerable<SettlementOtterDefinition> settleTargets,
+        string resultDevelopment)
+    {
+        _building = building;
+        _buildingCount = buildingCount;
+        _settleTargets = settleTargets != null ? new List<SettlementOtterDefinition>(settleTargets) : new List<SettlementOtterDefinition>();
+        _resultDevelopment = resultDevelopment;
+    }
 
     private void OnValidate()
     {
         if (string.IsNullOrWhiteSpace(_requestId))
             Debug.LogWarning($"[{name}] RequestId가 비어 있습니다.", this);
         if (ActionCount == 0)
-            Debug.LogWarning($"[{name}] 건설·배치할 전문 해달·역할·주민 작업이 모두 비어 있습니다.", this);
+            Debug.LogWarning($"[{name}] 건설·배치할 전문 해달·역할·주민 작업·건물·입주가 모두 비어 있습니다.", this);
         else if (ActionCount > 1)
-            Debug.LogWarning($"[{name}] 건설·배치할 전문 해달·역할·주민 작업 중 하나만 채워야 합니다.", this);
+            Debug.LogWarning($"[{name}] 건설·배치할 전문 해달·역할·주민 작업·건물·입주 중 하나만 채워야 합니다.", this);
         if (_assignSpecialist != null && !_assignSpecialist.IsSpecialist)
             Debug.LogWarning($"[{name}] '{_assignSpecialist.name}'에 일할 지역이 없어 배치할 수 없습니다.", this);
     }
