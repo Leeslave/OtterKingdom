@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_collection_2
   _title: "\uC218\uC9D1\uAC00"
   _description: "\uB3C4\uAC10 6\uCE78 \uCC44\uC6B0\uAE30"
-  _sortOrder: 29
-  _kind: 0
+  _sortOrder: 91
+  _kind: 2
   _requiredLevel: 5
   _prerequisite: {fileID: 11400000, guid: 2233a8c43bf0ee94f853d9f8a1412ea1, type: 2}
   _icon: {fileID: 21300000, guid: 83712413ee09b904e90ef98f8b2ec085, type: 3}
@@ -24,7 +24,11 @@ MonoBehaviour:
   _goal: 6
   _itemFilter: {fileID: 0}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 300
-  _expReward: 180
+  _expReward: 0
   _expPercentOfLevel: 0

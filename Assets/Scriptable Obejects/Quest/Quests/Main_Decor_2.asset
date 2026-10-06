@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_decor_2
   _title: "\uB180\uC774\uD130 \uB9CC\uB4E4\uAE30"
   _description: "\uC7A5\uB09C\uAC10 3\uAC1C \uB193\uAE30"
-  _sortOrder: 26
-  _kind: 0
+  _sortOrder: 88
+  _kind: 2
   _requiredLevel: 5
   _prerequisite: {fileID: 11400000, guid: 89a7dbd35d59175428001758414fe7b2, type: 2}
   _icon: {fileID: 21300000, guid: 36a103bcbf5870349be1100535869408, type: 3}
@@ -24,7 +24,11 @@ MonoBehaviour:
   _goal: 3
   _itemFilter: {fileID: 0}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 200
-  _expReward: 140
+  _expReward: 0
   _expPercentOfLevel: 0

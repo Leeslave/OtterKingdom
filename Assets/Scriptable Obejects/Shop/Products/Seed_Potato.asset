@@ -18,3 +18,4 @@ MonoBehaviour:
   _bundleSize: 1
   _priceCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _price: 100
+  _requiredLevel: 4

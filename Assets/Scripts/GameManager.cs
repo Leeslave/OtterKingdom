@@ -791,13 +791,21 @@ public class GameManager : MonoBehaviour
         gameUI.ShowCropChangePrompt(plotIndex, slotIndex);
     }
 
-    // Called by PlotView when the player taps a locked plot — opens the
-    // coin-unlock confirmation prompt for that plot.
-    public void RequestUnlockPrompt(int plotIndex)
+    // Called by PlotView / FurrowSlotView when the player taps a locked plot
+    // or furrow — offers the next furrow in order (one at a time), or says
+    // which kingdom level opens it.
+    public void RequestFurrowUnlockPrompt()
     {
-        if (farmService.IsPlotUnlocked(plotIndex)) return;
-        gameUI.ShowUnlockPrompt(plotIndex);
+        if (!farmService.TryGetNextFurrow(out _, out _, out var unlock)) return;
+        if (KingdomLevel < unlock.requiredLevel)
+        {
+            gameUI.ShowAlert($"왕국 레벨 {unlock.requiredLevel}에\n다음 고랑을 열 수 있어요.");
+            return;
+        }
+        gameUI.ShowFurrowUnlockPrompt(unlock.cost);
     }
+
+    public static int KingdomLevel => ProfileManager.Instance != null ? ProfileManager.Instance.Level : 1;
 
     // Planting by hand with no seed. Points at the fairy shop, or says the
     // fairy who sells seeds is on her way if she hasn't come to the plaza yet.
@@ -987,11 +995,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(PlayZoneTutorialWhenReady());
     }
 
-    public bool TryUnlockPlot(int plotIndex)
+    public FurrowUnlockResult TryUnlockNextFurrow()
     {
-        if (!farmService.TryUnlockPlot(plotIndex, CurrencyManager.Instance, goldCurrency)) return false;
-        SaveNow();
-        return true;
+        var result = farmService.TryUnlockNextFurrow(KingdomLevel, CurrencyManager.Instance, goldCurrency);
+        if (result == FurrowUnlockResult.Opened) SaveNow();
+        return result;
     }
 
     // Player's "change crop" confirmation — the old crop is thrown away.

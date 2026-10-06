@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M07_TownHall
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv7_town_hall
+  _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uD68C\uC758\uC18C"
+  _description: "\uB9C8\uC744\uD68C\uAD00 \uC9D3\uAE30"
+  _sortOrder: 23
+  _kind: 0
+  _requiredLevel: 7
+  _prerequisite: {fileID: 11400000, guid: 38305daeedb0cd94697d1669d95f13d0, type: 2}
+  _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
+  _goalType: 11
+  _goal: 1
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: req_upgrade_town_hall
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 300
+  _expReward: 120
+  _expPercentOfLevel: 0

@@ -14,8 +14,40 @@ public class FarmBalanceData : ScriptableObject
 
     public int maxFarmLevel = 5;
 
-    // Coin cost to unlock each locked plot (plot 1 starts unlocked).
-    public int plotUnlockCost = 100;
+    [System.Serializable]
+    public struct FurrowUnlock
+    {
+        [Tooltip("Kingdom level needed to open this furrow.")]
+        public int requiredLevel;
+        [Tooltip("Gold to open it.")]
+        public int cost;
+
+        public FurrowUnlock(int requiredLevel, int cost)
+        {
+            this.requiredLevel = requiredLevel;
+            this.cost = cost;
+        }
+    }
+
+    [Header("Furrows")]
+    [Tooltip("Plot 1's three furrows start open. The other six open one at a time, in order " +
+             "(plot 2 left to right, then plot 3): kingdom level and gold for each (growth curve: one furrow at a time). Placeholder numbers.")]
+    public FurrowUnlock[] furrowUnlocks =
+    {
+        new FurrowUnlock(5, 300),
+        new FurrowUnlock(6, 600),
+        new FurrowUnlock(8, 1000),
+        new FurrowUnlock(9, 1600),
+        new FurrowUnlock(11, 2500),
+        new FurrowUnlock(13, 4000),
+    };
+
+    // The price of the n-th furrow beyond plot 1 (0-based). Past the table: the last entry.
+    public FurrowUnlock FurrowUnlockAt(int index)
+    {
+        if (index < 0 || furrowUnlocks == null || furrowUnlocks.Length == 0) return new FurrowUnlock(1, 0);
+        return furrowUnlocks[Mathf.Min(index, furrowUnlocks.Length - 1)];
+    }
 
     [Header("Farmer")]
     [Tooltip("Seconds the farmer spends on one ready slot (walk + harvest) before the crop is in the bag. " +

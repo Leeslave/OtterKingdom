@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_upgrade_4
   _title: "\uC644\uBCBD\uD55C \uC124\uBE44"
   _description: "\uC0DD\uC0B0 \uC5C5\uADF8\uB808\uC774\uB4DC 2\uD68C"
-  _sortOrder: 22
-  _kind: 0
+  _sortOrder: 84
+  _kind: 2
   _requiredLevel: 10
   _prerequisite: {fileID: 11400000, guid: da6bdd9ae2732c74e8ad4aec37fcdde5, type: 2}
   _icon: {fileID: 21300000, guid: 83c4e9d4539ae1a42a11b4134583088c, type: 3}
@@ -24,7 +24,11 @@ MonoBehaviour:
   _goal: 2
   _itemFilter: {fileID: 0}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 800
-  _expReward: 400
+  _expReward: 0
   _expPercentOfLevel: 0

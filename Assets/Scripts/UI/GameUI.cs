@@ -175,20 +175,22 @@ public class GameUI : MonoBehaviour
         CreateButton(content, "취소", () => CloseModal(modal), kind: ButtonKind.Secondary);
     }
 
-    public void ShowUnlockPrompt(int plotIndex)
+    // The next furrow (one at a time, in order). The level was already checked.
+    public void ShowFurrowUnlockPrompt(int cost)
     {
         CloseAllModals();
-        var modal = OpenModal($"밭 {plotIndex + 1} 해금", out var content);
+        var modal = OpenModal("고랑 한 칸 열기", out var content);
 
-        CreateLabel(content, $"밭 {plotIndex + 1} 해금에 {game.FarmService.PlotUnlockCost} 코인이 필요해요.\n해금할까요?");
+        CreateLabel(content, $"고랑 한 칸을 {cost:N0} 코인에 열까요?\n작물을 심을 칸이 하나 늘어요.");
         var balanceLabel = CreateLabel(content, "");
         SetRefresher(modal, () => balanceLabel.text = $"보유 코인 : {game.CoinBalance}");
 
         var row = CreateRow(content, ButtonHeight);
-        CreateButton(row, "확인", () =>
+        CreateButton(row, "열기", () =>
         {
-            if (game.TryUnlockPlot(plotIndex)) CloseModal(modal);
-            else ShowAlert("코인이 부족해요!");
+            var result = game.TryUnlockNextFurrow();
+            if (result == FurrowUnlockResult.NotEnoughGold) ShowAlert("코인이 부족해요!");
+            else CloseModal(modal);
         }, flexible: true, kind: ButtonKind.Primary);
         CreateButton(row, "취소", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
     }

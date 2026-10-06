@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_sales_4
   _title: "\uC655\uAD6D\uC758 \uC0B4\uB9BC\uAFBC"
   _description: "\uD310\uB9E4\uB85C 15,000\uACE8\uB4DC \uBC8C\uAE30"
-  _sortOrder: 16
-  _kind: 0
+  _sortOrder: 78
+  _kind: 2
   _requiredLevel: 7
   _prerequisite: {fileID: 11400000, guid: c48d8a9d48310c7488e72e9be34158d1, type: 2}
   _icon: {fileID: 21300000, guid: 50d17c0c5e1496846a61da22ead35d0d, type: 3}
@@ -24,7 +24,11 @@ MonoBehaviour:
   _goal: 15000
   _itemFilter: {fileID: 0}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 700
-  _expReward: 260
+  _expReward: 0
   _expPercentOfLevel: 0

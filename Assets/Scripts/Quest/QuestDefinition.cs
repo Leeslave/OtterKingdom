@@ -72,6 +72,10 @@ public class QuestDefinition : ScriptableObject
     [SerializeField]
     private bool _builderOnly;
 
+    [Tooltip("정착 단계: 끝낸 부탁 ID 또는 열린 발전 ID (예: req_chair, supply_ready) / 장소 가 보기: 씬 이름 (예: Mine)")]
+    [SerializeField]
+    private string _target;
+
     [Header("보상")]
     [Tooltip("보상 재화 (골드)")]
     [SerializeField]
@@ -105,9 +109,11 @@ public class QuestDefinition : ScriptableObject
     public System.Collections.Generic.IReadOnlyList<ConstructionDefinition> Constructions =>
         _constructions ?? System.Array.Empty<ConstructionDefinition>();
     public bool BuilderOnly => _builderOnly;
+    public string Target => _target;
 
-    /// <summary>진행이 알림으로 쌓이지 않고 저장된 기록(만난 해달, 다 지은 건물)으로 매번 다시 세는지</summary>
-    public bool CountsFromRecords => _goalType == QuestGoalType.CompleteConstruction || _goalType == QuestGoalType.MeetOtter;
+    /// <summary>진행이 알림으로 쌓이지 않고 저장된 기록(만난 해달, 다 지은 건물, 정착 단계)으로 매번 다시 세는지</summary>
+    public bool CountsFromRecords => _goalType == QuestGoalType.CompleteConstruction || _goalType == QuestGoalType.MeetOtter
+        || _goalType == QuestGoalType.Milestone;
     public Currency RewardCurrency => _rewardCurrency;
     public int RewardAmount => _rewardAmount;
     public QuestKind Kind => _kind;

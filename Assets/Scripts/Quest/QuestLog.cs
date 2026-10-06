@@ -40,6 +40,11 @@ public class QuestLog
     /// <summary>일일 퀘스트를 마지막으로 초기화한 날 (0 = 아직 없음). 날이 바뀌면 QuestManager가 초기화한다</summary>
     public int DailyDay { get; private set; }
 
+    /// <summary>레벨별 메인 체인을 이 기록에 맞췄는지 (메인 체인이 생기기 전 세이브는 false → QuestManager가 한 번 맞춤)</summary>
+    public bool MainChainReady { get; private set; }
+
+    public void MarkMainChainReady() => MainChainReady = true;
+
     /// <returns>진행 수치 (목표를 넘지 않음)</returns>
     public int GetProgress(QuestDefinition quest)
     {

@@ -44,13 +44,17 @@ public class FairyShopView : MonoBehaviour
         _closeButton.onClick.AddListener(Hide);
     }
 
+    private int _playerLevel = 1;
+
     /// <param name="category">처음 보여줄 탭의 분류 (null이면 "전체")</param>
-    public void Show(ShopCatalog catalog, string dialogue, ItemCategory category)
+    /// <param name="playerLevel">지금 왕국 레벨 (그보다 높은 레벨의 상품은 잠긴 카드로)</param>
+    public void Show(ShopCatalog catalog, string dialogue, ItemCategory category, int playerLevel = 1)
     {
         if (catalog == null)
             throw new ArgumentNullException(nameof(catalog));
 
         _catalog = catalog;
+        _playerLevel = playerLevel;
         _products = catalog.Products;
         _dialogueText.text = dialogue;
         BuildTabs();
@@ -59,6 +63,9 @@ public class FairyShopView : MonoBehaviour
     }
 
     public void Hide() => _animator.Hide();
+
+    /// <summary>요정 말풍선 글을 바꿈 (잠긴 상품을 눌렀을 때 등)</summary>
+    public void Say(string text) => _dialogueText.text = text;
 
     private void BuildTabs()
     {
@@ -100,7 +107,7 @@ public class FairyShopView : MonoBehaviour
             bool used = i < shown.Count;
             _cards[i].gameObject.SetActive(used);
             if (used)
-                _cards[i].Bind(shown[i], _catalog.FindTab(shown[i])?.Label);
+                _cards[i].Bind(shown[i], _catalog.FindTab(shown[i])?.Label, shown[i].IsLockedAt(_playerLevel));
         }
 
         _scrollRect.verticalNormalizedPosition = 1f;

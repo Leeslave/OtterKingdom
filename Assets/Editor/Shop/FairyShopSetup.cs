@@ -32,14 +32,15 @@ public static class FairyShopSetup
     private static readonly Color Body = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
     private static readonly Color Red = new Color32(0xE5, 0x48, 0x4D, 0xFF);
 
-    // (에셋, ID, 아이템 경로, 묶음, 조개로 파는지, 가격) — 시안 값. 지렁이 미끼는 미끼 아이템·규칙이 없어 아직 뺌
-    private static readonly (string asset, string id, string item, int bundle, bool gem, int price)[] Products =
+    // (에셋, ID, 아이템 경로, 묶음, 조개로 파는지, 가격, 필요 레벨) — 시안 값. 지렁이 미끼는 미끼 아이템·규칙이 없어 아직 뺌
+    // 모종은 왕국 레벨로 열림 (Docs/레벨별_메인퀘스트.md)
+    private static readonly (string asset, string id, string item, int bundle, bool gem, int price, int level)[] Products =
     {
-        ("Seed_Potato", "shop_seed_potato", "Farming/감자 모종", 1, false, 100),
-        ("Seed_SweetPotato", "shop_seed_sweetpotato", "Farming/고구마 모종", 1, false, 150),
-        ("Seed_Strawberry", "shop_seed_strawberry", "Farming/딸기 모종", 1, false, 300),
-        ("Toy_SoccerBall", "shop_toy_soccerball", "Decor/축구공", 1, false, 800),
-        ("Toy_Puzzle", "shop_toy_puzzle", "Decor/퍼즐", 1, true, 25),
+        ("Seed_Potato", "shop_seed_potato", "Farming/감자 모종", 1, false, 100, 4),
+        ("Seed_SweetPotato", "shop_seed_sweetpotato", "Farming/고구마 모종", 1, false, 150, 8),
+        ("Seed_Strawberry", "shop_seed_strawberry", "Farming/딸기 모종", 1, false, 300, 11),
+        ("Toy_SoccerBall", "shop_toy_soccerball", "Decor/축구공", 1, false, 800, 1),
+        ("Toy_Puzzle", "shop_toy_puzzle", "Decor/퍼즐", 1, true, 25, 1),
     };
 
     // (탭 이름, 분류 에셋)
@@ -89,6 +90,7 @@ public static class FairyShopSetup
                 so.FindProperty("_bundleSize").intValue = p.bundle;
                 so.FindProperty("_priceCurrency").objectReferenceValue = p.gem ? gem : gold;
                 so.FindProperty("_price").intValue = p.price;
+                so.FindProperty("_requiredLevel").intValue = p.level;
                 so.ApplyModifiedPropertiesWithoutUndo();
             }
             products.Add(product);

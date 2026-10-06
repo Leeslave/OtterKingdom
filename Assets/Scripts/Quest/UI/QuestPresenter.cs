@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// 퀘스트 모델(QuestLog)과 퀘스트 화면을 연결한다. 위쪽은 왕국 레벨과 경험치.
-/// 목록은 지금 열린 퀘스트만: 보상 받을 수 있는 것 → 일일 → 성장 → 완료(오늘 받은 일일 → 이번 레벨에 받은 성장).
+/// 목록은 지금 열린 퀘스트만: 보상 받을 수 있는 것 → 메인(지금 할 일) → 일일 → 도전 → 완료(이번 레벨에 받은 메인 → 오늘 받은 일일 → 이번 레벨에 받은 도전).
 /// 완료는 남은 퀘스트 아래에 [완료] + 체크 + 흐리게 표시된다 (QuestRowView). 레벨이 오르면 받은 성장 퀘스트는 목록에서 빠진다.
 /// </summary>
 public class QuestPresenter : MonoBehaviour
@@ -91,11 +91,13 @@ public class QuestPresenter : MonoBehaviour
         // Quests는 이미 정렬 순서이므로 묶음별로 나눠 담기만 하면 안정 정렬이 된다
         _ordered.Clear();
         AddGroup(quests, q => log.GetStatus(q) == QuestStatus.Claimable);
-        AddGroup(quests, q => q.Kind == QuestKind.Daily && log.GetStatus(q) == QuestStatus.InProgress);
         AddGroup(quests, q => q.Kind == QuestKind.Main && log.GetStatus(q) == QuestStatus.InProgress);
-        // 완료는 남은 퀘스트 아래로 (오늘 받은 일일, 이번 레벨에 받은 성장만)
-        AddGroup(quests, q => q.Kind == QuestKind.Daily && _manager.ShowsAsCompleted(q));
+        AddGroup(quests, q => q.Kind == QuestKind.Daily && log.GetStatus(q) == QuestStatus.InProgress);
+        AddGroup(quests, q => q.Kind == QuestKind.Challenge && log.GetStatus(q) == QuestStatus.InProgress);
+        // 완료는 남은 퀘스트 아래로 (이번 레벨에 받은 메인·도전, 오늘 받은 일일만)
         AddGroup(quests, q => q.Kind == QuestKind.Main && _manager.ShowsAsCompleted(q));
+        AddGroup(quests, q => q.Kind == QuestKind.Daily && _manager.ShowsAsCompleted(q));
+        AddGroup(quests, q => q.Kind == QuestKind.Challenge && _manager.ShowsAsCompleted(q));
 
         while (_rows.Count < _ordered.Count)
         {
@@ -146,7 +148,7 @@ public class QuestPresenter : MonoBehaviour
     // D3D12 에디터에서 GPU가 멈춰 크래시가 났다 (Unity 6000.3.8, 퀘스트 화면을 열 때 재현).
     private void PrepareGlyphs()
     {
-        var text = new StringBuilder("0123456789/ ,.보상 받기진행 중완료일일경험치LvMAX");
+        var text = new StringBuilder("0123456789/ ,.보상 받기진행 중완료일일도전메인경험치LvMAX");
         foreach (var quest in _manager.Database.Quests)
             text.Append(quest.Title).Append(quest.Description);
 

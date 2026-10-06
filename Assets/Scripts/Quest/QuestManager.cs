@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// 퀘스트 모델(QuestLog)의 주인. 전역 UI(GlobalUI) 루트에 붙어 씬을 넘어 유지된다.
 /// 게임 알림(가방·판매·재화·도감·꾸미기)을 받아 진행 수치를 올리고, 보상 받기를 조율한다 (QuestLog는 돈을 모름).
-/// - 지금 열린 퀘스트(레벨·앞 단계 충족)만 진행이 쌓인다 → 성장 퀘스트가 체인처럼 이어짐
+/// - 지금 열린 퀘스트(레벨·앞 단계 충족)만 진행이 쌓인다 → 메인·도전 퀘스트가 체인처럼 이어짐
+/// - 메인: 레벨마다 몇 개를 하나씩 순서대로, 경험치 합 = 그 레벨의 필요 경험치. 도전·일일은 골드만
 /// - 보상: 재화 + 경험치(왕국 레벨, ProfileManager)
 /// - 일일 퀘스트: 매일 새벽 4시(기기 시간)에 진행·수령 초기화
 /// - 세이브: 게임 쪽이 LoadFromSave / WriteToSave를 호출
@@ -95,6 +96,7 @@ public class QuestManager : MonoBehaviour
         }
 
         FairyShopPresenter.Purchased += HandleShopPurchased;
+        SceneNavigator.Arrived += HandleArrived;
     }
 
     // 꾸미기·레벨 매니저는 같은 실행 순서(-80)라 OnEnable 시점에 아직 없을 수 있어 Start에서 연결
@@ -134,6 +136,7 @@ public class QuestManager : MonoBehaviour
         if (_collection != null)
             _collection.OnStateChanged -= HandleCollectionChanged;
         FairyShopPresenter.Purchased -= HandleShopPurchased;
+        SceneNavigator.Arrived -= HandleArrived;
         if (_decorManager != null)
             _decorManager.OnDecorPlaced -= HandleDecorPlaced;
         if (_profileManager != null)
@@ -202,8 +205,17 @@ public class QuestManager : MonoBehaviour
 
     private void HandleShopPurchased(ShopProduct product, int quantity)
     {
+        var item = product != null ? product.Item : null;
         foreach (var quest in _database.Quests)
-            AddProgress(quest, QuestProgressRules.FromShopPurchase(quest, quantity));
+            AddProgress(quest, QuestProgressRules.FromShopPurchase(quest, item, quantity));
+    }
+
+    private void HandleArrived(ZoneDefinition zone)
+    {
+        if (zone == null)
+            return;
+        foreach (var quest in _database.Quests)
+            AddProgress(quest, QuestProgressRules.FromArrival(quest, zone.SceneName));
     }
 
     // 레벨이 올라 새 퀘스트가 열림 → 앞서 만난 해달·지은 건물을 넣고 목록 갱신
@@ -230,8 +242,19 @@ public class QuestManager : MonoBehaviour
     /// </summary>
     public void RefreshRecordGoals()
     {
+        if (Log == null)
+            return;
+
+        // 장소 가 보기: 퀘스트가 열렸을 때 이미 그 장소에 있으면 바로
+        string scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        foreach (var quest in _database.Quests)
+        {
+            if (quest != null && quest.GoalType == QuestGoalType.VisitZone && IsAvailable(quest))
+                Log.SetProgressAtLeast(quest, QuestProgressRules.FromArrival(quest, scene));
+        }
+
         var settlement = _settlementManager != null ? _settlementManager : SettlementManager.Instance;
-        if (settlement == null || !settlement.IsLoaded || Log == null)
+        if (settlement == null || !settlement.IsLoaded)
             return;
 
         _buildings.Clear();
@@ -245,6 +268,10 @@ public class QuestManager : MonoBehaviour
             {
                 value = settlement.MetOtterCount;
             }
+            else if (quest.GoalType == QuestGoalType.Milestone)
+            {
+                value = IsMilestoneReached(settlement, quest.Target) ? 1 : 0;
+            }
             else
             {
                 if (!buildingsReady)
@@ -256,6 +283,14 @@ public class QuestManager : MonoBehaviour
             }
             Log.SetProgressAtLeast(quest, value);
         }
+    }
+
+    // 정착 단계: 끝낸 부탁이거나 열린 발전
+    private static bool IsMilestoneReached(SettlementManager settlement, string id)
+    {
+        if (string.IsNullOrEmpty(id))
+            return false;
+        return settlement.Settlement.IsCompleted(id) || settlement.HasDevelopment(id);
     }
 
     #endregion
@@ -305,6 +340,13 @@ public class QuestManager : MonoBehaviour
         if (_profileManager != null && exp > 0)
             _profileManager.AddExp(exp);
 
+        // 일일 퀘스트를 끝내는 메인 목표
+        if (quest.Kind == QuestKind.Daily)
+        {
+            foreach (var other in _database.Quests)
+                AddProgress(other, QuestProgressRules.FromClaimed(other, quest));
+        }
+
         // 앞 단계를 받아 열린 다음 단계가 이미 이룬 기록을 바로 반영
         RefreshRecordGoals();
         return true;
@@ -334,6 +376,12 @@ public class QuestManager : MonoBehaviour
     public void LoadFromSave(IEnumerable<QuestSaveEntry> saved)
     {
         QuestSaveConverter.Read(saved, Log);
+        // 데이터에 레벨별 메인 체인이 있을 때만 (Tools/Quest/Create Quest Data 전의 옛 데이터로 표시만 남지 않게)
+        if (!Log.MainChainReady && QuestProgressRules.HasMainChain(_database.Quests))
+        {
+            QuestProgressRules.SkipPassedMainQuests(_database.Quests, PlayerLevel, Log);
+            Log.MarkMainChainReady();
+        }
         CheckDailyReset();
         RefreshRecordGoals();
         OnChanged?.Invoke();

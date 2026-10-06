@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M13_Decor
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv13_decor
+  _title: "\uD574\uB2EC \uB180\uC774\uACF5\uC6D0"
+  _description: "\uC7A5\uB09C\uAC10 3\uAC1C \uB193\uAE30"
+  _sortOrder: 48
+  _kind: 0
+  _requiredLevel: 13
+  _prerequisite: {fileID: 11400000, guid: c4e6e46fc70a1db4abda8e8e5912dc00, type: 2}
+  _icon: {fileID: 21300000, guid: 36a103bcbf5870349be1100535869408, type: 3}
+  _goalType: 5
+  _goal: 3
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 800
+  _expReward: 400
+  _expPercentOfLevel: 0

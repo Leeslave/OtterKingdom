@@ -26,66 +26,140 @@ public static class QuestSetup
 
     private static readonly Color Body = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
 
-    // 아이콘: "item:경로" (아이템 아이콘), "gold" (골드 아이콘), "place:파일", "otter:파일", "npc:파일", "nav:파일"
-    // 성장 체인: 목표 종류마다 단계가 있고, 앞 단계 보상을 받고 필요 레벨이 되면 다음 단계가 열린다.
-    // 수치는 성장 곡선 설계안(Docs/성장곡선_퀘스트설계.md) 기준. 밸런스가 바뀌면 에셋에서 고친다
-    // 필터: 분류 이름(Crops 등) / "otter"(도감 해달 탭) / "only:아이템 경로"(그 아이템만) / "build:건설ID,건설ID"(그 건물만) / "builder"(건설 해달 참여 공사만)
-    // (에셋, ID, 제목, 조건, 목표 종류, 목표, 필터, 골드, 아이콘, 종류, 필요 레벨, 앞 단계 에셋, 경험치, 경험치 %)
+    // 아이콘: "item:경로" (아이템 아이콘), "gold" (골드 아이콘), "place:파일", "otter:파일", "npc:파일", "nav:파일", "settle:파일"
+    // 필터: 분류 이름(Crops 등) / "otter"(도감 해달 탭) / "only:아이템 경로"(그 아이템만 — 수확·상점 구매) / "build:건설ID,건설ID"(그 건물만) / "builder"(건설 해달 참여 공사만)
+    // 대상: 정착 단계 = 끝낸 부탁 ID 또는 열린 발전 ID / 장소 가 보기 = 씬 이름
+    //
+    // 메인: 레벨마다 몇 개를 하나씩 순서대로 (모두 한 줄로 이어짐 — 앞 단계 보상을 받으면 다음). 한 레벨의 메인 경험치 합 = 그 레벨의 필요 경험치.
+    //   정착 단계 중 스스로 경험치를 주는 것(공동사업·영토 미션)이나 레벨을 바로 올리는 부탁(의자·광산 길)은 경험치 0, 나머지가 채운다.
+    //   표와 이유: Docs/레벨별_메인퀘스트.md. 수치는 임시 (플레이 실측 뒤 조정)
+    // 도전: 예전 누적 체인. 골드만, 경험치 없음. 일일: Lv.9부터, 골드만.
+    // 이미 있는 에셋도 구조 칸(종류·레벨·앞 단계·경험치·정렬·대상·목표 종류)은 이 표로 맞춘다. 문구·목표 수치·보상은 사람이 고친 값을 지킨다.
+    // (에셋, ID, 제목, 조건, 목표 종류, 목표, 필터, 골드, 아이콘, 종류, 필요 레벨, 앞 단계 에셋, 경험치, 경험치 %, 대상)
     private static readonly (string asset, string id, string title, string description, QuestGoalType type, int goal, string filter,
-        int reward, string icon, QuestKind kind, int level, string prerequisite, int exp, float expPercent)[] Quests =
+        int reward, string icon, QuestKind kind, int level, string prerequisite, int exp, float expPercent, string target)[] Quests =
     {
-        // 농부를 밭에 배치한 뒤 (수확 퀘스트는 농부가 일해야 보임). 첫 안내가 당근이라 당근으로
-        ("Main_FirstCarrots", "quest_first_carrots", "첫 수확을 해봐요", "당근 3개 수확하기", QuestGoalType.Harvest, 3, "only:Farming/당근", 30, "item:Farming/당근", QuestKind.Main, 1, "", 30, 0f),
-        ("Main_Harvest_1", "main_harvest_1", "내가 키운 첫 수확", "작물 5개 수확하기", QuestGoalType.Harvest, 5, "Crops", 50, "item:Farming/당근", QuestKind.Main, 1, "", 40, 0f),
-        ("Main_Harvest_2", "main_harvest_2", "부지런한 손길", "작물 20개 수확하기", QuestGoalType.Harvest, 20, "Crops", 100, "item:Farming/감자", QuestKind.Main, 2, "Main_Harvest_1", 60, 0f),
-        ("Main_Harvest_3", "main_harvest_3", "텃밭 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 200, "item:Farming/당근", QuestKind.Main, 3, "Main_Harvest_2", 110, 0f),
-        ("Main_Harvest_4", "main_harvest_4", "밭의 주인", "작물 150개 수확하기", QuestGoalType.Harvest, 150, "Crops", 400, "item:Farming/감자", QuestKind.Main, 5, "Main_Harvest_3", 200, 0f),
-        ("Main_Harvest_5", "main_harvest_5", "풍년이다!", "작물 400개 수확하기", QuestGoalType.Harvest, 400, "Crops", 800, "item:Farming/당근", QuestKind.Main, 8, "Main_Harvest_4", 380, 0f),
-        ("Main_Harvest_6", "main_harvest_6", "농사 달인", "작물 1,000개 수확하기", QuestGoalType.Harvest, 1000, "Crops", 1500, "item:Farming/감자", QuestKind.Main, 11, "Main_Harvest_5", 650, 0f),
-        ("Main_Harvest_7", "main_harvest_7", "전설의 농부", "작물 2,500개 수확하기", QuestGoalType.Harvest, 2500, "Crops", 3000, "item:Farming/당근", QuestKind.Main, 14, "Main_Harvest_6", 1100, 0f),
-        ("Main_Catch_1", "main_catch_1", "첫 입질", "물고기 2마리 낚기", QuestGoalType.Catch, 2, "Fish", 50, "item:Fishing/고등어", QuestKind.Main, 1, "", 40, 0f),
-        ("Main_Catch_2", "main_catch_2", "오늘부터 낚시왕", "물고기 6마리 낚기", QuestGoalType.Catch, 6, "Fish", 100, "item:Fishing/고등어", QuestKind.Main, 2, "Main_Catch_1", 60, 0f),
-        ("Main_Catch_3", "main_catch_3", "바다의 단골", "물고기 15마리 낚기", QuestGoalType.Catch, 15, "Fish", 250, "item:Fishing/고등어", QuestKind.Main, 4, "Main_Catch_2", 120, 0f),
-        ("Main_Catch_4", "main_catch_4", "만선의 꿈", "물고기 40마리 낚기", QuestGoalType.Catch, 40, "Fish", 500, "item:Fishing/고등어", QuestKind.Main, 6, "Main_Catch_3", 220, 0f),
-        ("Main_Catch_5", "main_catch_5", "고등어 사냥꾼", "물고기 100마리 낚기", QuestGoalType.Catch, 100, "Fish", 1000, "item:Fishing/고등어", QuestKind.Main, 9, "Main_Catch_4", 420, 0f),
-        ("Main_Catch_6", "main_catch_6", "바다의 전설", "물고기 250마리 낚기", QuestGoalType.Catch, 250, "Fish", 2000, "item:Fishing/고등어", QuestKind.Main, 12, "Main_Catch_5", 750, 0f),
-        // 1레벨 = 광장에서 할 수 있는 것 (바위 깨기, 줍기, 첫 판매). 광산은 왕국 Lv.2에 열림
-        ("Main_Rock_1", "main_rock_1", "돌 깨는 해달", "광장 바위를 깨서 돌 6개 얻기", QuestGoalType.Gather, 6, "Ore", 30, "item:Mining/돌", QuestKind.Main, 1, "", 40, 0f),
-        ("Main_Mine_1", "main_mine_1", "첫 곡괭이질", "광산에서 광석 5개 캐기", QuestGoalType.Mine, 5, "Ore", 30, "item:Mining/돌", QuestKind.Main, 2, "", 40, 0f),
-        ("Main_Mine_2", "main_mine_2", "광부의 하루", "광산에서 광석 20개 캐기", QuestGoalType.Mine, 20, "Ore", 80, "item:Mining/다이아몬드", QuestKind.Main, 2, "Main_Mine_1", 60, 0f),
-        // 건설 완료: 다 지은 건물 기록으로 셈 (퀘스트를 늦게 받아도 앞서 지은 집이 들어감). 개간은 세지 않음
-        ("Main_Build_1", "main_build_1", "첫 보금자리", "집 1채 짓기", QuestGoalType.CompleteConstruction, 1, "build:con_house_1,con_house_2", 50, "settle:ICON_House_Blue", QuestKind.Main, 1, "", 40, 0f),
-        ("Main_Build_2", "main_build_2", "왕국을 가꾸는 손", "건축물 2개 짓기", QuestGoalType.CompleteConstruction, 2, "", 100, "settle:ICON_Chair", QuestKind.Main, 2, "Main_Build_1", 60, 0f),
-        ("Main_Build_3", "main_build_3", "뚝딱뚝딱", "건설 해달과 공사 1번 끝내기", QuestGoalType.CompleteConstruction, 1, "builder", 150, "settle:ICON_Otter_Builder", QuestKind.Main, 3, "", 80, 0f),
-        ("Main_Gather_1", "main_gather_1", "부지런한 손", "광장에서 재료 10개 줍기", QuestGoalType.Gather, 10, "", 30, "item:Mining/목재", QuestKind.Main, 1, "", 30, 0f),
-        ("Main_Gather_2", "main_gather_2", "광장 청소부", "광장에서 재료 40개 줍기", QuestGoalType.Gather, 40, "", 80, "item:Mining/돌", QuestKind.Main, 2, "Main_Gather_1", 60, 0f),
-        ("Main_Sales_1", "main_sales_1", "티끌 모아 왕국", "판매로 10골드 벌기", QuestGoalType.EarnFromSales, 10, "", 30, "gold", QuestKind.Main, 1, "", 30, 0f),
-        ("Main_Sales_2", "main_sales_2", "첫 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 100, "gold", QuestKind.Main, 2, "Main_Sales_1", 80, 0f),
-        ("Main_Sales_3", "main_sales_3", "알뜰 상인", "판매로 4,000골드 벌기", QuestGoalType.EarnFromSales, 4000, "", 300, "gold", QuestKind.Main, 4, "Main_Sales_2", 140, 0f),
-        ("Main_Sales_4", "main_sales_4", "왕국의 살림꾼", "판매로 15,000골드 벌기", QuestGoalType.EarnFromSales, 15000, "", 700, "gold", QuestKind.Main, 7, "Main_Sales_3", 260, 0f),
-        ("Main_Sales_5", "main_sales_5", "큰손 해달", "판매로 50,000골드 벌기", QuestGoalType.EarnFromSales, 50000, "", 1500, "gold", QuestKind.Main, 10, "Main_Sales_4", 480, 0f),
-        ("Main_Sales_6", "main_sales_6", "해달 재벌", "판매로 150,000골드 벌기", QuestGoalType.EarnFromSales, 150000, "", 3000, "gold", QuestKind.Main, 13, "Main_Sales_5", 850, 0f),
-        ("Main_Upgrade_1", "main_upgrade_1", "더 좋은 도구가 필요해", "생산 업그레이드 1회", QuestGoalType.Upgrade, 1, "", 100, "place:ICON_Place_Farm", QuestKind.Main, 2, "", 80, 0f),
-        ("Main_Upgrade_2", "main_upgrade_2", "장인의 손길", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 200, "place:ICON_Place_FishingSpot", QuestKind.Main, 4, "Main_Upgrade_1", 140, 0f),
-        ("Main_Upgrade_3", "main_upgrade_3", "최고의 장비", "생산 업그레이드 3회", QuestGoalType.Upgrade, 3, "", 400, "place:ICON_Place_Farm", QuestKind.Main, 7, "Main_Upgrade_2", 260, 0f),
-        ("Main_Upgrade_4", "main_upgrade_4", "완벽한 설비", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 800, "place:ICON_Place_FishingSpot", QuestKind.Main, 10, "Main_Upgrade_3", 400, 0f),
-        ("Main_Shop_1", "main_shop_1", "요정과 첫 거래", "요정 상점에서 1번 사기", QuestGoalType.ShopPurchase, 1, "", 50, "npc:Fairy", QuestKind.Main, 2, "", 60, 0f),
-        ("Main_Shop_2", "main_shop_2", "요정 상점 단골", "요정 상점에서 5번 사기", QuestGoalType.ShopPurchase, 5, "", 300, "npc:Fairy", QuestKind.Main, 6, "Main_Shop_1", 160, 0f),
-        ("Main_Decor_1", "main_decor_1", "광장 꾸미기", "장난감 1개 놓기", QuestGoalType.PlaceDecor, 1, "", 100, "item:Decor/축구공", QuestKind.Main, 3, "", 80, 0f),
-        ("Main_Decor_2", "main_decor_2", "놀이터 만들기", "장난감 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 200, "item:Decor/퍼즐", QuestKind.Main, 5, "Main_Decor_1", 140, 0f),
-        ("Main_Decor_3", "main_decor_3", "해달 놀이공원", "장난감 6개 놓기", QuestGoalType.PlaceDecor, 6, "", 500, "item:Decor/축구공", QuestKind.Main, 9, "Main_Decor_2", 300, 0f),
-        ("Main_Collection_1", "main_collection_1", "도감 시작", "도감 3칸 채우기", QuestGoalType.CollectionRegister, 3, "", 100, "nav:ICON_Nav_Collection", QuestKind.Main, 2, "", 80, 0f),
-        ("Main_Collection_2", "main_collection_2", "수집가", "도감 6칸 채우기", QuestGoalType.CollectionRegister, 6, "", 300, "nav:ICON_Nav_Collection", QuestKind.Main, 5, "Main_Collection_1", 180, 0f),
-        // 새 해달 만나기: 광장에서 처음 만난 해달 수 (도감 등록과 별개, 기록으로 셈)
-        ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.MeetOtter, 1, "", 200, "otter:ICON_Otter_Fisher", QuestKind.Main, 3, "", 120, 0f),
-        ("Main_Otter_2", "main_otter_2", "해달 친구들", "해달 2마리 만나기", QuestGoalType.MeetOtter, 2, "", 500, "otter:ICON_Otter_Farmer", QuestKind.Main, 8, "Main_Otter_1", 300, 0f),
-        ("Daily_Harvest", "daily_harvest", "오늘의 수확", "작물 30개 수확하기", QuestGoalType.Harvest, 30, "Crops", 150, "item:Farming/당근", QuestKind.Daily, 2, "", 0, 10f),
-        ("Daily_Catch", "daily_catch", "오늘의 낚시", "물고기 3마리 낚기", QuestGoalType.Catch, 3, "Fish", 150, "item:Fishing/고등어", QuestKind.Daily, 2, "", 0, 10f),
-        ("Daily_Sales", "daily_sales", "오늘의 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 200, "gold", QuestKind.Daily, 2, "", 0, 10f),
+        // Lv.1 → 2 해달 왕국에 어서 와 (100) — 의자를 끝내면 바로 Lv.2
+        ("M01_House", "main_lv1_house", "첫 번째 집", "게시판 부탁: 첫 번째 집 만들기", QuestGoalType.Milestone, 1, "", 30, "settle:ICON_House_Blue", QuestKind.Main, 1, "", 40, 0f, "req_first_house"),
+        ("Main_Gather_1", "main_gather_1", "부지런한 손", "광장에서 재료 10개 줍기", QuestGoalType.Gather, 10, "", 30, "item:Mining/목재", QuestKind.Main, 1, "M01_House", 30, 0f, ""),
+        ("Main_Sales_1", "main_sales_1", "티끌 모아 왕국", "판매로 10골드 벌기", QuestGoalType.EarnFromSales, 10, "", 30, "gold", QuestKind.Main, 1, "Main_Gather_1", 30, 0f, ""),
+        ("M01_Chair", "main_lv1_chair", "쉬어 갈 의자", "게시판 부탁: 쉬어 갈 의자 만들기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_Chair", QuestKind.Main, 1, "Main_Sales_1", 0, 0f, "req_chair"),
+        // Lv.2 → 3 광산을 찾았어요 (150) — 광산 길을 열면 바로 Lv.3
+        ("M02_VisitMine", "main_lv2_visit_mine", "광산을 찾았어요", "광산에 가 보기", QuestGoalType.VisitZone, 1, "", 30, "place:ICON_Place_Mine", QuestKind.Main, 2, "M01_Chair", 50, 0f, "Mine"),
+        ("Main_Rock_1", "main_rock_1", "돌 깨는 해달", "광장 바위를 깨서 돌 6개 얻기", QuestGoalType.Gather, 6, "Ore", 30, "item:Mining/돌", QuestKind.Main, 2, "M02_VisitMine", 100, 0f, ""),
+        ("M02_MinePath", "main_lv2_mine_path", "광산 길 열기", "광산 길을 막은 나무·바위 치우기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_MinePath", QuestKind.Main, 2, "Main_Rock_1", 0, 0f, "req_mine_path"),
+        // Lv.3 → 4 광부와 새 이웃 (220)
+        ("M03_Miner", "main_lv3_miner", "광산에서 일할 친구", "깡깡이를 광산에 배치하기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Miner", QuestKind.Main, 3, "M02_MinePath", 50, 0f, "req_assign_miner"),
+        ("Main_Mine_1", "main_mine_1", "첫 곡괭이질", "광산에서 광석 5개 캐기", QuestGoalType.Mine, 5, "Ore", 30, "item:Mining/돌", QuestKind.Main, 3, "M03_Miner", 70, 0f, ""),
+        ("M03_Neighbor", "main_lv3_neighbor", "새 이웃의 집", "게시판 부탁: 새 이웃의 집 짓기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_House_Red", QuestKind.Main, 3, "Main_Mine_1", 100, 0f, "req_neighbor_house"),
+        // Lv.4 → 5 먹거리를 길러요 (320)
+        ("M04_Farmland", "main_lv4_farmland", "먹거리를 길러요", "밭을 개간하기", QuestGoalType.Milestone, 1, "", 100, "place:ICON_Place_Farm", QuestKind.Main, 4, "M03_Neighbor", 100, 0f, "req_farmland"),
+        ("M04_Farmer", "main_lv4_farmer", "농사를 지을 해달", "새싹이를 밭에 배치하기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Farmer", QuestKind.Main, 4, "M04_Farmland", 60, 0f, "req_assign_farmer"),
+        ("Main_FirstCarrots", "quest_first_carrots", "첫 수확을 해봐요", "당근 3개 수확하기", QuestGoalType.Harvest, 3, "only:Farming/당근", 30, "item:Farming/당근", QuestKind.Main, 4, "M04_Farmer", 60, 0f, ""),
+        ("M04_Sales", "main_lv4_sales", "첫 장사", "판매로 300골드 벌기", QuestGoalType.EarnFromSales, 300, "", 50, "gold", QuestKind.Main, 4, "Main_FirstCarrots", 100, 0f, ""),
+        // Lv.5 → 6 고랑 넓히기 (450)
+        ("M05_Seed", "main_lv5_seed", "요정과 첫 거래", "요정 상점에서 감자 모종 사기", QuestGoalType.ShopPurchase, 1, "only:Farming/감자 모종", 50, "npc:Fairy", QuestKind.Main, 5, "M04_Sales", 60, 0f, ""),
+        ("M05_Furrow", "main_lv5_furrow", "고랑 넓히기", "밭의 고랑 한 칸 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 5, "M05_Seed", 70, 0f, ""),
+        ("M05_Board", "main_lv5_board", "부탁이 많아졌어요", "게시판 보강하기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_BoardUpgrade", QuestKind.Main, 5, "M05_Furrow", 120, 0f, "req_upgrade_board"),
+        ("M05_Harvest", "main_lv5_harvest", "부지런한 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 100, "item:Farming/감자", QuestKind.Main, 5, "M05_Board", 200, 0f, ""),
+        // Lv.6 → 7 함께 일하는 마을 (600)
+        ("M06_Clerk", "main_lv6_clerk", "게시판을 맡아 줄 친구", "또박이에게 게시판 맡기기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Clerk", QuestKind.Main, 6, "M05_Harvest", 80, 0f, "req_assign_receptionist"),
+        ("M06_Common", "main_lv6_common", "다 같이 쉴 자리", "광장에 쉴 자리 정리하기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_CommonSpace", QuestKind.Main, 6, "M06_Clerk", 100, 0f, "req_prepare_common_space"),
+        ("M06_Furrow", "main_lv6_furrow", "고랑 하나 더", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 6, "M06_Common", 60, 0f, ""),
+        ("M06_Potato", "main_lv6_potato", "감자 농사", "감자 20개 수확하기", QuestGoalType.Harvest, 20, "only:Farming/감자", 100, "item:Farming/감자", QuestKind.Main, 6, "M06_Furrow", 170, 0f, ""),
+        ("M06_Guild", "main_lv6_guild", "큰 부탁도 함께", "길드 접수소 짓기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_GuildOffice", QuestKind.Main, 6, "M06_Potato", 190, 0f, "req_build_guild_office"),
+        // Lv.7 → 8 우리 마을의 회의소 (800 = 첫 비축 사업 560 + 240)
+        ("M07_TownHall", "main_lv7_town_hall", "우리 마을의 회의소", "마을회관 짓기", QuestGoalType.Milestone, 1, "", 300, "settle:ICON_TownHall", QuestKind.Main, 7, "M06_Guild", 120, 0f, "req_upgrade_town_hall"),
+        ("M07_Supply", "main_lv7_supply", "우리 마을의 첫 비축", "공동사업: 비축 상자 만들기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_TownHall", QuestKind.Main, 7, "M07_TownHall", 0, 0f, "supply_ready"),
+        ("M07_Mine", "main_lv7_mine", "광석 모으기", "광산에서 광석 50개 캐기", QuestGoalType.Mine, 50, "Ore", 200, "item:Mining/다이아몬드", QuestKind.Main, 7, "M07_Supply", 120, 0f, ""),
+        // Lv.8 → 9 영토 넓히기 (1,050 = 첫 영토 미션 600 + 450)
+        ("M08_Furrow", "main_lv8_furrow", "고랑 셋째 칸", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 8, "M07_Mine", 80, 0f, ""),
+        ("M08_Territory", "main_lv8_territory", "영토 넓히기", "숲을 개간해 첫 영토 열기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_Clearing", QuestKind.Main, 8, "M08_Furrow", 0, 0f, "territory_first"),
+        ("M08_SweetPotato", "main_lv8_sweet_potato", "달콤한 고구마", "고구마 30개 수확하기", QuestGoalType.Harvest, 30, "only:Farming/고구마", 200, "item:Farming/고구마", QuestKind.Main, 8, "M08_Territory", 220, 0f, ""),
+        ("M08_Sales", "main_lv8_sales", "알뜰 살림", "판매로 3,000골드 벌기", QuestGoalType.EarnFromSales, 3000, "", 200, "gold", QuestKind.Main, 8, "M08_SweetPotato", 150, 0f, ""),
+        // Lv.9 → 10 새 이웃 (1,350 = 이웃 맞이 610 + 환영 공간 340 + 400)
+        ("M09_Neighbor", "main_lv9_neighbor", "새 이웃 맞이하기", "공동사업: 새 이웃의 집", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_House_Red", QuestKind.Main, 9, "M08_Sales", 0, 0f, "p3_neighbor_settled"),
+        ("M09_Welcome", "main_lv9_welcome", "환영 공간 꾸미기", "공동사업: 화분이나 빨랫줄 놓기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_CommonSpace", QuestKind.Main, 9, "M09_Neighbor", 0, 0f, "welcome_corner_ready"),
+        ("M09_Furrow", "main_lv9_furrow", "고랑 넷째 칸", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 9, "M09_Welcome", 100, 0f, ""),
+        ("M09_Daily", "main_lv9_daily", "오늘의 할 일", "일일 퀘스트 1개 끝내기", QuestGoalType.CompleteDaily, 1, "", 100, "nav:ICON_Nav_Quest", QuestKind.Main, 9, "M09_Furrow", 100, 0f, ""),
+        ("M09_Harvest", "main_lv9_harvest", "대풍년", "작물 300개 수확하기", QuestGoalType.Harvest, 300, "Crops", 300, "item:Farming/당근", QuestKind.Main, 9, "M09_Daily", 200, 0f, ""),
+        // Lv.10 → 11 첫 모임 (1,700 = 첫 모임 425 + 1,275)
+        ("M10_Gathering", "main_lv10_gathering", "우리 마을의 첫 모임", "공동사업: 첫 모임 열기", QuestGoalType.Milestone, 1, "", 300, "settle:ICON_CommonSpace", QuestKind.Main, 10, "M09_Harvest", 0, 0f, "first_gathering_complete"),
+        ("M10_Upgrade", "main_lv10_upgrade", "더 좋은 도구", "생산 업그레이드 1회", QuestGoalType.Upgrade, 1, "", 300, "place:ICON_Place_Farm", QuestKind.Main, 10, "M10_Gathering", 200, 0f, ""),
+        ("M10_Decor", "main_lv10_decor", "광장 놀이터", "장난감 2개 놓기", QuestGoalType.PlaceDecor, 2, "", 300, "item:Decor/축구공", QuestKind.Main, 10, "M10_Upgrade", 200, 0f, ""),
+        ("M10_Sales", "main_lv10_sales", "마을의 살림꾼", "판매로 10,000골드 벌기", QuestGoalType.EarnFromSales, 10000, "", 500, "gold", QuestKind.Main, 10, "M10_Decor", 300, 0f, ""),
+        ("M10_Harvest", "main_lv10_harvest", "밭의 주인", "작물 500개 수확하기", QuestGoalType.Harvest, 500, "Crops", 500, "item:Farming/감자", QuestKind.Main, 10, "M10_Sales", 575, 0f, ""),
+        // Lv.11 → 12 새빨간 딸기 (2,100)
+        ("M11_StrawberrySeed", "main_lv11_strawberry_seed", "새빨간 딸기", "요정 상점에서 딸기 모종 사기", QuestGoalType.ShopPurchase, 1, "only:Farming/딸기 모종", 200, "npc:Fairy", QuestKind.Main, 11, "M10_Harvest", 200, 0f, ""),
+        ("M11_Furrow", "main_lv11_furrow", "고랑 다섯째 칸", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 11, "M11_StrawberrySeed", 200, 0f, ""),
+        ("M11_Strawberry", "main_lv11_strawberry", "딸기 농사", "딸기 100개 수확하기", QuestGoalType.Harvest, 100, "only:Farming/딸기", 800, "item:Farming/딸기", QuestKind.Main, 11, "M11_Furrow", 800, 0f, ""),
+        ("M11_Mine", "main_lv11_mine", "광산 깊이", "광산에서 광석 200개 캐기", QuestGoalType.Mine, 200, "Ore", 800, "item:Mining/다이아몬드", QuestKind.Main, 11, "M11_Strawberry", 900, 0f, ""),
+        // Lv.12 → 13 왕국의 살림 (2,600)
+        ("M12_Upgrade", "main_lv12_upgrade", "장인의 손길", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 800, "place:ICON_Place_Mine", QuestKind.Main, 12, "M11_Mine", 500, 0f, ""),
+        ("M12_Harvest", "main_lv12_harvest", "풍년이다!", "작물 800개 수확하기", QuestGoalType.Harvest, 800, "Crops", 1000, "item:Farming/딸기", QuestKind.Main, 12, "M12_Upgrade", 1000, 0f, ""),
+        ("M12_Sales", "main_lv12_sales", "큰손 해달", "판매로 30,000골드 벌기", QuestGoalType.EarnFromSales, 30000, "", 1500, "gold", QuestKind.Main, 12, "M12_Harvest", 1100, 0f, ""),
+        // Lv.13 → 14 넓어진 밭 (3,200)
+        ("M13_Furrow", "main_lv13_furrow", "마지막 고랑", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 13, "M12_Sales", 300, 0f, ""),
+        ("M13_Decor", "main_lv13_decor", "해달 놀이공원", "장난감 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 800, "item:Decor/퍼즐", QuestKind.Main, 13, "M13_Furrow", 400, 0f, ""),
+        ("M13_Mine", "main_lv13_mine", "광맥을 찾아서", "광산에서 광석 400개 캐기", QuestGoalType.Mine, 400, "Ore", 1500, "item:Mining/다이아몬드", QuestKind.Main, 13, "M13_Decor", 1200, 0f, ""),
+        ("M13_Sales", "main_lv13_sales", "해달 재벌", "판매로 50,000골드 벌기", QuestGoalType.EarnFromSales, 50000, "", 2000, "gold", QuestKind.Main, 13, "M13_Mine", 1300, 0f, ""),
+        // Lv.14 → 15 바다를 향해 (3,900)
+        ("M14_Upgrade", "main_lv14_upgrade", "완벽한 설비", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 1500, "place:ICON_Place_Farm", QuestKind.Main, 14, "M13_Sales", 500, 0f, ""),
+        ("M14_Harvest", "main_lv14_harvest", "전설의 농부", "작물 1,500개 수확하기", QuestGoalType.Harvest, 1500, "Crops", 2000, "item:Farming/고구마", QuestKind.Main, 14, "M14_Upgrade", 1700, 0f, ""),
+        ("M14_Sales", "main_lv14_sales", "왕국의 금고", "판매로 80,000골드 벌기", QuestGoalType.EarnFromSales, 80000, "", 2500, "gold", QuestKind.Main, 14, "M14_Harvest", 1700, 0f, ""),
+        // Lv.15 → 16 바다가 열렸다 (4,700)
+        ("M15_Dock", "main_lv15_dock", "바다로 나가는 선착장", "게시판 부탁: 선착장 고치기", QuestGoalType.Milestone, 1, "", 1000, "settle:ICON_FishingDock", QuestKind.Main, 15, "M14_Sales", 1200, 0f, "req_fishing_dock"),
+        ("M15_Fisher", "main_lv15_fisher", "낚시를 할 해달", "첨벙이를 낚시터에 배치하기", QuestGoalType.Milestone, 1, "", 500, "otter:ICON_Otter_Fisher", QuestKind.Main, 15, "M15_Dock", 500, 0f, "req_assign_fisher"),
+        ("M15_VisitDock", "main_lv15_visit_dock", "바다가 열렸다", "낚시터에 가 보기", QuestGoalType.VisitZone, 1, "", 300, "place:ICON_Place_FishingSpot", QuestKind.Main, 15, "M15_Fisher", 300, 0f, "Fishing"),
+        ("M15_Catch", "main_lv15_catch", "첫 만선", "물고기 30마리 낚기", QuestGoalType.Catch, 30, "Fish", 2000, "item:Fishing/고등어", QuestKind.Main, 15, "M15_VisitDock", 2700, 0f, ""),
+
+        // 도전: 예전 누적 체인 (골드만). 첫 단계가 메인으로 옮겨 간 체인은 그 메인을 앞 단계로 둔다
+        ("Main_Harvest_1", "main_harvest_1", "내가 키운 첫 수확", "작물 5개 수확하기", QuestGoalType.Harvest, 5, "Crops", 50, "item:Farming/당근", QuestKind.Challenge, 1, "", 0, 0f, ""),
+        ("Main_Harvest_2", "main_harvest_2", "부지런한 손길", "작물 20개 수확하기", QuestGoalType.Harvest, 20, "Crops", 100, "item:Farming/감자", QuestKind.Challenge, 2, "Main_Harvest_1", 0, 0f, ""),
+        ("Main_Harvest_3", "main_harvest_3", "텃밭 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 200, "item:Farming/당근", QuestKind.Challenge, 3, "Main_Harvest_2", 0, 0f, ""),
+        ("Main_Harvest_4", "main_harvest_4", "밭의 주인", "작물 150개 수확하기", QuestGoalType.Harvest, 150, "Crops", 400, "item:Farming/감자", QuestKind.Challenge, 5, "Main_Harvest_3", 0, 0f, ""),
+        ("Main_Harvest_5", "main_harvest_5", "풍년이다!", "작물 400개 수확하기", QuestGoalType.Harvest, 400, "Crops", 800, "item:Farming/당근", QuestKind.Challenge, 8, "Main_Harvest_4", 0, 0f, ""),
+        ("Main_Harvest_6", "main_harvest_6", "농사 달인", "작물 1,000개 수확하기", QuestGoalType.Harvest, 1000, "Crops", 1500, "item:Farming/감자", QuestKind.Challenge, 11, "Main_Harvest_5", 0, 0f, ""),
+        ("Main_Harvest_7", "main_harvest_7", "전설의 농부", "작물 2,500개 수확하기", QuestGoalType.Harvest, 2500, "Crops", 3000, "item:Farming/당근", QuestKind.Challenge, 14, "Main_Harvest_6", 0, 0f, ""),
+        ("Main_Catch_1", "main_catch_1", "첫 입질", "물고기 2마리 낚기", QuestGoalType.Catch, 2, "Fish", 50, "item:Fishing/고등어", QuestKind.Challenge, 1, "", 0, 0f, ""),
+        ("Main_Catch_2", "main_catch_2", "오늘부터 낚시왕", "물고기 6마리 낚기", QuestGoalType.Catch, 6, "Fish", 100, "item:Fishing/고등어", QuestKind.Challenge, 2, "Main_Catch_1", 0, 0f, ""),
+        ("Main_Catch_3", "main_catch_3", "바다의 단골", "물고기 15마리 낚기", QuestGoalType.Catch, 15, "Fish", 250, "item:Fishing/고등어", QuestKind.Challenge, 4, "Main_Catch_2", 0, 0f, ""),
+        ("Main_Catch_4", "main_catch_4", "만선의 꿈", "물고기 40마리 낚기", QuestGoalType.Catch, 40, "Fish", 500, "item:Fishing/고등어", QuestKind.Challenge, 6, "Main_Catch_3", 0, 0f, ""),
+        ("Main_Catch_5", "main_catch_5", "고등어 사냥꾼", "물고기 100마리 낚기", QuestGoalType.Catch, 100, "Fish", 1000, "item:Fishing/고등어", QuestKind.Challenge, 9, "Main_Catch_4", 0, 0f, ""),
+        ("Main_Catch_6", "main_catch_6", "바다의 전설", "물고기 250마리 낚기", QuestGoalType.Catch, 250, "Fish", 2000, "item:Fishing/고등어", QuestKind.Challenge, 12, "Main_Catch_5", 0, 0f, ""),
+        ("Main_Mine_2", "main_mine_2", "광부의 하루", "광산에서 광석 20개 캐기", QuestGoalType.Mine, 20, "Ore", 80, "item:Mining/다이아몬드", QuestKind.Challenge, 3, "Main_Mine_1", 0, 0f, ""),
+        ("Main_Build_1", "main_build_1", "첫 보금자리", "집 1채 짓기", QuestGoalType.CompleteConstruction, 1, "build:con_house_1,con_house_2", 50, "settle:ICON_House_Blue", QuestKind.Challenge, 1, "", 0, 0f, ""),
+        ("Main_Build_2", "main_build_2", "왕국을 가꾸는 손", "건축물 2개 짓기", QuestGoalType.CompleteConstruction, 2, "", 100, "settle:ICON_Chair", QuestKind.Challenge, 2, "Main_Build_1", 0, 0f, ""),
+        ("Main_Build_3", "main_build_3", "뚝딱뚝딱", "건설 해달과 공사 1번 끝내기", QuestGoalType.CompleteConstruction, 1, "builder", 150, "settle:ICON_Otter_Builder", QuestKind.Challenge, 3, "", 0, 0f, ""),
+        ("Main_Gather_2", "main_gather_2", "광장 청소부", "광장에서 재료 40개 줍기", QuestGoalType.Gather, 40, "", 80, "item:Mining/돌", QuestKind.Challenge, 2, "Main_Gather_1", 0, 0f, ""),
+        ("Main_Sales_2", "main_sales_2", "첫 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 100, "gold", QuestKind.Challenge, 2, "Main_Sales_1", 0, 0f, ""),
+        ("Main_Sales_3", "main_sales_3", "알뜰 상인", "판매로 4,000골드 벌기", QuestGoalType.EarnFromSales, 4000, "", 300, "gold", QuestKind.Challenge, 4, "Main_Sales_2", 0, 0f, ""),
+        ("Main_Sales_4", "main_sales_4", "왕국의 살림꾼", "판매로 15,000골드 벌기", QuestGoalType.EarnFromSales, 15000, "", 700, "gold", QuestKind.Challenge, 7, "Main_Sales_3", 0, 0f, ""),
+        ("Main_Sales_5", "main_sales_5", "큰손 해달", "판매로 50,000골드 벌기", QuestGoalType.EarnFromSales, 50000, "", 1500, "gold", QuestKind.Challenge, 10, "Main_Sales_4", 0, 0f, ""),
+        ("Main_Sales_6", "main_sales_6", "해달 재벌", "판매로 150,000골드 벌기", QuestGoalType.EarnFromSales, 150000, "", 3000, "gold", QuestKind.Challenge, 13, "Main_Sales_5", 0, 0f, ""),
+        ("Main_Upgrade_1", "main_upgrade_1", "더 좋은 도구가 필요해", "생산 업그레이드 1회", QuestGoalType.Upgrade, 1, "", 100, "place:ICON_Place_Farm", QuestKind.Challenge, 2, "", 0, 0f, ""),
+        ("Main_Upgrade_2", "main_upgrade_2", "장인의 손길", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 200, "place:ICON_Place_FishingSpot", QuestKind.Challenge, 4, "Main_Upgrade_1", 0, 0f, ""),
+        ("Main_Upgrade_3", "main_upgrade_3", "최고의 장비", "생산 업그레이드 3회", QuestGoalType.Upgrade, 3, "", 400, "place:ICON_Place_Farm", QuestKind.Challenge, 7, "Main_Upgrade_2", 0, 0f, ""),
+        ("Main_Upgrade_4", "main_upgrade_4", "완벽한 설비", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 800, "place:ICON_Place_FishingSpot", QuestKind.Challenge, 10, "Main_Upgrade_3", 0, 0f, ""),
+        ("Main_Shop_1", "main_shop_1", "요정과 첫 거래", "요정 상점에서 1번 사기", QuestGoalType.ShopPurchase, 1, "", 50, "npc:Fairy", QuestKind.Challenge, 2, "", 0, 0f, ""),
+        ("Main_Shop_2", "main_shop_2", "요정 상점 단골", "요정 상점에서 5번 사기", QuestGoalType.ShopPurchase, 5, "", 300, "npc:Fairy", QuestKind.Challenge, 6, "Main_Shop_1", 0, 0f, ""),
+        ("Main_Decor_1", "main_decor_1", "광장 꾸미기", "장난감 1개 놓기", QuestGoalType.PlaceDecor, 1, "", 100, "item:Decor/축구공", QuestKind.Challenge, 3, "", 0, 0f, ""),
+        ("Main_Decor_2", "main_decor_2", "놀이터 만들기", "장난감 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 200, "item:Decor/퍼즐", QuestKind.Challenge, 5, "Main_Decor_1", 0, 0f, ""),
+        ("Main_Decor_3", "main_decor_3", "해달 놀이공원", "장난감 6개 놓기", QuestGoalType.PlaceDecor, 6, "", 500, "item:Decor/축구공", QuestKind.Challenge, 9, "Main_Decor_2", 0, 0f, ""),
+        ("Main_Collection_1", "main_collection_1", "도감 시작", "도감 3칸 채우기", QuestGoalType.CollectionRegister, 3, "", 100, "nav:ICON_Nav_Collection", QuestKind.Challenge, 2, "", 0, 0f, ""),
+        ("Main_Collection_2", "main_collection_2", "수집가", "도감 6칸 채우기", QuestGoalType.CollectionRegister, 6, "", 300, "nav:ICON_Nav_Collection", QuestKind.Challenge, 5, "Main_Collection_1", 0, 0f, ""),
+        ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.MeetOtter, 1, "", 200, "otter:ICON_Otter_Fisher", QuestKind.Challenge, 3, "", 0, 0f, ""),
+        ("Main_Otter_2", "main_otter_2", "해달 친구들", "해달 2마리 만나기", QuestGoalType.MeetOtter, 2, "", 500, "otter:ICON_Otter_Farmer", QuestKind.Challenge, 8, "Main_Otter_1", 0, 0f, ""),
+
+        // 일일: Lv.9부터 (성장곡선 5장), 골드만
+        ("Daily_Harvest", "daily_harvest", "오늘의 수확", "작물 30개 수확하기", QuestGoalType.Harvest, 30, "Crops", 150, "item:Farming/당근", QuestKind.Daily, 9, "", 0, 0f, ""),
+        ("Daily_Catch", "daily_catch", "오늘의 낚시", "물고기 3마리 낚기", QuestGoalType.Catch, 3, "Fish", 150, "item:Fishing/고등어", QuestKind.Daily, 9, "", 0, 0f, ""),
+        ("Daily_Sales", "daily_sales", "오늘의 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 200, "gold", QuestKind.Daily, 9, "", 0, 0f, ""),
     };
 
     #region 데이터
 
+    [MenuItem("Tools/Quest/Create Quest Data")]
     public static void CreateData()
     {
         EnsureFolder(QuestFolder);
@@ -96,20 +170,24 @@ public static class QuestSetup
             var q = Quests[i];
             var (quest, isNew) = LoadOrCreate<QuestDefinition>($"{QuestFolder}/{q.asset}.asset");
             var so = new SerializedObject(quest);
+
+            // 구조 (메인 체인·도전·일일, 경험치): 이미 있는 에셋도 표로 맞춘다
+            so.FindProperty("_sortOrder").intValue = i;
+            so.FindProperty("_goalType").enumValueIndex = (int)q.type;
+            so.FindProperty("_kind").enumValueIndex = (int)q.kind;
+            so.FindProperty("_requiredLevel").intValue = q.level;
+            so.FindProperty("_expReward").intValue = q.exp;
+            so.FindProperty("_expPercentOfLevel").floatValue = q.expPercent;
+            so.FindProperty("_target").stringValue = q.target;
+
             if (isNew)
             {
                 so.FindProperty("_questId").stringValue = q.id;
                 so.FindProperty("_title").stringValue = q.title;
                 so.FindProperty("_description").stringValue = q.description;
-                so.FindProperty("_sortOrder").intValue = i;
-                so.FindProperty("_goalType").enumValueIndex = (int)q.type;
                 so.FindProperty("_goal").intValue = q.goal;
                 so.FindProperty("_rewardCurrency").objectReferenceValue = gold;
                 so.FindProperty("_rewardAmount").intValue = q.reward;
-                so.FindProperty("_kind").enumValueIndex = (int)q.kind;
-                so.FindProperty("_requiredLevel").intValue = q.level;
-                so.FindProperty("_expReward").intValue = q.exp;
-                so.FindProperty("_expPercentOfLevel").floatValue = q.expPercent;
                 if (q.filter == "otter")
                     so.FindProperty("_collectionTab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<CollectionTab>(OtterTabPath);
                 else if (q.filter == "builder")
@@ -125,15 +203,17 @@ public static class QuestSetup
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
-        // 체인의 앞 단계 연결 (모든 에셋이 만들어진 뒤에, 새로 만든 것만)
+        // 체인의 앞 단계 연결 (모든 에셋이 만들어진 뒤에). 구조라 이미 있는 에셋도 표로 맞춘다
         foreach (var q in Quests)
         {
-            if (string.IsNullOrEmpty(q.prerequisite))
-                continue;
-
             var quest = AssetDatabase.LoadAssetAtPath<QuestDefinition>($"{QuestFolder}/{q.asset}.asset");
             var so = new SerializedObject(quest);
-            FillIfEmpty(so, "_prerequisite", AssetDatabase.LoadAssetAtPath<QuestDefinition>($"{QuestFolder}/{q.prerequisite}.asset"));
+            var prerequisite = string.IsNullOrEmpty(q.prerequisite)
+                ? null
+                : AssetDatabase.LoadAssetAtPath<QuestDefinition>($"{QuestFolder}/{q.prerequisite}.asset");
+            if (!string.IsNullOrEmpty(q.prerequisite) && prerequisite == null)
+                Debug.LogWarning($"[QuestSetup] 앞 단계를 찾을 수 없습니다: {q.asset} ← {q.prerequisite}");
+            so.FindProperty("_prerequisite").objectReferenceValue = prerequisite;
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 

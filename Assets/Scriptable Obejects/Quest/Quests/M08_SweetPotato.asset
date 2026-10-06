@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M08_SweetPotato
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv8_sweet_potato
+  _title: "\uB2EC\uCF64\uD55C \uACE0\uAD6C\uB9C8"
+  _description: "\uACE0\uAD6C\uB9C8 30\uAC1C \uC218\uD655\uD558\uAE30"
+  _sortOrder: 28
+  _kind: 0
+  _requiredLevel: 8
+  _prerequisite: {fileID: 11400000, guid: dc43c1f25bb393740963dc2b712a7b70, type: 2}
+  _icon: {fileID: 4481972823782185347, guid: eecc9255317c4214cb9581e7e72252fb, type: 3}
+  _goalType: 0
+  _goal: 30
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 11400000, guid: 3b1d9973c36f102419f2dcbd30a9bee7, type: 2}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 200
+  _expReward: 220
+  _expPercentOfLevel: 0

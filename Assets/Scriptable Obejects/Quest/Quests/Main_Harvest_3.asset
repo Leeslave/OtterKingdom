@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_harvest_3
   _title: "\uD143\uBC2D \uB18D\uBD80"
   _description: "\uC791\uBB3C 60\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 2
-  _kind: 0
+  _sortOrder: 60
+  _kind: 2
   _requiredLevel: 3
   _prerequisite: {fileID: 11400000, guid: f76841da8390c7e45a63b3edf10897b8, type: 2}
   _icon: {fileID: -5859083586626064994, guid: 125917c9ef5a91e478059e3954180ecc, type: 3}
@@ -24,7 +24,11 @@ MonoBehaviour:
   _goal: 60
   _itemFilter: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 200
-  _expReward: 110
+  _expReward: 0
   _expPercentOfLevel: 0

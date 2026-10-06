@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_harvest_4
   _title: "\uBC2D\uC758 \uC8FC\uC778"
   _description: "\uC791\uBB3C 150\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 3
-  _kind: 0
+  _sortOrder: 61
+  _kind: 2
   _requiredLevel: 5
   _prerequisite: {fileID: 11400000, guid: d998199e671b18a40809c35f5c6b6429, type: 2}
   _icon: {fileID: 21300000, guid: 518282ed563ba1c4f87280f830653a3e, type: 3}
@@ -24,7 +24,11 @@ MonoBehaviour:
   _goal: 150
   _itemFilter: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 400
-  _expReward: 200
+  _expReward: 0
   _expPercentOfLevel: 0

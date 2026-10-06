@@ -30,11 +30,28 @@ public static class QuestProgressRules
         return quest.ItemFilter == null || quest.ItemFilter.Contains(e.Item) ? e.Delta : 0;
     }
 
-    /// <summary>요정 상점 구매: 한 번에 여러 개를 사면 산 수량만큼 (10개 묶음 상품 하나 = 1)</summary>
-    public static int FromShopPurchase(QuestDefinition quest, int quantity)
+    /// <summary>요정 상점 구매: 한 번에 여러 개를 사면 산 수량만큼 (10개 묶음 상품 하나 = 1). 아이템을 정한 퀘스트는 그 아이템만</summary>
+    public static int FromShopPurchase(QuestDefinition quest, ItemDefinition bought, int quantity)
     {
         if (quest == null) throw new ArgumentNullException(nameof(quest));
-        return quest.GoalType == QuestGoalType.ShopPurchase && quantity > 0 ? quantity : 0;
+        if (quest.GoalType != QuestGoalType.ShopPurchase || quantity <= 0)
+            return 0;
+        return quest.Item == null || quest.Item == bought ? quantity : 0;
+    }
+
+    /// <summary>장소 가 보기: 그 장소(씬)에 도착하면 1</summary>
+    public static int FromArrival(QuestDefinition quest, string sceneName)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        return quest.GoalType == QuestGoalType.VisitZone && !string.IsNullOrEmpty(quest.Target) && quest.Target == sceneName ? 1 : 0;
+    }
+
+    /// <summary>일일 퀘스트 끝내기: 일일 퀘스트 보상을 받으면 1</summary>
+    public static int FromClaimed(QuestDefinition quest, QuestDefinition claimed)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        if (claimed == null) throw new ArgumentNullException(nameof(claimed));
+        return quest.GoalType == QuestGoalType.CompleteDaily && claimed.Kind == QuestKind.Daily ? 1 : 0;
     }
 
     /// <summary>
@@ -80,17 +97,29 @@ public static class QuestProgressRules
         return quest.GoalType == QuestGoalType.EarnFromSales ? Math.Max(0, e.TotalPrice) : 0;
     }
 
-    /// <summary>생산 업그레이드: 밭·낚싯대·곡괭이 강화 비용을 낸 거래 1번 = 1회</summary>
+    /// <summary>
+    /// 값을 낸 거래 1번 = 1회: 생산 업그레이드(밭·낚싯대·곡괭이 강화), 고랑 열기, 가방 칸 늘리기
+    /// </summary>
     public static int From(QuestDefinition quest, CurrencyChange change)
     {
         if (quest == null) throw new ArgumentNullException(nameof(quest));
 
-        if (quest.GoalType != QuestGoalType.Upgrade || change.Delta >= 0)
+        if (change.Delta >= 0)
             return 0;
 
-        return change.Source == TransactionSource.FarmUpgrade
-            || change.Source == TransactionSource.RodUpgrade
-            || change.Source == TransactionSource.PickaxeUpgrade ? 1 : 0;
+        switch (quest.GoalType)
+        {
+            case QuestGoalType.Upgrade:
+                return change.Source == TransactionSource.FarmUpgrade
+                    || change.Source == TransactionSource.RodUpgrade
+                    || change.Source == TransactionSource.PickaxeUpgrade ? 1 : 0;
+            case QuestGoalType.UnlockFurrow:
+                return change.Source == TransactionSource.PlotUnlock ? 1 : 0;
+            case QuestGoalType.ExpandBag:
+                return change.Source == TransactionSource.InventoryExpand ? 1 : 0;
+            default:
+                return 0;
+        }
     }
 
     /// <summary>장난감 놓기: 놓은 것 하나 = 1 (옮기기는 세지 않음)</summary>
@@ -128,6 +157,40 @@ public static class QuestProgressRules
         if (log.GetStatus(quest) != QuestStatus.Claimed)
             return false;
         return quest.Kind == QuestKind.Daily || log.GetClaimedLevel(quest) == level;
+    }
+
+    /// <summary>레벨별 메인 체인 데이터인지 (정착 단계를 세는 메인 퀘스트가 있음)</summary>
+    public static bool HasMainChain(System.Collections.Generic.IEnumerable<QuestDefinition> quests)
+    {
+        if (quests == null) throw new ArgumentNullException(nameof(quests));
+        foreach (var quest in quests)
+        {
+            if (quest != null && quest.Kind == QuestKind.Main && quest.GoalType == QuestGoalType.Milestone)
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 메인 체인이 생기기 전 세이브: 지금 레벨보다 낮은 레벨의 메인 퀘스트는 받은 것으로 넘긴다 (보상 없이).
+    /// 이미 지나온 레벨의 정착 단계가 한꺼번에 "보상 받기"로 쏟아져 경험치가 다시 들어오지 않게. 지금 레벨의 것부터 이어서 한다
+    /// </summary>
+    public static int SkipPassedMainQuests(System.Collections.Generic.IEnumerable<QuestDefinition> quests, int level, QuestLog log)
+    {
+        if (quests == null) throw new ArgumentNullException(nameof(quests));
+        if (log == null) throw new ArgumentNullException(nameof(log));
+
+        int skipped = 0;
+        foreach (var quest in quests)
+        {
+            if (quest == null || quest.Kind != QuestKind.Main || quest.RequiredLevel >= level)
+                continue;
+            if (log.GetStatus(quest) == QuestStatus.Claimed)
+                continue;
+            log.LoadRecord(quest.QuestId, quest.Goal, true);
+            skipped++;
+        }
+        return skipped;
     }
 
     /// <summary>도감 등록: 새로 획득·등록된 항목 1개 = 1 (방문 흔적은 세지 않음)</summary>

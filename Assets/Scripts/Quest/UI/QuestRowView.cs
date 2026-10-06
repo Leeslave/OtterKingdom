@@ -62,6 +62,8 @@ public class QuestRowView : MonoBehaviour
     }
 
     /// <param name="exp">받으면 얻는 경험치 (지금 레벨 기준)</param>
+    private TMP_Text _tagLabel;
+
     public void Bind(QuestDefinition quest, int progress, QuestStatus status, int exp)
     {
         if (quest == null)
@@ -83,7 +85,12 @@ public class QuestRowView : MonoBehaviour
         _rewardText.text = NumberFormatter.Short(quest.RewardAmount);
         _expTag.SetActive(exp > 0);
         _expText.text = $"경험치 {NumberFormatter.Short(exp)}";
-        _dailyTag.SetActive(quest.Kind == QuestKind.Daily);
+        // 종류 칩: 일일 / 도전 (메인은 칩 없이 맨 위)
+        _dailyTag.SetActive(quest.Kind != QuestKind.Main);
+        if (_tagLabel == null)
+            _tagLabel = _dailyTag.GetComponentInChildren<TMP_Text>(true);
+        if (_tagLabel != null)
+            _tagLabel.text = quest.Kind == QuestKind.Daily ? "일일" : "도전";
 
         bool claimable = status == QuestStatus.Claimable;
         bool claimed = status == QuestStatus.Claimed;

@@ -49,8 +49,11 @@ public class ShopProductCardView : MonoBehaviour
         _priceButton.onClick.AddListener(() => OnClicked?.Invoke(this));
     }
 
+    private static readonly Color LockedIconColor = new Color(0.55f, 0.55f, 0.55f, 0.8f);
+
     /// <param name="categoryLabel">분류 칩 글자 (null이면 칩 숨김)</param>
-    public void Bind(ShopProduct product, string categoryLabel)
+    /// <param name="locked">아직 레벨이 안 됨: 가격 대신 "Lv.N", 그림은 흐리게</param>
+    public void Bind(ShopProduct product, string categoryLabel, bool locked = false)
     {
         if (product == null)
             throw new ArgumentNullException(nameof(product));
@@ -77,7 +80,8 @@ public class ShopProductCardView : MonoBehaviour
 
         _priceButtonImage.sprite = _priceButtonSprites.Get(product.PriceCurrency);
         _priceIcon.sprite = product.PriceCurrency.Icon;
-        _priceIcon.enabled = _priceIcon.sprite != null;
-        _priceText.text = product.Price.ToString("N0");
+        _priceIcon.enabled = _priceIcon.sprite != null && !locked;
+        _priceText.text = locked ? $"Lv.{product.RequiredLevel}" : product.Price.ToString("N0");
+        _icon.color = locked ? LockedIconColor : Color.white;
     }
 }

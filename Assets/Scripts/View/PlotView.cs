@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 // One instance per furrow plot root (Plot_1_Active / Plot_2_Locked / ...).
 // Swaps between the locked and active furrow sprites based on the plot's
-// saved unlock state. While locked, tapping the plot opens GameManager's
-// coin-unlock prompt. The collider is only enabled while locked so it never
+// saved unlock state. While locked, tapping the plot offers the next furrow
+// (GameManager.RequestFurrowUnlockPrompt). The collider is only enabled while locked so it never
 // competes with the per-slot colliders (FurrowSlotView) once unlocked.
 // The first-plant guide plot also shows the "당근을 심어 볼까?" guide and
 // pulses until the player's first planting.
@@ -92,6 +92,6 @@ public class PlotView : MonoBehaviour
         var hit = Physics2D.OverlapPoint(worldPos);
         if (hit == null || hit.gameObject != gameObject) return;
 
-        GameManager.Instance.RequestUnlockPrompt(plotIndex);
+        GameManager.Instance.RequestFurrowUnlockPrompt();
     }
 }

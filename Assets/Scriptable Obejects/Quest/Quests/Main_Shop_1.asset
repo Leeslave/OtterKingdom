@@ -15,8 +15,8 @@ MonoBehaviour:
   _questId: main_shop_1
   _title: "\uC694\uC815\uACFC \uCCAB \uAC70\uB798"
   _description: "\uC694\uC815 \uC0C1\uC810\uC5D0\uC11C 1\uBC88 \uC0AC\uAE30"
-  _sortOrder: 23
-  _kind: 0
+  _sortOrder: 85
+  _kind: 2
   _requiredLevel: 2
   _prerequisite: {fileID: 0}
   _icon: {fileID: 21300000, guid: ba10b195dc6f789408312b64596f6b65, type: 3}
@@ -24,7 +24,11 @@ MonoBehaviour:
   _goal: 1
   _itemFilter: {fileID: 0}
   _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 50
-  _expReward: 60
+  _expReward: 0
   _expPercentOfLevel: 0
