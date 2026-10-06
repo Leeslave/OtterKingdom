@@ -805,7 +805,7 @@ public class GameManager : MonoBehaviour
         gameUI.ShowFurrowUnlockPrompt(unlock.cost);
     }
 
-    private static int KingdomLevel => ProfileManager.Instance != null ? ProfileManager.Instance.Level : 1;
+    public static int KingdomLevel => ProfileManager.Instance != null ? ProfileManager.Instance.Level : 1;
 
     // Planting by hand with no seed. Points at the fairy shop, or says the
     // fairy who sells seeds is on her way if she hasn't come to the plaza yet.

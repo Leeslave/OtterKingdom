@@ -11,6 +11,9 @@ using UnityEngine.InputSystem;
 // ran out of seeds keeps a "모종 없음" badge until the seed is back. Slots of
 // a locked plot stay hidden; a furrow not bought yet in an open plot shows
 // greyed out with a "잠김" badge, and tapping it offers the next furrow.
+// The next furrow to open shows its dashed circle even in a locked plot:
+// breathing with "열기 300" once the kingdom level allows it, dim with
+// "Lv.N" before that.
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Collider2D))]
 public class FurrowSlotView : MonoBehaviour
@@ -20,6 +23,14 @@ public class FurrowSlotView : MonoBehaviour
     private static readonly Color BadgeColor = new Color32(0xD9, 0x4F, 0x45, 0xFF);
     private static readonly Color LockedBadgeColor = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
     private static readonly Color LockedTint = new Color(0.55f, 0.5f, 0.45f, 0.75f);
+    // Text height on screen in world units, whatever the furrow's own scale
+    // (the farm camera shows about 120 px per unit).
+    private const float NextBadgeSize = 3.6f;
+    private const float LockedBadgeSize = 2.6f;
+    private static readonly Color NextWaitTint = new Color(0.75f, 0.7f, 0.62f, 0.7f);
+    private static readonly Color NextReadyBadgeColor = new Color32(0x3E, 0x8E, 0x4A, 0xFF);
+    private const float NextPulseSpeed = 3f;
+    private const float NextPulseScale = 0.06f;
 
     [SerializeField] private int plotIndex;
     [SerializeField] private int slotIndex;
@@ -32,6 +43,9 @@ public class FurrowSlotView : MonoBehaviour
     private Camera mainCamera;
     private TMPro.TextMeshPro noSeedBadge;
     private TMPro.TextMeshPro lockedBadge;
+    private TMPro.TextMeshPro nextBadge;
+    private Vector3 baseScale;
+    private string nextBadgeText;
 
     private FurrowSlotState lastState = (FurrowSlotState)(-1);
     private SlotGrowthStage lastStage = (SlotGrowthStage)(-1);
@@ -41,6 +55,7 @@ public class FurrowSlotView : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         mainCamera = Camera.main;
+        baseScale = transform.localScale;
     }
 
     private void Update()
@@ -50,12 +65,15 @@ public class FurrowSlotView : MonoBehaviour
         var farmService = GameManager.Instance.FarmService;
         bool plotOpen = farmService.IsPlotUnlocked(plotIndex);
         bool unlocked = farmService.IsSlotOpen(plotIndex, slotIndex);
-        spriteRenderer.enabled = plotOpen;
+        bool hasNext = farmService.TryGetNextFurrow(out int nextPlot, out int nextSlot, out var unlock);
+        bool isNext = !unlocked && hasNext && nextPlot == plotIndex && nextSlot == slotIndex;
+        spriteRenderer.enabled = plotOpen || isNext;
         RefreshNoSeedBadge(unlocked && farmService.GetWaitingSeedCrop(plotIndex, slotIndex) != null);
-        RefreshLocked(plotOpen && !unlocked);
+        RefreshLocked(plotOpen && !unlocked && !isNext);
+        RefreshNext(isNext, isNext && GameManager.KingdomLevel >= unlock.requiredLevel, unlock);
         if (!unlocked)
         {
-            if (plotOpen && WasTapped()) GameManager.Instance.RequestFurrowUnlockPrompt();
+            if ((plotOpen || isNext) && WasTapped()) GameManager.Instance.RequestFurrowUnlockPrompt();
             return;
         }
 
@@ -88,16 +106,52 @@ public class FurrowSlotView : MonoBehaviour
             spriteRenderer.sprite = emptySlotSprite;
             spriteRenderer.color = LockedTint;
             lastState = (FurrowSlotState)(-1);
-            if (lockedBadge == null) lockedBadge = CreateBadge("LockedBadge", LockedBadgeText, LockedBadgeColor);
+            if (lockedBadge == null) lockedBadge = CreateBadge("LockedBadge", LockedBadgeText, LockedBadgeColor, LockedBadgeSize);
         }
         if (lockedBadge != null && lockedBadge.gameObject.activeSelf != locked) lockedBadge.gameObject.SetActive(locked);
     }
 
-    private TMPro.TextMeshPro CreateBadge(string name, string text, Color color)
+    // The next furrow to open: its dashed circle breathes with "열기 300" when
+    // it can be bought now, or stays dim with "Lv.N" until the level is reached.
+    private void RefreshNext(bool isNext, bool ready, FarmBalanceData.FurrowUnlock unlock)
+    {
+        if (!isNext)
+        {
+            if (nextBadge != null && nextBadge.gameObject.activeSelf)
+            {
+                nextBadge.gameObject.SetActive(false);
+                transform.localScale = baseScale;
+            }
+            return;
+        }
+
+        spriteRenderer.sprite = emptySlotSprite;
+        // 열 수 있으면 첫 심기 안내처럼 금색으로 반짝임
+        spriteRenderer.color = ready ? PlotView.GuidePulse(Color.white) : NextWaitTint;
+        lastState = (FurrowSlotState)(-1);
+
+        string text = ready ? $"열기 {unlock.cost:N0}" : $"Lv.{unlock.requiredLevel}";
+        if (nextBadge == null) nextBadge = CreateBadge("NextFurrowBadge", text, NextReadyBadgeColor, NextBadgeSize);
+        if (!nextBadge.gameObject.activeSelf) nextBadge.gameObject.SetActive(true);
+        if (nextBadgeText != text)
+        {
+            nextBadgeText = text;
+            if (nextBadge.font != null) nextBadge.font.TryAddCharacters(text, out _);
+            nextBadge.text = text;
+        }
+        nextBadge.color = ready ? NextReadyBadgeColor : LockedBadgeColor;
+
+        float pulse = ready ? 1f + Mathf.Sin(Time.time * NextPulseSpeed) * NextPulseScale : 1f;
+        transform.localScale = baseScale * pulse;
+    }
+
+    // worldSize > 0: a label in the circle's middle at that size on screen
+    // (undoing the furrow's scale), with a white outline to read on the soil.
+    private TMPro.TextMeshPro CreateBadge(string name, string text, Color color, float worldSize = 0f)
     {
         var go = new GameObject(name);
         go.transform.SetParent(transform, false);
-        go.transform.localPosition = new Vector3(0f, 0.55f, 0f);
+        go.transform.localPosition = new Vector3(0f, worldSize > 0f ? 0f : 0.55f, 0f);
         var badge = go.AddComponent<TMPro.TextMeshPro>();
         var font = RuntimeUIKit.Style.TitleFont;
         if (font != null)
@@ -111,6 +165,22 @@ public class FurrowSlotView : MonoBehaviour
         badge.color = color;
         badge.rectTransform.sizeDelta = new Vector2(3f, 0.8f);
         badge.sortingOrder = spriteRenderer.sortingOrder + 5;
+        if (worldSize > 0f)
+        {
+            // 원(빈 고랑 그림)의 한가운데
+            if (spriteRenderer.sprite != null)
+            {
+                var center = transform.InverseTransformPoint(spriteRenderer.bounds.center);
+                go.transform.localPosition = new Vector3(center.x, center.y, 0f);
+            }
+            float scale = Mathf.Max(0.01f, Mathf.Abs(transform.lossyScale.x));
+            go.transform.localScale = Vector3.one / scale;
+            badge.fontSize = worldSize;
+            badge.fontStyle = TMPro.FontStyles.Bold;
+            badge.rectTransform.sizeDelta = new Vector2(8f, 1.5f);
+            badge.outlineWidth = 0.22f;
+            badge.outlineColor = new Color32(0xFF, 0xF8, 0xEC, 0xFF);
+        }
         return badge;
     }
 
