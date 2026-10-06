@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void OnAppLaunch()
     {
-        appLaunchUtc = DateTime.UtcNow;
+        appLaunchUtc = GameClock.UtcNow;
         launchAbsenceHandled = false;
     }
 
@@ -157,7 +157,16 @@ public class GameManager : MonoBehaviour
         saveService = new SaveService();
         var loadStatus = saveService.Load(out save);
         if (save == null) save = CreateNewSave();
-        MarkLegacySettlement();
+        // Odd values (missing lists, negative/NaN timers, level 0) are fixed
+        // before anything reads the save.
+        var fixes = SaveDataSanitizer.Sanitize(save);
+        if (fixes.Count > 0) Debug.LogWarning($"[GameManager] Fixed save values: {string.Join(", ", fixes)}");
+        if (save.schemaVersion > SaveData.CurrentSchemaVersion)
+            Debug.LogWarning($"[GameManager] Save is from a newer version (schema {save.schemaVersion} > {SaveData.CurrentSchemaVersion}).");
+        // Older saves are brought up to the current schema here, once
+        // (first-plant guide, zone tutorials, legacy settlement — SaveMigrations).
+        var migrated = SaveMigrations.Run(save);
+        if (migrated.Count > 0) Debug.Log($"[GameManager] Save migrated: {string.Join(", ", migrated)}");
 
         ComputePendingOfflineElapsed();
 
@@ -175,7 +184,6 @@ public class GameManager : MonoBehaviour
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
             otterVisitBalance, miningBalance);
         gameUI = GameUI.Create(this);
-        SkipGuidesForOldSaves();
         // Set here, before any view's Start asks for the first-plant guide.
         zoneTutorialPending = ZoneTutorials.Has(CurrentZoneId) && !save.tutorialsDone.Contains(CurrentZoneId);
 
@@ -188,6 +196,9 @@ public class GameManager : MonoBehaviour
 
     private void ReportLoadStatus(SaveLoadStatus status)
     {
+        if (status == SaveLoadStatus.RecoveredFromBackup || status == SaveLoadStatus.Corrupted)
+            AnalyticsLog.Track("save_recovery", ("reason", status.ToString()),
+                ("outcome", status == SaveLoadStatus.RecoveredFromBackup ? "backup" : "asked"));
         switch (status)
         {
             case SaveLoadStatus.RecoveredFromBackup:
@@ -209,6 +220,7 @@ public class GameManager : MonoBehaviour
 
     private void StartOverAfterCorruption()
     {
+        AnalyticsLog.Track("save_recovery", ("reason", nameof(SaveLoadStatus.Corrupted)), ("outcome", "start_over"));
         saveService.DiscardCorruptedAndStartOver();
         Time.timeScale = 1f;
         SaveNow();
@@ -305,7 +317,9 @@ public class GameManager : MonoBehaviour
 
         public void StoreHarvest(string cropId, int amount)
         {
-            if (game.TryFindItem(cropId, out var item)) game.Bag.Add(item, amount, ItemChangeReason.Harvest);
+            if (!game.TryFindItem(cropId, out var item)) return;
+            int added = game.Bag.Add(item, amount, ItemChangeReason.Harvest);
+            if (added > 0) HarvestStored?.Invoke(item, added);
         }
 
         public bool CanFarmerWork => CanProduceIn(FarmZoneId);
@@ -348,13 +362,17 @@ public class GameManager : MonoBehaviour
     {
         if (pause)
         {
-            pausedAtUtc = DateTime.UtcNow;
+            pausedAtUtc = GameClock.UtcNow;
             SaveNow();
             return;
         }
 
         if (pausedAtUtc == null) return;
-        double away = (DateTime.UtcNow - pausedAtUtc.Value).TotalSeconds;
+        // From the latest time already credited: a clock turned back and
+        // forward again doesn't pay the same hours twice (see SaveService).
+        var since = pausedAtUtc.Value;
+        if (TryParseSaveTime(save.lastSaveUtc, out var lastSave) && lastSave > since) since = lastSave;
+        double away = (GameClock.UtcNow - since).TotalSeconds;
         pausedAtUtc = null;
         if (away <= 0) return;
 
@@ -567,15 +585,6 @@ public class GameManager : MonoBehaviour
                Bag.TryRemove(seedItem, 1, ItemChangeReason.Plant);
     }
 
-    // Saves from before the settlement (schema < 4) keep everything they had:
-    // SettlementManager completes every board request when it loads them.
-    private void MarkLegacySettlement()
-    {
-        save.settlement ??= new SettlementSaveData();
-        if (save.schemaVersion < 4 && !save.settlement.initialized)
-            save.settlement.legacyComplete = true;
-    }
-
     private SaveData CreateNewSave()
     {
         var data = new SaveData();
@@ -603,13 +612,9 @@ public class GameManager : MonoBehaviour
         // elapsed <= 0, which Tick() already treats as a no-op.
         if (string.IsNullOrEmpty(save.lastSaveUtc)) return;
 
-        if (!DateTime.TryParse(save.lastSaveUtc, CultureInfo.InvariantCulture,
-                DateTimeStyles.RoundtripKind, out var last))
-        {
-            return;
-        }
+        if (!TryParseSaveTime(save.lastSaveUtc, out var last)) return;
 
-        double elapsed = (DateTime.UtcNow - last).TotalSeconds;
+        double elapsed = (GameClock.UtcNow - last).TotalSeconds;
         if (elapsed > 0)
         {
             pendingOfflineElapsedSec = (float)OfflineProductionService.Credited(elapsed);
@@ -621,6 +626,15 @@ public class GameManager : MonoBehaviour
             pendingElapsedIsLaunch = true;
             pendingAbsenceSec = Math.Max(0, (appLaunchUtc - last.ToUniversalTime()).TotalSeconds);
         }
+    }
+
+    private static bool TryParseSaveTime(string text, out DateTime utc)
+    {
+        utc = default;
+        if (string.IsNullOrEmpty(text)) return false;
+        if (!DateTime.TryParse(text, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var parsed)) return false;
+        utc = parsed.ToUniversalTime();
+        return true;
     }
 
     // ------------------------------------------------------------- offline
@@ -641,6 +655,9 @@ public class GameManager : MonoBehaviour
             report.NextGoal = settlement.NextGoalTitle;
         }
         SaveNow();
+        AnalyticsLog.Track("offline_settled", ("elapsedSec", absenceSec),
+            ("simulatedSec", OfflineProductionService.Credited(absenceSec)),
+            ("capped", absenceSec > OfflineProductionService.MaxCreditedSec), ("newRewards", report.HasAnything));
         if (report.HasAnything) gameUI.ShowOfflineReport(report, ItemDisplayName);
     }
 
@@ -791,9 +808,12 @@ public class GameManager : MonoBehaviour
     {
         // No farmer working yet: nothing happens in the farm (plots stay hidden too).
         if (!CanProduceIn(FarmZoneId)) return PlantResult.Failed;
+        bool firstCrop = IsFirstPlantGuideActive;
         var result = farmService.Plant(plotIndex, slotIndex, cropId);
         if (result == PlantResult.Planted)
         {
+            // The very first crop grows in 10 seconds (design doc 4.2), once.
+            if (firstCrop) farmService.SetGrowSeconds(plotIndex, slotIndex, FirstCropGrowSeconds);
             CompleteFirstPlantGuide();
             SaveNow();
         }
@@ -805,6 +825,7 @@ public class GameManager : MonoBehaviour
     // The very first guide (design doc 4.2): "당근을 심어 볼까?" with the
     // first plot highlighted, until the player plants anything.
     public const int FirstPlantGuidePlotIndex = 0;
+    private const float FirstCropGrowSeconds = 10f;
     private const string FirstPlantGuideMessage = "당근을 심어 볼까?";
 
     public bool IsFirstPlantGuideActive => !save.firstPlantGuideDone;
@@ -829,33 +850,6 @@ public class GameManager : MonoBehaviour
         if (!IsFirstPlantGuideActive) return;
         save.firstPlantGuideDone = true;
         gameUI.HideGuide();
-    }
-
-    // Saves from before the guides existed have no flags. A player who has
-    // already planted or sold something doesn't need the first-plant guide,
-    // and the zone tutorials are only for new games. Checked only once per
-    // save, so resetting the flags later (dev window) brings them back.
-    private void SkipGuidesForOldSaves()
-    {
-        save.tutorialsDone ??= new List<string>();
-        if (save.schemaVersion >= SaveData.CurrentSchemaVersion) return;
-
-        if (save.schemaVersion < 2 && (farmService.HasAnyPlantedSlot || save.lifetimeSales > 0))
-            save.firstPlantGuideDone = true;
-
-        if (save.schemaVersion < 3)
-        {
-            foreach (var id in ZoneTutorials.AllIds)
-            {
-                if (!save.tutorialsDone.Contains(id)) save.tutorialsDone.Add(id);
-            }
-            foreach (var id in ZoneTutorials.FeatureIds)
-            {
-                if (!save.tutorialsDone.Contains(id)) save.tutorialsDone.Add(id);
-            }
-        }
-
-        save.schemaVersion = SaveData.CurrentSchemaVersion;
     }
 
     public void DevResetFirstPlantGuide()
@@ -1056,6 +1050,7 @@ public class GameManager : MonoBehaviour
         {
             Bag.Add(item, 1, ItemChangeReason.Fishing);
             fullBagCatchAlertShown = false;
+            FishCaught?.Invoke(item);
             SaveNow();
             return;
         }
@@ -1078,6 +1073,11 @@ public class GameManager : MonoBehaviour
     // Static so GlobalUI can listen across scene changes: the mine scene's
     // otter bubble shows it there, a GlobalUI toast everywhere else.
     public static event Action<ItemDefinition> MiningFound;
+
+    // A harvest went into the bag (item, amount) / a catch landed in the bag.
+    // The farm and dock otters show it as icons flying to the bag.
+    public static event Action<ItemDefinition, int> HarvestStored;
+    public static event Action<ItemDefinition> FishCaught;
 
     // Mining runs in every zone scene once the otter is in the mine, like
     // the farm growing everywhere — not only while the mine scene is open.

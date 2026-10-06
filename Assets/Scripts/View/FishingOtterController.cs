@@ -90,6 +90,7 @@ public class FishingOtterController : MonoBehaviour
 
     private void Start()
     {
+        GameManager.FishCaught += HandleFishCaught;
         if (FishingActive)
         {
             SnapToSpot();
@@ -209,7 +210,14 @@ public class FishingOtterController : MonoBehaviour
 
     private void OnDestroy()
     {
+        GameManager.FishCaught -= HandleFishCaught;
         ReleasePlay();
+    }
+
+    // The catch flies from the otter to the bag (with "+1").
+    private void HandleFishCaught(ItemDefinition item)
+    {
+        RewardFly.FromWorld(item.Icon, transform.position + Vector3.up * 0.8f, RewardTarget.Bag, 1, 1);
     }
 
     private void BeginGoToSpot()

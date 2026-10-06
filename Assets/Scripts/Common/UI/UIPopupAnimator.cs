@@ -41,6 +41,9 @@ public class UIPopupAnimator : MonoBehaviour
     /// <summary>패널의 투명도 (열고 닫을 때 바뀜)</summary>
     public CanvasGroup PanelGroup => _panelGroup;
 
+    /// <summary>배경을 눌러 닫을 수 있는 창인지 (Android 뒤로 가기도 같은 기준으로 닫음)</summary>
+    public bool IsDismissable => _dimButton != null;
+
     /// <summary>닫기 연출이 끝나 화면이 꺼진 뒤 (배경 클릭으로 닫힌 경우 포함)</summary>
     public event Action OnHidden;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// 실제 음원이 생기기 전 확인용으로 코드로 만드는 임시 소리 (에셋 파일 없음).
-/// 배경음: C–Am–F–G 아르페지오 + 베이스, 약 20초 반복. 효과음: 짧은 "띵".
+/// 배경음: C–Am–F–G 아르페지오 + 베이스, 약 20초 반복. 효과음: 짧은 "띵" + 종류별 짧은 소리(CreateSfx).
 /// </summary>
 public static class PlaceholderAudio
 {
@@ -68,6 +68,68 @@ public static class PlaceholderAudio
         return clip;
     }
 
+    /// <summary>효과음 종류마다 다른 짧은 임시 소리 (실제 음원이 생기면 AudioManager 목록에 넣어 대신함)</summary>
+    public static AudioClip CreateSfx(SfxKind kind)
+    {
+        float length;
+        float[] samples;
+        switch (kind)
+        {
+            case SfxKind.Click: // 아주 짧고 부드러운 톡
+                samples = Buffer(length = 0.06f);
+                AddNote(samples, 0f, length, 79, 0.4f, Sine, 70f);
+                break;
+            case SfxKind.Harvest: // 뽁: 아래에서 위로 두 음
+                samples = Buffer(length = 0.2f);
+                AddNote(samples, 0f, 0.09f, 72, 0.5f, Triangle, 25f);
+                AddNote(samples, 0.06f, length - 0.06f, 79, 0.45f, Sine, 20f);
+                break;
+            case SfxKind.Fish: // 첨벙: 잡음이 퍼지고 맑은 음 하나
+                samples = Buffer(length = 0.3f);
+                AddNote(samples, 0f, 0.2f, 60, 0.35f, Noise, 22f);
+                AddNote(samples, 0.08f, length - 0.08f, 83, 0.35f, Sine, 14f);
+                break;
+            case SfxKind.Find: // 반짝: 빠른 세 음
+                samples = Buffer(length = 0.32f);
+                AddNote(samples, 0f, 0.2f, 84, 0.35f, Sine, 16f);
+                AddNote(samples, 0.06f, 0.2f, 88, 0.35f, Sine, 16f);
+                AddNote(samples, 0.12f, length - 0.12f, 91, 0.35f, Sine, 12f);
+                break;
+            case SfxKind.Coin: // 띠링
+                samples = Buffer(length = 0.28f);
+                AddNote(samples, 0f, 0.08f, 88, 0.4f, Sine, 20f);
+                AddNote(samples, 0.07f, length - 0.07f, 93, 0.4f, Sine, 12f);
+                break;
+            case SfxKind.Upgrade: // 올라가는 네 음
+                samples = Buffer(length = 0.45f);
+                for (int i = 0; i < 4; i++)
+                    AddNote(samples, i * 0.07f, length - i * 0.07f, new[] { 72, 76, 79, 84 }[i], 0.3f, Triangle, 9f);
+                break;
+            case SfxKind.LevelUp: // 짧은 팡파르: 올라가는 음 + 마지막 화음
+                samples = Buffer(length = 0.9f);
+                AddNote(samples, 0f, 0.15f, 72, 0.3f, Triangle, 8f);
+                AddNote(samples, 0.12f, 0.15f, 76, 0.3f, Triangle, 8f);
+                AddNote(samples, 0.24f, 0.15f, 79, 0.3f, Triangle, 8f);
+                foreach (int note in new[] { 72, 76, 79, 84 })
+                    AddNote(samples, 0.36f, length - 0.36f, note, 0.22f, Sine, 4f);
+                break;
+            case SfxKind.Complete: // 맑은 화음 하나
+                samples = Buffer(length = 0.7f);
+                foreach (int note in new[] { 79, 84, 88 })
+                    AddNote(samples, 0f, length, note, 0.25f, Sine, 5f);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(kind));
+        }
+
+        Normalize(samples, kind == SfxKind.Click ? Peak * 0.5f : Peak);
+        var clip = AudioClip.Create($"PlaceholderSfx_{kind}", samples.Length, 1, SampleRate, false);
+        clip.SetData(samples, 0);
+        return clip;
+    }
+
+    private static float[] Buffer(float seconds) => new float[Mathf.CeilToInt(seconds * SampleRate)];
+
     // 음 하나를 더함: 5ms 동안 올라가고 exp(-decay·t)로 감쇠, 끝 10ms는 0으로 모아 딸깍 소리 방지
     private static void AddNote(float[] samples, float start, float duration, int midi, float gain, Func<float, float> wave, float decay)
     {
@@ -95,6 +157,15 @@ public static class PlaceholderAudio
 
     private static float Sine(float phase01) => Mathf.Sin(phase01 * 2f * Mathf.PI);
     private static float Triangle(float phase01) => 1f - 4f * Mathf.Abs(phase01 - 0.5f);
+
+    // 첨벙 소리용 잡음 (늘 같은 소리가 나게 위상으로 정해지는 의사 난수)
+    private static float Noise(float phase01)
+    {
+        float x = Mathf.Sin(phase01 * 12.9898f + _noiseStep++ * 78.233f) * 43758.5453f;
+        return (x - Mathf.Floor(x)) * 2f - 1f;
+    }
+
+    private static int _noiseStep;
 
     private static void Normalize(float[] samples, float peak)
     {

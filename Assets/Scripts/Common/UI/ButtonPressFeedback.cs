@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// 버튼 손맛: 누르면 살짝 쏙 들어가고, 놓으면 통 튀어나온다. ButtonFeedbackInstaller가 모든 버튼에 붙인다.
+/// 버튼 손맛: 누르면 살짝 쏙 들어가며 "톡" 소리가 나고, 놓으면 통 튀어나온다. ButtonFeedbackInstaller가 모든 버튼에 붙인다.
 /// 화면을 덮는 배경 버튼(팝업 뒤 딤)은 눌러도 움직이지 않는다. 일시정지 중에도 움직이게 unscaled 시간.
 /// </summary>
 [DisallowMultipleComponent]
@@ -50,6 +50,7 @@ public class ButtonPressFeedback : MonoBehaviour, IPointerDownHandler, IPointerU
             _baseScale = transform.localScale;
         _pressed = true;
         Play(PressedScale, PressSeconds, false);
+        AudioManager.Play(SfxKind.Click);
     }
 
     public void OnPointerUp(PointerEventData eventData) => Release();

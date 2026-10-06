@@ -129,12 +129,20 @@ public class FarmerOtterController : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.ShowFarmUpgradeButton();
         RegisterAnchors();
         activeRoutine = StartCoroutine(WanderRoutine());
+        GameManager.HarvestStored += HandleHarvestStored;
     }
 
     private void OnDestroy()
     {
         if (subscribedFarmService != null) subscribedFarmService.PlotUnlocked -= RegisterPlotAnchors;
+        GameManager.HarvestStored -= HandleHarvestStored;
         ReleasePlay();
+    }
+
+    // The harvest flies from the farmer to the bag (with "+N").
+    private void HandleHarvestStored(ItemDefinition item, int amount)
+    {
+        RewardFly.FromWorld(item.Icon, transform.position + Vector3.up * 0.8f, RewardTarget.Bag, amount, amount);
     }
 
     private void RegisterAnchors()

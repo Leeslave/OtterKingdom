@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 배경음/효과음 재생. 음량은 환경설정(GameSettings)을 따르고, 설정이 바뀌면 바로 반영한다.
@@ -20,6 +22,25 @@ public class AudioManager : MonoBehaviour
 
     [Tooltip("미리듣기 최소 간격(초). 슬라이더를 끄는 동안 너무 자주 울리지 않게")]
     [SerializeField] private float _previewInterval = 0.12f;
+
+    [Tooltip("종류별 효과음. 실제 음원을 여기에 넣는다. 목록에 없는 종류는 코드로 만든 임시 소리")]
+    [SerializeField] private List<SfxClip> _sfxClips = new List<SfxClip>();
+
+    [Tooltip("같은 효과음을 다시 울리기까지 최소 간격(초). 여러 개가 한꺼번에 생겨도 소리가 겹겹이 쌓이지 않게")]
+    [SerializeField] private float _sameSfxInterval = 0.06f;
+
+    [Serializable]
+    private class SfxClip
+    {
+        [Tooltip("효과음 종류")]
+        public SfxKind Kind;
+
+        [Tooltip("이 종류에 쓸 음원")]
+        public AudioClip Clip;
+    }
+
+    private readonly Dictionary<SfxKind, AudioClip> _sfxByKind = new Dictionary<SfxKind, AudioClip>();
+    private readonly Dictionary<SfxKind, float> _lastSfxTime = new Dictionary<SfxKind, float>();
 
     private AudioSource _bgmSource;
     private AudioSource _sfxSource;
@@ -44,6 +65,33 @@ public class AudioManager : MonoBehaviour
             _defaultBgm = PlaceholderAudio.CreateBgm();
         if (_previewSfx == null)
             _previewSfx = PlaceholderAudio.CreateDing();
+
+        foreach (var entry in _sfxClips)
+        {
+            if (entry != null && entry.Clip != null)
+                _sfxByKind[entry.Kind] = entry.Clip;
+        }
+        foreach (SfxKind kind in Enum.GetValues(typeof(SfxKind)))
+        {
+            if (!_sfxByKind.ContainsKey(kind))
+                _sfxByKind[kind] = PlaceholderAudio.CreateSfx(kind);
+        }
+    }
+
+    /// <summary>효과음 한 번 (전역 UI가 아직 없으면 조용히 넘어감 — 테스트 씬 등)</summary>
+    public static void Play(SfxKind kind)
+    {
+        if (Instance != null)
+            Instance.PlaySfx(kind);
+    }
+
+    public void PlaySfx(SfxKind kind)
+    {
+        float now = Time.unscaledTime;
+        if (_lastSfxTime.TryGetValue(kind, out float last) && now - last < _sameSfxInterval)
+            return;
+        _lastSfxTime[kind] = now;
+        _sfxSource.PlayOneShot(_sfxByKind[kind]);
     }
 
     private void OnEnable()

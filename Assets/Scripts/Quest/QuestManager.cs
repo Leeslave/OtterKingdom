@@ -267,7 +267,7 @@ public class QuestManager : MonoBehaviour
 
     private void CheckDailyReset()
     {
-        int today = TodayNumber(DateTime.Now);
+        int today = TodayNumber(GameClock.Now);
         if (Log.DailyDay == today)
             return;
 

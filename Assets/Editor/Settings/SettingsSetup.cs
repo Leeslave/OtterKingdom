@@ -7,7 +7,7 @@ using static CurrencyShopSetup;
 using static GlobalUISetup;
 
 /// <summary>
-/// 설정 화면(배경음·효과음·진동·푸시 알림·언어, 메뉴 버튼 4개, 버전)을 만든다. GlobalUISetup이 함께 호출한다.
+/// 설정 화면(배경음·효과음·진동·푸시 알림·언어, 메뉴 버튼 4개, 데이터 초기화, 버전)을 만든다. GlobalUISetup이 함께 호출한다.
 /// 1080×1920 기준, 설정 시안(Tools/UIGen/hud_mockup.py의 settings) 수치를 옮김.
 /// </summary>
 public static class SettingsSetup
@@ -16,7 +16,7 @@ public static class SettingsSetup
 
     // 패널 안쪽 기준 (패널 왼쪽 위가 0,0)
     private const float PanelWidth = 940f;
-    private const float PanelHeight = 1150f;
+    private const float PanelHeight = 1260f;
     private const float RowCenterTop = 150f; // 첫 줄의 가운데
     private const float RowStep = 130f;
     private const float LabelX = 70f;
@@ -51,6 +51,15 @@ public static class SettingsSetup
         var support = BuildMenuButton(panel, 2, "SupportButton", "고객센터");
         var terms = BuildMenuButton(panel, 3, "TermsButton", "이용약관");
 
+        // 데이터 초기화: 메뉴 아래 작은 글자 버튼 (실수로 누르기 어렵게 눈에 덜 띄게, 확인은 두 번)
+        var reset = CreateText("ResetButton", panel, _bodyFont, "데이터 초기화", 30, LightBrown);
+        reset.alignment = TextAlignmentOptions.Center;
+        reset.fontStyle = FontStyles.Underline;
+        reset.raycastTarget = true; // CreateText는 클릭을 안 받게 만들므로 버튼으로 쓸 때 다시 켬
+        Place(reset.rectTransform, new Vector2(0.5f, 1), new Vector2(0, -(MenuTop + 250)), new Vector2(360, 70));
+        var resetButton = reset.gameObject.AddComponent<Button>();
+        resetButton.targetGraphic = reset;
+
         var version = CreateText("Version", panel, _bodyFont, "버전 0.1.0  ·  해달 왕국", 28, LightBrown);
         BottomBand(version.rectTransform, 50, 40);
 
@@ -77,6 +86,7 @@ public static class SettingsSetup
         Set(view, "_supportButton", support);
         Set(view, "_termsButton", terms);
         Set(view, "_closeButton", closeButton);
+        Set(view, "_resetButton", resetButton);
         Set(view, "_versionText", version);
         Set(view, "_notice", noticeGroup);
         Set(view, "_noticeText", noticeText);

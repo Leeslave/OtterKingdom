@@ -37,7 +37,8 @@ public class PlotRuntime
         if (slot.state == FurrowSlotState.AwaitingHarvest) return SlotGrowthStage.Grown;
 
         var crop = cropLookup(slot.cropId);
-        float duration = crop != null ? ComputeDuration(crop, levelDurationMultiplier) : slot.remainingSec;
+        float duration = slot.durationSec > 0f ? slot.durationSec
+            : crop != null ? ComputeDuration(crop, levelDurationMultiplier) : slot.remainingSec;
         if (duration <= 0f) return SlotGrowthStage.Grown;
 
         float elapsed = duration - slot.remainingSec;
@@ -60,6 +61,7 @@ public class PlotRuntime
         slot.cropId = cropId;
         slot.state = FurrowSlotState.Growing;
         slot.remainingSec = ComputeDuration(crop, levelDurationMultiplier);
+        slot.durationSec = 0f;
         // Planted (by the player or the replant) = no longer waiting for seeds.
         slot.waitingSeedCropId = null;
         return true;
@@ -81,6 +83,18 @@ public class PlotRuntime
 
     // Throws away whatever is in the slot (growing or awaiting harvest) with
     // no yield and no seed refund — used by the player's "change crop" flow.
+    // A growing crop that should grow in exactly this many seconds from now
+    // (the first-plant guide's crop). Its growth stages follow this time.
+    public bool SetGrowSeconds(int slotIndex, float seconds)
+    {
+        if (slotIndex < 0 || slotIndex >= Data.slots.Count || seconds <= 0f) return false;
+        var slot = Data.slots[slotIndex];
+        if (slot.state != FurrowSlotState.Growing) return false;
+        slot.durationSec = seconds;
+        slot.remainingSec = seconds;
+        return true;
+    }
+
     public bool ClearSlot(int slotIndex)
     {
         if (slotIndex < 0 || slotIndex >= Data.slots.Count) return false;
@@ -91,6 +105,7 @@ public class PlotRuntime
         slot.cropId = null;
         slot.state = FurrowSlotState.Empty;
         slot.remainingSec = 0f;
+        slot.durationSec = 0f;
         slot.waitingSeedCropId = null;
         return true;
     }
@@ -127,6 +142,7 @@ public class PlotRuntime
         slot.cropId = null;
         slot.state = FurrowSlotState.Empty;
         slot.remainingSec = 0f;
+        slot.durationSec = 0f;
         return result;
     }
 

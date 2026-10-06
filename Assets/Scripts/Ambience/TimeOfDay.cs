@@ -27,7 +27,7 @@ public static class TimeOfDay
     };
 
     /// <summary>지금 시각 (0~24, 미리 보기 우선)</summary>
-    public static float CurrentHour => PreviewHour >= 0f ? PreviewHour % 24f : (float)DateTime.Now.TimeOfDay.TotalHours;
+    public static float CurrentHour => PreviewHour >= 0f ? PreviewHour % 24f : (float)GameClock.Now.TimeOfDay.TotalHours;
 
     /// <summary>그 시각의 빛 색·세기</summary>
     public static (Color color, float intensity) Light(float hour)

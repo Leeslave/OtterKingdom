@@ -56,6 +56,21 @@ public class SettingsManager : MonoBehaviour
 #endif
     }
 
+    /// <summary>
+    /// 큰 순간(레벨 업, 건설 완료, 작업 완료)에 한 번 울림. 여러 창이 겹쳐 뜨면 한 번만 (상세기획서 3.3 진동).
+    /// 자주 일어나는 일(수확, 낚시)에는 쓰지 않는다 — 기기 진동이 길어서 성가심.
+    /// </summary>
+    public static void VibrateMoment()
+    {
+        if (Instance == null || Time.unscaledTime < _nextMomentTime)
+            return;
+        _nextMomentTime = Time.unscaledTime + MomentCooldown;
+        Instance.Vibrate();
+    }
+
+    private const float MomentCooldown = 1.5f;
+    private static float _nextMomentTime;
+
     /// <summary>바뀐 값을 기기에 기록 (슬라이더를 끄는 동안 매번 쓰지 않도록 화면을 닫을 때 호출)</summary>
     public void SaveIfDirty()
     {

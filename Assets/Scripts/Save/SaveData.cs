@@ -22,6 +22,9 @@ public class FurrowSlotSaveData
     public string cropId;
     public FurrowSlotState state;
     public float remainingSec;
+    // This crop's own grow time when it was set specially (the very first
+    // crop grows in 10s). 0 = from the crop and farm level as usual.
+    public float durationSec;
     // Empty slot whose automatic replant ran out of seeds: the crop to plant
     // again once the seed is back in the bag (null = nothing waiting).
     public string waitingSeedCropId;
@@ -105,6 +108,7 @@ public class SaveData
     // 3: tutorialsDone exists (older saves skip every zone tutorial).
     // 4: settlement exists (older saves get every board request completed,
     //    so a farm they already use isn't locked again).
+    // The upgrade steps live in SaveMigrations — raise this and add a step there.
     public const int CurrentSchemaVersion = 4;
     public int schemaVersion = CurrentSchemaVersion;
     public int lifetimeSales;
