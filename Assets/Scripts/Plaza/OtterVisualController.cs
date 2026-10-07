@@ -68,6 +68,7 @@ public class OtterVisualController : MonoBehaviour
     private bool hasWalkAnimSpeed;
     private WalkDir currentDir = WalkDir.Side;
     private readonly System.Collections.Generic.List<int> playTriggers = new System.Collections.Generic.List<int>();
+    private readonly System.Collections.Generic.List<int> preferredTriggers = new System.Collections.Generic.List<int>();
     private float playActionTimer;
     private bool facingRight = true;
 
@@ -130,6 +131,8 @@ public class OtterVisualController : MonoBehaviour
         }
 
         if (playTriggers.Count == 0) return;
+        // Hopping onto / off a chair: no action mid-air
+        if (agent.IsAtSpot && agent.PreferredActions == null) return;
 
         // Fire the next action only once the previous one has handed back to Idle.
         var state = animator.GetCurrentAnimatorStateInfo(0);
@@ -142,8 +145,25 @@ public class OtterVisualController : MonoBehaviour
         playActionTimer -= Time.deltaTime;
         if (playActionTimer > 0f) return;
 
-        animator.SetTrigger(playTriggers[Random.Range(0, playTriggers.Count)]);
+        animator.SetTrigger(PickPlayTrigger());
         playActionTimer = PlayActionGapSeconds;
+    }
+
+    // At a spot (chair / table / lamp) prefer the actions that fit it, among the ones this otter has
+    private int PickPlayTrigger()
+    {
+        var preferred = agent.PreferredActions;
+        if (preferred != null)
+        {
+            preferredTriggers.Clear();
+            foreach (var name in preferred)
+            {
+                int hash = Animator.StringToHash(name);
+                if (playTriggers.Contains(hash)) preferredTriggers.Add(hash);
+            }
+            if (preferredTriggers.Count > 0) return preferredTriggers[Random.Range(0, preferredTriggers.Count)];
+        }
+        return playTriggers[Random.Range(0, playTriggers.Count)];
     }
 
     private void UpdateFacing(Vector2 dir)
@@ -194,7 +214,7 @@ public class OtterVisualController : MonoBehaviour
 
     private void UpdateSorting()
     {
-        int order = PlazaDepth.SortingOrderFor(transform.position.y);
+        int order = PlazaDepth.SortingOrderFor(agent.DepthY);
         if (sortingGroup != null) sortingGroup.sortingOrder = order;
         else if (spriteRenderer != null) spriteRenderer.sortingOrder = order;
     }

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_OtterToyDegul
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: otter_toy_degul
+  _tab: {fileID: 11400000, guid: e57bb4e159ee155448fc7c02082cbb58, type: 2}
+  _displayName: "\uB370\uAD74\uC774"
+  _sortOrder: 106
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 8db287fc936d8c24fa151bae0d00fa80, type: 3}
+  _tagline: "\uC870\uC57D\uB3CC\uC744 \uBAA8\uC73C\uB294 \uD574\uB2EC"
+  _description: "\uBC18\uC9DD\uC774\uB294 \uB3CC\uB9CC \uBCF4\uBA74 \uB370\uAD74\uB370\uAD74
+    \uAD74\uB824 \uBCF4\uB294 \uCC44\uAD74 \uD574\uB2EC\uC774\uC5D0\uC694."
+  _extraValue: "\uBC18\uC9DD\uC774\uB294 \uC870\uC57D\uB3CC"
+  _hint: "\uC7A5\uB09C\uAC10(\uCD95\uAD6C\uACF5 \uB4F1)\uC744 \uAD11\uC7A5\uC5D0
+    \uB193\uC73C\uBA74 \uCC3E\uC544\uC640\uC694"
+  _linkedItem: {fileID: 0}
+  _unlockLevel: 0
+  _story: {fileID: 0}

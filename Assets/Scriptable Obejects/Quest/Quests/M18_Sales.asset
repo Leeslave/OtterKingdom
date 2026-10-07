@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M18_Sales
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv18_sales
+  _title: "\uD574\uB2EC \uC655\uAD6D\uC758 \uAE08\uACE0"
+  _description: "\uD310\uB9E4\uB85C 200,000\uACE8\uB4DC \uBC8C\uAE30"
+  _sortOrder: 69
+  _kind: 0
+  _requiredLevel: 18
+  _prerequisite: {fileID: 11400000, guid: bbf00e8dbcabe4747b7b8c811582e36c, type: 2}
+  _icon: {fileID: 21300000, guid: 50d17c0c5e1496846a61da22ead35d0d, type: 3}
+  _goalType: 2
+  _goal: 200000
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 4000
+  _expReward: 2000
+  _expPercentOfLevel: 0

@@ -20,14 +20,20 @@ MonoBehaviour:
   _trait: 5
   _toyVisitor: 1
   _visitTier: 1
-  _homelessLine: "\uC9D1\uC774 \uC5C6\uC73C\uBA74 \uC81C\uAC00 \uC9C0\uC5B4\uB3C4 \uB418\uB294\uB370\u2026\n\uBE48 \uC9D1\uC774 \uC0DD\uAE30\uBA74 \uC54C\uB824 \uC918\uC694!"
+  _favoriteToy: {fileID: 0}
+  _visitCondition: 2
+  _visitConditionValue: 0
+  _homelessLine: "\uC9D1\uC774 \uC5C6\uC73C\uBA74 \uC81C\uAC00 \uC9C0\uC5B4\uB3C4
+    \uB418\uB294\uB370\u2026\n\uBE48 \uC9D1\uC774 \uC0DD\uAE30\uBA74 \uC54C\uB824
+    \uC918\uC694!"
   _isBuilder: 0
   _arrivalEntry: {fileID: 11400000, guid: 4c72a77c56c6434daad023665f54bdc1, type: 2}
   _workRegion: {fileID: 0}
-  _collectionEntry: {fileID: 0}
+  _collectionEntry: {fileID: 11400000, guid: 9eddb0185c3722649bcda6464992789d, type: 2}
   _assignLine: 
   _assignDevelopment: 
-  _moveInLine: "\uC798 \uC9C0\uC740 \uC9D1\uC774\uB124\uC694!\n\uC5EC\uAE30 \uC0B4\uC544\uB3C4 \uB420\uAE4C\uC694?"
+  _moveInLine: "\uC798 \uC9C0\uC740 \uC9D1\uC774\uB124\uC694!\n\uC5EC\uAE30 \uC0B4\uC544\uB3C4
+    \uB420\uAE4C\uC694?"
   _lines:
   - "\uCF69\uCF69, \uBABB \uBC15\uB294 \uC18C\uB9AC \uC88B\uC544\uC694."
   - "\uACE0\uCE60 \uB370 \uC788\uC73C\uBA74 \uBD88\uB7EC\uC694!"

@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_p5_builder_home
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_p5_builder_home
+  _order: 41
+  _category: 0
+  _contentVersion: 4
+  _title: "\uCF69\uCF69\uC774\uAC00 \uC0B4 \uC9D1"
+  _description: "\uCF69\uCF69! \uB69D\uB531\uC774\uCC98\uB7FC \uC9D1\uC744 \uC9D3\uACE0
+    \uC2F6\uC5B4\uC694.\n\uC6B0\uC120 \uC9C0\uB0BC \uC9D1\uC774 \uC788\uC73C\uBA74
+    \uC88B\uACA0\uC5B4\uC694."
+  _icon: {fileID: 21300000, guid: 5436b78cc2da9ae4b9c403c6b96b3d4d, type: 3}
+  _requester: {fileID: 11400000, guid: ac2d28fc54a545e7ac154e16db67a844, type: 2}
+  _requiredDevelopment: p5_fishery_built
+  _minResidents: 0
+  _construction: {fileID: 0}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _building: {fileID: 0}
+  _buildingCount: 1
+  _settleTargets:
+  - {fileID: 11400000, guid: ac2d28fc54a545e7ac154e16db67a844, type: 2}
+  _resultDevelopment: p5_builder_settled
+  _settles: []
+  _arrivals: []
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: 1ebd41f8dca4b5d47ae106622ac252e0, type: 2}
+  _completionMessage: "\uCF69\uCF69\uC774\uAC00 \uB9C8\uC744 \uC8FC\uBBFC\uC774 \uB418\uC5C8\uC5B4\uC694!"
+  _kingdomLevel: 0

@@ -28,6 +28,33 @@ public static class SettlementMigration
         return true;
     }
 
+    /// <summary>
+    /// 끝낸 부탁이 데려오는 해달이 아직 없는 세이브 (부탁을 끝낸 뒤에 찾아오는 해달이 데이터에 추가됨, 예: 농업 창고 → 퐁당이):
+    /// 그 해달을 그 처지로 찾아오게 한다. 이미 있는 해달(주민 · 방문 · 떠남)은 그대로 둔다
+    /// </summary>
+    /// <returns>찾아오게 한 해달</returns>
+    public static List<SettlementOtterDefinition> ReconcileArrivals(SettlementConfig config, Settlement settlement)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+        var arrived = new List<SettlementOtterDefinition>();
+        foreach (var request in config.Requests)
+        {
+            if (request == null || !settlement.IsCompleted(request.RequestId))
+                continue;
+            foreach (var arrival in request.Arrivals)
+            {
+                if (arrival == null || arrival.Otter == null || settlement.TryGetResidentState(arrival.Otter.OtterId, out _))
+                    continue;
+                SettlementRules.Arrive(arrival.Otter, arrival.State, settlement);
+                arrived.Add(arrival.Otter);
+            }
+        }
+        return arrived;
+    }
+
     /// <summary>가로등 부탁 (건설 모드, 버전 4)</summary>
     public const string LampRequestId = "req_lamp";
 

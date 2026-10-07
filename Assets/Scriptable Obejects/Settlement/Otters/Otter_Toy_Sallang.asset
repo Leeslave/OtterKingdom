@@ -21,13 +21,15 @@ MonoBehaviour:
   _toyVisitor: 1
   _visitTier: 2
   _favoriteToy: {fileID: 11400000, guid: 458852b7db310b54786db1e633998149, type: 2}
+  _visitCondition: 0
+  _visitConditionValue: 0
   _homelessLine: "\uBC14\uB78C\uC774 \uC798 \uB4DC\uB294 \uC9D1\uC774 \uC788\uC73C\uBA74
     \uC88B\uACA0\uC5B4\uC694.\n\uBE48 \uC9D1\uC774 \uC0DD\uAE30\uBA74 \uBD88\uB7EC
     \uC918\uC694!"
   _isBuilder: 0
   _arrivalEntry: {fileID: 11400000, guid: 867fb45a98fae8b44b226a0d152a116d, type: 2}
   _workRegion: {fileID: 0}
-  _collectionEntry: {fileID: 0}
+  _collectionEntry: {fileID: 11400000, guid: c183a03ad662f8e478225abcc08ca0e0, type: 2}
   _assignLine: 
   _assignDevelopment: 
   _moveInLine: "\uBC14\uB78C\uC774 \uC0B4\uB791\uC0B4\uB791 \uC798 \uB4DC\uB294 \uC9D1\uC774\uB124\uC694!\n\uC5EC\uAE30

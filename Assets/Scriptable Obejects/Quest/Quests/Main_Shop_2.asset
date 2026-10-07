@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_shop_2
   _title: "\uC694\uC815 \uC0C1\uC810 \uB2E8\uACE8"
   _description: "\uC694\uC815 \uC0C1\uC810\uC5D0\uC11C 5\uBC88 \uC0AC\uAE30"
-  _sortOrder: 86
+  _sortOrder: 102
   _kind: 2
   _requiredLevel: 6
   _prerequisite: {fileID: 11400000, guid: 0ed2bbba6b1b3dd479ede5398647e1c5, type: 2}

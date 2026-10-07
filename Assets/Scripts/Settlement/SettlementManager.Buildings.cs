@@ -130,7 +130,8 @@ public partial class SettlementManager
             return BuildingBlock.None;
         PayCost(gold, items);
 
-        BuildingRules.Start(Settlement, building, placed.InstanceId, NowTicks, DevTimers.Duration(building.BuildSeconds));
+        BuildingRules.Start(Settlement, building, placed.InstanceId, NowTicks,
+            DevTimers.Duration(KingdomBonus.Shorten(KingdomBonusKind.BuildSpeed, building.BuildSeconds)));
         var record = Settlement.FindBuilding(placed.InstanceId);
         OnBuildingStarted?.Invoke(record);
         SaveRequested?.Invoke();

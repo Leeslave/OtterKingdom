@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_catch_3
   _title: "\uBC14\uB2E4\uC758 \uB2E8\uACE8"
   _description: "\uBB3C\uACE0\uAE30 15\uB9C8\uB9AC \uB09A\uAE30"
-  _sortOrder: 67
+  _sortOrder: 83
   _kind: 2
   _requiredLevel: 4
   _prerequisite: {fileID: 11400000, guid: 42066f90552582b469625acc8dd82a5d, type: 2}

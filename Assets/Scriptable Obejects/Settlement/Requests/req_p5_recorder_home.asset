@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_p5_recorder_home
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_p5_recorder_home
+  _order: 43
+  _category: 0
+  _contentVersion: 4
+  _title: "\uB044\uC801\uC774\uAC00 \uC0B4 \uC9D1"
+  _description: "\uBC24\uB9C8\uB2E4 \uBB34\uC5B8\uAC00\uB97C \uC801\uB358 \uB044\uC801\uC774\uAC00
+    \uCC3E\uC544\uC654\uC5B4\uC694.\n\uB610\uBC15\uC774\uC640 \uD568\uAED8 \uB9C8\uC744
+    \uC774\uC57C\uAE30\uB97C \uC801\uC5B4 \uB450\uACE0 \uC2F6\uB300\uC694."
+  _icon: {fileID: 21300000, guid: bf83ac05b525d184a901f628b4a631f8, type: 3}
+  _requester: {fileID: 11400000, guid: 58898692c33347619cf75afe6c116c9a, type: 2}
+  _requiredDevelopment: p5_workyard_built
+  _minResidents: 0
+  _construction: {fileID: 0}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _building: {fileID: 0}
+  _buildingCount: 1
+  _settleTargets:
+  - {fileID: 11400000, guid: 58898692c33347619cf75afe6c116c9a, type: 2}
+  _resultDevelopment: p5_recorder_settled
+  _settles: []
+  _arrivals: []
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: 15568479b0c70784f90a70c720e9a0f5, type: 2}
+  _completionMessage: "\uB044\uC801\uC774\uAC00 \uB9C8\uC744 \uC8FC\uBBFC\uC774 \uB418\uC5C8\uC5B4\uC694!"
+  _kingdomLevel: 0

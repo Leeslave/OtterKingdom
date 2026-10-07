@@ -7,6 +7,9 @@ public enum KingdomBonusKind
     ClearingWood = 1, // 영토 개간으로 얻는 목재 +%
     StoneYield = 2,   // 광장 바위·광산에서 얻는 돌 +%
     HarvestYield = 3, // 밭 수확량 +%
+    FishYield = 4,    // 낚은 물고기 +% (어업 작업소)
+    BuildSpeed = 5,   // 공사 시간 −% (건설소)
+    VisitSpeed = 6,   // 장난감 해달 방문 간격 −% (기록관)
 }
 
 /// <summary>
@@ -32,6 +35,13 @@ public static class KingdomBonus
         if (percent <= 0 || price <= 0)
             return price;
         return (int)Math.Min(int.MaxValue, Math.Round(price * (100 + percent) / 100.0, MidpointRounding.AwayFromZero));
+    }
+
+    /// <summary>시간을 효과만큼 줄임 (공사 시간 −%, 최대 90%까지)</summary>
+    public static float Shorten(KingdomBonusKind kind, float seconds)
+    {
+        int percent = Math.Min(90, Percent(kind));
+        return percent <= 0 ? seconds : seconds * (100 - percent) / 100f;
     }
 
     /// <summary>얻는 개수에 효과를 더함: 정수 부분은 늘 더하고, 남는 소수는 그 확률로 1개 (평균이 정확히 +%)</summary>

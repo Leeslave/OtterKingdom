@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_decor_1
   _title: "\uAD11\uC7A5 \uAFB8\uBBF8\uAE30"
   _description: "\uC7A5\uB09C\uAC10 1\uAC1C \uB193\uAE30"
-  _sortOrder: 87
+  _sortOrder: 103
   _kind: 2
   _requiredLevel: 3
   _prerequisite: {fileID: 0}

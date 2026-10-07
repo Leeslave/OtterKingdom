@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7961873648708708102}
   - component: {fileID: 5277386707151360831}
   - component: {fileID: 5353945891481627764}
+  - component: {fileID: 8884309233623534974}
   m_Layer: 0
   m_Name: Prop_Stump
   m_TagString: Untagged
@@ -32,6 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6152511556069885309}
+  - {fileID: 2947706261665579556}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5277386707151360831
@@ -106,6 +108,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlazaProp
   flat: 0
+  depthOffset: 0
+--- !u!114 &8884309233623534974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626572727324455860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8980909f708448cbb165b1aee59a00da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::PlazaSpotView
+  _kind: 0
+  _seats:
+  - {fileID: 2947706261665579556}
+  _lookPoint: {fileID: 0}
+  _approachLocalY: -0.45
+  _seconds: {x: 8, y: 16}
 --- !u!1 &2425535524900339028
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,3 +178,34 @@ MonoBehaviour:
   - {x: 0.72589505, y: 0.03755325}
   - {x: 0.013395015, y: -0.022446752}
   - {x: -0.661605, y: 0.03755325}
+--- !u!1 &3791045863560855567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2947706261665579556}
+  m_Layer: 0
+  m_Name: Spot1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2947706261665579556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3791045863560855567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.01868248, y: 0.9977919, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7961873648708708102}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

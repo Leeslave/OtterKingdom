@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_upgrade_1
   _title: "\uB354 \uC88B\uC740 \uB3C4\uAD6C\uAC00 \uD544\uC694\uD574"
   _description: "\uC0DD\uC0B0 \uC5C5\uADF8\uB808\uC774\uB4DC 1\uD68C"
-  _sortOrder: 81
+  _sortOrder: 97
   _kind: 2
   _requiredLevel: 2
   _prerequisite: {fileID: 0}

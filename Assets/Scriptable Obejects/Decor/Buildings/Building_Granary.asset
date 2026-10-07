@@ -24,6 +24,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 0
   _buildingId: bld_granary
   _buildingName: "\uB18D\uC5C5 \uCC3D\uACE0"
   _description: "\uBC2D\uC5D0\uC11C \uAC70\uB450\uB294 \uC791\uBB3C\uC774 \uB298\uC5B4\uB098\uC694."

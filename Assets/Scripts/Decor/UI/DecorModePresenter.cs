@@ -181,7 +181,7 @@ public class DecorModePresenter : MonoBehaviour
         _manager.OnStorageChanged += RefreshStorage;
         _session = null;
         _view.HideActions();
-        _view.ShowHint(HintIdle);
+        _view.ShowHint(WithCoziness(HintIdle));
         RefreshStorage();
     }
 
@@ -458,7 +458,7 @@ public class DecorModePresenter : MonoBehaviour
         if (!_session.IsNew)
             _board.SetHidden(_session.InstanceId, false);
         EndSession();
-        _view.ShowHint(HintPlaced);
+        _view.ShowHint(WithCoziness(HintPlaced));
     }
 
     // 건물: 새로 짓기 → 자리·길 확인 → 비용 확인 대화 → 공사 시작 / 놓인 건물 → 자리·길 확인 → 옮기기
@@ -617,7 +617,7 @@ public class DecorModePresenter : MonoBehaviour
         if (wasPlaced)
             _manager.ReturnToStorage(_board.Board, _session.InstanceId);
         EndSession();
-        _view.ShowHint(wasPlaced ? HintStored : HintIdle);
+        _view.ShowHint(WithCoziness(wasPlaced ? HintStored : HintIdle));
     }
 
     // 확인하지 않고 그만둠: 놓여 있던 물건은 원래 자리 그대로 다시 보임
@@ -786,6 +786,18 @@ public class DecorModePresenter : MonoBehaviour
         ShowPlacementHint();
     }
 
+    // 광장 아늑함 (장난감 · 가구를 놓을수록 오름 → 장난감 해달이 더 빨리 찾아옴)
+    private string WithCoziness(string hint)
+    {
+        var settlement = SettlementManager.Instance;
+        if (!CanBuildHere || settlement == null)
+            return hint;
+        var context = settlement.PlazaVisitContext;
+        int coziness = context.Coziness;
+        int percent = Mathf.RoundToInt((1f - ToyVisitRules.IntervalScale(context)) * 100f);
+        return percent > 0 ? $"{hint}\n광장 아늑함 {coziness} · 해달 방문 {percent}% 빨라짐" : $"{hint}\n광장 아늑함 {coziness}";
+    }
+
     // 지금 자리에 놓을 수 있는지 안내 (옮길 때마다. 막혔으면 이유)
     private void ShowPlacementHint()
     {
@@ -846,6 +858,7 @@ public class DecorModePresenter : MonoBehaviour
             .Append(HintEmpty).Append(HintShop).Append(HintFairyComing).Append(HintOccupied).Append(HintUnavailable).Append(HintLocked)
             .Append(HintBuildPlace).Append(HintBuildStarted).Append(HintMoved).Append(HintUnderConstruction).Append(HintCutsPath)
             .Append("건물다지음잠김무료골드목재돌남음짓기이자리에지을까요?왕국레벨부터특성해달이모자라요더없어요다른건물을짓는중이에요건설재료Lv.G/")
+            .Append("광장 아늑함 해달 방문 빨라짐%")
             .Append(HintNoStand).Append("다른 공사가 끝나면 시작할 수 있어요 건설 해달이 있어야 개가 더 필요해요 작업하러 가 있어요 지금은 지을 수 없어요");
         foreach (var building in DecorManager.Instance.Catalog.Buildings)
         {

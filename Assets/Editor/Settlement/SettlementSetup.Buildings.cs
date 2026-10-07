@@ -40,6 +40,16 @@ public static partial class SettlementSetup
         ("Building_Granary", "bld_granary", "농업 창고", "밭에서 거두는 작물이 늘어나요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Granary.png", new string[0], null,
             0, P4FarmerSettled, new[] { (OtterTrait.Farming, 2) }, 1, 5000, 80, 50, 0f, 480f),
+        // Lv.16~18 (SettlementSetup.P4Story.cs 표 39~44)
+        ("Building_Fishery", "bld_fishery", "어업 작업소", "바다에서 낚는 물고기가 늘어나요.", BuildingKind.Facility,
+            new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Fishery.png", new string[0], null,
+            0, P5FisherSettled, new[] { (OtterTrait.Fishing, 2) }, 1, 6000, 80, 60, 0f, 540f),
+        ("Building_Workyard", "bld_workyard", "건설소", "공사가 더 빨리 끝나요.", BuildingKind.Facility,
+            new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Workyard.png", new string[0], null,
+            0, P5BuilderSettled, new[] { (OtterTrait.Building, 2) }, 1, 7000, 100, 70, 0f, 600f),
+        ("Building_Archive", "bld_archive", "기록관", "찾아온 해달을 모두 적어 두면 장난감 해달이 더 자주 찾아와요.", BuildingKind.Facility,
+            new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Archive.png", new string[0], null,
+            0, P5RecorderSettled, new[] { (OtterTrait.Recording, 2) }, 1, 8000, 100, 80, 0f, 660f),
     };
 
     // 시설의 왕국 보유 효과 (%), 요정 상점이 이사하는지
@@ -50,6 +60,9 @@ public static partial class SettlementSetup
             { "bld_workshop", (new[] { (KingdomBonusKind.ClearingWood, 20) }, false) },
             { "bld_quarry", (new[] { (KingdomBonusKind.StoneYield, 20) }, false) },
             { "bld_granary", (new[] { (KingdomBonusKind.HarvestYield, 10) }, false) },
+            { "bld_fishery", (new[] { (KingdomBonusKind.FishYield, 20) }, false) },
+            { "bld_workyard", (new[] { (KingdomBonusKind.BuildSpeed, 15) }, false) },
+            { "bld_archive", (new[] { (KingdomBonusKind.VisitSpeed, 20) }, false) },
         };
 
     [MenuItem("Tools/Settlement/Apply Buildings")]

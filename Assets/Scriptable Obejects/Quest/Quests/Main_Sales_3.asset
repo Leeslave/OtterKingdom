@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_sales_3
   _title: "\uC54C\uB730 \uC0C1\uC778"
   _description: "\uD310\uB9E4\uB85C 4,000\uACE8\uB4DC \uBC8C\uAE30"
-  _sortOrder: 77
+  _sortOrder: 93
   _kind: 2
   _requiredLevel: 4
   _prerequisite: {fileID: 11400000, guid: 683316605d70e2b4fa67b5f33384a8f0, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_mine_2
   _title: "\uAD11\uBD80\uC758 \uD558\uB8E8"
   _description: "\uAD11\uC0B0\uC5D0\uC11C \uAD11\uC11D 20\uAC1C \uCE90\uAE30"
-  _sortOrder: 71
+  _sortOrder: 87
   _kind: 2
   _requiredLevel: 3
   _prerequisite: {fileID: 11400000, guid: b89084fdd9c376042a305741c58298af, type: 2}

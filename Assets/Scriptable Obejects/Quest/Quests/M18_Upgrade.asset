@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M18_Upgrade
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv18_upgrade
+  _title: "\uCD5C\uACE0\uC758 \uC124\uBE44"
+  _description: "\uC0DD\uC0B0 \uC5C5\uADF8\uB808\uC774\uB4DC 3\uD68C"
+  _sortOrder: 67
+  _kind: 0
+  _requiredLevel: 18
+  _prerequisite: {fileID: 11400000, guid: c9798e1ce7686ef4884e438d8684338e, type: 2}
+  _icon: {fileID: 21300000, guid: e6eaba03fc7b28941b5311f5097cbf65, type: 3}
+  _goalType: 3
+  _goal: 3
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 2500
+  _expReward: 1500
+  _expPercentOfLevel: 0

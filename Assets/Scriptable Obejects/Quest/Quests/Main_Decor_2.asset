@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_decor_2
   _title: "\uB180\uC774\uD130 \uB9CC\uB4E4\uAE30"
   _description: "\uC7A5\uB09C\uAC10 3\uAC1C \uB193\uAE30"
-  _sortOrder: 88
+  _sortOrder: 104
   _kind: 2
   _requiredLevel: 5
   _prerequisite: {fileID: 11400000, guid: 89a7dbd35d59175428001758414fe7b2, type: 2}

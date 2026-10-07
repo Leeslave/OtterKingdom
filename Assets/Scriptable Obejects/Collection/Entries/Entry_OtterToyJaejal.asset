@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_OtterToyJaejal
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: otter_toy_jaejal
+  _tab: {fileID: 11400000, guid: e57bb4e159ee155448fc7c02082cbb58, type: 2}
+  _displayName: "\uC7AC\uC798\uC774"
+  _sortOrder: 111
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 8db287fc936d8c24fa151bae0d00fa80, type: 3}
+  _tagline: "\uC218\uB2E4\uC7C1\uC774 \uD574\uB2EC"
+  _description: "\uC2DD\uD0C1\uC5D0 \uB458\uB7EC\uC549\uC544 \uC774\uC57C\uAE30\uD558\uB294
+    \uAC78 \uC81C\uC77C \uC88B\uC544\uD558\uB294 \uC7A5\uC0AC \uD574\uB2EC\uC774\uC5D0\uC694."
+  _extraValue: "\uACF5\uB3D9 \uC2DD\uD0C1"
+  _hint: "\uB808\uC5B4 \uC7A5\uB09C\uAC10(\uD37C\uC990 \uB4F1)\uC744 \uAD11\uC7A5\uC5D0
+    \uB193\uC73C\uBA74 \uCC3E\uC544\uC640\uC694\n\uAD11\uC7A5\uC5D0 \uC2DD\uD0C1\uC774\uB098
+    \uD53C\uD06C\uB2C9 \uB9E4\uD2B8\uAC00 \uC788\uC5B4\uC57C \uCC3E\uC544\uC640\uC694"
+  _linkedItem: {fileID: 0}
+  _unlockLevel: 0
+  _story: {fileID: 0}

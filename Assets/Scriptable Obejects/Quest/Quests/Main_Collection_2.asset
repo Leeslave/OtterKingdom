@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_collection_2
   _title: "\uC218\uC9D1\uAC00"
   _description: "\uB3C4\uAC10 6\uCE78 \uCC44\uC6B0\uAE30"
-  _sortOrder: 91
+  _sortOrder: 107
   _kind: 2
   _requiredLevel: 5
   _prerequisite: {fileID: 11400000, guid: 2233a8c43bf0ee94f853d9f8a1412ea1, type: 2}

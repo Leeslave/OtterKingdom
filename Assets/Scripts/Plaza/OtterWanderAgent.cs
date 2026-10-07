@@ -25,6 +25,15 @@ using UnityEngine;
 // Crowd: destinations near another otter (or where one is heading) are
 // skipped, and an idle otter standing on top of another one moves off
 // (PlazaCrowd). Passing each other while walking is fine.
+//
+// Habits: an otter with a trait sometimes goes to stand near its favourite
+// kind of place (a woodcutter by the trees, a recorder by the board...) and
+// does the actions that fit it there (SetHabit, from SettlementPlazaView).
+//
+// Spots: otherwise it may reserve a free place at a PlazaSpotView (sit on a
+// chair or bench, eat at the table, gather under a lamp at night), walk
+// there and stay a while. Sitting hops up onto the seat and back down to the
+// walkable floor in front of it before doing anything else.
 public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
 {
     // Idle otters closer than this many body widths step aside.
@@ -58,6 +67,27 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     private DecorPlaySession playSession;
     private bool walkingToPlay;
 
+    // Habit: favourite places of this otter's trait
+    private const float HabitChance = 0.3f;
+    private const float HabitRadius = 1.6f;
+    private const float HabitMinDistance = 0.6f;
+    private static readonly Vector2 HabitSeconds = new Vector2(6f, 12f);
+    private System.Func<Transform> pickHabitTarget;
+    private IReadOnlyList<string> habitActions;
+    private bool walkingToHabit;
+    private bool atHabit;
+
+    // Visiting a chair / table / lamp
+    private enum SpotPhase { None, HopIn, Stay, HopOut }
+    private const float HopSeconds = 0.3f;
+    private const float HopHeight = 0.45f;
+    private PlazaSpotSession spotSession;
+    private bool walkingToSpot;
+    private SpotPhase spotPhase;
+    private float hopTimer;
+    private Vector2 hopFrom;
+    private Vector2 hopTo;
+
     private bool hasTask;
     private bool walkingToTask;
     private Vector2 taskStandPoint;
@@ -73,6 +103,24 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     public Vector2 MoveDirection { get; private set; }
     // Where to face while playing (the toy).
     public Vector2 LookTarget { get; private set; }
+
+    // Ground height used for front/back sorting: the feet, except while
+    // sitting up on a chair (then just in front of the chair).
+    public float DepthY => spotSession != null && spotSession.Hops && spotPhase != SpotPhase.None ? spotSession.DepthY : transform.position.y;
+
+    // Actions to pick from while staying at a spot or a favourite place (null = any).
+    public IReadOnlyList<string> PreferredActions => spotSession != null && spotPhase == SpotPhase.Stay ? spotSession.Actions
+        : atHabit ? habitActions : null;
+
+    // Favourite places of this otter's trait: pickTarget returns one (or null if none now), actions fit them.
+    public void SetHabit(System.Func<Transform> pickTarget, IReadOnlyList<string> actions)
+    {
+        pickHabitTarget = pickTarget;
+        habitActions = actions;
+    }
+
+    // Sitting on a chair / standing at a spot (for bubbles etc.).
+    public bool IsAtSpot => spotSession != null && spotPhase != SpotPhase.None;
 
     // Working at the task spot (not walking there).
     public bool IsOnTask => hasTask && CurrentState == State.Play && playSession == null;
@@ -93,6 +141,7 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     {
         if (!hasTask) return;
         ReleasePlay();
+        ReleaseSpot();
         SetFeetPosition(taskStandPoint);
         if (initialized) EnterTask();
     }
@@ -140,6 +189,17 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
                 break;
 
             case State.Play:
+                if (spotSession != null)
+                {
+                    UpdateSpot(Time.deltaTime);
+                    break;
+                }
+                if (atHabit)
+                {
+                    stateTimer -= Time.deltaTime;
+                    if (stateTimer <= 0f) EnterIdle(settings.RollIdleSeconds());
+                    break;
+                }
                 if (playSession == null)
                 {
                     // Task: stays until ClearTask
@@ -164,6 +224,7 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     {
         PlazaCrowd.Unregister(this);
         ReleasePlay();
+        ReleaseSpot();
     }
 
     // Reserve a toy and a spot beside it, then walk there.
@@ -207,10 +268,126 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
         playSession = null;
     }
 
+    // Reserve a seat / place at a spot (chair, table, lamp), then walk in front of it.
+    private bool TryStartSpotWalk()
+    {
+        if (!PlazaSpotView.RollWantsToVisit()) return false;
+
+        Vector2 from = transform.position;
+        if (!PlazaSpotView.TryReserve(from, area.IsWalkable, out var session)) return false;
+
+        if (!area.TryFindPath(from, session.StandPoint, path) || path.Count == 0)
+        {
+            session.Release();
+            return false;
+        }
+
+        spotSession = session;
+        walkingToSpot = true;
+        BeginWalk(from);
+        return true;
+    }
+
+    private void EnterSpot()
+    {
+        walkingToSpot = false;
+        CurrentState = State.Play;
+        MoveDirection = Vector2.zero;
+        LookTarget = spotSession.LookPoint;
+        stateTimer = spotSession.Seconds;
+        path.Clear();
+        pathIndex = 0;
+        if (spotSession.Hops)
+            BeginHop(transform.position, spotSession.SeatPoint, SpotPhase.HopIn);
+        else
+            spotPhase = SpotPhase.Stay;
+    }
+
+    private void BeginHop(Vector2 from, Vector2 to, SpotPhase phase)
+    {
+        spotPhase = phase;
+        hopFrom = from;
+        hopTo = to;
+        hopTimer = 0f;
+    }
+
+    private void UpdateSpot(float deltaTime)
+    {
+        switch (spotPhase)
+        {
+            case SpotPhase.HopIn:
+            case SpotPhase.HopOut:
+                hopTimer += deltaTime;
+                float k = Mathf.Clamp01(hopTimer / HopSeconds);
+                Vector2 p = Vector2.Lerp(hopFrom, hopTo, k) + Vector2.up * (Mathf.Sin(k * Mathf.PI) * HopHeight);
+                SetFeetPosition(p);
+                if (k < 1f) break;
+                if (spotPhase == SpotPhase.HopOut) EnterIdle(settings.RollIdleSeconds());
+                else spotPhase = SpotPhase.Stay;
+                break;
+
+            default:
+                stateTimer -= deltaTime;
+                if (stateTimer > 0f && spotSession.IsValid) break;
+                // Down from the chair to the floor in front of it before wandering again
+                if (spotSession.Hops) BeginHop(transform.position, spotSession.StandPoint, SpotPhase.HopOut);
+                else EnterIdle(settings.RollIdleSeconds());
+                break;
+        }
+    }
+
+    private void ReleaseSpot()
+    {
+        walkingToSpot = false;
+        if (spotSession == null) return;
+        // Cut short while up on a chair: back on the walkable floor first
+        if (spotSession.Hops && spotPhase != SpotPhase.None) SetFeetPosition(spotSession.StandPoint);
+        spotPhase = SpotPhase.None;
+        spotSession.Release();
+        spotSession = null;
+    }
+
+    // Walk to a free spot near one of the trait's favourite places
+    private bool TryStartHabitWalk()
+    {
+        if (pickHabitTarget == null || Random.value >= HabitChance) return false;
+        var target = pickHabitTarget();
+        if (target == null) return false;
+
+        Vector2 center = target.position;
+        Vector2 from = transform.position;
+        for (int i = 0; i < 4; i++)
+        {
+            if (!area.TryGetRandomPointNear(center, HabitRadius, 12, out Vector2 point)) return false;
+            if ((point - center).sqrMagnitude < HabitMinDistance * HabitMinDistance) continue;
+            if (!PlazaCrowd.IsFree(point, settings.SpawnSpacing, this)) continue;
+            if (!area.TryFindPath(from, point, path) || path.Count == 0) continue;
+
+            LookTarget = center;
+            walkingToHabit = true;
+            BeginWalk(from);
+            return true;
+        }
+        return false;
+    }
+
+    private void EnterHabit()
+    {
+        walkingToHabit = false;
+        atHabit = true;
+        CurrentState = State.Play;
+        MoveDirection = Vector2.zero;
+        stateTimer = Random.Range(HabitSeconds.x, HabitSeconds.y);
+        path.Clear();
+        pathIndex = 0;
+    }
+
     private bool TryStartWalk()
     {
         if (hasTask) return TryStartTaskWalk();
         if (TryStartPlayWalk()) return true;
+        if (TryStartSpotWalk()) return true;
+        if (TryStartHabitWalk()) return true;
 
         Vector2 from = transform.position;
         for (int i = 0; i < settings.maxDestinationTries; i++)
@@ -321,6 +498,8 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
         {
             if (walkingToTask && hasTask) EnterTask();
             else if (walkingToPlay && playSession != null && playSession.IsValid) EnterPlay();
+            else if (walkingToSpot && spotSession != null && spotSession.IsValid) EnterSpot();
+            else if (walkingToHabit) EnterHabit();
             else EnterIdle(settings.RollIdleSeconds());
         }
     }
@@ -331,6 +510,9 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     private void EnterIdle(float duration)
     {
         ReleasePlay();
+        ReleaseSpot();
+        walkingToHabit = false;
+        atHabit = false;
         walkingToTask = false;
         CurrentState = State.Idle;
         MoveDirection = Vector2.zero;

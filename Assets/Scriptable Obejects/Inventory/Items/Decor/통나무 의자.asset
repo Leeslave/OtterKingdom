@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uD1B5\uB098\uBB34 \uC758\uC790"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: furniture_log
+  _displayName: "\uD1B5\uB098\uBB34 \uC758\uC790"
+  _description: "\uB458\uC774 \uB098\uB780\uD788 \uAC78\uD130\uC549\uB294 \uD1B5\uB098\uBB34\uC608\uC694."
+  _icon: {fileID: 0}
+  _category: {fileID: 11400000, guid: b037e0480d1f96748a9b866df5f0d3e3, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 0
+  _sellPrice: 0
+  _maxStack: 99

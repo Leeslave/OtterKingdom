@@ -24,6 +24,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 1
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 4
   _construction: {fileID: 11400000, guid: a1637af1d6661014db67d74380460edf, type: 2}
   _defaultCell: {x: 17, y: 8}
   _alternateDevelopment: 

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_OtterSleepy
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: otter_sleepy
+  _tab: {fileID: 11400000, guid: e57bb4e159ee155448fc7c02082cbb58, type: 2}
+  _displayName: "\uAFB8\uBC85\uC774"
+  _sortOrder: 101
+  _portrait: {fileID: 21300000, guid: 96122e84e50259244b42d66a1f5f18c2, type: 3}
+  _silhouette: {fileID: 21300000, guid: 8db287fc936d8c24fa151bae0d00fa80, type: 3}
+  _tagline: "\uB298 \uC878\uB9B0 \uB098\uBB34\uAFBC \uD574\uB2EC"
+  _description: "\uB290\uAE0B\uD558\uAC8C \uB098\uBB34\uB97C \uBCA0\uB2E4\uAC00\uB3C4
+    \uBCA4\uCE58\uC5D0\uB9CC \uC549\uC73C\uBA74 \uAFB8\uBC85\uAFB8\uBC85 \uC878\uC544\uC694."
+  _extraValue: "\uADF8\uB298\uC9C4 \uBCA4\uCE58"
+  _hint: "\uCCAB \uC9D1\uC744 \uC9C0\uC73C\uBA74 \uB180\uB7EC \uC640\uC694"
+  _linkedItem: {fileID: 0}
+  _unlockLevel: 0
+  _story: {fileID: 0}

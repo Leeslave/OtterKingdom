@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: daily_sales
   _title: "\uC624\uB298\uC758 \uC7A5\uC0AC"
   _description: "\uD310\uB9E4\uB85C 1,000\uACE8\uB4DC \uBC8C\uAE30"
-  _sortOrder: 96
+  _sortOrder: 112
   _kind: 1
   _requiredLevel: 9
   _prerequisite: {fileID: 0}

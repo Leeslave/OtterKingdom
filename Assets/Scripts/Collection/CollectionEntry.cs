@@ -47,6 +47,11 @@ public class CollectionEntry : ScriptableObject
     [SerializeField]
     private string _extraValue;
 
+    [Tooltip("아직 못 만났을 때 보이는 힌트 (예: 레어 장난감을 놓으면 찾아와요 · 밤에만). 비우면 탭 기본 문구")]
+    [TextArea(1, 3)]
+    [SerializeField]
+    private string _hint;
+
     [Header("자동 획득")]
     [Tooltip("이 아이템을 수확·낚시 등으로 처음 얻으면 자동으로 획득 (해달처럼 아이템이 아닌 항목은 비움)")]
     [SerializeField]
@@ -68,6 +73,7 @@ public class CollectionEntry : ScriptableObject
     public string Tagline => _tagline;
     public string Description => _description;
     public string ExtraValue => _extraValue;
+    public string Hint => _hint;
     public ItemDefinition LinkedItem => _linkedItem;
     public int UnlockLevel => _unlockLevel;
     public CollectionStory Story => _story;
