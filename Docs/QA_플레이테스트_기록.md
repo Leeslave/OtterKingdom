@@ -131,3 +131,37 @@ Lv.12~15 부탁(꾸벅이·쿵쿵이 입주 → 목공소 · 채석 작업소 ·
 ### 이어서 할 때
 
 - 지금 브라우저 저장소의 세이브 = 이 3차 진행(Lv.12). 2차 Lv.5 세이브는 같은 폴더의 `qa_lv5_backup.json`으로 남겨 둠.
+
+## 수정 (2026-10-07, `feature/OmissionFunction`)
+
+1~3차에서 찾은 것 중 고친 것. 웹 저장(autoSync)은 웹 출시를 안 해서 제외.
+
+| 문제 | 고친 곳 |
+|---|---|
+| "모두 받기"가 화면에 없던 다음 단계까지 받음 | `QuestManager.ClaimAll` — 누르기 전에 받을 수 있던 것만 모아서 받음 |
+| 재화 부족 창 리본이 늘 "조개 부족" | `CurrencyShortagePopupView._ribbonText` ("골드 부족" 등) + `GlobalUI.prefab` · `CurrencyShopSetup` 연결 |
+| 골드/코인 이름이 섞임 | 화면 문구의 "코인"을 데이터 이름 "골드"로 (GameUI 강화·고랑 창, HUD, 튜토리얼) |
+| 꾸미기 보관함 x0이면 무조건 "배치됨" | 실제로 놓은 게 있을 때만 "배치됨", 아니면 흐린 이름 (`DecorManager.PlacedCount`) |
+| 레벨이 모자라 못 사는 모종도 "상점에서 구매해 주세요" | `GameManager.NoSeedMessage` — "왕국 레벨 N부터 요정 상점에서 살 수 있어요" (`FairyShopPresenter.RequiredLevelFor`) |
+| 칸이 남았는데 "가방이 가득해서 수확이 멈췄어요" | `FarmNoticeText.Build` — 빈 칸이 있으면 "가방에 당근을 더 넣을 수 없어…" |
+| 경험치가 찼는데 레벨이 안 오르는 이유 안내 없음 | 퀘스트 창 부제: "'놀러 온 친구의 집'을 끝내면 다음 레벨(Lv.11)로 올라가요!" (`SettlementRules.LevelCapRequest`, `QuestPresenter._subtitleText`) |
+| 건물 기본 위치가 광장 가운데 조개 위 · 채집 나무 앞뒤에 건물·장난감을 놓을 수 있음 | `IDecorBlocker`: 나무 · 바위 · 나뭇가지(탭 영역)와 해달 모임 자리(`SettlementPlazaView._gatherClearSize` 3.5×2.5)를 막음. 미리보기 시작 위치(`TryFindFreeNear`)도 자동으로 피함 |
+| 막힌 자리인데 건물 미리보기가 놓을 수 있어 보임 · 안내가 안 바뀜 | `DecorGhostView` — 못 놓으면 그림도 붉게, 탭으로 옮길 때도 안내 갱신 |
+| P4 건물 부탁 "재료가 모자라요"뿐 | `BuildingBlockText` — "목재 10개가 더 필요해요", "골드가 N 모자라요" |
+| 정렬 드롭다운 ▼가 제목 폰트에 없어 공백 | 화살표만 본문 폰트 (`GlobalUI.prefab`, `InventoryChipSortSetup`) |
+| EventSystem 중복 경고 | `GlobalUIRoot` — 전역 UI가 생길 때·씬이 열릴 때 다른 임시 EventSystem 정리 |
+| 말투 · 줄바꿈 | "채굴/낚시를 시작할까요?", "…그만할까요?", "어떤 작물을 심을까요?", "작물을 바꿀까요?", "항목/아이템을 골라 보세요.", 나무 "… 뒤에 또 흔들어요", 밭 튜토리얼 줄바꿈 |
+| 이동 지도 잠긴 칸: 조건 글씨가 흐리고 눌러도 반응 없음 | 잠긴 칸도 누를 수 있고, 누르면 여는 조건 알림 (`GlobalUIPresenter`), 조건 글씨는 평소 색 |
+| "광장 꾸미기"가 요정 상점 전부터 보임 | `SettlementQuestGate` — 장난감 놓기 목표는 밭(요정 상점)이 열린 뒤 |
+| "광장에서 …" 줍기 퀘스트가 광산·밭 장애물도 셈 | `ClearingObstacleView` 보상을 `ItemChangeReason.Clearing`으로 (`SettlementManager.GrantClearingReward`) |
+| "광산에 가 보기"가 퀘스트가 열리기 전 방문을 안 셈 | 가 본 장소를 퀘스트 세이브에 `__visited:씬` 줄로 남기고, 열릴 때 기록으로 셈 (`QuestLog.MarkVisited`) |
+
+테스트 추가: `MainQuestChainTests.VisitedZones_AreSavedAndLoaded_NotAsQuestRecords`, `P4StoryTests.LevelCapRequest_IsTheRequestHoldingTheCap`.
+
+### 그대로 둔 것 (결정이 필요하거나 의도로 보임)
+
+- 알림 토스트가 부탁 창 위에 겹쳐 뜨고, 레벨업 연출이 끝난 뒤에 뜸 (토스트 설계)
+- 상점에서 살 수 있는 양보다 많이 고를 수 있음 → 부족 창의 [충전하기]로 이어지는 흐름일 수 있음
+- 고구마 모종을 Lv.8 전에 시작 지급품으로 줌 · 광산에 배치한 깡깡이가 광장에도 보임
+- 아트·연출: 광산·밭 좌우 여백, 해달 상점 공사 단계 그림, 당근 설명 "당근이다.", 오프라인 방문자 임시 이름
+- 미확인(도구 탓일 수 있음): 안내 띠 [보기] 카메라 이동, 클릭이 가끔 무시됨 → 실제 기기에서 확인

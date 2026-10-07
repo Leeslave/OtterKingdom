@@ -43,6 +43,8 @@ public class DecorGhostView : MonoBehaviour
         transform.position = new Vector3(worldRect.xMin, worldRect.yMin, 0f);
 
         _tile.sprite = canPlace ? _okSprite : _blockedSprite;
+        // 건물처럼 그림이 칸을 덮어도 놓을 수 없는 자리임이 보이게 그림도 붉게
+        _toy.color = canPlace ? new Color(1f, 1f, 1f, GhostAlpha) : new Color(1f, 0.55f, 0.55f, GhostAlpha);
         _tile.transform.localPosition = new Vector3(worldRect.width * 0.5f, worldRect.height * 0.5f, 0f);
         if (_tile.sprite != null)
         {

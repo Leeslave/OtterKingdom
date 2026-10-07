@@ -165,6 +165,13 @@ public class DecorBoardView : MonoBehaviour
             }
         }
 
+        // 채집 나무·바위, 해달 모임 자리처럼 스스로 비워 둘 영역을 알려 주는 것
+        foreach (var behaviour in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
+        {
+            if (behaviour is IDecorBlocker blocker && blocker.TryGetDecorBlock(out var area))
+                BlockOverlapping(area);
+        }
+
         foreach (var point in _reservedPoints)
         {
             if (point == null)
@@ -176,6 +183,21 @@ public class DecorBoardView : MonoBehaviour
             {
                 for (int x = min.x; x <= max.x; x++)
                     Layout.SetBlocked(new Vector2Int(x, y), true);
+            }
+        }
+    }
+
+    private void BlockOverlapping(Rect area)
+    {
+        var min = WorldToCell(area.min);
+        var max = WorldToCell(area.max);
+        for (int y = min.y; y <= max.y; y++)
+        {
+            for (int x = min.x; x <= max.x; x++)
+            {
+                var cell = new Vector2Int(x, y);
+                if (ContainsCell(cell) && AreaWorldRect(new RectInt(cell, Vector2Int.one)).Overlaps(area))
+                    Layout.SetBlocked(cell, true);
             }
         }
     }

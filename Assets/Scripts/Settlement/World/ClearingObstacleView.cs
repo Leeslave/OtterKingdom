@@ -159,7 +159,7 @@ public class ClearingObstacleView : MonoBehaviour
             for (int i = 0; i < 8; i++)
                 _fx.Burst(_pieceSprite, Center, new Vector2(Random.Range(-3f, 3f), Random.Range(3f, 7f)), Random.Range(0.15f, 0.28f), transform.position.y, 0.9f);
         }
-        int added = _reward != null && _rewardAmount > 0 ? manager.GatherExtra(_reward, _rewardAmount) : 0;
+        int added = _reward != null && _rewardAmount > 0 ? manager.GrantClearingReward(_reward, _rewardAmount) : 0;
         if (added > 0)
         {
             for (int i = 0; i < added; i++)

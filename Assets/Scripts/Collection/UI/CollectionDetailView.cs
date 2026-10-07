@@ -25,7 +25,7 @@ public class CollectionDetailView : MonoBehaviour
     [SerializeField] private string _unknownTagline = "아직 만나지 못했어요.";
     [SerializeField] private string _visitedBadge = "방문 흔적";
     [SerializeField] private string _visitedTagline = "섬에 다녀간 흔적이 있어요.";
-    [SerializeField] private string _emptyMessage = "항목을 선택하세요.";
+    [SerializeField] private string _emptyMessage = "항목을 골라 보세요.";
 
     [Header("방문 흔적")]
     [SerializeField] private float _visitedAlpha = 0.4f;

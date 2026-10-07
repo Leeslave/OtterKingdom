@@ -51,7 +51,7 @@ public class ItemDetailView : MonoBehaviour
 
     [Header("빈 상태")]
     [SerializeField]
-    private string _emptyMessage = "아이템을 선택하세요.";
+    private string _emptyMessage = "아이템을 골라 보세요.";
 
     public event Action OnCloseClicked;
     public event Action OnSellClicked;

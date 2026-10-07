@@ -214,6 +214,7 @@ public class QuestManager : MonoBehaviour
     {
         if (zone == null)
             return;
+        Log.MarkVisited(zone.SceneName);
         foreach (var quest in _database.Quests)
             AddProgress(quest, QuestProgressRules.FromArrival(quest, zone.SceneName));
     }
@@ -245,12 +246,15 @@ public class QuestManager : MonoBehaviour
         if (Log == null)
             return;
 
-        // 장소 가 보기: 퀘스트가 열렸을 때 이미 그 장소에 있으면 바로
+        // 장소 가 보기: 퀘스트가 열렸을 때 이미 그 장소에 있거나, 전에 가 본 적이 있으면 바로
         string scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        Log.MarkVisited(scene);
         foreach (var quest in _database.Quests)
         {
-            if (quest != null && quest.GoalType == QuestGoalType.VisitZone && IsAvailable(quest))
-                Log.SetProgressAtLeast(quest, QuestProgressRules.FromArrival(quest, scene));
+            if (quest == null || quest.GoalType != QuestGoalType.VisitZone || !IsAvailable(quest))
+                continue;
+            int value = Log.HasVisited(quest.Target) ? 1 : QuestProgressRules.FromArrival(quest, scene);
+            Log.SetProgressAtLeast(quest, value);
         }
 
         var settlement = _settlementManager != null ? _settlementManager : SettlementManager.Instance;
@@ -356,13 +360,19 @@ public class QuestManager : MonoBehaviour
     /// <returns>받은 퀘스트 수</returns>
     public int ClaimAll()
     {
-        // 받으면서 상태가 바뀌고 새 퀘스트가 열리므로 목록을 먼저 복사 (새로 열린 것은 다음 번에)
-        var targets = new List<QuestDefinition>(_database.Quests);
+        // 받으면서 새 퀘스트가 열리고, 기록으로 세는 퀘스트는 열리자마자 받을 수 있게 된다.
+        // 누르기 전에 받을 수 있던 것만 먼저 모아 받는다 (새로 열린 것은 목록에 보인 뒤 다음 번에)
+        var targets = new List<QuestDefinition>();
+        foreach (var quest in _database.Quests)
+        {
+            if (quest != null && IsAvailable(quest) && Log.GetStatus(quest) == QuestStatus.Claimable)
+                targets.Add(quest);
+        }
 
         int count = 0;
         foreach (var quest in targets)
         {
-            if (Log.GetStatus(quest) == QuestStatus.Claimable && TryClaim(quest))
+            if (TryClaim(quest))
                 count++;
         }
         return count;

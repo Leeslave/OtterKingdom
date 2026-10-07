@@ -231,7 +231,7 @@ public class DecorModePresenter : MonoBehaviour
         if (_storage.ShowsBuildings && CanBuildHere)
             _storage.RefreshBuildings(SettlementManager.Instance.BuildingCatalog, BuildingSlotInfo, holding);
         else
-            _storage.Refresh(_manager.Catalog.Decors, _manager.StorageCount, holding);
+            _storage.Refresh(_manager.Catalog.Decors, _manager.StorageCount, _manager.PlacedCount, holding);
     }
 
     // 건물은 광장 격자에만 지음
@@ -592,11 +592,7 @@ public class DecorModePresenter : MonoBehaviour
         {
             _dragging = false;
             SetCameraDrag(true);
-            var result = _session.Check(_layout);
-            if (result == DecorPlacementResult.Ok && _session.Decor.IsBuilding && _board.WouldCutPath(_session.Area))
-                _view.ShowHint(HintCutsPath, true);
-            else
-                _view.ShowHint(result == DecorPlacementResult.Ok ? HintPlace : ReasonText(result), result != DecorPlacementResult.Ok);
+            ShowPlacementHint();
             return;
         }
 
@@ -623,6 +619,17 @@ public class DecorModePresenter : MonoBehaviour
         var size = _session.Size;
         _session.MoveTo(cell - new Vector2Int(size.x / 2, size.y / 2));
         UpdateGhost();
+        ShowPlacementHint();
+    }
+
+    // 지금 자리에 놓을 수 있는지 안내 (옮길 때마다. 막혔으면 이유)
+    private void ShowPlacementHint()
+    {
+        var result = _session.Check(_layout);
+        if (result == DecorPlacementResult.Ok && _session.Decor.IsBuilding && _board.WouldCutPath(_session.Area))
+            _view.ShowHint(HintCutsPath, true);
+        else
+            _view.ShowHint(result == DecorPlacementResult.Ok ? HintPlace : ReasonText(result), result != DecorPlacementResult.Ok);
     }
 
     private void LateUpdate()

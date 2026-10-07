@@ -9,7 +9,7 @@ using UnityEngine;
 /// - 깨질 때 드물게 조개
 /// 깎인 체력은 앱을 켜 둔 동안만 기억한다 (다른 장소에 다녀와도 금 간 채로).
 /// </summary>
-public class RockNodeView : MonoBehaviour
+public class RockNodeView : MonoBehaviour, IDecorBlocker
 {
     private const float ShakeSeconds = 0.15f;
     private const float PopInSeconds = 0.35f;
@@ -288,5 +288,20 @@ public class RockNodeView : MonoBehaviour
             if (_weakSpotTimer <= 0f)
                 HideWeakSpot();
         }
+    }
+
+    // 꾸미기: 이 자리(탭 영역)에는 물건·건물을 놓지 못하게. 주워서 그림이 꺼진 뒤에도 같은 자리를 비워 두도록 처음 범위를 기억
+    private Rect? _decorBlock;
+
+    public bool TryGetDecorBlock(out Rect worldRect)
+    {
+        if (_decorBlock == null && _tapArea != null && _tapArea.isActiveAndEnabled)
+        {
+            var bounds = _tapArea.bounds;
+            if (bounds.size.x > 0f && bounds.size.y > 0f)
+                _decorBlock = new Rect(bounds.min, bounds.size);
+        }
+        worldRect = _decorBlock ?? default;
+        return _decorBlock != null;
     }
 }

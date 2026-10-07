@@ -146,7 +146,7 @@ public class GameUI : MonoBehaviour
     public void ShowSeedPrompt(int plotIndex, int slotIndex)
     {
         CloseAllModals();
-        var modal = OpenModal("심을 작물을 선택하세요", out var content);
+        var modal = OpenModal("어떤 작물을 심을까요?", out var content);
 
         foreach (var crop in game.Crops)
         {
@@ -181,15 +181,15 @@ public class GameUI : MonoBehaviour
         CloseAllModals();
         var modal = OpenModal("고랑 한 칸 열기", out var content);
 
-        CreateLabel(content, $"고랑 한 칸을 {cost:N0} 코인에 열까요?\n작물을 심을 칸이 하나 늘어요.");
+        CreateLabel(content, $"고랑 한 칸을 {cost:N0} 골드에 열까요?\n작물을 심을 칸이 하나 늘어요.");
         var balanceLabel = CreateLabel(content, "");
-        SetRefresher(modal, () => balanceLabel.text = $"보유 코인 : {game.CoinBalance}");
+        SetRefresher(modal, () => balanceLabel.text = $"보유 골드 : {game.CoinBalance}");
 
         var row = CreateRow(content, ButtonHeight);
         CreateButton(row, "열기", () =>
         {
             var result = game.TryUnlockNextFurrow();
-            if (result == FurrowUnlockResult.NotEnoughGold) ShowAlert("코인이 부족해요!");
+            if (result == FurrowUnlockResult.NotEnoughGold) ShowAlert("골드가 부족해요!");
             else CloseModal(modal);
         }, flexible: true, kind: ButtonKind.Primary);
         CreateButton(row, "취소", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
@@ -205,7 +205,7 @@ public class GameUI : MonoBehaviour
         CloseAllModals();
         var modal = OpenModal("작물 변경", out var content);
 
-        CreateLabel(content, "작물을 변경하시겠습니까?");
+        CreateLabel(content, "작물을 바꿀까요?");
         CreateLabel(content, $"심어져 있던 {WithTopicParticle(crop.displayName)} 버려집니다.");
         if (game.FarmService.GetSlotState(plotIndex, slotIndex) == FurrowSlotState.AwaitingHarvest)
         {
@@ -479,7 +479,7 @@ public class GameUI : MonoBehaviour
         var row = CreateRow(content, ButtonHeight);
         var upgradeButton = CreateButton(row, "강화", () =>
         {
-            if (!game.TryUpgradeRod()) ShowAlert("코인이 부족해요!");
+            if (!game.TryUpgradeRod()) ShowAlert("골드가 부족해요!");
         }, flexible: true, kind: ButtonKind.Primary);
         CreateButton(row, "닫기", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
 
@@ -490,9 +490,9 @@ public class GameUI : MonoBehaviour
             string current = $"현재 Lv.{level} (물고기 확률 {Percent(fishing.FishChanceAt(level))})";
             infoLabel.text = fishing.CanUpgradeRod
                 ? $"{current}\n다음 Lv.{level + 1} (물고기 확률 {Percent(fishing.FishChanceAt(level + 1))})\n" +
-                  $"강화 비용 : {fishing.NextRodUpgradeCost} 코인"
+                  $"강화 비용 : {fishing.NextRodUpgradeCost} 골드"
                 : $"{current}\n최대 레벨이에요!";
-            balanceLabel.text = $"보유 코인 : {game.CoinBalance}";
+            balanceLabel.text = $"보유 골드 : {game.CoinBalance}";
             upgradeButton.interactable = fishing.CanUpgradeRod;
         });
     }
@@ -521,7 +521,7 @@ public class GameUI : MonoBehaviour
         var row = CreateRow(content, ButtonHeight);
         var upgradeButton = CreateButton(row, "강화", () =>
         {
-            if (!game.TryUpgradePickaxe()) ShowAlert("코인이 부족해요!");
+            if (!game.TryUpgradePickaxe()) ShowAlert("골드가 부족해요!");
         }, flexible: true, kind: ButtonKind.Primary);
         CreateButton(row, "닫기", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
 
@@ -532,9 +532,9 @@ public class GameUI : MonoBehaviour
             string current = $"현재 Lv.{level} (다이아몬드 확률 {Percent(mining.DiamondChanceAt(level))})";
             infoLabel.text = mining.CanUpgradePickaxe
                 ? $"{current}\n다음 Lv.{level + 1} (다이아몬드 확률 {Percent(mining.DiamondChanceAt(level + 1))})\n" +
-                  $"강화 비용 : {mining.NextPickaxeUpgradeCost} 코인"
+                  $"강화 비용 : {mining.NextPickaxeUpgradeCost} 골드"
                 : $"{current}\n최대 레벨이에요!";
-            balanceLabel.text = $"보유 코인 : {game.CoinBalance}";
+            balanceLabel.text = $"보유 골드 : {game.CoinBalance}";
             upgradeButton.interactable = mining.CanUpgradePickaxe;
         });
     }
@@ -564,7 +564,7 @@ public class GameUI : MonoBehaviour
         var row = CreateRow(content, ButtonHeight);
         var upgradeButton = CreateButton(row, "강화", () =>
         {
-            if (!game.TryUpgradeFarm()) ShowAlert("코인이 부족해요!");
+            if (!game.TryUpgradeFarm()) ShowAlert("골드가 부족해요!");
         }, flexible: true, kind: ButtonKind.Primary);
         CreateButton(row, "닫기", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
 
@@ -576,9 +576,9 @@ public class GameUI : MonoBehaviour
             string offline = level + 1 == farm.OfflineUnlockLevel ? "\n강화하면 게임을 꺼 둔 동안에도 농사를 지어요." : "";
             infoLabel.text = farm.CanUpgrade
                 ? $"{current}\n다음 Lv.{level + 1} (자라는 시간 {Percent(farm.DurationMultiplierAt(level + 1))}){offline}\n" +
-                  $"강화 비용 : {farm.NextUpgradeCost} 코인"
+                  $"강화 비용 : {farm.NextUpgradeCost} 골드"
                 : $"{current}\n최대 레벨이에요!";
-            balanceLabel.text = $"보유 코인 : {game.CoinBalance}";
+            balanceLabel.text = $"보유 골드 : {game.CoinBalance}";
             upgradeButton.interactable = farm.CanUpgrade;
         });
     }

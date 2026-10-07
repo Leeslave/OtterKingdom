@@ -280,7 +280,7 @@ public static class InventoryChipSortSetup
         captionRect.offsetMin = new Vector2(20, LipOffset);
         captionRect.offsetMax = new Vector2(-48, 0);
 
-        // 기본 화살표 이미지(흰 사각형) 대신 글자 ▼
+        // 기본 화살표 이미지(흰 사각형) 대신 글자 ▼ (제목 폰트에 없는 기호라 본문 폰트)
         var arrow = (RectTransform)go.transform.Find("Arrow");
         Object.DestroyImmediate(arrow.GetComponent<Image>());
         arrow.anchorMin = new Vector2(1, 0);
@@ -289,7 +289,7 @@ public static class InventoryChipSortSetup
         arrow.sizeDelta = new Vector2(40, -LipOffset);
         arrow.anchoredPosition = new Vector2(-16, LipOffset / 2);
         var arrowText = arrow.gameObject.AddComponent<TextMeshProUGUI>();
-        arrowText.font = font;
+        arrowText.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/NanumSquareRoundOTFR SDF.asset") ?? font;
         arrowText.text = "▼";
         arrowText.fontSize = 20;
         arrowText.color = muted;

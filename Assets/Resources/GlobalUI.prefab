@@ -3617,7 +3617,7 @@ MonoBehaviour:
   _emptySprite: {fileID: 21300000, guid: 846f8134f4d476c42ab10743c31ef6f3, type: 3}
   _priceBox: {fileID: 714261102781643302}
   _sellButton: {fileID: 851677280261093432}
-  _emptyMessage: "\uC544\uC774\uD15C\uC744 \uC120\uD0DD\uD558\uC138\uC694."
+  _emptyMessage: "\uC544\uC774\uD15C\uC744 \uACE8\uB77C \uBCF4\uC138\uC694."
 --- !u!1 &504552077879873973
 GameObject:
   m_ObjectHideFlags: 0
@@ -38298,6 +38298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::CurrencyShortagePopupView
   _animator: {fileID: 8086349961688950515}
+  _ribbonText: {fileID: 593520978263515228}
   _icon: {fileID: 2096857515172244898}
   _titleText: {fileID: 8296510443731214556}
   _detailText: {fileID: 5938417447950644161}
@@ -39396,6 +39397,7 @@ MonoBehaviour:
   _levelText: {fileID: 544156002715035812}
   _expText: {fileID: 8473414755239310453}
   _expBar: {fileID: 507341087196848289}
+  _subtitleText: {fileID: 8357888455435390368}
   _claimAllButton: {fileID: 9042177871494519630}
   _claimAllImage: {fileID: 3994943644268098239}
   _claimAllLabel: {fileID: 4430095179524637803}
@@ -59633,7 +59635,7 @@ MonoBehaviour:
   _unknownTagline: "\uC544\uC9C1 \uB9CC\uB098\uC9C0 \uBABB\uD588\uC5B4\uC694."
   _visitedBadge: "\uBC29\uBB38 \uD754\uC801"
   _visitedTagline: "\uC12C\uC5D0 \uB2E4\uB140\uAC04 \uD754\uC801\uC774 \uC788\uC5B4\uC694."
-  _emptyMessage: "\uD56D\uBAA9\uC744 \uC120\uD0DD\uD558\uC138\uC694."
+  _emptyMessage: "\uD56D\uBAA9\uC744 \uACE8\uB77C \uBCF4\uC138\uC694."
   _visitedAlpha: 0.4
 --- !u!1 &7627896389683933684
 GameObject:
@@ -67215,8 +67217,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u25BC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
-  m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 237a5805bd097184181530db2ded2133, type: 2}
+  m_sharedMaterial: {fileID: -658371464127678442, guid: 237a5805bd097184181530db2ded2133, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

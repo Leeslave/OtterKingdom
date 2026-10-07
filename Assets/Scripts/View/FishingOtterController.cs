@@ -201,7 +201,7 @@ public class FishingOtterController : MonoBehaviour
         Vector2 worldPos = mainCamera.ScreenToWorldPoint(screenPos);
         if (!bodyCollider.OverlapPoint(worldPos)) return;
 
-        string message = "낚시를 중단하시겠습니까?";
+        string message = "낚시를 그만할까요?";
         if (phase == Phase.Bite || phase == Phase.Pull) message += "\n낚는 중이던 것은 버려져요.";
         GameManager.Instance.ShowConfirm("낚시 중단", message, () => GameManager.Instance.SetFishingActive(false));
     }

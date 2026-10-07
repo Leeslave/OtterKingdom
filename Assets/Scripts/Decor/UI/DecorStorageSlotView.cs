@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 보관함 칸 하나: 물건 그림, 남은 개수(x1), 이름. 남은 게 없으면 흐리게 하고 이름 대신 "배치됨".
+/// 보관함 칸 하나: 물건 그림, 남은 개수(x1), 이름. 남은 게 없으면 흐리게 하고, 놓아 둔 게 있으면 이름 대신 "배치됨".
 /// </summary>
 public class DecorStorageSlotView : MonoBehaviour
 {
@@ -36,7 +36,8 @@ public class DecorStorageSlotView : MonoBehaviour
         _button.onClick.AddListener(() => OnClicked?.Invoke(this));
     }
 
-    public void Bind(DecorDefinition decor, int storageCount, bool selected)
+    /// <param name="anyPlaced">어딘가에 놓인 게 있는지 (남은 게 없을 때 "배치됨"으로 쓸지, 흐린 이름으로 둘지)</param>
+    public void Bind(DecorDefinition decor, int storageCount, bool anyPlaced, bool selected)
     {
         if (decor == null)
             throw new ArgumentNullException(nameof(decor));
@@ -49,7 +50,7 @@ public class DecorStorageSlotView : MonoBehaviour
         _icon.enabled = _icon.sprite != null;
         _icon.color = new Color(1f, 1f, 1f, has ? 1f : _emptyIconAlpha);
         _countText.text = $"x{storageCount}";
-        _nameText.text = has ? decor.DisplayName : "배치됨";
+        _nameText.text = has || !anyPlaced ? decor.DisplayName : "배치됨";
         _nameText.color = has ? _nameColor : _mutedColor;
         _selectRing.SetActive(selected);
     }

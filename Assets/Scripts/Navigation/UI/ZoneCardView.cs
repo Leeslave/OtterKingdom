@@ -60,11 +60,13 @@ public class ZoneCardView : MonoBehaviour
         _nameText.text = zone.DisplayName;
         _nameText.color = locked ? _lockedColor : _nameColor;
         _subtitleText.text = locked ? ZoneAccess.LockedSubtitle(zone) : ZoneAccess.Subtitle(zone);
-        _subtitleText.color = locked ? _lockedColor : _subtitleColor;
+        // 잠긴 카드도 여는 조건은 읽혀야 하므로 부제는 평소 색 그대로
+        _subtitleText.color = _subtitleColor;
 
         _currentBadge.SetActive(showCurrent);
         _selectRing.SetActive(showCurrent);
         _lockIcon.SetActive(locked);
-        _button.interactable = !locked;
+        // 잠겨도 누를 수 있게 둠 (누르면 여는 조건 안내. GlobalUIPresenter)
+        _button.interactable = true;
     }
 }

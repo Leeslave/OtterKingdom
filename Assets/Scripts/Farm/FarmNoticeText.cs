@@ -15,10 +15,17 @@ public static class FarmNoticeText
     /// <summary>모종을 어디서 사는지 (요정이 왔으면 상점, 아니면 오는 중)</summary>
     public static string WhereToBuySeeds => FairyAccess.IsShopOpen ? BuyFromFairyText : FairyComingText;
 
-    public static GameNotice Build(FarmNotice notice, Func<string, string> cropName)
+    /// <param name="bagHasRoom">가방에 빈 칸이 남았는지. 남았는데 막혔으면 그 작물 칸이 꽉 찬 것 (한 칸 최대 개수)</param>
+    public static GameNotice Build(FarmNotice notice, Func<string, string> cropName, bool bagHasRoom = false)
     {
         if (notice.Kind == FarmNoticeKind.StorageFull)
-            return new GameNotice(StorageFullText);
+        {
+            if (!bagHasRoom || notice.CropIds.Count == 0)
+                return new GameNotice(StorageFullText);
+            string names = Join(notice.CropIds, cropName);
+            string particle = KoreanParticle.ObjectParticle(names);
+            return new GameNotice($"가방에 {names}{particle} 더 넣을 수 없어 밭 수확이 멈췄어요.\n{names}{particle} 팔아 자리를 비워 주세요.");
+        }
 
         string message = notice.SlotCount <= 1 && notice.CropIds.Count > 0
             ? $"{cropName(notice.CropIds[0])} 모종이 없어 밭 한 곳의 재배가 멈췄어요."

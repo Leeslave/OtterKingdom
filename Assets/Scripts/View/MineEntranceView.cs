@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 // The root transform is where the miner otter's feet stop before going in;
 // the `inside` child is the point deeper in the tunnel it walks to while
 // fading out. Tapping the oval while nobody is mining asks
-// "채굴을 진행하시겠습니까?"; "예" turns mining on and MinerOtterController
+// "채굴을 시작할까요?"; "예" turns mining on and MinerOtterController
 // walks over. Hidden while mining is on — stopping is done from the emote.
 public class MineEntranceView : MonoBehaviour
 {
@@ -53,7 +53,7 @@ public class MineEntranceView : MonoBehaviour
         Vector2 worldPos = mainCamera.ScreenToWorldPoint(screenPos);
         if (!circleCollider.OverlapPoint(worldPos)) return;
 
-        GameManager.Instance.ShowConfirm("채굴", "채굴을 진행하시겠습니까?",
+        GameManager.Instance.ShowConfirm("채굴", "채굴을 시작할까요?",
             () => GameManager.Instance.SetMiningActive(true));
     }
 }

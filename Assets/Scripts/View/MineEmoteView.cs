@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 // (tail pointing at the tunnel) with the miner otter's mining clip playing
 // inside it. It stands in for the otter while the otter is inside, so
 // MinerOtterController shows/hides it. Tapping it asks
-// "채굴을 중단하시겠습니까?"; "예" turns mining off and the otter walks out.
+// "채굴을 그만할까요?"; "예" turns mining off and the otter walks out.
 //
 // The bubble pops in when shown and bobs a little; the otter inside is a
 // SpriteFrameAnimator playing ClipMine on loop. Each find's icon pops out of
@@ -152,7 +152,7 @@ public class MineEmoteView : MonoBehaviour
         Vector2 worldPos = mainCamera.ScreenToWorldPoint(screenPos);
         if (!bubbleCollider.OverlapPoint(worldPos)) return;
 
-        GameManager.Instance.ShowConfirm("채굴 중단", "채굴을 중단하시겠습니까?",
+        GameManager.Instance.ShowConfirm("채굴 중단", "채굴을 그만할까요?",
             () => GameManager.Instance.SetMiningActive(false));
     }
 }

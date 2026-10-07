@@ -15,5 +15,5 @@ public enum ItemChangeReason
     Gather, // 광장에서 주운 재료 (나뭇가지 → 목재)
     Construction, // 건설 재료로 씀
     Delivery, // 공동사업·생활 의뢰에 납품 (P3)
-    Clearing, // 영토의 숲 개간으로 얻은 목재 (줍기 퀘스트에 세지 않음)
+    Clearing, // 영토의 숲 개간 · 광산·밭 길의 장애물을 치워 얻은 재료 (광장 줍기 퀘스트에 세지 않음)
 }

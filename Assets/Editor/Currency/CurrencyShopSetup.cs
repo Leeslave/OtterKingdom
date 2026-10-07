@@ -380,6 +380,7 @@ public static class CurrencyShopSetup
 
         var view = screen.gameObject.AddComponent<CurrencyShortagePopupView>();
         Set(view, "_animator", animator);
+        Set(view, "_ribbonText", panel.Find("Ribbon/Title").GetComponent<TextMeshProUGUI>());
         Set(view, "_icon", icon);
         Set(view, "_titleText", title);
         Set(view, "_detailText", detail);

@@ -7,7 +7,7 @@ using UnityEngine;
 /// 탭하면 줍고 사라졌다가 시간이 지나면 다시 생긴다 (세이브에 남음). 줍는 순간 "+2 목재"가 떠올랐다 사라진다.
 /// 아이템·개수·시간을 비우면 SettlementConfig의 기본값(나뭇가지)을 쓴다.
 /// </summary>
-public class GatherPointView : MonoBehaviour
+public class GatherPointView : MonoBehaviour, IDecorBlocker
 {
     private const float PopupSeconds = 0.9f;
     private const float PopupRise = 0.8f;
@@ -104,5 +104,20 @@ public class GatherPointView : MonoBehaviour
         _popup.color = color;
         _popup.gameObject.SetActive(false);
         _popupRoutine = null;
+    }
+
+    // 꾸미기: 이 자리(탭 영역)에는 물건·건물을 놓지 못하게. 주워서 그림이 꺼진 뒤에도 같은 자리를 비워 두도록 처음 범위를 기억
+    private Rect? _decorBlock;
+
+    public bool TryGetDecorBlock(out Rect worldRect)
+    {
+        if (_decorBlock == null && _tapArea != null && _tapArea.isActiveAndEnabled)
+        {
+            var bounds = _tapArea.bounds;
+            if (bounds.size.x > 0f && bounds.size.y > 0f)
+                _decorBlock = new Rect(bounds.min, bounds.size);
+        }
+        worldRect = _decorBlock ?? default;
+        return _decorBlock != null;
     }
 }

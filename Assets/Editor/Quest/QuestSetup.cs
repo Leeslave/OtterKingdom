@@ -445,7 +445,7 @@ public static class QuestSetup
         panel.rectTransform.offsetMax = new Vector2(-32, -110);
         var panelRect = panel.rectTransform;
 
-        BuildHeader(panelRect);
+        var subtitle = BuildHeader(panelRect);
         var (levelText, expText, expBar) = BuildOverall(panelRect);
         var (scroll, content) = BuildList(panelRect);
         var (claimAll, claimAllImage, claimAllLabel) = BuildClaimAll(panelRect);
@@ -471,6 +471,7 @@ public static class QuestSetup
         Set(presenter, "_levelText", levelText);
         Set(presenter, "_expText", expText);
         Set(presenter, "_expBar", expBar);
+        Set(presenter, "_subtitleText", subtitle);
         Set(presenter, "_claimAllButton", claimAll);
         Set(presenter, "_claimAllImage", claimAllImage);
         Set(presenter, "_claimAllLabel", claimAllLabel);
@@ -505,7 +506,7 @@ public static class QuestSetup
     }
 
     // 해달 그림 + "왕국 성장" + 부제
-    private static void BuildHeader(RectTransform panel)
+    private static TextMeshProUGUI BuildHeader(RectTransform panel)
     {
         var frame = CreateImage("HeaderArt", panel, LoadSprite(InventorySpriteFolder, "UI_Inventory_Slot_Filled"), false);
         Place(frame.rectTransform, new Vector2(0, 1), new Vector2(48, -92), new Vector2(330, 224));
@@ -523,6 +524,7 @@ public static class QuestSetup
         subtitle.alignment = TextAlignmentOptions.Left;
         FitText(subtitle, 22, 30);
         TopBand(subtitle.rectTransform, 412, 40, 206, 48);
+        return subtitle;
     }
 
     // "Lv.3 [경험치 바] 120 / 300" (경험치는 퀘스트 보상으로만 쌓임)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -36,6 +37,33 @@ public class GlobalUIRoot : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        RemoveOtherEventSystems();
+    }
+
+    // 장소 씬이 전역 UI보다 먼저 만든 임시 EventSystem(GameUI 등이 없을 때 만듦)을 치워 전역 UI 것 하나만 남김.
+    // 둘이 함께 켜져 있으면 "There can be only one active Event System" 경고가 나고 입력이 한쪽으로만 감
+    private void RemoveOtherEventSystems()
+    {
+        var own = GetComponentInChildren<EventSystem>(true);
+        if (own == null)
+            return;
+        foreach (var other in FindObjectsByType<EventSystem>(FindObjectsSortMode.None))
+        {
+            if (other == own)
+                continue;
+            // EventSystem만 있는 오브젝트(Transform · EventSystem · 입력 모듈)면 통째로, 아니면 그 기능만 끔
+            if (other.GetComponents<Component>().Length <= 3)
+            {
+                other.gameObject.SetActive(false);
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                foreach (var module in other.GetComponents<BaseInputModule>())
+                    module.enabled = false;
+                other.enabled = false;
+            }
+        }
     }
 
     private void OnDestroy()
@@ -59,6 +87,8 @@ public class GlobalUIRoot : MonoBehaviour
     private static void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         TrySpawn(scene);
+        if (Instance != null)
+            Instance.RemoveOtherEventSystems();
     }
 
     private static void TrySpawn(Scene scene)
