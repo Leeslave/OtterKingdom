@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: M07_TownHall
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv7_town_hall
-  _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uD68C\uC758\uC18C"
-  _description: "\uB9C8\uC744\uD68C\uAD00 \uC9D3\uAE30"
+  _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uAE38\uB4DC"
+  _description: "\uB9C8\uC744 \uAE38\uB4DC\uB85C \uB113\uD788\uAE30"
   _sortOrder: 23
   _kind: 0
   _requiredLevel: 7

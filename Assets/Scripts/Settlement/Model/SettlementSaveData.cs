@@ -134,10 +134,11 @@ public class LifeRequestSaveData
 public class SettlementSaveData
 {
     /// <summary>
-    /// 정착 세이브 버전. 0 = P2 전 (필드가 없던 세이브), 2 = P2 (관리 역할), 3 = P3 (공동사업·집·생활 의뢰·요정 방문 순서).
+    /// 정착 세이브 버전. 0 = P2 전 (필드가 없던 세이브), 2 = P2 (관리 역할), 3 = P3 (공동사업·집·생활 의뢰·요정 방문 순서),
+    /// 4 = 가로등이 첫 집과 따로 지어짐 (건설 모드).
     /// 불러올 때 낮은 버전이면 SettlementManager가 한 번 옮기고 이 값으로 올린다
     /// </summary>
-    public const int CurrentVersion = 3;
+    public const int CurrentVersion = 4;
 
     public int version;
     // 새 게임 처리(첫 해달 도착, 시작 재료)를 했는지. 재접속 때 다시 하지 않게

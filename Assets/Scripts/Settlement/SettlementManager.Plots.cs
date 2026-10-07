@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// 게시판 부탁으로 짓는 광장 건물(첫 집 · 두 번째 집 · 의자 · 벤치 · 길드 접수소)의 자리 고르기.
+/// 부탁으로 짓는 광장 건물(첫 집 · 두 번째 집 · 의자 · 벤치 · 가로등 · 공동사업 건물)의 자리 고르기.
 /// 부탁의 [자리 고르기] → 건설 모드에서 자리를 고르고 [확인] → 자리를 꾸미기 격자에 놓고 같은 순간 건설을 시작 (TryStartAt).
 /// 자리는 꾸미기 세이브, 공사·완료는 부탁 기록이 원본이다. 다 지은 건물은 꾸미기 모드에서 옮길 수 있다 (치울 수는 없음)
 /// </summary>
@@ -169,7 +169,7 @@ public partial class SettlementManager
                 continue;
 
             // 원래 자리는 씬이 비워 두던 곳이라 월드 막힘은 보지 않음 (씬을 열기 전이면 막힘이 아직 맞지 않음)
-            var origin = board.SaveOrigin + plot.DefaultCell;
+            var origin = board.SaveOrigin + plot.DefaultCellFor(Settlement.HasDevelopment);
             if (layout.TryPlace(plot, origin, DecorRotation.R0, out _, ignoreBlocked: true) == DecorPlacementResult.Ok)
                 continue;
             var center = origin + new Vector2Int(plot.Footprint.x / 2, plot.Footprint.y / 2);

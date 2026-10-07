@@ -102,13 +102,14 @@ public static partial class SettlementSetup
         ("gb_fisher_arrival", "otter_fisher", "방문", "선착장이 생겼다고 해서 왔어요.\n낚싯대는 제가 챙겨 왔어요!"),
         ("gb_fisher_assigned", "otter_fisher", "배치", "낚시터는 제게 맡겨요!\n첨벙첨벙!"),
         // P2: 게시판 성장 → 관리 해달 → 공동 공간 → 접수소 → 마을회관 (+ 선택 주민 부탁 2개)
-        ("gb_board_upgrade", "otter_first", "발전", "게시판이 튼튼해졌어요!\n이제 부탁을 더 많이 붙일 수 있어요."),
+        ("gb_board_upgrade", "otter_first", "발전", "게시판이 마을회관이 됐어요!\n이제 부탁을 더 많이 붙일 수 있어요."),
         ("gb_receptionist_arrival", ReceptionistOtterId, "방문", "게시판에 부탁이 잔뜩이네요!\n제가 정리해 드려도 될까요?"),
         ("gb_receptionist_assigned", ReceptionistOtterId, "담당", "오늘부터 게시판은 제가 맡을게요.\n부탁은 차곡차곡 정리해 둘게요!"),
         ("gb_common_space", "otter_painter", "정비", "다 같이 쉴 자리가 생겼어요!\n여기서 그림을 그려도 되겠죠?"),
-        ("gb_guild_office", ReceptionistOtterId, "개소", "접수소가 문을 열었어요.\n큰 부탁도 함께 받아요!"),
-        ("gb_town_hall", "otter_first", "완공", "우리 마을에 회의소가 생겼어요!\n모두 모여 이야기해요."),
-        ("gb_rest_corner", "otter_sleepy", "휴식", "바닷가 벤치에 앉으니…\n하암, 딱 좋아요."),
+        ("gb_guild_office", ReceptionistOtterId, "개소", "접수 창구를 열었어요.\n큰 부탁도 함께 받아요!"),
+        ("gb_town_hall", "otter_first", "완공", "우리 마을에 길드가 생겼어요!\n모두 모여 이야기해요."),
+        ("gb_rest_corner", "otter_sleepy", "휴식", "새 벤치에 앉으니…\n하암, 딱 좋아요."),
+        ("gb_lamp", "otter_first", "가로등", "가로등을 세웠어요!\n밤에도 광장이 환해요."),
         ("gb_board_area", ReceptionistOtterId, "정리", "게시판 주변이 깔끔해졌어요!\n부탁 읽기가 한결 편해요."),
     };
 
@@ -118,7 +119,7 @@ public static partial class SettlementSetup
     {
         ("con_house_1", "작은 집", "ICON_House_Blue", ConstructionTarget.House, 0, 8, 5, 10f, false,
             "작은 집 짓는 중", "다 지으면 몽실이가 정착해요", "house_1"),
-        ("con_chair", "나무 그늘 의자", "ICON_Chair", ConstructionTarget.House, 50, 6, 0, 8f, false,
+        ("con_chair", "의자", "ICON_Chair", ConstructionTarget.House, 50, 6, 0, 8f, false,
             "의자 만드는 중", "다 만들면 몽실이가 쉴 수 있어요", "chair"),
         ("con_mine_path", "광산 길 열기", "ICON_MinePath", ConstructionTarget.Clearing, 0, 0, 0, 0f, false,
             "", "", "mine_cleared"),
@@ -128,14 +129,18 @@ public static partial class SettlementSetup
         ("con_farmland", "농경지 개간", "ICON_Clearing", ConstructionTarget.Clearing, 0, 0, 0, 0f, false,
             "", "", FarmOperationalDevelopment),
         // P2 (구현 지시서 6.1의 QA용 제안값. 출시 밸런스 확정값 아님). 벤치는 기존 의자 아이콘
-        ("con_board_upgrade", "튼튼한 마을 게시판", "ICON_BoardUpgrade", ConstructionTarget.House, 300, 12, 6, 30f, true,
-            "게시판 보강 중", "다 지으면 게시판을 맡을 해달이 찾아와요", BoardUpgradeDevelopment),
-        ("con_guild_office", "길드 접수소", "ICON_GuildOffice", ConstructionTarget.House, 600, 24, 12, 60f, true,
-            "접수소 짓는 중", "다 지으면 큰 부탁을 묶어서 볼 수 있어요", GuildDevelopment),
-        ("con_town_hall", "마을회관", "ICON_TownHall", ConstructionTarget.House, 1200, 36, 24, 120f, true,
-            "마을회관 넓히는 중", "다 지으면 마을 발전 현황을 볼 수 있어요", TownHallDevelopment),
-        ("con_rest_corner", "바닷가 벤치", "ICON_Chair", ConstructionTarget.House, 150, 8, 4, 20f, true,
+        // 게시판은 제자리에서 커짐: 게시판 → 마을회관(게시판 확장) → 접수 창구(큰 부탁, 회관 안) → 마을 길드(회관 확장)
+        ("con_board_upgrade", "마을회관", "ICON_GuildOffice", ConstructionTarget.House, 300, 12, 6, 30f, true,
+            "마을회관 짓는 중", "다 지으면 게시판을 맡을 해달이 찾아와요", BoardUpgradeDevelopment),
+        ("con_guild_office", "길드 접수 창구", "ICON_GuildOffice", ConstructionTarget.House, 600, 24, 12, 60f, true,
+            "접수 창구 만드는 중", "다 만들면 큰 부탁을 묶어서 볼 수 있어요", GuildDevelopment),
+        ("con_town_hall", "마을 길드", "ICON_TownHall", ConstructionTarget.House, 1200, 36, 24, 120f, true,
+            "마을 길드로 넓히는 중", "다 지으면 마을 발전 현황을 볼 수 있어요", TownHallDevelopment),
+        ("con_rest_corner", "벤치", "ICON_Chair", ConstructionTarget.House, 150, 8, 4, 20f, true,
             "벤치 만드는 중", "다 만들면 해달들이 쉬어 가요", RestCornerDevelopment),
+        // 가로등: 첫 집 뒤 따로 세움 (공사 현장 없이 바로, 건설 모드에서 자리를 고름)
+        ("con_lamp", "가로등", "ICON_Lamp", ConstructionTarget.House, 30, 4, 2, 0f, false,
+            "", "", LampDevelopment),
         // 낚시터 (Lv.15, 임시값): 현장이 광장 밖이라 건설 해달은 광장에 있고 시간만 흐름
         ("con_fishing_dock", "바닷가 선착장", "ICON_FishingDock", ConstructionTarget.House, 2000, 60, 30, 180f, true,
             "선착장 고치는 중", "다 고치면 낚시꾼 해달이 찾아와요", FishingDevelopment),
@@ -154,7 +159,7 @@ public static partial class SettlementSetup
             "otter_first", "", 0, "con_house_1", new[] { "otter_first" },
             new[] { ("otter_sleepy", ResidentState.Visitor) },
             1, "gb_first_settle", "첫 주민이 정착했어요!", 0, "", ""),
-        ("req_chair", 1, "쉬어 갈 의자", "몽실이가 나무 그늘에서 쉴 의자를 갖고 싶대요.\n목재와 골드로 만들어 줘요.", "ICON_Chair",
+        ("req_chair", 1, "쉬어 갈 의자", "몽실이가 쉬어 갈 의자를 갖고 싶대요.\n의자를 만들어 마음에 드는 곳에 놓아 줘요.", "ICON_Chair",
             "otter_first", "house_1", 0, "con_chair", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_chair", "의자 완성! 몽실이가 숲 너머에서\n동굴을 발견했어요.", 2, "", ""),
@@ -182,10 +187,10 @@ public static partial class SettlementSetup
 
         // P2 게시판 성장 · 관리 해달 · 마을회관: 농부가 일하기 시작하면(farm_working) 열림. 첫 수확 퀘스트 보상과는 상관없음.
         // 분류(메인/주민)·역할·주민 작업·콘텐츠 버전은 P2Requests 표 (SettlementSetup.P2)
-        ("req_upgrade_board", 7, "부탁이 많아졌어요", "게시판에 부탁이 넘쳐요!\n건설 해달과 함께 게시판을 튼튼하게 보강해요.", "ICON_BoardUpgrade",
+        ("req_upgrade_board", 7, "부탁이 많아졌어요", "게시판에 부탁이 넘쳐요!\n건설 해달과 함께 게시판을 마을회관으로 넓혀요.", "ICON_GuildOffice",
             "otter_first", SettlementQuestGate.FarmProductionDevelopment, 0, "con_board_upgrade", new string[0],
             new[] { (ReceptionistOtterId, ResidentState.SpecialNpc) },
-            -1, "gb_board_upgrade", "게시판이 튼튼해졌어요!\n소식을 듣고 게시판을 맡아 줄 해달이 찾아왔어요.", 0, "", ""),
+            -1, "gb_board_upgrade", "게시판이 마을회관이 됐어요!\n소식을 듣고 게시판을 맡아 줄 해달이 찾아왔어요.", 0, "", ""),
         ("req_assign_receptionist", 8, "게시판을 맡아 줄 친구", "게시판을 정리해 줄 또박이가 찾아왔어요.\n광장에서 만나 게시판 관리를 맡겨 주세요.", ClerkPortraitName,
             ReceptionistOtterId, BoardUpgradeDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
@@ -194,14 +199,14 @@ public static partial class SettlementSetup
             "otter_painter", BoardManagedDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_common_space", "다 같이 쉴 자리가 생겼어요!\n광장이 한결 아늑해졌어요.", 0, "", ""),
-        ("req_build_guild_office", 10, "큰 부탁도 함께 받아요", "큰 부탁을 함께 관리할 접수소를 지어요.\n건설 해달이 필요해요.", "ICON_GuildOffice",
+        ("req_build_guild_office", 10, "큰 부탁도 함께 받아요", "마을회관에 큰 부탁을 받을 접수 창구를 만들어요.\n건설 해달이 필요해요.", "ICON_GuildOffice",
             ReceptionistOtterId, CommonSpaceDevelopment, 0, "con_guild_office", new string[0],
             new (string, ResidentState)[0],
-            -1, "gb_guild_office", "접수소가 문을 열었어요!\n접수소를 누르면 큰 부탁을 볼 수 있어요.", 0, "", ""),
-        ("req_upgrade_town_hall", 11, "우리 마을의 회의소", "접수소를 넓혀 마을회관으로 만들어요.\n마을이 얼마나 자랐는지 한눈에 볼 수 있어요.", "ICON_TownHall",
+            -1, "gb_guild_office", "접수 창구가 열렸어요!\n게시판에서 큰 부탁을 볼 수 있어요.", 0, "", ""),
+        ("req_upgrade_town_hall", 11, "우리 마을의 길드", "마을회관을 넓혀 마을 길드로 만들어요.\n마을이 얼마나 자랐는지 한눈에 볼 수 있어요.", "ICON_TownHall",
             "otter_first", GuildDevelopment, 0, "con_town_hall", new string[0],
             new (string, ResidentState)[0],
-            4, "gb_town_hall", "마을회관이 완성됐어요!\n회관을 누르면 마을 발전 현황을 볼 수 있어요.", 0, "", ""),
+            4, "gb_town_hall", "마을 길드가 완성됐어요!\n게시판에서 마을 발전 현황을 볼 수 있어요.", 0, "", ""),
         // 낚시터 (Lv.15): 레벨이 되면 몽실이가 선착장을 발견(SettlementConfig 레벨 발전) → 고치면 낚시꾼 첨벙이 방문 → 배치
         // 콘텐츠 버전 0: 정착 진행 전 옛 세이브는 낚시터를 이미 쓰고 있었으므로 두 부탁 모두 끝낸 것으로 옮김
         ("req_fishing_dock", 12, "바다로 나가는 선착장", "몽실이가 바닷가에서 낡은 선착장을 찾았어요.\n건설 해달과 함께 고치면 낚시터에 갈 수 있어요.", "ICON_FishingDock",
@@ -213,14 +218,19 @@ public static partial class SettlementSetup
             new (string, ResidentState)[0],
             -1, "gb_fisher_assigned", "첨벙이가 낚시터에서 일하기 시작해요!\n낚시터에 가서 첫 낚시를 해 봐요.", 0, "", "otter_fisher"),
         // 선택 주민 부탁 (메인 진행의 조건이 아님)
-        ("req_rest_corner", 20, "쉬어 갈 자리를 마련해 주세요", "꾸벅이가 바닷가에서 쉬어 갈 벤치를 갖고 싶대요.", "ICON_Chair",
+        ("req_rest_corner", 20, "쉬어 갈 벤치를 놓아 주세요", "꾸벅이가 쉬어 갈 벤치를 갖고 싶대요.\n벤치를 만들어 마음에 드는 곳에 놓아 줘요.", "ICON_Chair",
             "otter_sleepy", BoardManagedDevelopment, 0, "con_rest_corner", new string[0],
             new (string, ResidentState)[0],
-            -1, "gb_rest_corner", "바닷가에 쉬어 갈 벤치가 생겼어요!", 0, "", ""),
+            -1, "gb_rest_corner", "광장에 쉬어 갈 벤치가 생겼어요!", 0, "", ""),
         ("req_tidy_board_area", 21, "게시판 주변을 정리해 주세요", "게시판 앞에 쌓인 낙엽과 잔돌을 쓸어 모아요.", "ICON_TidyBoard",
             ReceptionistOtterId, BoardManagedDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_board_area", "게시판 주변이 깔끔해졌어요!", 0, "", ""),
+        // 첫 집 뒤 (메인 진행의 조건이 아님). 버전 4 전 세이브는 첫 집과 함께 끝낸 것으로 (SettlementMigration.MigrateLamp)
+        (SettlementMigration.LampRequestId, 22, "광장을 밝혀 주세요", "밤이 되면 광장이 어두워요.\n가로등을 만들어 마음에 드는 곳에 세워 줘요.", "ICON_Lamp",
+            "otter_first", "house_1", 0, "con_lamp", new string[0],
+            new (string, ResidentState)[0],
+            -1, "gb_lamp", "가로등을 세웠어요!\n밤에도 광장이 환해요.", 0, "", ""),
     };
 
     // 새 게임 시작 재료 = 첫 집 비용 (시안 1: 목재 8, 돌 5)
@@ -272,81 +282,107 @@ public static partial class SettlementSetup
             otters[o.id] = otter;
         }
 
-        foreach (var e in Entries)
-        {
-            var so = new SerializedObject(entries[e.id]);
-            so.FindProperty("_entryId").stringValue = e.id;
-            so.FindProperty("_otter").objectReferenceValue = otters[e.otter];
-            so.FindProperty("_tag").stringValue = e.tag;
-            so.FindProperty("_message").stringValue = e.message;
-            so.ApplyModifiedPropertiesWithoutUndo();
-        }
+        for (int i = 0; i < Entries.Length; i++)
+            ApplyEntryRow(i, entries[Entries[i].id], otters);
 
         var constructions = new Dictionary<string, ConstructionDefinition>();
-        foreach (var c in Constructions)
-        {
-            var construction = LoadOrCreate<ConstructionDefinition>($"{DataFolder}/Constructions/{c.id}.asset").asset;
-            var so = new SerializedObject(construction);
-            so.FindProperty("_constructionId").stringValue = c.id;
-            so.FindProperty("_displayName").stringValue = c.name;
-            so.FindProperty("_icon").objectReferenceValue = LoadArt(c.icon);
-            so.FindProperty("_targetType").enumValueIndex = (int)c.target;
-            so.FindProperty("_requiredGold").intValue = c.gold;
-            var items = so.FindProperty("_requiredItems");
-            items.arraySize = 0;
-            AddItemAmount(items, wood, c.wood);
-            AddItemAmount(items, stone, c.stone);
-            so.FindProperty("_durationSeconds").floatValue = c.seconds;
-            so.FindProperty("_needsBuilder").boolValue = c.builder;
-            so.FindProperty("_progressLabel").stringValue = c.label;
-            so.FindProperty("_progressHint").stringValue = c.hint;
-            so.FindProperty("_unlockResultId").stringValue = c.result;
-            so.ApplyModifiedPropertiesWithoutUndo();
-            constructions[c.id] = construction;
-        }
+        for (int i = 0; i < Constructions.Length; i++)
+            constructions[Constructions[i].id] = ApplyConstructionRow(i, wood, stone);
 
         var requests = new List<BoardRequestDefinition>();
-        foreach (var r in Requests)
-        {
-            var request = LoadOrCreate<BoardRequestDefinition>($"{DataFolder}/Requests/{r.id}.asset").asset;
-            var so = new SerializedObject(request);
-            so.FindProperty("_requestId").stringValue = r.id;
-            so.FindProperty("_order").intValue = r.order;
-            so.FindProperty("_title").stringValue = r.title;
-            so.FindProperty("_description").stringValue = r.description;
-            so.FindProperty("_icon").objectReferenceValue = LoadPortrait(r.icon);
-            so.FindProperty("_requester").objectReferenceValue = otters[r.requester];
-            so.FindProperty("_requiredDevelopment").stringValue = r.requires;
-            so.FindProperty("_minResidents").intValue = r.residents;
-            so.FindProperty("_construction").objectReferenceValue =
-                string.IsNullOrEmpty(r.construction) ? null : constructions[r.construction];
-            so.FindProperty("_assignSpecialist").objectReferenceValue = string.IsNullOrEmpty(r.assign) ? null : otters[r.assign];
-
-            var settles = so.FindProperty("_settles");
-            settles.arraySize = r.settles.Length;
-            for (int i = 0; i < r.settles.Length; i++)
-                settles.GetArrayElementAtIndex(i).objectReferenceValue = otters[r.settles[i]];
-
-            var arrivals = so.FindProperty("_arrivals");
-            arrivals.arraySize = r.arrivals.Length;
-            for (int i = 0; i < r.arrivals.Length; i++)
-            {
-                var element = arrivals.GetArrayElementAtIndex(i);
-                element.FindPropertyRelative("_otter").objectReferenceValue = otters[r.arrivals[i].otter];
-                element.FindPropertyRelative("_state").enumValueIndex = (int)r.arrivals[i].state;
-            }
-
-            so.FindProperty("_stageOnComplete").intValue = r.stage;
-            so.FindProperty("_completionEntry").objectReferenceValue = entries[r.entry];
-            so.FindProperty("_completionMessage").stringValue = r.message;
-            so.FindProperty("_kingdomLevel").intValue = r.level;
-            so.FindProperty("_clearZone").objectReferenceValue =
-                string.IsNullOrEmpty(r.zone) ? null : AssetDatabase.LoadAssetAtPath<ZoneDefinition>(r.zone);
-            so.ApplyModifiedPropertiesWithoutUndo();
-            requests.Add(request);
-        }
+        for (int i = 0; i < Requests.Length; i++)
+            requests.Add(ApplyRequestRow(i, otters, constructions, entries));
 
         var config = LoadOrCreate<SettlementConfig>(ConfigPath).asset;
+        CreateConfigData(config, otters, requests, entries, wood, stone);
+        LinkSpecialists(otters);
+        LinkReceptionist(otters);
+
+        AssetDatabase.SaveAssets();
+    }
+
+    // 방명록 표의 한 줄 → 에셋 (CreateData, Apply Building Plots)
+    private static void ApplyEntryRow(int index, GuestbookEntryDefinition entry, Dictionary<string, SettlementOtterDefinition> otters)
+    {
+        var e = Entries[index];
+        var so = new SerializedObject(entry);
+        so.FindProperty("_entryId").stringValue = e.id;
+        so.FindProperty("_otter").objectReferenceValue = otters[e.otter];
+        so.FindProperty("_tag").stringValue = e.tag;
+        so.FindProperty("_message").stringValue = e.message;
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    // 건설 표의 한 줄 → 에셋
+    private static ConstructionDefinition ApplyConstructionRow(int index, ItemDefinition wood, ItemDefinition stone)
+    {
+        var c = Constructions[index];
+        var construction = LoadOrCreate<ConstructionDefinition>($"{DataFolder}/Constructions/{c.id}.asset").asset;
+        var so = new SerializedObject(construction);
+        so.FindProperty("_constructionId").stringValue = c.id;
+        so.FindProperty("_displayName").stringValue = c.name;
+        so.FindProperty("_icon").objectReferenceValue = LoadArt(c.icon);
+        so.FindProperty("_targetType").enumValueIndex = (int)c.target;
+        so.FindProperty("_requiredGold").intValue = c.gold;
+        var items = so.FindProperty("_requiredItems");
+        items.arraySize = 0;
+        AddItemAmount(items, wood, c.wood);
+        AddItemAmount(items, stone, c.stone);
+        so.FindProperty("_durationSeconds").floatValue = c.seconds;
+        so.FindProperty("_needsBuilder").boolValue = c.builder;
+        so.FindProperty("_progressLabel").stringValue = c.label;
+        so.FindProperty("_progressHint").stringValue = c.hint;
+        so.FindProperty("_unlockResultId").stringValue = c.result;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return construction;
+    }
+
+    // 부탁 표의 한 줄 → 에셋 (분류·역할·작업은 CreateP2Data가 덧붙임)
+    private static BoardRequestDefinition ApplyRequestRow(int index, Dictionary<string, SettlementOtterDefinition> otters,
+        Dictionary<string, ConstructionDefinition> constructions, Dictionary<string, GuestbookEntryDefinition> entries)
+    {
+        var r = Requests[index];
+        var request = LoadOrCreate<BoardRequestDefinition>($"{DataFolder}/Requests/{r.id}.asset").asset;
+        var so = new SerializedObject(request);
+        so.FindProperty("_requestId").stringValue = r.id;
+        so.FindProperty("_order").intValue = r.order;
+        so.FindProperty("_title").stringValue = r.title;
+        so.FindProperty("_description").stringValue = r.description;
+        so.FindProperty("_icon").objectReferenceValue = LoadPortrait(r.icon);
+        so.FindProperty("_requester").objectReferenceValue = otters[r.requester];
+        so.FindProperty("_requiredDevelopment").stringValue = r.requires;
+        so.FindProperty("_minResidents").intValue = r.residents;
+        so.FindProperty("_construction").objectReferenceValue =
+            string.IsNullOrEmpty(r.construction) ? null : constructions[r.construction];
+        so.FindProperty("_assignSpecialist").objectReferenceValue = string.IsNullOrEmpty(r.assign) ? null : otters[r.assign];
+
+        var settles = so.FindProperty("_settles");
+        settles.arraySize = r.settles.Length;
+        for (int i = 0; i < r.settles.Length; i++)
+            settles.GetArrayElementAtIndex(i).objectReferenceValue = otters[r.settles[i]];
+
+        var arrivals = so.FindProperty("_arrivals");
+        arrivals.arraySize = r.arrivals.Length;
+        for (int i = 0; i < r.arrivals.Length; i++)
+        {
+            var element = arrivals.GetArrayElementAtIndex(i);
+            element.FindPropertyRelative("_otter").objectReferenceValue = otters[r.arrivals[i].otter];
+            element.FindPropertyRelative("_state").enumValueIndex = (int)r.arrivals[i].state;
+        }
+
+        so.FindProperty("_stageOnComplete").intValue = r.stage;
+        so.FindProperty("_completionEntry").objectReferenceValue = entries[r.entry];
+        so.FindProperty("_completionMessage").stringValue = r.message;
+        so.FindProperty("_kingdomLevel").intValue = r.level;
+        so.FindProperty("_clearZone").objectReferenceValue =
+            string.IsNullOrEmpty(r.zone) ? null : AssetDatabase.LoadAssetAtPath<ZoneDefinition>(r.zone);
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return request;
+    }
+
+    private static void CreateConfigData(SettlementConfig config, Dictionary<string, SettlementOtterDefinition> otters,
+        List<BoardRequestDefinition> requests, Dictionary<string, GuestbookEntryDefinition> entries, ItemDefinition wood, ItemDefinition stone)
+    {
         var configSo = new SerializedObject(config);
         configSo.FindProperty("_goldCurrency").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Currency>(GoldPath);
         var stages = configSo.FindProperty("_stageNames");
@@ -378,10 +414,6 @@ public static partial class SettlementSetup
         CreateP2Data(configSo, otters, requests);
         CreateP3Data(configSo, otters);
         configSo.ApplyModifiedPropertiesWithoutUndo();
-        LinkSpecialists(otters);
-        LinkReceptionist(otters);
-
-        AssetDatabase.SaveAssets();
     }
 
     // 전문 해달 ↔ 일할 지역·도감 항목 (지역은 CreateRegionData가 만든 뒤에)

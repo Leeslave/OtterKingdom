@@ -107,7 +107,7 @@ public partial class SettlementManager
         if (_clearingRewardText.TryGetValue(task.TaskId, out string reward) && !string.IsNullOrEmpty(reward))
             text.Append('\n').Append(reward);
         if (index + 1 >= total)
-            text.Append("\n마을회관에서 영토 확장 미션을 할 수 있어요.");
+            text.Append("\n마을 길드에서 영토 확장 미션을 할 수 있어요.");
         return text.ToString();
     }
 

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Group_town_council
   m_EditorClassIdentifier: OtterKingdom::MilestoneGroupDefinition
   _groupId: group_town_council
-  _title: "\uB9C8\uC744 \uD68C\uC758\uC18C \uB9C8\uB828\uD558\uAE30"
-  _description: "\uAC8C\uC2DC\uD310\uC744 \uD0A4\uC6B0\uACE0 \uD68C\uC758\uC18C\uB97C
-    \uC138\uC6B0\uAE30\uAE4C\uC9C0,\n\uB9C8\uC744\uC774 \uD568\uAED8 \uC774\uB8E8\uB294
+  _title: "\uB9C8\uC744 \uAE38\uB4DC \uC138\uC6B0\uAE30"
+  _description: "\uAC8C\uC2DC\uD310\uC744 \uB9C8\uC744\uD68C\uAD00\uC73C\uB85C, \uB9C8\uC744\uD68C\uAD00\uC744
+    \uB9C8\uC744 \uAE38\uB4DC\uB85C.\n\uB9C8\uC744\uC774 \uD568\uAED8 \uC774\uB8E8\uB294
     \uD070 \uBD80\uD0C1\uC774\uC5D0\uC694."
   _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
   _visibleDevelopment: guild_office_built

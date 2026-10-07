@@ -15,11 +15,11 @@ MonoBehaviour:
   _projectId: p3_village_life
   _order: 6
   _title: "\uB9C8\uC744 \uC0DD\uD65C \uC900\uBE44"
-  _line: "\uD68C\uAD00 \uC0B4\uB9BC\uC744 \uC870\uAE08\uC529 \uCC44\uC6CC \uB450\uBA74
+  _line: "\uAE38\uB4DC \uC0B4\uB9BC\uC744 \uC870\uAE08\uC529 \uCC44\uC6CC \uB450\uBA74
     \uB9C8\uC744\uC774 \uB354 \uB4E0\uB4E0\uD574\uC838\uC694."
   _requester: {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
   _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
-  _resultPreview: "3\uBC88 \uB9C8\uCE58\uBA74 \uD68C\uAD00 \uC55E\uC774 \uAF43\uC73C\uB85C
+  _resultPreview: "3\uBC88 \uB9C8\uCE58\uBA74 \uAE38\uB4DC \uC55E\uC774 \uAF43\uC73C\uB85C
     \uAFB8\uBA70\uC838\uC694"
   _completionMessage: "\uB9C8\uC744 \uC0DD\uD65C \uC900\uBE44\uB97C \uB9C8\uCCE4\uC5B4\uC694!"
   _requiredLevel: 10
@@ -34,7 +34,7 @@ MonoBehaviour:
   _cycleTitles:
   - "\uC2DD\uD0C1 \uC900\uBE44"
   - "\uD734\uC2DD \uACF5\uAC04 \uC815\uB3C8"
-  - "\uD68C\uAD00 \uBB3C\uD488 \uBCF4\uCDA9"
+  - "\uAE38\uB4DC \uBB3C\uD488 \uBCF4\uCDA9"
   _cycleCosts:
   - _gold: 200
     _items:

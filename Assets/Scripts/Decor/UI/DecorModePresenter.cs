@@ -377,7 +377,7 @@ public class DecorModePresenter : MonoBehaviour
             return;
 
         CancelSession();
-        var origin = _board.Board.SaveOrigin + plot.DefaultCell;
+        var origin = _board.Board.SaveOrigin + plot.DefaultCellFor(settlement.HasDevelopment);
         bool found = _layout.Check(plot, origin, DecorRotation.R0) == DecorPlacementResult.Ok
             && !_board.WouldCutPath(new RectInt(origin, plot.Footprint));
         if (!found)
@@ -564,7 +564,7 @@ public class DecorModePresenter : MonoBehaviour
         if (request == null)
             return;
         var anchor = ConstructionPlotAnchor.Find(plot.SaveId);
-        if (anchor != null && !_board.IsWalkable(anchor.StandPointFor(_board.AreaWorldRect(_session.Area))))
+        if (anchor != null && anchor.TryGetStandPoint(_board.AreaWorldRect(_session.Area), out var stand) && !_board.IsWalkable(stand))
         {
             _view.ShowHint(HintNoStand, true);
             return;

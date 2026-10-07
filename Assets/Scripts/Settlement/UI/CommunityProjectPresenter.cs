@@ -446,7 +446,7 @@ public class CommunityProjectPresenter : MonoBehaviour
                 {
                     var construction = stage.Construction != null ? stage.Construction.Construction : null;
                     _projectNote.text = hint + (construction != null ? $"{FormatDuration(construction.DurationSeconds)} 걸려요. 재료는 이미 냈어요." : string.Empty);
-                    SetAction("건설 시작", true, () => Advance(project));
+                    SetStartAction(project, stage.Construction);
                 }
                 break;
 
@@ -460,7 +460,7 @@ public class CommunityProjectPresenter : MonoBehaviour
                 if (chosen != null)
                 {
                     _projectNote.text = hint + $"고른 소품: {chosen.Construction.DisplayName}";
-                    SetAction("건설 시작", true, () => Advance(project));
+                    SetStartAction(project, chosen);
                     break;
                 }
                 _projectNote.text = hint + "하나를 골라 주세요. 비용·시간은 같아요.";
@@ -564,8 +564,11 @@ public class CommunityProjectPresenter : MonoBehaviour
     {
         if (_project == null || index < 0 || index >= _choices.Count)
             return;
-        var result = _manager.TryChooseWelcomeProp(_project, _choices[index]);
-        if (result == ProjectActionResult.Done)
+        var project = _project;
+        var result = _manager.TryChooseWelcomeProp(project, _choices[index]);
+        if (result == ProjectActionResult.NeedsPlace)
+            ChoosePlace(project);
+        else if (result == ProjectActionResult.Done)
             CloseProject();
         else
             FillProject();
@@ -575,10 +578,35 @@ public class CommunityProjectPresenter : MonoBehaviour
     {
         var result = _manager.TryAdvanceProject(project);
         // 건설을 시작하면 건설 해달이 일하러 가는 모습이 보이게, 주민 고르기는 그 화면이 뜨게 닫음
-        if (result == ProjectActionResult.Done || result == ProjectActionResult.OpenTask)
+        if (result == ProjectActionResult.NeedsPlace)
+            ChoosePlace(project);
+        else if (result == ProjectActionResult.Done || result == ProjectActionResult.OpenTask)
             CloseProject();
         else
             FillProject();
+    }
+
+    // 짓기 단계의 버튼: 자리를 골라 짓는 건물이면 [자리 고르기] (광장이 아니면 [광장으로]), 아니면 [건설 시작]
+    private void SetStartAction(CommunityProjectDefinition project, BoardRequestDefinition request)
+    {
+        var plot = _manager.PlotOf(request);
+        if (plot != null && !_manager.IsPlotPlaced(plot))
+            SetPlazaAction(SettlementPlazaView.Active != null, "자리 고르기", () => Advance(project));
+        else
+            SetAction("건설 시작", true, () => Advance(project));
+    }
+
+    // 건설 모드에서 자리를 고르면 그때 공사가 시작됨 (재료는 납품으로 이미 냄)
+    private void ChoosePlace(CommunityProjectDefinition project)
+    {
+        var request = _manager.PlaceRequestOf(project);
+        CloseProject();
+        if (request == null)
+            return;
+        if (SettlementPlazaView.Active != null)
+            DecorModePresenter.RequestPlace(request);
+        else
+            GoToPlaza();
     }
 
     // 광장에서 할 일: 광장이면 그 버튼, 아니면 [광장으로]
@@ -798,6 +826,7 @@ public class CommunityProjectPresenter : MonoBehaviour
         var config = _manager.Config;
         var text = new StringBuilder("0123456789:/ ,.!?%·→✓[]()“”…+가능한만큼넣기닫기재료모으기넣음보유필요완성하면경험치조금완료기록건설시작현장보기주민배정만나러가기모임열기광장으로의뢰보기다음사업첫다시돌려받을수없어요넣을까요을를취소고른소품하나골라주세요비용시간은같아요치운것중대기지금공사가는끝나면있어요준비걸려요이미냈어요보낼명작업에게말걸어입주도와찾아오고있모두모였어마무리하는건네주기다른로보상골드개새집했함께일할늘었생활마쳤부터시작할Lv성장퀘스트생산으로모아요");
         text.Append(NoRefundNote);
+        text.Append("자리 고르기");
         var projects = new List<CommunityProjectDefinition>(config.Projects);
         // 영토 확장 미션도 같은 화면에서 열림
         foreach (var territory in config.Territories)

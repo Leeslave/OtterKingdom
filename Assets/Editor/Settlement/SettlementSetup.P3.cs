@@ -10,11 +10,11 @@ using static GlobalUISetup;
 /// <summary>
 /// P3 공동사업 · 생활 의뢰 · 요정 방문 순서 (기획: 해달왕국_P3_기획서.md, 작업기록: Docs/P3_공동사업_작업기록.md).
 /// - 데이터: 공동사업 5개(첫 비축 → 새 이웃 → 환영 소품 → 첫 모임 → 반복 "마을 생활 준비"), 사업 건설 부탁·건설(비용 0),
-///   회관 주변 정리 작업, 새 이웃 해달, 방명록, 생활 의뢰 3종, 요정 방문 발전 (농부 파견 → 예약)
+///   길드 주변 정리 작업, 새 이웃 해달, 방명록, 생활 의뢰 3종, 요정 방문 발전 (농부 파견 → 예약)
 ///   광장 확장은 영토 확장(SettlementSetup.Territory: 서쪽·북쪽 숲 개간)으로 바뀜 — 새 이웃 맞이하기는 처음 땅을 넓힌 뒤
 /// - 그림: Tools/UIGen/p3_art.py가 만든 임시 소품(비축 상자·공동 식탁·화분·빨랫줄)
 /// - 광장: 회관 앞 비축 상자·식탁·모임 연출, 이웃집 묶음(집·화분·빨랫줄·공사 현장 — 처음 넓힌 영토 쪽으로 옮겨짐, TerritoryAnchor),
-///   회관 앞 장식(반복 사업 3회), 회관 주변 정리 자리, 요정은 도착 발전으로, 끝에 영토(지도·숲·걷기 칸·개간 자리·카메라 범위)
+///   회관 앞 장식(반복 사업 3회), 길드 주변 정리 자리, 요정은 도착 발전으로, 끝에 영토(지도·숲·걷기 칸·개간 자리·카메라 범위)
 /// 한 번에 적용: Tools/Settlement/Apply P3 Projects (여러 번 실행해도 결과가 같음). Setup Plaza · Apply P2를 다시 돌려도 P3 배치가 함께 다시 만들어짐
 /// </summary>
 public static partial class SettlementSetup
@@ -151,12 +151,12 @@ public static partial class SettlementSetup
         var entries = new Dictionary<string, GuestbookEntryDefinition>();
         (string id, string otter, string tag, string message)[] entryTable =
         {
-            ("gb_p3_supply", "otter_receptionist", "첫 비축", "회관 앞에 우리 마을의 첫 비축 상자가 생겼어요."),
+            ("gb_p3_supply", "otter_receptionist", "첫 비축", "광장에 우리 마을의 첫 비축 상자가 생겼어요."),
             ("gb_p3_plaza", "otter_first", "광장 확장", "숲을 걷어 내니 광장이 훨씬 넓어졌어요!"),
             ("gb_p3_neighbor_arrival", NeighborOtterId, "첫 방문", "새 집이 생겼다는 소식을 듣고 찾아왔어요."),
             ("gb_p3_neighbor", NeighborOtterId, "입주", "짐을 풀고 나니 이제 정말 우리 집 같아요."),
             ("gb_p3_welcome", NeighborOtterId, "환영", "문 앞이 환해졌어요. 반겨 줘서 고마워요!"),
-            ("gb_p3_gathering", "otter_receptionist", "첫 모임", "마을회관 앞 식탁에 모두 모여 첫 모임을 열었어요."),
+            ("gb_p3_gathering", "otter_receptionist", "첫 모임", "광장 식탁에 모두 모여 첫 모임을 열었어요."),
         };
         foreach (var e in entryTable)
             entries[e.id] = LoadOrCreate<GuestbookEntryDefinition>($"{DataFolder}/Guestbook/{e.id}.asset").asset;
@@ -185,11 +185,11 @@ public static partial class SettlementSetup
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
-        // 작업: 광장 확장 정비(예전 동쪽 확장 — 정비 중이던 세이브가 이어서 끝낼 수 있게만 남김) · 회관 주변 정리(생활 의뢰 틀)
+        // 작업: 광장 확장 정비(예전 동쪽 확장 — 정비 중이던 세이브가 이어서 끝낼 수 있게만 남김) · 길드 주변 정리(생활 의뢰 틀)
         var expandTask = CreateP3Task(ExpandTaskId, "광장 확장 정비", "덤불을 걷어 낸 땅을 고르고\n집 지을 자리까지 길을 내요.",
             "광장이 넓어졌어요!", 1, 60f, ObstaclesClearedDevelopment, PlazaExpandDevelopment);
-        var tidyTask = CreateP3Task(HallTidyTaskId, "회관 주변 정리", "회관 앞을 쓸고 물건을 가지런히 놓아요.",
-            "회관 앞이 깔끔해졌어요!", 1, 20f, "", "");
+        var tidyTask = CreateP3Task(HallTidyTaskId, "길드 주변 정리", "길드 앞을 쓸고 물건을 가지런히 놓아요.",
+            "길드 앞이 깔끔해졌어요!", 1, 20f, "", "");
 
         // 사업 단계의 건설 (비용 0 — 재료는 사업 납품으로 냄)
         var conSupply = CreateP3Construction("con_p3_supply_box", "비축 상자", "Prop_SupplyBox", ConstructionTarget.House, 30f,
@@ -215,11 +215,11 @@ public static partial class SettlementSetup
 
         // 공동사업 (경험치 = 기획서 11장: 구간 시작 레벨의 필요 경험치 E7 800 · E8 1,050 · E9 1,350 × 비율)
         var supply = CreateProject("p3_supply_01", 1, "우리 마을의 첫 비축",
-            "회관은 생겼는데 함께 쓸 재료가 없네. 다음 공사를 위해 조금씩 모아 둘까?", clerk, LoadArt("ICON_TownHall"),
-            "회관 앞에 비축 상자가 생겨요", "우리 마을의 첫 비축을 마쳤어요!\n회관 앞에 비축 상자가 생겼어요.",
+            "길드는 생겼는데 함께 쓸 재료가 없네. 다음 공사를 위해 조금씩 모아 둘까?", clerk, LoadArt("ICON_TownHall"),
+            "광장에 비축 상자가 생겨요", "우리 마을의 첫 비축을 마쳤어요!\n광장에 비축 상자가 생겼어요.",
             7, TownHallDevelopment, 300, new[] { (wood, 12), (stone, 6) },
             new[] { new ProjectStageDefinition("build_box", ProjectActionKind.CompleteConstruction, "상자 설치")
-                .With(construction: reqSupply, hint: "건설 해달이 회관 앞에 비축 상자를 놓아요.") },
+                .With(construction: reqSupply, hint: "고른 자리에 건설 해달이 비축 상자를 놓아요.") },
             "supply_ready", 560, entries["gb_p3_supply"]);
         // 영토 확장 (광장 첫 확장 대신): 서쪽·북쪽 숲 개간 → 마을회관 영토 확장 미션. 처음 넓힌 땅에 새 이웃의 집 자리
         CreateTerritoryData(configSo, first, entries["gb_p3_plaza"]);
@@ -247,22 +247,22 @@ public static partial class SettlementSetup
             "welcome_corner_ready", 340, entries["gb_p3_welcome"]);
         var gathering = CreateProject("p3_gathering_01", 5, "우리 마을의 첫 모임",
             "마을이 이만큼 컸으니, 다 같이 모여 밥 한 끼 할까요?", clerk, LoadArt("Prop_CommunityTable"),
-            "회관 앞에 공동 식탁이 생기고 첫 모임을 열어요", "우리 마을의 첫 모임을 열었어요!\n회관에서 마을 생활 준비를 이어 갈 수 있어요.",
+            "광장에 공동 식탁이 생기고 첫 모임을 열어요", "우리 마을의 첫 모임을 열었어요!\n길드에서 마을 생활 준비를 이어 갈 수 있어요.",
             10, "welcome_corner_ready", 300, new[] { (wood, 8), (carrot, 12) },
             new[]
             {
                 new ProjectStageDefinition("build_table", ProjectActionKind.CompleteConstruction, "식탁 준비")
-                    .With(construction: reqTable, hint: "건설 해달이 회관 앞에 공동 식탁을 놓아요."),
+                    .With(construction: reqTable, hint: "고른 자리에 건설 해달이 공동 식탁을 놓아요."),
                 new ProjectStageDefinition("hold_gathering", ProjectActionKind.HoldGathering, "모임 열기")
                     .With(hint: "광장에서 [모임 열기]를 누르면 주민들이 식탁에 모여요."),
             },
             "first_gathering_complete", 425, entries["gb_p3_gathering"]);
         var repeat = CreateProject("p3_village_life", 6, "마을 생활 준비",
-            "회관 살림을 조금씩 채워 두면 마을이 더 든든해져요.", clerk, LoadArt("ICON_TownHall"),
-            "3번 마치면 회관 앞이 꽃으로 꾸며져요", "마을 생활 준비를 마쳤어요!",
+            "길드 살림을 조금씩 채워 두면 마을이 더 든든해져요.", clerk, LoadArt("ICON_TownHall"),
+            "3번 마치면 길드 앞이 꽃으로 꾸며져요", "마을 생활 준비를 마쳤어요!",
             10, "first_gathering_complete", 0, System.Array.Empty<(ItemDefinition, int)>(),
             System.Array.Empty<ProjectStageDefinition>(), "", 0, null);
-        repeat.SetupRepeat(new[] { "식탁 준비", "휴식 공간 정돈", "회관 물품 보충" },
+        repeat.SetupRepeat(new[] { "식탁 준비", "휴식 공간 정돈", "길드 물품 보충" },
             new[]
             {
                 new ProjectCycleCost(200, new[] { new ItemAmount(carrot, 10), new ItemAmount(wood, 4) }),
@@ -280,7 +280,7 @@ public static partial class SettlementSetup
         repair.Setup("life_repair", LifeRequestKind.Deliver, "집수리 재료", "지붕이 삐걱거려요. {item} {amount}개만 있으면 고칠 수 있어요.",
             new[] { wood, stone }.Where(i => i != null), 6, null, 80, 8f, LoadArt("ICON_Item_Wood"));
         var tidy = LoadOrCreate<LifeRequestTemplate>($"{LifeFolder}/Life_hall_tidy.asset").asset;
-        tidy.Setup("life_hall_tidy", LifeRequestKind.ResidentWork, "회관 주변 정리", "회관 앞이 어수선해요. 주민 한 명이 잠깐 정리해 줄래요?",
+        tidy.Setup("life_hall_tidy", LifeRequestKind.ResidentWork, "길드 주변 정리", "길드 앞이 어수선해요. 주민 한 명이 잠깐 정리해 줄래요?",
             null, 1, tidyTask, 40, 8f, LoadArt("ICON_TidyBoard"));
         foreach (var asset in new Object[] { snack, repair, tidy })
             EditorUtility.SetDirty(asset);
@@ -441,6 +441,7 @@ public static partial class SettlementSetup
         var bounds = GroundBounds(background);
         Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
         BuildP3(root, plazaRoot.Find("Props"), root.GetComponent<SettlementPlazaView>(), background, ToWorld);
+        ApplyBoardExpansion(plazaRoot);
         ApplyPlotAnchors(plazaRoot);
 
         EditorSceneManager.MarkSceneDirty(scene);
@@ -494,7 +495,7 @@ public static partial class SettlementSetup
             P3Prop(decor, "FlowerPot", "Prop_FlowerPot", toWorld(pixel), 0.85f, new Rect(-0.5f, -0.1f, 1f, 0.4f));
         AddGate(decor.gameObject, HallDecorDevelopment, true, true);
 
-        // 5) 회관 주변 정리 (생활 의뢰): 표지판 없이 일할 자리만
+        // 5) 길드 주변 정리 (생활 의뢰): 표지판 없이 일할 자리만
         var tidy = BuildPlazaTaskSite(p3, "TaskSite_HallTidy", HallTidyTaskId, config, toWorld(TidyLookPixel) + new Vector3(0f, 2.4f, 0f),
             TidyStandPixels.Select(toWorld).ToArray(), toWorld(TidyLookPixel), "hint_hall_tidy");
         var tidySo = new SerializedObject(tidy);

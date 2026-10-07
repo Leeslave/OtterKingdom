@@ -24,17 +24,18 @@ public class ConstructionPlotAnchor : MonoBehaviour
     [Tooltip("원래 자리를 꾸미기에서 비워 두던 막음 (묶음 밖에 있는 것). 자리를 고르게 되었으니 끔")]
     [SerializeField] private List<GameObject> _reservations = new List<GameObject>();
 
-    private readonly List<(Transform target, Vector3 position)> _authored = new List<(Transform, Vector3)>();
+    // 이 오브젝트(발밑)에서 떨어진 거리 (부모가 영토 묶음이라 옮겨져도 같은 모양으로)
+    private readonly List<(Transform target, Vector3 offset)> _parts = new List<(Transform, Vector3)>();
     // PlazaProp이 아닌 그림 (밤 불빛 등): 씬에 정해 둔 정렬 순서를 옮긴 높이만큼 바꿔 줌
     private readonly List<(SpriteRenderer renderer, int order)> _fixedOrders = new List<(SpriteRenderer, int)>();
-    private Vector2 _authoredPivot;
-    private Vector2 _currentPivot;
+    private float _authoredPivotY;
+    private Rect? _area;
     private ConstructionSiteView _site;
 
     public ConstructionPlotDefinition Plot => _plot;
 
     /// <summary>지금 오브젝트 발밑 (공사 현장 자리)</summary>
-    public Vector2 Pivot => _currentPivot;
+    public Vector2 Pivot => transform.position;
 
     /// <summary>이 건설의 묶음 (광장에 없으면 null)</summary>
     public static ConstructionPlotAnchor Find(string constructionId) =>
@@ -43,7 +44,7 @@ public class ConstructionPlotAnchor : MonoBehaviour
     private void Awake()
     {
         _site = GetComponent<ConstructionSiteView>();
-        _authoredPivot = _currentPivot = transform.position;
+        _authoredPivotY = transform.position.y;
         if (_plot != null && !string.IsNullOrEmpty(_plot.SaveId))
             Anchors[_plot.SaveId] = this;
 
@@ -55,7 +56,7 @@ public class ConstructionPlotAnchor : MonoBehaviour
         }
         foreach (var root in roots)
         {
-            _authored.Add((root, root.position));
+            _parts.Add((root, root.position - transform.position));
             foreach (var area in root.GetComponentsInChildren<DecorBlockArea>(true))
                 area.gameObject.SetActive(false);
             foreach (var polygon in root.GetComponentsInChildren<PlazaAreaPolygon>(true))
@@ -84,11 +85,26 @@ public class ConstructionPlotAnchor : MonoBehaviour
             Anchors.Remove(_plot.SaveId);
     }
 
-    /// <summary>이 칸에 놓이면 공사 해달이 설 곳 (공사 현장이 없으면 발밑)</summary>
-    public Vector2 StandPointFor(Rect area)
+    /// <summary>이 칸에 놓이면 공사 해달이 설 곳 (공사 현장이 없는 건물은 false — 바로 지어짐)</summary>
+    public bool TryGetStandPoint(Rect area, out Vector2 point)
     {
-        var delta = _plot.PivotFor(area) - _currentPivot;
-        return (_site != null ? _site.StandPoint : _currentPivot) + delta;
+        point = default;
+        if (_site == null)
+            return false;
+        point = _site.StandPoint + (_plot.PivotFor(area) - (Vector2)transform.position);
+        return true;
+    }
+
+    /// <summary>놓인 자리에 다시 맞춤 (영토 묶음이 부모를 옮긴 뒤 — SettlementPlazaView)</summary>
+    public static bool ReapplyAll()
+    {
+        bool moved = false;
+        foreach (var anchor in Anchors.Values)
+        {
+            if (anchor != null && anchor._area.HasValue)
+                moved |= anchor.Apply(anchor._area.Value);
+        }
+        return moved;
     }
 
     /// <summary>묶음을 이 칸(월드)에 맞춰 옮긴다</summary>
@@ -97,26 +113,27 @@ public class ConstructionPlotAnchor : MonoBehaviour
     {
         if (_plot == null)
             return false;
+        _area = area;
         var pivot = _plot.PivotFor(area);
-        if ((pivot - _currentPivot).sqrMagnitude < 0.0001f)
+        if ((pivot - (Vector2)transform.position).sqrMagnitude < 0.0001f)
             return false;
 
-        _currentPivot = pivot;
-        Vector3 delta = pivot - _authoredPivot;
-        foreach (var (target, position) in _authored)
+        // 이 오브젝트가 맨 앞이라 거리는 그대로 (이 오브젝트를 옮긴 뒤 따라갈 것을 옮김)
+        Vector3 target3 = new Vector3(pivot.x, pivot.y, transform.position.z);
+        foreach (var (target, offset) in _parts)
         {
             if (target != null)
-                target.position = position + delta;
+                target.position = target3 + offset;
         }
 
         // 앞뒤 정렬을 새 높이로 (PlazaProp은 스스로, 그 밖의 그림은 씬 순서 + 옮긴 만큼)
-        int shift = PlazaDepth.SortingOrderFor(pivot.y) - PlazaDepth.SortingOrderFor(_authoredPivot.y);
+        int shift = PlazaDepth.SortingOrderFor(pivot.y) - PlazaDepth.SortingOrderFor(_authoredPivotY);
         foreach (var (renderer, order) in _fixedOrders)
         {
             if (renderer != null)
                 renderer.sortingOrder = Mathf.Clamp(order + shift, PlazaDepth.FlatPropOrder + 1, OverlayOrderFrom - 1);
         }
-        foreach (var (target, _) in _authored)
+        foreach (var (target, _) in _parts)
         {
             if (target == null)
                 continue;

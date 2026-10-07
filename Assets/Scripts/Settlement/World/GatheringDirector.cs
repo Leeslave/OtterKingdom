@@ -212,7 +212,7 @@ public class GatheringDirector : MonoBehaviour
         var dim = RuntimeUIKit.CreateDim(canvas.transform);
         var panel = RuntimeUIKit.CreatePanel(dim, 900f);
         string guests = _guestNames.Count > 0 ? string.Join(" · ", _guestNames) : "마을 주민들";
-        string body = $"마을회관 앞 식탁에 모두 모였어요.\n함께한 해달: {guests}\n\n이 기록은 공동사업 화면에서 다시 볼 수 있어요.";
+        string body = $"광장 식탁에 모두 모였어요.\n함께한 해달: {guests}\n\n이 기록은 공동사업 화면에서 다시 볼 수 있어요.";
         RuntimeUIKit.PrepareGlyphs(_memoryTitle + body + "기념닫기");
         RuntimeUIKit.CreateLabel(panel, _memoryTitle + " 기념", RuntimeUIKit.TitleFontSize, true);
         RuntimeUIKit.CreateLabel(panel, body);

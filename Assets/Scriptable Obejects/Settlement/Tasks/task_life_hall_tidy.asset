@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: task_life_hall_tidy
   m_EditorClassIdentifier: OtterKingdom::SettlementTaskDefinition
   _taskId: task_life_hall_tidy
-  _title: "\uD68C\uAD00 \uC8FC\uBCC0 \uC815\uB9AC"
-  _description: "\uD68C\uAD00 \uC55E\uC744 \uC4F8\uACE0 \uBB3C\uAC74\uC744 \uAC00\uC9C0\uB7F0\uD788
+  _title: "\uAE38\uB4DC \uC8FC\uBCC0 \uC815\uB9AC"
+  _description: "\uAE38\uB4DC \uC55E\uC744 \uC4F8\uACE0 \uBB3C\uAC74\uC744 \uAC00\uC9C0\uB7F0\uD788
     \uB193\uC544\uC694."
-  _completionMessage: "\uD68C\uAD00 \uC55E\uC774 \uAE54\uB054\uD574\uC84C\uC5B4\uC694!"
+  _completionMessage: "\uAE38\uB4DC \uC55E\uC774 \uAE54\uB054\uD574\uC84C\uC5B4\uC694!"
   _requiredWorkers: 1
   _durationSeconds: 20
   _requiredGold: 0

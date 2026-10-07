@@ -30,7 +30,7 @@ public static partial class SettlementSetup
     {
         ("House_Blue", 965, 400, "house_1"),
         ("Bench", 240, 320, "chair"), // 의자 부탁으로 지음 (Site_Chair)
-        ("Lamp", 990, 520, "house_1"),
+        ("Lamp", 990, 520, LampDevelopment), // 첫 집 뒤 가로등 부탁으로 세움 (자리는 건설 모드, SettlementSetup.Plots)
         ("House_Red", 905, 240, "house_2"),
         ("Fence_Rising", 40, 690, "house_2"),
         ("Picnic", 140, 1000, "farmland"),
@@ -177,6 +177,7 @@ public static partial class SettlementSetup
         // P2: 게시판 보강·관리 해달 근무 자리·광장 주민 작업·접수소 → 마을회관·바닷가 벤치 (SettlementSetup.P2)
         BuildP2(root, props, view, ToWorld);
         // 게시판 부탁 건물을 건설 모드에서 자리를 골라 짓게 (SettlementSetup.Plots)
+        ApplyBoardExpansion(plazaRoot);
         ApplyPlotAnchors(plazaRoot);
 
         EditorSceneManager.MarkSceneDirty(scene);

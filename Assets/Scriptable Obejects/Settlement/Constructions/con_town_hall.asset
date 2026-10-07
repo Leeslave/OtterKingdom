@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: con_town_hall
   m_EditorClassIdentifier: OtterKingdom::ConstructionDefinition
   _constructionId: con_town_hall
-  _displayName: "\uB9C8\uC744\uD68C\uAD00"
+  _displayName: "\uB9C8\uC744 \uAE38\uB4DC"
   _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
   _targetType: 0
   _requiredGold: 1200
@@ -24,7 +24,7 @@ MonoBehaviour:
     _amount: 24
   _durationSeconds: 120
   _needsBuilder: 1
-  _progressLabel: "\uB9C8\uC744\uD68C\uAD00 \uB113\uD788\uB294 \uC911"
+  _progressLabel: "\uB9C8\uC744 \uAE38\uB4DC\uB85C \uB113\uD788\uB294 \uC911"
   _progressHint: "\uB2E4 \uC9C0\uC73C\uBA74 \uB9C8\uC744 \uBC1C\uC804 \uD604\uD669\uC744
     \uBCFC \uC218 \uC788\uC5B4\uC694"
   _unlockResultId: town_hall_built

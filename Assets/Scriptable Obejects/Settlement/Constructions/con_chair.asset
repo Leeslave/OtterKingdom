@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: con_chair
   m_EditorClassIdentifier: OtterKingdom::ConstructionDefinition
   _constructionId: con_chair
-  _displayName: "\uB098\uBB34 \uADF8\uB298 \uC758\uC790"
+  _displayName: "\uC758\uC790"
   _icon: {fileID: 21300000, guid: c965ba9ca8006aa458ac8be800e48a59, type: 3}
   _targetType: 0
   _requiredGold: 50

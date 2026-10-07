@@ -67,6 +67,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3db83093cd91ddf47a321c72ce91887b, type: 2}
   - {fileID: 11400000, guid: a2c15005a22109a42a662ada45df49f3, type: 2}
   - {fileID: 11400000, guid: 767b30bc6d6c5d24080b2bd5306edac9, type: 2}
+  - {fileID: 11400000, guid: c10b380d28aafb447a3ea52ebea24c21, type: 2}
   _guestbookEntries:
   - {fileID: 11400000, guid: 33c4ddbf79f82ec4295cddd2da782dfe, type: 2}
   - {fileID: 11400000, guid: 26cb5157adbe284468d965b7886dcf4c, type: 2}
@@ -118,6 +119,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ed3ea56d75504a641b269c37fb44cdac, type: 2}
   - {fileID: 11400000, guid: ef0412d9136a42f4388150eb3c2a9b57, type: 2}
   - {fileID: 11400000, guid: 67108e59a537a494287a18760c9ab698, type: 2}
+  - {fileID: 11400000, guid: d12ca1e420dfadb47bc27ecd05ebe0ce, type: 2}
   _regions:
   - {fileID: 11400000, guid: 64bd9c77f54f5f64f904b9a057f13bad, type: 2}
   - {fileID: 11400000, guid: 4dcd2c8c3b284983a4d03fce7db21aff, type: 2}

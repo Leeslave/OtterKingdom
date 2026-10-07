@@ -23,6 +23,7 @@ public enum ProjectActionResult
     Busy,           // 건설 큐를 다른 공사가 쓰는 중 (납품은 그대로 보존)
     NeedChoice,     // 소품을 먼저 골라야 함
     NothingToGive,  // 넣을 수 있는 재료가 없음 (가진 것이 없거나 이미 다 냄)
+    NeedsPlace,     // 건설 모드에서 지을 자리를 먼저 골라야 함 (PlaceRequestOf로 그 부탁을 얻어 꾸미기 모드를 엶)
 }
 
 /// <summary>
@@ -296,9 +297,20 @@ public partial class SettlementManager
             case ConstructionStartResult.Busy:
             case ConstructionStartResult.WorkerBusy:
                 return ProjectActionResult.Busy;
+            case ConstructionStartResult.NeedsPlace:
+                return ProjectActionResult.NeedsPlace;
             default:
                 return ProjectActionResult.NotNow;
         }
+    }
+
+    /// <summary>지금 단계에서 자리를 골라 지어야 하는 건설 부탁 (자리를 이미 골랐거나 짓는 단계가 아니면 null)</summary>
+    public BoardRequestDefinition PlaceRequestOf(CommunityProjectDefinition project)
+    {
+        var stage = CurrentStage(project);
+        var request = stage != null ? CommunityProjectRules.StageConstruction(project, stage, Settlement) : null;
+        var plot = PlotOf(request);
+        return plot != null && !IsPlotPlaced(plot) ? request : null;
     }
 
     /// <summary>환영 소품을 고르고 바로 짓기 시작한다 (한 번 고르면 바꾸지 않음. 큐가 차 있으면 고른 것만 남고 나중에 시작)</summary>
