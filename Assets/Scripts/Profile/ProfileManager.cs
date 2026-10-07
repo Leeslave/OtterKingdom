@@ -16,8 +16,8 @@ public class ProfileSaveData
 /// 경험치는 퀘스트 보상으로 들어오고(AddExp), 레벨이 오르면 레벨 표의 보상(조개 등)을 주고 알린다.
 /// - 세이브: 게임 쪽이 LoadFromSave / WriteToSave를 호출
 /// </summary>
-// 상단바 뷰의 OnEnable보다 먼저 준비
-[DefaultExecutionOrder(-80)]
+// 상단바 뷰의 OnEnable보다, 그리고 레벨 해금을 구독하는 CollectionManager(-90)보다 먼저 준비
+[DefaultExecutionOrder(-95)]
 public class ProfileManager : MonoBehaviour
 {
     public static ProfileManager Instance { get; private set; }

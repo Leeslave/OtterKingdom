@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterFisher
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 0}
+  - {fileID: 0}
+  _lines:
+  - _cut: 0
+    _text: "\uC544\u2026 {\uC774\uB984}\uB2D8\uC774\uB2E4\u2026 \uC548\uB155\uD558\uC138\uC694\uC624\u2026"
+  - _cut: 1
+    _text: "\uC774\uAC74\uC694\u2026 \uC81C\uC77C \uC88B\uC544\uD558\uB294 \uB3CC\uC774\uC5D0\uC694.
+      \uACA8\uB4DC\uB791\uC774\uC5D0 \uB123\uC5B4 \uB2E4\uB140\uC694."
+  - _cut: 0
+    _text: "\uBB3C\uACB0 \uC18C\uB9AC \uB4E3\uB2E4 \uBCF4\uBA74\u2026 \uBB3C\uACE0\uAE30\uAC00
+      \uBA3C\uC800 \uC640\uC694\u2026 \uCFE8\u2026"

@@ -16,10 +16,67 @@ public class Collection
 {
     public event Action<CollectionEntry, CollectionState> OnStateChanged;
 
+    /// <summary>"아직 안 본 이야기"가 생기거나 없어질 수 있을 때 (이야기 있는 항목 획득, 이야기 봄)</summary>
+    public event Action OnStoriesChanged;
+
     // 세이브와 같은 ID 기준. DB에서 지워진 항목의 상태도 그대로 보관해 다음 저장 때 잃지 않음
     private readonly Dictionary<string, CollectionState> _states = new Dictionary<string, CollectionState>();
 
+    // 이야기를 본 항목 ID
+    private readonly HashSet<string> _watchedStories = new HashSet<string>();
+
     public IReadOnlyDictionary<string, CollectionState> States => _states;
+
+    public bool IsStoryWatched(string entryId) => _watchedStories.Contains(entryId);
+
+    /// <summary>획득했고 이야기가 있는데 아직 안 봤으면 true (N 표시, 자동 재생)</summary>
+    public bool HasNewStory(CollectionEntry entry)
+    {
+        if (entry == null)
+            throw new ArgumentNullException(nameof(entry));
+
+        return entry.HasStory && GetState(entry) == CollectionState.Collected && !_watchedStories.Contains(entry.EntryId);
+    }
+
+    public int CountNewStories(IEnumerable<CollectionEntry> entries)
+    {
+        if (entries == null)
+            throw new ArgumentNullException(nameof(entries));
+
+        int count = 0;
+        foreach (var entry in entries)
+        {
+            if (entry != null && HasNewStory(entry))
+                count++;
+        }
+        return count;
+    }
+
+    /// <summary>이야기를 끝까지 봤거나 건너뜀</summary>
+    /// <returns>처음 본 것이면 true</returns>
+    public bool MarkStoryWatched(CollectionEntry entry)
+    {
+        if (entry == null)
+            throw new ArgumentNullException(nameof(entry));
+
+        if (!_watchedStories.Add(entry.EntryId))
+            return false;
+
+        OnStoriesChanged?.Invoke();
+        return true;
+    }
+
+    /// <summary>세이브를 다 불러온 뒤 호출 → N 표시를 다시 계산하게 알림 (복원 중에는 하나씩 알리지 않음)</summary>
+    public void NotifyLoaded() => OnStoriesChanged?.Invoke();
+
+    /// <summary>세이브 복원용. 알림 없이 "봤음"으로 넣는다</summary>
+    public void LoadStoryWatched(string entryId)
+    {
+        if (string.IsNullOrEmpty(entryId))
+            throw new ArgumentException("entryId가 비어 있습니다.", nameof(entryId));
+
+        _watchedStories.Add(entryId);
+    }
 
     public CollectionState GetState(CollectionEntry entry)
     {
@@ -87,6 +144,9 @@ public class Collection
 
         _states[entry.EntryId] = target;
         OnStateChanged?.Invoke(entry, target);
+
+        if (target == CollectionState.Collected && entry.HasStory)
+            OnStoriesChanged?.Invoke();
         return true;
     }
 }
