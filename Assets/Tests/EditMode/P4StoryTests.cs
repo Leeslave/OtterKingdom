@@ -116,6 +116,18 @@ public class P4StoryTests
     }
 
     [Test]
+    public void LevelCapRequest_IsTheRequestHoldingTheCap()
+    {
+        var settlement = new Settlement();
+        Assert.AreEqual(_firstHome, SettlementRules.LevelCapRequest(_config, settlement, 10), "Lv.10: 첫 집 부탁을 끝내면 11");
+        Assert.AreEqual(_shopRequest, SettlementRules.LevelCapRequest(_config, settlement, 11), "Lv.11 세이브: 상점");
+        Assert.IsNull(SettlementRules.LevelCapRequest(_config, settlement, 16), "이미 넘은 세이브는 묶지 않음");
+
+        settlement.CompleteRequest(_firstHome.RequestId, "p4_first_home");
+        Assert.AreEqual(_shopRequest, SettlementRules.LevelCapRequest(_config, settlement, 10));
+    }
+
+    [Test]
     public void Bonus_CountsBuiltFacilityOnce()
     {
         var settlement = new Settlement();

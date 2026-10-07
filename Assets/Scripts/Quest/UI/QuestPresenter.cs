@@ -23,6 +23,8 @@ public class QuestPresenter : MonoBehaviour
     [Tooltip("\"120 / 300\" (최고 레벨이면 \"MAX\")")]
     [SerializeField] private TextMeshProUGUI _expText;
     [SerializeField] private ProgressBarView _expBar;
+    [Tooltip("\"해달들과 함께 왕국을 키워요!\" — 경험치가 찼는데 부탁에 묶여 레벨이 안 오르면 그 부탁을 알려 줌")]
+    [SerializeField] private TextMeshProUGUI _subtitleText;
 
     [Header("버튼")]
     [SerializeField] private Button _claimAllButton;
@@ -141,6 +143,23 @@ public class QuestPresenter : MonoBehaviour
         _levelText.text = $"Lv.{progress.Level}";
         _expText.text = need > 0 ? $"{progress.Exp:N0} / {need:N0}" : "MAX";
         _expBar.SetRatio(progress.Ratio(_profile.LevelTable));
+        RefreshSubtitle(need > 0 && progress.Exp >= need);
+    }
+
+    private string _defaultSubtitle;
+
+    // 경험치가 다 찼는데 레벨이 묶여 있으면 (의자 → Lv.2 등) 무엇을 끝내면 오르는지 부제 자리에 알려 줌
+    private void RefreshSubtitle(bool expFull)
+    {
+        if (_subtitleText == null)
+            return;
+        _defaultSubtitle ??= _subtitleText.text;
+
+        var settlement = SettlementManager.Instance;
+        var request = expFull && settlement != null ? settlement.LevelCapRequest : null;
+        _subtitleText.text = request != null
+            ? $"'{request.Title}'{KoreanParticle.ObjectParticle(request.Title)} 끝내면 다음 레벨(Lv.{request.KingdomLevel})로 올라가요!"
+            : _defaultSubtitle;
     }
 
     // 처음 보는 한글을 폰트 아틀라스에 미리 넣는다 (동적 폰트).

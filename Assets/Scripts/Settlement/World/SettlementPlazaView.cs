@@ -22,7 +22,7 @@ using UnityEngine;
 /// </summary>
 // GameManager.Start(0)가 세이브를 불러온 뒤, PlazaController.Start(0) 다음에 광장을 맞춤
 [DefaultExecutionOrder(50)]
-public class SettlementPlazaView : MonoBehaviour
+public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
 {
     // 완성 순간 카메라가 현장으로 미끄러져 가는 시간 (별빛은 그 뒤에)
     private const float CameraArriveSeconds = 0.6f;
@@ -42,6 +42,8 @@ public class SettlementPlazaView : MonoBehaviour
     [SerializeField] private Transform _otterRoot;
     [Tooltip("처음 들어올 때 해달들이 모여 있을 곳 (카메라 첫 화면)")]
     [SerializeField] private Transform _gatherPoint;
+    [Tooltip("모이는 곳 둘레로 꾸미기 물건·건물을 놓지 못하게 비워 둘 크기 (월드 단위). 0이면 비우지 않음")]
+    [SerializeField] private Vector2 _gatherClearSize = new Vector2(3.5f, 2.5f);
     [Tooltip("새로 찾아온 해달이 나타나는 곳 (광장 가장자리 길)")]
     [SerializeField] private Transform _arrivalPoint;
 
@@ -442,6 +444,16 @@ public class SettlementPlazaView : MonoBehaviour
         var view = target.AddComponent<SettlementOtterView>();
         view.Init(otter, _plazaSettings.otterHeight, _speechBubble, _alertBubble, _hammerBubble, _speechFont);
         return view;
+    }
+
+    /// <summary>해달이 모이고 새 해달이 서 있는 곳(광장 가운데 조개 자리)에 물건·건물이 오지 않게 비워 둠</summary>
+    public bool TryGetDecorBlock(out Rect worldRect)
+    {
+        worldRect = default;
+        if (_gatherPoint == null || _gatherClearSize.x <= 0f || _gatherClearSize.y <= 0f)
+            return false;
+        worldRect = new Rect((Vector2)_gatherPoint.position - _gatherClearSize * 0.5f, _gatherClearSize);
+        return true;
     }
 
     /// <summary>광장의 이 해달 쪽으로 카메라를 옮김 (안내 띠 "할 말이 있대요")</summary>

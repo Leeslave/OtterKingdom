@@ -134,4 +134,23 @@ public class MainQuestChainTests
         Assert.IsTrue(loaded.MainChainReady);
         Assert.IsFalse(new QuestLog().MainChainReady, "옛 세이브(표시 없음)는 false");
     }
+
+    [Test]
+    public void VisitedZones_AreSavedAndLoaded_NotAsQuestRecords()
+    {
+        var log = new QuestLog();
+        Assert.IsTrue(log.MarkVisited("Mine"));
+        Assert.IsFalse(log.MarkVisited("Mine"), "같은 장소는 한 번만");
+        log.MarkVisited("Farm");
+        var saved = new List<QuestSaveEntry>();
+        QuestSaveConverter.Write(log, saved);
+
+        var loaded = new QuestLog();
+        QuestSaveConverter.Read(saved, loaded);
+
+        Assert.IsTrue(loaded.HasVisited("Mine"));
+        Assert.IsTrue(loaded.HasVisited("Farm"));
+        Assert.IsFalse(loaded.HasVisited("Fishing"));
+        Assert.AreEqual(0, loaded.Records.Count, "가 본 장소 줄은 퀘스트 기록이 아닙니다.");
+    }
 }

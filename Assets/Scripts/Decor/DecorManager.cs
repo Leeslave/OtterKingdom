@@ -156,6 +156,15 @@ public class DecorManager : MonoBehaviour
         return DecorStorage.Available(owned, _layouts.Values, decor);
     }
 
+    /// <summary>모든 장소에 놓인 개수</summary>
+    public int PlacedCount(DecorDefinition decor)
+    {
+        if (decor == null)
+            throw new ArgumentNullException(nameof(decor));
+
+        return DecorStorage.PlacedCount(_layouts.Values, decor);
+    }
+
     /// <summary>보관함에서 꺼내 이 장소에 놓기. 남은 개수가 없으면 NotOwned</summary>
     public DecorPlacementResult TryPlaceFromStorage(DecorBoardDefinition board, DecorDefinition decor, Vector2Int origin,
         DecorRotation rotation, out PlacedDecor placed)

@@ -400,6 +400,16 @@ public partial class SettlementManager : MonoBehaviour
             profile.SetLevelCap(SettlementRules.LevelCap(_config, Settlement, profile.Level));
     }
 
+    /// <summary>왕국 레벨을 묶고 있는 부탁 (끝내면 레벨이 오름). 묶여 있지 않으면 null</summary>
+    public BoardRequestDefinition LevelCapRequest
+    {
+        get
+        {
+            var profile = ProfileManager.Instance;
+            return IsLoaded ? SettlementRules.LevelCapRequest(_config, Settlement, profile != null ? profile.Level : 1) : null;
+        }
+    }
+
     #endregion
 
     #region 해달과 대화
@@ -487,6 +497,21 @@ public partial class SettlementManager : MonoBehaviour
             throw new ArgumentOutOfRangeException(nameof(amount));
 
         int added = InventoryManager.Instance.Inventory.Add(item, amount, ItemChangeReason.Gather);
+        if (added > 0)
+            SaveRequested?.Invoke();
+        return added;
+    }
+
+    /// <summary>장소(광산·밭)의 길을 막은 장애물을 치우고 얻은 재료. 광장 줍기 퀘스트에는 세지 않음</summary>
+    /// <returns>넣은 개수 (가방이 꽉 찼으면 0)</returns>
+    public int GrantClearingReward(ItemDefinition item, int amount)
+    {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+        if (amount <= 0)
+            throw new ArgumentOutOfRangeException(nameof(amount));
+
+        int added = InventoryManager.Instance.Inventory.Add(item, amount, ItemChangeReason.Clearing);
         if (added > 0)
             SaveRequested?.Invoke();
         return added;

@@ -299,7 +299,7 @@ public class GameManager : MonoBehaviour
         {
             var crop = farmService.GetCrop(cropId);
             return crop != null ? crop.displayName : cropId;
-        }));
+        }, InventoryManager.Instance != null && Bag.FreeSlots > 0));
     }
 
     private class FarmHost : IFarmHost
@@ -822,8 +822,16 @@ public class GameManager : MonoBehaviour
 
     // Planting by hand with no seed. Points at the fairy shop, or says the
     // fairy who sells seeds is on her way if she hasn't come to the plaza yet.
-    public static string NoSeedMessage(CropDefinition crop) =>
-        $"{crop.displayName} 모종이 없어요.\n" + FarmNoticeText.WhereToBuySeeds;
+    // A seed the shop only sells from a later kingdom level says which level.
+    public static string NoSeedMessage(CropDefinition crop)
+    {
+        string head = $"{crop.displayName} 모종이 없어요.\n";
+        var shop = FairyShopPresenter.Instance;
+        int level = shop != null ? shop.RequiredLevelFor(crop.SeedItemId) : 0;
+        if (FairyAccess.IsShopOpen && KingdomLevel < level)
+            return head + $"왕국 레벨 {level}부터 요정 상점에서 살 수 있어요.";
+        return head + FarmNoticeText.WhereToBuySeeds;
+    }
 
     public PlantResult PlantFromPrompt(int plotIndex, int slotIndex, string cropId)
     {
@@ -1028,6 +1036,12 @@ public class GameManager : MonoBehaviour
     public void ShowConfirm(string title, string message, Action onYes)
     {
         gameUI.ShowConfirm(title, message, onYes);
+    }
+
+    // Plain "알림" popup with [확인] — e.g. why a locked zone on the travel map can't be entered yet.
+    public void ShowAlert(string message)
+    {
+        gameUI.ShowAlert(message);
     }
 
     // Bottom speech bubble (e.g. "길을 막은 나무와 돌을 톡톡 눌러 치워요!"
@@ -1251,7 +1265,7 @@ public class GameManager : MonoBehaviour
 
         GUILayout.BeginArea(DebugPanelRect, GUI.skin.box);
 
-        GUILayout.Label($"코인: {CurrencyManager.Instance.GetCurrency(goldCurrency)}");
+        GUILayout.Label($"골드: {CurrencyManager.Instance.GetCurrency(goldCurrency)}");
         GUILayout.Label($"농사 레벨: {save.farmLevel}");
 
         for (int plotIndex = 0; plotIndex < farmService.Plots.Count; plotIndex++)
@@ -1292,7 +1306,7 @@ public class GameManager : MonoBehaviour
         if (farmService.CanUpgrade)
         {
             GUI.enabled = CurrencyManager.Instance.GetCurrency(goldCurrency) >= farmService.NextUpgradeCost;
-            if (GUILayout.Button($"농사 강화 ({farmService.NextUpgradeCost} 코인)"))
+            if (GUILayout.Button($"농사 강화 ({farmService.NextUpgradeCost} 골드)"))
             {
                 if (farmService.TryUpgrade(CurrencyManager.Instance, goldCurrency))
                 {

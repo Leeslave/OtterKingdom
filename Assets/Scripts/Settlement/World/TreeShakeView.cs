@@ -6,7 +6,7 @@ using UnityEngine;
 /// 정해진 횟수를 흔들면(마지막엔 더 많이) 잎이 성긴 그림으로 바뀌어 "쉬는 중"이 되고, 시간이 지나면 다시 흔들 수 있다 (세이브에 남음).
 /// 흔든 횟수는 앱을 켜 둔 동안만 기억한다 (다른 장소에 다녀와도 이어서).
 /// </summary>
-public class TreeShakeView : MonoBehaviour
+public class TreeShakeView : MonoBehaviour, IDecorBlocker
 {
     private const float SwaySeconds = 0.8f;
 
@@ -150,7 +150,7 @@ public class TreeShakeView : MonoBehaviour
     {
         StartSway(2f);
         Leaves(1);
-        _fx.ShowText($"{SettlementManager.FormatShort(manager.GatherRemaining(_pointId))} 뒤에 다시 흔들 수 있어요", TextPoint, _textColor);
+        _fx.ShowText($"{SettlementManager.FormatShort(manager.GatherRemaining(_pointId))} 뒤에 또 흔들어요", TextPoint, _textColor);
     }
 
     // 쉬는 동안만 작은 시계: 남은 시간만큼 초록이 차오름
@@ -208,5 +208,20 @@ public class TreeShakeView : MonoBehaviour
         float t = SwaySeconds - _swayTimer;
         float angle = _swayTimer > 0f ? _swayAmplitude * Mathf.Sin(t * 22f) * Mathf.Exp(-t * 4.5f) : 0f;
         _renderer.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
+    // 꾸미기: 이 자리(탭 영역)에는 물건·건물을 놓지 못하게. 주워서 그림이 꺼진 뒤에도 같은 자리를 비워 두도록 처음 범위를 기억
+    private Rect? _decorBlock;
+
+    public bool TryGetDecorBlock(out Rect worldRect)
+    {
+        if (_decorBlock == null && _tapArea != null && _tapArea.isActiveAndEnabled)
+        {
+            var bounds = _tapArea.bounds;
+            if (bounds.size.x > 0f && bounds.size.y > 0f)
+                _decorBlock = new Rect(bounds.min, bounds.size);
+        }
+        worldRect = _decorBlock ?? default;
+        return _decorBlock != null;
     }
 }

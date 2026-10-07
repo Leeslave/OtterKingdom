@@ -34,6 +34,19 @@ public class FairyShopPresenter : MonoBehaviour
 
     public bool IsOpen => _shop.IsOpen;
 
+    /// <summary>이 아이템을 파는 상품이 열리는 왕국 레벨 (팔지 않으면 0)</summary>
+    public int RequiredLevelFor(string itemId)
+    {
+        if (_catalog == null || string.IsNullOrEmpty(itemId))
+            return 0;
+        foreach (var product in _catalog.Products)
+        {
+            if (product.Item.ItemId == itemId)
+                return product.RequiredLevel;
+        }
+        return 0;
+    }
+
     private bool _glyphsReady;
 
     private void Awake()

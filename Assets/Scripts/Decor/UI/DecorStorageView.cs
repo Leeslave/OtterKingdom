@@ -84,7 +84,8 @@ public class DecorStorageView : MonoBehaviour
     }
 
     /// <summary>칸을 다시 그린다. count: 보관함에 남은 개수, selected: 지금 들고 있는 물건</summary>
-    public void Refresh(IReadOnlyList<DecorDefinition> decors, Func<DecorDefinition, int> count, DecorDefinition selected)
+    public void Refresh(IReadOnlyList<DecorDefinition> decors, Func<DecorDefinition, int> count, Func<DecorDefinition, int> placed,
+        DecorDefinition selected)
     {
         var shown = new List<DecorDefinition>();
         foreach (var decor in decors)
@@ -99,7 +100,7 @@ public class DecorStorageView : MonoBehaviour
             bool used = i < shown.Count;
             _slots[i].gameObject.SetActive(used);
             if (used)
-                _slots[i].Bind(shown[i], count(shown[i]), shown[i] == selected);
+                _slots[i].Bind(shown[i], count(shown[i]), placed(shown[i]) > 0, shown[i] == selected);
         }
 
         _shopSlotRoot.gameObject.SetActive(true);

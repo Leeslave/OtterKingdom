@@ -37,6 +37,9 @@ public static class SettlementQuestGate
             // 요정 상점은 밭이 열릴 때 광장에 나옴
             case QuestGoalType.ShopPurchase:
                 return FarmDevelopment;
+            // 장난감은 요정 상점에서 사므로 상점이 나오기 전에는 놓을 수 없음
+            case QuestGoalType.PlaceDecor:
+                return FarmDevelopment;
             // 도감의 작물·물고기 칸은 밭이 열려야 채울 수 있음 (탭을 정한 해달 만나기는 언제든)
             case QuestGoalType.CollectionRegister:
                 return quest.CollectionTab != null ? null : FarmDevelopment;

@@ -12,6 +12,8 @@ public class CurrencyShortagePopupView : MonoBehaviour
     [SerializeField] private UIPopupAnimator _animator;
 
     [Header("내용")]
+    [Tooltip("패널 위 리본 \"조개 부족\"")]
+    [SerializeField] private TextMeshProUGUI _ribbonText;
     [SerializeField] private Image _icon;
     [Tooltip("\"조개가 부족해요\"")]
     [SerializeField] private TextMeshProUGUI _titleText;
@@ -44,6 +46,8 @@ public class CurrencyShortagePopupView : MonoBehaviour
 
         Currency = currency;
         _icon.sprite = currency.Icon;
+        if (_ribbonText != null)
+            _ribbonText.text = $"{currency.DisplayName} 부족";
         _titleText.text = $"{currency.DisplayName}{KoreanParticle.SubjectParticle(currency.DisplayName)} 부족해요";
         _detailText.text = $"필요 {need:N0}  ·  보유 {have:N0}";
         _lackText.text = $"{Math.Max(0, need - have):N0}개 부족";

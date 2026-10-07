@@ -45,6 +45,16 @@ public class QuestLog
 
     public void MarkMainChainReady() => MainChainReady = true;
 
+    // 가 본 장소 (씬 이름). 장소 가 보기 퀘스트가 열리기 전에 다녀왔어도 기록으로 세려고 남김
+    private readonly HashSet<string> _visitedZones = new HashSet<string>();
+
+    public IReadOnlyCollection<string> VisitedZones => _visitedZones;
+
+    /// <returns>처음 가 본 장소면 true</returns>
+    public bool MarkVisited(string sceneName) => !string.IsNullOrEmpty(sceneName) && _visitedZones.Add(sceneName);
+
+    public bool HasVisited(string sceneName) => !string.IsNullOrEmpty(sceneName) && _visitedZones.Contains(sceneName);
+
     /// <returns>진행 수치 (목표를 넘지 않음)</returns>
     public int GetProgress(QuestDefinition quest)
     {

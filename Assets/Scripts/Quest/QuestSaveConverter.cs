@@ -31,6 +31,8 @@ public static class QuestSaveConverter
     public const string DailyDayId = "__daily_day";
     // 레벨별 메인 체인을 맞춘 세이브인지 (progress 1). 없으면 옛 세이브
     public const string MainChainId = "__main_chain";
+    // 가 본 장소 하나에 한 줄 ("__visited:Mine"). 장소 가 보기 퀘스트를 기록으로 셈
+    public const string VisitedPrefix = "__visited:";
 
     /// <summary>기록이 있는 퀘스트만 ID 순으로 쓴다 (DB에 없는 ID도 보관해 둔 그대로 씀)</summary>
     public static void Write(QuestLog log, List<QuestSaveEntry> result)
@@ -52,6 +54,11 @@ public static class QuestSaveConverter
             result.Add(new QuestSaveEntry(DailyDayId, log.DailyDay, false));
         if (log.MainChainReady)
             result.Add(new QuestSaveEntry(MainChainId, 1, false));
+
+        var zones = new List<string>(log.VisitedZones);
+        zones.Sort(string.CompareOrdinal);
+        foreach (var zone in zones)
+            result.Add(new QuestSaveEntry(VisitedPrefix + zone, 1, false));
     }
 
     /// <summary>저장된 기록을 넣는다. 비었거나 잘못된 줄은 건너뛴다.</summary>
@@ -74,6 +81,11 @@ public static class QuestSaveConverter
             {
                 if (line.progress > 0)
                     log.MarkMainChainReady();
+                continue;
+            }
+            if (line.questId.StartsWith(VisitedPrefix, StringComparison.Ordinal))
+            {
+                log.MarkVisited(line.questId.Substring(VisitedPrefix.Length));
                 continue;
             }
 

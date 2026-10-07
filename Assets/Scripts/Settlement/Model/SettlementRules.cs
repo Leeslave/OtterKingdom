@@ -261,6 +261,22 @@ public static class SettlementRules
         return cap;
     }
 
+    /// <summary>LevelCap을 정하는 부탁: 끝내면 왕국 레벨이 오르는 부탁 중 아직 안 끝낸 가장 낮은 것 (제한이 없으면 null)</summary>
+    public static BoardRequestDefinition LevelCapRequest(SettlementConfig config, Settlement settlement, int currentLevel = 1)
+    {
+        BoardRequestDefinition best = null;
+        foreach (var request in config.Requests)
+        {
+            if (request == null || request.KingdomLevel <= 0 || settlement.IsCompleted(request.RequestId)
+                || request.KingdomLevel <= currentLevel)
+                continue;
+            if (best == null || request.KingdomLevel < best.KingdomLevel
+                || request.KingdomLevel == best.KingdomLevel && request.Order < best.Order)
+                best = request;
+        }
+        return best;
+    }
+
     /// <summary>이 장소를 직접 치우는 부탁 (없으면 null)</summary>
     public static BoardRequestDefinition FindClearing(SettlementConfig config, ZoneDefinition zone)
     {

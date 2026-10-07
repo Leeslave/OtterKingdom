@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 // The dashed circle at the end of the dock (same sprite as an empty furrow
 // slot). The root transform is where the fishing otter's feet go; the circle
 // itself is a child so it can be offset/scaled freely. Tapping it while the
-// otter is off duty asks "낚시를 진행하시겠습니까?"; "예" turns fishing on and
+// otter is off duty asks "낚시를 시작할까요?"; "예" turns fishing on and
 // FishingOtterController walks over. Hidden while fishing is on — the otter
 // is standing on it, and tapping the otter is how fishing is stopped.
 public class FishingSpotView : MonoBehaviour
@@ -50,7 +50,7 @@ public class FishingSpotView : MonoBehaviour
         Vector2 worldPos = mainCamera.ScreenToWorldPoint(screenPos);
         if (!circleCollider.OverlapPoint(worldPos)) return;
 
-        GameManager.Instance.ShowConfirm("낚시", "낚시를 진행하시겠습니까?",
+        GameManager.Instance.ShowConfirm("낚시", "낚시를 시작할까요?",
             () => GameManager.Instance.SetFishingActive(true));
     }
 }

@@ -72,8 +72,14 @@ public partial class SettlementManager
             case BuildingBlock.NoBuilder:
                 return "건설 해달이 있어야 지을 수 있어요";
             case BuildingBlock.Gold:
-                return "골드가 모자라요";
+                return $"골드가 {BuildingGoldCost(building) - GoldBalance:N0} 모자라요";
             case BuildingBlock.Items:
+                foreach (var cost in BuildingItemCosts(building))
+                {
+                    int lack = cost.Amount - ItemCount(cost.Item);
+                    if (lack > 0)
+                        return $"{cost.Item.DisplayName} {lack}개가 더 필요해요";
+                }
                 return "재료가 모자라요";
             default:
                 return "";

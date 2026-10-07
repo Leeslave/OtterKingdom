@@ -76,6 +76,6 @@ public class CurrencyHud : MonoBehaviour
 
     private void Refresh()
     {
-        label.text = $"코인 {CurrencyManager.Instance.GetCurrency(currency)}";
+        label.text = $"골드 {CurrencyManager.Instance.GetCurrency(currency)}";
     }
 }

@@ -187,6 +187,14 @@ public class GlobalUIPresenter : MonoBehaviour
             return;
         }
 
+        // 잠긴 장소: 카드의 작은 글씨 대신 여는 조건을 크게 알려 줌
+        if (!ZoneAccess.IsOpen(zone))
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.ShowAlert($"{zone.DisplayName}\n{ZoneAccess.LockedSubtitle(zone)}");
+            return;
+        }
+
         if (_navigator.TryGo(zone))
             _travelPopup.Hide();
     }
