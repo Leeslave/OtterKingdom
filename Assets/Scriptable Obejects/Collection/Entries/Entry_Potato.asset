@@ -24,3 +24,5 @@ MonoBehaviour:
     \uC904\uC744 \uC11C\uC694."
   _extraValue: "\uBC2D"
   _linkedItem: {fileID: 11400000, guid: 0e99b5383c079a0439f83ec3ff5c30f1, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 11400000, guid: 4b28af452ab27c349b377d1f5eba3760, type: 2}

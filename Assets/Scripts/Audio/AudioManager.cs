@@ -152,8 +152,11 @@ public class AudioManager : MonoBehaviour
             return;
 
         _lastPreviewTime = Time.unscaledTime;
-        PlaySfx(_previewSfx);
+        PlayChime();
     }
+
+    /// <summary>짧은 알림음 (이야기 시작 등). 전용 효과음이 생기기 전까지 미리듣기 소리를 같이 씀</summary>
+    public void PlayChime() => PlaySfx(_previewSfx);
 
     private void ApplyVolumes()
     {

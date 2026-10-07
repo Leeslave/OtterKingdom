@@ -48,9 +48,18 @@ public class CollectionEntry : ScriptableObject
     private string _extraValue;
 
     [Header("자동 획득")]
-    [Tooltip("이 아이템이 가방에 처음 들어오면 자동으로 획득 (해달처럼 아이템이 아닌 항목은 비움)")]
+    [Tooltip("이 아이템을 수확·낚시 등으로 처음 얻으면 자동으로 획득 (해달처럼 아이템이 아닌 항목은 비움)")]
     [SerializeField]
     private ItemDefinition _linkedItem;
+
+    [Tooltip("이 레벨에 도달하면 자동으로 등록 (0이면 레벨로 해금하지 않음. 예: 농부 해달 2, 낚시꾼 해달 10)")]
+    [SerializeField]
+    private int _unlockLevel;
+
+    [Header("이야기")]
+    [Tooltip("해금 후 도감에서 볼 수 있는 컷씬. 비우면 이야기 없음")]
+    [SerializeField]
+    private CollectionStory _story;
 
     public string EntryId => _entryId;
     public CollectionTab Tab => _tab;
@@ -60,6 +69,9 @@ public class CollectionEntry : ScriptableObject
     public string Description => _description;
     public string ExtraValue => _extraValue;
     public ItemDefinition LinkedItem => _linkedItem;
+    public int UnlockLevel => _unlockLevel;
+    public CollectionStory Story => _story;
+    public bool HasStory => _story != null;
 
     public string DisplayName =>
         !string.IsNullOrWhiteSpace(_displayName) ? _displayName
@@ -78,5 +90,7 @@ public class CollectionEntry : ScriptableObject
 
         if (_tab == null)
             Debug.LogWarning($"[{name}] Tab이 비어 있습니다.", this);
+
+        _unlockLevel = Mathf.Max(0, _unlockLevel);
     }
 }

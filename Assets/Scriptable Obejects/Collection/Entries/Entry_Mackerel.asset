@@ -23,3 +23,5 @@ MonoBehaviour:
     \uD5E4\uC5C4\uCCD0\uC694."
   _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130"
   _linkedItem: {fileID: 11400000, guid: 0cb02bf2ad3606a439fe3742a5df077a, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 11400000, guid: 189907bbf0f6ca546bda547377c683dd, type: 2}
