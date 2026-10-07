@@ -660,6 +660,20 @@ public class SettlementPresenter : MonoBehaviour
                 note = construction.IsInstant ? "바로 지을 수 있어요!" : $"{FormatDuration(construction.DurationSeconds)} 걸려요";
         }
 
+        // 자리를 골라 짓는 건물 (첫 집·의자·길드 등): [자리 고르기] → 건설 모드 (광장이 아니면 광장으로)
+        var plot = _manager.PlotOf(request);
+        if (plot != null && status == RequestStatus.Available && !_manager.IsPlotPlaced(plot))
+        {
+            startLabel = "자리 고르기";
+            if (canStart)
+                note = $"건설 모드에서 지을 자리를 골라요 · {FormatDuration(construction.DurationSeconds)} 걸려요";
+            if (canStart && SettlementPlazaView.Active == null)
+            {
+                startLabel = "광장으로";
+                canStart = PlazaZone != null && _navigator != null;
+            }
+        }
+
         _construction.Show(request, speaker, line, _costs, note, startLabel, canStart);
     }
 
@@ -1000,6 +1014,20 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
+        // 자리를 골라 짓는 건물: 건설 모드에서 자리를 고르면 그때 건설이 시작됨 (광장이 아니면 광장으로)
+        var plot = _manager.PlotOf(request);
+        if (plot != null && !_manager.IsPlotPlaced(plot))
+        {
+            _construction.Hide();
+            if (_board.IsOpen)
+                _board.Hide();
+            if (SettlementPlazaView.Active != null)
+                DecorModePresenter.RequestPlace(request);
+            else if (PlazaZone != null && _navigator != null)
+                _navigator.TryGo(PlazaZone);
+            return;
+        }
+
         switch (_manager.TryStart(request))
         {
             case ConstructionStartResult.Started:
@@ -1166,6 +1194,7 @@ public class SettlementPresenter : MonoBehaviour
             if (request.Construction != null)
                 text.Append(request.Construction.DisplayName).Append(request.Construction.ProgressLabel).Append(request.Construction.ProgressHint);
         }
+        text.Append("자리 고르기 건설 모드에서 지을 자리를 골라요 광장으로");
         foreach (var entry in config.GuestbookEntries)
         {
             if (entry != null)

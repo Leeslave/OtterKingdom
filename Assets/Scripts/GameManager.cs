@@ -339,6 +339,8 @@ public class GameManager : MonoBehaviour
         SettlementManager.SaveRequested += SaveNow;
         DecorManager.SaveRequested += SaveNow;
         FairyShopPresenter.Opened += HandleFairyShopOpened;
+        DecorModePresenter.BuildPlacementBegan += HandleBuildPlacementBegan;
+        DecorModePresenter.BuildStarted += HandleBuildStarted;
         InventoryManager.Instance.OnItemSold += HandleItemSold;
     }
 
@@ -348,6 +350,8 @@ public class GameManager : MonoBehaviour
         SettlementManager.SaveRequested -= SaveNow;
         DecorManager.SaveRequested -= SaveNow;
         FairyShopPresenter.Opened -= HandleFairyShopOpened;
+        DecorModePresenter.BuildPlacementBegan -= HandleBuildPlacementBegan;
+        DecorModePresenter.BuildStarted -= HandleBuildStarted;
         if (InventoryManager.Instance != null) InventoryManager.Instance.OnItemSold -= HandleItemSold;
     }
 
@@ -1003,6 +1007,79 @@ public class GameManager : MonoBehaviour
         if (save.tutorialsDone.Contains(ZoneTutorials.FairyShop)) return;
         save.tutorialsDone.Add(ZoneTutorials.FairyShop);
         SaveNow();
+    }
+
+    // The build mode guide: the first time the player picks a spot for a
+    // building (the first house, from its board request), a short overlay
+    // explains the ghost (green/red cells, drag to move) and [확인], then a
+    // highlight on [확인] that doesn't block dragging stays until the build
+    // actually starts = done (BuildStarted). Leaving build mode without
+    // building hides it; the next placement shows the highlight again (the
+    // explanation only once: BuildIntro).
+    private DecorModePresenter buildTutorialMode;
+    private TutorialPointer buildPointer;
+
+    private void HandleBuildPlacementBegan(DecorModePresenter decorMode)
+    {
+        if (save.tutorialsDone.Contains(ZoneTutorials.Build) || buildTutorialMode != null) return;
+        buildTutorialMode = decorMode;
+        StartCoroutine(PlayBuildTutorial(decorMode));
+    }
+
+    private IEnumerator PlayBuildTutorial(DecorModePresenter decorMode)
+    {
+        // Let the camera glide to the ghost first.
+        yield return new WaitForSecondsRealtime(0.6f);
+        if (!decorMode.IsPlacingBuilding || save.tutorialsDone.Contains(ZoneTutorials.Build))
+        {
+            buildTutorialMode = null;
+            yield break;
+        }
+
+        if (!save.tutorialsDone.Contains(ZoneTutorials.BuildIntro))
+        {
+            bool finished = false;
+            bool skipped = false;
+            TutorialOverlay.Play(ZoneTutorials.BuildSteps(decorMode), wasSkipped =>
+            {
+                finished = true;
+                skipped = wasSkipped;
+            });
+            while (!finished) yield return null;
+            if (!skipped && !save.tutorialsDone.Contains(ZoneTutorials.Build))
+            {
+                save.tutorialsDone.Add(ZoneTutorials.BuildIntro);
+                SaveNow();
+            }
+        }
+
+        if (save.tutorialsDone.Contains(ZoneTutorials.Build) || !decorMode.IsPlacingBuilding)
+        {
+            buildTutorialMode = null;
+            yield break;
+        }
+        buildPointer = TutorialPointer.Show(
+            () => decorMode != null && decorMode.IsPlacingBuilding && !gameUI.IsModalOpen && !TutorialOverlay.IsShowing
+                ? TutorialTargets.Ui(decorMode.ConfirmButton) : null,
+            ZoneTutorials.BuildPointerMessage, TutorialPointer.AboveGlobalUI);
+        // Gone with build mode (left without building): ask again next time.
+        while (decorMode != null && decorMode.IsOpen && !save.tutorialsDone.Contains(ZoneTutorials.Build)) yield return null;
+        CloseBuildPointer();
+    }
+
+    private void HandleBuildStarted()
+    {
+        CloseBuildPointer();
+        if (save.tutorialsDone.Contains(ZoneTutorials.Build)) return;
+        save.tutorialsDone.Add(ZoneTutorials.Build);
+        SaveNow();
+    }
+
+    private void CloseBuildPointer()
+    {
+        if (buildPointer != null) buildPointer.Close();
+        buildPointer = null;
+        buildTutorialMode = null;
     }
 
     // Forgets every zone tutorial and replays this zone's right away.

@@ -17,7 +17,13 @@ public static class ZoneTutorials
     // 기능 튜토리얼: 장소의 첫 방문과 따로, 그 기능이 열린 뒤에 한 번 (완료 기록은 장소 튜토리얼과 같은 목록)
     // 요정 상점은 실제로 상점을 열어야 완료 (설명만 넘겨서는 완료가 아님)
     public const string FairyShop = "FairyShop";
-    public static readonly string[] FeatureIds = { FairyShop };
+    // 건설 모드: 처음 건물 자리를 고를 때 (첫 집). 실제로 공사를 시작해야 완료
+    public const string Build = "Build";
+    public static readonly string[] FeatureIds = { FairyShop, Build };
+
+    // 건설 모드 설명을 끝까지 봤음 (완료가 아님). 다음에 자리를 고를 때는 설명 없이 [확인] 강조만
+    public const string BuildIntro = "Build.Intro";
+    public const string BuildPointerMessage = "자리를 정했으면 [확인]을 눌러 공사를 시작해요!";
 
     // 요정 상점 소개 설명을 끝까지 봤음 (완료가 아님). 다음 광장 방문부터는 설명 없이 요정 강조만 다시 보여 줌.
     // 이 기록이 없는 세이브(이전 버전)는 처음 보는 것으로 = 기본값 "안 봄"
@@ -103,6 +109,26 @@ public static class ZoneTutorials
             TutorialStep.At("요정이 찾아왔어요!",
                 "밭이 열리자 모종을 파는 요정이\n광장에 찾아왔어요.\n모종과 왕국에 필요한 물건을 살 수 있어요.",
                 () => TutorialTargets.World(fairy)),
+        };
+    }
+
+    /// <summary>
+    /// 건설 모드 설명 (첫 건물 자리 고르기). 설명이 끝나면 화면을 막지 않는 [확인] 강조(TutorialPointer)로 넘어가고,
+    /// 실제로 공사를 시작해야 완료된다
+    /// </summary>
+    public static List<TutorialStep> BuildSteps(DecorModePresenter decorMode)
+    {
+        return new List<TutorialStep>
+        {
+            TutorialStep.At("건설 모드",
+                "건물을 지을 자리를 직접 골라요.\n초록 칸이면 지을 수 있고,\n빨간 칸이면 지을 수 없어요.",
+                () => TutorialTargets.World(decorMode.GhostTarget)),
+            TutorialStep.At("자리 옮기기",
+                "건물을 꾹 누른 채 끌면 옮겨져요.\n빈 땅을 눌러도 그 자리로 와요.\n화면을 끌면 광장을 둘러볼 수 있어요.",
+                () => TutorialTargets.World(decorMode.GhostTarget)),
+            TutorialStep.At("공사 시작",
+                "자리를 정했으면 [확인]을 눌러요.\n재료를 내면 그 자리에 공사가 시작돼요!\n다 지은 건물은 꾸미기에서 옮길 수 있어요.",
+                () => TutorialTargets.Ui(decorMode.ConfirmButton)),
         };
     }
 

@@ -13,6 +13,7 @@ public enum ConstructionStartResult
     NotEnoughGold,
     NotEnoughItems,
     WorkerBusy,     // 일할 해달이 주민 작업에 가 있음
+    NeedsPlace,     // 자리를 골라 짓는 건물인데 아직 자리를 고르지 않음 (건설 모드에서 TryStartAt)
 }
 
 /// <summary>주민 작업을 시작하지 못한 이유</summary>
@@ -307,8 +308,37 @@ public partial class SettlementManager : MonoBehaviour
         OnBoardRequested?.Invoke(openRequests);
     }
 
-    /// <summary>부탁의 건설을 시작한다. 비용을 내고, 시간이 0이면 바로 끝낸다</summary>
+    /// <summary>부탁의 건설을 시작한다. 비용을 내고, 시간이 0이면 바로 끝낸다.
+    /// 자리를 골라 짓는 건물(ConstructionPlotDefinition)은 자리가 놓인 뒤에만 시작한다 (건설 모드의 TryStartAt)</summary>
     public ConstructionStartResult TryStart(BoardRequestDefinition request)
+    {
+        var check = CheckStart(request);
+        if (check != ConstructionStartResult.Started)
+            return check;
+        var plot = PlotOf(request);
+        if (plot != null && !IsPlotPlaced(plot))
+            return ConstructionStartResult.NeedsPlace;
+
+        var construction = request.Construction;
+        PayCost(construction);
+
+        if (construction.IsInstant)
+        {
+            Complete(request);
+            return ConstructionStartResult.Completed;
+        }
+
+        long now = NowTicks;
+        long end = now + TimeSpan.FromSeconds(DevTimers.Duration(construction.DurationSeconds)).Ticks;
+        _workerWaitSeconds = 0f;
+        Settlement.StartJob(request.RequestId, construction.ConstructionId, now, end, waitingForWorker: true);
+        OnConstructionStarted?.Invoke(request);
+        SaveRequested?.Invoke();
+        return ConstructionStartResult.Started;
+    }
+
+    /// <summary>지금 시작할 수 있는지만 본다 (아무것도 바꾸지 않음). 시작할 수 있으면 Started, 아니면 첫 이유</summary>
+    public ConstructionStartResult CheckStart(BoardRequestDefinition request)
     {
         if (request == null)
             throw new ArgumentNullException(nameof(request));
@@ -329,21 +359,6 @@ public partial class SettlementManager : MonoBehaviour
             return ConstructionStartResult.NotEnoughGold;
         if (!HasEnoughItems(construction))
             return ConstructionStartResult.NotEnoughItems;
-
-        PayCost(construction);
-
-        if (construction.IsInstant)
-        {
-            Complete(request);
-            return ConstructionStartResult.Completed;
-        }
-
-        long now = NowTicks;
-        long end = now + TimeSpan.FromSeconds(DevTimers.Duration(construction.DurationSeconds)).Ticks;
-        _workerWaitSeconds = 0f;
-        Settlement.StartJob(request.RequestId, construction.ConstructionId, now, end, waitingForWorker: true);
-        OnConstructionStarted?.Invoke(request);
-        SaveRequested?.Invoke();
         return ConstructionStartResult.Started;
     }
 
@@ -1244,6 +1259,7 @@ public partial class SettlementManager : MonoBehaviour
         MigrateTerritory();
         ReconcileRecords();
         ReconcileBuildings();
+        ReconcilePlots();
         SyncLevelDevelopments(false);
         IsLoaded = true;
         // 개발 메뉴 Fast Timers가 켜져 있으면 세이브에 남은 긴 건설·작업도 5초 안으로

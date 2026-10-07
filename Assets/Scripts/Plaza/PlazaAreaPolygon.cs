@@ -25,6 +25,11 @@ public class PlazaAreaPolygon : MonoBehaviour
     public PlazaAreaKind Kind => kind;
     public int PointCount => points.Count;
 
+    // Runtime only: a Blocked footprint that moves with a building the player
+    // places (ConstructionPlotAnchor). It still blocks walking, but decor cells
+    // ignore it so the building can be moved next to its current spot.
+    public bool IgnoredByDecor { get; set; }
+
     public void GetWorldPoints(List<Vector2> result)
     {
         result.Clear();

@@ -33,6 +33,7 @@ public class DecorModeView : MonoBehaviour
     public event Action OnRemoveClicked;
 
     public RectTransform Actions => _actions;
+    public RectTransform ConfirmButton => (RectTransform)_confirmButton.transform;
 
     private Vector2 _hintBasePosition;
     private Coroutine _shake;

@@ -36,6 +36,7 @@ public static class DecorSetup
     // 광산: 입구 아래 모래 마당 작은 칸 (P1 개간 지역 샘플). 구역은 잠긴 채 시작 → 광산 정비를 마치면 열림 (SettlementSetup.Tasks)
     // 광산은 광부·나무·돌이 1000 근처 순서로 앞뒤 정렬하므로 놓인 물건은 배경(0)·입구(1) 위 5에 고정
     // 광장 격자는 영토 확장(P4 건물)으로 서쪽 77칸 · 북쪽 54칸 · 남쪽 3칸(서쪽 첫 땅이 광장보다 조금 아래로 내려감)을 넓혔다 (처음: (-12, -14.4)에서 24 × 33칸). 걷기 영역 밖은 막히므로 열린 땅에만 놓임
+    // 동쪽 2칸(x 12~14)은 걷기 영역 밖이지만 광장 동쪽 끝 집(첫 집 · 두 번째 집)의 원래 자리가 걸쳐 있어 넓힘 (옛 세이브의 집이 제자리에 놓이게, SettlementSetup.Plots)
     // 넓힌 격자: 세이브 좌표 기준 칸 (옛 세이브의 (0, 0) 칸 = 지금 칸). 이 표에 있는 격자는 씬 위치·칸 수·기본 구역을 실행할 때마다 맞춤
     private static readonly Dictionary<string, Vector2Int> SaveOrigins = new Dictionary<string, Vector2Int>
     {
@@ -44,7 +45,7 @@ public static class DecorSetup
 
     private static readonly (string id, string zone, string scene, Vector2 origin, float cell, Vector2Int size, bool depth, int order, bool outside, bool blockWalk)[] Boards =
     {
-        ("plaza", "Zone_Plaza", "Assets/Scenes/Plaza.unity", new Vector2(-89f, -17.4f), 1f, new Vector2Int(101, 90), true, 0, false, true),
+        ("plaza", "Zone_Plaza", "Assets/Scenes/Plaza.unity", new Vector2(-89f, -17.4f), 1f, new Vector2Int(103, 90), true, 0, false, true),
         ("farm", "Zone_Farm", "Assets/Scenes/Farm.unity", new Vector2(-3.6f, -5.4f), 0.6f, new Vector2Int(13, 16), false, 1, true, false),
         ("fishing", "Zone_Fishing", "Assets/Scenes/Fishing.unity", new Vector2(-4.4f, 1.85f), 0.8f, new Vector2Int(6, 1), false, 1, true, false),
         ("mine", "Zone_Mine", "Assets/Scenes/Mine.unity", new Vector2(-2.0f, -3.6f), 0.8f, new Vector2Int(4, 2), false, 5, false, false),

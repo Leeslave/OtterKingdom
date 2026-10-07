@@ -53,7 +53,17 @@ public class DecorGhostView : MonoBehaviour
         }
 
         // DecorVisual은 부모 원점이 칸 아래 가운데라고 보므로, 이 오브젝트(칸 왼쪽 아래)에서 가로 절반만큼 옮김
-        if (decor is BuildingDefinition building)
+        if (decor is ConstructionPlotDefinition plot)
+        {
+            // 건설 자리: 씬의 건물이 설 자리(발밑)에 같은 크기로
+            _toy.sprite = plot.WorldSprite;
+            _toyBody.localPosition = plot.PivotOffset;
+            _toyBody.localRotation = Quaternion.identity;
+            _toy.transform.localPosition = Vector3.zero;
+            _toy.transform.localRotation = Quaternion.identity;
+            _toy.transform.localScale = Vector3.one * plot.WorldScale;
+        }
+        else if (decor is BuildingDefinition building)
             BuildingVisual.Fit(_toyBody, _toy, building, building.WorldSprite, worldRect);
         else
             DecorVisual.Fit(_toyBody, _toy, decor, rotation, worldRect, fill);
