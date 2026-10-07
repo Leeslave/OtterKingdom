@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::LifeRequestTemplate
   _templateId: life_hall_tidy
   _kind: 1
-  _title: "\uD68C\uAD00 \uC8FC\uBCC0 \uC815\uB9AC"
-  _line: "\uD68C\uAD00 \uC55E\uC774 \uC5B4\uC218\uC120\uD574\uC694. \uC8FC\uBBFC
+  _title: "\uAE38\uB4DC \uC8FC\uBCC0 \uC815\uB9AC"
+  _line: "\uAE38\uB4DC \uC55E\uC774 \uC5B4\uC218\uC120\uD574\uC694. \uC8FC\uBBFC
     \uD55C \uBA85\uC774 \uC7A0\uAE50 \uC815\uB9AC\uD574 \uC904\uB798\uC694?"
   _icon: {fileID: 21300000, guid: 258edefb6705efa4ca2c5437a24fbab1, type: 3}
   _items: []

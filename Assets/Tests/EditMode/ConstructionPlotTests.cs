@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 /// <summary>
 /// 게시판 부탁 건물의 건설 자리 (첫 집 · 의자 · 길드 등을 건설 모드에서 자리를 골라 지음):
 /// 카탈로그에서 건설 ID로 찾기, 꾸미기 세이브에 건설 ID로 남음(세이브 기준 칸), 돌리지 않음, 옛 세이브용 막힘 무시 놓기(물건 위는 안 됨),
-/// 칸 → 건물 발밑, 움직이는 건물의 발자국은 해달 길만 막고 꾸미기 칸은 막지 않음.
+/// 칸 → 건물 발밑, 영토 방향에 따른 기본 칸, 옛 세이브의 가로등, 움직이는 건물의 발자국은 해달 길만 막고 꾸미기 칸은 막지 않음.
 /// </summary>
 public class ConstructionPlotTests
 {
@@ -83,7 +83,7 @@ public class ConstructionPlotTests
     public void PivotFor_PutsBuildingFootAtSceneSpot()
     {
         var plot = Plot("con_house_1", "작은 집", new Vector2Int(20, 23), new Vector2Int(6, 4));
-        plot.SetupPlot(plot.Construction, plot.DefaultCell, new Vector2(0.325f, 0.6f), 1f);
+        plot.SetupPlot(plot.Construction, plot.DefaultCell, new Vector2(0.325f, 0.6f), Vector2.one);
 
         var pivot = plot.PivotFor(new Rect(8f, 8.6f, 6f, 4f));
         Assert.AreEqual(11.325f, pivot.x, 0.0001f);
@@ -91,6 +91,51 @@ public class ConstructionPlotTests
         var moved = plot.PivotFor(new Rect(-2f, 0.6f, 6f, 4f));
         Assert.AreEqual(1.325f, moved.x, 0.0001f, "옮긴 칸만큼 그대로 따라감");
         Assert.AreEqual(1.2f, moved.y, 0.0001f);
+    }
+
+    [Test]
+    public void DefaultCell_FollowsTerritoryDirection()
+    {
+        var plot = Plot("con_p3_house", "새 이웃의 집", new Vector2Int(-16, 19), new Vector2Int(6, 4));
+        plot.SetupPlot(plot.Construction, plot.DefaultCell, Vector2.zero, Vector2.one, "territory_home_north", new Vector2Int(11, 47));
+
+        Assert.AreEqual(new Vector2Int(-16, 19), plot.DefaultCellFor(_ => false), "서쪽을 먼저 넓혔거나 아직 넓히기 전");
+        Assert.AreEqual(new Vector2Int(11, 47), plot.DefaultCellFor(id => id == "territory_home_north"), "북쪽을 먼저 넓힘");
+        var plain = Plot("con_house_1", "작은 집", new Vector2Int(20, 23), new Vector2Int(6, 4));
+        Assert.AreEqual(new Vector2Int(20, 23), plain.DefaultCellFor(_ => true), "다른 칸이 없는 자리");
+    }
+
+    [Test]
+    public void LampMigration_OldSaveWithHouseKeepsLamp()
+    {
+        var construction = Create<ConstructionDefinition>();
+        var cso = new SerializedObject(construction);
+        cso.FindProperty("_constructionId").stringValue = "con_lamp";
+        cso.FindProperty("_unlockResultId").stringValue = "lamp_built";
+        cso.ApplyModifiedPropertiesWithoutUndo();
+        var lamp = Create<BoardRequestDefinition>();
+        var rso = new SerializedObject(lamp);
+        rso.FindProperty("_requestId").stringValue = SettlementMigration.LampRequestId;
+        rso.FindProperty("_requiredDevelopment").stringValue = "house_1";
+        rso.FindProperty("_construction").objectReferenceValue = construction;
+        rso.ApplyModifiedPropertiesWithoutUndo();
+        var config = Create<SettlementConfig>();
+        var so = new SerializedObject(config);
+        var requests = so.FindProperty("_requests");
+        requests.arraySize = 1;
+        requests.GetArrayElementAtIndex(0).objectReferenceValue = lamp;
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        var noHouse = new Settlement();
+        Assert.IsFalse(SettlementMigration.MigrateLamp(config, noHouse, 3), "첫 집 전이면 직접 세움");
+
+        var old = new Settlement();
+        old.UnlockDevelopment("house_1");
+        Assert.IsFalse(SettlementMigration.MigrateLamp(config, old, 4), "이미 버전 4 (새 게임에서 첫 집을 지은 뒤)");
+        Assert.IsTrue(SettlementMigration.MigrateLamp(config, old, 3), "첫 집과 함께 있던 가로등은 그대로");
+        Assert.IsTrue(old.IsCompleted(SettlementMigration.LampRequestId));
+        Assert.IsTrue(old.HasDevelopment("lamp_built"));
+        Assert.IsFalse(SettlementMigration.MigrateLamp(config, old, 3), "다시 해도 그대로");
     }
 
     [Test]
@@ -139,7 +184,7 @@ public class ConstructionPlotTests
 
         var plot = Create<ConstructionPlotDefinition>();
         plot.SetupPlacement(size, false, null);
-        plot.SetupPlot(construction, cell, Vector2.zero, 1f);
+        plot.SetupPlot(construction, cell, Vector2.zero, Vector2.one);
         return plot;
     }
 

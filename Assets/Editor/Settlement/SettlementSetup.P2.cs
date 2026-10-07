@@ -29,6 +29,7 @@ public static partial class SettlementSetup
     internal const string GuildDevelopment = "guild_office_built";
     internal const string TownHallDevelopment = "town_hall_built";
     internal const string RestCornerDevelopment = "rest_corner_built";
+    internal const string LampDevelopment = "lamp_built";
     internal const string BoardAreaDevelopment = "board_area_tidy";
     internal const string ClerkPortraitName = "ICON_Otter_Clerk";
 
@@ -53,6 +54,10 @@ public static partial class SettlementSetup
     };
 
     // 큰 부탁 "마을 회의소 마련하기"의 단계 (부탁 ID 순서)
+    // 큰 부탁: 게시판 → 마을회관 → 마을 길드 (SettlementSetup.Plots도 같은 문구로 에셋을 맞춤)
+    private const string GroupTitle = "마을 길드 세우기";
+    private const string GroupDescription = "게시판을 마을회관으로, 마을회관을 마을 길드로.\n마을이 함께 이루는 큰 부탁이에요.";
+
     private static readonly string[] TownCouncilSteps =
         { "req_upgrade_board", "req_assign_receptionist", "req_prepare_common_space", "req_build_guild_office", "req_upgrade_town_hall" };
 
@@ -123,8 +128,8 @@ public static partial class SettlementSetup
         var group = LoadOrCreate<MilestoneGroupDefinition>($"{GroupFolder}/Group_town_council.asset").asset;
         var groupSo = new SerializedObject(group);
         groupSo.FindProperty("_groupId").stringValue = "group_town_council";
-        groupSo.FindProperty("_title").stringValue = "마을 회의소 마련하기";
-        groupSo.FindProperty("_description").stringValue = "게시판을 키우고 회의소를 세우기까지,\n마을이 함께 이루는 큰 부탁이에요.";
+        groupSo.FindProperty("_title").stringValue = GroupTitle;
+        groupSo.FindProperty("_description").stringValue = GroupDescription;
         groupSo.FindProperty("_icon").objectReferenceValue = LoadArt("ICON_TownHall");
         groupSo.FindProperty("_visibleDevelopment").stringValue = GuildDevelopment;
         SetList(groupSo.FindProperty("_steps"), TownCouncilSteps.Select(id => byId[id]).ToList());
@@ -186,6 +191,7 @@ public static partial class SettlementSetup
         var bounds = GroundBounds(plazaRoot.Find("Background").GetComponent<SpriteRenderer>());
         Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
         BuildP2(root, plazaRoot.Find("Props"), root.GetComponent<SettlementPlazaView>(), ToWorld);
+        ApplyBoardExpansion(plazaRoot);
         ApplyPlotAnchors(plazaRoot);
 
         EditorSceneManager.MarkSceneDirty(scene);
@@ -545,7 +551,7 @@ public static partial class SettlementSetup
         Place(panel, new Vector2(0.5f, 0.5f), new Vector2(0, 0), new Vector2(940, 1420));
         panel.pivot = new Vector2(0.5f, 0.5f);
 
-        BuildTitleBoard(panel, "마을회관");
+        BuildTitleBoard(panel, "마을 길드");
         var close = BuildCloseButton(panel);
 
         var stage = Label("Stage", panel, _titleFont, "05 · 작은 마을", 32, Cocoa, TextAlignmentOptions.Left, 22);

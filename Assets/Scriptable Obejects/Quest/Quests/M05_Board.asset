@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv5_board
   _title: "\uBD80\uD0C1\uC774 \uB9CE\uC544\uC84C\uC5B4\uC694"
-  _description: "\uAC8C\uC2DC\uD310 \uBCF4\uAC15\uD558\uAE30"
+  _description: "\uAC8C\uC2DC\uD310\uC744 \uB9C8\uC744\uD68C\uAD00\uC73C\uB85C \uB113\uD788\uAE30"
   _sortOrder: 16
   _kind: 0
   _requiredLevel: 5
   _prerequisite: {fileID: 11400000, guid: b01d82867bd65314b8b614decedd83da, type: 2}
-  _icon: {fileID: 21300000, guid: b6946c2833b4858488525be2b085b78b, type: 3}
+  _icon: {fileID: 21300000, guid: 7378b420846c8a2449ac9600afbe4ea4, type: 3}
   _goalType: 11
   _goal: 1
   _itemFilter: {fileID: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: con_rest_corner
   m_EditorClassIdentifier: OtterKingdom::ConstructionDefinition
   _constructionId: con_rest_corner
-  _displayName: "\uBC14\uB2F7\uAC00 \uBCA4\uCE58"
+  _displayName: "\uBCA4\uCE58"
   _icon: {fileID: 21300000, guid: c965ba9ca8006aa458ac8be800e48a59, type: 3}
   _targetType: 0
   _requiredGold: 150

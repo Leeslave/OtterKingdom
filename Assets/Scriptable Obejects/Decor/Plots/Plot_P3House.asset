@@ -10,21 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9429ae57387f4f07b8ae7ed3cc8d4823, type: 3}
-  m_Name: Plot_GuildOffice
+  m_Name: Plot_P3House
   m_EditorClassIdentifier: OtterKingdom::ConstructionPlotDefinition
   _item: {fileID: 0}
-  _footprint: {x: 6, y: 3}
+  _footprint: {x: 6, y: 4}
   _canRotate: 0
   _playStyle: 0
   _playSeconds: {x: 4, y: 7}
   _maxPlayers: 1
-  _worldSprite: {fileID: 21300000, guid: 33ee6fd5e82532048a412e3305d24085, type: 3}
+  _worldSprite: {fileID: 21300000, guid: 5abb75a753e5025458c586827fa2dd27, type: 3}
   _rotationSprites:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _construction: {fileID: 11400000, guid: 6bbd4d72e232e5f43abce918904b3f8a, type: 2}
-  _defaultCell: {x: 17, y: 15}
-  _pivotOffset: {x: -0.17500019, y: 1.3000004}
-  _worldScale: 1
+  _construction: {fileID: 11400000, guid: 91d8ef75c793fa44f9c07ebc9047c74f, type: 2}
+  _defaultCell: {x: -16, y: 19}
+  _alternateDevelopment: territory_home_north
+  _alternateCell: {x: 11, y: 47}
+  _pivotOffset: {x: -0.79999924, y: 0.6000004}
+  _worldScale: {x: 1, y: 1}

@@ -60,16 +60,16 @@ public static class QuestSetup
         // Lv.5 → 6 고랑 넓히기 (450)
         ("M05_Seed", "main_lv5_seed", "요정과 첫 거래", "요정 상점에서 감자 모종 사기", QuestGoalType.ShopPurchase, 1, "only:Farming/감자 모종", 50, "npc:Fairy", QuestKind.Main, 5, "M04_Sales", 60, 0f, ""),
         ("M05_Furrow", "main_lv5_furrow", "고랑 넓히기", "밭의 고랑 한 칸 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 5, "M05_Seed", 70, 0f, ""),
-        ("M05_Board", "main_lv5_board", "부탁이 많아졌어요", "게시판 보강하기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_BoardUpgrade", QuestKind.Main, 5, "M05_Furrow", 120, 0f, "req_upgrade_board"),
+        ("M05_Board", "main_lv5_board", "부탁이 많아졌어요", "게시판을 마을회관으로 넓히기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_GuildOffice", QuestKind.Main, 5, "M05_Furrow", 120, 0f, "req_upgrade_board"),
         ("M05_Harvest", "main_lv5_harvest", "부지런한 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 100, "item:Farming/감자", QuestKind.Main, 5, "M05_Board", 200, 0f, ""),
         // Lv.6 → 7 함께 일하는 마을 (600)
         ("M06_Clerk", "main_lv6_clerk", "게시판을 맡아 줄 친구", "또박이에게 게시판 맡기기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Clerk", QuestKind.Main, 6, "M05_Harvest", 80, 0f, "req_assign_receptionist"),
         ("M06_Common", "main_lv6_common", "다 같이 쉴 자리", "광장에 쉴 자리 정리하기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_CommonSpace", QuestKind.Main, 6, "M06_Clerk", 100, 0f, "req_prepare_common_space"),
         ("M06_Furrow", "main_lv6_furrow", "고랑 하나 더", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 6, "M06_Common", 60, 0f, ""),
         ("M06_Potato", "main_lv6_potato", "감자 농사", "감자 20개 수확하기", QuestGoalType.Harvest, 20, "only:Farming/감자", 100, "item:Farming/감자", QuestKind.Main, 6, "M06_Furrow", 170, 0f, ""),
-        ("M06_Guild", "main_lv6_guild", "큰 부탁도 함께", "길드 접수소 짓기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_GuildOffice", QuestKind.Main, 6, "M06_Potato", 190, 0f, "req_build_guild_office"),
+        ("M06_Guild", "main_lv6_guild", "큰 부탁도 함께", "길드 접수 창구 만들기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_GuildOffice", QuestKind.Main, 6, "M06_Potato", 190, 0f, "req_build_guild_office"),
         // Lv.7 → 8 우리 마을의 회의소 (800 = 첫 비축 사업 560 + 240)
-        ("M07_TownHall", "main_lv7_town_hall", "우리 마을의 회의소", "마을회관 짓기", QuestGoalType.Milestone, 1, "", 300, "settle:ICON_TownHall", QuestKind.Main, 7, "M06_Guild", 120, 0f, "req_upgrade_town_hall"),
+        ("M07_TownHall", "main_lv7_town_hall", "우리 마을의 길드", "마을 길드로 넓히기", QuestGoalType.Milestone, 1, "", 300, "settle:ICON_TownHall", QuestKind.Main, 7, "M06_Guild", 120, 0f, "req_upgrade_town_hall"),
         ("M07_Supply", "main_lv7_supply", "우리 마을의 첫 비축", "공동사업: 비축 상자 만들기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_TownHall", QuestKind.Main, 7, "M07_TownHall", 0, 0f, "supply_ready"),
         ("M07_Mine", "main_lv7_mine", "광석 모으기", "광산에서 광석 50개 캐기", QuestGoalType.Mine, 50, "Ore", 200, "item:Mining/다이아몬드", QuestKind.Main, 7, "M07_Supply", 120, 0f, ""),
         // Lv.8 → 9 영토 넓히기 (1,050 = 첫 영토 미션 600 + 450)

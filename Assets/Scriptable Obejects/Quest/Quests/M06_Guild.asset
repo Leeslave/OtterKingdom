@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv6_guild
   _title: "\uD070 \uBD80\uD0C1\uB3C4 \uD568\uAED8"
-  _description: "\uAE38\uB4DC \uC811\uC218\uC18C \uC9D3\uAE30"
+  _description: "\uAE38\uB4DC \uC811\uC218 \uCC3D\uAD6C \uB9CC\uB4E4\uAE30"
   _sortOrder: 22
   _kind: 0
   _requiredLevel: 6

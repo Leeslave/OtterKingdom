@@ -61,7 +61,7 @@ public class DecorGhostView : MonoBehaviour
             _toyBody.localRotation = Quaternion.identity;
             _toy.transform.localPosition = Vector3.zero;
             _toy.transform.localRotation = Quaternion.identity;
-            _toy.transform.localScale = Vector3.one * plot.WorldScale;
+            _toy.transform.localScale = new Vector3(plot.WorldScale.x, plot.WorldScale.y, 1f);
         }
         else if (decor is BuildingDefinition building)
             BuildingVisual.Fit(_toyBody, _toy, building, building.WorldSprite, worldRect);

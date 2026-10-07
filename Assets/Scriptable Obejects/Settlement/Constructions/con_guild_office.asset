@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: con_guild_office
   m_EditorClassIdentifier: OtterKingdom::ConstructionDefinition
   _constructionId: con_guild_office
-  _displayName: "\uAE38\uB4DC \uC811\uC218\uC18C"
+  _displayName: "\uAE38\uB4DC \uC811\uC218 \uCC3D\uAD6C"
   _icon: {fileID: 21300000, guid: 7378b420846c8a2449ac9600afbe4ea4, type: 3}
   _targetType: 0
   _requiredGold: 600
@@ -24,7 +24,7 @@ MonoBehaviour:
     _amount: 12
   _durationSeconds: 60
   _needsBuilder: 1
-  _progressLabel: "\uC811\uC218\uC18C \uC9D3\uB294 \uC911"
-  _progressHint: "\uB2E4 \uC9C0\uC73C\uBA74 \uD070 \uBD80\uD0C1\uC744 \uBB36\uC5B4\uC11C
+  _progressLabel: "\uC811\uC218 \uCC3D\uAD6C \uB9CC\uB4DC\uB294 \uC911"
+  _progressHint: "\uB2E4 \uB9CC\uB4E4\uBA74 \uD070 \uBD80\uD0C1\uC744 \uBB36\uC5B4\uC11C
     \uBCFC \uC218 \uC788\uC5B4\uC694"
   _unlockResultId: guild_office_built

@@ -1284,6 +1284,8 @@ public partial class SettlementManager : MonoBehaviour
         int from = Settlement.Version;
         if (SettlementMigration.MigrateFairy(_config, Settlement, from, fairyShopSeen))
             Debug.Log("[SettlementManager] P3 전 세이브: 이미 광장에 있던 요정을 그대로 둡니다.");
+        if (SettlementMigration.MigrateLamp(_config, Settlement, from))
+            Debug.Log("[SettlementManager] 버전 4 전 세이브: 첫 집과 함께 있던 가로등을 그대로 둡니다.");
         if (SettlementMigration.MigrateToCurrent(Settlement) && from > 0)
             Debug.Log($"[SettlementManager] 정착 세이브를 버전 {from} → {SettlementSaveData.CurrentVersion}으로 옮겼습니다.");
     }

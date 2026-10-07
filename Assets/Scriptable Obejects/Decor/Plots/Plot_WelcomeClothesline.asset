@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9429ae57387f4f07b8ae7ed3cc8d4823, type: 3}
+  m_Name: Plot_WelcomeClothesline
+  m_EditorClassIdentifier: OtterKingdom::ConstructionPlotDefinition
+  _item: {fileID: 0}
+  _footprint: {x: 4, y: 1}
+  _canRotate: 0
+  _playStyle: 0
+  _playSeconds: {x: 4, y: 7}
+  _maxPlayers: 1
+  _worldSprite: {fileID: 21300000, guid: e15b13f4edd99634cb13b88501b59a92, type: 3}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _construction: {fileID: 11400000, guid: c7d36a11d95d81641aa8d5d8ae0274b0, type: 2}
+  _defaultCell: {x: -13, y: 18}
+  _alternateDevelopment: territory_home_north
+  _alternateCell: {x: 14, y: 46}
+  _pivotOffset: {x: 0.07500076, y: 0.47500038}
+  _worldScale: {x: 1, y: 1}

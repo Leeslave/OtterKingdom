@@ -15,14 +15,14 @@ MonoBehaviour:
   _projectId: p3_supply_01
   _order: 1
   _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBE44\uCD95"
-  _line: "\uD68C\uAD00\uC740 \uC0DD\uACBC\uB294\uB370 \uD568\uAED8 \uC4F8 \uC7AC\uB8CC\uAC00
+  _line: "\uAE38\uB4DC\uB294 \uC0DD\uACBC\uB294\uB370 \uD568\uAED8 \uC4F8 \uC7AC\uB8CC\uAC00
     \uC5C6\uB124. \uB2E4\uC74C \uACF5\uC0AC\uB97C \uC704\uD574 \uC870\uAE08\uC529
     \uBAA8\uC544 \uB458\uAE4C?"
   _requester: {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
   _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
-  _resultPreview: "\uD68C\uAD00 \uC55E\uC5D0 \uBE44\uCD95 \uC0C1\uC790\uAC00 \uC0DD\uACA8\uC694"
+  _resultPreview: "\uAD11\uC7A5\uC5D0 \uBE44\uCD95 \uC0C1\uC790\uAC00 \uC0DD\uACA8\uC694"
   _completionMessage: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBE44\uCD95\uC744
-    \uB9C8\uCCE4\uC5B4\uC694!\n\uD68C\uAD00 \uC55E\uC5D0 \uBE44\uCD95 \uC0C1\uC790\uAC00
+    \uB9C8\uCCE4\uC5B4\uC694!\n\uAD11\uC7A5\uC5D0 \uBE44\uCD95 \uC0C1\uC790\uAC00
     \uC0DD\uACBC\uC5B4\uC694."
   _requiredLevel: 7
   _requiredDevelopment: town_hall_built
@@ -36,7 +36,7 @@ MonoBehaviour:
   - _stageId: build_box
     _action: 0
     _label: "\uC0C1\uC790 \uC124\uCE58"
-    _hint: "\uAC74\uC124 \uD574\uB2EC\uC774 \uD68C\uAD00 \uC55E\uC5D0 \uBE44\uCD95
+    _hint: "\uACE0\uB978 \uC790\uB9AC\uC5D0 \uAC74\uC124 \uD574\uB2EC\uC774 \uBE44\uCD95
       \uC0C1\uC790\uB97C \uB193\uC544\uC694."
     _construction: {fileID: 11400000, guid: a78cebe982b9d134a823a8076a071e6b, type: 2}
     _options: []

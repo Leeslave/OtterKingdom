@@ -108,7 +108,7 @@ public class TownHallPresenter : MonoBehaviour
         _milestoneTarget = SettlementBoardRules.CurrentStep(group, settlement);
         string note;
         if (_milestoneTarget == null)
-            note = done >= _steps.Count ? "모든 단계를 마쳤어요! 마을회관을 눌러 발전 현황을 볼 수 있어요." : "다음 단계가 열리기를 기다리고 있어요.";
+            note = done >= _steps.Count ? "모든 단계를 마쳤어요! 게시판에서 발전 현황을 볼 수 있어요." : "다음 단계가 열리기를 기다리고 있어요.";
         else if (_manager.GetStatus(_milestoneTarget) == RequestStatus.Building)
             note = $"지금 \"{_milestoneTarget.Title}\"을(를) 하고 있어요.";
         else
@@ -326,7 +326,7 @@ public class TownHallPresenter : MonoBehaviour
     private void PrepareGlyphs()
     {
         var config = _manager.Config;
-        var text = new StringBuilder("0123456789:/ ,.!?()·\"명단계완료진행중다음아직가보기지금하고있어요모든마쳤어요마을회관을눌러발전현황볼수열리기를기다리고")
+        var text = new StringBuilder("0123456789:/ ,.!?()·\"명단계완료진행중다음아직가보기지금하고있어요모든마쳤어요마을회관길드게시판에서눌러발전현황볼수열리기를기다리고")
             .Append(AllDoneMessage).Append("다음 발전을 준비하고 있어요진행 중인 일이 끝나면 새 부탁이 열려요.지금 진행 중인 일이 없어요.아직 완료한 발전이 없어요.가는 중");
         foreach (var request in config.Requests)
         {

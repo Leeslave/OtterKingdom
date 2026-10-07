@@ -16,9 +16,10 @@ MonoBehaviour:
   _order: 20
   _category: 1
   _contentVersion: 2
-  _title: "\uC26C\uC5B4 \uAC08 \uC790\uB9AC\uB97C \uB9C8\uB828\uD574 \uC8FC\uC138\uC694"
-  _description: "\uAFB8\uBC85\uC774\uAC00 \uBC14\uB2F7\uAC00\uC5D0\uC11C \uC26C\uC5B4
-    \uAC08 \uBCA4\uCE58\uB97C \uAC16\uACE0 \uC2F6\uB300\uC694."
+  _title: "\uC26C\uC5B4 \uAC08 \uBCA4\uCE58\uB97C \uB193\uC544 \uC8FC\uC138\uC694"
+  _description: "\uAFB8\uBC85\uC774\uAC00 \uC26C\uC5B4 \uAC08 \uBCA4\uCE58\uB97C
+    \uAC16\uACE0 \uC2F6\uB300\uC694.\n\uBCA4\uCE58\uB97C \uB9CC\uB4E4\uC5B4 \uB9C8\uC74C\uC5D0
+    \uB4DC\uB294 \uACF3\uC5D0 \uB193\uC544 \uC918\uC694."
   _icon: {fileID: 21300000, guid: c965ba9ca8006aa458ac8be800e48a59, type: 3}
   _requester: {fileID: 11400000, guid: 8ff3e80563dfd8a4cbf590e6056ddc02, type: 2}
   _requiredDevelopment: receptionist_assigned
@@ -28,10 +29,14 @@ MonoBehaviour:
   _assignSpecialist: {fileID: 0}
   _assignRole: {fileID: 0}
   _completionTask: {fileID: 0}
+  _building: {fileID: 0}
+  _buildingCount: 1
+  _settleTargets: []
+  _resultDevelopment: 
   _settles: []
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 4ae64d9e40ccf474c990f1db977259db, type: 2}
-  _completionMessage: "\uBC14\uB2F7\uAC00\uC5D0 \uC26C\uC5B4 \uAC08 \uBCA4\uCE58\uAC00
+  _completionMessage: "\uAD11\uC7A5\uC5D0 \uC26C\uC5B4 \uAC08 \uBCA4\uCE58\uAC00
     \uC0DD\uACBC\uC5B4\uC694!"
   _kingdomLevel: 0

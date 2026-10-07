@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// 발전이 열리면 같은 오브젝트의 그림을 바꾼다 (게시판 보강: 게시판 오브젝트가 그대로 보강된 게시판 그림으로).
+/// 발전이 열리면 같은 오브젝트의 그림을 바꾸거나 숨긴다 (게시판이 마을회관으로 커지면 게시판 그림은 숨기고 회관이 대신 보임).
 /// 탭·발자국·앞뒤 정렬은 그대로 두고 그림만 바꾸므로, 공사 중에도 게시판을 계속 쓸 수 있다.
 /// 상태는 발전 기록에서 읽기만 한다 (그림이 바뀌어야 저장되는 구조가 아님).
 /// </summary>
@@ -17,6 +17,9 @@ public class DevelopmentSpriteSwap : MonoBehaviour
 
     [Tooltip("발전 뒤 그림")]
     [SerializeField] private Sprite _unlockedSprite;
+
+    [Tooltip("켜면 발전 뒤 그림을 숨김 (게시판이 같은 자리의 마을회관으로 커질 때). 탭·말풍선은 그대로")]
+    [SerializeField] private bool _hideWhenUnlocked;
 
     private Sprite _baseSprite;
     private bool _applied;
@@ -41,7 +44,8 @@ public class DevelopmentSpriteSwap : MonoBehaviour
         _applied = true;
         _unlocked = unlocked;
         _renderer.sprite = unlocked && _unlockedSprite != null ? _unlockedSprite : _baseSprite;
-        if (animate)
+        _renderer.enabled = !(unlocked && _hideWhenUnlocked);
+        if (animate && _renderer.enabled)
             StartCoroutine(Pop());
     }
 

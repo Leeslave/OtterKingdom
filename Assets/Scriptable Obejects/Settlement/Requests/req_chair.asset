@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_chair
   _order: 1
+  _category: 0
+  _contentVersion: 0
   _title: "\uC26C\uC5B4 \uAC08 \uC758\uC790"
-  _description: "\uBABD\uC2E4\uC774\uAC00 \uB098\uBB34 \uADF8\uB298\uC5D0\uC11C \uC274
-    \uC758\uC790\uB97C \uAC16\uACE0 \uC2F6\uB300\uC694.\n\uBAA9\uC7AC\uC640 \uACE8\uB4DC\uB85C
-    \uB9CC\uB4E4\uC5B4 \uC918\uC694."
+  _description: "\uBABD\uC2E4\uC774\uAC00 \uC26C\uC5B4 \uAC08 \uC758\uC790\uB97C
+    \uAC16\uACE0 \uC2F6\uB300\uC694.\n\uC758\uC790\uB97C \uB9CC\uB4E4\uC5B4 \uB9C8\uC74C\uC5D0
+    \uB4DC\uB294 \uACF3\uC5D0 \uB193\uC544 \uC918\uC694."
   _icon: {fileID: 21300000, guid: c965ba9ca8006aa458ac8be800e48a59, type: 3}
   _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   _requiredDevelopment: house_1
@@ -25,6 +27,12 @@ MonoBehaviour:
   _construction: {fileID: 11400000, guid: 916caec0eaa71104cb965356e7fc1039, type: 2}
   _clearZone: {fileID: 0}
   _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _building: {fileID: 0}
+  _buildingCount: 1
+  _settleTargets: []
+  _resultDevelopment: 
   _settles: []
   _arrivals: []
   _stageOnComplete: -1

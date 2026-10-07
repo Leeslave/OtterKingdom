@@ -264,6 +264,8 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             if (anchor != null)
                 anchor.Apply(isUnlocked);
         }
+        // 영토 묶음 안의 건물(새 이웃의 집 · 환영 소품)도 플레이어가 고른 자리로 (묶음이 부모를 옮겼으면 되돌림)
+        ConstructionPlotAnchor.ReapplyAll();
         foreach (var gate in _gates)
         {
             if (gate != null)

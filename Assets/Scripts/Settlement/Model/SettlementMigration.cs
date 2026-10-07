@@ -23,8 +23,32 @@ public static class SettlementMigration
 
         // 0 → 2: 옮길 기록이 없음 (P2 세이브 필드는 비어 있음 = 미진행). 옛 세이브의 P0·P1 진행·생산·보상은 그대로 둔다
         // 2 → 3: 공동사업·집·생활 의뢰 기록이 없음 = 회관 뒤 첫 비축부터. 요정은 MigrateFairy가 먼저 맞춤
+        // 3 → 4: 가로등 부탁이 생김. 첫 집이 있던 세이브는 MigrateLamp가 먼저 끝낸 것으로 맞춤
         settlement.SetVersion(SettlementSaveData.CurrentVersion);
         return true;
+    }
+
+    /// <summary>가로등 부탁 (건설 모드, 버전 4)</summary>
+    public const string LampRequestId = "req_lamp";
+
+    /// <summary>
+    /// 버전 4 전 세이브: 가로등은 첫 집과 함께 생겼다. 첫 집(가로등 부탁의 필요 발전)이 이미 있으면 가로등 부탁을 조용히 끝내
+    /// 가로등이 그대로 보이게 한다 (팝업·방명록 없음). 이미 버전 4이거나 부탁이 없으면 아무것도 하지 않는다
+    /// </summary>
+    /// <returns>끝냈으면 true</returns>
+    public static bool MigrateLamp(SettlementConfig config, Settlement settlement, int fromVersion)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+        if (fromVersion >= 4)
+            return false;
+        var request = config.FindRequest(LampRequestId);
+        if (request == null || settlement.IsCompleted(request.RequestId)
+            || string.IsNullOrEmpty(request.RequiredDevelopment) || !settlement.HasDevelopment(request.RequiredDevelopment))
+            return false;
+        return settlement.CompleteRequest(request.RequestId, SettlementRules.CompletionDevelopment(request));
     }
 
     /// <summary>

@@ -26,5 +26,7 @@ MonoBehaviour:
   - {fileID: 0}
   _construction: {fileID: 11400000, guid: 45c4958c9aedc574d9aa4cae7ca1e883, type: 2}
   _defaultCell: {x: 20, y: 23}
+  _alternateDevelopment: 
+  _alternateCell: {x: 0, y: 0}
   _pivotOffset: {x: 0.3249998, y: 0.5999994}
-  _worldScale: 1
+  _worldScale: {x: 1, y: 1}
