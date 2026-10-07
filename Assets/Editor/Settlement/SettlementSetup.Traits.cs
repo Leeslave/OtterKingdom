@@ -142,5 +142,8 @@ public static partial class SettlementSetup
             AddUnique(configSo.FindProperty("_otters"), otter);
             AddUnique(configSo.FindProperty("_guestbookEntries"), entry);
         }
+
+        // 뽑기 한정 해달 (살랑이 — 좋아하는 장난감이 광장에 있어야 옴). 해달 목록을 다시 채울 때 빠지지 않게
+        GachaSetup.AddLimitedOtters(configSo);
     }
 }

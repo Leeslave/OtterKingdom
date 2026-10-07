@@ -13,8 +13,21 @@ MonoBehaviour:
   m_Name: DecorCatalog
   m_EditorClassIdentifier: OtterKingdom::DecorCatalog
   _decors:
+  - {fileID: 11400000, guid: 4a1d0b62570261d419e78eb1e71fc7e1, type: 2}
+  - {fileID: 11400000, guid: 90d4399ae3543aa43a81f321821128d7, type: 2}
+  - {fileID: 11400000, guid: f419a126ce757f449aa073665effe6ed, type: 2}
+  - {fileID: 11400000, guid: ed5fdcf4c2d861343bd7aff31daa01f6, type: 2}
+  - {fileID: 11400000, guid: e3b4618fa566d9b4b98003f4ddc4ca97, type: 2}
+  - {fileID: 11400000, guid: 37c53917c54f09143adb7c5ffc3ede62, type: 2}
+  - {fileID: 11400000, guid: 29dc883ed41b4e64bbd3db00278e1529, type: 2}
+  - {fileID: 11400000, guid: c04f7381c325b0a41b833bc38a0c6ec4, type: 2}
+  - {fileID: 11400000, guid: ee24fb44337f2ce4da3f7e68fe3d394a, type: 2}
+  - {fileID: 11400000, guid: d58af692eab965f42ae78def17daf22e, type: 2}
   - {fileID: 11400000, guid: a74ce065ea35313408fc84c4682a8b18, type: 2}
+  - {fileID: 11400000, guid: 42b1c4da2a3e8894fbe3ed76b8fddaba, type: 2}
+  - {fileID: 11400000, guid: 51ffba750135cf642aa1ad0a73e0ccf4, type: 2}
   - {fileID: 11400000, guid: 27f5a89fd896ec2448e08acb315e6e58, type: 2}
+  - {fileID: 11400000, guid: a7880cae0d74c7e45b602e386b485917, type: 2}
   _buildings:
   - {fileID: 11400000, guid: 778c24d56eda4ca280f37eb40957d768, type: 2}
   - {fileID: 11400000, guid: f6132aa17635ef644a2c1a3a1dd18789, type: 2}

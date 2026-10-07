@@ -110,6 +110,8 @@ public static class GlobalUISetup
         QuestSetup.BuildPrefabs();
         CurrencyShopSetup.CreateData();
         CurrencyShopSetup.BuildPrefabs();
+        // 뽑기 장난감도 꾸미기 목록에 들어가도록 꾸미기 데이터보다 먼저
+        GachaSetup.CreateData();
         DecorSetup.CreateData();
         DecorModeSetup.BuildPrefabs();
         FairyShopSetup.CreateData();
@@ -279,7 +281,8 @@ public static class GlobalUISetup
         var inventoryPresenter = inventoryScreen.GetComponentInChildren<InventoryPresenter>(true);
         inventoryScreen.gameObject.SetActive(false); // 가방은 닫힌 채로 시작
 
-        // 그리는 순서: 상단바·하단 바(정착 칩·안내 띠 포함) → 공사 진행 말풍선 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점 → 재화 충전(부족·충전은 상점 위) → 설정
+        // 그리는 순서: 상단바·하단 바(정착 칩·안내 띠·뽑기 버튼 포함) → 공사 진행 말풍선 → 가방 → 확장 팝업 → 도감 → 퀘스트 → 꾸미기 모드 → 요정 상점
+        //            → 뽑기(화면·확률·교환소·연출) → 재화 충전(부족·충전은 상점·뽑기 위) → 설정
         //            → 게시판 → 큰 부탁 → 마을회관 → 건설 → 주민 작업 → 건설 완료 → 레벨업 → 이동 팝업 → 페이드
         var hud = CreateRect("HudSafeArea", rootRect);
         Stretch(hud, 0);
@@ -290,6 +293,7 @@ public static class GlobalUISetup
         var topBar = TopBarSetup.Build(hud);
         var settlement = SettlementSetup.BuildHud(hud, rootRect);
         settlement.progress.transform.SetSiblingIndex(1); // HUD 바로 위, 가방·팝업 아래
+        var gachaButton = GachaSetup.BuildHudButton(hud);
         var findToast = FindToastSetup.Build(hud);
         var collection = CollectionSetup.BuildScreen(rootRect);
         // 도감 이야기(컷씬)는 도감 화면 위에
@@ -298,6 +302,7 @@ public static class GlobalUISetup
         var quest = QuestSetup.BuildScreen(rootRect);
         var decorMode = DecorModeSetup.BuildScreen(rootRect, hud.gameObject);
         var fairyShop = FairyShopSetup.BuildScreens(rootRect);
+        var gacha = GachaSetup.BuildScreens(rootRect);
         var shop = CurrencyShopSetup.BuildScreens(rootRect);
         var settings = SettingsSetup.BuildScreen(rootRect);
         SettlementSetup.BuildPopups(rootRect, ref settlement);
@@ -357,6 +362,9 @@ public static class GlobalUISetup
         Set(fairyPresenter, "_shop", fairyShop.shop);
         Set(fairyPresenter, "_popup", fairyShop.popup);
         Set(fairyPresenter, "_shortage", shop.shortage);
+
+        // 보물 조개 뽑기 (HUD 뽑기 버튼 → 화면 → 연출). 조개 부족은 같은 부족 팝업
+        GachaSetup.Attach(root, gacha, gachaButton, shop.shortage);
 
         // 상단바 설정 버튼 → 설정 화면. 설정 값의 주인(기기에 저장)도 전역 UI에 붙음
         root.AddComponent<SettingsManager>();

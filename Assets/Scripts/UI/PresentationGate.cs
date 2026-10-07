@@ -16,7 +16,8 @@ public static class PresentationGate
                 _navigator = Object.FindAnyObjectByType<SceneNavigator>();
             if (_navigator != null && _navigator.IsTraveling)
                 return true;
-            if (SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy || TutorialOverlay.IsShowing || GatheringDirector.IsPlaying)
+            if (SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy || TutorialOverlay.IsShowing || GatheringDirector.IsPlaying
+                || GachaRevealView.IsPlaying)
                 return true;
             return GameManager.Instance != null && GameManager.Instance.IsModalOpen;
         }

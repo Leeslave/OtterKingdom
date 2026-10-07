@@ -118,6 +118,38 @@ public static class PlaceholderAudio
                 foreach (int note in new[] { 79, 84, 88 })
                     AddNote(samples, 0f, length, note, 0.25f, Sine, 5f);
                 break;
+            case SfxKind.ShellTap: // 톡: 짧고 단단한 소리
+                samples = Buffer(length = 0.09f);
+                AddNote(samples, 0f, length, 76, 0.45f, Triangle, 45f);
+                AddNote(samples, 0f, 0.04f, 60, 0.3f, Noise, 80f);
+                break;
+            case SfxKind.ShellCrack: // 쩍: 잡음이 터지고 낮은 음
+                samples = Buffer(length = 0.32f);
+                AddNote(samples, 0f, 0.18f, 60, 0.5f, Noise, 18f);
+                AddNote(samples, 0f, length, 55, 0.35f, Triangle, 10f);
+                break;
+            case SfxKind.RevealCommon: // 퐁: 맑은 두 음
+                samples = Buffer(length = 0.4f);
+                AddNote(samples, 0f, 0.2f, 79, 0.35f, Sine, 10f);
+                AddNote(samples, 0.08f, length - 0.08f, 84, 0.35f, Sine, 8f);
+                break;
+            case SfxKind.RevealRare: // 반짝반짝: 올라가는 다섯 음
+                samples = Buffer(length = 0.7f);
+                for (int i = 0; i < 5; i++)
+                    AddNote(samples, i * 0.06f, length - i * 0.06f, new[] { 79, 83, 86, 91, 95 }[i], 0.24f, Sine, 7f);
+                break;
+            case SfxKind.RevealEpic: // 팡파르: 올라가는 음 + 큰 화음 (효과음은 1초 안)
+                samples = Buffer(length = 0.95f);
+                for (int i = 0; i < 4; i++)
+                    AddNote(samples, i * 0.07f, 0.18f, new[] { 72, 76, 79, 84 }[i], 0.28f, Triangle, 7f);
+                foreach (int note in new[] { 72, 79, 84, 88, 91 })
+                    AddNote(samples, 0.3f, length - 0.3f, note, 0.2f, Sine, 3.2f);
+                break;
+            case SfxKind.RevealUpgrade: // 승급: 빠르게 올라가는 음
+                samples = Buffer(length = 0.6f);
+                for (int i = 0; i < 8; i++)
+                    AddNote(samples, i * 0.045f, length - i * 0.045f, 72 + i * 3, 0.2f, Sine, 9f);
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(kind));
         }

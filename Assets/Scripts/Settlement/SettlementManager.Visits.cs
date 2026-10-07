@@ -11,6 +11,7 @@ public partial class SettlementManager
     private const float ToyVisitCheckSeconds = 1f;
 
     private float _toyVisitCheckTimer;
+    private readonly HashSet<ItemDefinition> _plazaToys = new HashSet<ItemDefinition>();
 
     /// <summary>장난감 해달이 찾아왔을 때 (광장은 주민 목록 변경으로 대기 줄에 넣어 걸어 들어오게 함)</summary>
     public event Action<SettlementOtterDefinition> OnToyVisitorArrived;
@@ -54,6 +55,22 @@ public partial class SettlementManager
         }
     }
 
+    /// <summary>광장 꾸미기 격자에 놓인 장난감 (건물 제외). 한정 해달은 좋아하는 장난감이 여기 있어야 찾아온다</summary>
+    private HashSet<ItemDefinition> CollectPlazaToys()
+    {
+        _plazaToys.Clear();
+        var decor = DecorManager.Instance;
+        var board = decor != null ? decor.FindBoard(_config.PlazaBoardId) : null;
+        if (board == null)
+            return _plazaToys;
+        foreach (var placed in decor.GetLayout(board).Placed)
+        {
+            if (placed.Decor != null && !placed.Decor.IsBuilding && placed.Decor.Item != null)
+                _plazaToys.Add(placed.Decor.Item);
+        }
+        return _plazaToys;
+    }
+
     // Update에서 1초마다
     private void TickToyVisits()
     {
@@ -67,7 +84,7 @@ public partial class SettlementManager
     /// <returns>이번에 찾아온 해달 (없으면 null)</returns>
     private SettlementOtterDefinition UpdateToyVisits()
     {
-        var step = ToyVisitRules.Step(_config, Settlement, PlazaToyTier, NowTicks, out var arrived);
+        var step = ToyVisitRules.Step(_config, Settlement, PlazaToyTier, CollectPlazaToys(), NowTicks, out var arrived);
         if (step != ToyVisitStep.Arrived)
             return null;
 
