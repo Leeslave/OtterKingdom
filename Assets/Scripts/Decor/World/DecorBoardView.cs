@@ -76,6 +76,8 @@ public class DecorBoardView : MonoBehaviour
     private readonly Dictionary<int, PlacedDecorView> _views = new Dictionary<int, PlacedDecorView>();
     private readonly List<Rect> _obstacles = new List<Rect>();
     private int _appliedStaticVersion = -1;
+    // 건설 자리가 씬의 건물 묶음을 옮겨 걷기 영역을 다시 계산해야 함 (한 프레임에 한 번만)
+    private bool _walkableDirty;
     private readonly List<Vector2Int> _cornerBuffer = new List<Vector2Int>();
 
     private void OnEnable()
@@ -125,6 +127,11 @@ public class DecorBoardView : MonoBehaviour
     // 걷기 영역이 다시 만들어지면(영토가 넓어짐 · 집이 생김) 놓을 수 있는 칸도 다시 정함
     private void Update()
     {
+        if (_walkableDirty && _walkableArea != null)
+        {
+            _walkableDirty = false;
+            _walkableArea.Rebuild();
+        }
         if (Layout == null || _walkableArea == null || _walkableArea.StaticVersion == _appliedStaticVersion)
             return;
         _appliedStaticVersion = _walkableArea.StaticVersion;
@@ -211,8 +218,11 @@ public class DecorBoardView : MonoBehaviour
                 return true;
         }
 
-        return _walkableArea != null && !_allowOutsideWalkable && !_walkableArea.IsStaticWalkable(rect.center);
+        return _walkableArea != null && !_allowOutsideWalkable && !_walkableArea.IsDecorWalkable(rect.center);
     }
+
+    /// <summary>해달이 지금 설 수 있는 곳인지 (걷기 영역이 없는 장소는 늘 true)</summary>
+    public bool IsWalkable(Vector2 world) => _walkableArea == null || _walkableArea.IsWalkable(world);
 
     #endregion
 
@@ -231,8 +241,16 @@ public class DecorBoardView : MonoBehaviour
             var rect = AreaWorldRect(placed.Area);
             view.Place(rect, _fill);
             view.SetSortingOrder(SortingOrderFor(rect));
+            RebuildIfPlotMoved(view);
         }
         UpdateObstacles();
+    }
+
+    // 건설 자리가 씬의 건물 묶음을 옮겼으면 발자국이 바뀌었으니 걷기 영역을 다시 계산 (Update에서 한 번. 놓을 수 있는 칸도 이어서 다시 정함)
+    private void RebuildIfPlotMoved(PlacedDecorView view)
+    {
+        if (view is PlacedPlotView plot && plot.MovedAnchor)
+            _walkableDirty = true;
     }
 
     private void HandleRemoved(PlacedDecor placed)
@@ -250,11 +268,18 @@ public class DecorBoardView : MonoBehaviour
     {
         var go = new GameObject($"Decor_{placed.Decor.SaveId}_{placed.InstanceId}");
         go.transform.SetParent(transform, true);
-        // 건물은 공사 단계·완성 그림을 그리는 뷰 (해달이 가지고 놀지 않음)
-        var view = placed.Decor.IsBuilding ? go.AddComponent<PlacedBuildingView>() : go.AddComponent<PlacedDecorView>();
+        // 건물은 공사 단계·완성 그림을 그리는 뷰, 건설 자리는 씬의 건물 묶음을 옮기는 뷰 (둘 다 해달이 가지고 놀지 않음)
+        PlacedDecorView view;
+        if (placed.Decor is ConstructionPlotDefinition)
+            view = go.AddComponent<PlacedPlotView>();
+        else if (placed.Decor.IsBuilding)
+            view = go.AddComponent<PlacedBuildingView>();
+        else
+            view = go.AddComponent<PlacedDecorView>();
         var rect = AreaWorldRect(placed.Area);
         view.Init(placed, rect, _cellSize, _fill, SortingOrderFor(rect));
         _views[placed.InstanceId] = view;
+        RebuildIfPlotMoved(view);
     }
 
     /// <summary>
@@ -290,7 +315,8 @@ public class DecorBoardView : MonoBehaviour
         _obstacles.Clear();
         foreach (var view in _views.Values)
         {
-            if (view.gameObject.activeSelf)
+            // 건설 자리의 건물은 씬의 발자국이 해달 길을 막음
+            if (view.gameObject.activeSelf && !(view is PlacedPlotView))
                 _obstacles.Add(view.WorldRect);
         }
         _walkableArea.SetObstacles(_obstacles);

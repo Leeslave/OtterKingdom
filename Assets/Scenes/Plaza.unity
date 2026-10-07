@@ -5499,6 +5499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 131358678}
   - component: {fileID: 131358679}
+  - component: {fileID: 131358680}
   m_Layer: 0
   m_Name: Site_GuildOffice
   m_TagString: Untagged
@@ -5547,6 +5548,27 @@ MonoBehaviour:
   _dustWidth: 4.2837143
   _twinkleSprite: {fileID: 21300000, guid: 3d6f4bb804b595141bc81c788436772b, type: 3}
   _glowMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+--- !u!114 &131358680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131358677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e644a59e732c4c8b8b9a2f98e586db80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::ConstructionPlotAnchor
+  _plot: {fileID: 11400000, guid: db6ee3bcd424d3c448784c656c899fc5, type: 2}
+  _followers:
+  - {fileID: 978443876}
+  - {fileID: 1645030713}
+  - {fileID: 1301017076}
+  - {fileID: 1501943280}
+  - {fileID: 1799579931}
+  _reservations:
+  - {fileID: 1437315233}
 --- !u!1 &131905749
 GameObject:
   m_ObjectHideFlags: 0
@@ -13002,6 +13024,7 @@ Transform:
   - {fileID: 433909117}
   - {fileID: 590890337}
   - {fileID: 1525054934}
+  - {fileID: 1876567272}
   m_Father: {fileID: 191430252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &309491931
@@ -13021,6 +13044,7 @@ MonoBehaviour:
   _plazaSettings: {fileID: 11400000, guid: a87f7ad4f3f555849811703b28fc64f6, type: 2}
   _otterRoot: {fileID: 607886186}
   _gatherPoint: {fileID: 1966488469}
+  _gatherClearSize: {x: 3.5, y: 2.5}
   _arrivalPoint: {fileID: 456018890}
   _gateRoots:
   - {fileID: 1264929017}
@@ -36953,6 +36977,51 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &910206833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910206834}
+  - component: {fileID: 910206835}
+  m_Layer: 0
+  m_Name: Reserve_SupplyBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &910206834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910206833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.825, y: -0.32499927, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1876567272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &910206835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910206833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2840685ba1280a4886e0797ef373ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DecorBlockArea
+  _size: {x: 2.2, y: 0.9}
 --- !u!1 &911105235
 GameObject:
   m_ObjectHideFlags: 0
@@ -48996,6 +49065,51 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1208802727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1208802728}
+  - component: {fileID: 1208802729}
+  m_Layer: 0
+  m_Name: Reserve_Lamp_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1208802728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208802727}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.94923, y: 6.3561487, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1876567272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1208802729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208802727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2840685ba1280a4886e0797ef373ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DecorBlockArea
+  _size: {x: 0.8125, y: 0.3875003}
 --- !u!1 &1208903572
 GameObject:
   m_ObjectHideFlags: 0
@@ -49763,6 +49877,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1223557040}
   - component: {fileID: 1223557041}
+  - component: {fileID: 1223557042}
   m_Layer: 0
   m_Name: Site_House1
   m_TagString: Untagged
@@ -49816,6 +49931,23 @@ MonoBehaviour:
   _dustWidth: 4.7100005
   _twinkleSprite: {fileID: 21300000, guid: 3d6f4bb804b595141bc81c788436772b, type: 3}
   _glowMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+--- !u!114 &1223557042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223557039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e644a59e732c4c8b8b9a2f98e586db80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::ConstructionPlotAnchor
+  _plot: {fileID: 11400000, guid: c221802d65e4c2840bb560c59f190bce, type: 2}
+  _followers:
+  - {fileID: 91317298}
+  - {fileID: 362773806}
+  _reservations: []
 --- !u!1 &1225577950
 GameObject:
   m_ObjectHideFlags: 0
@@ -63312,6 +63444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1514906470}
   - component: {fileID: 1514906471}
+  - component: {fileID: 1514906472}
   m_Layer: 0
   m_Name: Site_House2
   m_TagString: Untagged
@@ -63365,6 +63498,23 @@ MonoBehaviour:
   _dustWidth: 5.19
   _twinkleSprite: {fileID: 21300000, guid: 3d6f4bb804b595141bc81c788436772b, type: 3}
   _glowMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+--- !u!114 &1514906472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514906469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e644a59e732c4c8b8b9a2f98e586db80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::ConstructionPlotAnchor
+  _plot: {fileID: 11400000, guid: 3fd3baabfb23ed44d80132d44379dcd6, type: 2}
+  _followers:
+  - {fileID: 1376828946}
+  - {fileID: 2054823950}
+  _reservations: []
 --- !u!1 &1521667312
 GameObject:
   m_ObjectHideFlags: 0
@@ -63865,6 +64015,51 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1535082944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535082945}
+  - component: {fileID: 1535082946}
+  m_Layer: 0
+  m_Name: Reserve_FairyNpc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1535082945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535082944}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.6, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1876567272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1535082946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535082944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2840685ba1280a4886e0797ef373ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DecorBlockArea
+  _size: {x: 1.6, y: 1.6}
 --- !u!1 &1537206150
 GameObject:
   m_ObjectHideFlags: 0
@@ -65802,6 +65997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1566625604}
   - component: {fileID: 1566625605}
+  - component: {fileID: 1566625606}
   m_Layer: 0
   m_Name: Site_RestCorner
   m_TagString: Untagged
@@ -65849,6 +66045,22 @@ MonoBehaviour:
   _dustWidth: 2.4
   _twinkleSprite: {fileID: 21300000, guid: 3d6f4bb804b595141bc81c788436772b, type: 3}
   _glowMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+--- !u!114 &1566625606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566625603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e644a59e732c4c8b8b9a2f98e586db80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::ConstructionPlotAnchor
+  _plot: {fileID: 11400000, guid: e09c5a941a15ae440b32a3259928c9ca, type: 2}
+  _followers:
+  - {fileID: 1836523128}
+  _reservations: []
 --- !u!1 &1569522960
 GameObject:
   m_ObjectHideFlags: 0
@@ -67520,6 +67732,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2335169801097507072, guid: 372439689f36b2f409c8fbeda5e17c3e, type: 3}
   m_PrefabInstance: {fileID: 1612105121}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1613557844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1613557845}
+  - component: {fileID: 1613557846}
+  m_Layer: 0
+  m_Name: Reserve_CommunityTable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1613557845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613557844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.2, y: -0.29999918, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1876567272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1613557846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613557844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2840685ba1280a4886e0797ef373ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::DecorBlockArea
+  _size: {x: 4.4, y: 1.6}
 --- !u!1 &1618044375
 GameObject:
   m_ObjectHideFlags: 0
@@ -78842,6 +79099,41 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 960561502156252483, guid: 89454c83aafe40d489dfa5db2b6689c2, type: 3}
   m_PrefabInstance: {fileID: 1874653161}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1876567271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1876567272}
+  m_Layer: 0
+  m_Name: PlotReservations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1876567272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876567271}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1208802728}
+  - {fileID: 1613557845}
+  - {fileID: 910206834}
+  - {fileID: 1535082945}
+  m_Father: {fileID: 309491930}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1878931521
 GameObject:
   m_ObjectHideFlags: 0
@@ -82393,6 +82685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1966021689}
   - component: {fileID: 1966021690}
+  - component: {fileID: 1966021691}
   m_Layer: 0
   m_Name: Site_Chair
   m_TagString: Untagged
@@ -82440,6 +82733,22 @@ MonoBehaviour:
   _dustWidth: 2.4
   _twinkleSprite: {fileID: 21300000, guid: 3d6f4bb804b595141bc81c788436772b, type: 3}
   _glowMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+--- !u!114 &1966021691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966021688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e644a59e732c4c8b8b9a2f98e586db80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OtterKingdom::ConstructionPlotAnchor
+  _plot: {fileID: 11400000, guid: ef40a83501ab597418c3524ce359e5f9, type: 2}
+  _followers:
+  - {fileID: 1563984014}
+  _reservations: []
 --- !u!1 &1966488468
 GameObject:
   m_ObjectHideFlags: 0

@@ -186,6 +186,7 @@ public static partial class SettlementSetup
         var bounds = GroundBounds(plazaRoot.Find("Background").GetComponent<SpriteRenderer>());
         Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
         BuildP2(root, plazaRoot.Find("Props"), root.GetComponent<SettlementPlazaView>(), ToWorld);
+        ApplyPlotAnchors(plazaRoot);
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);

@@ -176,6 +176,8 @@ public static partial class SettlementSetup
 
         // P2: 게시판 보강·관리 해달 근무 자리·광장 주민 작업·접수소 → 마을회관·바닷가 벤치 (SettlementSetup.P2)
         BuildP2(root, props, view, ToWorld);
+        // 게시판 부탁 건물을 건설 모드에서 자리를 골라 짓게 (SettlementSetup.Plots)
+        ApplyPlotAnchors(plazaRoot);
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);

@@ -135,9 +135,11 @@ public class DecorLayout
 
     /// <summary>
     /// 이 자리·방향에 놓을 수 있는지. ignoreInstanceId는 옮기는 중인 물건 자신 (자기 칸은 비어 있는 것으로 봄).
-    /// 여러 칸이 문제면 가장 먼저 걸린 이유를 돌려준다 (격자 밖 → 막힘 → 잠김 → 겹침 순)
+    /// 여러 칸이 문제면 가장 먼저 걸린 이유를 돌려준다 (격자 밖 → 막힘 → 잠김 → 겹침 순).
+    /// ignoreBlocked: 월드 쪽 막힘은 보지 않음 (옛 세이브의 다 지은 건물을 원래 자리에 놓을 때)
     /// </summary>
-    public DecorPlacementResult Check(DecorDefinition decor, Vector2Int origin, DecorRotation rotation, int ignoreInstanceId = 0)
+    public DecorPlacementResult Check(DecorDefinition decor, Vector2Int origin, DecorRotation rotation, int ignoreInstanceId = 0,
+        bool ignoreBlocked = false)
     {
         if (decor == null)
             throw new ArgumentNullException(nameof(decor));
@@ -151,7 +153,7 @@ public class DecorLayout
         {
             int i = Index(cell);
             DecorPlacementResult result;
-            if (_regionOfCell[i] == null || _blocked[i])
+            if (_regionOfCell[i] == null || (_blocked[i] && !ignoreBlocked))
                 result = DecorPlacementResult.Unavailable;
             else if (!_unlockedRegions.Contains(_regionOfCell[i]))
                 result = DecorPlacementResult.Locked;
@@ -172,10 +174,12 @@ public class DecorLayout
     #region 놓기 / 옮기기 / 치우기
 
     /// <summary>물건을 놓는다 (보관함 개수는 검사하지 않음, DecorManager가 먼저 확인)</summary>
-    public DecorPlacementResult TryPlace(DecorDefinition decor, Vector2Int origin, DecorRotation rotation, out PlacedDecor placed)
+    /// <param name="ignoreBlocked">월드 쪽 막힘은 보지 않음 (Check 참고)</param>
+    public DecorPlacementResult TryPlace(DecorDefinition decor, Vector2Int origin, DecorRotation rotation, out PlacedDecor placed,
+        bool ignoreBlocked = false)
     {
         placed = null;
-        var result = Check(decor, origin, rotation);
+        var result = Check(decor, origin, rotation, 0, ignoreBlocked);
         if (result != DecorPlacementResult.Ok)
             return result;
 

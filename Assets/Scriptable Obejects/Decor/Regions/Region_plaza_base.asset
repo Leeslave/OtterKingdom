@@ -17,7 +17,7 @@ MonoBehaviour:
   _areas:
   - x: 0
     y: 0
-    width: 101
+    width: 103
     height: 90
   _unlockedByDefault: 1
   _requirements: []

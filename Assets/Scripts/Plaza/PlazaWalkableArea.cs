@@ -52,6 +52,7 @@ public class PlazaWalkableArea : MonoBehaviour
     private int height;
     private bool[] walkable;
     private bool[] staticWalkable; // polygons only, before runtime obstacles
+    private bool[] decorWalkable;  // staticWalkable without footprints of player-placed buildings (null = same)
     private int[] component;
     private readonly List<Rect> obstacles = new List<Rect>();
     private int largestComponent = -1;
@@ -92,12 +93,14 @@ public class PlazaWalkableArea : MonoBehaviour
 
         var walkPolys = new List<List<Vector2>>();
         var blockPolys = new List<List<Vector2>>();
+        var fixedBlockPolys = new List<List<Vector2>>();
         foreach (var area in areas)
         {
             if (area.PointCount < 3) continue;
             var pts = new List<Vector2>();
             area.GetWorldPoints(pts);
             (area.Kind == PlazaAreaKind.Walkable ? walkPolys : blockPolys).Add(pts);
+            if (area.Kind == PlazaAreaKind.Blocked && !area.IgnoredByDecor) fixedBlockPolys.Add(pts);
         }
 
         if (walkPolys.Count == 0)
@@ -105,6 +108,7 @@ public class PlazaWalkableArea : MonoBehaviour
             width = height = 0;
             walkable = new bool[0];
             staticWalkable = new bool[0];
+            decorWalkable = null;
             component = new int[0];
             largestComponent = -1;
             if (!warnedNoAreas && Application.isPlaying)
@@ -132,6 +136,12 @@ public class PlazaWalkableArea : MonoBehaviour
         int count = width * height;
 
         walkable = new bool[count];
+        decorWalkable = null;
+        if (fixedBlockPolys.Count < blockPolys.Count)
+        {
+            RasterizeClearCells(walkPolys, fixedBlockPolys);
+            decorWalkable = (bool[])walkable.Clone();
+        }
         RasterizeClearCells(walkPolys, blockPolys);
 
         staticWalkable = (bool[])walkable.Clone();
@@ -358,6 +368,14 @@ public class PlazaWalkableArea : MonoBehaviour
     public bool IsStaticWalkable(Vector2 worldPos)
     {
         return EnsureBuilt() && TryGetCell(worldPos, out int cell) && staticWalkable[cell];
+    }
+
+    // Like IsStaticWalkable, but footprints of buildings the player places
+    // (PlazaAreaPolygon.IgnoredByDecor) don't count: decor cells under such a
+    // building are held by the building's own grid placement instead.
+    public bool IsDecorWalkable(Vector2 worldPos)
+    {
+        return EnsureBuilt() && TryGetCell(worldPos, out int cell) && (decorWalkable ?? staticWalkable)[cell];
     }
 
     private void ApplyObstacleCells()

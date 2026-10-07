@@ -14,6 +14,8 @@ public class TutorialPointer : MonoBehaviour
     private static readonly Vector2 ReferenceResolution = new Vector2(1080f, 1920f);
     // 장소 화면 아래층(90) 위, 전역 UI(100) 아래
     private const int SortingOrder = 95;
+    // 전역 UI 위 (꾸미기 모드의 버튼을 가리킬 때). 튜토리얼 화면(500) 아래
+    public const int AboveGlobalUI = 110;
     private const float BubbleWidth = 640f;
     private const float BodyFontSize = 36f;
     private const float HolePadding = 16f;
@@ -31,12 +33,13 @@ public class TutorialPointer : MonoBehaviour
     private RectTransform _bubble;
 
     /// <param name="target">강조할 화면 영역 (픽셀, 매 프레임 다시 구함. null이면 잠시 숨김)</param>
-    public static TutorialPointer Show(Func<Rect?> target, string message)
+    /// <param name="sortingOrder">그릴 층 (기본: 전역 UI 아래 — 팝업이 뜨면 가려짐)</param>
+    public static TutorialPointer Show(Func<Rect?> target, string message, int sortingOrder = SortingOrder)
     {
         var go = new GameObject(nameof(TutorialPointer), typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(CanvasGroup));
         var pointer = go.AddComponent<TutorialPointer>();
         pointer._target = target ?? throw new ArgumentNullException(nameof(target));
-        pointer.Build(message);
+        pointer.Build(message, sortingOrder);
         pointer.LateUpdate();
         return pointer;
     }
@@ -96,7 +99,7 @@ public class TutorialPointer : MonoBehaviour
         return Rect.MinMaxRect(xMin, yMin, xMax, yMax);
     }
 
-    private void Build(string message)
+    private void Build(string message, int sortingOrder)
     {
         var style = Resources.Load<TutorialStyle>(TutorialStyle.ResourcePath);
         if (style == null)
@@ -104,7 +107,7 @@ public class TutorialPointer : MonoBehaviour
 
         _canvas = GetComponent<Canvas>();
         _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        _canvas.sortingOrder = SortingOrder;
+        _canvas.sortingOrder = sortingOrder;
         var scaler = GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = ReferenceResolution;
