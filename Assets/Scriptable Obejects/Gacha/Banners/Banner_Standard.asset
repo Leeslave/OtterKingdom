@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a6f3e4780aca24786e1d59775051a1, type: 3}
+  m_Name: Banner_Standard
+  m_EditorClassIdentifier: OtterKingdom::GachaBannerDefinition
+  _bannerId: standard_seaside
+  _kind: 0
+  _title: "\uBC14\uB2F7\uAC00 \uBCF4\uBB3C \uC870\uAC1C"
+  _subtitle: "\uB298 \uC5F4\uB824 \uC788\uB294 \uBCF4\uBB3C \uC870\uAC1C. \uD558\uB8E8
+    \uD55C \uBC88\uC740 \uACE8\uB4DC\uB85C!"
+  _sortOrder: 1
+  _startDate: 
+  _endDate: 
+  _bannerArt: {fileID: 21300000, guid: df92e8930d826e542a27615063118ad7, type: 3}
+  _shellIcon: {fileID: 21300000, guid: 238a2c8e15ebe9141ac8001786d30ab4, type: 3}
+  _themeColor: {r: 1, g: 0.86, b: 0.5, a: 1}
+  _pool:
+  - {fileID: 11400000, guid: 4a7324cefa30f064ab142b871705d967, type: 2}
+  - {fileID: 11400000, guid: 73d033e5216468740a51db8946b9e19c, type: 2}
+  - {fileID: 11400000, guid: 558a9741e106d984299c4ef6ccedf6b4, type: 2}
+  - {fileID: 11400000, guid: c4782a9d90516344b8c08dc426471c16, type: 2}
+  - {fileID: 11400000, guid: f2c62dc7c6ac8e64a96a1f7a5dc06b54, type: 2}
+  - {fileID: 11400000, guid: 4c43ce999aa7e664fba89cc823005e8e, type: 2}
+  - {fileID: 11400000, guid: 234686ba816311a4bbe518dd8d5abd62, type: 2}
+  - {fileID: 11400000, guid: 6744559d31ae52b419caaefe2354738a, type: 2}
+  - {fileID: 11400000, guid: 421a829fe909de14b9df27f155e65b9d, type: 2}
+  - {fileID: 11400000, guid: dca27b669949d12438b70fc5b6320268, type: 2}
+  - {fileID: 11400000, guid: 936a8fb2f5ff76f47af1d0cd020aaef2, type: 2}
+  - {fileID: 11400000, guid: a657349a8b3d4b348a6b21687ec1ea5c, type: 2}
+  _featured: []
+  _featuredOtter: {fileID: 0}
+  _epicRate: 0.025
+  _rareRate: 0.15
+  _featuredShare: 0.5
+  _epicPity: 80
+  _rarePity: 10
+  _gem: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+  _gemCost: 30
+  _ticket: {fileID: 11400000, guid: 5bf421e97133e4a4290eb94bb0442467, type: 2}
+  _exchangePoints: 0
+  _dailyGoldPull: 1
+  _goldPullBase: 1000
+  _goldPullPerLevel: 800

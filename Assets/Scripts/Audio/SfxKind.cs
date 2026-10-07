@@ -13,4 +13,10 @@ public enum SfxKind
     Upgrade,   // 강화·확장
     LevelUp,   // 왕국 레벨 업
     Complete,  // 건설·주민 작업 완료
+    ShellTap,  // 뽑기: 해달이 돌로 조개를 톡
+    ShellCrack, // 뽑기: 조개가 쩍 갈라짐
+    RevealCommon, // 뽑기: 흔함 장난감이 나옴
+    RevealRare,   // 뽑기: 레어 장난감이 나옴
+    RevealEpic,   // 뽑기: 에픽 장난감이 나옴 (팡파르)
+    RevealUpgrade, // 뽑기: 빛 색이 한 단계 올라감 (승급)
 }

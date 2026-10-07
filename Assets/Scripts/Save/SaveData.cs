@@ -174,4 +174,7 @@ public class SaveData
     // Owned by DecorManager (GlobalUI): toys placed on each zone's grid and
     // unlocked decor regions. Missing in older saves -> nothing placed.
     public DecorSaveData decor = new DecorSaveData();
+    // Owned by GachaManager (GlobalUI): pity counters, star points, daily
+    // gold pull. Missing in older saves -> JsonUtility fills defaults.
+    public GachaSaveData gacha = new GachaSaveData();
 }

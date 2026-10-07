@@ -38,6 +38,9 @@ public class BackButtonHandler : MonoBehaviour
         var gameUI = FindAnyObjectByType<GameUI>();
         if (gameUI != null && gameUI.CloseTopModal())
             return;
+        // 뽑기 연출 중: 결과로 건너뜀 (결과 화면이면 닫음) — 아래 뽑기 화면이 먼저 닫히지 않게
+        if (GachaRevealView.TryHandleBack())
+            return;
         if (CloseTopGlobalWindow())
             return;
         if (DecorModePresenter.IsActive)

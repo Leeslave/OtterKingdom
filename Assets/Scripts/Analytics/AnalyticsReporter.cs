@@ -34,6 +34,7 @@ public class AnalyticsReporter : MonoBehaviour
         GameManager.FishCaught += HandleFishCaught;
         GameManager.MiningFound += HandleMiningFound;
         FairyShopPresenter.Purchased += HandleShopPurchased;
+        GachaManager.Pulled += HandleGachaPulled;
     }
 
     private void OnDisable()
@@ -42,6 +43,7 @@ public class AnalyticsReporter : MonoBehaviour
         GameManager.FishCaught -= HandleFishCaught;
         GameManager.MiningFound -= HandleMiningFound;
         FairyShopPresenter.Purchased -= HandleShopPurchased;
+        GachaManager.Pulled -= HandleGachaPulled;
         Bind(null, null, null, null, null);
     }
 
@@ -138,6 +140,26 @@ public class AnalyticsReporter : MonoBehaviour
         if (item == null)
             return;
         AnalyticsLog.Track("reward_claimed", ("facilityId", facility), ("itemId", item.ItemId), ("amount", amount), ("offlineOrigin", false));
+    }
+
+    // 뽑기 한 번 (1회·10회): 배너, 낸 값, 등급별 수, 픽업·새 장난감 수, 에픽 천장까지 남은 수
+    private static void HandleGachaPulled(GachaPullReport report)
+    {
+        if (report == null || report.Banner == null)
+            return;
+        int epic = 0, rare = 0, featured = 0, fresh = 0, shards = 0;
+        foreach (var pull in report.Pulls)
+        {
+            if (pull.IsEpic) epic++;
+            else if (pull.IsRareOrBetter) rare++;
+            if (pull.Featured) featured++;
+            if (pull.IsNew) fresh++;
+            shards += pull.Shards;
+        }
+        var manager = GachaManager.Instance;
+        AnalyticsLog.Track("gacha_pull", ("bannerId", report.Banner.BannerId), ("payment", report.Payment.ToString()),
+            ("count", report.Pulls.Count), ("cost", report.Cost), ("epic", epic), ("rare", rare), ("featured", featured),
+            ("new", fresh), ("shards", shards), ("epicPityLeft", manager != null ? manager.EpicPityLeft(report.Banner) : 0));
     }
 
     private static void HandleShopPurchased(ShopProduct product, int quantity)

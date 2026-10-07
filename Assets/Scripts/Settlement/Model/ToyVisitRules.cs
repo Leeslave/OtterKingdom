@@ -25,6 +25,9 @@ public static class ToyVisitRules
     /// <summary>왕국에 아직 없는 특성을 가진 해달의 가중치 (특성이 막혀 진행이 멈추지 않게)</summary>
     public const int MissingTraitWeight = 3;
 
+    /// <summary>좋아하는 장난감이 광장에 놓인 한정 해달의 가중치 (뽑은 장난감을 놓으면 그 해달이 먼저 오게)</summary>
+    public const int FavoriteToyWeight = 20;
+
     /// <summary>n번째(0부터) 방문까지 걸리는 시간</summary>
     public static TimeSpan Interval(SettlementConfig config, int visitIndex)
     {
@@ -51,8 +54,17 @@ public static class ToyVisitRules
         return count;
     }
 
-    /// <summary>이 장난감 등급으로 올 수 있는 해달: 아직 찾아온 적 없는 장난감 해달 중 등급이 장난감 이하 (데이터 순서)</summary>
-    public static void CollectCandidates(SettlementConfig config, Settlement settlement, int toyTier, List<SettlementOtterDefinition> result)
+    /// <summary>이 장난감 등급으로 올 수 있는 해달: 아직 찾아온 적 없는 장난감 해달 중 등급이 장난감 이하 (데이터 순서). 한정 해달은 오지 않음</summary>
+    public static void CollectCandidates(SettlementConfig config, Settlement settlement, int toyTier, List<SettlementOtterDefinition> result) =>
+        CollectCandidates(config, settlement, toyTier, null, result);
+
+    /// <summary>
+    /// 올 수 있는 해달: 아직 찾아온 적 없는 장난감 해달 중 등급이 장난감 이하 (데이터 순서).
+    /// 좋아하는 장난감이 있는 한정 해달은 등급 대신 그 장난감이 광장에 놓였는지를 본다
+    /// </summary>
+    /// <param name="placedToys">광장에 놓인 장난감 (null이면 한정 해달은 오지 않음)</param>
+    public static void CollectCandidates(SettlementConfig config, Settlement settlement, int toyTier,
+        ICollection<ItemDefinition> placedToys, List<SettlementOtterDefinition> result)
     {
         if (config == null)
             throw new ArgumentNullException(nameof(config));
@@ -66,13 +78,18 @@ public static class ToyVisitRules
             return;
         foreach (var otter in config.Otters)
         {
-            if (otter != null && otter.IsToyVisitor && otter.VisitTier <= toyTier
-                && !string.IsNullOrEmpty(otter.OtterId) && !settlement.TryGetResidentState(otter.OtterId, out _))
+            if (otter == null || !otter.IsToyVisitor || string.IsNullOrEmpty(otter.OtterId)
+                || settlement.TryGetResidentState(otter.OtterId, out _))
+                continue;
+            bool comes = otter.FavoriteToy != null
+                ? placedToys != null && placedToys.Contains(otter.FavoriteToy)
+                : otter.VisitTier <= toyTier;
+            if (comes)
                 result.Add(otter);
         }
     }
 
-    /// <summary>후보의 가중치: 기본 1, 장난감과 같은 등급 ×2, 왕국에 아직 없는 특성 ×3</summary>
+    /// <summary>후보의 가중치: 기본 1, 장난감과 같은 등급 ×2, 왕국에 아직 없는 특성 ×3, 좋아하는 장난감이 놓인 한정 해달 ×20</summary>
     public static int Weight(SettlementOtterDefinition otter, int toyTier, int[] traitCounts)
     {
         if (otter == null)
@@ -83,6 +100,8 @@ public static class ToyVisitRules
         int index = (int)otter.Trait;
         if (index > 0 && traitCounts != null && index < traitCounts.Length && traitCounts[index] == 0)
             weight *= MissingTraitWeight;
+        if (otter.FavoriteToy != null)
+            weight *= FavoriteToyWeight;
         return weight;
     }
 
@@ -114,7 +133,13 @@ public static class ToyVisitRules
     /// </summary>
     /// <param name="toyTier">광장 장난감 중 가장 높은 등급 (없으면 -1)</param>
     public static ToyVisitStep Step(SettlementConfig config, Settlement settlement, int toyTier, long nowUtcTicks,
-        out SettlementOtterDefinition arrived)
+        out SettlementOtterDefinition arrived) =>
+        Step(config, settlement, toyTier, null, nowUtcTicks, out arrived);
+
+    /// <param name="toyTier">광장 장난감 중 가장 높은 등급 (없으면 -1)</param>
+    /// <param name="placedToys">광장에 놓인 장난감 (한정 해달은 좋아하는 장난감이 여기 있어야 옴, null = 안 옴)</param>
+    public static ToyVisitStep Step(SettlementConfig config, Settlement settlement, int toyTier, ICollection<ItemDefinition> placedToys,
+        long nowUtcTicks, out SettlementOtterDefinition arrived)
     {
         if (config == null)
             throw new ArgumentNullException(nameof(config));
@@ -132,7 +157,7 @@ public static class ToyVisitRules
         }
 
         var candidates = new List<SettlementOtterDefinition>();
-        CollectCandidates(config, settlement, toyTier, candidates);
+        CollectCandidates(config, settlement, toyTier, placedToys, candidates);
         if (candidates.Count == 0)
         {
             settlement.SetToyVisitDue(0);

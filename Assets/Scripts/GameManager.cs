@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
     private static ProfileManager loadedProfile;
     private static SettlementManager loadedSettlement;
     private static DecorManager loadedDecor;
+    private static GachaManager loadedGacha;
 
     // Offline production covers the time the app was closed, which ends when
     // the app starts — not when the first zone scene with a GameManager opens
@@ -338,6 +339,7 @@ public class GameManager : MonoBehaviour
         SceneNavigator.BeforeLeave += SaveNow;
         SettlementManager.SaveRequested += SaveNow;
         DecorManager.SaveRequested += SaveNow;
+        GachaManager.SaveRequested += SaveNow;
         FairyShopPresenter.Opened += HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan += HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted += HandleBuildStarted;
@@ -349,6 +351,7 @@ public class GameManager : MonoBehaviour
         SceneNavigator.BeforeLeave -= SaveNow;
         SettlementManager.SaveRequested -= SaveNow;
         DecorManager.SaveRequested -= SaveNow;
+        GachaManager.SaveRequested -= SaveNow;
         FairyShopPresenter.Opened -= HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan -= HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted -= HandleBuildStarted;
@@ -500,6 +503,15 @@ public class GameManager : MonoBehaviour
             loadedQuests = quests;
             save.quests ??= new List<QuestSaveEntry>();
             quests.LoadFromSave(save.quests);
+        }
+
+        // Gacha pity and star points (the toys themselves are in the bag).
+        var gacha = GachaManager.Instance;
+        if (gacha != null && loadedGacha != gacha)
+        {
+            loadedGacha = gacha;
+            save.gacha ??= new GachaSaveData();
+            gacha.LoadFromSave(save.gacha);
         }
     }
 
@@ -755,6 +767,7 @@ public class GameManager : MonoBehaviour
         if (ProfileManager.Instance != null) ProfileManager.Instance.WriteToSave(save.profile ??= new ProfileSaveData());
         if (SettlementManager.Instance != null) SettlementManager.Instance.WriteToSave(save.settlement ??= new SettlementSaveData());
         if (DecorManager.Instance != null) DecorManager.Instance.WriteToSave(save.decor ??= new DecorSaveData());
+        if (GachaManager.Instance != null && GachaManager.Instance.IsLoaded) GachaManager.Instance.WriteToSave(save.gacha ??= new GachaSaveData());
         saveService.Save(save);
     }
 

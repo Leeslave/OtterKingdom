@@ -38,6 +38,9 @@ public class SettlementOtterDefinition : ScriptableObject
     [Min(0)]
     [SerializeField] private int _visitTier;
 
+    [Tooltip("이 장난감이 광장에 있어야만 찾아오는 한정 해달 (뽑기 픽업 장난감). 있으면 다른 해달보다 먼저 옴. 비우면 장난감 등급만 봄")]
+    [SerializeField] private ItemDefinition _favoriteToy;
+
     [Tooltip("빈 집이 없을 때 말을 걸면 하는 말 (비우면 기본 말)")]
     [TextArea]
     [SerializeField] private string _homelessLine;
@@ -88,6 +91,7 @@ public class SettlementOtterDefinition : ScriptableObject
     public OtterTrait Trait => _trait;
     public bool IsToyVisitor => _toyVisitor;
     public int VisitTier => _visitTier;
+    public ItemDefinition FavoriteToy => _favoriteToy;
     public string HomelessLine => _homelessLine;
     public bool IsBuilder => _isBuilder;
     public GuestbookEntryDefinition ArrivalEntry => _arrivalEntry;
