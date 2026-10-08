@@ -18,7 +18,7 @@ MonoBehaviour:
   _playStyle: 0
   _playSeconds: {x: 4, y: 7}
   _maxPlayers: 1
-  _worldSprite: {fileID: 0}
+  _worldSprite: {fileID: 21300000, guid: 09d5bd2aade6419ea266492aac9294a7, type: 3}
   _rotationSprites:
   - {fileID: 0}
   - {fileID: 0}

@@ -38,6 +38,9 @@ public class GachaPresenter : MonoBehaviour
     [Tooltip("뽑기권으로 뽑기 (초록)")]
     [SerializeField] private Sprite _ticketButton;
 
+    [Tooltip("골드 배너 뽑기 버튼 (겨자)")]
+    [SerializeField] private Sprite _goldButton;
+
     private readonly GachaScreenState _state = new GachaScreenState();
     private GachaBannerDefinition _selected;
     private int _lastCount = 1;
@@ -240,7 +243,14 @@ public class GachaPresenter : MonoBehaviour
         Refresh();
     }
 
-    // 결과 카드 안내: 픽업 에픽 = 그 장난감을 좋아하는 한정 해달, 나머지는 등급별 한 줄
+    // 꾸미기 가구 (의자 · 가로등 · 피크닉 매트 등, 장난감이 아님)
+    private static bool IsFurniture(ItemDefinition item)
+    {
+        var decor = DecorManager.Instance != null && DecorManager.Instance.Catalog != null ? DecorManager.Instance.Catalog.FindByItem(item) : null;
+        return decor != null && decor.IsFurniture;
+    }
+
+    // 결과 카드 안내: 픽업 에픽 = 그 장난감을 좋아하는 한정 해달, 가구 = 해달이 쓰는 자리 · 아늑함, 나머지는 등급별 한 줄
     private (string hint, Sprite portrait) Describe(GachaPull pull)
     {
         var otter = _selected != null ? _selected.FeaturedOtter : null;
@@ -248,6 +258,15 @@ public class GachaPresenter : MonoBehaviour
         {
             string name = otter.DisplayName;
             return ($"광장에 두면 한정 해달 {name}{KoreanParticle.SubjectParticle(name)} 놀러 와요!", otter.Portrait);
+        }
+        var furniture = DecorManager.Instance != null && DecorManager.Instance.Catalog != null ? DecorManager.Instance.Catalog.FindByItem(pull.Item) : null;
+        if (furniture != null && furniture.IsFurniture)
+        {
+            string use = !furniture.HasSpot ? "광장이 푸릇해져요"
+                : furniture.SpotKind == PlazaSpotKind.Sit ? "해달이 앉아 쉬어 가요"
+                : furniture.SpotKind == PlazaSpotKind.Eat ? "해달이 둘러앉아 간식을 먹어요"
+                : "밤이면 해달이 불빛 아래 모여요";
+            return ($"광장에 두면 {use} (아늑함 +{furniture.Coziness})", null);
         }
         switch (pull.Tier)
         {
@@ -271,8 +290,10 @@ public class GachaPresenter : MonoBehaviour
         var manager = GachaManager.Instance;
         var payment = manager.PreferredPayment(banner, count);
         var (currency, cost) = manager.Price(banner, count, payment);
-        return new GachaPriceLook(payment == GachaPayment.Ticket ? _ticketButton : _gemButton,
-            currency != null ? currency.Icon : null, cost.ToString("N0"));
+        var button = payment == GachaPayment.Ticket ? _ticketButton
+            : payment == GachaPayment.Gold && _goldButton != null ? _goldButton
+            : _gemButton;
+        return new GachaPriceLook(button, currency != null ? currency.Icon : null, cost.ToString("N0"));
     }
 
     private static int Balance(Currency currency) =>
@@ -377,8 +398,13 @@ public class GachaPresenter : MonoBehaviour
         }
 
         text.Append("<size=38><b>확정 규칙</b></size>\n");
-        text.Append($"·  {banner.EpicPity}회 안에 에픽 확정 (지금 {manager.EpicPityLeft(banner)}회 남음)\n");
-        text.Append($"·  {banner.RarePity}회 안에 레어 이상 확정\n");
+        if (banner.IsGoldBanner)
+            text.Append($"·  {banner.RarePity}회 안에 레어 이상 확정 (지금 {manager.RarePityLeft(banner)}회 남음)\n");
+        else
+        {
+            text.Append($"·  {banner.EpicPity}회 안에 에픽 확정 (지금 {manager.EpicPityLeft(banner)}회 남음)\n");
+            text.Append($"·  {banner.RarePity}회 안에 레어 이상 확정\n");
+        }
         if (banner.IsPickup)
         {
             text.Append($"·  에픽이 나오면 {Percent(banner.FeaturedShare)} 확률로 픽업 장난감, 놓치면 다음 에픽은 픽업 확정\n");
@@ -386,6 +412,13 @@ public class GachaPresenter : MonoBehaviour
             var reward = manager.PointsReward(banner);
             if (banner.ExchangePoints > 0 && reward != null)
                 text.Append($"·  한 번 뽑을 때마다 별빛 포인트 1점, {banner.ExchangePoints}점이면 {reward.DisplayName}{KoreanParticle.ObjectParticle(reward.DisplayName)} 받아요\n");
+        }
+        else if (banner.IsGoldBanner)
+        {
+            text.Append("·  골드로 언제든 뽑아요. 값은 왕국 레벨에 따라 올라요 ")
+                .Append($"(지금 1회 {manager.GoldBannerCost(banner, 1):N0} · 10회 {manager.GoldBannerCost(banner, 10):N0})\n");
+            text.Append("·  에픽 장난감은 나오지 않아요 (에픽은 보물 조개에서)\n");
+            text.Append("·  확정까지 남은 횟수는 골드 뽑기끼리 이어져요\n");
         }
         else
         {
@@ -442,6 +475,18 @@ public class GachaPresenter : MonoBehaviour
                     state.Highlights.Add((item, tier, true));
             }
         }
+        else if (selected.IsGoldBanner)
+        {
+            // 골드 배너: 레어 장난감 먼저, 그다음 가구
+            state.HighlightLabel = "레어 장난감 · 가구";
+            foreach (var item in table.Standard(GachaTable.Rare))
+                state.Highlights.Add((item, GachaTable.Rare, false));
+            foreach (var item in table.Standard(GachaTable.Common))
+            {
+                if (IsFurniture(item))
+                    state.Highlights.Add((item, GachaTable.Common, false));
+            }
+        }
         else
         {
             state.HighlightLabel = "에픽 장난감";
@@ -449,8 +494,10 @@ public class GachaPresenter : MonoBehaviour
                 state.Highlights.Add((item, GachaTable.Epic, false));
         }
 
-        state.PityTotal = selected.EpicPity;
-        state.PityLeft = manager.EpicPityLeft(selected);
+        // 골드 배너는 에픽이 없어서 레어 이상 확정까지
+        state.PityLabel = selected.IsGoldBanner ? "레어 확정까지" : "에픽 확정까지";
+        state.PityTotal = selected.IsGoldBanner ? selected.RarePity : selected.EpicPity;
+        state.PityLeft = selected.IsGoldBanner ? manager.RarePityLeft(selected) : manager.EpicPityLeft(selected);
         state.Guaranteed = manager.IsFeaturedGuaranteed(selected);
 
         state.ShowPoints = selected.IsPickup && selected.ExchangePoints > 0;
@@ -464,8 +511,10 @@ public class GachaPresenter : MonoBehaviour
         state.GoldAffordable = Balance(manager.Gold) >= state.GoldCost;
 
         state.Shards = Balance(manager.Shard);
-        state.TicketIcon = selected.Ticket != null ? selected.Ticket.Icon : null;
-        state.Tickets = Balance(selected.Ticket);
+        // 골드 배너는 뽑기권 대신 가진 골드
+        var held = selected.IsGoldBanner ? manager.Gold : selected.Ticket;
+        state.TicketIcon = held != null ? held.Icon : null;
+        state.Tickets = Balance(held);
         state.Single = PriceLook(selected, 1);
         state.Ten = PriceLook(selected, 10);
 
@@ -490,7 +539,8 @@ public class GachaPresenter : MonoBehaviour
         var text = new StringBuilder("0123456789,.%/×+-!?·★()에픽레어흔함확정까지회남음일시간곧끝나요상시확률UP장난감별빛포인트교환골드뽑기오늘의내일다시")
             .Append("한번더10회톡두드려보세요마지막으로눌러서조개를한꺼번에열어요건너뛰기확인새NEW픽업반짝조각이미있는광장에두면해달친구가놀러와요")
             .Append("레어도어떤든올수있어요한정요정의선물을받았어요지난이됐어요모자라요하루에번이에요기간끝났어요규칙아래뽑을때받아요새벽4시")
-            .Append("교환소꾸미기에서놓아가질없어요지금은바꿀이어져요끼리덤으로줘요보물바닷가봄바람정보장");
+            .Append("교환소꾸미기에서놓아가질없어요지금은바꿀이어져요끼리덤으로줘요보물바닷가봄바람정보장")
+            .Append("가구언제든값은왕국레벨에따라올라요나오지않아요에픽은앉아쉬어가요둘러앉아간식을먹어요밤이면불빛아래모여요푸릇해져요아늑함");
         foreach (var banner in manager.Banners)
         {
             if (banner == null)

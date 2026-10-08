@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: bcd2e6cbce1e0f94b8a6ed35b68abc39
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7942998185802387919
+    second: Cast_Honey_0
+  - first:
+      213: -4065596822136136494
+    second: Cast_Honey_1
+  - first:
+      213: 6649170884040624012
+    second: Cast_Honey_2
+  - first:
+      213: -8027832905434452933
+    second: Cast_Honey_3
+  - first:
+      213: -8784716738966021215
+    second: Cast_Honey_4
+  - first:
+      213: -3838926772802193019
+    second: Cast_Honey_5
+  - first:
+      213: 33943907029244030
+    second: Cast_Honey_6
+  - first:
+      213: -9160913635612339006
+    second: Cast_Honey_7
+  - first:
+      213: -8601533520972690716
+    second: Cast_Honey_8
+  - first:
+      213: -5859297242666319086
+    second: Cast_Honey_9
+  - first:
+      213: -4528952069953340466
+    second: Cast_Honey_10
+  - first:
+      213: -1130440116322954023
+    second: Cast_Honey_11
+  - first:
+      213: 7970746176333986398
+    second: Cast_Honey_12
+  - first:
+      213: 8374976512453355752
+    second: Cast_Honey_13
+  - first:
+      213: -2927396690320228556
+    second: Cast_Honey_14
+  - first:
+      213: 7070254808862399231
+    second: Cast_Honey_15
+  - first:
+      213: -5802591148135598503
+    second: Cast_Honey_16
+  - first:
+      213: 966176584860948723
+    second: Cast_Honey_17
+  - first:
+      213: 7512704518547597599
+    second: Cast_Honey_18
+  - first:
+      213: -1940151219491184557
+    second: Cast_Honey_19
+  - first:
+      213: 8348018243661420731
+    second: Cast_Honey_20
+  - first:
+      213: 7659333914342072138
+    second: Cast_Honey_21
+  - first:
+      213: -3139315865941463140
+    second: Cast_Honey_22
+  - first:
+      213: -4534605613567174779
+    second: Cast_Honey_23
+  - first:
+      213: 4421968015403830633
+    second: Cast_Honey_24
+  - first:
+      213: 6822239675136352418
+    second: Cast_Honey_25
+  - first:
+      213: 8737057389784307918
+    second: Cast_Honey_26
+  - first:
+      213: 5560546365251603284
+    second: Cast_Honey_27
+  - first:
+      213: 8631652037035743571
+    second: Cast_Honey_28
+  - first:
+      213: 666914342709700842
+    second: Cast_Honey_29
+  - first:
+      213: -9111042598929359149
+    second: Cast_Honey_30
+  - first:
+      213: -5142991288263323587
+    second: Cast_Honey_31
+  - first:
+      213: -4743768109920354131
+    second: Cast_Honey_32
+  - first:
+      213: 2149260469941003180
+    second: Cast_Honey_33
+  - first:
+      213: -5730299082270759082
+    second: Cast_Honey_34
+  - first:
+      213: 1714060743844875742
+    second: Cast_Honey_35
+  - first:
+      213: -6519495701724882123
+    second: Cast_Honey_36
+  - first:
+      213: 1486334210466566088
+    second: Cast_Honey_37
+  - first:
+      213: 8463143109658177320
+    second: Cast_Honey_38
+  - first:
+      213: 2259090219921490376
+    second: Cast_Honey_39
+  - first:
+      213: -8848012163273818716
+    second: Cast_Honey_40
+  - first:
+      213: -5680742998219942865
+    second: Cast_Honey_41
+  - first:
+      213: -1586508632845642551
+    second: Cast_Honey_42
+  - first:
+      213: 6737373525593712037
+    second: Cast_Honey_43
+  - first:
+      213: 8047338665744628880
+    second: Cast_Honey_44
+  - first:
+      213: 1341461335722143606
+    second: Cast_Honey_45
+  - first:
+      213: -5451699509441277268
+    second: Cast_Honey_46
+  - first:
+      213: -785669208270757867
+    second: Cast_Honey_47
+  - first:
+      213: -8720428902244552564
+    second: Cast_Honey_48
+  - first:
+      213: -592486722370960794
+    second: Cast_Honey_49
+  - first:
+      213: -7880179945208593522
+    second: Cast_Honey_50
+  - first:
+      213: -5426607776686761976
+    second: Cast_Honey_51
+  - first:
+      213: -733633239613902009
+    second: Cast_Honey_52
+  - first:
+      213: 1924426318369394414
+    second: Cast_Honey_53
+  - first:
+      213: -8062072471224658522
+    second: Cast_Honey_54
+  - first:
+      213: -3553948227317862159
+    second: Cast_Honey_55
+  - first:
+      213: -2808824870444223661
+    second: Cast_Honey_56
+  - first:
+      213: -6610778640247691674
+    second: Cast_Honey_57
+  - first:
+      213: -3589516779518286060
+    second: Cast_Honey_58
+  - first:
+      213: 2818951629039198279
+    second: Cast_Honey_59
+  - first:
+      213: -4006980114367977461
+    second: Cast_Honey_60
+  - first:
+      213: -2750731640393390051
+    second: Cast_Honey_61
+  - first:
+      213: -881840846209443297
+    second: Cast_Honey_62
+  - first:
+      213: 6046747261710210189
+    second: Cast_Honey_63
+  - first:
+      213: -2361462878962010345
+    second: Cast_Honey_64
+  - first:
+      213: -4625784278115537096
+    second: Cast_Honey_65
+  - first:
+      213: -5897759554095103080
+    second: Cast_Honey_66
+  - first:
+      213: 5980259369758937511
+    second: Cast_Honey_67
+  - first:
+      213: -3474615365816014879
+    second: Cast_Honey_68
+  - first:
+      213: 3436087784678087424
+    second: Cast_Honey_69
+  - first:
+      213: -3208113803721596058
+    second: Cast_Honey_Walk_0
+  - first:
+      213: -4167031845444934026
+    second: Cast_Honey_Walk_1
+  - first:
+      213: -6979527414537299221
+    second: Cast_Honey_Walk_2
+  - first:
+      213: 3606492397547275902
+    second: Cast_Honey_Walk_3
+  - first:
+      213: -4668649033145073686
+    second: Cast_Honey_Walk_4
+  - first:
+      213: 2468487719688957821
+    second: Cast_Honey_Walk_5
+  - first:
+      213: -7761951903132678794
+    second: Cast_Honey_Walk_6
+  - first:
+      213: 3386455791394934436
+    second: Cast_Honey_Walk_7
+  - first:
+      213: -460476175063679424
+    second: Cast_Honey_Walk_Down_0
+  - first:
+      213: -9045963766705059519
+    second: Cast_Honey_Walk_Down_1
+  - first:
+      213: 1262669909394404507
+    second: Cast_Honey_Walk_Down_2
+  - first:
+      213: -6542080944039326535
+    second: Cast_Honey_Walk_Down_3
+  - first:
+      213: 6431605313471348752
+    second: Cast_Honey_Walk_Down_4
+  - first:
+      213: 6306703529362619020
+    second: Cast_Honey_Walk_Down_5
+  - first:
+      213: 2475186320172133815
+    second: Cast_Honey_Walk_Down_6
+  - first:
+      213: 4269389523386887616
+    second: Cast_Honey_Walk_Down_7
+  - first:
+      213: 727650765190861307
+    second: Cast_Honey_Walk_Up_0
+  - first:
+      213: 2098725968982423775
+    second: Cast_Honey_Walk_Up_1
+  - first:
+      213: 6354649198007779
+    second: Cast_Honey_Walk_Up_2
+  - first:
+      213: 1367795197076597581
+    second: Cast_Honey_Walk_Up_3
+  - first:
+      213: 5169692866732522004
+    second: Cast_Honey_Walk_Up_4
+  - first:
+      213: 4573679013478358733
+    second: Cast_Honey_Walk_Up_5
+  - first:
+      213: 6515243331311081770
+    second: Cast_Honey_Walk_Up_6
+  - first:
+      213: -6996058290638350783
+    second: Cast_Honey_Walk_Up_7
+  - first:
+      213: -7128709423464905061
+    second: Cast_Honey_Harvest_0
+  - first:
+      213: -7807543792908596934
+    second: Cast_Honey_Harvest_1
+  - first:
+      213: 6671613464524659018
+    second: Cast_Honey_Harvest_2
+  - first:
+      213: 4937620704537608580
+    second: Cast_Honey_Harvest_3
+  - first:
+      213: -6777582182134580666
+    second: Cast_Honey_Harvest_4
+  - first:
+      213: 7804319499600066059
+    second: Cast_Honey_Harvest_5
+  - first:
+      213: 5072043729863796407
+    second: Cast_Honey_Harvest_6
+  - first:
+      213: -4714557194895725049
+    second: Cast_Honey_Harvest_7
+  - first:
+      213: -1168528316091298978
+    second: Cast_Honey_Eat_0
+  - first:
+      213: -7389719364248993512
+    second: Cast_Honey_Eat_1
+  - first:
+      213: -176031941575398569
+    second: Cast_Honey_Eat_2
+  - first:
+      213: 1466521550728436601
+    second: Cast_Honey_Eat_3
+  - first:
+      213: 7789085058457457309
+    second: Cast_Honey_Eat_4
+  - first:
+      213: -5256000660999823511
+    second: Cast_Honey_Eat_5
+  - first:
+      213: -84756941023906816
+    second: Cast_Honey_Eat_6
+  - first:
+      213: -3764902827741037763
+    second: Cast_Honey_Eat_7
+  - first:
+      213: 8311161544038034706
+    second: Cast_Honey_Net_0
+  - first:
+      213: -7675808928207429050
+    second: Cast_Honey_Net_1
+  - first:
+      213: 2306454827386775969
+    second: Cast_Honey_Net_2
+  - first:
+      213: 5276067677513299495
+    second: Cast_Honey_Net_3
+  - first:
+      213: 1443818733235154791
+    second: Cast_Honey_Net_4
+  - first:
+      213: 6324450636719460598
+    second: Cast_Honey_Net_5
+  - first:
+      213: -999899920734035379
+    second: Cast_Honey_Net_6
+  - first:
+      213: 4623933135189862241
+    second: Cast_Honey_Net_7
+  - first:
+      213: -5330582339650619690
+    second: Cast_Honey_Squat_0
+  - first:
+      213: 5833672616617206376
+    second: Cast_Honey_Squat_1
+  - first:
+      213: 7544481361080227016
+    second: Cast_Honey_Squat_2
+  - first:
+      213: -6618504572467800803
+    second: Cast_Honey_Squat_3
+  - first:
+      213: 4764198659553279437
+    second: Cast_Honey_Squat_4
+  - first:
+      213: 2631868589982445488
+    second: Cast_Honey_Squat_5
+  - first:
+      213: 1738366571631105728
+    second: Cast_Honey_Squat_6
+  - first:
+      213: 4069221709266943966
+    second: Cast_Honey_Squat_7
+  - first:
+      213: -8276483691196660240
+    second: Cast_Honey_Stretch_0
+  - first:
+      213: -3798391079700323771
+    second: Cast_Honey_Stretch_1
+  - first:
+      213: 3877704883227095764
+    second: Cast_Honey_Stretch_2
+  - first:
+      213: 4340716057476765503
+    second: Cast_Honey_Stretch_3
+  - first:
+      213: 5303561008821803746
+    second: Cast_Honey_Stretch_4
+  - first:
+      213: 5283563078460239581
+    second: Cast_Honey_Stretch_5
+  - first:
+      213: -6067617192165786264
+    second: Cast_Honey_Stretch_6
+  - first:
+      213: -6361680882621706830
+    second: Cast_Honey_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 663a52a2e7d7a73d0800000000000000
+      internalID: -3208113803721596058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 676a38c4d9abb26c0800000000000000
+      internalID: -4167031845444934026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bea576cabccb32f90800000000000000
+      internalID: -6979527414537299221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e76c3f04ab5dc0230800000000000000
+      internalID: 3606492397547275902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aefba6e9070a53fb0800000000000000
+      internalID: -4668649033145073686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7f6970a084d14220800000000000000
+      internalID: 2468487719688957821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6750c126ed1084490800000000000000
+      internalID: -7761951903132678794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4aec8ad999b1ffe20800000000000000
+      internalID: 3386455791394934436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04e7cc5cb5f0c99f0800000000000000
+      internalID: -460476175063679424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1498d7ab1e7467280800000000000000
+      internalID: -9045963766705059519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b94370ab797e58110800000000000000
+      internalID: 1262669909394404507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bc0fa6fa0cd535a0800000000000000
+      internalID: -6542080944039326535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01089fcd4f6a14950800000000000000
+      internalID: 6431605313471348752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8a7c531279e58750800000000000000
+      internalID: 6306703529362619020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bd24c618d0a95220800000000000000
+      internalID: 2475186320172133815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cdef3db62bef3b30800000000000000
+      internalID: 4269389523386887616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf11eb30482291a00800000000000000
+      internalID: 727650765190861307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd8b516362c202d10800000000000000
+      internalID: 2098725968982423775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e59e101583961000800000000000000
+      internalID: 6354649198007779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4b6c3f1c726bf210800000000000000
+      internalID: 1367795197076597581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41a7677a5407eb740800000000000000
+      internalID: 5169692866732522004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dce590394d8f87f30800000000000000
+      internalID: 4573679013478358733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2997046a4bca6a50800000000000000
+      internalID: 6515243331311081770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14613962d0209ee90800000000000000
+      internalID: -6996058290638350783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9605638c8cb11d90800000000000000
+      internalID: -7128709423464905061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a398067594806a390800000000000000
+      internalID: -7807543792908596934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4994b72915569c50800000000000000
+      internalID: 6671613464524659018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4810491ced3f58440800000000000000
+      internalID: 4937620704537608580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64af9dd1ae031f1a0800000000000000
+      internalID: -6777582182134580666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b06f05f5c338e4c60800000000000000
+      internalID: 7804319499600066059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b667c346e4836640800000000000000
+      internalID: 5072043729863796407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70e6af4c537829eb0800000000000000
+      internalID: -4714557194895725049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5b846900bd88cfe0800000000000000
+      internalID: -1168528316091298978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8110d100461727990800000000000000
+      internalID: -7389719364248993512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75ba64db1eb9e8df0800000000000000
+      internalID: -176031941575398569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97b9f9694912a5410800000000000000
+      internalID: 1466521550728436601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d92d8a2a793681c60800000000000000
+      internalID: 7789085058457457309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96f13ed0f3fee07b0800000000000000
+      internalID: -5256000660999823511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 004750ed202e2def0800000000000000
+      internalID: -84756941023906816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3bb1a253d060cbc0800000000000000
+      internalID: -3764902827741037763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21d264fc36d275370800000000000000
+      internalID: 8311161544038034706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 642ac6ea27c0a7590800000000000000
+      internalID: -7675808928207429050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a9afd4027c220020800000000000000
+      internalID: 2306454827386775969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 726b911599b583940800000000000000
+      internalID: 5276067677513299495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76f298afc79790410800000000000000
+      internalID: 1443818733235154791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f018218856f4c750800000000000000
+      internalID: 6324450636719460598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d42e4bdd154af12f0800000000000000
+      internalID: -999899920734035379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 167662410b28b2040800000000000000
+      internalID: 4623933135189862241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d6772fca97f506b0800000000000000
+      internalID: -5330582339650619690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8626461365e55f050800000000000000
+      internalID: 5833672616617206376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c41eb553d163b860800000000000000
+      internalID: 7544481361080227016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1512cd58295624a0800000000000000
+      internalID: -6618504572467800803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcdb0166075dd1240800000000000000
+      internalID: 4764198659553279437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bf6961d986468420800000000000000
+      internalID: 2631868589982445488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c65c77cf2bef1810800000000000000
+      internalID: 1738366571631105728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edff92db597c87830800000000000000
+      internalID: 4069221709266943966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f5c8ecfee5042d80800000000000000
+      internalID: -8276483691196660240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54223701077694bc0800000000000000
+      internalID: -3798391079700323771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d27c8cdb0060d530800000000000000
+      internalID: 3877704883227095764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f379cb491425d3c30800000000000000
+      internalID: 4340716057476765503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ea9f6753a80a9940800000000000000
+      internalID: 5303561008821803746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddeedf750acf25940800000000000000
+      internalID: 5283563078460239581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86db7e3bf4e7bcba0800000000000000
+      internalID: -6067617192165786264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Honey_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bd80f061f4c6b7a0800000000000000
+      internalID: -6361680882621706830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Honey_0: -7942998185802387919
+      Cast_Honey_1: -4065596822136136494
+      Cast_Honey_10: -4528952069953340466
+      Cast_Honey_11: -1130440116322954023
+      Cast_Honey_12: 7970746176333986398
+      Cast_Honey_13: 8374976512453355752
+      Cast_Honey_14: -2927396690320228556
+      Cast_Honey_15: 7070254808862399231
+      Cast_Honey_16: -5802591148135598503
+      Cast_Honey_17: 966176584860948723
+      Cast_Honey_18: 7512704518547597599
+      Cast_Honey_19: -1940151219491184557
+      Cast_Honey_2: 6649170884040624012
+      Cast_Honey_20: 8348018243661420731
+      Cast_Honey_21: 7659333914342072138
+      Cast_Honey_22: -3139315865941463140
+      Cast_Honey_23: -4534605613567174779
+      Cast_Honey_24: 4421968015403830633
+      Cast_Honey_25: 6822239675136352418
+      Cast_Honey_26: 8737057389784307918
+      Cast_Honey_27: 5560546365251603284
+      Cast_Honey_28: 8631652037035743571
+      Cast_Honey_29: 666914342709700842
+      Cast_Honey_3: -8027832905434452933
+      Cast_Honey_30: -9111042598929359149
+      Cast_Honey_31: -5142991288263323587
+      Cast_Honey_32: -4743768109920354131
+      Cast_Honey_33: 2149260469941003180
+      Cast_Honey_34: -5730299082270759082
+      Cast_Honey_35: 1714060743844875742
+      Cast_Honey_36: -6519495701724882123
+      Cast_Honey_37: 1486334210466566088
+      Cast_Honey_38: 8463143109658177320
+      Cast_Honey_39: 2259090219921490376
+      Cast_Honey_4: -8784716738966021215
+      Cast_Honey_40: -8848012163273818716
+      Cast_Honey_41: -5680742998219942865
+      Cast_Honey_42: -1586508632845642551
+      Cast_Honey_43: 6737373525593712037
+      Cast_Honey_44: 8047338665744628880
+      Cast_Honey_45: 1341461335722143606
+      Cast_Honey_46: -5451699509441277268
+      Cast_Honey_47: -785669208270757867
+      Cast_Honey_48: -8720428902244552564
+      Cast_Honey_49: -592486722370960794
+      Cast_Honey_5: -3838926772802193019
+      Cast_Honey_50: -7880179945208593522
+      Cast_Honey_51: -5426607776686761976
+      Cast_Honey_52: -733633239613902009
+      Cast_Honey_53: 1924426318369394414
+      Cast_Honey_54: -8062072471224658522
+      Cast_Honey_55: -3553948227317862159
+      Cast_Honey_56: -2808824870444223661
+      Cast_Honey_57: -6610778640247691674
+      Cast_Honey_58: -3589516779518286060
+      Cast_Honey_59: 2818951629039198279
+      Cast_Honey_6: 33943907029244030
+      Cast_Honey_60: -4006980114367977461
+      Cast_Honey_61: -2750731640393390051
+      Cast_Honey_62: -881840846209443297
+      Cast_Honey_63: 6046747261710210189
+      Cast_Honey_64: -2361462878962010345
+      Cast_Honey_65: -4625784278115537096
+      Cast_Honey_66: -5897759554095103080
+      Cast_Honey_67: 5980259369758937511
+      Cast_Honey_68: -3474615365816014879
+      Cast_Honey_69: 3436087784678087424
+      Cast_Honey_7: -9160913635612339006
+      Cast_Honey_8: -8601533520972690716
+      Cast_Honey_9: -5859297242666319086
+      Cast_Honey_Eat_0: -1168528316091298978
+      Cast_Honey_Eat_1: -7389719364248993512
+      Cast_Honey_Eat_2: -176031941575398569
+      Cast_Honey_Eat_3: 1466521550728436601
+      Cast_Honey_Eat_4: 7789085058457457309
+      Cast_Honey_Eat_5: -5256000660999823511
+      Cast_Honey_Eat_6: -84756941023906816
+      Cast_Honey_Eat_7: -3764902827741037763
+      Cast_Honey_Harvest_0: -7128709423464905061
+      Cast_Honey_Harvest_1: -7807543792908596934
+      Cast_Honey_Harvest_2: 6671613464524659018
+      Cast_Honey_Harvest_3: 4937620704537608580
+      Cast_Honey_Harvest_4: -6777582182134580666
+      Cast_Honey_Harvest_5: 7804319499600066059
+      Cast_Honey_Harvest_6: 5072043729863796407
+      Cast_Honey_Harvest_7: -4714557194895725049
+      Cast_Honey_Net_0: 8311161544038034706
+      Cast_Honey_Net_1: -7675808928207429050
+      Cast_Honey_Net_2: 2306454827386775969
+      Cast_Honey_Net_3: 5276067677513299495
+      Cast_Honey_Net_4: 1443818733235154791
+      Cast_Honey_Net_5: 6324450636719460598
+      Cast_Honey_Net_6: -999899920734035379
+      Cast_Honey_Net_7: 4623933135189862241
+      Cast_Honey_Squat_0: -5330582339650619690
+      Cast_Honey_Squat_1: 5833672616617206376
+      Cast_Honey_Squat_2: 7544481361080227016
+      Cast_Honey_Squat_3: -6618504572467800803
+      Cast_Honey_Squat_4: 4764198659553279437
+      Cast_Honey_Squat_5: 2631868589982445488
+      Cast_Honey_Squat_6: 1738366571631105728
+      Cast_Honey_Squat_7: 4069221709266943966
+      Cast_Honey_Stretch_0: -8276483691196660240
+      Cast_Honey_Stretch_1: -3798391079700323771
+      Cast_Honey_Stretch_2: 3877704883227095764
+      Cast_Honey_Stretch_3: 4340716057476765503
+      Cast_Honey_Stretch_4: 5303561008821803746
+      Cast_Honey_Stretch_5: 5283563078460239581
+      Cast_Honey_Stretch_6: -6067617192165786264
+      Cast_Honey_Stretch_7: -6361680882621706830
+      Cast_Honey_Walk_0: -3208113803721596058
+      Cast_Honey_Walk_1: -4167031845444934026
+      Cast_Honey_Walk_2: -6979527414537299221
+      Cast_Honey_Walk_3: 3606492397547275902
+      Cast_Honey_Walk_4: -4668649033145073686
+      Cast_Honey_Walk_5: 2468487719688957821
+      Cast_Honey_Walk_6: -7761951903132678794
+      Cast_Honey_Walk_7: 3386455791394934436
+      Cast_Honey_Walk_Down_0: -460476175063679424
+      Cast_Honey_Walk_Down_1: -9045963766705059519
+      Cast_Honey_Walk_Down_2: 1262669909394404507
+      Cast_Honey_Walk_Down_3: -6542080944039326535
+      Cast_Honey_Walk_Down_4: 6431605313471348752
+      Cast_Honey_Walk_Down_5: 6306703529362619020
+      Cast_Honey_Walk_Down_6: 2475186320172133815
+      Cast_Honey_Walk_Down_7: 4269389523386887616
+      Cast_Honey_Walk_Up_0: 727650765190861307
+      Cast_Honey_Walk_Up_1: 2098725968982423775
+      Cast_Honey_Walk_Up_2: 6354649198007779
+      Cast_Honey_Walk_Up_3: 1367795197076597581
+      Cast_Honey_Walk_Up_4: 5169692866732522004
+      Cast_Honey_Walk_Up_5: 4573679013478358733
+      Cast_Honey_Walk_Up_6: 6515243331311081770
+      Cast_Honey_Walk_Up_7: -6996058290638350783
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

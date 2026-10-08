@@ -1,0 +1,22 @@
+[
+  {"id": "Blossom", "concept": "벚꽃", "fur": [232, 192, 172], "hat": [245, 165, 185], "band": [250, 238, 240], "overall": [178, 152, 208], "hatwear": [{"kind": "flowers", "color": [255, 168, 196]}]},
+  {"id": "Sailor", "concept": "선원", "fur": [172, 168, 174], "hat": [246, 246, 240], "band": [52, 64, 116], "overall": [58, 74, 126], "neck": [{"kind": "kerchief", "color": [212, 62, 62]}], "hatwear": [{"kind": "star", "color": [226, 62, 62]}]},
+  {"id": "Sprout", "concept": "새싹", "fur": [152, 106, 76], "band": [92, 144, 72], "overall": [86, 116, 168], "hatwear": [{"kind": "sprout", "color": [124, 196, 92]}]},
+  {"id": "Cherry", "concept": "체리", "fur": [242, 236, 228], "hat": [218, 72, 72], "band": [250, 236, 214], "overall": [232, 162, 182], "hatwear": [{"kind": "cherry", "color": [218, 40, 62]}]},
+  {"id": "Explorer", "concept": "탐험", "fur": [206, 172, 128], "hat": [188, 168, 112], "band": [112, 72, 42], "overall": [134, 112, 72], "hatwear": [{"kind": "feather", "color": [214, 84, 62]}]},
+  {"id": "Night", "concept": "밤하늘", "fur": [104, 98, 110], "hat": [62, 72, 134], "band": [232, 192, 84], "overall": [112, 92, 164], "hatwear": [{"kind": "star", "color": [255, 216, 84]}]},
+  {"id": "Snow", "concept": "눈송이", "fur": [244, 240, 234], "hat": [152, 202, 242], "band": [250, 250, 250], "overall": [142, 186, 228], "neck": [{"kind": "scarf", "color": [214, 62, 70], "color2": [250, 244, 240]}], "hatwear": [{"kind": "star", "color": [255, 255, 255]}]},
+  {"id": "Honey", "concept": "꿀", "fur": [226, 172, 92], "hat": [242, 152, 62], "band": [126, 78, 40], "overall": [132, 92, 62], "neck": [{"kind": "collar", "color": [208, 64, 60]}], "hatwear": [{"kind": "flowers", "color": [255, 200, 80]}]},
+  {"id": "Mint", "concept": "박하", "fur": [152, 162, 182], "hat": [152, 216, 192], "band": [250, 250, 248], "overall": [72, 152, 152], "hatwear": [{"kind": "bow", "color": [242, 152, 172]}]},
+  {"id": "Cocoa", "concept": "코코아", "fur": [112, 74, 54], "hat": [242, 228, 194], "band": [150, 96, 62], "overall": [192, 76, 70], "neck": [{"kind": "bowtie", "color": [234, 192, 82]}], "hatwear": [{"kind": "bow", "color": [202, 62, 62]}]},
+  {"id": "Lilac", "concept": "라일락", "fur": [192, 186, 192], "hat": [198, 172, 228], "band": [130, 96, 170], "overall": [226, 212, 178], "hatwear": [{"kind": "flower", "color": [204, 160, 242]}]},
+  {"id": "Pumpkin", "concept": "호박", "fur": [206, 118, 78], "hat": [142, 96, 60], "band": [232, 142, 60], "overall": [228, 138, 62], "neck": [{"kind": "kerchief", "color": [102, 162, 82], "color2": [250, 246, 230]}], "hatwear": [{"kind": "sprout", "color": [110, 170, 80]}]},
+  {"id": "Ocean", "concept": "파도", "fur": [208, 174, 132], "hat": [72, 162, 172], "band": [250, 250, 248], "overall": [86, 116, 168], "neck": [{"kind": "scarf", "color": [140, 196, 236], "color2": [250, 252, 255]}], "hatwear": [{"kind": "feather", "color": [252, 252, 250]}]},
+  {"id": "Berry", "concept": "산딸기", "fur": [226, 162, 152], "hat": [152, 92, 172], "band": [246, 176, 196], "overall": [182, 72, 112], "hatwear": [{"kind": "bow", "color": [252, 250, 246]}]},
+  {"id": "Forest", "concept": "숲", "fur": [172, 132, 106], "hat": [102, 152, 92], "band": [118, 80, 50], "overall": [126, 92, 62], "hatwear": [{"kind": "feather", "color": [118, 186, 96]}]},
+  {"id": "Sunny", "concept": "해바라기", "fur": [238, 214, 172], "band": [214, 70, 60], "overall": [202, 72, 62], "hatwear": [{"kind": "flower", "color": [255, 210, 62], "center": [120, 76, 40]}]},
+  {"id": "Ink", "concept": "먹물", "fur": [84, 80, 88], "hat": [64, 62, 66], "band": [210, 62, 62], "overall": [124, 124, 130], "neck": [{"kind": "bowtie", "color": [214, 60, 64]}], "hatwear": [{"kind": "feather", "color": [220, 70, 70]}]},
+  {"id": "Peach", "concept": "복숭아", "hat": [248, 246, 240], "band": [240, 166, 150], "overall": [238, 172, 152], "hatwear": [{"kind": "bow", "color": [222, 70, 76]}]},
+  {"id": "Sky", "concept": "하늘", "fur": [152, 164, 186], "hat": [248, 248, 246], "band": [140, 190, 236], "overall": [236, 236, 242], "neck": [{"kind": "scarf", "color": [255, 208, 72], "color2": [255, 244, 200]}], "hatwear": [{"kind": "bow", "color": [255, 208, 72]}]},
+  {"id": "Clover", "concept": "클로버", "fur": [154, 108, 78], "hat": [112, 172, 102], "band": [250, 250, 244], "overall": [226, 212, 178], "hatwear": [{"kind": "flower", "color": [255, 255, 255]}], "neck": [{"kind": "kerchief", "color": [102, 162, 82]}]}
+]

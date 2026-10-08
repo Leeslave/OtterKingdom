@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: d300372d43cf69846a4863ca8c927231
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 391455887518298417
+    second: Cast_Mint_0
+  - first:
+      213: -6535629202330347136
+    second: Cast_Mint_1
+  - first:
+      213: -9034361521586277036
+    second: Cast_Mint_2
+  - first:
+      213: 7647469054505480883
+    second: Cast_Mint_3
+  - first:
+      213: -5731054865230170105
+    second: Cast_Mint_4
+  - first:
+      213: -9139260009015508311
+    second: Cast_Mint_5
+  - first:
+      213: 965598497430189779
+    second: Cast_Mint_6
+  - first:
+      213: 5347008222946934501
+    second: Cast_Mint_7
+  - first:
+      213: -1170441631824333264
+    second: Cast_Mint_8
+  - first:
+      213: -7497441770740860239
+    second: Cast_Mint_9
+  - first:
+      213: 4443974683783555888
+    second: Cast_Mint_10
+  - first:
+      213: 4813395615003212696
+    second: Cast_Mint_11
+  - first:
+      213: -8304650381649820121
+    second: Cast_Mint_12
+  - first:
+      213: -8650336953623168091
+    second: Cast_Mint_13
+  - first:
+      213: -7471841943921561045
+    second: Cast_Mint_14
+  - first:
+      213: 5126608239683904363
+    second: Cast_Mint_15
+  - first:
+      213: -1975741039653922906
+    second: Cast_Mint_16
+  - first:
+      213: -4235512847627731708
+    second: Cast_Mint_17
+  - first:
+      213: -6560373526749535080
+    second: Cast_Mint_18
+  - first:
+      213: 5854343072546396444
+    second: Cast_Mint_19
+  - first:
+      213: -7007297397624244845
+    second: Cast_Mint_20
+  - first:
+      213: 6569771893877497127
+    second: Cast_Mint_21
+  - first:
+      213: 7706687526883293159
+    second: Cast_Mint_22
+  - first:
+      213: -7786922708154089884
+    second: Cast_Mint_23
+  - first:
+      213: -5731448404161160190
+    second: Cast_Mint_24
+  - first:
+      213: 2608928813996584477
+    second: Cast_Mint_25
+  - first:
+      213: -1453096045316517213
+    second: Cast_Mint_26
+  - first:
+      213: -609866212918906523
+    second: Cast_Mint_27
+  - first:
+      213: 1200834661251902632
+    second: Cast_Mint_28
+  - first:
+      213: -4903802562067103636
+    second: Cast_Mint_29
+  - first:
+      213: 9001691208708713202
+    second: Cast_Mint_30
+  - first:
+      213: -3030616860542577194
+    second: Cast_Mint_31
+  - first:
+      213: -7237614236468708290
+    second: Cast_Mint_32
+  - first:
+      213: -3587346761905729099
+    second: Cast_Mint_33
+  - first:
+      213: -5726417447258097345
+    second: Cast_Mint_34
+  - first:
+      213: -3881728660229588537
+    second: Cast_Mint_35
+  - first:
+      213: 3159187619568803820
+    second: Cast_Mint_36
+  - first:
+      213: -5434248710113377962
+    second: Cast_Mint_37
+  - first:
+      213: 5923120876169296724
+    second: Cast_Mint_38
+  - first:
+      213: 6828704648732636085
+    second: Cast_Mint_39
+  - first:
+      213: -7005213703117865569
+    second: Cast_Mint_40
+  - first:
+      213: -5871996839698012399
+    second: Cast_Mint_41
+  - first:
+      213: 4181843534926365764
+    second: Cast_Mint_42
+  - first:
+      213: -5205626261154792937
+    second: Cast_Mint_43
+  - first:
+      213: 530271405327204577
+    second: Cast_Mint_44
+  - first:
+      213: -512478556108162905
+    second: Cast_Mint_45
+  - first:
+      213: 487441312807016749
+    second: Cast_Mint_46
+  - first:
+      213: 956143214716997506
+    second: Cast_Mint_47
+  - first:
+      213: 8793807626199467696
+    second: Cast_Mint_48
+  - first:
+      213: 2645742599011879948
+    second: Cast_Mint_49
+  - first:
+      213: -4466879659029793366
+    second: Cast_Mint_50
+  - first:
+      213: -1076332429137225161
+    second: Cast_Mint_51
+  - first:
+      213: -2745688091030929092
+    second: Cast_Mint_52
+  - first:
+      213: 2377793170955329877
+    second: Cast_Mint_53
+  - first:
+      213: -2196450900391766489
+    second: Cast_Mint_54
+  - first:
+      213: 583386942657150759
+    second: Cast_Mint_55
+  - first:
+      213: 8344468472621604965
+    second: Cast_Mint_56
+  - first:
+      213: 6112968783075756610
+    second: Cast_Mint_57
+  - first:
+      213: -7619393351166668027
+    second: Cast_Mint_58
+  - first:
+      213: 3116789146062970598
+    second: Cast_Mint_59
+  - first:
+      213: -3529087509338332852
+    second: Cast_Mint_60
+  - first:
+      213: 4653643477394738976
+    second: Cast_Mint_61
+  - first:
+      213: 2169241108986472000
+    second: Cast_Mint_62
+  - first:
+      213: 1312868815899735644
+    second: Cast_Mint_63
+  - first:
+      213: -7407102876756241028
+    second: Cast_Mint_64
+  - first:
+      213: 4929444975321328682
+    second: Cast_Mint_65
+  - first:
+      213: 585531392034493470
+    second: Cast_Mint_66
+  - first:
+      213: -3071769663536382620
+    second: Cast_Mint_67
+  - first:
+      213: 1596432596836289358
+    second: Cast_Mint_68
+  - first:
+      213: 4705398783194067272
+    second: Cast_Mint_69
+  - first:
+      213: 4768236311481084398
+    second: Cast_Mint_Walk_0
+  - first:
+      213: 8684455585739682029
+    second: Cast_Mint_Walk_1
+  - first:
+      213: -1984445928775456617
+    second: Cast_Mint_Walk_2
+  - first:
+      213: -3244615684433789872
+    second: Cast_Mint_Walk_3
+  - first:
+      213: 3048611492817327604
+    second: Cast_Mint_Walk_4
+  - first:
+      213: 6522835538382373930
+    second: Cast_Mint_Walk_5
+  - first:
+      213: -8256144773571319008
+    second: Cast_Mint_Walk_6
+  - first:
+      213: 666733916984321976
+    second: Cast_Mint_Walk_7
+  - first:
+      213: 3576295635718775076
+    second: Cast_Mint_Walk_Down_0
+  - first:
+      213: -8397609313948380100
+    second: Cast_Mint_Walk_Down_1
+  - first:
+      213: -8020621071672962161
+    second: Cast_Mint_Walk_Down_2
+  - first:
+      213: 7447687028424005189
+    second: Cast_Mint_Walk_Down_3
+  - first:
+      213: 5396320519923545831
+    second: Cast_Mint_Walk_Down_4
+  - first:
+      213: 6112918117601354665
+    second: Cast_Mint_Walk_Down_5
+  - first:
+      213: -6391394935249333961
+    second: Cast_Mint_Walk_Down_6
+  - first:
+      213: 7469405750689829117
+    second: Cast_Mint_Walk_Down_7
+  - first:
+      213: -252087663510427964
+    second: Cast_Mint_Walk_Up_0
+  - first:
+      213: 5750428765966305808
+    second: Cast_Mint_Walk_Up_1
+  - first:
+      213: 1366259373212752620
+    second: Cast_Mint_Walk_Up_2
+  - first:
+      213: -6523604951433575658
+    second: Cast_Mint_Walk_Up_3
+  - first:
+      213: 1345824833533366120
+    second: Cast_Mint_Walk_Up_4
+  - first:
+      213: 4983022633483057618
+    second: Cast_Mint_Walk_Up_5
+  - first:
+      213: 63492454686605538
+    second: Cast_Mint_Walk_Up_6
+  - first:
+      213: 2503172639797346541
+    second: Cast_Mint_Walk_Up_7
+  - first:
+      213: 3328253399355699486
+    second: Cast_Mint_Harvest_0
+  - first:
+      213: 7722750595578375169
+    second: Cast_Mint_Harvest_1
+  - first:
+      213: -6882096330127066372
+    second: Cast_Mint_Harvest_2
+  - first:
+      213: -6939184351432973212
+    second: Cast_Mint_Harvest_3
+  - first:
+      213: -3788579478283453430
+    second: Cast_Mint_Harvest_4
+  - first:
+      213: 5421058368587834223
+    second: Cast_Mint_Harvest_5
+  - first:
+      213: -805264439540142115
+    second: Cast_Mint_Harvest_6
+  - first:
+      213: -5346858812531649806
+    second: Cast_Mint_Harvest_7
+  - first:
+      213: -5613358354092936445
+    second: Cast_Mint_Eat_0
+  - first:
+      213: 4592944692245767740
+    second: Cast_Mint_Eat_1
+  - first:
+      213: 5876520629372798285
+    second: Cast_Mint_Eat_2
+  - first:
+      213: 148222085979680846
+    second: Cast_Mint_Eat_3
+  - first:
+      213: 7851769458558883754
+    second: Cast_Mint_Eat_4
+  - first:
+      213: -4198116701233397704
+    second: Cast_Mint_Eat_5
+  - first:
+      213: -7149637598101944591
+    second: Cast_Mint_Eat_6
+  - first:
+      213: -1176303488494371877
+    second: Cast_Mint_Eat_7
+  - first:
+      213: -5109267184698726482
+    second: Cast_Mint_Net_0
+  - first:
+      213: 4219369415160656473
+    second: Cast_Mint_Net_1
+  - first:
+      213: 2204500174280048681
+    second: Cast_Mint_Net_2
+  - first:
+      213: 1716709230762420573
+    second: Cast_Mint_Net_3
+  - first:
+      213: -8072615831790243218
+    second: Cast_Mint_Net_4
+  - first:
+      213: -6575087925649961532
+    second: Cast_Mint_Net_5
+  - first:
+      213: 2517092104058986359
+    second: Cast_Mint_Net_6
+  - first:
+      213: -4900790443378142192
+    second: Cast_Mint_Net_7
+  - first:
+      213: -5124257440813729853
+    second: Cast_Mint_Squat_0
+  - first:
+      213: 8720059714042575156
+    second: Cast_Mint_Squat_1
+  - first:
+      213: -5344508229846847309
+    second: Cast_Mint_Squat_2
+  - first:
+      213: -596214255718336267
+    second: Cast_Mint_Squat_3
+  - first:
+      213: 4924086801722343780
+    second: Cast_Mint_Squat_4
+  - first:
+      213: 4498016558315003979
+    second: Cast_Mint_Squat_5
+  - first:
+      213: -5186815440755694955
+    second: Cast_Mint_Squat_6
+  - first:
+      213: -6217791772206669435
+    second: Cast_Mint_Squat_7
+  - first:
+      213: 2640212354619958503
+    second: Cast_Mint_Stretch_0
+  - first:
+      213: 4762571640589410922
+    second: Cast_Mint_Stretch_1
+  - first:
+      213: -2474314730828265919
+    second: Cast_Mint_Stretch_2
+  - first:
+      213: -6997010603287192258
+    second: Cast_Mint_Stretch_3
+  - first:
+      213: 476034144393885138
+    second: Cast_Mint_Stretch_4
+  - first:
+      213: 1782903552163840450
+    second: Cast_Mint_Stretch_5
+  - first:
+      213: 1036386837542493095
+    second: Cast_Mint_Stretch_6
+  - first:
+      213: -8823359058458812995
+    second: Cast_Mint_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee9e2fe79ad2c2240800000000000000
+      internalID: 4768236311481084398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de0bbafc752658870800000000000000
+      internalID: 8684455585739682029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7986e5b11f4d574e0800000000000000
+      internalID: -1984445928775456617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05cb9a8c93fc8f2d0800000000000000
+      internalID: -3244615684433789872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f5dc8f1008de4a20800000000000000
+      internalID: 3048611492817327604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a244399dc54c58a50800000000000000
+      internalID: 6522835538382373930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02b651542184c6d80800000000000000
+      internalID: -8256144773571319008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b72e8907f6b04900800000000000000
+      internalID: 666733916984321976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4212cc2ceed81a130800000000000000
+      internalID: 3576295635718775076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c34589742d2b57b80800000000000000
+      internalID: -8397609313948380100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f839be061a701b090800000000000000
+      internalID: -8020621071672962161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5465f7f84ef7b5760800000000000000
+      internalID: 7447687028424005189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e6b1340ce493ea40800000000000000
+      internalID: 5396320519923545831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a3adace3a275d450800000000000000
+      internalID: 6112918117601354665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7319b316b243d47a0800000000000000
+      internalID: -6391394935249333961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df09025a4f8a8a760800000000000000
+      internalID: 7469405750689829117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c6e33c0b97608cf0800000000000000
+      internalID: -252087663510427964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01a0c9dde70adcf40800000000000000
+      internalID: 5750428765966305808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cead46349ade5f210800000000000000
+      internalID: 1366259373212752620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61382d63cdf7775a0800000000000000
+      internalID: -6523604951433575658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86fc7ac3e845da210800000000000000
+      internalID: 1345824833533366120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d93d781fa0472540800000000000000
+      internalID: 4983022633483057618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e043871d0291e000800000000000000
+      internalID: 63492454686605538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de00996e04e0db220800000000000000
+      internalID: 2503172639797346541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e11351735d4503e20800000000000000
+      internalID: 3328253399355699486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10ca262ffb8bc2b60800000000000000
+      internalID: 7722750595578375169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfab1c4c9d1ed70a0800000000000000
+      internalID: -6882096330127066372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46463e5099013bf90800000000000000
+      internalID: -6939184351432973212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0c749989034c6bc0800000000000000
+      internalID: -3788579478283453430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f63265e3dd77b3b40800000000000000
+      internalID: 5421058368587834223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddfa4fa324023d4f0800000000000000
+      internalID: -805264439540142115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f252e62d342cc5b0800000000000000
+      internalID: -5346858812531649806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 303b15b51585912b0800000000000000
+      internalID: -5613358354092936445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c362356fcda6dbf30800000000000000
+      internalID: 4592944692245767740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d45450590689d8150800000000000000
+      internalID: 5876520629372798285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e40bfaea3379e0200800000000000000
+      internalID: 148222085979680846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa7d9abd8b617fc60800000000000000
+      internalID: 7851769458558883754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83049515a1b4db5c0800000000000000
+      internalID: -4198116701233397704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f64b542c7267cc90800000000000000
+      internalID: -7149637598101944591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdb7d34a53eecafe0800000000000000
+      internalID: -1176303488494371877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea7e879c09c3819b0800000000000000
+      internalID: -5109267184698726482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9527cceb0263e8a30800000000000000
+      internalID: 4219369415160656473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 920cf338a35f79e10800000000000000
+      internalID: 2204500174280048681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d596a3a23f9f2d710800000000000000
+      internalID: 1716709230762420573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e62b2f9ebae48ff80800000000000000
+      internalID: -8072615831790243218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cd8ca03e5890c4a0800000000000000
+      internalID: -6575087925649961532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77f5069bee18ee220800000000000000
+      internalID: 2517092104058986359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01411d7ae05ecfbb0800000000000000
+      internalID: -4900790443378142192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c735aec10bf2e8b0800000000000000
+      internalID: -5124257440813729853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 439b3bbeb10e30970800000000000000
+      internalID: 8720059714042575156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b0b3d4d41e74d5b0800000000000000
+      internalID: -5344508229846847309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f872e51b42d9b7f0800000000000000
+      internalID: -596214255718336267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46189d37bded55440800000000000000
+      internalID: 4924086801722343780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b40e0307a3a2c6e30800000000000000
+      internalID: 4498016558315003979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 592ee3a66dab408b0800000000000000
+      internalID: -5186815440755694955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58166429357f5b9a0800000000000000
+      internalID: -6217791772206669435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e468b8e52be3a420800000000000000
+      internalID: 2640212354619958503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a626ea68cad081240800000000000000
+      internalID: 4762571640589410922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 146077e9cd779add0800000000000000
+      internalID: -2474314730828265919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3ddc659def95ee90800000000000000
+      internalID: -6997010603287192258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d5fd8d38863b9600800000000000000
+      internalID: 476034144393885138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c1028f95552eb810800000000000000
+      internalID: 1782903552163840450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ab5c95765cf16e00800000000000000
+      internalID: 1036386837542493095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Mint_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbd56da3fa12d8580800000000000000
+      internalID: -8823359058458812995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Mint_0: 391455887518298417
+      Cast_Mint_1: -6535629202330347136
+      Cast_Mint_10: 4443974683783555888
+      Cast_Mint_11: 4813395615003212696
+      Cast_Mint_12: -8304650381649820121
+      Cast_Mint_13: -8650336953623168091
+      Cast_Mint_14: -7471841943921561045
+      Cast_Mint_15: 5126608239683904363
+      Cast_Mint_16: -1975741039653922906
+      Cast_Mint_17: -4235512847627731708
+      Cast_Mint_18: -6560373526749535080
+      Cast_Mint_19: 5854343072546396444
+      Cast_Mint_2: -9034361521586277036
+      Cast_Mint_20: -7007297397624244845
+      Cast_Mint_21: 6569771893877497127
+      Cast_Mint_22: 7706687526883293159
+      Cast_Mint_23: -7786922708154089884
+      Cast_Mint_24: -5731448404161160190
+      Cast_Mint_25: 2608928813996584477
+      Cast_Mint_26: -1453096045316517213
+      Cast_Mint_27: -609866212918906523
+      Cast_Mint_28: 1200834661251902632
+      Cast_Mint_29: -4903802562067103636
+      Cast_Mint_3: 7647469054505480883
+      Cast_Mint_30: 9001691208708713202
+      Cast_Mint_31: -3030616860542577194
+      Cast_Mint_32: -7237614236468708290
+      Cast_Mint_33: -3587346761905729099
+      Cast_Mint_34: -5726417447258097345
+      Cast_Mint_35: -3881728660229588537
+      Cast_Mint_36: 3159187619568803820
+      Cast_Mint_37: -5434248710113377962
+      Cast_Mint_38: 5923120876169296724
+      Cast_Mint_39: 6828704648732636085
+      Cast_Mint_4: -5731054865230170105
+      Cast_Mint_40: -7005213703117865569
+      Cast_Mint_41: -5871996839698012399
+      Cast_Mint_42: 4181843534926365764
+      Cast_Mint_43: -5205626261154792937
+      Cast_Mint_44: 530271405327204577
+      Cast_Mint_45: -512478556108162905
+      Cast_Mint_46: 487441312807016749
+      Cast_Mint_47: 956143214716997506
+      Cast_Mint_48: 8793807626199467696
+      Cast_Mint_49: 2645742599011879948
+      Cast_Mint_5: -9139260009015508311
+      Cast_Mint_50: -4466879659029793366
+      Cast_Mint_51: -1076332429137225161
+      Cast_Mint_52: -2745688091030929092
+      Cast_Mint_53: 2377793170955329877
+      Cast_Mint_54: -2196450900391766489
+      Cast_Mint_55: 583386942657150759
+      Cast_Mint_56: 8344468472621604965
+      Cast_Mint_57: 6112968783075756610
+      Cast_Mint_58: -7619393351166668027
+      Cast_Mint_59: 3116789146062970598
+      Cast_Mint_6: 965598497430189779
+      Cast_Mint_60: -3529087509338332852
+      Cast_Mint_61: 4653643477394738976
+      Cast_Mint_62: 2169241108986472000
+      Cast_Mint_63: 1312868815899735644
+      Cast_Mint_64: -7407102876756241028
+      Cast_Mint_65: 4929444975321328682
+      Cast_Mint_66: 585531392034493470
+      Cast_Mint_67: -3071769663536382620
+      Cast_Mint_68: 1596432596836289358
+      Cast_Mint_69: 4705398783194067272
+      Cast_Mint_7: 5347008222946934501
+      Cast_Mint_8: -1170441631824333264
+      Cast_Mint_9: -7497441770740860239
+      Cast_Mint_Eat_0: -5613358354092936445
+      Cast_Mint_Eat_1: 4592944692245767740
+      Cast_Mint_Eat_2: 5876520629372798285
+      Cast_Mint_Eat_3: 148222085979680846
+      Cast_Mint_Eat_4: 7851769458558883754
+      Cast_Mint_Eat_5: -4198116701233397704
+      Cast_Mint_Eat_6: -7149637598101944591
+      Cast_Mint_Eat_7: -1176303488494371877
+      Cast_Mint_Harvest_0: 3328253399355699486
+      Cast_Mint_Harvest_1: 7722750595578375169
+      Cast_Mint_Harvest_2: -6882096330127066372
+      Cast_Mint_Harvest_3: -6939184351432973212
+      Cast_Mint_Harvest_4: -3788579478283453430
+      Cast_Mint_Harvest_5: 5421058368587834223
+      Cast_Mint_Harvest_6: -805264439540142115
+      Cast_Mint_Harvest_7: -5346858812531649806
+      Cast_Mint_Net_0: -5109267184698726482
+      Cast_Mint_Net_1: 4219369415160656473
+      Cast_Mint_Net_2: 2204500174280048681
+      Cast_Mint_Net_3: 1716709230762420573
+      Cast_Mint_Net_4: -8072615831790243218
+      Cast_Mint_Net_5: -6575087925649961532
+      Cast_Mint_Net_6: 2517092104058986359
+      Cast_Mint_Net_7: -4900790443378142192
+      Cast_Mint_Squat_0: -5124257440813729853
+      Cast_Mint_Squat_1: 8720059714042575156
+      Cast_Mint_Squat_2: -5344508229846847309
+      Cast_Mint_Squat_3: -596214255718336267
+      Cast_Mint_Squat_4: 4924086801722343780
+      Cast_Mint_Squat_5: 4498016558315003979
+      Cast_Mint_Squat_6: -5186815440755694955
+      Cast_Mint_Squat_7: -6217791772206669435
+      Cast_Mint_Stretch_0: 2640212354619958503
+      Cast_Mint_Stretch_1: 4762571640589410922
+      Cast_Mint_Stretch_2: -2474314730828265919
+      Cast_Mint_Stretch_3: -6997010603287192258
+      Cast_Mint_Stretch_4: 476034144393885138
+      Cast_Mint_Stretch_5: 1782903552163840450
+      Cast_Mint_Stretch_6: 1036386837542493095
+      Cast_Mint_Stretch_7: -8823359058458812995
+      Cast_Mint_Walk_0: 4768236311481084398
+      Cast_Mint_Walk_1: 8684455585739682029
+      Cast_Mint_Walk_2: -1984445928775456617
+      Cast_Mint_Walk_3: -3244615684433789872
+      Cast_Mint_Walk_4: 3048611492817327604
+      Cast_Mint_Walk_5: 6522835538382373930
+      Cast_Mint_Walk_6: -8256144773571319008
+      Cast_Mint_Walk_7: 666733916984321976
+      Cast_Mint_Walk_Down_0: 3576295635718775076
+      Cast_Mint_Walk_Down_1: -8397609313948380100
+      Cast_Mint_Walk_Down_2: -8020621071672962161
+      Cast_Mint_Walk_Down_3: 7447687028424005189
+      Cast_Mint_Walk_Down_4: 5396320519923545831
+      Cast_Mint_Walk_Down_5: 6112918117601354665
+      Cast_Mint_Walk_Down_6: -6391394935249333961
+      Cast_Mint_Walk_Down_7: 7469405750689829117
+      Cast_Mint_Walk_Up_0: -252087663510427964
+      Cast_Mint_Walk_Up_1: 5750428765966305808
+      Cast_Mint_Walk_Up_2: 1366259373212752620
+      Cast_Mint_Walk_Up_3: -6523604951433575658
+      Cast_Mint_Walk_Up_4: 1345824833533366120
+      Cast_Mint_Walk_Up_5: 4983022633483057618
+      Cast_Mint_Walk_Up_6: 63492454686605538
+      Cast_Mint_Walk_Up_7: 2503172639797346541
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

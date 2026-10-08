@@ -20,6 +20,8 @@ public static class GachaSetup
     private const string CurrencyFolder = DataFolder + "/Currencies";
     internal const string StandardBannerPath = BannerFolder + "/Banner_Standard.asset";
     internal const string PickupBannerPath = BannerFolder + "/Banner_Pickup_Spring.asset";
+    internal const string GoldBannerPath = BannerFolder + "/Banner_Gold.asset";
+    private const string GachaGlobalUIPath = "Assets/Resources/GlobalUI.prefab";
     private const string ShardPath = CurrencyFolder + "/Shard.asset";
     private const string ItemFolder = "Assets/Scriptable Obejects/Inventory/Items/Decor";
     private const string ItemDatabasePath = "Assets/Scriptable Obejects/Inventory/ItemDatabase.asset";
@@ -66,6 +68,9 @@ public static class GachaSetup
 
     private static readonly string[] PickupFeatured = { "CherryPinwheel", "PetalKite", "ButterflyMobile" };
 
+    // 골드 배너 = 상시 장난감 중 흔함 · 레어 + 가구 (PlazaLifeSetup이 만든 아이템, 흔함). 에픽은 조개 뽑기에만
+    private static readonly string[] GoldFurniture = { "작은 덤불", "그루터기 의자", "통나무 의자", "나무 벤치", "가로등", "피크닉 매트" };
+
     // 조개 모습 순서 (GachaRevealView): 흔함 · 레어 · 에픽 · 픽업
     private static readonly string[] ShellLooks = { "Common", "Rare", "Epic", "Pickup" };
 
@@ -104,7 +109,7 @@ public static class GachaSetup
     private static void ImportArt()
     {
         foreach (var name in new[] { "Otter_Float_Rest", "Otter_Float_Ready", "Otter_Float_Surprise", "BG_Sea_Day", "BG_Sea_Night",
-                     "Banner_Pickup_Spring", "Banner_Standard", "FX_Ring", "FX_WaterBody", "FX_WaterFoam" })
+                     "Banner_Pickup_Spring", "Banner_Standard", "Banner_Gold", "FX_Ring", "FX_WaterBody", "FX_WaterFoam" })
             ImportSprite(GachaArtFolder, name);
         foreach (var look in ShellLooks)
         {
@@ -334,6 +339,92 @@ public static class GachaSetup
         FillIfEmpty(so, "_gem", gem);
         FillIfEmpty(so, "_ticket", pickupTicket);
         so.ApplyModifiedPropertiesWithoutUndo();
+
+        CreateGoldBanner(pool);
+    }
+
+    /// <summary>
+    /// 골드 배너 "모래사장 골드 조개": 골드 소모처. 1회 = 500 + 250 × 왕국 레벨 (Lv.5 1,750 · Lv.10 3,000 · Lv.15 4,250 · Lv.19 5,250),
+    /// 10회 = 1회 × 9. 레어 10% · 10회 안에 레어 확정, 에픽 없음 (조개 값이 떨어지지 않게). 가구(흔함)가 함께 나옴
+    /// </summary>
+    private static GachaBannerDefinition CreateGoldBanner(List<ItemDefinition> standardPool)
+    {
+        var pool = standardPool.Where(item => item.Rarity == null || item.Rarity.Tier < GachaTable.Epic).ToList();
+        foreach (var name in GoldFurniture)
+        {
+            var item = AssetDatabase.LoadAssetAtPath<ItemDefinition>($"{ItemFolder}/{name}.asset");
+            if (item != null)
+                pool.Add(item);
+            else
+                Debug.LogWarning($"[GachaSetup] 가구 {name}가 없어 골드 배너에서 뺍니다 (Tools/Settlement/Apply Plaza Life 먼저).");
+        }
+
+        var (banner, isNew) = LoadOrCreate<GachaBannerDefinition>(GoldBannerPath);
+        var so = new SerializedObject(banner);
+        if (isNew)
+        {
+            so.FindProperty("_bannerId").stringValue = "gold_sandbar";
+            so.FindProperty("_kind").enumValueIndex = (int)GachaBannerKind.Gold;
+            so.FindProperty("_title").stringValue = "골드 조개";
+            so.FindProperty("_subtitle").stringValue = "골드로 언제든! 장난감과 광장 가구가 나와요";
+            so.FindProperty("_sortOrder").intValue = 2;
+            so.FindProperty("_themeColor").colorValue = new Color(1f, 0.8f, 0.36f);
+            SetList(so.FindProperty("_pool"), pool);
+            so.FindProperty("_epicRate").floatValue = 0f;
+            so.FindProperty("_rareRate").floatValue = 0.1f;
+            so.FindProperty("_epicPity").intValue = 999;
+            so.FindProperty("_rarePity").intValue = 10;
+            so.FindProperty("_exchangePoints").intValue = 0;
+            so.FindProperty("_dailyGoldPull").boolValue = false;
+            so.FindProperty("_goldCostBase").intValue = 500;
+            so.FindProperty("_goldCostPerLevel").intValue = 250;
+            so.FindProperty("_goldTenPulls").intValue = 9;
+        }
+        FillIfEmpty(so, "_bannerArt", ImportSprite(GachaArtFolder, "Banner_Gold"));
+        FillIfEmpty(so, "_shellIcon", ImportSprite(GachaArtFolder, "Shell_Rare"));
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return banner;
+    }
+
+    /// <summary>
+    /// 골드 배너만 만들어 전역 UI 프리팹의 뽑기 매니저 · 프레젠터에 붙인다 (Build Global UI를 다시 돌리지 않고).
+    /// Build Global UI는 정착 설정을 처음 상태로 다시 만들므로 이미 만든 프로젝트에서는 이 메뉴를 쓴다.
+    /// 배치 모드: -executeMethod GachaSetup.AddGoldBanner
+    /// </summary>
+    [MenuItem("Tools/Gacha/Add Gold Banner")]
+    public static void AddGoldBanner()
+    {
+        var standard = AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(StandardBannerPath);
+        if (standard == null)
+        {
+            Debug.LogError("[GachaSetup] 상시 배너가 없습니다. Build Global UI를 먼저 실행하세요.");
+            return;
+        }
+        ImportSprite(GachaArtFolder, "Banner_Gold");
+        var gold = CreateGoldBanner(standard.Pool.Where(item => item != null).ToList());
+        AssetDatabase.SaveAssets();
+
+        var root = PrefabUtility.LoadPrefabContents(GachaGlobalUIPath);
+        try
+        {
+            var manager = root.GetComponentInChildren<GachaManager>(true);
+            var presenter = root.GetComponentInChildren<GachaPresenter>(true);
+            if (manager == null || presenter == null)
+            {
+                Debug.LogError("[GachaSetup] 전역 UI에 뽑기 매니저 · 프레젠터가 없습니다.");
+                return;
+            }
+            var managerSo = new SerializedObject(manager);
+            AddUnique(managerSo.FindProperty("_banners"), gold);
+            managerSo.ApplyModifiedPropertiesWithoutUndo();
+            Set(presenter, "_goldButton", Common("UI_Button_Coin"));
+            PrefabUtility.SaveAsPrefabAsset(root, GachaGlobalUIPath);
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+        Debug.Log($"[GachaSetup] 골드 배너를 만들어 전역 UI에 붙였습니다 (뽑기 {gold.Pool.Count}종).");
     }
 
     private static void AddUnique(SerializedProperty list, Object value)
@@ -359,6 +450,7 @@ public static class GachaSetup
         {
             AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(PickupBannerPath),
             AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(StandardBannerPath),
+            AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(GoldBannerPath),
         });
         Set(manager, "_gold", AssetDatabase.LoadAssetAtPath<Currency>(GoldPath));
         Set(manager, "_shard", AssetDatabase.LoadAssetAtPath<Currency>(ShardPath));
@@ -372,6 +464,7 @@ public static class GachaSetup
         Set(presenter, "_hudButton", hudButton);
         Set(presenter, "_gemButton", Common("UI_Button_Shell"));
         Set(presenter, "_ticketButton", Common("UI_Button_Primary"));
+        Set(presenter, "_goldButton", Common("UI_Button_Coin"));
     }
 
     private static void SetArray(Object target, string property, Object[] values)

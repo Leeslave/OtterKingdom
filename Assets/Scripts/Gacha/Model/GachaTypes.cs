@@ -6,7 +6,7 @@ public enum GachaPayment
 {
     Gem,    // 조개 (1회 30)
     Ticket, // 뽑기권 1회 1장
-    Gold,   // 상시 배너, 하루 한 번
+    Gold,   // 상시 배너는 하루 한 번 1회, 골드 배너는 언제든 1회 · 10회
 }
 
 public enum GachaPullOutcome
@@ -95,6 +95,10 @@ public class GachaSaveData
 
     // 마지막으로 골드 뽑기를 한 날 (QuestManager.TodayNumber, 새벽 4시 기준). 0 = 한 적 없음
     public int goldPullDay;
+
+    // 골드 배너 천장 (골드 뽑기끼리)
+    public int goldSinceEpic;
+    public int goldSinceRare;
 
     public bool welcomeGiftGiven;
     public int totalPulls;

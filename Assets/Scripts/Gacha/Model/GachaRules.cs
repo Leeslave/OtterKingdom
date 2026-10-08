@@ -163,6 +163,19 @@ public static class GachaRules
     /// <summary>에픽 확정까지 남은 수 (다음 뽑기가 1번째)</summary>
     public static int EpicPityLeft(GachaTable table, GachaPity pity) => Math.Max(1, table.EpicPity - pity.SinceEpic);
 
+    /// <summary>레어 이상 확정까지 남은 수 (다음 뽑기가 1번째)</summary>
+    public static int RarePityLeft(GachaTable table, GachaPity pity) => Math.Max(1, table.RarePity - pity.SinceRare);
+
+    /// <summary>
+    /// 골드 배너 값: 1회 = 기본 + 왕국 레벨 × 레벨당, 10회 = 1회 × tenPulls (9면 한 번 공짜)
+    /// </summary>
+    public static int GoldBannerCost(int baseCost, int perLevel, int kingdomLevel, int count, int tenPulls)
+    {
+        long single = GoldPullCost(baseCost, perLevel, kingdomLevel);
+        long total = count >= 10 ? single * Math.Max(1, Math.Min(10, tenPulls)) : single * Math.Max(1, count);
+        return (int)Math.Min(int.MaxValue, total);
+    }
+
     /// <summary>골드 뽑기 값 = 기본 + 왕국 레벨 × 레벨당</summary>
     public static int GoldPullCost(int baseCost, int perLevel, int kingdomLevel) =>
         Math.Max(0, baseCost) + Math.Max(0, perLevel) * Math.Max(1, kingdomLevel);

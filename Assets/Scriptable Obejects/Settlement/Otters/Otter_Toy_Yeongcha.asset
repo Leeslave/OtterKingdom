@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_toy_yeongcha
   _displayName: "\uC601\uCC28"
-  _portrait: {fileID: 21300000, guid: 2456492ce6202ca41a30a26547562ba4, type: 3}
-  _plazaPrefab: {fileID: 5833170307420288663, guid: e86c7eb151ead664abbc91e7cefe9682, type: 3}
-  _plazaTint: {r: 1, g: 0.86, b: 0.76, a: 1}
+  _portrait: {fileID: 21300000, guid: ca0e6b300d446044789d3c63a005eba3, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: ef2944dac172eb540a739f3fae98326c, type: 3}
+  _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 7
   _toyVisitor: 1
   _visitTier: 0

@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: fad59a366ab0d8848a557b62b20f567b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6523918636275309156
+    second: Cast_Sky_0
+  - first:
+      213: 7203417214324583675
+    second: Cast_Sky_1
+  - first:
+      213: -147378829140633743
+    second: Cast_Sky_2
+  - first:
+      213: 5378914873210491359
+    second: Cast_Sky_3
+  - first:
+      213: 8546394094495102768
+    second: Cast_Sky_4
+  - first:
+      213: -8816214944594823051
+    second: Cast_Sky_5
+  - first:
+      213: -7655079086664402058
+    second: Cast_Sky_6
+  - first:
+      213: 834358159663368420
+    second: Cast_Sky_7
+  - first:
+      213: 3745681975179565953
+    second: Cast_Sky_8
+  - first:
+      213: 7315356230518315167
+    second: Cast_Sky_9
+  - first:
+      213: -4044155400215386372
+    second: Cast_Sky_10
+  - first:
+      213: 512189964732157297
+    second: Cast_Sky_11
+  - first:
+      213: -5617298413766251208
+    second: Cast_Sky_12
+  - first:
+      213: -4197436797524183225
+    second: Cast_Sky_13
+  - first:
+      213: -6390218918120595834
+    second: Cast_Sky_14
+  - first:
+      213: 3524738010332496804
+    second: Cast_Sky_15
+  - first:
+      213: -4088502660450147255
+    second: Cast_Sky_16
+  - first:
+      213: -6454432950049245614
+    second: Cast_Sky_17
+  - first:
+      213: 5022462045279035825
+    second: Cast_Sky_18
+  - first:
+      213: 2867908291527635071
+    second: Cast_Sky_19
+  - first:
+      213: -1286364801709686439
+    second: Cast_Sky_20
+  - first:
+      213: 2383450256753907030
+    second: Cast_Sky_21
+  - first:
+      213: -7591519948765701332
+    second: Cast_Sky_22
+  - first:
+      213: -8810722621246872488
+    second: Cast_Sky_23
+  - first:
+      213: 8872777172464098976
+    second: Cast_Sky_24
+  - first:
+      213: -8859760038448116956
+    second: Cast_Sky_25
+  - first:
+      213: -1337236288086925266
+    second: Cast_Sky_26
+  - first:
+      213: -3390311857038673789
+    second: Cast_Sky_27
+  - first:
+      213: -2709007907181089071
+    second: Cast_Sky_28
+  - first:
+      213: 1843000258113202154
+    second: Cast_Sky_29
+  - first:
+      213: -3875693418128375833
+    second: Cast_Sky_30
+  - first:
+      213: -5470165825452364319
+    second: Cast_Sky_31
+  - first:
+      213: -8215582961507185831
+    second: Cast_Sky_32
+  - first:
+      213: 9096255471408250468
+    second: Cast_Sky_33
+  - first:
+      213: -5426017320702751801
+    second: Cast_Sky_34
+  - first:
+      213: 1001374038793775022
+    second: Cast_Sky_35
+  - first:
+      213: -5601001041678341784
+    second: Cast_Sky_36
+  - first:
+      213: -5352957352915563474
+    second: Cast_Sky_37
+  - first:
+      213: 785103034410978939
+    second: Cast_Sky_38
+  - first:
+      213: -2272211088896140748
+    second: Cast_Sky_39
+  - first:
+      213: 197948451332971650
+    second: Cast_Sky_40
+  - first:
+      213: 2795567969300884842
+    second: Cast_Sky_41
+  - first:
+      213: -1637775612250212399
+    second: Cast_Sky_42
+  - first:
+      213: 7211080406618697702
+    second: Cast_Sky_43
+  - first:
+      213: -2481154958689244904
+    second: Cast_Sky_44
+  - first:
+      213: -6082087777739335994
+    second: Cast_Sky_45
+  - first:
+      213: 527543855333002387
+    second: Cast_Sky_46
+  - first:
+      213: -5147267146313245068
+    second: Cast_Sky_47
+  - first:
+      213: -2352278524164825611
+    second: Cast_Sky_48
+  - first:
+      213: 2250068738399988290
+    second: Cast_Sky_49
+  - first:
+      213: 1647858941582453483
+    second: Cast_Sky_50
+  - first:
+      213: 7457156698328771476
+    second: Cast_Sky_51
+  - first:
+      213: -3536485057650633158
+    second: Cast_Sky_52
+  - first:
+      213: -575602200697617093
+    second: Cast_Sky_53
+  - first:
+      213: 3699854309867844080
+    second: Cast_Sky_54
+  - first:
+      213: -677804100562919234
+    second: Cast_Sky_55
+  - first:
+      213: 7096600681339180264
+    second: Cast_Sky_56
+  - first:
+      213: 7753200932154159984
+    second: Cast_Sky_57
+  - first:
+      213: 4687258967736319733
+    second: Cast_Sky_58
+  - first:
+      213: -1284724451466857329
+    second: Cast_Sky_59
+  - first:
+      213: 2166972581712190085
+    second: Cast_Sky_60
+  - first:
+      213: 6281011076449498589
+    second: Cast_Sky_61
+  - first:
+      213: 4603307914023145955
+    second: Cast_Sky_62
+  - first:
+      213: -6725509975986872061
+    second: Cast_Sky_63
+  - first:
+      213: 2807887087626735811
+    second: Cast_Sky_64
+  - first:
+      213: -6277136050597402571
+    second: Cast_Sky_65
+  - first:
+      213: 1621378409894170836
+    second: Cast_Sky_66
+  - first:
+      213: -7117892224790126296
+    second: Cast_Sky_67
+  - first:
+      213: 4524186855352744464
+    second: Cast_Sky_68
+  - first:
+      213: 1175258326268751295
+    second: Cast_Sky_69
+  - first:
+      213: 6353302017760972101
+    second: Cast_Sky_Walk_0
+  - first:
+      213: -1691555789336092483
+    second: Cast_Sky_Walk_1
+  - first:
+      213: -6996660897727402448
+    second: Cast_Sky_Walk_2
+  - first:
+      213: 7420956197128569703
+    second: Cast_Sky_Walk_3
+  - first:
+      213: -3487560612419613335
+    second: Cast_Sky_Walk_4
+  - first:
+      213: -2962819266148660478
+    second: Cast_Sky_Walk_5
+  - first:
+      213: 3953443510257690308
+    second: Cast_Sky_Walk_6
+  - first:
+      213: 2365038233243926543
+    second: Cast_Sky_Walk_7
+  - first:
+      213: -8011811387789374943
+    second: Cast_Sky_Walk_Down_0
+  - first:
+      213: -2291484468268707373
+    second: Cast_Sky_Walk_Down_1
+  - first:
+      213: 4547826009331731036
+    second: Cast_Sky_Walk_Down_2
+  - first:
+      213: 4442082272581982512
+    second: Cast_Sky_Walk_Down_3
+  - first:
+      213: 7508078545969331843
+    second: Cast_Sky_Walk_Down_4
+  - first:
+      213: -3387736019436078376
+    second: Cast_Sky_Walk_Down_5
+  - first:
+      213: 1056919257323078825
+    second: Cast_Sky_Walk_Down_6
+  - first:
+      213: -3131895084362891291
+    second: Cast_Sky_Walk_Down_7
+  - first:
+      213: 6896179368436792463
+    second: Cast_Sky_Walk_Up_0
+  - first:
+      213: 574050956769870656
+    second: Cast_Sky_Walk_Up_1
+  - first:
+      213: -6884734741753588968
+    second: Cast_Sky_Walk_Up_2
+  - first:
+      213: 6332619702626038905
+    second: Cast_Sky_Walk_Up_3
+  - first:
+      213: 1374130105124633909
+    second: Cast_Sky_Walk_Up_4
+  - first:
+      213: -2004248938913955581
+    second: Cast_Sky_Walk_Up_5
+  - first:
+      213: -7565741633845781248
+    second: Cast_Sky_Walk_Up_6
+  - first:
+      213: -8240348088033824855
+    second: Cast_Sky_Walk_Up_7
+  - first:
+      213: -1195754837016396863
+    second: Cast_Sky_Harvest_0
+  - first:
+      213: -6275123272565131510
+    second: Cast_Sky_Harvest_1
+  - first:
+      213: -3629253478798215000
+    second: Cast_Sky_Harvest_2
+  - first:
+      213: 2188947084924579189
+    second: Cast_Sky_Harvest_3
+  - first:
+      213: -6964535182400641546
+    second: Cast_Sky_Harvest_4
+  - first:
+      213: -8830743813598031643
+    second: Cast_Sky_Harvest_5
+  - first:
+      213: 8325818366283780794
+    second: Cast_Sky_Harvest_6
+  - first:
+      213: 7837309600016675815
+    second: Cast_Sky_Harvest_7
+  - first:
+      213: -3985209567587168219
+    second: Cast_Sky_Eat_0
+  - first:
+      213: 6591189143859189300
+    second: Cast_Sky_Eat_1
+  - first:
+      213: -5375007406532892448
+    second: Cast_Sky_Eat_2
+  - first:
+      213: 3070683823022504933
+    second: Cast_Sky_Eat_3
+  - first:
+      213: -4293739091167756352
+    second: Cast_Sky_Eat_4
+  - first:
+      213: 7925719925035329482
+    second: Cast_Sky_Eat_5
+  - first:
+      213: -5035830630110113204
+    second: Cast_Sky_Eat_6
+  - first:
+      213: 7850125142387179642
+    second: Cast_Sky_Eat_7
+  - first:
+      213: -3677222218148574618
+    second: Cast_Sky_Net_0
+  - first:
+      213: 2134471739045527548
+    second: Cast_Sky_Net_1
+  - first:
+      213: -6236921312829212246
+    second: Cast_Sky_Net_2
+  - first:
+      213: 2935919401581515824
+    second: Cast_Sky_Net_3
+  - first:
+      213: -6281262360651810909
+    second: Cast_Sky_Net_4
+  - first:
+      213: 1929639544453860903
+    second: Cast_Sky_Net_5
+  - first:
+      213: 1400734294338241604
+    second: Cast_Sky_Net_6
+  - first:
+      213: 5535690553321037614
+    second: Cast_Sky_Net_7
+  - first:
+      213: 6850628226114819262
+    second: Cast_Sky_Squat_0
+  - first:
+      213: -8143690214191691409
+    second: Cast_Sky_Squat_1
+  - first:
+      213: 2631809861802314759
+    second: Cast_Sky_Squat_2
+  - first:
+      213: 798629051819206977
+    second: Cast_Sky_Squat_3
+  - first:
+      213: -4553954190098114988
+    second: Cast_Sky_Squat_4
+  - first:
+      213: 399849025725551035
+    second: Cast_Sky_Squat_5
+  - first:
+      213: -298402723423490548
+    second: Cast_Sky_Squat_6
+  - first:
+      213: -1230537435170794215
+    second: Cast_Sky_Squat_7
+  - first:
+      213: -1954468690205744785
+    second: Cast_Sky_Stretch_0
+  - first:
+      213: 8014591194167055098
+    second: Cast_Sky_Stretch_1
+  - first:
+      213: -4747408457415401816
+    second: Cast_Sky_Stretch_2
+  - first:
+      213: -1519919173985784971
+    second: Cast_Sky_Stretch_3
+  - first:
+      213: -7594233372160888598
+    second: Cast_Sky_Stretch_4
+  - first:
+      213: 7461854858050004357
+    second: Cast_Sky_Stretch_5
+  - first:
+      213: 7581171571858398017
+    second: Cast_Sky_Stretch_6
+  - first:
+      213: -3467461288703728130
+    second: Cast_Sky_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54d4a6f16867b2850800000000000000
+      internalID: 6353302017760972101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db0eddac8f26688e0800000000000000
+      internalID: -1691555789336092483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03ea711cbfdd6ee90800000000000000
+      internalID: -6996660897727402448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7630597e7588cf660800000000000000
+      internalID: 7420956197128569703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96dc514d912b99fc0800000000000000
+      internalID: -3487560612419613335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20b868b3393f1e6d0800000000000000
+      internalID: -2962819266148660478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c6ab742de37dd630800000000000000
+      internalID: 3953443510257690308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f00c8bc1ebd42d020800000000000000
+      internalID: 2365038233243926543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12a826fbdf350d090800000000000000
+      internalID: -8011811387789374943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d1d48454030330e0800000000000000
+      internalID: -2291484468268707373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5a008af8af1d1f30800000000000000
+      internalID: 4547826009331731036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0391f40ba4275ad30800000000000000
+      internalID: 4442082272581982512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38ebb3678ad023860800000000000000
+      internalID: 7508078545969331843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8da77b01a085cf0d0800000000000000
+      internalID: -3387736019436078376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a40309f67eeaae00800000000000000
+      internalID: 1056919257323078825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5eff1c6a3064984d0800000000000000
+      internalID: -3131895084362891291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8c7d0b199624bf50800000000000000
+      internalID: 6896179368436792463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 043cd31cd4077f700800000000000000
+      internalID: 574050956769870656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8139cf0ba328470a0800000000000000
+      internalID: -6884734741753588968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9743aa0611cf1e750800000000000000
+      internalID: 6332619702626038905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53dbf17dc04e11310800000000000000
+      internalID: 1374130105124633909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3018492853a7f24e0800000000000000
+      internalID: -2004248938913955581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00d1d3ca116110790800000000000000
+      internalID: -7565741633845781248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9afac2bb21764ad80800000000000000
+      internalID: -8240348088033824855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cbbe25af43d76fe0800000000000000
+      internalID: -1195754837016396863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a07f7f071a84ae8a0800000000000000
+      internalID: -6275123272565131510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a8b16c803d42adc0800000000000000
+      internalID: -3629253478798215000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57d6e05b6c3b06e10800000000000000
+      internalID: 2188947084924579189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f5ac4bb620095f90800000000000000
+      internalID: -6964535182400641546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e0d200f945e27580800000000000000
+      internalID: -8830743813598031643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab294ca21bf3b8370800000000000000
+      internalID: 8325818366283780794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e3b0cfae87b3cc60800000000000000
+      internalID: 7837309600016675815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5209a784301b1b8c0800000000000000
+      internalID: -3985209567587168219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 436532fca9b987b50800000000000000
+      internalID: 6591189143859189300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e86384ed332865b0800000000000000
+      internalID: -5375007406532892448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5eb7bc8faa24d9a20800000000000000
+      internalID: 3070683823022504933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cfbcb8bb039964c0800000000000000
+      internalID: -4293739091167756352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac767f09740ddfd60800000000000000
+      internalID: 7925719925035329482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c42514f09b22d1ab0800000000000000
+      internalID: -5035830630110113204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a70c95aa93f31fc60800000000000000
+      internalID: 7850125142387179642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66a841710e1e7fcc0800000000000000
+      internalID: -3677222218148574618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff3becdcba2f9d10800000000000000
+      internalID: 2134471739045527548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa970c05c110279a0800000000000000
+      internalID: -6236921312829212246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 034917cf32b7eb820800000000000000
+      internalID: 2935919401581515824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a7315c992974d8a0800000000000000
+      internalID: -6281262360651810909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72e08b721f477ca10800000000000000
+      internalID: 1929639544453860903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4440db65b68607310800000000000000
+      internalID: 1400734294338241604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2f9f299a39b2dc40800000000000000
+      internalID: 5535690553321037614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb496d15312521f50800000000000000
+      internalID: 6850628226114819262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f698746b5eccbfe80800000000000000
+      internalID: -8143690214191691409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70cc8191021168420800000000000000
+      internalID: 2631809861802314759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 149adfc24ec451b00800000000000000
+      internalID: 798629051819206977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 456dccfbaca1dc0c0800000000000000
+      internalID: -4553954190098114988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb15826029c8c8500800000000000000
+      internalID: 399849025725551035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0e6556dd4cdbdbf0800000000000000
+      internalID: -298402723423490548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91513dde8b04ceee0800000000000000
+      internalID: -1230537435170794215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f61e9abd41550e4e0800000000000000
+      internalID: -1954468690205744785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af21d4c5a3c893f60800000000000000
+      internalID: 8014591194167055098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8aed11c2921dd1eb0800000000000000
+      internalID: -4747408457415401816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57ba54b609928eae0800000000000000
+      internalID: -1519919173985784971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae0fee6ebfcdb9690800000000000000
+      internalID: -7594233372160888598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 585e7937575dd8760800000000000000
+      internalID: 7461854858050004357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14bd8e9b06bb53960800000000000000
+      internalID: 7581171571858398017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sky_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef5656e445a11efc0800000000000000
+      internalID: -3467461288703728130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Sky_0: -6523918636275309156
+      Cast_Sky_1: 7203417214324583675
+      Cast_Sky_10: -4044155400215386372
+      Cast_Sky_11: 512189964732157297
+      Cast_Sky_12: -5617298413766251208
+      Cast_Sky_13: -4197436797524183225
+      Cast_Sky_14: -6390218918120595834
+      Cast_Sky_15: 3524738010332496804
+      Cast_Sky_16: -4088502660450147255
+      Cast_Sky_17: -6454432950049245614
+      Cast_Sky_18: 5022462045279035825
+      Cast_Sky_19: 2867908291527635071
+      Cast_Sky_2: -147378829140633743
+      Cast_Sky_20: -1286364801709686439
+      Cast_Sky_21: 2383450256753907030
+      Cast_Sky_22: -7591519948765701332
+      Cast_Sky_23: -8810722621246872488
+      Cast_Sky_24: 8872777172464098976
+      Cast_Sky_25: -8859760038448116956
+      Cast_Sky_26: -1337236288086925266
+      Cast_Sky_27: -3390311857038673789
+      Cast_Sky_28: -2709007907181089071
+      Cast_Sky_29: 1843000258113202154
+      Cast_Sky_3: 5378914873210491359
+      Cast_Sky_30: -3875693418128375833
+      Cast_Sky_31: -5470165825452364319
+      Cast_Sky_32: -8215582961507185831
+      Cast_Sky_33: 9096255471408250468
+      Cast_Sky_34: -5426017320702751801
+      Cast_Sky_35: 1001374038793775022
+      Cast_Sky_36: -5601001041678341784
+      Cast_Sky_37: -5352957352915563474
+      Cast_Sky_38: 785103034410978939
+      Cast_Sky_39: -2272211088896140748
+      Cast_Sky_4: 8546394094495102768
+      Cast_Sky_40: 197948451332971650
+      Cast_Sky_41: 2795567969300884842
+      Cast_Sky_42: -1637775612250212399
+      Cast_Sky_43: 7211080406618697702
+      Cast_Sky_44: -2481154958689244904
+      Cast_Sky_45: -6082087777739335994
+      Cast_Sky_46: 527543855333002387
+      Cast_Sky_47: -5147267146313245068
+      Cast_Sky_48: -2352278524164825611
+      Cast_Sky_49: 2250068738399988290
+      Cast_Sky_5: -8816214944594823051
+      Cast_Sky_50: 1647858941582453483
+      Cast_Sky_51: 7457156698328771476
+      Cast_Sky_52: -3536485057650633158
+      Cast_Sky_53: -575602200697617093
+      Cast_Sky_54: 3699854309867844080
+      Cast_Sky_55: -677804100562919234
+      Cast_Sky_56: 7096600681339180264
+      Cast_Sky_57: 7753200932154159984
+      Cast_Sky_58: 4687258967736319733
+      Cast_Sky_59: -1284724451466857329
+      Cast_Sky_6: -7655079086664402058
+      Cast_Sky_60: 2166972581712190085
+      Cast_Sky_61: 6281011076449498589
+      Cast_Sky_62: 4603307914023145955
+      Cast_Sky_63: -6725509975986872061
+      Cast_Sky_64: 2807887087626735811
+      Cast_Sky_65: -6277136050597402571
+      Cast_Sky_66: 1621378409894170836
+      Cast_Sky_67: -7117892224790126296
+      Cast_Sky_68: 4524186855352744464
+      Cast_Sky_69: 1175258326268751295
+      Cast_Sky_7: 834358159663368420
+      Cast_Sky_8: 3745681975179565953
+      Cast_Sky_9: 7315356230518315167
+      Cast_Sky_Eat_0: -3985209567587168219
+      Cast_Sky_Eat_1: 6591189143859189300
+      Cast_Sky_Eat_2: -5375007406532892448
+      Cast_Sky_Eat_3: 3070683823022504933
+      Cast_Sky_Eat_4: -4293739091167756352
+      Cast_Sky_Eat_5: 7925719925035329482
+      Cast_Sky_Eat_6: -5035830630110113204
+      Cast_Sky_Eat_7: 7850125142387179642
+      Cast_Sky_Harvest_0: -1195754837016396863
+      Cast_Sky_Harvest_1: -6275123272565131510
+      Cast_Sky_Harvest_2: -3629253478798215000
+      Cast_Sky_Harvest_3: 2188947084924579189
+      Cast_Sky_Harvest_4: -6964535182400641546
+      Cast_Sky_Harvest_5: -8830743813598031643
+      Cast_Sky_Harvest_6: 8325818366283780794
+      Cast_Sky_Harvest_7: 7837309600016675815
+      Cast_Sky_Net_0: -3677222218148574618
+      Cast_Sky_Net_1: 2134471739045527548
+      Cast_Sky_Net_2: -6236921312829212246
+      Cast_Sky_Net_3: 2935919401581515824
+      Cast_Sky_Net_4: -6281262360651810909
+      Cast_Sky_Net_5: 1929639544453860903
+      Cast_Sky_Net_6: 1400734294338241604
+      Cast_Sky_Net_7: 5535690553321037614
+      Cast_Sky_Squat_0: 6850628226114819262
+      Cast_Sky_Squat_1: -8143690214191691409
+      Cast_Sky_Squat_2: 2631809861802314759
+      Cast_Sky_Squat_3: 798629051819206977
+      Cast_Sky_Squat_4: -4553954190098114988
+      Cast_Sky_Squat_5: 399849025725551035
+      Cast_Sky_Squat_6: -298402723423490548
+      Cast_Sky_Squat_7: -1230537435170794215
+      Cast_Sky_Stretch_0: -1954468690205744785
+      Cast_Sky_Stretch_1: 8014591194167055098
+      Cast_Sky_Stretch_2: -4747408457415401816
+      Cast_Sky_Stretch_3: -1519919173985784971
+      Cast_Sky_Stretch_4: -7594233372160888598
+      Cast_Sky_Stretch_5: 7461854858050004357
+      Cast_Sky_Stretch_6: 7581171571858398017
+      Cast_Sky_Stretch_7: -3467461288703728130
+      Cast_Sky_Walk_0: 6353302017760972101
+      Cast_Sky_Walk_1: -1691555789336092483
+      Cast_Sky_Walk_2: -6996660897727402448
+      Cast_Sky_Walk_3: 7420956197128569703
+      Cast_Sky_Walk_4: -3487560612419613335
+      Cast_Sky_Walk_5: -2962819266148660478
+      Cast_Sky_Walk_6: 3953443510257690308
+      Cast_Sky_Walk_7: 2365038233243926543
+      Cast_Sky_Walk_Down_0: -8011811387789374943
+      Cast_Sky_Walk_Down_1: -2291484468268707373
+      Cast_Sky_Walk_Down_2: 4547826009331731036
+      Cast_Sky_Walk_Down_3: 4442082272581982512
+      Cast_Sky_Walk_Down_4: 7508078545969331843
+      Cast_Sky_Walk_Down_5: -3387736019436078376
+      Cast_Sky_Walk_Down_6: 1056919257323078825
+      Cast_Sky_Walk_Down_7: -3131895084362891291
+      Cast_Sky_Walk_Up_0: 6896179368436792463
+      Cast_Sky_Walk_Up_1: 574050956769870656
+      Cast_Sky_Walk_Up_2: -6884734741753588968
+      Cast_Sky_Walk_Up_3: 6332619702626038905
+      Cast_Sky_Walk_Up_4: 1374130105124633909
+      Cast_Sky_Walk_Up_5: -2004248938913955581
+      Cast_Sky_Walk_Up_6: -7565741633845781248
+      Cast_Sky_Walk_Up_7: -8240348088033824855
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

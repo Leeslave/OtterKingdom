@@ -1,0 +1,2078 @@
+fileFormatVersion: 2
+guid: 4f276c6bdeeb92741bd03c298a9a56f6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7847669972654306476
+    second: Cast_Sprout_0
+  - first:
+      213: 8357794236829295230
+    second: Cast_Sprout_1
+  - first:
+      213: -3123455787565540320
+    second: Cast_Sprout_2
+  - first:
+      213: 8049409304415737899
+    second: Cast_Sprout_3
+  - first:
+      213: -8364226845712666134
+    second: Cast_Sprout_4
+  - first:
+      213: 5225871710880866382
+    second: Cast_Sprout_5
+  - first:
+      213: -8280880057914299386
+    second: Cast_Sprout_6
+  - first:
+      213: 9010314344929626798
+    second: Cast_Sprout_7
+  - first:
+      213: -8653469150108256299
+    second: Cast_Sprout_8
+  - first:
+      213: -5687193955381004364
+    second: Cast_Sprout_9
+  - first:
+      213: -4737222144186274262
+    second: Cast_Sprout_10
+  - first:
+      213: 3071449829790901264
+    second: Cast_Sprout_11
+  - first:
+      213: -6786156627460794164
+    second: Cast_Sprout_12
+  - first:
+      213: 290193882928057293
+    second: Cast_Sprout_13
+  - first:
+      213: 8680256815159695132
+    second: Cast_Sprout_14
+  - first:
+      213: 7956975649241362889
+    second: Cast_Sprout_15
+  - first:
+      213: 5660812739687371880
+    second: Cast_Sprout_16
+  - first:
+      213: 6989772126408316837
+    second: Cast_Sprout_17
+  - first:
+      213: -7627696448185988783
+    second: Cast_Sprout_18
+  - first:
+      213: 3251018284068640391
+    second: Cast_Sprout_19
+  - first:
+      213: -4712622170168676669
+    second: Cast_Sprout_20
+  - first:
+      213: -5415383666565301416
+    second: Cast_Sprout_21
+  - first:
+      213: 4706053673879921843
+    second: Cast_Sprout_22
+  - first:
+      213: 4385634654303670143
+    second: Cast_Sprout_23
+  - first:
+      213: 8742254026888029221
+    second: Cast_Sprout_24
+  - first:
+      213: 7110048615679229676
+    second: Cast_Sprout_25
+  - first:
+      213: -4916333458411515148
+    second: Cast_Sprout_26
+  - first:
+      213: -507430760479353562
+    second: Cast_Sprout_27
+  - first:
+      213: -663976720246083360
+    second: Cast_Sprout_28
+  - first:
+      213: -3697227159318808549
+    second: Cast_Sprout_29
+  - first:
+      213: -1996073238615518684
+    second: Cast_Sprout_30
+  - first:
+      213: -729396910069160918
+    second: Cast_Sprout_31
+  - first:
+      213: -1385013733282561025
+    second: Cast_Sprout_32
+  - first:
+      213: -5668537204906213099
+    second: Cast_Sprout_33
+  - first:
+      213: 5539757157746550434
+    second: Cast_Sprout_34
+  - first:
+      213: -6337397527257938480
+    second: Cast_Sprout_35
+  - first:
+      213: -5293049511818177879
+    second: Cast_Sprout_36
+  - first:
+      213: -1434801309801967903
+    second: Cast_Sprout_37
+  - first:
+      213: 5891144018531171600
+    second: Cast_Sprout_38
+  - first:
+      213: 8101672241678492116
+    second: Cast_Sprout_39
+  - first:
+      213: 6920632854101092040
+    second: Cast_Sprout_40
+  - first:
+      213: -4432098115056634291
+    second: Cast_Sprout_41
+  - first:
+      213: 5757061335354854319
+    second: Cast_Sprout_42
+  - first:
+      213: 4469612046936733949
+    second: Cast_Sprout_43
+  - first:
+      213: -3887580243033968555
+    second: Cast_Sprout_44
+  - first:
+      213: 1586958001660527766
+    second: Cast_Sprout_45
+  - first:
+      213: 5396051704901805538
+    second: Cast_Sprout_46
+  - first:
+      213: 1122508190228065962
+    second: Cast_Sprout_47
+  - first:
+      213: -8412208943984110055
+    second: Cast_Sprout_48
+  - first:
+      213: 1360267602508332739
+    second: Cast_Sprout_49
+  - first:
+      213: 5483006521607445420
+    second: Cast_Sprout_50
+  - first:
+      213: 718171803964510544
+    second: Cast_Sprout_51
+  - first:
+      213: -1862130877632206393
+    second: Cast_Sprout_52
+  - first:
+      213: 1323148203086677674
+    second: Cast_Sprout_53
+  - first:
+      213: -5789215290843433446
+    second: Cast_Sprout_54
+  - first:
+      213: -5396744923251056342
+    second: Cast_Sprout_55
+  - first:
+      213: -4078676737379456632
+    second: Cast_Sprout_56
+  - first:
+      213: -7351379577772899208
+    second: Cast_Sprout_57
+  - first:
+      213: -1807862081455410931
+    second: Cast_Sprout_58
+  - first:
+      213: -7467662827309662344
+    second: Cast_Sprout_59
+  - first:
+      213: -1609342586851978837
+    second: Cast_Sprout_60
+  - first:
+      213: 5499673564462912079
+    second: Cast_Sprout_61
+  - first:
+      213: -7162363632396185212
+    second: Cast_Sprout_62
+  - first:
+      213: -5880586728910716167
+    second: Cast_Sprout_63
+  - first:
+      213: -8261775003399797448
+    second: Cast_Sprout_64
+  - first:
+      213: 5664967997361938484
+    second: Cast_Sprout_65
+  - first:
+      213: 5969495116223162753
+    second: Cast_Sprout_66
+  - first:
+      213: -8999923568148345583
+    second: Cast_Sprout_67
+  - first:
+      213: -6745407110913761458
+    second: Cast_Sprout_68
+  - first:
+      213: 8975011198492653300
+    second: Cast_Sprout_69
+  - first:
+      213: 7858911939450269267
+    second: Cast_Sprout_70
+  - first:
+      213: -2546315363093309262
+    second: Cast_Sprout_Walk_0
+  - first:
+      213: 4922896970924494623
+    second: Cast_Sprout_Walk_1
+  - first:
+      213: 6913765342140968760
+    second: Cast_Sprout_Walk_2
+  - first:
+      213: 5687115228845330840
+    second: Cast_Sprout_Walk_3
+  - first:
+      213: 7514046255526882396
+    second: Cast_Sprout_Walk_4
+  - first:
+      213: -935845899296070509
+    second: Cast_Sprout_Walk_5
+  - first:
+      213: 5636941183734809827
+    second: Cast_Sprout_Walk_6
+  - first:
+      213: -4973189855911820802
+    second: Cast_Sprout_Walk_7
+  - first:
+      213: 2942908738871783862
+    second: Cast_Sprout_Walk_Down_0
+  - first:
+      213: 2810278390931045399
+    second: Cast_Sprout_Walk_Down_1
+  - first:
+      213: 3467495131311769450
+    second: Cast_Sprout_Walk_Down_2
+  - first:
+      213: 1351115604631620282
+    second: Cast_Sprout_Walk_Down_3
+  - first:
+      213: -1844427409162436944
+    second: Cast_Sprout_Walk_Down_4
+  - first:
+      213: -7771540275814008651
+    second: Cast_Sprout_Walk_Down_5
+  - first:
+      213: 7142588562884747789
+    second: Cast_Sprout_Walk_Down_6
+  - first:
+      213: 780344922144592810
+    second: Cast_Sprout_Walk_Down_7
+  - first:
+      213: 8082930460882646399
+    second: Cast_Sprout_Walk_Up_0
+  - first:
+      213: 4708945325919369093
+    second: Cast_Sprout_Walk_Up_1
+  - first:
+      213: 3322358728708622272
+    second: Cast_Sprout_Walk_Up_2
+  - first:
+      213: -7125815651756030845
+    second: Cast_Sprout_Walk_Up_3
+  - first:
+      213: 6782679569147002855
+    second: Cast_Sprout_Walk_Up_4
+  - first:
+      213: 8194390967427545514
+    second: Cast_Sprout_Walk_Up_5
+  - first:
+      213: -5849930876985392194
+    second: Cast_Sprout_Walk_Up_6
+  - first:
+      213: -910925356256351953
+    second: Cast_Sprout_Walk_Up_7
+  - first:
+      213: -4427811646704153833
+    second: Cast_Sprout_Harvest_0
+  - first:
+      213: -7286277262834042975
+    second: Cast_Sprout_Harvest_1
+  - first:
+      213: -8541378798740596792
+    second: Cast_Sprout_Harvest_2
+  - first:
+      213: 2223801670965280095
+    second: Cast_Sprout_Harvest_3
+  - first:
+      213: 1833759105446167923
+    second: Cast_Sprout_Harvest_4
+  - first:
+      213: -2910319610206328923
+    second: Cast_Sprout_Harvest_5
+  - first:
+      213: -5137416714113646760
+    second: Cast_Sprout_Harvest_6
+  - first:
+      213: 6774291367427598879
+    second: Cast_Sprout_Harvest_7
+  - first:
+      213: 4288261409961286332
+    second: Cast_Sprout_Eat_0
+  - first:
+      213: -7011253944277155191
+    second: Cast_Sprout_Eat_1
+  - first:
+      213: 9061429719608612973
+    second: Cast_Sprout_Eat_2
+  - first:
+      213: -3427278015765287900
+    second: Cast_Sprout_Eat_3
+  - first:
+      213: -2334808357564442117
+    second: Cast_Sprout_Eat_4
+  - first:
+      213: 6759574100333474784
+    second: Cast_Sprout_Eat_5
+  - first:
+      213: -903866890969711005
+    second: Cast_Sprout_Eat_6
+  - first:
+      213: -6165205930934075200
+    second: Cast_Sprout_Eat_7
+  - first:
+      213: 6534704447227272098
+    second: Cast_Sprout_Net_0
+  - first:
+      213: -8254513866829630985
+    second: Cast_Sprout_Net_1
+  - first:
+      213: -9220523490671026019
+    second: Cast_Sprout_Net_2
+  - first:
+      213: 7871189865171170177
+    second: Cast_Sprout_Net_3
+  - first:
+      213: 7613734072300418604
+    second: Cast_Sprout_Net_4
+  - first:
+      213: -4999506609706665728
+    second: Cast_Sprout_Net_5
+  - first:
+      213: -7462687474207461807
+    second: Cast_Sprout_Net_6
+  - first:
+      213: -2094807505757323578
+    second: Cast_Sprout_Net_7
+  - first:
+      213: 587686944862457099
+    second: Cast_Sprout_Squat_0
+  - first:
+      213: 8299452513929669321
+    second: Cast_Sprout_Squat_1
+  - first:
+      213: -203470640807264220
+    second: Cast_Sprout_Squat_2
+  - first:
+      213: 1126847747813363713
+    second: Cast_Sprout_Squat_3
+  - first:
+      213: -2780682552546470494
+    second: Cast_Sprout_Squat_4
+  - first:
+      213: -916883540929499496
+    second: Cast_Sprout_Squat_5
+  - first:
+      213: -3741071451205738957
+    second: Cast_Sprout_Squat_6
+  - first:
+      213: -7909454126397807151
+    second: Cast_Sprout_Squat_7
+  - first:
+      213: 8293083187447523450
+    second: Cast_Sprout_Stretch_0
+  - first:
+      213: 7499492657946215717
+    second: Cast_Sprout_Stretch_1
+  - first:
+      213: -7222850578356398885
+    second: Cast_Sprout_Stretch_2
+  - first:
+      213: -8999891045755909752
+    second: Cast_Sprout_Stretch_3
+  - first:
+      213: 5020220315411132819
+    second: Cast_Sprout_Stretch_4
+  - first:
+      213: -5664143144800160593
+    second: Cast_Sprout_Stretch_5
+  - first:
+      213: -3806944399785519746
+    second: Cast_Sprout_Stretch_6
+  - first:
+      213: 2404378663600752668
+    second: Cast_Sprout_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b814b01baba9acd0800000000000000
+      internalID: -2546315363093309262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1f0dc166b4a15440800000000000000
+      internalID: 4922896970924494623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83f28bea2f0a2ff50800000000000000
+      internalID: 6913765342140968760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8915a044b21bcee40800000000000000
+      internalID: 5687115228845330840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5ca88e1241474860800000000000000
+      internalID: 7514046255526882396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 394a3f7ec153303f0800000000000000
+      internalID: -935845899296070509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e4884c04207a3e40800000000000000
+      internalID: 5636941183734809827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef1ccc5dc2eabfab0800000000000000
+      internalID: -4973189855911820802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b178d2e7ef47d820800000000000000
+      internalID: 2942908738871783862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71cb66b9e4d100720800000000000000
+      internalID: 2810278390931045399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a670c3a43740f1030800000000000000
+      internalID: 3467495131311769450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aba0e80eb7020c210800000000000000
+      internalID: 1351115604631620282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bef0e62b074766e0800000000000000
+      internalID: -1844427409162436944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b8f6766b41f52490800000000000000
+      internalID: -7771540275814008651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d02638374729f1360800000000000000
+      internalID: 7142588562884747789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa355be729754da00800000000000000
+      internalID: 780344922144592810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f753811dd665c2070800000000000000
+      internalID: 8082930460882646399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 587f82a23d8895140800000000000000
+      internalID: 4708945325919369093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c7881149a36b1e20800000000000000
+      internalID: 3322358728708622272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 384c92e3b640c1d90800000000000000
+      internalID: -7125815651756030845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ef7e48c12be02e50800000000000000
+      internalID: 6782679569147002855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa9303c4b2358b170800000000000000
+      internalID: 8194390967427545514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb342b49cded0dea0800000000000000
+      internalID: -5849930876985392194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f29a17bf63ebb53f0800000000000000
+      internalID: -910925356256351953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71b8cd154c04d82c0800000000000000
+      internalID: -4427811646704153833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a775cd0f61f1ea90800000000000000
+      internalID: -7286277262834042975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c793099c3de67980800000000000000
+      internalID: -8541378798740596792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5d3ec866d78cde10800000000000000
+      internalID: 2223801670965280095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 375c1c3d032d27910800000000000000
+      internalID: 1833759105446167923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a76ccaebb77c97d0800000000000000
+      internalID: -2910319610206328923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85ff91cb7ba34b8b0800000000000000
+      internalID: -5137416714113646760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1a64806b1e130e50800000000000000
+      internalID: 6774291367427598879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cba12cc3807f28b30800000000000000
+      internalID: 4288261409961286332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 982cd455fa503be90800000000000000
+      internalID: -7011253944277155191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d68507a025aa0cd70800000000000000
+      internalID: 9061429719608612973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42cedcb9dccdf60d0800000000000000
+      internalID: -3427278015765287900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf912cc4b28199fd0800000000000000
+      internalID: -2334808357564442117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e3be4b94d4decd50800000000000000
+      internalID: 6759574100333474784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36e738ff9d1d473f0800000000000000
+      internalID: -903866890969711005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c00b87ded9c07aa0800000000000000
+      internalID: -6165205930934075200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab9529821fefaa50800000000000000
+      internalID: 6534704447227272098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f175165f53127d80800000000000000
+      internalID: -8254513866829630985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d90a867dcbe1a0080800000000000000
+      internalID: -9220523490671026019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 183be21aa751c3d60800000000000000
+      internalID: 7871189865171170177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2631c9acca69a960800000000000000
+      internalID: 7613734072300418604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 009773c1a3f2e9ab0800000000000000
+      internalID: -4999506609706665728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15e6b1ef7453f6890800000000000000
+      internalID: -7462687474207461807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ce338a1cafbde2e0800000000000000
+      internalID: -2094807505757323578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0d49a3a922e72800800000000000000
+      internalID: 587686944862457099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ca200bc6149d2370800000000000000
+      internalID: 8299452513929669321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 420467cb7802d2df0800000000000000
+      internalID: -203470640807264220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1005d5c6e0e53af00800000000000000
+      internalID: 1126847747813363713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a5575e73f70969d0800000000000000
+      internalID: -2780682552546470494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89eae7207439643f0800000000000000
+      internalID: -916883540929499496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33ed68f065b051cc0800000000000000
+      internalID: -3741071451205738957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d5afccc069fb3290800000000000000
+      internalID: -7909454126397807151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a78e2986833f61370800000000000000
+      internalID: 8293083187447523450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 525c880a6dc831860800000000000000
+      internalID: 7499492657946215717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd49753daa743cb90800000000000000
+      internalID: -7222850578356398885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 889008007c6f91380800000000000000
+      internalID: -8999891045755909752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 391b74257c76ba540800000000000000
+      internalID: 5020220315411132819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa4f839d1dbe461b0800000000000000
+      internalID: -5664143144800160593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e751f1b0d340b2bc0800000000000000
+      internalID: -3806944399785519746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sprout_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c188375d7a11e5120800000000000000
+      internalID: 2404378663600752668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Sprout_0: 7847669972654306476
+      Cast_Sprout_1: 8357794236829295230
+      Cast_Sprout_10: -4737222144186274262
+      Cast_Sprout_11: 3071449829790901264
+      Cast_Sprout_12: -6786156627460794164
+      Cast_Sprout_13: 290193882928057293
+      Cast_Sprout_14: 8680256815159695132
+      Cast_Sprout_15: 7956975649241362889
+      Cast_Sprout_16: 5660812739687371880
+      Cast_Sprout_17: 6989772126408316837
+      Cast_Sprout_18: -7627696448185988783
+      Cast_Sprout_19: 3251018284068640391
+      Cast_Sprout_2: -3123455787565540320
+      Cast_Sprout_20: -4712622170168676669
+      Cast_Sprout_21: -5415383666565301416
+      Cast_Sprout_22: 4706053673879921843
+      Cast_Sprout_23: 4385634654303670143
+      Cast_Sprout_24: 8742254026888029221
+      Cast_Sprout_25: 7110048615679229676
+      Cast_Sprout_26: -4916333458411515148
+      Cast_Sprout_27: -507430760479353562
+      Cast_Sprout_28: -663976720246083360
+      Cast_Sprout_29: -3697227159318808549
+      Cast_Sprout_3: 8049409304415737899
+      Cast_Sprout_30: -1996073238615518684
+      Cast_Sprout_31: -729396910069160918
+      Cast_Sprout_32: -1385013733282561025
+      Cast_Sprout_33: -5668537204906213099
+      Cast_Sprout_34: 5539757157746550434
+      Cast_Sprout_35: -6337397527257938480
+      Cast_Sprout_36: -5293049511818177879
+      Cast_Sprout_37: -1434801309801967903
+      Cast_Sprout_38: 5891144018531171600
+      Cast_Sprout_39: 8101672241678492116
+      Cast_Sprout_4: -8364226845712666134
+      Cast_Sprout_40: 6920632854101092040
+      Cast_Sprout_41: -4432098115056634291
+      Cast_Sprout_42: 5757061335354854319
+      Cast_Sprout_43: 4469612046936733949
+      Cast_Sprout_44: -3887580243033968555
+      Cast_Sprout_45: 1586958001660527766
+      Cast_Sprout_46: 5396051704901805538
+      Cast_Sprout_47: 1122508190228065962
+      Cast_Sprout_48: -8412208943984110055
+      Cast_Sprout_49: 1360267602508332739
+      Cast_Sprout_5: 5225871710880866382
+      Cast_Sprout_50: 5483006521607445420
+      Cast_Sprout_51: 718171803964510544
+      Cast_Sprout_52: -1862130877632206393
+      Cast_Sprout_53: 1323148203086677674
+      Cast_Sprout_54: -5789215290843433446
+      Cast_Sprout_55: -5396744923251056342
+      Cast_Sprout_56: -4078676737379456632
+      Cast_Sprout_57: -7351379577772899208
+      Cast_Sprout_58: -1807862081455410931
+      Cast_Sprout_59: -7467662827309662344
+      Cast_Sprout_6: -8280880057914299386
+      Cast_Sprout_60: -1609342586851978837
+      Cast_Sprout_61: 5499673564462912079
+      Cast_Sprout_62: -7162363632396185212
+      Cast_Sprout_63: -5880586728910716167
+      Cast_Sprout_64: -8261775003399797448
+      Cast_Sprout_65: 5664967997361938484
+      Cast_Sprout_66: 5969495116223162753
+      Cast_Sprout_67: -8999923568148345583
+      Cast_Sprout_68: -6745407110913761458
+      Cast_Sprout_69: 8975011198492653300
+      Cast_Sprout_7: 9010314344929626798
+      Cast_Sprout_70: 7858911939450269267
+      Cast_Sprout_8: -8653469150108256299
+      Cast_Sprout_9: -5687193955381004364
+      Cast_Sprout_Eat_0: 4288261409961286332
+      Cast_Sprout_Eat_1: -7011253944277155191
+      Cast_Sprout_Eat_2: 9061429719608612973
+      Cast_Sprout_Eat_3: -3427278015765287900
+      Cast_Sprout_Eat_4: -2334808357564442117
+      Cast_Sprout_Eat_5: 6759574100333474784
+      Cast_Sprout_Eat_6: -903866890969711005
+      Cast_Sprout_Eat_7: -6165205930934075200
+      Cast_Sprout_Harvest_0: -4427811646704153833
+      Cast_Sprout_Harvest_1: -7286277262834042975
+      Cast_Sprout_Harvest_2: -8541378798740596792
+      Cast_Sprout_Harvest_3: 2223801670965280095
+      Cast_Sprout_Harvest_4: 1833759105446167923
+      Cast_Sprout_Harvest_5: -2910319610206328923
+      Cast_Sprout_Harvest_6: -5137416714113646760
+      Cast_Sprout_Harvest_7: 6774291367427598879
+      Cast_Sprout_Net_0: 6534704447227272098
+      Cast_Sprout_Net_1: -8254513866829630985
+      Cast_Sprout_Net_2: -9220523490671026019
+      Cast_Sprout_Net_3: 7871189865171170177
+      Cast_Sprout_Net_4: 7613734072300418604
+      Cast_Sprout_Net_5: -4999506609706665728
+      Cast_Sprout_Net_6: -7462687474207461807
+      Cast_Sprout_Net_7: -2094807505757323578
+      Cast_Sprout_Squat_0: 587686944862457099
+      Cast_Sprout_Squat_1: 8299452513929669321
+      Cast_Sprout_Squat_2: -203470640807264220
+      Cast_Sprout_Squat_3: 1126847747813363713
+      Cast_Sprout_Squat_4: -2780682552546470494
+      Cast_Sprout_Squat_5: -916883540929499496
+      Cast_Sprout_Squat_6: -3741071451205738957
+      Cast_Sprout_Squat_7: -7909454126397807151
+      Cast_Sprout_Stretch_0: 8293083187447523450
+      Cast_Sprout_Stretch_1: 7499492657946215717
+      Cast_Sprout_Stretch_2: -7222850578356398885
+      Cast_Sprout_Stretch_3: -8999891045755909752
+      Cast_Sprout_Stretch_4: 5020220315411132819
+      Cast_Sprout_Stretch_5: -5664143144800160593
+      Cast_Sprout_Stretch_6: -3806944399785519746
+      Cast_Sprout_Stretch_7: 2404378663600752668
+      Cast_Sprout_Walk_0: -2546315363093309262
+      Cast_Sprout_Walk_1: 4922896970924494623
+      Cast_Sprout_Walk_2: 6913765342140968760
+      Cast_Sprout_Walk_3: 5687115228845330840
+      Cast_Sprout_Walk_4: 7514046255526882396
+      Cast_Sprout_Walk_5: -935845899296070509
+      Cast_Sprout_Walk_6: 5636941183734809827
+      Cast_Sprout_Walk_7: -4973189855911820802
+      Cast_Sprout_Walk_Down_0: 2942908738871783862
+      Cast_Sprout_Walk_Down_1: 2810278390931045399
+      Cast_Sprout_Walk_Down_2: 3467495131311769450
+      Cast_Sprout_Walk_Down_3: 1351115604631620282
+      Cast_Sprout_Walk_Down_4: -1844427409162436944
+      Cast_Sprout_Walk_Down_5: -7771540275814008651
+      Cast_Sprout_Walk_Down_6: 7142588562884747789
+      Cast_Sprout_Walk_Down_7: 780344922144592810
+      Cast_Sprout_Walk_Up_0: 8082930460882646399
+      Cast_Sprout_Walk_Up_1: 4708945325919369093
+      Cast_Sprout_Walk_Up_2: 3322358728708622272
+      Cast_Sprout_Walk_Up_3: -7125815651756030845
+      Cast_Sprout_Walk_Up_4: 6782679569147002855
+      Cast_Sprout_Walk_Up_5: 8194390967427545514
+      Cast_Sprout_Walk_Up_6: -5849930876985392194
+      Cast_Sprout_Walk_Up_7: -910925356256351953
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

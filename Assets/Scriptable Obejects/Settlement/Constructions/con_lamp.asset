@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::ConstructionDefinition
   _constructionId: con_lamp
   _displayName: "\uAC00\uB85C\uB4F1"
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 311299cc5a864170ad810d5eac937051, type: 3}
   _targetType: 0
   _requiredGold: 30
   _requiredItems:

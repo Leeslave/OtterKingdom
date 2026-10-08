@@ -31,6 +31,8 @@ public sealed class GachaScreenState
     public string HighlightLabel;
     public readonly List<(ItemDefinition item, int tier, bool featured)> Highlights = new List<(ItemDefinition, int, bool)>();
 
+    /// <summary>"에픽 확정까지" · "레어 확정까지" (골드 배너)</summary>
+    public string PityLabel = "에픽 확정까지";
     public int PityLeft;
     public int PityTotal;
     public bool Guaranteed;

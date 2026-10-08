@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_toy_jaejal
   _displayName: "\uC7AC\uC798\uC774"
-  _portrait: {fileID: 21300000, guid: 73d3958f4839ca3428f2b29ed0f46e19, type: 3}
-  _plazaPrefab: {fileID: 7043452558069457149, guid: bb3135875573f5549a628191893e39f6, type: 3}
-  _plazaTint: {r: 1, g: 0.86, b: 0.9, a: 1}
+  _portrait: {fileID: 21300000, guid: 2da81c5dbe6c25a41b8e46214f5c0c0b, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: cdff4ef7db8895548a23581b7f33a21d, type: 3}
+  _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 8
   _toyVisitor: 1
   _visitTier: 1
