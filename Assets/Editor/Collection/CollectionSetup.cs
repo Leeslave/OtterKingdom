@@ -293,12 +293,14 @@ public static class CollectionSetup
         var border = ReadBorder(name);
 
         bool dirty = importer.textureType != TextureImporterType.Sprite
+                     || importer.textureShape != TextureImporterShape.Texture2D // guid만 적은 메타는 큐브맵으로 불러와질 때가 있음
                      || importer.spriteImportMode != SpriteImportMode.Single
                      || importer.mipmapEnabled
                      || (border.HasValue && importer.spriteBorder != border.Value);
         if (dirty)
         {
             importer.textureType = TextureImporterType.Sprite;
+            importer.textureShape = TextureImporterShape.Texture2D;
             importer.spriteImportMode = SpriteImportMode.Single;
             importer.alphaIsTransparency = true;
             importer.mipmapEnabled = false;

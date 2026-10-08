@@ -20,7 +20,7 @@ MonoBehaviour:
   _description: "\uB69D\uB531\uC774\uB791 \uAC19\uC774 \uC4F8 \uAC74\uC124\uC18C\uAC00
     \uC788\uC73C\uBA74\n\uACF5\uC0AC\uB97C \uD6E8\uC52C \uBE68\uB9AC \uB05D\uB0BC
     \uC218 \uC788\uC5B4\uC694."
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 03393487b6f5467ca724f2828b86ff4f, type: 3}
   _requester: {fileID: 11400000, guid: ac2d28fc54a545e7ac154e16db67a844, type: 2}
   _requiredDevelopment: p5_builder_settled
   _minResidents: 0
