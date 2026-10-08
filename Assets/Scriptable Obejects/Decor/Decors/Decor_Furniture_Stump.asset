@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a412c96f04c32584fab81052490c4bea, type: 3}
+  m_Name: Decor_Furniture_Stump
+  m_EditorClassIdentifier: OtterKingdom::DecorDefinition
+  _item: {fileID: 11400000, guid: d409c193455b16546af07dee692e3569, type: 2}
+  _footprint: {x: 1, y: 1}
+  _canRotate: 0
+  _playStyle: 0
+  _playSeconds: {x: 4, y: 7}
+  _maxPlayers: 1
+  _worldSprite: {fileID: 21300000, guid: c1661d9e3358a114488e88664e21c509, type: 3}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _furniture: 1
+  _hasSpot: 1
+  _spotKind: 0
+  _spotPoints:
+  - {x: 0.5, y: 0.66}
+  _coziness: 3

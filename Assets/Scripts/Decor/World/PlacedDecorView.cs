@@ -24,7 +24,7 @@ public class PlacedDecorView : MonoBehaviour
     /// <summary>지금 같이 놀고 있는 해달 수 (DecorBoardView가 예약·해제)</summary>
     public int Players { get; internal set; }
 
-    public bool HasRoom => !Placed.Decor.IsBuilding && Players < Placed.Decor.MaxPlayers;
+    public bool HasRoom => !Placed.Decor.IsBuilding && !Placed.Decor.IsFurniture && Players < Placed.Decor.MaxPlayers;
 
     /// <summary>물건이 땅에 닿는 자리 (차지한 칸 아래쪽 가운데)</summary>
     public Vector2 GroundPoint => transform.position;
@@ -47,6 +47,49 @@ public class PlacedDecorView : MonoBehaviour
 
         _renderer.sortingOrder = sortingOrder;
         Place(worldRect, fill);
+        if (placed.Decor.HasSpot)
+            BuildSpot();
+    }
+
+    // 가구의 자리 (앉기: 그림 위 · 먹기/모이기: 둘레). 앉는 자리는 그림의 자식이라 칸에 맞춘 크기·자리를 그대로 따라감
+    private PlazaSpotView _spot;
+    private readonly System.Collections.Generic.List<Transform> _spotPoints = new System.Collections.Generic.List<Transform>();
+
+    private void BuildSpot()
+    {
+        var decor = Placed.Decor;
+        bool onSprite = decor.SpotKind == PlazaSpotKind.Sit;
+        foreach (var point in _spotPoints)
+        {
+            if (point != null)
+                Destroy(point.gameObject);
+        }
+        _spotPoints.Clear();
+        for (int i = 0; i < decor.SpotPoints.Count; i++)
+        {
+            var point = new GameObject($"Spot{i + 1}").transform;
+            point.SetParent(onSprite ? _renderer.transform : transform, false);
+            _spotPoints.Add(point);
+        }
+        PlaceSpotPoints();
+        if (_spot == null)
+            _spot = gameObject.AddComponent<PlazaSpotView>();
+        // 앉는 자리는 가구 앞(차지한 칸 아랫변 아래) 바닥에서 올라앉음 (놓인 물건은 걷기 장애물이라 조금 더 띄움)
+        _spot.Setup(decor.SpotKind, _spotPoints, null, -0.6f);
+    }
+
+    private void PlaceSpotPoints()
+    {
+        var decor = Placed.Decor;
+        var sprite = _renderer.sprite;
+        for (int i = 0; i < _spotPoints.Count && i < decor.SpotPoints.Count; i++)
+        {
+            var n = decor.SpotPoints[i];
+            if (decor.SpotKind == PlazaSpotKind.Sit && sprite != null)
+                _spotPoints[i].localPosition = (Vector3)((n * sprite.rect.size - sprite.pivot) / sprite.pixelsPerUnit);
+            else
+                _spotPoints[i].localPosition = new Vector3((n.x - 0.5f) * WorldRect.width, n.y * WorldRect.height, 0f);
+        }
     }
 
     // 칸에 맞춰 놓고 방향만큼 돌림 (옮기거나 돌린 뒤에도 다시 부름)
@@ -56,6 +99,8 @@ public class PlacedDecorView : MonoBehaviour
         WorldRect = worldRect;
         transform.position = new Vector3(worldRect.center.x, worldRect.yMin, 0f);
         _baseRotation = DecorVisual.Fit(_body, _renderer, Placed.Decor, Placed.Rotation, worldRect, fill);
+        if (_spot != null)
+            PlaceSpotPoints();
     }
 
     private void StopReaction()

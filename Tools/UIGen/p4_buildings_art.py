@@ -6,6 +6,9 @@
 - Assets/Art/Settlement/Building_Workshop.png  목공소 (나무캐기 · 통나무 더미 + 톱 간판)
 - Assets/Art/Settlement/Building_Quarry.png    채석 작업소 (채굴 · 돌무더기 + 곡괭이 간판)
 - Assets/Art/Settlement/Building_Granary.png   농업 창고 (농사 · 둥근 지붕 + 당근 간판)
+- Assets/Art/Settlement/Building_Fishery.png   어업 작업소 (낚시 · 파란 지붕 + 그물 + 물고기 간판, Lv.16)
+- Assets/Art/Settlement/Building_Workyard.png  건설소 (건설 · 비계 + 망치 간판, Lv.17)
+- Assets/Art/Settlement/Building_Archive.png   기록관 (기록 · 높은 지붕 + 책 간판, Lv.18)
 
 P3 소품(p3_art.py)과 같은 아이소메트릭 · 진한 갈색 테두리 스티커 느낌의 도형 그림. 정식 아트가 나오면 같은 이름으로 바꿔 끼운다.
 그림 아래 가운데가 건물의 앞 모서리(피벗 0.5, 0.02)라, 꾸미기 격자 4 × 3칸에 가로를 맞춰 그린다 (BuildingVisual).
@@ -178,8 +181,80 @@ def granary():
     finish(img, "Building_Granary.png")
 
 
+def fish_icon(d, x, y):
+    poly(d, [(x - 16, y), (x - 2, y - 10), (x + 10, y - 4), (x + 10, y + 4), (x - 2, y + 10)], (126, 190, 214, 255), 3)
+    poly(d, [(x + 8, y), (x + 20, y - 10), (x + 20, y + 10)], (126, 190, 214, 255), 3)
+    ellipse(d, (x - 10, y - 4, x - 4, y + 2), OUTLINE, True, 0)
+
+
+def hammer_icon(d, x, y):
+    line(d, [(x - 12, y + 16), (x + 6, y - 6)], WOOD_DARK, 6)
+    poly(d, [(x - 2, y - 18), (x + 18, y - 2), (x + 12, y + 4), (x - 8, y - 12)], (190, 196, 204, 255), 3)
+
+
+def book_icon(d, x, y):
+    poly(d, [(x - 16, y - 12), (x, y - 6), (x, y + 16), (x - 16, y + 10)], (232, 96, 88, 255), 3)
+    poly(d, [(x, y - 6), (x + 16, y - 12), (x + 16, y + 10), (x, y + 16)], (214, 80, 74, 255), 3)
+
+
+def net(d, x, y):
+    for i in range(5):
+        line(d, [(x - 40 + i * 20, y - 40), (x - 30 + i * 20, y + 10)], (120, 104, 84, 255), 2)
+        line(d, [(x - 44, y - 34 + i * 11), (x + 50, y - 40 + i * 11)], (120, 104, 84, 255), 2)
+
+
+def scaffold(d, x, y):
+    for dx in (-30, 30):
+        line(d, [(x + dx, y), (x + dx, y - 120)], WOOD_DARK, 5)
+    for h in (40, 80, 116):
+        line(d, [(x - 36, y - h), (x + 36, y - h - 6)], WOOD, 6)
+
+
+def fishery():
+    img = canvas(W, H)
+    d = ImageDraw.Draw(img)
+    shadow(d, CX, BASE - DEPTH, HALF + 10, DEPTH + 10)
+    top = house(d, (226, 214, 190, 255), (196, 182, 156, 255), 136)
+    gable_roof(d, top, (92, 150, 200, 255), (64, 112, 156, 255), 88)
+    door(d, CX - 92, BASE - 46)
+    window(d, CX + 46, BASE - 116)
+    net(d, CX + 104, BASE - 30)
+    sign(d, CX - 40, top[1][1] - 34, 28, fish_icon)
+    finish(img, "Building_Fishery.png")
+
+
+def workyard():
+    img = canvas(W, H)
+    d = ImageDraw.Draw(img)
+    shadow(d, CX, BASE - DEPTH, HALF + 10, DEPTH + 10)
+    top = house(d, (232, 196, 140, 255), (204, 160, 104, 255), 140)
+    gable_roof(d, top, (238, 170, 70, 255), (196, 128, 44, 255), 90)
+    door(d, CX - 100, BASE - 40, 60, 80)
+    window(d, CX + 40, BASE - 120)
+    scaffold(d, CX + 118, BASE - 16)
+    sign(d, CX - 40, top[1][1] - 34, 28, hammer_icon)
+    finish(img, "Building_Workyard.png")
+
+
+def archive():
+    img = canvas(W, H)
+    d = ImageDraw.Draw(img)
+    shadow(d, CX, BASE - DEPTH, HALF + 10, DEPTH + 10)
+    top = house(d, (236, 226, 206, 255), (206, 194, 170, 255), 160)
+    gable_roof(d, top, (128, 98, 160, 255), (94, 70, 122, 255), 120)
+    door(d, CX - 92, BASE - 46)
+    window(d, CX - 150, BASE - 136)
+    window(d, CX + 40, BASE - 128)
+    window(d, CX + 100, BASE - 160)
+    sign(d, CX - 40, top[1][1] - 36, 28, book_icon)
+    finish(img, "Building_Archive.png")
+
+
 if __name__ == "__main__":
     shop()
     workshop()
     quarry()
     granary()
+    fishery()
+    workyard()
+    archive()

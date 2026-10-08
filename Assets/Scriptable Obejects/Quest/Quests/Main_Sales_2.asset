@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_sales_2
   _title: "\uCCAB \uC7A5\uC0AC"
   _description: "\uD310\uB9E4\uB85C 1,000\uACE8\uB4DC \uBC8C\uAE30"
-  _sortOrder: 76
+  _sortOrder: 92
   _kind: 2
   _requiredLevel: 2
   _prerequisite: {fileID: 11400000, guid: 2c63d35b2647d524b8add9018e26462d, type: 2}

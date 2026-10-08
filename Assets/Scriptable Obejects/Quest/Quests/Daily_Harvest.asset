@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: daily_harvest
   _title: "\uC624\uB298\uC758 \uC218\uD655"
   _description: "\uC791\uBB3C 30\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 94
+  _sortOrder: 110
   _kind: 1
   _requiredLevel: 9
   _prerequisite: {fileID: 0}

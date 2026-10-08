@@ -19,3 +19,13 @@ MonoBehaviour:
   _playSeconds: {x: 4, y: 7}
   _maxPlayers: 1
   _worldSprite: {fileID: 0}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 2

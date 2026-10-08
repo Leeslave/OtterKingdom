@@ -24,6 +24,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 0
   _buildingId: bld_shop
   _buildingName: "\uD574\uB2EC \uC0C1\uC810"
   _description: "\uC9E4\uB791\uC774\uC758 \uAC00\uAC8C. \uC694\uC815 \uC0C1\uC810\uC774

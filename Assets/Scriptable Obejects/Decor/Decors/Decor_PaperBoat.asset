@@ -24,3 +24,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 2

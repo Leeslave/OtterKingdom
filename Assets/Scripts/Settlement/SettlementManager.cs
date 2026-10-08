@@ -329,7 +329,7 @@ public partial class SettlementManager : MonoBehaviour
         }
 
         long now = NowTicks;
-        long end = now + TimeSpan.FromSeconds(DevTimers.Duration(construction.DurationSeconds)).Ticks;
+        long end = now + TimeSpan.FromSeconds(DevTimers.Duration(KingdomBonus.Shorten(KingdomBonusKind.BuildSpeed, construction.DurationSeconds))).Ticks;
         _workerWaitSeconds = 0f;
         Settlement.StartJob(request.RequestId, construction.ConstructionId, now, end, waitingForWorker: true);
         OnConstructionStarted?.Invoke(request);
@@ -914,9 +914,18 @@ public partial class SettlementManager : MonoBehaviour
         if (!first && Settlement.GetSpecialistState(otter.OtterId) == before)
             return;
         if (first)
+        {
             OnOtterMet?.Invoke(otter.OtterId);
+            if (RegistersOnMeet(otter) && CollectionManager.Instance != null)
+                CollectionManager.Instance.Register(otter.CollectionEntry.EntryId);
+        }
         SaveRequested?.Invoke();
     }
+
+    // 만나면 바로 도감에 오르는 해달 (이야기로 찾아오는 해달: 몽실 · 꾸벅이 · 물감이 · 뚝딱이 · 포근이).
+    // 전문 해달은 배치, 관리 해달은 역할, 장난감 해달은 입주할 때 오름
+    private bool RegistersOnMeet(SettlementOtterDefinition otter) =>
+        otter.CollectionEntry != null && !otter.IsSpecialist && !otter.IsToyVisitor && FindRole(otter) == null;
 
     /// <summary>새 해달 만나기 퀘스트가 세는 수: 광장에서 만난 해달 (처음부터 함께한 첫 해달은 뺌)</summary>
     public int MetOtterCount
@@ -990,8 +999,11 @@ public partial class SettlementManager : MonoBehaviour
             return;
         foreach (var otter in _config.Otters)
         {
-            if (otter != null && otter.CollectionEntry != null && GetSpecialistState(otter) >= SpecialistState.Assigned
-                && collection.Collection.GetState(otter.CollectionEntry) != CollectionState.Collected)
+            if (otter == null || otter.CollectionEntry == null || collection.Collection.GetState(otter.CollectionEntry) == CollectionState.Collected)
+                continue;
+            // 전문 해달은 배치된 뒤, 이야기로 찾아온 해달은 만난 뒤, 장난감 해달은 입주한 뒤 (도감 항목이 생기기 전 세이브)
+            bool toyResident = otter.IsToyVisitor && Settlement.TryGetResidentState(otter.OtterId, out var state) && state == ResidentState.Resident;
+            if (GetSpecialistState(otter) >= SpecialistState.Assigned || (RegistersOnMeet(otter) && Settlement.HasMet(otter.OtterId)) || toyResident)
                 collection.Register(otter.CollectionEntry.EntryId);
         }
     }
@@ -1297,6 +1309,9 @@ public partial class SettlementManager : MonoBehaviour
         SettlementMigration.ReconcileRecords(_config, Settlement, completed);
         foreach (var request in completed)
             Debug.Log($"[SettlementManager] 기록에 맞춰 부탁 '{request.RequestId}'을(를) 끝낸 것으로 맞췄습니다.");
+        // 끝낸 부탁이 데려오는 해달이 나중에 데이터에 생긴 세이브: 그 해달이 찾아옴
+        foreach (var otter in SettlementMigration.ReconcileArrivals(_config, Settlement))
+            Debug.Log($"[SettlementManager] 끝낸 부탁에 맞춰 '{otter.DisplayName}'이(가) 찾아왔습니다.");
         // 파견은 했는데 파견 발전(요정 방문 예약)이 없는 세이브: 한 번 맞춤
         foreach (var otter in SettlementMigration.ReconcileAssignDevelopments(_config, Settlement))
             Debug.Log($"[SettlementManager] 기록에 맞춰 '{otter.DisplayName}' 파견 발전 '{otter.AssignDevelopment}'을(를) 열었습니다.");

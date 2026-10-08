@@ -112,6 +112,26 @@ public static class QuestSetup
         ("M15_Fisher", "main_lv15_fisher", "낚시를 할 해달", "첨벙이를 낚시터에 배치하기", QuestGoalType.Milestone, 1, "", 500, "otter:ICON_Otter_Fisher", QuestKind.Main, 15, "M15_Dock", 500, 0f, "req_assign_fisher"),
         ("M15_VisitDock", "main_lv15_visit_dock", "바다가 열렸다", "낚시터에 가 보기", QuestGoalType.VisitZone, 1, "", 300, "place:ICON_Place_FishingSpot", QuestKind.Main, 15, "M15_Fisher", 300, 0f, "Fishing"),
         ("M15_Catch", "main_lv15_catch", "첫 만선", "물고기 30마리 낚기", QuestGoalType.Catch, 30, "Fish", 2000, "item:Fishing/고등어", QuestKind.Main, 15, "M15_VisitDock", 2700, 0f, ""),
+        // Lv.16 → 17 바다 마을 (5,600): 다음 레벨은 건설소 (해달의 부탁 42)
+        ("M16_Builder", "main_lv16_builder", "망치 소리", "게시판 부탁: 콩콩이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "settle:ICON_Otter_Builder", QuestKind.Main, 16, "M15_Catch", 1200, 0f, "req_p5_builder_home"),
+        ("M16_Catch", "main_lv16_catch", "그물 가득", "물고기 100마리 낚기", QuestGoalType.Catch, 100, "Fish", 2500, "item:Fishing/고등어", QuestKind.Main, 16, "M16_Builder", 2000, 0f, ""),
+        ("M16_Decor", "main_lv16_decor", "아늑한 광장", "가구나 장난감 4개 놓기", QuestGoalType.PlaceDecor, 4, "", 1500, "item:Decor/나무 벤치", QuestKind.Main, 16, "M16_Catch", 1000, 0f, ""),
+        ("M16_Workyard", "main_lv16_workyard", "공사를 빠르게", "게시판 부탁: 건설소 짓기", QuestGoalType.Milestone, 1, "", 2000, "settle:ICON_GuildOffice", QuestKind.Main, 16, "M16_Decor", 1400, 0f, "req_p5_workyard"),
+        // Lv.17 → 18 이야기가 모이는 마을 (6,600): 다음 레벨은 기록관 (해달의 부탁 44)
+        ("M17_Recorder", "main_lv17_recorder", "밤의 메모쟁이", "게시판 부탁: 끄적이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "otter:ICON_Otter_Clerk", QuestKind.Main, 17, "M16_Workyard", 1200, 0f, "req_p5_recorder_home"),
+        ("M17_Mine", "main_lv17_mine", "깊은 광맥", "광산에서 광석 600개 캐기", QuestGoalType.Mine, 600, "Ore", 2500, "item:Mining/다이아몬드", QuestKind.Main, 17, "M17_Recorder", 1700, 0f, ""),
+        ("M17_Sales", "main_lv17_sales", "광장의 큰손", "판매로 120,000골드 벌기", QuestGoalType.EarnFromSales, 120000, "", 3000, "gold", QuestKind.Main, 17, "M17_Mine", 1900, 0f, ""),
+        ("M17_Archive", "main_lv17_archive", "모두의 기록", "게시판 부탁: 기록관 짓기", QuestGoalType.Milestone, 1, "", 2500, "settle:ICON_TownHall", QuestKind.Main, 17, "M17_Sales", 1800, 0f, "req_p5_archive"),
+        // Lv.18 → 19 해달이 모이는 왕국 (7,700)
+        ("M18_Harvest", "main_lv18_harvest", "왕국의 곳간", "작물 2,500개 수확하기", QuestGoalType.Harvest, 2500, "Crops", 3000, "item:Farming/딸기", QuestKind.Main, 18, "M17_Archive", 2200, 0f, ""),
+        ("M18_Upgrade", "main_lv18_upgrade", "최고의 설비", "생산 업그레이드 3회", QuestGoalType.Upgrade, 3, "", 2500, "place:ICON_Place_Mine", QuestKind.Main, 18, "M18_Harvest", 1500, 0f, ""),
+        ("M18_Catch", "main_lv18_catch", "바다의 왕", "물고기 250마리 낚기", QuestGoalType.Catch, 250, "Fish", 3000, "item:Fishing/고등어", QuestKind.Main, 18, "M18_Upgrade", 2000, 0f, ""),
+        ("M18_Sales", "main_lv18_sales", "해달 왕국의 금고", "판매로 200,000골드 벌기", QuestGoalType.EarnFromSales, 200000, "", 4000, "gold", QuestKind.Main, 18, "M18_Catch", 2000, 0f, ""),
+        // Lv.19 → 20 해달 왕국 (9,000)
+        ("M19_Decor", "main_lv19_decor", "모두의 광장", "가구나 장난감 8개 놓기", QuestGoalType.PlaceDecor, 8, "", 3000, "item:Decor/피크닉 매트", QuestKind.Main, 19, "M18_Sales", 2000, 0f, ""),
+        ("M19_Mine", "main_lv19_mine", "보물 광산", "광산에서 광석 1,000개 캐기", QuestGoalType.Mine, 1000, "Ore", 4000, "item:Mining/다이아몬드", QuestKind.Main, 19, "M19_Decor", 2300, 0f, ""),
+        ("M19_Harvest", "main_lv19_harvest", "끝없는 풍년", "작물 4,000개 수확하기", QuestGoalType.Harvest, 4000, "Crops", 4000, "item:Farming/당근", QuestKind.Main, 19, "M19_Mine", 2300, 0f, ""),
+        ("M19_Sales", "main_lv19_sales", "왕국의 전설", "판매로 300,000골드 벌기", QuestGoalType.EarnFromSales, 300000, "", 5000, "gold", QuestKind.Main, 19, "M19_Harvest", 2400, 0f, ""),
 
         // 도전: 예전 누적 체인 (골드 + 예전 경험치). 첫 단계가 메인으로 옮겨 간 체인은 그 메인을 앞 단계로 둔다
         ("Main_Harvest_1", "main_harvest_1", "내가 키운 첫 수확", "작물 5개 수확하기", QuestGoalType.Harvest, 5, "Crops", 50, "item:Farming/당근", QuestKind.Challenge, 1, "", 40, 0f, ""),

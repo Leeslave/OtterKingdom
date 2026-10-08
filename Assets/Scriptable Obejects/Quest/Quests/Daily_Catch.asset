@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: daily_catch
   _title: "\uC624\uB298\uC758 \uB09A\uC2DC"
   _description: "\uBB3C\uACE0\uAE30 3\uB9C8\uB9AC \uB09A\uAE30"
-  _sortOrder: 95
+  _sortOrder: 111
   _kind: 1
   _requiredLevel: 9
   _prerequisite: {fileID: 0}

@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_otter_1
   _title: "\uCC98\uC74C \uBD59\uACA0\uC2B5\uB2C8\uB2E4!"
   _description: "\uD574\uB2EC 1\uB9C8\uB9AC \uB9CC\uB098\uAE30"
-  _sortOrder: 92
+  _sortOrder: 108
   _kind: 2
   _requiredLevel: 3
   _prerequisite: {fileID: 0}

@@ -20,9 +20,17 @@ MonoBehaviour:
   _trait: 9
   _toyVisitor: 0
   _visitTier: 0
+  _favoriteToy: {fileID: 0}
+  _visitCondition: 0
+  _visitConditionValue: 0
   _homelessLine: 
   _isBuilder: 0
   _arrivalEntry: {fileID: 11400000, guid: 33c4ddbf79f82ec4295cddd2da782dfe, type: 2}
+  _workRegion: {fileID: 0}
+  _collectionEntry: {fileID: 11400000, guid: ce531d5cc022d4d4fbdb140b96816444, type: 2}
+  _assignLine: 
+  _assignDevelopment: 
+  _moveInLine: 
   _lines:
   - "\uBC14\uB2F7\uBC14\uB78C\uC774 \uC88B\uC544\uC694~"
   - "\uC624\uB298\uB3C4 \uC88B\uC740 \uD558\uB8E8!"

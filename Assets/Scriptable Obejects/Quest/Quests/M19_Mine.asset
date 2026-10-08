@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M19_Mine
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv19_mine
+  _title: "\uBCF4\uBB3C \uAD11\uC0B0"
+  _description: "\uAD11\uC0B0\uC5D0\uC11C \uAD11\uC11D 1,000\uAC1C \uCE90\uAE30"
+  _sortOrder: 71
+  _kind: 0
+  _requiredLevel: 19
+  _prerequisite: {fileID: 11400000, guid: 1f129b08579bc0f45b84b97e32230814, type: 2}
+  _icon: {fileID: 21300000, guid: fcbb2374e547b94488a2a8d6e246f1d6, type: 3}
+  _goalType: 7
+  _goal: 1000
+  _itemFilter: {fileID: 11400000, guid: c0aaf6ff75ccefa499fe320afcbcbb59, type: 2}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 4000
+  _expReward: 2300
+  _expPercentOfLevel: 0

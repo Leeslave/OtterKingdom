@@ -34,10 +34,13 @@ MonoBehaviour:
   _settleTargets: []
   _resultDevelopment: p4_granary_built
   _settles: []
-  _arrivals: []
+  _arrivals:
+  - _otter: {fileID: 11400000, guid: b9c681d6bbf9435381dc3a1e349ef2e6, type: 2}
+    _state: 0
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 67108e59a537a494287a18760c9ab698, type: 2}
   _completionMessage: "\uB18D\uC5C5 \uCC3D\uACE0\uAC00 \uC0DD\uACBC\uC5B4\uC694!
     \uBC2D\uC5D0\uC11C \uAC70\uB450\uB294 \uC791\uBB3C\uC774 \uB298\uC5B4\uB098\uC694.
-    (\uC218\uD655\uB7C9 +10%)"
+    (\uC218\uD655\uB7C9 +10%)\n\uBC14\uB2E4\uB97C \uC88B\uC544\uD558\uB294 \uD401\uB2F9\uC774\uAC00
+    \uCC3E\uC544\uC654\uC5B4\uC694."
   _kingdomLevel: 15

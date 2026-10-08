@@ -52,6 +52,27 @@ public class DecorDefinition : ScriptableObject
     [SerializeField]
     private Sprite[] _rotationSprites = new Sprite[4];
 
+    [Header("가구 · 아늑함")]
+    [Tooltip("켜면 가구 (의자·가로등·피크닉 매트 등): 장난감 방문 등급에 세지 않고, 해달이 가지고 놀지 않고 자리(_spot)를 씀")]
+    [SerializeField]
+    private bool _furniture;
+
+    [Tooltip("해달이 쓰는 자리가 있는지 (의자에 앉기 · 식탁에서 먹기 · 가로등 아래 모이기)")]
+    [SerializeField]
+    private bool _hasSpot;
+
+    [SerializeField]
+    private PlazaSpotKind _spotKind;
+
+    [Tooltip("자리: 앉기는 그림 안 비율(왼쪽 아래 0,0 ~ 오른쪽 위 1,1, 앉은 발 위치), 먹기·모이기는 차지한 칸 비율(칸 밖도 됨, 선 자리)")]
+    [SerializeField]
+    private Vector2[] _spotPoints = new Vector2[0];
+
+    [Tooltip("광장 아늑함 점수 (놓여 있으면 더해짐 → 장난감 해달이 더 빨리 찾아옴)")]
+    [Min(0)]
+    [SerializeField]
+    private int _coziness;
+
     public ItemDefinition Item => _item;
     public string ItemId => _item != null ? _item.ItemId : null;
     public virtual string DisplayName => _item != null ? _item.DisplayName : name;
@@ -69,6 +90,13 @@ public class DecorDefinition : ScriptableObject
     public float RollPlaySeconds() => Random.Range(Mathf.Min(_playSeconds.x, _playSeconds.y), Mathf.Max(_playSeconds.x, _playSeconds.y));
     public Sprite WorldSprite => _worldSprite != null ? _worldSprite : _item != null ? _item.Icon : null;
 
+    /// <summary>가구 (장난감이 아님: 방문 등급에 세지 않고 가지고 놀지 않음)</summary>
+    public bool IsFurniture => _furniture;
+    public bool HasSpot => _hasSpot;
+    public PlazaSpotKind SpotKind => _spotKind;
+    public System.Collections.Generic.IReadOnlyList<Vector2> SpotPoints => _spotPoints;
+    public int Coziness => _coziness;
+
     /// <summary>이 방향일 때 보여줄 그림과, 그 그림을 돌릴 각도 (방향별 그림이 있으면 0)</summary>
     public Sprite SpriteFor(DecorRotation rotation, out float zAngle)
     {
@@ -81,6 +109,16 @@ public class DecorDefinition : ScriptableObject
 
         zAngle = -90f * index; // 시계 방향
         return WorldSprite;
+    }
+
+    /// <summary>테스트·설정 도구용: 가구 · 자리 · 아늑함</summary>
+    public void SetupFurniture(bool furniture, bool hasSpot, PlazaSpotKind spotKind, Vector2[] spotPoints, int coziness)
+    {
+        _furniture = furniture;
+        _hasSpot = hasSpot;
+        _spotKind = spotKind;
+        _spotPoints = spotPoints ?? new Vector2[0];
+        _coziness = coziness;
     }
 
     /// <summary>테스트·설정 도구용: 놓는 모습</summary>

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_p5_workyard
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_p5_workyard
+  _order: 42
+  _category: 0
+  _contentVersion: 4
+  _title: "\uAC74\uC124\uC18C"
+  _description: "\uB69D\uB531\uC774\uB791 \uAC19\uC774 \uC4F8 \uAC74\uC124\uC18C\uAC00
+    \uC788\uC73C\uBA74\n\uACF5\uC0AC\uB97C \uD6E8\uC52C \uBE68\uB9AC \uB05D\uB0BC
+    \uC218 \uC788\uC5B4\uC694."
+  _icon: {fileID: 0}
+  _requester: {fileID: 11400000, guid: ac2d28fc54a545e7ac154e16db67a844, type: 2}
+  _requiredDevelopment: p5_builder_settled
+  _minResidents: 0
+  _construction: {fileID: 0}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _building: {fileID: 11400000, guid: 1607a7396d13ff140a6315c611b5af35, type: 2}
+  _buildingCount: 1
+  _settleTargets: []
+  _resultDevelopment: p5_workyard_built
+  _settles: []
+  _arrivals:
+  - _otter: {fileID: 11400000, guid: 58898692c33347619cf75afe6c116c9a, type: 2}
+    _state: 0
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: f24f9350cccbb864bb8e53753e72c0dd, type: 2}
+  _completionMessage: "\uAC74\uC124\uC18C\uAC00 \uC0DD\uACBC\uC5B4\uC694! \uACF5\uC0AC\uAC00
+    \uB354 \uBE68\uB9AC \uB05D\uB098\uC694. (\uACF5\uC0AC \uC2DC\uAC04 \u221215%)\n\uBA54\uBAA8\uC7C1\uC774
+    \uB044\uC801\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
+  _kingdomLevel: 17

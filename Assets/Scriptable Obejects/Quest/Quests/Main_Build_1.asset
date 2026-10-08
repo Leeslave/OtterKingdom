@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_build_1
   _title: "\uCCAB \uBCF4\uAE08\uC790\uB9AC"
   _description: "\uC9D1 1\uCC44 \uC9D3\uAE30"
-  _sortOrder: 72
+  _sortOrder: 88
   _kind: 2
   _requiredLevel: 1
   _prerequisite: {fileID: 0}

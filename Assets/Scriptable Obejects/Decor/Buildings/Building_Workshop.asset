@@ -24,6 +24,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 0
   _buildingId: bld_workshop
   _buildingName: "\uBAA9\uACF5\uC18C"
   _description: "\uC232\uC744 \uAC1C\uAC04\uD560 \uB54C \uC5BB\uB294 \uBAA9\uC7AC\uAC00

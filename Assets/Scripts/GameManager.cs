@@ -1173,7 +1173,9 @@ public class GameManager : MonoBehaviour
 
         if (Bag.GetAddableAmount(item) > 0)
         {
-            Bag.Add(item, 1, ItemChangeReason.Fishing);
+            // 어업 작업소: 가끔 한 마리 더 (가방에 들어가는 만큼)
+            int count = Mathf.Min(Bag.GetAddableAmount(item), KingdomBonus.Amount(KingdomBonusKind.FishYield, 1));
+            Bag.Add(item, count, ItemChangeReason.Fishing);
             fullBagCatchAlertShown = false;
             FishCaught?.Invoke(item);
             SaveNow();

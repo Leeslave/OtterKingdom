@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_gather_2
   _title: "\uAD11\uC7A5 \uCCAD\uC18C\uBD80"
   _description: "\uAD11\uC7A5\uC5D0\uC11C \uC7AC\uB8CC 40\uAC1C \uC90D\uAE30"
-  _sortOrder: 75
+  _sortOrder: 91
   _kind: 2
   _requiredLevel: 2
   _prerequisite: {fileID: 11400000, guid: 8823bffdc23b28e4196eb8bb88c325a9, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_catch_5
   _title: "\uACE0\uB4F1\uC5B4 \uC0AC\uB0E5\uAFBC"
   _description: "\uBB3C\uACE0\uAE30 100\uB9C8\uB9AC \uB09A\uAE30"
-  _sortOrder: 69
+  _sortOrder: 85
   _kind: 2
   _requiredLevel: 9
   _prerequisite: {fileID: 11400000, guid: 4d95da7d506bf91449ccf5da6b9d67c6, type: 2}

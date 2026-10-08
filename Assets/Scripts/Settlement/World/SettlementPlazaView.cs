@@ -430,6 +430,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             return false;
         }
         agent.Initialize(_walkableArea, _plazaSettings);
+        agent.SetHabit(() => PickHabitTarget(otter.Trait), OtterHabits.Actions(otter.Trait));
         if (otter.PlazaTint != Color.white)
         {
             // 같은 프리팹을 쓰는 해달 구분용 임시 색
@@ -439,6 +440,16 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         _spawned[otter.OtterId] = agent;
         _views[otter.OtterId] = AttachView(instance, otter);
         return true;
+    }
+
+    // 특성마다 좋아하는 곳 하나 (지금 광장에 켜져 있는 것 중 무작위, 없으면 null)
+    private readonly List<Transform> _habitCandidates = new List<Transform>();
+
+    private Transform PickHabitTarget(OtterTrait trait)
+    {
+        _habitCandidates.Clear();
+        OtterHabits.CollectTargets(trait, _arrivalPoint, _habitCandidates);
+        return _habitCandidates.Count > 0 ? _habitCandidates[Random.Range(0, _habitCandidates.Count)] : null;
     }
 
     private SettlementOtterView AttachView(GameObject target, SettlementOtterDefinition otter)

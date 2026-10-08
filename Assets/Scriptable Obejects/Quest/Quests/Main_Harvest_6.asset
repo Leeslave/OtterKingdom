@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_harvest_6
   _title: "\uB18D\uC0AC \uB2EC\uC778"
   _description: "\uC791\uBB3C 1,000\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 63
+  _sortOrder: 79
   _kind: 2
   _requiredLevel: 11
   _prerequisite: {fileID: 11400000, guid: 3e5934ce62c1e5c49b35bf9b0e1609c5, type: 2}

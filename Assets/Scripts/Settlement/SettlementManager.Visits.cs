@@ -46,7 +46,7 @@ public partial class SettlementManager
             int tier = -1;
             foreach (var placed in decor.GetLayout(board).Placed)
             {
-                if (placed.Decor == null || placed.Decor.IsBuilding)
+                if (placed.Decor == null || placed.Decor.IsBuilding || placed.Decor.IsFurniture)
                     continue;
                 var rarity = placed.Decor.Item != null ? placed.Decor.Item.Rarity : null;
                 tier = Math.Max(tier, rarity != null ? rarity.Tier : 0);
@@ -54,6 +54,41 @@ public partial class SettlementManager
             return tier;
         }
     }
+
+    /// <summary>
+    /// 광장 상태: 밤인지(게임 시계), 놓인 가구 · 다 지은 건물의 자리 수(의자 · 가로등 · 식탁), 아늑함 합계.
+    /// 희귀 해달의 방문 조건과 아늑함만큼 줄어드는 방문 간격에 쓴다
+    /// </summary>
+    public ToyVisitContext PlazaVisitContext
+    {
+        get
+        {
+            bool night = TimeOfDay.Night(TimeOfDay.CurrentHour) >= 0.35f;
+            int seats = 0, lamps = 0, tables = 0, coziness = 0;
+            var decor = DecorManager.Instance;
+            var board = decor != null ? decor.FindBoard(_config.PlazaBoardId) : null;
+            if (board != null)
+            {
+                foreach (var placed in decor.GetLayout(board).Placed)
+                {
+                    var d = placed.Decor;
+                    if (d == null)
+                        continue;
+                    coziness += d.Coziness;
+                    // 부탁으로 짓는 건물(의자 · 가로등 · 식탁)은 다 지어야 셈
+                    if (!d.HasSpot || (d is ConstructionPlotDefinition plot && !Settlement.HasDevelopment(plot.Construction.UnlockResultId)))
+                        continue;
+                    if (d.SpotKind == PlazaSpotKind.Sit) seats++;
+                    else if (d.SpotKind == PlazaSpotKind.Gather) lamps++;
+                    else if (d.SpotKind == PlazaSpotKind.Eat) tables++;
+                }
+            }
+            return new ToyVisitContext(night, seats, lamps, tables, coziness, KingdomBonus.Percent(KingdomBonusKind.VisitSpeed));
+        }
+    }
+
+    /// <summary>광장 아늑함 합계 (꾸미기 모드 안내)</summary>
+    public int PlazaCoziness => PlazaVisitContext.Coziness;
 
     /// <summary>광장 꾸미기 격자에 놓인 장난감 (건물 제외). 한정 해달은 좋아하는 장난감이 여기 있어야 찾아온다</summary>
     private HashSet<ItemDefinition> CollectPlazaToys()
@@ -65,7 +100,7 @@ public partial class SettlementManager
             return _plazaToys;
         foreach (var placed in decor.GetLayout(board).Placed)
         {
-            if (placed.Decor != null && !placed.Decor.IsBuilding && placed.Decor.Item != null)
+            if (placed.Decor != null && !placed.Decor.IsBuilding && !placed.Decor.IsFurniture && placed.Decor.Item != null)
                 _plazaToys.Add(placed.Decor.Item);
         }
         return _plazaToys;
@@ -84,7 +119,7 @@ public partial class SettlementManager
     /// <returns>이번에 찾아온 해달 (없으면 null)</returns>
     private SettlementOtterDefinition UpdateToyVisits()
     {
-        var step = ToyVisitRules.Step(_config, Settlement, PlazaToyTier, CollectPlazaToys(), NowTicks, out var arrived);
+        var step = ToyVisitRules.Step(_config, Settlement, PlazaToyTier, CollectPlazaToys(), PlazaVisitContext, NowTicks, out var arrived);
         if (step != ToyVisitStep.Arrived)
             return null;
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_sales_6
   _title: "\uD574\uB2EC \uC7AC\uBC8C"
   _description: "\uD310\uB9E4\uB85C 150,000\uACE8\uB4DC \uBC8C\uAE30"
-  _sortOrder: 80
+  _sortOrder: 96
   _kind: 2
   _requiredLevel: 13
   _prerequisite: {fileID: 11400000, guid: 5610593450b1698418ec51dabd759acb, type: 2}

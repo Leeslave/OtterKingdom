@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a412c96f04c32584fab81052490c4bea, type: 3}
+  m_Name: Decor_Furniture_Picnic
+  m_EditorClassIdentifier: OtterKingdom::DecorDefinition
+  _item: {fileID: 11400000, guid: 55bbaf8934df1de4f83bb19806d0d03c, type: 2}
+  _footprint: {x: 3, y: 2}
+  _canRotate: 0
+  _playStyle: 0
+  _playSeconds: {x: 4, y: 7}
+  _maxPlayers: 1
+  _worldSprite: {fileID: 21300000, guid: 59a63411acaf36948843a9194fc136b4, type: 3}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _furniture: 1
+  _hasSpot: 1
+  _spotKind: 1
+  _spotPoints:
+  - {x: -0.15, y: 0.5}
+  - {x: 1.15, y: 0.5}
+  - {x: 0.3, y: -0.35}
+  - {x: 0.7, y: -0.35}
+  _coziness: 8

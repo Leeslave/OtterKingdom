@@ -24,6 +24,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 0
   _buildingId: bld_quarry
   _buildingName: "\uCC44\uC11D \uC791\uC5C5\uC18C"
   _description: "\uAD11\uC7A5 \uBC14\uC704\uC640 \uAD11\uC0B0\uC5D0\uC11C \uC5BB\uB294

@@ -87,7 +87,9 @@ public class CollectionDetailView : MonoBehaviour
         _badge.SetActive(state != CollectionState.Unknown);
         _badgeText.text = visited ? _visitedBadge : tab != null ? tab.CollectedLabel : "";
 
-        _taglineText.text = collected ? entry.Tagline : visited ? _visitedTagline : _unknownTagline;
+        // 못 만난 해달은 만나는 방법 힌트 (어떤 장난감 · 언제 · 어떤 가구가 있으면 찾아오는지)
+        string hint = !collected && !string.IsNullOrEmpty(entry.Hint) ? entry.Hint : null;
+        _taglineText.text = collected ? entry.Tagline : hint ?? (visited ? _visitedTagline : _unknownTagline);
         _descriptionText.text = collected ? entry.Description : "";
         _extraText.text = collected && tab != null && !string.IsNullOrEmpty(entry.ExtraValue)
             ? $"{tab.ExtraLabel}: {entry.ExtraValue}"

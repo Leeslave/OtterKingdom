@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_catch_1
   _title: "\uCCAB \uC785\uC9C8"
   _description: "\uBB3C\uACE0\uAE30 2\uB9C8\uB9AC \uB09A\uAE30"
-  _sortOrder: 65
+  _sortOrder: 81
   _kind: 2
   _requiredLevel: 1
   _prerequisite: {fileID: 0}

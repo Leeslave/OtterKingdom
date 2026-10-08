@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_build_3
   _title: "\uB69D\uB531\uB69D\uB531"
   _description: "\uAC74\uC124 \uD574\uB2EC\uACFC \uACF5\uC0AC 1\uBC88 \uB05D\uB0B4\uAE30"
-  _sortOrder: 74
+  _sortOrder: 90
   _kind: 2
   _requiredLevel: 3
   _prerequisite: {fileID: 0}
