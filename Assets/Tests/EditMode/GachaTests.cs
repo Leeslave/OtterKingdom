@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 /// <summary>
 /// 보물 조개 뽑기 (Docs/장난감_뽑기_기획.md): 확률 공개표(합 1 · 기획 수치), 천장(에픽 60·80째, 레어 10째),
 /// 픽업 반반 → 놓치면 다음 에픽 픽업 확정, 빈 등급은 아래로, 배너 기간, 골드 뽑기 값, 가장 좋은 결과, 세이브 왕복,
-/// 한정 해달(좋아하는 장난감이 광장에 있어야 옴).
+/// 한정 해달(좋아하는 장난감이 광장에 있어야 옴), 골드 배너(값 · 에픽 없음 · 레어 천장 · 천장 따로).
 /// </summary>
 public class GachaTests
 {
@@ -295,6 +295,8 @@ public class GachaTests
                 pointsBannerId = "pickup_spring_breeze",
                 points = 42,
                 goldPullDay = 739900,
+                goldSinceEpic = 12,
+                goldSinceRare = 3,
                 welcomeGiftGiven = true,
                 totalPulls = 120,
                 seenBanners = new List<string> { "pickup_spring_breeze" },
@@ -320,6 +322,79 @@ public class GachaTests
         Assert.IsNotNull(save.gacha, "옛 세이브도 뽑기 기록은 기본값");
         Assert.AreEqual(0, save.gacha.pickupSinceEpic);
         Assert.IsFalse(save.gacha.welcomeGiftGiven);
+    }
+
+    #endregion
+
+    #region 골드 배너
+
+    [Test]
+    public void GoldBannerCost_GrowsWithLevel_TenIsNineTimes()
+    {
+        Assert.AreEqual(750, GachaRules.GoldBannerCost(500, 250, 1, 1, 9));
+        Assert.AreEqual(3000, GachaRules.GoldBannerCost(500, 250, 10, 1, 9));
+        Assert.AreEqual(27000, GachaRules.GoldBannerCost(500, 250, 10, 10, 9), "10회 = 1회 × 9 (한 번 공짜)");
+        Assert.AreEqual(5250, GachaRules.GoldBannerCost(500, 250, 19, 1, 9));
+        Assert.AreEqual(750, GachaRules.GoldBannerCost(500, 250, 0, 1, 9), "레벨은 최소 1");
+        Assert.AreEqual(7500, GachaRules.GoldBannerCost(500, 250, 1, 10, 99), "10회 값은 최대 ×10");
+    }
+
+    [Test]
+    public void GoldBanner_NoEpic_RareTenPercent_RarePityEveryTen()
+    {
+        var table = GoldTable();
+        var rates = GachaRules.Rates(table);
+        Assert.AreEqual(1.0, rates.Sum(r => r.Chance), Tolerance);
+        Assert.AreEqual(0.0, table.TierChance(GachaTable.Epic), Tolerance, "에픽 없음");
+        Assert.AreEqual(0.1, table.TierChance(GachaTable.Rare), Tolerance);
+        Assert.AreEqual(0.9, table.TierChance(GachaTable.Common), Tolerance);
+        Assert.IsFalse(rates.Any(r => r.Tier == GachaTable.Epic));
+
+        var pity = new GachaPity();
+        var unlucky = new ScriptedRandom(0.999);
+        var tiers = Enumerable.Range(0, 30).Select(_ => GachaRules.Roll(table, pity, unlucky).Tier).ToList();
+        for (int i = 0; i < tiers.Count; i++)
+            Assert.AreEqual((i + 1) % 10 == 0 ? GachaTable.Rare : GachaTable.Common, tiers[i], $"{i + 1}번째");
+        Assert.AreEqual(10, GachaRules.RarePityLeft(table, pity));
+
+        // 아무리 운이 좋아도(0.0) 에픽은 나오지 않음
+        var lucky = GachaRules.Roll(table, new GachaPity(), new ScriptedRandom(0.0));
+        Assert.AreEqual(GachaTable.Rare, lucky.Tier);
+    }
+
+    [Test]
+    public void GoldBanner_OnlyGold_PityKeptApart()
+    {
+        var go = new GameObject("Gacha");
+        try
+        {
+            var manager = go.AddComponent<GachaManager>();
+            var gold = Banner(GachaBannerKind.Gold, new[] { Toy("ball", _common) }, new ItemDefinition[0], "", "");
+            var standard = Banner(GachaBannerKind.Standard, new[] { Toy("duck", _common) }, new ItemDefinition[0], "", "");
+            var so = new SerializedObject(gold);
+            so.FindProperty("_dailyGoldPull").boolValue = true;
+            so.FindProperty("_epicPity").intValue = 999;
+            so.FindProperty("_rarePity").intValue = 10;
+            so.ApplyModifiedPropertiesWithoutUndo();
+
+            Assert.IsTrue(gold.IsGoldBanner);
+            Assert.IsFalse(gold.HasDailyGoldPull, "골드 배너에는 하루 한 번 골드 뽑기가 없음");
+            Assert.IsFalse(gold.IsPickup);
+            Assert.AreEqual(0, gold.ExchangePoints);
+            Assert.AreEqual(GachaPayment.Gold, manager.PreferredPayment(gold, 1));
+            Assert.AreEqual(GachaPayment.Gold, manager.PreferredPayment(gold, 10));
+            Assert.AreEqual(750, manager.Price(gold, 1, GachaPayment.Gold).cost, "프로필이 없으면 Lv.1");
+            Assert.AreEqual(6750, manager.Price(gold, 10, GachaPayment.Gold).cost);
+            Assert.Throws<ArgumentException>(() => manager.TryPull(gold, 1, GachaPayment.Gem, out _), "골드 배너는 골드로만");
+
+            manager.LoadFromSave(new GachaSaveData { standardSinceRare = 7, goldSinceRare = 2 });
+            Assert.AreEqual(8, manager.RarePityLeft(gold), "골드 배너 천장은 골드끼리");
+            Assert.AreEqual(3, manager.RarePityLeft(standard));
+        }
+        finally
+        {
+            Object.DestroyImmediate(go);
+        }
     }
 
     #endregion
@@ -392,6 +467,17 @@ public class GachaTests
             table.Add(rare, GachaTable.Rare, true);
         AddStandard(table);
         return (table, featuredEpic, featuredRares);
+    }
+
+    // 골드: 흔함 6 + 가구 4 · 레어 4, 에픽 없음
+    private GachaTable GoldTable()
+    {
+        var table = new GachaTable(GachaBannerKind.Gold, 0f, 0.1f, 0f, 999, 10);
+        for (int i = 0; i < 10; i++)
+            table.Add(Toy($"common_{i}", _common), GachaTable.Common, false);
+        for (int i = 0; i < 4; i++)
+            table.Add(Toy($"rare_{i}", _rare), GachaTable.Rare, false);
+        return table;
     }
 
     private GachaTable StandardTable(float epicRate, int epicPity)

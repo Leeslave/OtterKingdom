@@ -59,6 +59,7 @@ public class GachaManager : MonoBehaviour
 
     private readonly GachaPity _standardPity = new GachaPity();
     private readonly GachaPity _pickupPity = new GachaPity();
+    private readonly GachaPity _goldPity = new GachaPity();
     private readonly Dictionary<GachaBannerDefinition, GachaTable> _tables = new Dictionary<GachaBannerDefinition, GachaTable>();
     private readonly HashSet<string> _seenBanners = new HashSet<string>();
     private readonly System.Random _random = new System.Random();
@@ -127,7 +128,11 @@ public class GachaManager : MonoBehaviour
 
     public List<GachaRate> Rates(GachaBannerDefinition banner) => GachaRules.Rates(Table(banner));
 
-    private GachaPity Pity(GachaBannerKind kind) => kind == GachaBannerKind.Pickup ? _pickupPity : _standardPity;
+    private GachaPity Pity(GachaBannerKind kind) =>
+        kind == GachaBannerKind.Pickup ? _pickupPity : kind == GachaBannerKind.Gold ? _goldPity : _standardPity;
+
+    /// <summary>레어 이상 확정까지 남은 수 (이번이 1번째)</summary>
+    public int RarePityLeft(GachaBannerDefinition banner) => GachaRules.RarePityLeft(Table(banner), Pity(banner.Kind));
 
     /// <summary>에픽 확정까지 남은 수 (이번이 1번째)</summary>
     public int EpicPityLeft(GachaBannerDefinition banner) => GachaRules.EpicPityLeft(Table(banner), Pity(banner.Kind));
@@ -148,7 +153,7 @@ public class GachaManager : MonoBehaviour
 
     #region 값
 
-    /// <summary>이 방법으로 count회 뽑을 때의 재화와 값 (골드 뽑기는 1회만)</summary>
+    /// <summary>이 방법으로 count회 뽑을 때의 재화와 값 (상시 배너의 골드 뽑기는 1회만, 골드 배너는 1회 · 10회)</summary>
     public (Currency currency, int cost) Price(GachaBannerDefinition banner, int count, GachaPayment payment)
     {
         if (banner == null)
@@ -160,15 +165,20 @@ public class GachaManager : MonoBehaviour
             case GachaPayment.Ticket:
                 return (banner.Ticket, count);
             case GachaPayment.Gold:
-                return (_gold, GoldPullCost(banner));
+                return (_gold, banner.IsGoldBanner ? GoldBannerCost(banner, count) : GoldPullCost(banner));
             default:
                 throw new ArgumentOutOfRangeException(nameof(payment));
         }
     }
 
-    /// <summary>뽑기권이 count장 있으면 뽑기권, 아니면 조개</summary>
+    /// <summary>골드 배너는 골드, 아니면 뽑기권이 count장 있으면 뽑기권, 없으면 조개</summary>
     public GachaPayment PreferredPayment(GachaBannerDefinition banner, int count) =>
-        banner.Ticket != null && Balance(banner.Ticket) >= count ? GachaPayment.Ticket : GachaPayment.Gem;
+        banner.IsGoldBanner ? GachaPayment.Gold
+        : banner.Ticket != null && Balance(banner.Ticket) >= count ? GachaPayment.Ticket : GachaPayment.Gem;
+
+    /// <summary>골드 배너 값 (count = 1 또는 10, 왕국 레벨에 따라)</summary>
+    public int GoldBannerCost(GachaBannerDefinition banner, int count) =>
+        GachaRules.GoldBannerCost(banner.GoldCostBase, banner.GoldCostPerLevel, KingdomLevel, count, banner.GoldTenPulls);
 
     public int GoldPullCost(GachaBannerDefinition banner) =>
         GachaRules.GoldPullCost(banner.GoldPullBase, banner.GoldPullPerLevel, KingdomLevel);
@@ -214,13 +224,16 @@ public class GachaManager : MonoBehaviour
             throw new ArgumentNullException(nameof(banner));
         if (count != 1 && count != 10)
             throw new ArgumentOutOfRangeException(nameof(count), "1회 또는 10회만 뽑습니다.");
-        if (payment == GachaPayment.Gold && (count != 1 || !banner.HasDailyGoldPull))
+        bool dailyGold = payment == GachaPayment.Gold && !banner.IsGoldBanner;
+        if (dailyGold && (count != 1 || !banner.HasDailyGoldPull))
             throw new ArgumentException("골드 뽑기는 골드 뽑기가 있는 배너에서 1회만 합니다.", nameof(payment));
+        if (banner.IsGoldBanner && payment != GachaPayment.Gold)
+            throw new ArgumentException("골드 배너는 골드로만 뽑습니다.", nameof(payment));
 
         report = null;
         if (!IsOpen(banner))
             return GachaPullOutcome.Closed;
-        if (payment == GachaPayment.Gold && !CanGoldPullToday(banner))
+        if (dailyGold && !CanGoldPullToday(banner))
             return GachaPullOutcome.GoldUsedToday;
 
         var (currency, cost) = Price(banner, count, payment);
@@ -232,7 +245,7 @@ public class GachaManager : MonoBehaviour
         if (!CurrencyManager.Instance.TrySpend(currency, cost, TransactionSource.GotchaUse))
             return GachaPullOutcome.NotEnough;
 
-        if (payment == GachaPayment.Gold)
+        if (dailyGold)
             _goldPullDay = Today;
         if (banner.IsPickup)
         {
@@ -366,7 +379,7 @@ public class GachaManager : MonoBehaviour
         var now = Now;
         foreach (var banner in _banners)
         {
-            if (banner == null || banner.IsPickup || !banner.IsOpenAt(now))
+            if (banner == null || banner.Kind != GachaBannerKind.Standard || !banner.IsOpenAt(now))
                 continue;
             var table = Table(banner);
             for (int tier = GachaTable.Epic; tier >= GachaTable.Rare; tier--)
@@ -455,6 +468,7 @@ public class GachaManager : MonoBehaviour
 
         _standardPity.Set(saved.standardSinceEpic, saved.standardSinceRare, false);
         _pickupPity.Set(saved.pickupSinceEpic, saved.pickupSinceRare, saved.pickupGuaranteed);
+        _goldPity.Set(saved.goldSinceEpic, saved.goldSinceRare, false);
         _pointsBannerId = string.IsNullOrEmpty(saved.pointsBannerId) ? null : saved.pointsBannerId;
         _points = Math.Max(0, saved.points);
         _goldPullDay = saved.goldPullDay;
@@ -483,6 +497,8 @@ public class GachaManager : MonoBehaviour
         result.pickupSinceEpic = _pickupPity.SinceEpic;
         result.pickupSinceRare = _pickupPity.SinceRare;
         result.pickupGuaranteed = _pickupPity.FeaturedGuaranteed;
+        result.goldSinceEpic = _goldPity.SinceEpic;
+        result.goldSinceRare = _goldPity.SinceRare;
         result.pointsBannerId = _pointsBannerId;
         result.points = _points;
         result.goldPullDay = _goldPullDay;

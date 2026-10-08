@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a6f3e4780aca24786e1d59775051a1, type: 3}
+  m_Name: Banner_Gold
+  m_EditorClassIdentifier: OtterKingdom::GachaBannerDefinition
+  _bannerId: gold_sandbar
+  _kind: 2
+  _title: "\uACE8\uB4DC \uC870\uAC1C"
+  _subtitle: "\uACE8\uB4DC\uB85C \uC5B8\uC81C\uB4E0! \uC7A5\uB09C\uAC10\uACFC \uAD11\uC7A5
+    \uAC00\uAD6C\uAC00 \uB098\uC640\uC694"
+  _sortOrder: 2
+  _startDate: 
+  _endDate: 
+  _bannerArt: {fileID: 21300000, guid: d59b0061b27047159756ae23e7db0277, type: 3}
+  _shellIcon: {fileID: 21300000, guid: 7a18a50e99134a04997858a55fe2a781, type: 3}
+  _themeColor: {r: 1, g: 0.8, b: 0.36, a: 1}
+  _pool:
+  - {fileID: 11400000, guid: 4a7324cefa30f064ab142b871705d967, type: 2}
+  - {fileID: 11400000, guid: 73d033e5216468740a51db8946b9e19c, type: 2}
+  - {fileID: 11400000, guid: 558a9741e106d984299c4ef6ccedf6b4, type: 2}
+  - {fileID: 11400000, guid: c4782a9d90516344b8c08dc426471c16, type: 2}
+  - {fileID: 11400000, guid: f2c62dc7c6ac8e64a96a1f7a5dc06b54, type: 2}
+  - {fileID: 11400000, guid: 4c43ce999aa7e664fba89cc823005e8e, type: 2}
+  - {fileID: 11400000, guid: 234686ba816311a4bbe518dd8d5abd62, type: 2}
+  - {fileID: 11400000, guid: 6744559d31ae52b419caaefe2354738a, type: 2}
+  - {fileID: 11400000, guid: 421a829fe909de14b9df27f155e65b9d, type: 2}
+  - {fileID: 11400000, guid: dca27b669949d12438b70fc5b6320268, type: 2}
+  - {fileID: 11400000, guid: 6c98c68e51c54f043ba156bf7199df14, type: 2}
+  - {fileID: 11400000, guid: d409c193455b16546af07dee692e3569, type: 2}
+  - {fileID: 11400000, guid: a52c7708cf9d15942847ef1ca3a09a1a, type: 2}
+  - {fileID: 11400000, guid: aecd6ee594f751841840a2b47341d3dd, type: 2}
+  - {fileID: 11400000, guid: 793afa907c5f3034cb9a7420f3f7668d, type: 2}
+  - {fileID: 11400000, guid: 55bbaf8934df1de4f83bb19806d0d03c, type: 2}
+  _featured: []
+  _featuredOtter: {fileID: 0}
+  _epicRate: 0
+  _rareRate: 0.1
+  _featuredShare: 0.5
+  _epicPity: 999
+  _rarePity: 10
+  _gem: {fileID: 0}
+  _gemCost: 30
+  _ticket: {fileID: 0}
+  _exchangePoints: 0
+  _dailyGoldPull: 0
+  _goldPullBase: 1000
+  _goldPullPerLevel: 800
+  _goldCostBase: 500
+  _goldCostPerLevel: 250
+  _goldTenPulls: 9

@@ -218,7 +218,7 @@ public class GachaScreenView : MonoBehaviour
                 _highlightChips[i].Show(null, 0, false);
         }
 
-        _pityText.text = $"에픽 확정까지 <b>{state.PityLeft}회</b>";
+        _pityText.text = $"{state.PityLabel} <b>{state.PityLeft}회</b>";
         _pityBar.SetProgress(state.PityTotal - state.PityLeft, state.PityTotal);
         _guaranteeChip.SetActive(state.Guaranteed);
 
@@ -257,9 +257,14 @@ public class GachaScreenView : MonoBehaviour
         cost.text = look.Cost;
     }
 
-    // 배너 수만큼 탭을 맞춤 (복제본을 재사용)
+    // 배너 수만큼 탭을 맞춤 (복제본을 재사용). 한 줄에 다 들어가게 탭 너비를 줄임
     private void RenderTabs(GachaScreenState state)
     {
+        var template = (RectTransform)_tabTemplate.transform;
+        var layout = _tabParent.GetComponent<HorizontalLayoutGroup>();
+        float spacing = layout != null ? layout.spacing : 0f;
+        int count = Mathf.Max(1, state.Banners.Count);
+        float width = Mathf.Min(template.sizeDelta.x, (_tabParent.rect.width - spacing * (count - 1)) / count);
         while (_tabs.Count < state.Banners.Count)
         {
             var tab = Instantiate(_tabTemplate, _tabParent);
@@ -272,6 +277,8 @@ public class GachaScreenView : MonoBehaviour
             _tabs[i].gameObject.SetActive(used);
             if (used)
             {
+                var rect = (RectTransform)_tabs[i].transform;
+                rect.sizeDelta = new Vector2(width, rect.sizeDelta.y);
                 var banner = state.Banners[i];
                 _tabs[i].Bind(banner, banner == state.Selected, state.NewBanners.Contains(banner));
             }

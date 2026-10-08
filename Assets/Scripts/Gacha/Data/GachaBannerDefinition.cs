@@ -8,6 +8,7 @@ public enum GachaBannerKind
 {
     Standard, // 상시: 늘 열림
     Pickup,   // 픽업: 기간 한정, 픽업 장난감 확률 UP · 별빛 포인트
+    Gold,     // 골드: 늘 열림, 골드로 언제든 1회 · 10회 (값은 왕국 레벨에 따라)
 }
 
 /// <summary>
@@ -113,6 +114,18 @@ public class GachaBannerDefinition : ScriptableObject
     [Min(0)]
     [SerializeField] private int _goldPullPerLevel = 800;
 
+    [Header("골드 배너 (골드만)")]
+    [Tooltip("1회 값 = 기본 + 왕국 레벨 × 레벨당")]
+    [Min(0)]
+    [SerializeField] private int _goldCostBase = 500;
+
+    [Min(0)]
+    [SerializeField] private int _goldCostPerLevel = 250;
+
+    [Tooltip("10회 값 = 1회 값 × 이 수 (9 = 한 번 공짜)")]
+    [Range(1, 10)]
+    [SerializeField] private int _goldTenPulls = 9;
+
     public string BannerId => _bannerId;
     public GachaBannerKind Kind => _kind;
     public bool IsPickup => _kind == GachaBannerKind.Pickup;
@@ -134,9 +147,15 @@ public class GachaBannerDefinition : ScriptableObject
     public int GemCost => Mathf.Max(1, _gemCost);
     public Currency Ticket => _ticket;
     public int ExchangePoints => IsPickup ? Mathf.Max(0, _exchangePoints) : 0;
-    public bool HasDailyGoldPull => !IsPickup && _dailyGoldPull;
+    public bool HasDailyGoldPull => _kind == GachaBannerKind.Standard && _dailyGoldPull;
     public int GoldPullBase => _goldPullBase;
     public int GoldPullPerLevel => _goldPullPerLevel;
+
+    /// <summary>골드로 뽑는 배너 (조개 · 뽑기권 없이 골드만, 언제든 1회 · 10회)</summary>
+    public bool IsGoldBanner => _kind == GachaBannerKind.Gold;
+    public int GoldCostBase => _goldCostBase;
+    public int GoldCostPerLevel => _goldCostPerLevel;
+    public int GoldTenPulls => Mathf.Clamp(_goldTenPulls, 1, 10);
 
     /// <summary>이 장난감이 이 배너의 픽업 장난감인지</summary>
     public bool IsFeatured(ItemDefinition item) => item != null && _featured.Contains(item);

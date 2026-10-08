@@ -74920,6 +74920,7 @@ MonoBehaviour:
   _banners:
   - {fileID: 11400000, guid: f6e92d97f66bbd64788405c913c492bd, type: 2}
   - {fileID: 11400000, guid: 901be3d901e28194ca63b348a9b0f7a4, type: 2}
+  - {fileID: 11400000, guid: da7c1dfaf45584042bd1affe60e8d42c, type: 2}
   _gold: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _shard: {fileID: 11400000, guid: 1904a5655abc8104294f83794c48c5ec, type: 2}
   _welcomeTickets: 1
@@ -74943,6 +74944,7 @@ MonoBehaviour:
   _hudButton: {fileID: 7412150727548925285}
   _gemButton: {fileID: 21300000, guid: c2b9eb1190efeaf4d8c692256d900838, type: 3}
   _ticketButton: {fileID: 21300000, guid: 8f45ebc0bd5c4cc4888ffebf02d54747, type: 3}
+  _goldButton: {fileID: 21300000, guid: a45e5373999ed664ca1f615b487a02d6, type: 3}
 --- !u!114 &8616602573329413797
 MonoBehaviour:
   m_ObjectHideFlags: 0
