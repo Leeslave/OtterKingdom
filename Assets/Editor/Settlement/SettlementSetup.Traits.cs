@@ -136,6 +136,7 @@ public static partial class SettlementSetup
             so.FindProperty("_arrivalEntry").objectReferenceValue = entry;
             so.FindProperty("_moveInLine").stringValue = row.moveIn;
             SetStrings(so.FindProperty("_lines"), row.lines);
+            OtterCastSetup.ApplyTo(so, row.id); // 따로 만든 모습이 있으면 빌린 모습 대신
             so.ApplyModifiedPropertiesWithoutUndo();
             otters[row.id] = otter;
 

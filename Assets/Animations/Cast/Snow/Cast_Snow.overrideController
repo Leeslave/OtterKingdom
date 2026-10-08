@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Cast_Snow
+  m_Controller: {fileID: 9100000, guid: f4a7abfefc902644a8204fdbdb8c5614, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f3e7230179501eb4a8afdccd2dc26430, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9957ad7c0e9f44649bf08254c8cc4750, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 54590d25456f36f4cb8bb562cb8ce1b7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d0427852b9023224ba6016e9cd921ac9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f523676fe28c4184aa43814d68ccf8ea, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 86a903f74662fb74c81378795bda25dd, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 66c5f09d1732fdf4eb189f88d77c6fe8, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 116721ac5da7c7347b8e473d6973f1f4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 377ac897cf2200841bc5e681eedaed4b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6e702534eca280f439a342b2581c1e7a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a7b156789ce22714d81f0bfa4a16e1f6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 481855cc9bf59924bbad939280c8eeb2, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 99956fffeace3bf419c2b533b26d9aca, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e80881044dfee2b4a8ceff8a9c4ec763, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4aa4be201c43f614489b60925b40541a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 921e95b9f9214fb4091ad5321c790cf9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5cac4f2c5c199274a9a0688716543b1e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4825e7bfa45c7b449a1755d333625b9e, type: 2}

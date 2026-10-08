@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_toy_kongkong
   _displayName: "\uCF69\uCF69\uC774"
-  _portrait: {fileID: 21300000, guid: 5436b78cc2da9ae4b9c403c6b96b3d4d, type: 3}
-  _plazaPrefab: {fileID: 4823710553209184617, guid: c232c503b3514cd397048b6d52d74b4f, type: 3}
-  _plazaTint: {r: 1, g: 0.82, b: 0.72, a: 1}
+  _portrait: {fileID: 21300000, guid: d8dfe352c436ccc49aebf0689186bbb6, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: 94301e8f2e59bb54a9c1570dec35a3d5, type: 3}
+  _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 5
   _toyVisitor: 1
   _visitTier: 1

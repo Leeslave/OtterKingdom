@@ -372,7 +372,8 @@ public static class PlazaLifeSetup
             so.FindProperty("_tab").objectReferenceValue = tab;
             so.FindProperty("_displayName").stringValue = otter.DisplayName;
             so.FindProperty("_sortOrder").intValue = 100 + i;
-            so.FindProperty("_portrait").objectReferenceValue = ImportSprite(e.folder, e.portrait);
+            var castFace = OtterCastSetup.Portrait(e.otter); // 따로 만든 모습이 있으면 그 얼굴
+            so.FindProperty("_portrait").objectReferenceValue = castFace != null ? castFace : ImportSprite(e.folder, e.portrait);
             so.FindProperty("_silhouette").objectReferenceValue = silhouette;
             so.FindProperty("_tagline").stringValue = e.tagline;
             so.FindProperty("_description").stringValue = e.description;

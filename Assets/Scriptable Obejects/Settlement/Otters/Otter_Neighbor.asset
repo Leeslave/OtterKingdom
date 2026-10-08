@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_p3_neighbor
   _displayName: "\uD3EC\uADFC\uC774"
-  _portrait: {fileID: 21300000, guid: 4951d4902ad1b814cbbff2ea208b0a11, type: 3}
-  _plazaPrefab: {fileID: 6466850907306658564, guid: 9a19223946c51b4428033532af21aab7, type: 3}
+  _portrait: {fileID: 21300000, guid: 18d23bf822ab517498c3e95385aa4438, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: d081ac90fefa4dd4598d7dc852fe3359, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 7
   _toyVisitor: 0

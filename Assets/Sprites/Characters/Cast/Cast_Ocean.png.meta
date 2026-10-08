@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: 90f113d91a8f4e547accaaf5cbf2a93b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2860597706428847776
+    second: Cast_Ocean_0
+  - first:
+      213: -6729003991216123971
+    second: Cast_Ocean_1
+  - first:
+      213: -5646841334970740836
+    second: Cast_Ocean_2
+  - first:
+      213: -8578018097073587546
+    second: Cast_Ocean_3
+  - first:
+      213: 6792288645739412389
+    second: Cast_Ocean_4
+  - first:
+      213: -8389997910206818696
+    second: Cast_Ocean_5
+  - first:
+      213: 4878884486424227488
+    second: Cast_Ocean_6
+  - first:
+      213: -8157853936566141050
+    second: Cast_Ocean_7
+  - first:
+      213: -8118353968393251879
+    second: Cast_Ocean_8
+  - first:
+      213: 408681593977193758
+    second: Cast_Ocean_9
+  - first:
+      213: 6841030662565479205
+    second: Cast_Ocean_10
+  - first:
+      213: -8698204340116383883
+    second: Cast_Ocean_11
+  - first:
+      213: -3868111795291294267
+    second: Cast_Ocean_12
+  - first:
+      213: -174763447276767209
+    second: Cast_Ocean_13
+  - first:
+      213: 6392397511418982531
+    second: Cast_Ocean_14
+  - first:
+      213: 1416707739366507401
+    second: Cast_Ocean_15
+  - first:
+      213: -6881339708738936802
+    second: Cast_Ocean_16
+  - first:
+      213: 4922571316477495427
+    second: Cast_Ocean_17
+  - first:
+      213: -4487858770181326335
+    second: Cast_Ocean_18
+  - first:
+      213: -6994859213733942501
+    second: Cast_Ocean_19
+  - first:
+      213: 5115904580710474161
+    second: Cast_Ocean_20
+  - first:
+      213: -3602489254526097315
+    second: Cast_Ocean_21
+  - first:
+      213: -5357934381928557462
+    second: Cast_Ocean_22
+  - first:
+      213: 614771716308025267
+    second: Cast_Ocean_23
+  - first:
+      213: 6554747688795056097
+    second: Cast_Ocean_24
+  - first:
+      213: -573297114407441598
+    second: Cast_Ocean_25
+  - first:
+      213: 2529925808425810852
+    second: Cast_Ocean_26
+  - first:
+      213: 8523823842238112688
+    second: Cast_Ocean_27
+  - first:
+      213: -9182214665397590132
+    second: Cast_Ocean_28
+  - first:
+      213: 6273876158623278967
+    second: Cast_Ocean_29
+  - first:
+      213: -5251430376536395403
+    second: Cast_Ocean_30
+  - first:
+      213: 1335915689438794020
+    second: Cast_Ocean_31
+  - first:
+      213: -8922920016695544094
+    second: Cast_Ocean_32
+  - first:
+      213: 1348381117005905420
+    second: Cast_Ocean_33
+  - first:
+      213: -7417102882081913495
+    second: Cast_Ocean_34
+  - first:
+      213: 6286807360387740332
+    second: Cast_Ocean_35
+  - first:
+      213: 3710191621746968878
+    second: Cast_Ocean_36
+  - first:
+      213: 2888309568075158432
+    second: Cast_Ocean_37
+  - first:
+      213: -2828002439492423961
+    second: Cast_Ocean_38
+  - first:
+      213: 2916747614044713669
+    second: Cast_Ocean_39
+  - first:
+      213: 504421196841163872
+    second: Cast_Ocean_40
+  - first:
+      213: -3431783299694425091
+    second: Cast_Ocean_41
+  - first:
+      213: 4873969450095862506
+    second: Cast_Ocean_42
+  - first:
+      213: -844108464574689645
+    second: Cast_Ocean_43
+  - first:
+      213: 7775060682836321967
+    second: Cast_Ocean_44
+  - first:
+      213: -1819363924993733091
+    second: Cast_Ocean_45
+  - first:
+      213: -4035652486406849381
+    second: Cast_Ocean_46
+  - first:
+      213: 8116405997817040306
+    second: Cast_Ocean_47
+  - first:
+      213: 6454100153113495187
+    second: Cast_Ocean_48
+  - first:
+      213: -4707758645318302056
+    second: Cast_Ocean_49
+  - first:
+      213: 2767117495936456743
+    second: Cast_Ocean_50
+  - first:
+      213: -3436599831791725503
+    second: Cast_Ocean_51
+  - first:
+      213: 5777530314283604179
+    second: Cast_Ocean_52
+  - first:
+      213: -2195217454396591123
+    second: Cast_Ocean_53
+  - first:
+      213: -4859864486717623769
+    second: Cast_Ocean_54
+  - first:
+      213: 3430553520948576483
+    second: Cast_Ocean_55
+  - first:
+      213: 2532099265686380508
+    second: Cast_Ocean_56
+  - first:
+      213: -475559281714616201
+    second: Cast_Ocean_57
+  - first:
+      213: -3029411304204664245
+    second: Cast_Ocean_58
+  - first:
+      213: -8349424669297653981
+    second: Cast_Ocean_59
+  - first:
+      213: 5546106163647712693
+    second: Cast_Ocean_60
+  - first:
+      213: 4752717611591794815
+    second: Cast_Ocean_61
+  - first:
+      213: 300735980854063660
+    second: Cast_Ocean_62
+  - first:
+      213: 5268144372111251935
+    second: Cast_Ocean_63
+  - first:
+      213: 5268160735384680490
+    second: Cast_Ocean_64
+  - first:
+      213: 2145962110039895557
+    second: Cast_Ocean_65
+  - first:
+      213: -8677526442884756184
+    second: Cast_Ocean_66
+  - first:
+      213: -1350584197644890354
+    second: Cast_Ocean_67
+  - first:
+      213: 8318941740515728067
+    second: Cast_Ocean_68
+  - first:
+      213: 1059225971266593456
+    second: Cast_Ocean_69
+  - first:
+      213: -7707646147780314975
+    second: Cast_Ocean_Walk_0
+  - first:
+      213: 8518577867404855324
+    second: Cast_Ocean_Walk_1
+  - first:
+      213: -9204428519940434352
+    second: Cast_Ocean_Walk_2
+  - first:
+      213: 2379173251870931197
+    second: Cast_Ocean_Walk_3
+  - first:
+      213: 5288282991950359106
+    second: Cast_Ocean_Walk_4
+  - first:
+      213: 515494176996297450
+    second: Cast_Ocean_Walk_5
+  - first:
+      213: 9210129870919077748
+    second: Cast_Ocean_Walk_6
+  - first:
+      213: 4115793649087039106
+    second: Cast_Ocean_Walk_7
+  - first:
+      213: 7736999664202140981
+    second: Cast_Ocean_Walk_Down_0
+  - first:
+      213: 1861583008963062266
+    second: Cast_Ocean_Walk_Down_1
+  - first:
+      213: -3137903744198835902
+    second: Cast_Ocean_Walk_Down_2
+  - first:
+      213: 446918119552609636
+    second: Cast_Ocean_Walk_Down_3
+  - first:
+      213: -6525056577379673668
+    second: Cast_Ocean_Walk_Down_4
+  - first:
+      213: -8887705655178943245
+    second: Cast_Ocean_Walk_Down_5
+  - first:
+      213: 4536500318529385021
+    second: Cast_Ocean_Walk_Down_6
+  - first:
+      213: -189448889777520571
+    second: Cast_Ocean_Walk_Down_7
+  - first:
+      213: -6529379182711453896
+    second: Cast_Ocean_Walk_Up_0
+  - first:
+      213: -4285938700603871701
+    second: Cast_Ocean_Walk_Up_1
+  - first:
+      213: -4430166987502484366
+    second: Cast_Ocean_Walk_Up_2
+  - first:
+      213: -2845458091687020731
+    second: Cast_Ocean_Walk_Up_3
+  - first:
+      213: -3107841768006141640
+    second: Cast_Ocean_Walk_Up_4
+  - first:
+      213: 8026759580805736833
+    second: Cast_Ocean_Walk_Up_5
+  - first:
+      213: -1122046235696694666
+    second: Cast_Ocean_Walk_Up_6
+  - first:
+      213: 7496374900115243315
+    second: Cast_Ocean_Walk_Up_7
+  - first:
+      213: 462602844268252810
+    second: Cast_Ocean_Harvest_0
+  - first:
+      213: -9168540245969752948
+    second: Cast_Ocean_Harvest_1
+  - first:
+      213: 7956420949503752843
+    second: Cast_Ocean_Harvest_2
+  - first:
+      213: 6813870123491988264
+    second: Cast_Ocean_Harvest_3
+  - first:
+      213: 2051194934414311933
+    second: Cast_Ocean_Harvest_4
+  - first:
+      213: 3192204139608003313
+    second: Cast_Ocean_Harvest_5
+  - first:
+      213: -3590558502643652761
+    second: Cast_Ocean_Harvest_6
+  - first:
+      213: 305684518219189563
+    second: Cast_Ocean_Harvest_7
+  - first:
+      213: -337615437776766864
+    second: Cast_Ocean_Eat_0
+  - first:
+      213: 4544130507132718887
+    second: Cast_Ocean_Eat_1
+  - first:
+      213: -3569496620902011101
+    second: Cast_Ocean_Eat_2
+  - first:
+      213: -6157115493761250142
+    second: Cast_Ocean_Eat_3
+  - first:
+      213: -1938587616847603041
+    second: Cast_Ocean_Eat_4
+  - first:
+      213: -7533069643177635434
+    second: Cast_Ocean_Eat_5
+  - first:
+      213: -4164247419909789215
+    second: Cast_Ocean_Eat_6
+  - first:
+      213: -1028501765423332778
+    second: Cast_Ocean_Eat_7
+  - first:
+      213: 3140577969280426637
+    second: Cast_Ocean_Net_0
+  - first:
+      213: -5047587034391258916
+    second: Cast_Ocean_Net_1
+  - first:
+      213: -3677652854811335346
+    second: Cast_Ocean_Net_2
+  - first:
+      213: -210911114777301732
+    second: Cast_Ocean_Net_3
+  - first:
+      213: -671197181379484291
+    second: Cast_Ocean_Net_4
+  - first:
+      213: -5878536480115893338
+    second: Cast_Ocean_Net_5
+  - first:
+      213: -8570031816102978174
+    second: Cast_Ocean_Net_6
+  - first:
+      213: 8386933653388875066
+    second: Cast_Ocean_Net_7
+  - first:
+      213: 7296433330028584708
+    second: Cast_Ocean_Squat_0
+  - first:
+      213: -3772041329708627355
+    second: Cast_Ocean_Squat_1
+  - first:
+      213: -3648895718508498757
+    second: Cast_Ocean_Squat_2
+  - first:
+      213: 8424312150824210156
+    second: Cast_Ocean_Squat_3
+  - first:
+      213: 6885657218548920811
+    second: Cast_Ocean_Squat_4
+  - first:
+      213: -632770761902678370
+    second: Cast_Ocean_Squat_5
+  - first:
+      213: 3262308087941522193
+    second: Cast_Ocean_Squat_6
+  - first:
+      213: 448523979931268240
+    second: Cast_Ocean_Squat_7
+  - first:
+      213: -1296262383995419727
+    second: Cast_Ocean_Stretch_0
+  - first:
+      213: 9049470866529023898
+    second: Cast_Ocean_Stretch_1
+  - first:
+      213: -3552469790936441663
+    second: Cast_Ocean_Stretch_2
+  - first:
+      213: 7454663456160433341
+    second: Cast_Ocean_Stretch_3
+  - first:
+      213: -136425885286271488
+    second: Cast_Ocean_Stretch_4
+  - first:
+      213: -2146816005940789719
+    second: Cast_Ocean_Stretch_5
+  - first:
+      213: -2678356667880497230
+    second: Cast_Ocean_Stretch_6
+  - first:
+      213: -1679668072034494478
+    second: Cast_Ocean_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a8752b5aa0f80590800000000000000
+      internalID: -7707646147780314975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c18cb22ef61183670800000000000000
+      internalID: 8518577867404855324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 056d97c370d434080800000000000000
+      internalID: -9204428519940434352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df8b0e89775840120800000000000000
+      internalID: 2379173251870931197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24ae0f6dc51c36940800000000000000
+      internalID: 5288282991950359106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aea85a70937672700800000000000000
+      internalID: 515494176996297450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47f885bf154f0df70800000000000000
+      internalID: 9210129870919077748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28644a6748c3e1930800000000000000
+      internalID: 4115793649087039106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53dc514c3385f5b60800000000000000
+      internalID: 7736999664202140981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af9652132eba5d910800000000000000
+      internalID: 1861583008963062266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24109a38b2de374d0800000000000000
+      internalID: -3137903744198835902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46d6e9f69a5c33600800000000000000
+      internalID: 446918119552609636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb955f53d975275a0800000000000000
+      internalID: -6525056577379673668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f424d2bbc688a480800000000000000
+      internalID: -8887705655178943245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d32f3691103e4fe30800000000000000
+      internalID: 4536500318529385021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54008bd0d31fe5df0800000000000000
+      internalID: -189448889777520571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83747aa3a3cf265a0800000000000000
+      internalID: -6529379182711453896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2e286da5794584c0800000000000000
+      internalID: -4285938700603871701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 274804ec892e482c0800000000000000
+      internalID: -4430166987502484366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 547fbb501f6e288d0800000000000000
+      internalID: -2845458091687020731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8393fd7c06abed4d0800000000000000
+      internalID: -3107841768006141640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 189a367af47c46f60800000000000000
+      internalID: 8026759580805736833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67afbbbb4e0bd60f0800000000000000
+      internalID: -1122046235696694666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33106801149780860800000000000000
+      internalID: 7496374900115243315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8ec1bcf5de7b6600800000000000000
+      internalID: 462602844268252810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8ca91a293dc2c080800000000000000
+      internalID: -9168540245969752948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8ab5aad2b2ea6e60800000000000000
+      internalID: 7956420949503752843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8231360a6cabf8e50800000000000000
+      internalID: 6813870123491988264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df188d6dcee477c10800000000000000
+      internalID: 2051194934414311933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f2dddf70ccfc4c20800000000000000
+      internalID: 3192204139608003313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 767aaa0c016cb2ec0800000000000000
+      internalID: -3590558502643652761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3d8ac123720e3400800000000000000
+      internalID: 305684518219189563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 078b0a05c8c805bf0800000000000000
+      internalID: -337615437776766864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72f49a2de9eff0f30800000000000000
+      internalID: 4544130507132718887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32fad2c3cb9967ec0800000000000000
+      internalID: -3569496620902011101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ac8e4984188d8aa0800000000000000
+      internalID: -6157115493761250142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9ad3d365d0c815e0800000000000000
+      internalID: -1938587616847603041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6915e1a4219257790800000000000000
+      internalID: -7533069643177635434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e9a073e80f9536c0800000000000000
+      internalID: -4164247419909789215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6528415f7170ab1f0800000000000000
+      internalID: -1028501765423332778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d82a0680603959b20800000000000000
+      internalID: 3140577969280426637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd8dd32e55e53f9b0800000000000000
+      internalID: -5047587034391258916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e45e4cda63a56fcc0800000000000000
+      internalID: -3677652854811335346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1d64846571b21df0800000000000000
+      internalID: -210911114777301732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d75e1ad38bd6fa6f0800000000000000
+      internalID: -671197181379484291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ab5487973e3b6ea0800000000000000
+      internalID: -5878536480115893338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28dd26f1871211980800000000000000
+      internalID: -8570031816102978174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a35530dc8bf546470800000000000000
+      internalID: 8386933653388875066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40f9cab9473224560800000000000000
+      internalID: 7296433330028584708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56a00a0556407abc0800000000000000
+      internalID: -3772041329708627355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb07bdb3da48c5dc0800000000000000
+      internalID: -3648895718508498757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cee42ea644b29e470800000000000000
+      internalID: 8424312150824210156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be176bc22c4ce8f50800000000000000
+      internalID: 6885657218548920811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9e99883852f737f0800000000000000
+      internalID: -632770761902678370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11363a9ebeb064d20800000000000000
+      internalID: 3262308087941522193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0943c01fe2a793600800000000000000
+      internalID: 448523979931268240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b3804aca30c20ee0800000000000000
+      internalID: -1296262383995419727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9775b49ecd269d70800000000000000
+      internalID: 9049470866529023898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cc5de30c8713bec0800000000000000
+      internalID: -3552469790936441663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db44788bae8447760800000000000000
+      internalID: 7454663456160433341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 006f75151615b1ef0800000000000000
+      internalID: -136425885286271488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92eb6c7873af432e0800000000000000
+      internalID: -2146816005940789719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bf1f251dc094dad0800000000000000
+      internalID: -2678356667880497230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ocean_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f791d9a9ce90b8e0800000000000000
+      internalID: -1679668072034494478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Ocean_0: -2860597706428847776
+      Cast_Ocean_1: -6729003991216123971
+      Cast_Ocean_10: 6841030662565479205
+      Cast_Ocean_11: -8698204340116383883
+      Cast_Ocean_12: -3868111795291294267
+      Cast_Ocean_13: -174763447276767209
+      Cast_Ocean_14: 6392397511418982531
+      Cast_Ocean_15: 1416707739366507401
+      Cast_Ocean_16: -6881339708738936802
+      Cast_Ocean_17: 4922571316477495427
+      Cast_Ocean_18: -4487858770181326335
+      Cast_Ocean_19: -6994859213733942501
+      Cast_Ocean_2: -5646841334970740836
+      Cast_Ocean_20: 5115904580710474161
+      Cast_Ocean_21: -3602489254526097315
+      Cast_Ocean_22: -5357934381928557462
+      Cast_Ocean_23: 614771716308025267
+      Cast_Ocean_24: 6554747688795056097
+      Cast_Ocean_25: -573297114407441598
+      Cast_Ocean_26: 2529925808425810852
+      Cast_Ocean_27: 8523823842238112688
+      Cast_Ocean_28: -9182214665397590132
+      Cast_Ocean_29: 6273876158623278967
+      Cast_Ocean_3: -8578018097073587546
+      Cast_Ocean_30: -5251430376536395403
+      Cast_Ocean_31: 1335915689438794020
+      Cast_Ocean_32: -8922920016695544094
+      Cast_Ocean_33: 1348381117005905420
+      Cast_Ocean_34: -7417102882081913495
+      Cast_Ocean_35: 6286807360387740332
+      Cast_Ocean_36: 3710191621746968878
+      Cast_Ocean_37: 2888309568075158432
+      Cast_Ocean_38: -2828002439492423961
+      Cast_Ocean_39: 2916747614044713669
+      Cast_Ocean_4: 6792288645739412389
+      Cast_Ocean_40: 504421196841163872
+      Cast_Ocean_41: -3431783299694425091
+      Cast_Ocean_42: 4873969450095862506
+      Cast_Ocean_43: -844108464574689645
+      Cast_Ocean_44: 7775060682836321967
+      Cast_Ocean_45: -1819363924993733091
+      Cast_Ocean_46: -4035652486406849381
+      Cast_Ocean_47: 8116405997817040306
+      Cast_Ocean_48: 6454100153113495187
+      Cast_Ocean_49: -4707758645318302056
+      Cast_Ocean_5: -8389997910206818696
+      Cast_Ocean_50: 2767117495936456743
+      Cast_Ocean_51: -3436599831791725503
+      Cast_Ocean_52: 5777530314283604179
+      Cast_Ocean_53: -2195217454396591123
+      Cast_Ocean_54: -4859864486717623769
+      Cast_Ocean_55: 3430553520948576483
+      Cast_Ocean_56: 2532099265686380508
+      Cast_Ocean_57: -475559281714616201
+      Cast_Ocean_58: -3029411304204664245
+      Cast_Ocean_59: -8349424669297653981
+      Cast_Ocean_6: 4878884486424227488
+      Cast_Ocean_60: 5546106163647712693
+      Cast_Ocean_61: 4752717611591794815
+      Cast_Ocean_62: 300735980854063660
+      Cast_Ocean_63: 5268144372111251935
+      Cast_Ocean_64: 5268160735384680490
+      Cast_Ocean_65: 2145962110039895557
+      Cast_Ocean_66: -8677526442884756184
+      Cast_Ocean_67: -1350584197644890354
+      Cast_Ocean_68: 8318941740515728067
+      Cast_Ocean_69: 1059225971266593456
+      Cast_Ocean_7: -8157853936566141050
+      Cast_Ocean_8: -8118353968393251879
+      Cast_Ocean_9: 408681593977193758
+      Cast_Ocean_Eat_0: -337615437776766864
+      Cast_Ocean_Eat_1: 4544130507132718887
+      Cast_Ocean_Eat_2: -3569496620902011101
+      Cast_Ocean_Eat_3: -6157115493761250142
+      Cast_Ocean_Eat_4: -1938587616847603041
+      Cast_Ocean_Eat_5: -7533069643177635434
+      Cast_Ocean_Eat_6: -4164247419909789215
+      Cast_Ocean_Eat_7: -1028501765423332778
+      Cast_Ocean_Harvest_0: 462602844268252810
+      Cast_Ocean_Harvest_1: -9168540245969752948
+      Cast_Ocean_Harvest_2: 7956420949503752843
+      Cast_Ocean_Harvest_3: 6813870123491988264
+      Cast_Ocean_Harvest_4: 2051194934414311933
+      Cast_Ocean_Harvest_5: 3192204139608003313
+      Cast_Ocean_Harvest_6: -3590558502643652761
+      Cast_Ocean_Harvest_7: 305684518219189563
+      Cast_Ocean_Net_0: 3140577969280426637
+      Cast_Ocean_Net_1: -5047587034391258916
+      Cast_Ocean_Net_2: -3677652854811335346
+      Cast_Ocean_Net_3: -210911114777301732
+      Cast_Ocean_Net_4: -671197181379484291
+      Cast_Ocean_Net_5: -5878536480115893338
+      Cast_Ocean_Net_6: -8570031816102978174
+      Cast_Ocean_Net_7: 8386933653388875066
+      Cast_Ocean_Squat_0: 7296433330028584708
+      Cast_Ocean_Squat_1: -3772041329708627355
+      Cast_Ocean_Squat_2: -3648895718508498757
+      Cast_Ocean_Squat_3: 8424312150824210156
+      Cast_Ocean_Squat_4: 6885657218548920811
+      Cast_Ocean_Squat_5: -632770761902678370
+      Cast_Ocean_Squat_6: 3262308087941522193
+      Cast_Ocean_Squat_7: 448523979931268240
+      Cast_Ocean_Stretch_0: -1296262383995419727
+      Cast_Ocean_Stretch_1: 9049470866529023898
+      Cast_Ocean_Stretch_2: -3552469790936441663
+      Cast_Ocean_Stretch_3: 7454663456160433341
+      Cast_Ocean_Stretch_4: -136425885286271488
+      Cast_Ocean_Stretch_5: -2146816005940789719
+      Cast_Ocean_Stretch_6: -2678356667880497230
+      Cast_Ocean_Stretch_7: -1679668072034494478
+      Cast_Ocean_Walk_0: -7707646147780314975
+      Cast_Ocean_Walk_1: 8518577867404855324
+      Cast_Ocean_Walk_2: -9204428519940434352
+      Cast_Ocean_Walk_3: 2379173251870931197
+      Cast_Ocean_Walk_4: 5288282991950359106
+      Cast_Ocean_Walk_5: 515494176996297450
+      Cast_Ocean_Walk_6: 9210129870919077748
+      Cast_Ocean_Walk_7: 4115793649087039106
+      Cast_Ocean_Walk_Down_0: 7736999664202140981
+      Cast_Ocean_Walk_Down_1: 1861583008963062266
+      Cast_Ocean_Walk_Down_2: -3137903744198835902
+      Cast_Ocean_Walk_Down_3: 446918119552609636
+      Cast_Ocean_Walk_Down_4: -6525056577379673668
+      Cast_Ocean_Walk_Down_5: -8887705655178943245
+      Cast_Ocean_Walk_Down_6: 4536500318529385021
+      Cast_Ocean_Walk_Down_7: -189448889777520571
+      Cast_Ocean_Walk_Up_0: -6529379182711453896
+      Cast_Ocean_Walk_Up_1: -4285938700603871701
+      Cast_Ocean_Walk_Up_2: -4430166987502484366
+      Cast_Ocean_Walk_Up_3: -2845458091687020731
+      Cast_Ocean_Walk_Up_4: -3107841768006141640
+      Cast_Ocean_Walk_Up_5: 8026759580805736833
+      Cast_Ocean_Walk_Up_6: -1122046235696694666
+      Cast_Ocean_Walk_Up_7: 7496374900115243315
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

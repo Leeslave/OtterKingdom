@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: c1915ceaf4e69cf4186aa5175294c1bc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1417122408292190257
+    second: Cast_Clover_0
+  - first:
+      213: 7355068888556202999
+    second: Cast_Clover_1
+  - first:
+      213: 3797681308571592621
+    second: Cast_Clover_2
+  - first:
+      213: -2948710828003699281
+    second: Cast_Clover_3
+  - first:
+      213: 6354840960181788815
+    second: Cast_Clover_4
+  - first:
+      213: 4969130838522386764
+    second: Cast_Clover_5
+  - first:
+      213: 9035092314843380271
+    second: Cast_Clover_6
+  - first:
+      213: 4086617459484513642
+    second: Cast_Clover_7
+  - first:
+      213: 73728177640461337
+    second: Cast_Clover_8
+  - first:
+      213: 7545007411431069124
+    second: Cast_Clover_9
+  - first:
+      213: -8239133001802497509
+    second: Cast_Clover_10
+  - first:
+      213: -601781359014322613
+    second: Cast_Clover_11
+  - first:
+      213: -3510430749851470003
+    second: Cast_Clover_12
+  - first:
+      213: -4762444066371389100
+    second: Cast_Clover_13
+  - first:
+      213: -8157587912591114689
+    second: Cast_Clover_14
+  - first:
+      213: -3879049359355956953
+    second: Cast_Clover_15
+  - first:
+      213: -1820882822897004317
+    second: Cast_Clover_16
+  - first:
+      213: -2551942040921231966
+    second: Cast_Clover_17
+  - first:
+      213: 7750007222316112931
+    second: Cast_Clover_18
+  - first:
+      213: 2809047945213041479
+    second: Cast_Clover_19
+  - first:
+      213: 1031416189450613038
+    second: Cast_Clover_20
+  - first:
+      213: 1290618505205280187
+    second: Cast_Clover_21
+  - first:
+      213: 847981742831615596
+    second: Cast_Clover_22
+  - first:
+      213: -4831750493706322785
+    second: Cast_Clover_23
+  - first:
+      213: -8843907322669328492
+    second: Cast_Clover_24
+  - first:
+      213: -5812378065444055849
+    second: Cast_Clover_25
+  - first:
+      213: 2568066983900656044
+    second: Cast_Clover_26
+  - first:
+      213: -8128699457873567024
+    second: Cast_Clover_27
+  - first:
+      213: 1300915777815421204
+    second: Cast_Clover_28
+  - first:
+      213: -4596027781451370697
+    second: Cast_Clover_29
+  - first:
+      213: 2832005886645980354
+    second: Cast_Clover_30
+  - first:
+      213: -1298737766932199611
+    second: Cast_Clover_31
+  - first:
+      213: -2845654482855909688
+    second: Cast_Clover_32
+  - first:
+      213: -1513369364070051515
+    second: Cast_Clover_33
+  - first:
+      213: 8519840873086356004
+    second: Cast_Clover_34
+  - first:
+      213: -6721200800196331817
+    second: Cast_Clover_35
+  - first:
+      213: -3190667985739080472
+    second: Cast_Clover_36
+  - first:
+      213: -1629451975287563826
+    second: Cast_Clover_37
+  - first:
+      213: -3825102154829928113
+    second: Cast_Clover_38
+  - first:
+      213: 3274013340113823331
+    second: Cast_Clover_39
+  - first:
+      213: -1129510863384497459
+    second: Cast_Clover_40
+  - first:
+      213: -2157459833066924504
+    second: Cast_Clover_41
+  - first:
+      213: -378261172703104822
+    second: Cast_Clover_42
+  - first:
+      213: 790392303781394081
+    second: Cast_Clover_43
+  - first:
+      213: 5817445298608330859
+    second: Cast_Clover_44
+  - first:
+      213: 6567442289411765023
+    second: Cast_Clover_45
+  - first:
+      213: -5426495356917069835
+    second: Cast_Clover_46
+  - first:
+      213: -7580265790591164979
+    second: Cast_Clover_47
+  - first:
+      213: 2203117029558914914
+    second: Cast_Clover_48
+  - first:
+      213: 5233031607657467790
+    second: Cast_Clover_49
+  - first:
+      213: -2720651455060837766
+    second: Cast_Clover_50
+  - first:
+      213: -6452045597987994002
+    second: Cast_Clover_51
+  - first:
+      213: 3135169570137725766
+    second: Cast_Clover_52
+  - first:
+      213: 5806585971874079999
+    second: Cast_Clover_53
+  - first:
+      213: -3260411280686949651
+    second: Cast_Clover_54
+  - first:
+      213: -4631221924392725601
+    second: Cast_Clover_55
+  - first:
+      213: -4851893773250893763
+    second: Cast_Clover_56
+  - first:
+      213: -6814719050084518214
+    second: Cast_Clover_57
+  - first:
+      213: 3010563207554787265
+    second: Cast_Clover_58
+  - first:
+      213: -3563829002499881129
+    second: Cast_Clover_59
+  - first:
+      213: -1062190722612313762
+    second: Cast_Clover_60
+  - first:
+      213: 2575932495546553387
+    second: Cast_Clover_61
+  - first:
+      213: 3280517213760809006
+    second: Cast_Clover_62
+  - first:
+      213: 6795030839203264894
+    second: Cast_Clover_63
+  - first:
+      213: 1423616747903253290
+    second: Cast_Clover_64
+  - first:
+      213: -24361391824642896
+    second: Cast_Clover_65
+  - first:
+      213: -9210003739897563762
+    second: Cast_Clover_66
+  - first:
+      213: -2164629378415298088
+    second: Cast_Clover_67
+  - first:
+      213: 6958861106759184294
+    second: Cast_Clover_68
+  - first:
+      213: 2830159542866604299
+    second: Cast_Clover_69
+  - first:
+      213: -3303349795857203495
+    second: Cast_Clover_Walk_0
+  - first:
+      213: -3336003314755002984
+    second: Cast_Clover_Walk_1
+  - first:
+      213: -7539788378490432065
+    second: Cast_Clover_Walk_2
+  - first:
+      213: -3592556813321266334
+    second: Cast_Clover_Walk_3
+  - first:
+      213: -2085550482002106907
+    second: Cast_Clover_Walk_4
+  - first:
+      213: -1698131059526013071
+    second: Cast_Clover_Walk_5
+  - first:
+      213: 789520496488547225
+    second: Cast_Clover_Walk_6
+  - first:
+      213: 3997438921458951481
+    second: Cast_Clover_Walk_7
+  - first:
+      213: -7504770457846372356
+    second: Cast_Clover_Walk_Down_0
+  - first:
+      213: -9095660016357796548
+    second: Cast_Clover_Walk_Down_1
+  - first:
+      213: -1351353149286498188
+    second: Cast_Clover_Walk_Down_2
+  - first:
+      213: -8709842823679716391
+    second: Cast_Clover_Walk_Down_3
+  - first:
+      213: -2244910180014973078
+    second: Cast_Clover_Walk_Down_4
+  - first:
+      213: -6111701799983202393
+    second: Cast_Clover_Walk_Down_5
+  - first:
+      213: 5927193321168480453
+    second: Cast_Clover_Walk_Down_6
+  - first:
+      213: -6311277061243140742
+    second: Cast_Clover_Walk_Down_7
+  - first:
+      213: -994716072444093589
+    second: Cast_Clover_Walk_Up_0
+  - first:
+      213: -8233404091583551717
+    second: Cast_Clover_Walk_Up_1
+  - first:
+      213: -8754534705411232279
+    second: Cast_Clover_Walk_Up_2
+  - first:
+      213: -4053818492804481862
+    second: Cast_Clover_Walk_Up_3
+  - first:
+      213: -6847949213070779982
+    second: Cast_Clover_Walk_Up_4
+  - first:
+      213: -5666103870332459961
+    second: Cast_Clover_Walk_Up_5
+  - first:
+      213: -5421196859390059238
+    second: Cast_Clover_Walk_Up_6
+  - first:
+      213: 7822356066271370126
+    second: Cast_Clover_Walk_Up_7
+  - first:
+      213: 3414403155296709615
+    second: Cast_Clover_Harvest_0
+  - first:
+      213: 5241308550029900340
+    second: Cast_Clover_Harvest_1
+  - first:
+      213: 505172103895078936
+    second: Cast_Clover_Harvest_2
+  - first:
+      213: 4436821290933807835
+    second: Cast_Clover_Harvest_3
+  - first:
+      213: -7309102347760958286
+    second: Cast_Clover_Harvest_4
+  - first:
+      213: -3103583509957348774
+    second: Cast_Clover_Harvest_5
+  - first:
+      213: -226907353713256389
+    second: Cast_Clover_Harvest_6
+  - first:
+      213: -1218378292750776110
+    second: Cast_Clover_Harvest_7
+  - first:
+      213: 5396098498381386097
+    second: Cast_Clover_Eat_0
+  - first:
+      213: -6452078417496137313
+    second: Cast_Clover_Eat_1
+  - first:
+      213: 2606201637674876471
+    second: Cast_Clover_Eat_2
+  - first:
+      213: -4777560899137768505
+    second: Cast_Clover_Eat_3
+  - first:
+      213: -6490197981734670790
+    second: Cast_Clover_Eat_4
+  - first:
+      213: 3991919497064965992
+    second: Cast_Clover_Eat_5
+  - first:
+      213: -8273262823767389163
+    second: Cast_Clover_Eat_6
+  - first:
+      213: -9184624244312328828
+    second: Cast_Clover_Eat_7
+  - first:
+      213: -8524603057488236528
+    second: Cast_Clover_Net_0
+  - first:
+      213: 6333251234754632549
+    second: Cast_Clover_Net_1
+  - first:
+      213: -5905031172433442226
+    second: Cast_Clover_Net_2
+  - first:
+      213: -2321389894724694858
+    second: Cast_Clover_Net_3
+  - first:
+      213: 4790416558817751842
+    second: Cast_Clover_Net_4
+  - first:
+      213: -5526544674827674454
+    second: Cast_Clover_Net_5
+  - first:
+      213: 7232815824377439145
+    second: Cast_Clover_Net_6
+  - first:
+      213: 5131799092183706799
+    second: Cast_Clover_Net_7
+  - first:
+      213: 2932339236816885598
+    second: Cast_Clover_Squat_0
+  - first:
+      213: 6124030513479448684
+    second: Cast_Clover_Squat_1
+  - first:
+      213: 2443618436085097668
+    second: Cast_Clover_Squat_2
+  - first:
+      213: 9003438516396823053
+    second: Cast_Clover_Squat_3
+  - first:
+      213: 4687582491104451549
+    second: Cast_Clover_Squat_4
+  - first:
+      213: -2458353073164335179
+    second: Cast_Clover_Squat_5
+  - first:
+      213: 5550243153543102564
+    second: Cast_Clover_Squat_6
+  - first:
+      213: -8053304653409953257
+    second: Cast_Clover_Squat_7
+  - first:
+      213: 6054570245892554338
+    second: Cast_Clover_Stretch_0
+  - first:
+      213: -625470968555042308
+    second: Cast_Clover_Stretch_1
+  - first:
+      213: -5973142123082556024
+    second: Cast_Clover_Stretch_2
+  - first:
+      213: 2153802259810711918
+    second: Cast_Clover_Stretch_3
+  - first:
+      213: -7331703382943015240
+    second: Cast_Clover_Stretch_4
+  - first:
+      213: 1085958716395199928
+    second: Cast_Clover_Stretch_5
+  - first:
+      213: 5340615366237489037
+    second: Cast_Clover_Stretch_6
+  - first:
+      213: -3978661397733459296
+    second: Cast_Clover_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9de7211dcd42822d0800000000000000
+      internalID: -3303349795857203495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89d908ef8a224b1d0800000000000000
+      internalID: -3336003314755002984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb59572da6a4d5790800000000000000
+      internalID: -7539788378490432065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26b939acc9ca42ec0800000000000000
+      internalID: -3592556813321266334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e5ae17e2e2ae03e0800000000000000
+      internalID: -2085550482002106907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17fe4e66cc60f68e0800000000000000
+      internalID: -1698131059526013071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 993071065b0f4fa00800000000000000
+      internalID: 789520496488547225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 935a1ec0581c97730800000000000000
+      internalID: 3997438921458951481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf7a833d703b9d790800000000000000
+      internalID: -7504770457846372356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c35154fe769b5c180800000000000000
+      internalID: -9095660016357796548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4704ca278770f3de0800000000000000
+      internalID: -1351353149286498188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d3d51d391c602780800000000000000
+      internalID: -8709842823679716391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6f9c87d51a78d0e0800000000000000
+      internalID: -2244910180014973078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7afb2e6189fde2ba0800000000000000
+      internalID: -6111701799983202393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c8a0570cee914250800000000000000
+      internalID: 5927193321168480453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a75088d83f6d968a0800000000000000
+      internalID: -6311277061243140742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6b1999900f0232f0800000000000000
+      internalID: -994716072444093589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b172ae4e9921dbd80800000000000000
+      internalID: -8233404091583551717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ed6226a115a18680800000000000000
+      internalID: -8754534705411232279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abcba701f81fdb7c0800000000000000
+      internalID: -4053818492804481862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b91003097237f0a0800000000000000
+      internalID: -6847949213070779982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7442e5cdc84fd51b0800000000000000
+      internalID: -5666103870332459961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1d979add2a04c4b0800000000000000
+      internalID: -5421196859390059238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8b1abcc5679e8c60800000000000000
+      internalID: 7822356066271370126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: febee675495626f20800000000000000
+      internalID: 3414403155296709615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43affba4b5edcb840800000000000000
+      internalID: 5241308550029900340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8185a1b1a5bb20700800000000000000
+      internalID: 505172103895078936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdaeff1f471c29d30800000000000000
+      internalID: 4436821290933807835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b40cb6d32ad09a90800000000000000
+      internalID: -7309102347760958286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a527b3ebd3bdde4d0800000000000000
+      internalID: -3103583509957348774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b385ff8c6fcd9dcf0800000000000000
+      internalID: -226907353713256389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d80b82e563771fe0800000000000000
+      internalID: -1218378292750776110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1719a099efac2ea40800000000000000
+      internalID: 5396098498381386097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f91ad262ddc9576a0800000000000000
+      internalID: -6452078417496137313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73ef6aac4961b2420800000000000000
+      internalID: 2606201637674876471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c3f812cca1b2bdb0800000000000000
+      internalID: -4777560899137768505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3e6fb8725f2ee5a0800000000000000
+      internalID: -6490197981734670790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 867638ae1a5266730800000000000000
+      internalID: 3991919497064965992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51c46ef9b477f2d80800000000000000
+      internalID: -8273262823767389163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 485b25a79e8a98080800000000000000
+      internalID: -9184624244312328828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 010743b3fa682b980800000000000000
+      internalID: -8524603057488236528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b9ad8617a34e750800000000000000
+      internalID: 6333251234754632549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4a0f735f6d1d0ea0800000000000000
+      internalID: -5905031172433442226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bcc0c3a034c8cfd0800000000000000
+      internalID: -2321389894724694858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2233b72ca7afa7240800000000000000
+      internalID: 4790416558817751842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aacd19d26e4cd43b0800000000000000
+      internalID: -5526544674827674454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a367d1dbaf106460800000000000000
+      internalID: 7232815824377439145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fac284cb510d73740800000000000000
+      internalID: 5131799092183706799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e57196beff2c1b820800000000000000
+      internalID: 2932339236816885598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6878953e4decf450800000000000000
+      internalID: 6124030513479448684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c4a271550a79e120800000000000000
+      internalID: 2443618436085097668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0217eed0a3a2fc70800000000000000
+      internalID: 9003438516396823053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddb1f959073ad0140800000000000000
+      internalID: 4687582491104451549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b7cc85a7ec22edd0800000000000000
+      internalID: -2458353073164335179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4600bffddbc660d40800000000000000
+      internalID: 5550243153543102564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71adf71061aec3090800000000000000
+      internalID: -8053304653409953257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26e33166f87260450800000000000000
+      internalID: 6054570245892554338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf905fdc771e157f0800000000000000
+      internalID: -625470968555042308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88dddb8d2e22b1da0800000000000000
+      internalID: -5973142123082556024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6973747eb7d3ed10800000000000000
+      internalID: 2153802259810711918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bed6254e9e804a90800000000000000
+      internalID: -7331703382943015240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd997be2b9121f00800000000000000
+      internalID: 1085958716395199928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d87049a316dad1a40800000000000000
+      internalID: 5340615366237489037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Clover_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aab982e984f8c8c0800000000000000
+      internalID: -3978661397733459296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Clover_0: 1417122408292190257
+      Cast_Clover_1: 7355068888556202999
+      Cast_Clover_10: -8239133001802497509
+      Cast_Clover_11: -601781359014322613
+      Cast_Clover_12: -3510430749851470003
+      Cast_Clover_13: -4762444066371389100
+      Cast_Clover_14: -8157587912591114689
+      Cast_Clover_15: -3879049359355956953
+      Cast_Clover_16: -1820882822897004317
+      Cast_Clover_17: -2551942040921231966
+      Cast_Clover_18: 7750007222316112931
+      Cast_Clover_19: 2809047945213041479
+      Cast_Clover_2: 3797681308571592621
+      Cast_Clover_20: 1031416189450613038
+      Cast_Clover_21: 1290618505205280187
+      Cast_Clover_22: 847981742831615596
+      Cast_Clover_23: -4831750493706322785
+      Cast_Clover_24: -8843907322669328492
+      Cast_Clover_25: -5812378065444055849
+      Cast_Clover_26: 2568066983900656044
+      Cast_Clover_27: -8128699457873567024
+      Cast_Clover_28: 1300915777815421204
+      Cast_Clover_29: -4596027781451370697
+      Cast_Clover_3: -2948710828003699281
+      Cast_Clover_30: 2832005886645980354
+      Cast_Clover_31: -1298737766932199611
+      Cast_Clover_32: -2845654482855909688
+      Cast_Clover_33: -1513369364070051515
+      Cast_Clover_34: 8519840873086356004
+      Cast_Clover_35: -6721200800196331817
+      Cast_Clover_36: -3190667985739080472
+      Cast_Clover_37: -1629451975287563826
+      Cast_Clover_38: -3825102154829928113
+      Cast_Clover_39: 3274013340113823331
+      Cast_Clover_4: 6354840960181788815
+      Cast_Clover_40: -1129510863384497459
+      Cast_Clover_41: -2157459833066924504
+      Cast_Clover_42: -378261172703104822
+      Cast_Clover_43: 790392303781394081
+      Cast_Clover_44: 5817445298608330859
+      Cast_Clover_45: 6567442289411765023
+      Cast_Clover_46: -5426495356917069835
+      Cast_Clover_47: -7580265790591164979
+      Cast_Clover_48: 2203117029558914914
+      Cast_Clover_49: 5233031607657467790
+      Cast_Clover_5: 4969130838522386764
+      Cast_Clover_50: -2720651455060837766
+      Cast_Clover_51: -6452045597987994002
+      Cast_Clover_52: 3135169570137725766
+      Cast_Clover_53: 5806585971874079999
+      Cast_Clover_54: -3260411280686949651
+      Cast_Clover_55: -4631221924392725601
+      Cast_Clover_56: -4851893773250893763
+      Cast_Clover_57: -6814719050084518214
+      Cast_Clover_58: 3010563207554787265
+      Cast_Clover_59: -3563829002499881129
+      Cast_Clover_6: 9035092314843380271
+      Cast_Clover_60: -1062190722612313762
+      Cast_Clover_61: 2575932495546553387
+      Cast_Clover_62: 3280517213760809006
+      Cast_Clover_63: 6795030839203264894
+      Cast_Clover_64: 1423616747903253290
+      Cast_Clover_65: -24361391824642896
+      Cast_Clover_66: -9210003739897563762
+      Cast_Clover_67: -2164629378415298088
+      Cast_Clover_68: 6958861106759184294
+      Cast_Clover_69: 2830159542866604299
+      Cast_Clover_7: 4086617459484513642
+      Cast_Clover_8: 73728177640461337
+      Cast_Clover_9: 7545007411431069124
+      Cast_Clover_Eat_0: 5396098498381386097
+      Cast_Clover_Eat_1: -6452078417496137313
+      Cast_Clover_Eat_2: 2606201637674876471
+      Cast_Clover_Eat_3: -4777560899137768505
+      Cast_Clover_Eat_4: -6490197981734670790
+      Cast_Clover_Eat_5: 3991919497064965992
+      Cast_Clover_Eat_6: -8273262823767389163
+      Cast_Clover_Eat_7: -9184624244312328828
+      Cast_Clover_Harvest_0: 3414403155296709615
+      Cast_Clover_Harvest_1: 5241308550029900340
+      Cast_Clover_Harvest_2: 505172103895078936
+      Cast_Clover_Harvest_3: 4436821290933807835
+      Cast_Clover_Harvest_4: -7309102347760958286
+      Cast_Clover_Harvest_5: -3103583509957348774
+      Cast_Clover_Harvest_6: -226907353713256389
+      Cast_Clover_Harvest_7: -1218378292750776110
+      Cast_Clover_Net_0: -8524603057488236528
+      Cast_Clover_Net_1: 6333251234754632549
+      Cast_Clover_Net_2: -5905031172433442226
+      Cast_Clover_Net_3: -2321389894724694858
+      Cast_Clover_Net_4: 4790416558817751842
+      Cast_Clover_Net_5: -5526544674827674454
+      Cast_Clover_Net_6: 7232815824377439145
+      Cast_Clover_Net_7: 5131799092183706799
+      Cast_Clover_Squat_0: 2932339236816885598
+      Cast_Clover_Squat_1: 6124030513479448684
+      Cast_Clover_Squat_2: 2443618436085097668
+      Cast_Clover_Squat_3: 9003438516396823053
+      Cast_Clover_Squat_4: 4687582491104451549
+      Cast_Clover_Squat_5: -2458353073164335179
+      Cast_Clover_Squat_6: 5550243153543102564
+      Cast_Clover_Squat_7: -8053304653409953257
+      Cast_Clover_Stretch_0: 6054570245892554338
+      Cast_Clover_Stretch_1: -625470968555042308
+      Cast_Clover_Stretch_2: -5973142123082556024
+      Cast_Clover_Stretch_3: 2153802259810711918
+      Cast_Clover_Stretch_4: -7331703382943015240
+      Cast_Clover_Stretch_5: 1085958716395199928
+      Cast_Clover_Stretch_6: 5340615366237489037
+      Cast_Clover_Stretch_7: -3978661397733459296
+      Cast_Clover_Walk_0: -3303349795857203495
+      Cast_Clover_Walk_1: -3336003314755002984
+      Cast_Clover_Walk_2: -7539788378490432065
+      Cast_Clover_Walk_3: -3592556813321266334
+      Cast_Clover_Walk_4: -2085550482002106907
+      Cast_Clover_Walk_5: -1698131059526013071
+      Cast_Clover_Walk_6: 789520496488547225
+      Cast_Clover_Walk_7: 3997438921458951481
+      Cast_Clover_Walk_Down_0: -7504770457846372356
+      Cast_Clover_Walk_Down_1: -9095660016357796548
+      Cast_Clover_Walk_Down_2: -1351353149286498188
+      Cast_Clover_Walk_Down_3: -8709842823679716391
+      Cast_Clover_Walk_Down_4: -2244910180014973078
+      Cast_Clover_Walk_Down_5: -6111701799983202393
+      Cast_Clover_Walk_Down_6: 5927193321168480453
+      Cast_Clover_Walk_Down_7: -6311277061243140742
+      Cast_Clover_Walk_Up_0: -994716072444093589
+      Cast_Clover_Walk_Up_1: -8233404091583551717
+      Cast_Clover_Walk_Up_2: -8754534705411232279
+      Cast_Clover_Walk_Up_3: -4053818492804481862
+      Cast_Clover_Walk_Up_4: -6847949213070779982
+      Cast_Clover_Walk_Up_5: -5666103870332459961
+      Cast_Clover_Walk_Up_6: -5421196859390059238
+      Cast_Clover_Walk_Up_7: 7822356066271370126
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: 4c4998aa8749aa64aaad635f42d2ad1a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2632035235268609600
+    second: Cast_Berry_0
+  - first:
+      213: 5475229455650124174
+    second: Cast_Berry_1
+  - first:
+      213: -7580246097537602607
+    second: Cast_Berry_2
+  - first:
+      213: -7279175703263412756
+    second: Cast_Berry_3
+  - first:
+      213: -5479324813692129937
+    second: Cast_Berry_4
+  - first:
+      213: 8844523775953505584
+    second: Cast_Berry_5
+  - first:
+      213: 1316391924704787744
+    second: Cast_Berry_6
+  - first:
+      213: -5819916620910605727
+    second: Cast_Berry_7
+  - first:
+      213: 6174056343464801174
+    second: Cast_Berry_8
+  - first:
+      213: 70262780273152459
+    second: Cast_Berry_9
+  - first:
+      213: -2694977423220850374
+    second: Cast_Berry_10
+  - first:
+      213: -6909081869558530279
+    second: Cast_Berry_11
+  - first:
+      213: -8406305645246226062
+    second: Cast_Berry_12
+  - first:
+      213: -1779248537706616629
+    second: Cast_Berry_13
+  - first:
+      213: 1449985135348183323
+    second: Cast_Berry_14
+  - first:
+      213: 6213111696516721481
+    second: Cast_Berry_15
+  - first:
+      213: 3616342273020052715
+    second: Cast_Berry_16
+  - first:
+      213: 7024365125468758572
+    second: Cast_Berry_17
+  - first:
+      213: -1883432835774427761
+    second: Cast_Berry_18
+  - first:
+      213: -7143088791550202318
+    second: Cast_Berry_19
+  - first:
+      213: -1709480264470270863
+    second: Cast_Berry_20
+  - first:
+      213: 7760751441339215835
+    second: Cast_Berry_21
+  - first:
+      213: -6921267002663373454
+    second: Cast_Berry_22
+  - first:
+      213: 1441301979590212630
+    second: Cast_Berry_23
+  - first:
+      213: 634924093253485114
+    second: Cast_Berry_24
+  - first:
+      213: -7086097337114228634
+    second: Cast_Berry_25
+  - first:
+      213: -6723116372194147718
+    second: Cast_Berry_26
+  - first:
+      213: 4518393758172374908
+    second: Cast_Berry_27
+  - first:
+      213: 3401001719565189987
+    second: Cast_Berry_28
+  - first:
+      213: 4286666278610156481
+    second: Cast_Berry_29
+  - first:
+      213: 895286213902915931
+    second: Cast_Berry_30
+  - first:
+      213: -3133895235476497222
+    second: Cast_Berry_31
+  - first:
+      213: -3462883788015515408
+    second: Cast_Berry_32
+  - first:
+      213: -8655882856484761024
+    second: Cast_Berry_33
+  - first:
+      213: 6390063791807268814
+    second: Cast_Berry_34
+  - first:
+      213: 8984946837916111395
+    second: Cast_Berry_35
+  - first:
+      213: 3658404118187512844
+    second: Cast_Berry_36
+  - first:
+      213: 9128410348361708976
+    second: Cast_Berry_37
+  - first:
+      213: -6385936207407468047
+    second: Cast_Berry_38
+  - first:
+      213: -4554370820828186588
+    second: Cast_Berry_39
+  - first:
+      213: 5247663764217884508
+    second: Cast_Berry_40
+  - first:
+      213: 1943763070441751996
+    second: Cast_Berry_41
+  - first:
+      213: -8231723098846330101
+    second: Cast_Berry_42
+  - first:
+      213: -4491123932063499459
+    second: Cast_Berry_43
+  - first:
+      213: 2788873356945733965
+    second: Cast_Berry_44
+  - first:
+      213: -4192169401438017525
+    second: Cast_Berry_45
+  - first:
+      213: 3343953387470270235
+    second: Cast_Berry_46
+  - first:
+      213: -8072794058233230365
+    second: Cast_Berry_47
+  - first:
+      213: -7503323391117700259
+    second: Cast_Berry_48
+  - first:
+      213: 3418407628385564717
+    second: Cast_Berry_49
+  - first:
+      213: 1105115343456914482
+    second: Cast_Berry_50
+  - first:
+      213: 3373749735203578548
+    second: Cast_Berry_51
+  - first:
+      213: -8543595889688001061
+    second: Cast_Berry_52
+  - first:
+      213: 2417594519654364
+    second: Cast_Berry_53
+  - first:
+      213: 7478310439398293130
+    second: Cast_Berry_54
+  - first:
+      213: -3066031056468867063
+    second: Cast_Berry_55
+  - first:
+      213: 2499145779860205376
+    second: Cast_Berry_56
+  - first:
+      213: -4071718390937880029
+    second: Cast_Berry_57
+  - first:
+      213: 6026750018865214942
+    second: Cast_Berry_58
+  - first:
+      213: -8770041035506157341
+    second: Cast_Berry_59
+  - first:
+      213: 9159025095947517882
+    second: Cast_Berry_60
+  - first:
+      213: 6435885147166080387
+    second: Cast_Berry_61
+  - first:
+      213: -3294598513159893546
+    second: Cast_Berry_62
+  - first:
+      213: 4205176020908197339
+    second: Cast_Berry_63
+  - first:
+      213: 8696822026642239353
+    second: Cast_Berry_64
+  - first:
+      213: 7045102349590885490
+    second: Cast_Berry_65
+  - first:
+      213: 3040249250532088763
+    second: Cast_Berry_66
+  - first:
+      213: -6699355857513893468
+    second: Cast_Berry_67
+  - first:
+      213: 6107634051568739406
+    second: Cast_Berry_68
+  - first:
+      213: -5234905317479138136
+    second: Cast_Berry_69
+  - first:
+      213: 6434986914842927254
+    second: Cast_Berry_Walk_0
+  - first:
+      213: -3071912904071052868
+    second: Cast_Berry_Walk_1
+  - first:
+      213: 3519849640688012142
+    second: Cast_Berry_Walk_2
+  - first:
+      213: 8330019197567280033
+    second: Cast_Berry_Walk_3
+  - first:
+      213: -4349469045983512225
+    second: Cast_Berry_Walk_4
+  - first:
+      213: 5245135669757568129
+    second: Cast_Berry_Walk_5
+  - first:
+      213: 3045991144894504920
+    second: Cast_Berry_Walk_6
+  - first:
+      213: -3438821658101107055
+    second: Cast_Berry_Walk_7
+  - first:
+      213: 7728611363523243154
+    second: Cast_Berry_Walk_Down_0
+  - first:
+      213: -4286424452967003732
+    second: Cast_Berry_Walk_Down_1
+  - first:
+      213: -5811337801757075224
+    second: Cast_Berry_Walk_Down_2
+  - first:
+      213: -1834287279226104560
+    second: Cast_Berry_Walk_Down_3
+  - first:
+      213: 7140138713245601114
+    second: Cast_Berry_Walk_Down_4
+  - first:
+      213: -7100781643047007701
+    second: Cast_Berry_Walk_Down_5
+  - first:
+      213: -123596390092294010
+    second: Cast_Berry_Walk_Down_6
+  - first:
+      213: -529175123255970382
+    second: Cast_Berry_Walk_Down_7
+  - first:
+      213: -9069399848868331135
+    second: Cast_Berry_Walk_Up_0
+  - first:
+      213: -2957720482156058106
+    second: Cast_Berry_Walk_Up_1
+  - first:
+      213: 5587008448070857496
+    second: Cast_Berry_Walk_Up_2
+  - first:
+      213: -1865959919503453408
+    second: Cast_Berry_Walk_Up_3
+  - first:
+      213: -3630554776370464579
+    second: Cast_Berry_Walk_Up_4
+  - first:
+      213: -5123822327358418817
+    second: Cast_Berry_Walk_Up_5
+  - first:
+      213: -7343779559380876825
+    second: Cast_Berry_Walk_Up_6
+  - first:
+      213: 176550019586558297
+    second: Cast_Berry_Walk_Up_7
+  - first:
+      213: -8110982684840563277
+    second: Cast_Berry_Harvest_0
+  - first:
+      213: 1840843731043491171
+    second: Cast_Berry_Harvest_1
+  - first:
+      213: -438772981225691420
+    second: Cast_Berry_Harvest_2
+  - first:
+      213: 8089633679723615593
+    second: Cast_Berry_Harvest_3
+  - first:
+      213: 4601365184585445662
+    second: Cast_Berry_Harvest_4
+  - first:
+      213: 7956699977994396828
+    second: Cast_Berry_Harvest_5
+  - first:
+      213: -414538990034771146
+    second: Cast_Berry_Harvest_6
+  - first:
+      213: 4826379485492502227
+    second: Cast_Berry_Harvest_7
+  - first:
+      213: 1840843639571985556
+    second: Cast_Berry_Eat_0
+  - first:
+      213: -4093818120180722664
+    second: Cast_Berry_Eat_1
+  - first:
+      213: 5465865397972777941
+    second: Cast_Berry_Eat_2
+  - first:
+      213: 523963010108297507
+    second: Cast_Berry_Eat_3
+  - first:
+      213: 3250437795673700528
+    second: Cast_Berry_Eat_4
+  - first:
+      213: -6023656302887418131
+    second: Cast_Berry_Eat_5
+  - first:
+      213: -1813961067566455006
+    second: Cast_Berry_Eat_6
+  - first:
+      213: 2893247214773631222
+    second: Cast_Berry_Eat_7
+  - first:
+      213: -5480991992281738018
+    second: Cast_Berry_Net_0
+  - first:
+      213: 4946370065165379104
+    second: Cast_Berry_Net_1
+  - first:
+      213: 397469968948843745
+    second: Cast_Berry_Net_2
+  - first:
+      213: 8820786478255347339
+    second: Cast_Berry_Net_3
+  - first:
+      213: -5452003139069693846
+    second: Cast_Berry_Net_4
+  - first:
+      213: 678645230970851605
+    second: Cast_Berry_Net_5
+  - first:
+      213: 1222918640137723088
+    second: Cast_Berry_Net_6
+  - first:
+      213: 8484922356677647114
+    second: Cast_Berry_Net_7
+  - first:
+      213: 4641553195383258497
+    second: Cast_Berry_Squat_0
+  - first:
+      213: -3227131725972274135
+    second: Cast_Berry_Squat_1
+  - first:
+      213: 4731564121195732318
+    second: Cast_Berry_Squat_2
+  - first:
+      213: 2303213869974633904
+    second: Cast_Berry_Squat_3
+  - first:
+      213: -1375168415182703375
+    second: Cast_Berry_Squat_4
+  - first:
+      213: 1543466636775408924
+    second: Cast_Berry_Squat_5
+  - first:
+      213: -8248400407938749936
+    second: Cast_Berry_Squat_6
+  - first:
+      213: 404595647155759817
+    second: Cast_Berry_Squat_7
+  - first:
+      213: 6619178039088094363
+    second: Cast_Berry_Stretch_0
+  - first:
+      213: -9218681936490135649
+    second: Cast_Berry_Stretch_1
+  - first:
+      213: -2989617777756141948
+    second: Cast_Berry_Stretch_2
+  - first:
+      213: 6439139685747617368
+    second: Cast_Berry_Stretch_3
+  - first:
+      213: 2126283904310507876
+    second: Cast_Berry_Stretch_4
+  - first:
+      213: 334932767274116656
+    second: Cast_Berry_Stretch_5
+  - first:
+      213: 5204232126989429168
+    second: Cast_Berry_Stretch_6
+  - first:
+      213: -4064678709815697631
+    second: Cast_Berry_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 690ef79418aad4950800000000000000
+      internalID: 6434986914842927254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb108eb4d7f5e55d0800000000000000
+      internalID: -3071912904071052868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6bcef7699409d030800000000000000
+      internalID: 3519849640688012142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a3ae2b635c2a9370800000000000000
+      internalID: 8330019197567280033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f59789872f493a3c0800000000000000
+      internalID: -4349469045983512225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18461aa0a177ac840800000000000000
+      internalID: 5245135669757568129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8df1c64dec8854a20800000000000000
+      internalID: 3045991144894504920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 196b6feebe9d640d0800000000000000
+      internalID: -3438821658101107055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29ca9d1561b814b60800000000000000
+      internalID: 7728611363523243154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca98a54abaf8384c0800000000000000
+      internalID: -4286424452967003732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e858702f0bf95fa0800000000000000
+      internalID: -5811337801757075224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 015d5b1207d4b86e0800000000000000
+      internalID: -1834287279226104560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5dc402645ed61360800000000000000
+      internalID: 7140138713245601114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2a819a97b4f47d90800000000000000
+      internalID: -7100781643047007701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6883701fcb5e84ef0800000000000000
+      internalID: -123596390092294010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b5ba52770ef7a8f0800000000000000
+      internalID: -529175123255970382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 181c832a3e4032280800000000000000
+      internalID: -9069399848868331135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60ae03464e014f6d0800000000000000
+      internalID: -2957720482156058106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 813be50159a098d40800000000000000
+      internalID: 5587008448070857496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02351e8e657ca16e0800000000000000
+      internalID: -1865959919503453408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db837d89aadad9dc0800000000000000
+      internalID: -3630554776370464579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f70169d8db684e8b0800000000000000
+      internalID: -5123822327358418817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e104565667a51a90800000000000000
+      internalID: -7343779559380876825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9598b82be4b337200800000000000000
+      internalID: 176550019586558297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bdebb2d830007f80800000000000000
+      internalID: -8110982684840563277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36d1ad3ce9dfb8910800000000000000
+      internalID: 1840843731043491171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e6e00d5c4a29e9f0800000000000000
+      internalID: -438772981225691420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96556f298f6244070800000000000000
+      internalID: 8089633679723615593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e11b01d91455bdf30800000000000000
+      internalID: 4601365184585445662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c94e6bc3970eb6e60800000000000000
+      internalID: 7956699977994396828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 633ad612cf24f3af0800000000000000
+      internalID: -414538990034771146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3de5300229ebaf240800000000000000
+      internalID: 4826379485492502227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 494b9b7798dfb8910800000000000000
+      internalID: 1840843639571985556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81412931c16df27c0800000000000000
+      internalID: -4093818120180722664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5db344cbe97aadb40800000000000000
+      internalID: 5465865397972777941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32113f4e49d754700800000000000000
+      internalID: 523963010108297507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b872af14ffdb1d20800000000000000
+      internalID: 3250437795673700528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de64a59d18ca76ca0800000000000000
+      internalID: -6023656302887418131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2272053150483d6e0800000000000000
+      internalID: -1813961067566455006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f878f34301e62820800000000000000
+      internalID: 2893247214773631222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed4594392da9fe3b0800000000000000
+      internalID: -5480991992281738018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 026eec50e5905a440800000000000000
+      internalID: 4946370065165379104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e4d414b4d8148500800000000000000
+      internalID: 397469968948843745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b869af3419ab96a70800000000000000
+      internalID: 8820786478255347339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a60bf6de7089654b0800000000000000
+      internalID: -5452003139069693846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 511d780fd380b6900800000000000000
+      internalID: 678645230970851605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dcdc9e160ea8f010800000000000000
+      internalID: 1222918640137723088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0b9a88adef70c570800000000000000
+      internalID: 8484922356677647114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18df5e80a0c1a6040800000000000000
+      internalID: 4641553195383258497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92487061bcce633d0800000000000000
+      internalID: -3227131725972274135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5ddad3df74e9a140800000000000000
+      internalID: 4731564121195732318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bd3791dfc8a6ff10800000000000000
+      internalID: 2303213869974633904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f4b2b2cc9b6aece0800000000000000
+      internalID: -1375168415182703375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c154aaf7abe7b6510800000000000000
+      internalID: 1543466636775408924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01aaf97e78bc78d80800000000000000
+      internalID: -8248400407938749936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ca6362f8996d9500800000000000000
+      internalID: 404595647155759817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9c99ec4b5b0cdb50800000000000000
+      internalID: 6619178039088094363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9ff1361f99a01080800000000000000
+      internalID: -9218681936490135649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48607a6887eb286d0800000000000000
+      internalID: -2989617777756141948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85e6b1c9d6b6c5950800000000000000
+      internalID: 6439139685747617368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 469fe0802f3128d10800000000000000
+      internalID: 2126283904310507876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0362309c39be5a400800000000000000
+      internalID: 334932767274116656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b961e9db85293840800000000000000
+      internalID: 5204232126989429168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Berry_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12f975fbf3c5797c0800000000000000
+      internalID: -4064678709815697631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Berry_0: -2632035235268609600
+      Cast_Berry_1: 5475229455650124174
+      Cast_Berry_10: -2694977423220850374
+      Cast_Berry_11: -6909081869558530279
+      Cast_Berry_12: -8406305645246226062
+      Cast_Berry_13: -1779248537706616629
+      Cast_Berry_14: 1449985135348183323
+      Cast_Berry_15: 6213111696516721481
+      Cast_Berry_16: 3616342273020052715
+      Cast_Berry_17: 7024365125468758572
+      Cast_Berry_18: -1883432835774427761
+      Cast_Berry_19: -7143088791550202318
+      Cast_Berry_2: -7580246097537602607
+      Cast_Berry_20: -1709480264470270863
+      Cast_Berry_21: 7760751441339215835
+      Cast_Berry_22: -6921267002663373454
+      Cast_Berry_23: 1441301979590212630
+      Cast_Berry_24: 634924093253485114
+      Cast_Berry_25: -7086097337114228634
+      Cast_Berry_26: -6723116372194147718
+      Cast_Berry_27: 4518393758172374908
+      Cast_Berry_28: 3401001719565189987
+      Cast_Berry_29: 4286666278610156481
+      Cast_Berry_3: -7279175703263412756
+      Cast_Berry_30: 895286213902915931
+      Cast_Berry_31: -3133895235476497222
+      Cast_Berry_32: -3462883788015515408
+      Cast_Berry_33: -8655882856484761024
+      Cast_Berry_34: 6390063791807268814
+      Cast_Berry_35: 8984946837916111395
+      Cast_Berry_36: 3658404118187512844
+      Cast_Berry_37: 9128410348361708976
+      Cast_Berry_38: -6385936207407468047
+      Cast_Berry_39: -4554370820828186588
+      Cast_Berry_4: -5479324813692129937
+      Cast_Berry_40: 5247663764217884508
+      Cast_Berry_41: 1943763070441751996
+      Cast_Berry_42: -8231723098846330101
+      Cast_Berry_43: -4491123932063499459
+      Cast_Berry_44: 2788873356945733965
+      Cast_Berry_45: -4192169401438017525
+      Cast_Berry_46: 3343953387470270235
+      Cast_Berry_47: -8072794058233230365
+      Cast_Berry_48: -7503323391117700259
+      Cast_Berry_49: 3418407628385564717
+      Cast_Berry_5: 8844523775953505584
+      Cast_Berry_50: 1105115343456914482
+      Cast_Berry_51: 3373749735203578548
+      Cast_Berry_52: -8543595889688001061
+      Cast_Berry_53: 2417594519654364
+      Cast_Berry_54: 7478310439398293130
+      Cast_Berry_55: -3066031056468867063
+      Cast_Berry_56: 2499145779860205376
+      Cast_Berry_57: -4071718390937880029
+      Cast_Berry_58: 6026750018865214942
+      Cast_Berry_59: -8770041035506157341
+      Cast_Berry_6: 1316391924704787744
+      Cast_Berry_60: 9159025095947517882
+      Cast_Berry_61: 6435885147166080387
+      Cast_Berry_62: -3294598513159893546
+      Cast_Berry_63: 4205176020908197339
+      Cast_Berry_64: 8696822026642239353
+      Cast_Berry_65: 7045102349590885490
+      Cast_Berry_66: 3040249250532088763
+      Cast_Berry_67: -6699355857513893468
+      Cast_Berry_68: 6107634051568739406
+      Cast_Berry_69: -5234905317479138136
+      Cast_Berry_7: -5819916620910605727
+      Cast_Berry_8: 6174056343464801174
+      Cast_Berry_9: 70262780273152459
+      Cast_Berry_Eat_0: 1840843639571985556
+      Cast_Berry_Eat_1: -4093818120180722664
+      Cast_Berry_Eat_2: 5465865397972777941
+      Cast_Berry_Eat_3: 523963010108297507
+      Cast_Berry_Eat_4: 3250437795673700528
+      Cast_Berry_Eat_5: -6023656302887418131
+      Cast_Berry_Eat_6: -1813961067566455006
+      Cast_Berry_Eat_7: 2893247214773631222
+      Cast_Berry_Harvest_0: -8110982684840563277
+      Cast_Berry_Harvest_1: 1840843731043491171
+      Cast_Berry_Harvest_2: -438772981225691420
+      Cast_Berry_Harvest_3: 8089633679723615593
+      Cast_Berry_Harvest_4: 4601365184585445662
+      Cast_Berry_Harvest_5: 7956699977994396828
+      Cast_Berry_Harvest_6: -414538990034771146
+      Cast_Berry_Harvest_7: 4826379485492502227
+      Cast_Berry_Net_0: -5480991992281738018
+      Cast_Berry_Net_1: 4946370065165379104
+      Cast_Berry_Net_2: 397469968948843745
+      Cast_Berry_Net_3: 8820786478255347339
+      Cast_Berry_Net_4: -5452003139069693846
+      Cast_Berry_Net_5: 678645230970851605
+      Cast_Berry_Net_6: 1222918640137723088
+      Cast_Berry_Net_7: 8484922356677647114
+      Cast_Berry_Squat_0: 4641553195383258497
+      Cast_Berry_Squat_1: -3227131725972274135
+      Cast_Berry_Squat_2: 4731564121195732318
+      Cast_Berry_Squat_3: 2303213869974633904
+      Cast_Berry_Squat_4: -1375168415182703375
+      Cast_Berry_Squat_5: 1543466636775408924
+      Cast_Berry_Squat_6: -8248400407938749936
+      Cast_Berry_Squat_7: 404595647155759817
+      Cast_Berry_Stretch_0: 6619178039088094363
+      Cast_Berry_Stretch_1: -9218681936490135649
+      Cast_Berry_Stretch_2: -2989617777756141948
+      Cast_Berry_Stretch_3: 6439139685747617368
+      Cast_Berry_Stretch_4: 2126283904310507876
+      Cast_Berry_Stretch_5: 334932767274116656
+      Cast_Berry_Stretch_6: 5204232126989429168
+      Cast_Berry_Stretch_7: -4064678709815697631
+      Cast_Berry_Walk_0: 6434986914842927254
+      Cast_Berry_Walk_1: -3071912904071052868
+      Cast_Berry_Walk_2: 3519849640688012142
+      Cast_Berry_Walk_3: 8330019197567280033
+      Cast_Berry_Walk_4: -4349469045983512225
+      Cast_Berry_Walk_5: 5245135669757568129
+      Cast_Berry_Walk_6: 3045991144894504920
+      Cast_Berry_Walk_7: -3438821658101107055
+      Cast_Berry_Walk_Down_0: 7728611363523243154
+      Cast_Berry_Walk_Down_1: -4286424452967003732
+      Cast_Berry_Walk_Down_2: -5811337801757075224
+      Cast_Berry_Walk_Down_3: -1834287279226104560
+      Cast_Berry_Walk_Down_4: 7140138713245601114
+      Cast_Berry_Walk_Down_5: -7100781643047007701
+      Cast_Berry_Walk_Down_6: -123596390092294010
+      Cast_Berry_Walk_Down_7: -529175123255970382
+      Cast_Berry_Walk_Up_0: -9069399848868331135
+      Cast_Berry_Walk_Up_1: -2957720482156058106
+      Cast_Berry_Walk_Up_2: 5587008448070857496
+      Cast_Berry_Walk_Up_3: -1865959919503453408
+      Cast_Berry_Walk_Up_4: -3630554776370464579
+      Cast_Berry_Walk_Up_5: -5123822327358418817
+      Cast_Berry_Walk_Up_6: -7343779559380876825
+      Cast_Berry_Walk_Up_7: 176550019586558297
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -172,6 +172,7 @@ public static partial class SettlementSetup
         neighborSo.FindProperty("_arrivalEntry").objectReferenceValue = entries["gb_p3_neighbor_arrival"];
         neighborSo.FindProperty("_moveInLine").stringValue = "새 집이 생겼다고 들었어요!\n저 집에서 살아도 될까요?";
         SetStrings(neighborSo.FindProperty("_lines"), "여기 정말 살기 좋아요!", "이웃이 많아서 든든해요.", "오늘은 뭘 도와줄까요?");
+        OtterCastSetup.ApplyTo(neighborSo, NeighborOtterId); // 따로 만든 모습이 있으면 농부 모습 대신
         neighborSo.ApplyModifiedPropertiesWithoutUndo();
         otters[NeighborOtterId] = neighbor;
 
