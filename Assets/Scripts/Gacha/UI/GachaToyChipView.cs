@@ -16,9 +16,9 @@ public class GachaToyChipView : MonoBehaviour
     [Header("등급 색 (흔함 · 레어 · 에픽)")]
     [SerializeField] private Color[] _frameColors =
     {
-        new Color(0.93f, 0.89f, 0.82f, 1f),
-        new Color(0.62f, 0.8f, 1f, 1f),
-        new Color(1f, 0.84f, 0.42f, 1f),
+        new Color(1f, 0.96f, 0.88f, 1f),
+        new Color(0.68f, 0.85f, 1f, 1f),
+        new Color(1f, 0.86f, 0.45f, 1f),
     };
 
     public void Show(ItemDefinition item, int tier, bool featured)

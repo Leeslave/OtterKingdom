@@ -84,6 +84,7 @@ public class GachaResultCardView : MonoBehaviour
 
     private Vector2 _restPosition;
     private bool _positionKnown;
+    private float _hintIndent;
 
     private void Awake()
     {
@@ -96,6 +97,7 @@ public class GachaResultCardView : MonoBehaviour
         if (!_positionKnown)
         {
             _restPosition = _panel.anchoredPosition;
+            _hintIndent = _hintText.rectTransform.offsetMin.x;
             _positionKnown = true;
         }
 
@@ -110,6 +112,10 @@ public class GachaResultCardView : MonoBehaviour
         _hintText.text = hint;
         _hintPortraitFrame.SetActive(portrait != null);
         _hintPortrait.sprite = portrait;
+        // 얼굴이 있으면 그 오른쪽부터, 없으면 카드 가운데
+        var hintMin = _hintText.rectTransform.offsetMin;
+        hintMin.x = portrait != null ? _hintIndent : 0f;
+        _hintText.rectTransform.offsetMin = hintMin;
         _shardText.text = pull.Shards > 0 ? $"이미 있는 장난감이라 반짝 조각 +{pull.Shards}" : "";
 
         _againLabel.text = again.Label;

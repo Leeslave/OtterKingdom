@@ -47,6 +47,10 @@ public sealed class GachaScreenState
     public bool GoldAffordable;
     public int GoldCost;
 
+    /// <summary>천장 아래 안내 줄 (포인트 · 골드 뽑기 줄이 없는 배너, 비우면 감춤)</summary>
+    public string Note;
+    public Sprite NoteIcon;
+
     public int Shards;
     public Sprite TicketIcon;
     public int Tickets;
