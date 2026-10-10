@@ -19,7 +19,7 @@ MonoBehaviour:
   _kind: 0
   _requiredLevel: 3
   _prerequisite: {fileID: 11400000, guid: 9737472da51cb334a9765bf2f5a28d12, type: 2}
-  _icon: {fileID: 21300000, guid: 5436b78cc2da9ae4b9c403c6b96b3d4d, type: 3}
+  _icon: {fileID: 21300000, guid: 86ccbc71a56bb93438cba76d320dd204, type: 3}
   _goalType: 11
   _goal: 1
   _itemFilter: {fileID: 0}

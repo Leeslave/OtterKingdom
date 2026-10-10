@@ -276,7 +276,7 @@ public static partial class SettlementSetup
         // 생활 의뢰 (경험치 = 받는 순간 레벨의 8%: E7 64 · E8 84 · E9 108)
         var snack = LoadOrCreate<LifeRequestTemplate>($"{LifeFolder}/Life_snack.asset").asset;
         snack.Setup("life_snack", LifeRequestKind.Deliver, "오늘의 간식", "출출한데 {item} {amount}개만 나눠 줄래요?",
-            new[] { carrot, cucumber }.Where(i => i != null), 8, null, 60, 8f, LoadArt("ICON_Otter_Snack"), GameManager.FarmZoneId);
+            new[] { carrot, cucumber }.Where(i => i != null), 8, null, 60, 8f, LoadPortrait("ICON_Otter_Cast_Explorer"), GameManager.FarmZoneId);
         var repair = LoadOrCreate<LifeRequestTemplate>($"{LifeFolder}/Life_repair.asset").asset;
         repair.Setup("life_repair", LifeRequestKind.Deliver, "집수리 재료", "지붕이 삐걱거려요. {item} {amount}개만 있으면 고칠 수 있어요.",
             new[] { wood, stone }.Where(i => i != null), 6, null, 80, 8f, LoadArt("ICON_Item_Wood"));

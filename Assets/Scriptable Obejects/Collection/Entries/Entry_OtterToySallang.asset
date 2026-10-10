@@ -16,7 +16,7 @@ MonoBehaviour:
   _tab: {fileID: 11400000, guid: e57bb4e159ee155448fc7c02082cbb58, type: 2}
   _displayName: "\uC0B4\uB791\uC774"
   _sortOrder: 116
-  _portrait: {fileID: 21300000, guid: 6b6af48686533404fbe6c7d79aec96a3, type: 3}
+  _portrait: {fileID: 21300000, guid: e6af9a4c80e16e44ebf8114425fc0ef3, type: 3}
   _silhouette: {fileID: 21300000, guid: 8db287fc936d8c24fa151bae0d00fa80, type: 3}
   _tagline: "\uBC9A\uAF43 \uBC14\uB78C\uC744 \uD0C0\uACE0 \uC628 \uD574\uB2EC"
   _description: "\uBD04\uBC14\uB78C\uC5D0 \uC2E4\uB824 \uC628 \uC0B4\uB791\uC0B4\uB791

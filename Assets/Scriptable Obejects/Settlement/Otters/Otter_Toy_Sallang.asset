@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_toy_sallang
   _displayName: "\uC0B4\uB791\uC774"
-  _portrait: {fileID: 21300000, guid: 6b6af48686533404fbe6c7d79aec96a3, type: 3}
-  _plazaPrefab: {fileID: 7043452558069457149, guid: bb3135875573f5549a628191893e39f6, type: 3}
-  _plazaTint: {r: 1, g: 0.84, b: 0.9, a: 1}
+  _portrait: {fileID: 21300000, guid: e6af9a4c80e16e44ebf8114425fc0ef3, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: 12e3ede16d4d06b43b21f374d096ec68, type: 3}
+  _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 9
   _toyVisitor: 1
   _visitTier: 2

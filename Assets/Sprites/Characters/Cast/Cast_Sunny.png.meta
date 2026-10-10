@@ -404,6 +404,198 @@ TextureImporter:
   - first:
       213: -2053879134643030096
     second: Cast_Sunny_Stretch_7
+  - first:
+      213: 1749846729186238935
+    second: Cast_Sunny_Walk_0_Feet
+  - first:
+      213: 7796094981660097190
+    second: Cast_Sunny_Walk_1_Feet
+  - first:
+      213: -8655477418281787565
+    second: Cast_Sunny_Walk_2_Feet
+  - first:
+      213: 6749802736119828670
+    second: Cast_Sunny_Walk_3_Feet
+  - first:
+      213: 7057431531227099888
+    second: Cast_Sunny_Walk_4_Feet
+  - first:
+      213: -3421627705783377503
+    second: Cast_Sunny_Walk_5_Feet
+  - first:
+      213: -3384901466987094955
+    second: Cast_Sunny_Walk_6_Feet
+  - first:
+      213: 4840341664961479623
+    second: Cast_Sunny_Walk_7_Feet
+  - first:
+      213: -6210612676379056163
+    second: Cast_Sunny_Walk_Down_0_Feet
+  - first:
+      213: 4042502631161362196
+    second: Cast_Sunny_Walk_Down_1_Feet
+  - first:
+      213: -5283659411731381268
+    second: Cast_Sunny_Walk_Down_2_Feet
+  - first:
+      213: 2785971253059282278
+    second: Cast_Sunny_Walk_Down_3_Feet
+  - first:
+      213: 5434519583174081137
+    second: Cast_Sunny_Walk_Down_4_Feet
+  - first:
+      213: 1611119969663570728
+    second: Cast_Sunny_Walk_Down_5_Feet
+  - first:
+      213: 1928208255757885848
+    second: Cast_Sunny_Walk_Down_6_Feet
+  - first:
+      213: 5005184786148332509
+    second: Cast_Sunny_Walk_Down_7_Feet
+  - first:
+      213: 6412899404644527893
+    second: Cast_Sunny_Walk_Up_0_Feet
+  - first:
+      213: 6027770596999795324
+    second: Cast_Sunny_Walk_Up_1_Feet
+  - first:
+      213: -3260342954812744775
+    second: Cast_Sunny_Walk_Up_2_Feet
+  - first:
+      213: -8177728612262576705
+    second: Cast_Sunny_Walk_Up_3_Feet
+  - first:
+      213: 7905135305050003984
+    second: Cast_Sunny_Walk_Up_4_Feet
+  - first:
+      213: -7435346442168514322
+    second: Cast_Sunny_Walk_Up_5_Feet
+  - first:
+      213: 8084105437282834414
+    second: Cast_Sunny_Walk_Up_6_Feet
+  - first:
+      213: 2967086591458138439
+    second: Cast_Sunny_Walk_Up_7_Feet
+  - first:
+      213: -6912710708433076010
+    second: Cast_Sunny_Harvest_0_Feet
+  - first:
+      213: -3819092071225452835
+    second: Cast_Sunny_Harvest_1_Feet
+  - first:
+      213: 8472383340510656648
+    second: Cast_Sunny_Harvest_2_Feet
+  - first:
+      213: -5540399543222737675
+    second: Cast_Sunny_Harvest_3_Feet
+  - first:
+      213: 6985175555527701850
+    second: Cast_Sunny_Harvest_4_Feet
+  - first:
+      213: 3057078878766974061
+    second: Cast_Sunny_Harvest_5_Feet
+  - first:
+      213: 3600117639487449866
+    second: Cast_Sunny_Harvest_6_Feet
+  - first:
+      213: 2470562742838388468
+    second: Cast_Sunny_Harvest_7_Feet
+  - first:
+      213: -6853685651375514772
+    second: Cast_Sunny_Eat_0_Feet
+  - first:
+      213: 6585064492907854982
+    second: Cast_Sunny_Eat_1_Feet
+  - first:
+      213: -496622303719277390
+    second: Cast_Sunny_Eat_2_Feet
+  - first:
+      213: 7655868356586005072
+    second: Cast_Sunny_Eat_3_Feet
+  - first:
+      213: 765163829931985096
+    second: Cast_Sunny_Eat_4_Feet
+  - first:
+      213: 6977026625754975013
+    second: Cast_Sunny_Eat_5_Feet
+  - first:
+      213: 2753085674363546321
+    second: Cast_Sunny_Eat_6_Feet
+  - first:
+      213: -4706911920679353806
+    second: Cast_Sunny_Eat_7_Feet
+  - first:
+      213: 3812207816496171008
+    second: Cast_Sunny_Net_0_Feet
+  - first:
+      213: -8887385158539249422
+    second: Cast_Sunny_Net_1_Feet
+  - first:
+      213: -5455135978256789446
+    second: Cast_Sunny_Net_2_Feet
+  - first:
+      213: -8023281589740636110
+    second: Cast_Sunny_Net_3_Feet
+  - first:
+      213: 5685534612619263082
+    second: Cast_Sunny_Net_4_Feet
+  - first:
+      213: -7839402398525892543
+    second: Cast_Sunny_Net_5_Feet
+  - first:
+      213: 7744792169979857932
+    second: Cast_Sunny_Net_6_Feet
+  - first:
+      213: -6972349519319541425
+    second: Cast_Sunny_Net_7_Feet
+  - first:
+      213: -1120741125175335306
+    second: Cast_Sunny_Squat_0_Feet
+  - first:
+      213: -3386885378460551721
+    second: Cast_Sunny_Squat_1_Feet
+  - first:
+      213: -3715980977146137372
+    second: Cast_Sunny_Squat_2_Feet
+  - first:
+      213: -1337456866611960605
+    second: Cast_Sunny_Squat_3_Feet
+  - first:
+      213: 3314548580310070880
+    second: Cast_Sunny_Squat_4_Feet
+  - first:
+      213: -8971556875155759878
+    second: Cast_Sunny_Squat_5_Feet
+  - first:
+      213: 5411277684658942102
+    second: Cast_Sunny_Squat_6_Feet
+  - first:
+      213: 7849426534704644714
+    second: Cast_Sunny_Squat_7_Feet
+  - first:
+      213: -3723538595930207549
+    second: Cast_Sunny_Stretch_0_Feet
+  - first:
+      213: 3357447946548955239
+    second: Cast_Sunny_Stretch_1_Feet
+  - first:
+      213: -5558885930931901536
+    second: Cast_Sunny_Stretch_2_Feet
+  - first:
+      213: 6467401901436929481
+    second: Cast_Sunny_Stretch_3_Feet
+  - first:
+      213: 5958649134434326350
+    second: Cast_Sunny_Stretch_4_Feet
+  - first:
+      213: -3218721256152288669
+    second: Cast_Sunny_Stretch_5_Feet
+  - first:
+      213: 5388146431599377691
+    second: Cast_Sunny_Stretch_6_Feet
+  - first:
+      213: 7434130698004247997
+    second: Cast_Sunny_Stretch_7_Feet
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -534,6 +726,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_0_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d166804454b84810800000000000000
+      internalID: 1749846729186238935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_1
       rect:
         serializedVersion: 2
@@ -551,6 +765,28 @@ TextureImporter:
       bones: []
       spriteID: cda6be4ad056c4ff0800000000000000
       internalID: -50554386532046116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_1_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aa3e01941b413c60800000000000000
+      internalID: 7796094981660097190
       vertices: []
       indices: 
       edges: []
@@ -578,6 +814,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_2_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35f16e1952191e780800000000000000
+      internalID: -8655477418281787565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_3
       rect:
         serializedVersion: 2
@@ -595,6 +853,28 @@ TextureImporter:
       bones: []
       spriteID: c4edb9b942ef32360800000000000000
       internalID: 7143832867122699852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_3_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb0d16693dd1cad50800000000000000
+      internalID: 6749802736119828670
       vertices: []
       indices: 
       edges: []
@@ -622,6 +902,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_4_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f2be65f59801f160800000000000000
+      internalID: 7057431531227099888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_5
       rect:
         serializedVersion: 2
@@ -639,6 +941,28 @@ TextureImporter:
       bones: []
       spriteID: 24b8544cf115b0120800000000000000
       internalID: 2381086024874167106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_5_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a1a52beabfe380d0800000000000000
+      internalID: -3421627705783377503
       vertices: []
       indices: 
       edges: []
@@ -666,6 +990,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_6_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55c198cbc0a6601d0800000000000000
+      internalID: -3384901466987094955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_7
       rect:
         serializedVersion: 2
@@ -683,6 +1029,28 @@ TextureImporter:
       bones: []
       spriteID: a12fccd1228857a60800000000000000
       internalID: 7671187220405744154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_7_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c34d8b59195c2340800000000000000
+      internalID: 4840341664961479623
       vertices: []
       indices: 
       edges: []
@@ -710,6 +1078,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_Down_0_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd763e21da87fc9a0800000000000000
+      internalID: -6210612676379056163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_Down_1
       rect:
         serializedVersion: 2
@@ -727,6 +1117,28 @@ TextureImporter:
       bones: []
       spriteID: b820873534465d800800000000000000
       internalID: 636525162668753547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_Down_1_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41774f599bad91830800000000000000
+      internalID: 4042502631161362196
       vertices: []
       indices: 
       edges: []
@@ -754,6 +1166,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_Down_2_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce30a9152cbaca6b0800000000000000
+      internalID: -5283659411731381268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_Down_3
       rect:
         serializedVersion: 2
@@ -771,6 +1205,28 @@ TextureImporter:
       bones: []
       spriteID: bb9a2b0ccf44f2f20800000000000000
       internalID: 3400012096043395515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_Down_3_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6656c0d0812c9a620800000000000000
+      internalID: 2785971253059282278
       vertices: []
       indices: 
       edges: []
@@ -798,6 +1254,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_Down_4_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17abeff74ca4b6b40800000000000000
+      internalID: 5434519583174081137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_Down_5
       rect:
         serializedVersion: 2
@@ -815,6 +1293,28 @@ TextureImporter:
       bones: []
       spriteID: ed8552300c91ae8e0800000000000000
       internalID: -1663488799882782498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_Down_5_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 823d55a8319db5610800000000000000
+      internalID: 1611119969663570728
       vertices: []
       indices: 
       edges: []
@@ -842,6 +1342,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_Down_6_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 891ac69413f52ca10800000000000000
+      internalID: 1928208255757885848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_Down_7
       rect:
         serializedVersion: 2
@@ -859,6 +1381,28 @@ TextureImporter:
       bones: []
       spriteID: cecc15027bccc8d30800000000000000
       internalID: 4435144819946409196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_Down_7_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd39f8d5b0df57540800000000000000
+      internalID: 5005184786148332509
       vertices: []
       indices: 
       edges: []
@@ -886,6 +1430,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_Up_0_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51fa62218023ff850800000000000000
+      internalID: 6412899404644527893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_Up_1
       rect:
         serializedVersion: 2
@@ -903,6 +1469,28 @@ TextureImporter:
       bones: []
       spriteID: 179189493dbc68810800000000000000
       internalID: 1767324013381032305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_Up_1_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7297b5eb61f6a350800000000000000
+      internalID: 6027770596999795324
       vertices: []
       indices: 
       edges: []
@@ -930,6 +1518,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_Up_2_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bb507c4b5fe0c2d0800000000000000
+      internalID: -3260342954812744775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_Up_3
       rect:
         serializedVersion: 2
@@ -947,6 +1557,28 @@ TextureImporter:
       bones: []
       spriteID: a0ffb58b2a9acb5b0800000000000000
       internalID: -5351215740880158966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_Up_3_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbd7a84972fd28e80800000000000000
+      internalID: -8177728612262576705
       vertices: []
       indices: 
       edges: []
@@ -974,6 +1606,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_Up_4_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01a97ee3daea4bd60800000000000000
+      internalID: 7905135305050003984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_Up_5
       rect:
         serializedVersion: 2
@@ -991,6 +1645,28 @@ TextureImporter:
       bones: []
       spriteID: 67392543a11808790800000000000000
       internalID: -7529876627416509578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_Up_5_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee8c4941ec750d890800000000000000
+      internalID: -7435346442168514322
       vertices: []
       indices: 
       edges: []
@@ -1018,6 +1694,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Walk_Up_6_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee71c045013803070800000000000000
+      internalID: 8084105437282834414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Walk_Up_7
       rect:
         serializedVersion: 2
@@ -1035,6 +1733,28 @@ TextureImporter:
       bones: []
       spriteID: dda2e77525feb6c60800000000000000
       internalID: 7812601115538500317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Walk_Up_7_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 749dfadd8853d2920800000000000000
+      internalID: 2967086591458138439
       vertices: []
       indices: 
       edges: []
@@ -1062,6 +1782,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Harvest_0_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d0cecc5c3e1110a0800000000000000
+      internalID: -6912710708433076010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Harvest_1
       rect:
         serializedVersion: 2
@@ -1079,6 +1821,28 @@ TextureImporter:
       bones: []
       spriteID: 24133a5f76c18a210800000000000000
       internalID: 1344355721598415170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Harvest_1_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd69812eefbdffac0800000000000000
+      internalID: -3819092071225452835
       vertices: []
       indices: 
       edges: []
@@ -1106,6 +1870,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Harvest_2_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 888331472c3f39570800000000000000
+      internalID: 8472383340510656648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Harvest_3
       rect:
         serializedVersion: 2
@@ -1123,6 +1909,28 @@ TextureImporter:
       bones: []
       spriteID: 131590a86471bb380800000000000000
       internalID: -8954537842365083343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Harvest_3_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f4e87048fb8c13b0800000000000000
+      internalID: -5540399543222737675
       vertices: []
       indices: 
       edges: []
@@ -1150,6 +1958,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Harvest_4_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5578f0a82450f060800000000000000
+      internalID: 6985175555527701850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Harvest_5
       rect:
         serializedVersion: 2
@@ -1167,6 +1997,28 @@ TextureImporter:
       bones: []
       spriteID: 142e8b46f9f4dcbf0800000000000000
       internalID: -302498053955722687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Harvest_5_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d64414b0b0dec6a20800000000000000
+      internalID: 3057078878766974061
       vertices: []
       indices: 
       edges: []
@@ -1194,6 +2046,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Harvest_6_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0b644b3bef26f130800000000000000
+      internalID: 3600117639487449866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Harvest_7
       rect:
         serializedVersion: 2
@@ -1211,6 +2085,28 @@ TextureImporter:
       bones: []
       spriteID: 55c6e20a123c3d060800000000000000
       internalID: 6977134796915764309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Harvest_7_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f6623a99b3394220800000000000000
+      internalID: 2470562742838388468
       vertices: []
       indices: 
       edges: []
@@ -1238,6 +2134,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Eat_0_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6b12936631d2e0a0800000000000000
+      internalID: -6853685651375514772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Eat_1
       rect:
         serializedVersion: 2
@@ -1255,6 +2173,28 @@ TextureImporter:
       bones: []
       spriteID: ed05f36d17704ec30800000000000000
       internalID: 4387640122472878302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Eat_1_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68c7fc26449d26b50800000000000000
+      internalID: 6585064492907854982
       vertices: []
       indices: 
       edges: []
@@ -1282,6 +2222,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Eat_2_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bcb64f55a4ab19f0800000000000000
+      internalID: -496622303719277390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Eat_3
       rect:
         serializedVersion: 2
@@ -1299,6 +2261,28 @@ TextureImporter:
       bones: []
       spriteID: 98b2617c964eb7950800000000000000
       internalID: 6447998434473814921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Eat_3_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 052667135bb1f3a60800000000000000
+      internalID: 7655868356586005072
       vertices: []
       indices: 
       edges: []
@@ -1326,6 +2310,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Eat_4_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c8c21603786e9a00800000000000000
+      internalID: 765163829931985096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Eat_5
       rect:
         serializedVersion: 2
@@ -1343,6 +2349,28 @@ TextureImporter:
       bones: []
       spriteID: e473c6f26ed722d10800000000000000
       internalID: 2099378803899643726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Eat_5_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52b419010c063d060800000000000000
+      internalID: 6977026625754975013
       vertices: []
       indices: 
       edges: []
@@ -1370,6 +2398,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Eat_6_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dae7a895dce43620800000000000000
+      internalID: 2753085674363546321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Eat_7
       rect:
         serializedVersion: 2
@@ -1387,6 +2437,28 @@ TextureImporter:
       bones: []
       spriteID: 1222e15736a83f340800000000000000
       internalID: 4896409379653165601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Eat_7_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2320bd2eb80bdaeb0800000000000000
+      internalID: -4706911920679353806
       vertices: []
       indices: 
       edges: []
@@ -1414,6 +2486,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Net_0_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 008c838afcea7e430800000000000000
+      internalID: 3812207816496171008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Net_1
       rect:
         serializedVersion: 2
@@ -1431,6 +2525,28 @@ TextureImporter:
       bones: []
       spriteID: af5aa453ce45b9d70800000000000000
       internalID: 9050921249614243322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Net_1_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f87033294aa9a480800000000000000
+      internalID: -8887385158539249422
       vertices: []
       indices: 
       edges: []
@@ -1458,6 +2574,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Net_2_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a301d86fab67b44b0800000000000000
+      internalID: -5455135978256789446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Net_3
       rect:
         serializedVersion: 2
@@ -1475,6 +2613,28 @@ TextureImporter:
       bones: []
       spriteID: a541ca1967c9af310800000000000000
       internalID: 1439635063962342490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Net_3_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 238f39e37e397a090800000000000000
+      internalID: -8023281589740636110
       vertices: []
       indices: 
       edges: []
@@ -1502,6 +2662,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Net_4_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6cfb5f5b9317ee40800000000000000
+      internalID: 5685534612619263082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Net_5
       rect:
         serializedVersion: 2
@@ -1519,6 +2701,28 @@ TextureImporter:
       bones: []
       spriteID: acfe97c59f2800e30800000000000000
       internalID: 4467714837861494730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Net_5_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 148d480bd09d43390800000000000000
+      internalID: -7839402398525892543
       vertices: []
       indices: 
       edges: []
@@ -1546,6 +2750,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Net_6_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c40e6e1770b7b60800000000000000
+      internalID: 7744792169979857932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Net_7
       rect:
         serializedVersion: 2
@@ -1563,6 +2789,28 @@ TextureImporter:
       bones: []
       spriteID: 303dd3480627153c0800000000000000
       internalID: -4372588004338969853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Net_7_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f49d713ad0d3d3f90800000000000000
+      internalID: -6972349519319541425
       vertices: []
       indices: 
       edges: []
@@ -1590,6 +2838,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Squat_0_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 676a0c472e35270f0800000000000000
+      internalID: -1120741125175335306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Squat_1
       rect:
         serializedVersion: 2
@@ -1607,6 +2877,28 @@ TextureImporter:
       bones: []
       spriteID: 24e25fb7356706ca0800000000000000
       internalID: -6025686200487694782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Squat_1_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d5f4e951bd5ff0d0800000000000000
+      internalID: -3386885378460551721
       vertices: []
       indices: 
       edges: []
@@ -1634,6 +2926,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Squat_2_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e478194dfe2e6cc0800000000000000
+      internalID: -3715980977146137372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Squat_3
       rect:
         serializedVersion: 2
@@ -1651,6 +2965,28 @@ TextureImporter:
       bones: []
       spriteID: c3b6a2992f2a73a20800000000000000
       internalID: 3042079236147538748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Squat_3_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e4ef23e016607de0800000000000000
+      internalID: -1337456866611960605
       vertices: []
       indices: 
       edges: []
@@ -1678,6 +3014,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Squat_4_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06638206f54affd20800000000000000
+      internalID: 3314548580310070880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Squat_5
       rect:
         serializedVersion: 2
@@ -1695,6 +3053,28 @@ TextureImporter:
       bones: []
       spriteID: 0e0ccac12fe430a80800000000000000
       internalID: -8501864869775228704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Squat_5_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afc902e2e80ae7380800000000000000
+      internalID: -8971556875155759878
       vertices: []
       indices: 
       edges: []
@@ -1722,6 +3102,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Squat_6_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 690381f4268b81b40800000000000000
+      internalID: 5411277684658942102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Squat_7
       rect:
         serializedVersion: 2
@@ -1739,6 +3141,28 @@ TextureImporter:
       bones: []
       spriteID: 6b2ce3cf171b41780800000000000000
       internalID: -8713144275933674826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Squat_7_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a62889368d3ceec60800000000000000
+      internalID: 7849426534704644714
       vertices: []
       indices: 
       edges: []
@@ -1766,6 +3190,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Stretch_0_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ca8f1a0065535cc0800000000000000
+      internalID: -3723538595930207549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Stretch_1
       rect:
         serializedVersion: 2
@@ -1783,6 +3229,28 @@ TextureImporter:
       bones: []
       spriteID: 4ca5a39b9be64e4e0800000000000000
       internalID: -1953314594416338236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Stretch_1_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7684aed6e1d089e20800000000000000
+      internalID: 3357447946548955239
       vertices: []
       indices: 
       edges: []
@@ -1810,6 +3278,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Stretch_2_Feet
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ab23e3b2bedad2b0800000000000000
+      internalID: -5558885930931901536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Stretch_3
       rect:
         serializedVersion: 2
@@ -1827,6 +3317,28 @@ TextureImporter:
       bones: []
       spriteID: 429571d8e6b3396f0800000000000000
       internalID: -679133772803253980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Stretch_3_Feet
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c585da73c3d0c950800000000000000
+      internalID: 6467401901436929481
       vertices: []
       indices: 
       edges: []
@@ -1854,6 +3366,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Stretch_4_Feet
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e47952741df51b250800000000000000
+      internalID: 5958649134434326350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Stretch_5
       rect:
         serializedVersion: 2
@@ -1871,6 +3405,28 @@ TextureImporter:
       bones: []
       spriteID: c205df99d42d01840800000000000000
       internalID: 5192881601096011820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Stretch_5_Feet
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3623b00321ec453d0800000000000000
+      internalID: -3218721256152288669
       vertices: []
       indices: 
       edges: []
@@ -1898,6 +3454,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Cast_Sunny_Stretch_6_Feet
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1df445c1aa86ca40800000000000000
+      internalID: 5388146431599377691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Cast_Sunny_Stretch_7
       rect:
         serializedVersion: 2
@@ -1915,6 +3493,28 @@ TextureImporter:
       bones: []
       spriteID: 0b7f3081fc72f73e0800000000000000
       internalID: -2053879134643030096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sunny_Stretch_7_Feet
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db5be5c6b765b2760800000000000000
+      internalID: 7434130698004247997
       vertices: []
       indices: 
       edges: []
@@ -2004,69 +3604,133 @@ TextureImporter:
       Cast_Sunny_8: -2283927956902497040
       Cast_Sunny_9: 2170760101221439147
       Cast_Sunny_Eat_0: 9013873318144307575
+      Cast_Sunny_Eat_0_Feet: -6853685651375514772
       Cast_Sunny_Eat_1: 4387640122472878302
+      Cast_Sunny_Eat_1_Feet: 6585064492907854982
       Cast_Sunny_Eat_2: 1299162676610707284
+      Cast_Sunny_Eat_2_Feet: -496622303719277390
       Cast_Sunny_Eat_3: 6447998434473814921
+      Cast_Sunny_Eat_3_Feet: 7655868356586005072
       Cast_Sunny_Eat_4: -1576274072873185969
+      Cast_Sunny_Eat_4_Feet: 765163829931985096
       Cast_Sunny_Eat_5: 2099378803899643726
+      Cast_Sunny_Eat_5_Feet: 6977026625754975013
       Cast_Sunny_Eat_6: 5534166249484268853
+      Cast_Sunny_Eat_6_Feet: 2753085674363546321
       Cast_Sunny_Eat_7: 4896409379653165601
+      Cast_Sunny_Eat_7_Feet: -4706911920679353806
       Cast_Sunny_Harvest_0: -8299050783490098400
+      Cast_Sunny_Harvest_0_Feet: -6912710708433076010
       Cast_Sunny_Harvest_1: 1344355721598415170
+      Cast_Sunny_Harvest_1_Feet: -3819092071225452835
       Cast_Sunny_Harvest_2: -6016416959644902379
+      Cast_Sunny_Harvest_2_Feet: 8472383340510656648
       Cast_Sunny_Harvest_3: -8954537842365083343
+      Cast_Sunny_Harvest_3_Feet: -5540399543222737675
       Cast_Sunny_Harvest_4: -3431520234943266209
+      Cast_Sunny_Harvest_4_Feet: 6985175555527701850
       Cast_Sunny_Harvest_5: -302498053955722687
+      Cast_Sunny_Harvest_5_Feet: 3057078878766974061
       Cast_Sunny_Harvest_6: -46595596572555834
+      Cast_Sunny_Harvest_6_Feet: 3600117639487449866
       Cast_Sunny_Harvest_7: 6977134796915764309
+      Cast_Sunny_Harvest_7_Feet: 2470562742838388468
       Cast_Sunny_Net_0: 1348198714293350873
+      Cast_Sunny_Net_0_Feet: 3812207816496171008
       Cast_Sunny_Net_1: 9050921249614243322
+      Cast_Sunny_Net_1_Feet: -8887385158539249422
       Cast_Sunny_Net_2: 2008027747896754429
+      Cast_Sunny_Net_2_Feet: -5455135978256789446
       Cast_Sunny_Net_3: 1439635063962342490
+      Cast_Sunny_Net_3_Feet: -8023281589740636110
       Cast_Sunny_Net_4: 3419511598658474724
+      Cast_Sunny_Net_4_Feet: 5685534612619263082
       Cast_Sunny_Net_5: 4467714837861494730
+      Cast_Sunny_Net_5_Feet: -7839402398525892543
       Cast_Sunny_Net_6: -3157515491158780930
+      Cast_Sunny_Net_6_Feet: 7744792169979857932
       Cast_Sunny_Net_7: -4372588004338969853
+      Cast_Sunny_Net_7_Feet: -6972349519319541425
       Cast_Sunny_Squat_0: 1816501852026830510
+      Cast_Sunny_Squat_0_Feet: -1120741125175335306
       Cast_Sunny_Squat_1: -6025686200487694782
+      Cast_Sunny_Squat_1_Feet: -3386885378460551721
       Cast_Sunny_Squat_2: -2653363868464328976
+      Cast_Sunny_Squat_2_Feet: -3715980977146137372
       Cast_Sunny_Squat_3: 3042079236147538748
+      Cast_Sunny_Squat_3_Feet: -1337456866611960605
       Cast_Sunny_Squat_4: -8171026321292806794
+      Cast_Sunny_Squat_4_Feet: 3314548580310070880
       Cast_Sunny_Squat_5: -8501864869775228704
+      Cast_Sunny_Squat_5_Feet: -8971556875155759878
       Cast_Sunny_Squat_6: -1838828941338828206
+      Cast_Sunny_Squat_6_Feet: 5411277684658942102
       Cast_Sunny_Squat_7: -8713144275933674826
+      Cast_Sunny_Squat_7_Feet: 7849426534704644714
       Cast_Sunny_Stretch_0: 3809807802201393383
+      Cast_Sunny_Stretch_0_Feet: -3723538595930207549
       Cast_Sunny_Stretch_1: -1953314594416338236
+      Cast_Sunny_Stretch_1_Feet: 3357447946548955239
       Cast_Sunny_Stretch_2: -9139294994306074781
+      Cast_Sunny_Stretch_2_Feet: -5558885930931901536
       Cast_Sunny_Stretch_3: -679133772803253980
+      Cast_Sunny_Stretch_3_Feet: 6467401901436929481
       Cast_Sunny_Stretch_4: -6825693815716385767
+      Cast_Sunny_Stretch_4_Feet: 5958649134434326350
       Cast_Sunny_Stretch_5: 5192881601096011820
+      Cast_Sunny_Stretch_5_Feet: -3218721256152288669
       Cast_Sunny_Stretch_6: 81903785235612810
+      Cast_Sunny_Stretch_6_Feet: 5388146431599377691
       Cast_Sunny_Stretch_7: -2053879134643030096
+      Cast_Sunny_Stretch_7_Feet: 7434130698004247997
       Cast_Sunny_Walk_0: 3687955854524627831
+      Cast_Sunny_Walk_0_Feet: 1749846729186238935
       Cast_Sunny_Walk_1: -50554386532046116
+      Cast_Sunny_Walk_1_Feet: 7796094981660097190
       Cast_Sunny_Walk_2: 1688363713700122581
+      Cast_Sunny_Walk_2_Feet: -8655477418281787565
       Cast_Sunny_Walk_3: 7143832867122699852
+      Cast_Sunny_Walk_3_Feet: 6749802736119828670
       Cast_Sunny_Walk_4: 4164681370430490466
+      Cast_Sunny_Walk_4_Feet: 7057431531227099888
       Cast_Sunny_Walk_5: 2381086024874167106
+      Cast_Sunny_Walk_5_Feet: -3421627705783377503
       Cast_Sunny_Walk_6: -4803958284036454284
+      Cast_Sunny_Walk_6_Feet: -3384901466987094955
       Cast_Sunny_Walk_7: 7671187220405744154
+      Cast_Sunny_Walk_7_Feet: 4840341664961479623
       Cast_Sunny_Walk_Down_0: 8106847920044191134
+      Cast_Sunny_Walk_Down_0_Feet: -6210612676379056163
       Cast_Sunny_Walk_Down_1: 636525162668753547
+      Cast_Sunny_Walk_Down_1_Feet: 4042502631161362196
       Cast_Sunny_Walk_Down_2: 1740769115636703302
+      Cast_Sunny_Walk_Down_2_Feet: -5283659411731381268
       Cast_Sunny_Walk_Down_3: 3400012096043395515
+      Cast_Sunny_Walk_Down_3_Feet: 2785971253059282278
       Cast_Sunny_Walk_Down_4: 4791657763826683264
+      Cast_Sunny_Walk_Down_4_Feet: 5434519583174081137
       Cast_Sunny_Walk_Down_5: -1663488799882782498
+      Cast_Sunny_Walk_Down_5_Feet: 1611119969663570728
       Cast_Sunny_Walk_Down_6: -5596593258961105695
+      Cast_Sunny_Walk_Down_6_Feet: 1928208255757885848
       Cast_Sunny_Walk_Down_7: 4435144819946409196
+      Cast_Sunny_Walk_Down_7_Feet: 5005184786148332509
       Cast_Sunny_Walk_Up_0: 5570604951267905397
+      Cast_Sunny_Walk_Up_0_Feet: 6412899404644527893
       Cast_Sunny_Walk_Up_1: 1767324013381032305
+      Cast_Sunny_Walk_Up_1_Feet: 6027770596999795324
       Cast_Sunny_Walk_Up_2: 5856623856558408651
+      Cast_Sunny_Walk_Up_2_Feet: -3260342954812744775
       Cast_Sunny_Walk_Up_3: -5351215740880158966
+      Cast_Sunny_Walk_Up_3_Feet: -8177728612262576705
       Cast_Sunny_Walk_Up_4: -4128442812184520159
+      Cast_Sunny_Walk_Up_4_Feet: 7905135305050003984
       Cast_Sunny_Walk_Up_5: -7529876627416509578
+      Cast_Sunny_Walk_Up_5_Feet: -7435346442168514322
       Cast_Sunny_Walk_Up_6: 918299109082680181
+      Cast_Sunny_Walk_Up_6_Feet: 8084105437282834414
       Cast_Sunny_Walk_Up_7: 7812601115538500317
+      Cast_Sunny_Walk_Up_7_Feet: 2967086591458138439
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

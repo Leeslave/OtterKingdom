@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_Zucchini
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: crop_zucchini
+  _tab: {fileID: 11400000, guid: dcb3b9557d9798d4290580afb291c277, type: 2}
+  _displayName: 
+  _sortOrder: 12
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 2f1c0fda76e3838488a4fb4412bedd49, type: 3}
+  _tagline: "\uC5F0\uB463\uBE5B \uAE38\uCB49\uD55C \uD638\uBC15."
+  _description: "\uBD80\uCE68\uAC1C\uB85C \uBD80\uCE58\uBA74 \uAD11\uC7A5\uC5D0 \uACE0\uC18C\uD55C
+    \uB0C4\uC0C8\uAC00 \uD37C\uC838\uC694."
+  _extraValue: "\uBC2D"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: 0dccbabc540004b4ab588316c35b01b1, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

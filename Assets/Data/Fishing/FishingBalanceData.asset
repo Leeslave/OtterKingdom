@@ -14,7 +14,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishingBalanceData
   fishItemId: fish_mackerel
   trashItemId: trash_basic
+  fishTable:
+  - itemId: fish_mackerel
+    tier: 0
+    minRodLevel: 1
+    weight: 100
+  - itemId: fish_sardine
+    tier: 0
+    minRodLevel: 1
+    weight: 100
+  - itemId: fish_horse_mackerel
+    tier: 0
+    minRodLevel: 3
+    weight: 100
+  - itemId: fish_saury
+    tier: 0
+    minRodLevel: 5
+    weight: 100
+  - itemId: fish_rockfish
+    tier: 0
+    minRodLevel: 7
+    weight: 100
+  - itemId: fish_sea_bream
+    tier: 1
+    minRodLevel: 6
+    weight: 15
+  - itemId: fish_salmon
+    tier: 1
+    minRodLevel: 9
+    weight: 15
+  - itemId: fish_flounder
+    tier: 1
+    minRodLevel: 12
+    weight: 15
+  - itemId: fish_tuna
+    tier: 2
+    minRodLevel: 15
+    weight: 3
+  - itemId: fish_golden_mackerel
+    tier: 2
+    minRodLevel: 18
+    weight: 3
+  rareLuckPerRodLevel: 0.05
   biteDelaySec: {x: 10, y: 30}
   baseFishChance: 0.5
   fishChancePerRodLevel: 0.05
-  rodUpgradeCosts: 64000000c80000009001000020030000
+  maxFishChance: 0.95
+  rodUpgradeCosts: 64000000c80000009001000020030000b0040000a406000060090000e40c00009411000070170000401f000004290000b036000044480000c05d000018790000409c000020cb0000b8050100
+  offlineUnlockRodLevel: 2
+  onlineAnimationSecPerCatch: 5
+  offlineSlowdown: 4

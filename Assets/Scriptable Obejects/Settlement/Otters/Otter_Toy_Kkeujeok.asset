@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_toy_kkeujeok
   _displayName: "\uB044\uC801\uC774"
-  _portrait: {fileID: 21300000, guid: 500d1033b5622254abc1d583c590d016, type: 3}
-  _plazaPrefab: {fileID: 6466850907306658564, guid: 4512c23ba6c15d84bb661f225cdd48a6, type: 3}
+  _portrait: {fileID: 21300000, guid: 819d74aa7dcb5a245a4500bf5b591d3d, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: 8c9faf1e57b74ba47b42bbb388548972, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 10
   _toyVisitor: 1

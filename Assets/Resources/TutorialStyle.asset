@@ -16,7 +16,7 @@ MonoBehaviour:
   _bodyFont: {fileID: 11400000, guid: 237a5805bd097184181530db2ded2133, type: 2}
   _panel: {fileID: -2927049211254050797, guid: 3041aa4fed2307141a8552323fa69aea, type: 3}
   _divider: {fileID: 21300000, guid: b4872e1aa60332e43ac5e7b50311cf67, type: 3}
-  _guidePortrait: {fileID: 21300000, guid: 2456492ce6202ca41a30a26547562ba4, type: 3}
+  _guidePortrait: {fileID: 21300000, guid: 4714a1aeba5d41241880dedbe79725e9, type: 3}
   _portraitFrame: {fileID: 21300000, guid: 79bffadeaed098c4895947aed65438bb, type: 3}
   _nextButton: {fileID: 21300000, guid: 8f45ebc0bd5c4cc4888ffebf02d54747, type: 3}
   _skipButton: {fileID: 21300000, guid: e1a4fae1055404e41b7775abfefba23f, type: 3}

@@ -50,6 +50,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7749fc528f04422a1d4961eddff8d83, type: 2}
   - {fileID: 11400000, guid: a633d9c83b754f9695e117876b5e2b47, type: 2}
   - {fileID: 11400000, guid: 9f99786d03c2ac64e87e281518c70fdb, type: 2}
+  - {fileID: 11400000, guid: c9d1f6f9f56fcd541a0254b1548f05a2, type: 2}
+  - {fileID: 11400000, guid: 529be7597d33c7849b76190805e785f1, type: 2}
+  - {fileID: 11400000, guid: 1cb963523afa6de479fd5e02dd03c7cb, type: 2}
+  - {fileID: 11400000, guid: 7a33cc908e4786d40ad03b68f6a888df, type: 2}
+  - {fileID: 11400000, guid: c85d4b67f07480e439404344e9018160, type: 2}
+  - {fileID: 11400000, guid: ed74597d76468f049875bccb2005d92c, type: 2}
+  - {fileID: 11400000, guid: e46a63601a3f77a4a9e6da0c4115714c, type: 2}
+  - {fileID: 11400000, guid: 63addcbfe809fce4eacfb782472abb82, type: 2}
+  - {fileID: 11400000, guid: 61a5d0296f9bce4478ba2406d55ac35d, type: 2}
+  - {fileID: 11400000, guid: 3fbb277fa8f065141aeb60db62392837, type: 2}
   farmBalance: {fileID: 0}
   fishingBalance: {fileID: 11400000, guid: 821d8ca2ca83e6f49b91a462ea19214a, type: 2}
   miningBalance: {fileID: 11400000, guid: 83ffdef1f57a2a5489c9bacc6dd0928b, type: 2}

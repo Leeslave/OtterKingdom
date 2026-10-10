@@ -1,0 +1,2070 @@
+fileFormatVersion: 2
+guid: acf4bbd14c4772f44b1a913a7c819506
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1355416236561922199
+    second: Cast_Miner_0
+  - first:
+      213: -7634070433159740402
+    second: Cast_Miner_1
+  - first:
+      213: -7750892584747295067
+    second: Cast_Miner_2
+  - first:
+      213: -7632442686095300618
+    second: Cast_Miner_3
+  - first:
+      213: -7503531006680640850
+    second: Cast_Miner_4
+  - first:
+      213: 6511724538232807058
+    second: Cast_Miner_5
+  - first:
+      213: -6597883780282164676
+    second: Cast_Miner_6
+  - first:
+      213: -7921603764436967732
+    second: Cast_Miner_7
+  - first:
+      213: 7170600126910279565
+    second: Cast_Miner_8
+  - first:
+      213: -64198926295545384
+    second: Cast_Miner_9
+  - first:
+      213: 6982656453219217883
+    second: Cast_Miner_10
+  - first:
+      213: -2929577915992942043
+    second: Cast_Miner_11
+  - first:
+      213: 8359241461550268122
+    second: Cast_Miner_12
+  - first:
+      213: -525301921552915264
+    second: Cast_Miner_13
+  - first:
+      213: 1810383585992806378
+    second: Cast_Miner_14
+  - first:
+      213: 5578899725359667834
+    second: Cast_Miner_15
+  - first:
+      213: -728099880703017394
+    second: Cast_Miner_16
+  - first:
+      213: 5176894244748866195
+    second: Cast_Miner_17
+  - first:
+      213: 3183598944367233057
+    second: Cast_Miner_18
+  - first:
+      213: 8369213436437074910
+    second: Cast_Miner_19
+  - first:
+      213: 8389044783094428526
+    second: Cast_Miner_20
+  - first:
+      213: 4229958202198687720
+    second: Cast_Miner_21
+  - first:
+      213: -3424467208398515795
+    second: Cast_Miner_22
+  - first:
+      213: -5299351827503780815
+    second: Cast_Miner_23
+  - first:
+      213: -3040662167809790639
+    second: Cast_Miner_24
+  - first:
+      213: 7158580017294550123
+    second: Cast_Miner_25
+  - first:
+      213: -6165319655164562540
+    second: Cast_Miner_26
+  - first:
+      213: 3115775388268043758
+    second: Cast_Miner_27
+  - first:
+      213: -2583120548544713258
+    second: Cast_Miner_28
+  - first:
+      213: -228457694438054728
+    second: Cast_Miner_29
+  - first:
+      213: 8874967597749449997
+    second: Cast_Miner_30
+  - first:
+      213: -6817957231792458928
+    second: Cast_Miner_31
+  - first:
+      213: -3973236219508737871
+    second: Cast_Miner_32
+  - first:
+      213: -7344827292669378656
+    second: Cast_Miner_33
+  - first:
+      213: 7417661622728731103
+    second: Cast_Miner_34
+  - first:
+      213: 4632192394074462216
+    second: Cast_Miner_35
+  - first:
+      213: -2007816512239296189
+    second: Cast_Miner_36
+  - first:
+      213: 1210307175883600643
+    second: Cast_Miner_37
+  - first:
+      213: 467791073469760918
+    second: Cast_Miner_38
+  - first:
+      213: 1090802374372322201
+    second: Cast_Miner_39
+  - first:
+      213: -644366521724144731
+    second: Cast_Miner_40
+  - first:
+      213: 6607156071063183764
+    second: Cast_Miner_41
+  - first:
+      213: -1002981148156742006
+    second: Cast_Miner_42
+  - first:
+      213: 4061616314094393123
+    second: Cast_Miner_43
+  - first:
+      213: 6431469435982220765
+    second: Cast_Miner_44
+  - first:
+      213: 2215045480070101017
+    second: Cast_Miner_45
+  - first:
+      213: -309276173848510645
+    second: Cast_Miner_46
+  - first:
+      213: 1650197803534291402
+    second: Cast_Miner_47
+  - first:
+      213: -2858171548839427274
+    second: Cast_Miner_48
+  - first:
+      213: -3988896831476546499
+    second: Cast_Miner_49
+  - first:
+      213: -4169997803064518680
+    second: Cast_Miner_50
+  - first:
+      213: 8818227257114639476
+    second: Cast_Miner_51
+  - first:
+      213: 4437497950508299860
+    second: Cast_Miner_52
+  - first:
+      213: -6160920866310486789
+    second: Cast_Miner_53
+  - first:
+      213: 1456078827995505246
+    second: Cast_Miner_54
+  - first:
+      213: -4223076414742536678
+    second: Cast_Miner_55
+  - first:
+      213: 6592540506498622126
+    second: Cast_Miner_56
+  - first:
+      213: -8268505381382155458
+    second: Cast_Miner_57
+  - first:
+      213: 3482788659140392903
+    second: Cast_Miner_58
+  - first:
+      213: 2447208478792591042
+    second: Cast_Miner_59
+  - first:
+      213: -2114724550037825108
+    second: Cast_Miner_60
+  - first:
+      213: 2228664646596482620
+    second: Cast_Miner_61
+  - first:
+      213: 6498967451805499998
+    second: Cast_Miner_62
+  - first:
+      213: -1867553410655218235
+    second: Cast_Miner_63
+  - first:
+      213: -1189876290112339870
+    second: Cast_Miner_64
+  - first:
+      213: 1670397202922633112
+    second: Cast_Miner_65
+  - first:
+      213: -5602053775363355927
+    second: Cast_Miner_66
+  - first:
+      213: -1152990242732233344
+    second: Cast_Miner_67
+  - first:
+      213: 4230650407692909712
+    second: Cast_Miner_68
+  - first:
+      213: -2914212326790477333
+    second: Cast_Miner_Walk_0
+  - first:
+      213: 540638864571589096
+    second: Cast_Miner_Walk_1
+  - first:
+      213: 4847500800997842555
+    second: Cast_Miner_Walk_2
+  - first:
+      213: -5447800958664736078
+    second: Cast_Miner_Walk_3
+  - first:
+      213: 3303360437666546777
+    second: Cast_Miner_Walk_4
+  - first:
+      213: 3650521266843096602
+    second: Cast_Miner_Walk_5
+  - first:
+      213: -769762559817449279
+    second: Cast_Miner_Walk_6
+  - first:
+      213: 119083112353312500
+    second: Cast_Miner_Walk_7
+  - first:
+      213: -8291791704195497110
+    second: Cast_Miner_Walk_Down_0
+  - first:
+      213: 3549541548482141298
+    second: Cast_Miner_Walk_Down_1
+  - first:
+      213: 1771926930144302801
+    second: Cast_Miner_Walk_Down_2
+  - first:
+      213: 5566036987319490176
+    second: Cast_Miner_Walk_Down_3
+  - first:
+      213: 2039673733748017861
+    second: Cast_Miner_Walk_Down_4
+  - first:
+      213: -6923854018833738758
+    second: Cast_Miner_Walk_Down_5
+  - first:
+      213: 5610957450497048634
+    second: Cast_Miner_Walk_Down_6
+  - first:
+      213: 2395038543225006702
+    second: Cast_Miner_Walk_Down_7
+  - first:
+      213: 7534078191242645143
+    second: Cast_Miner_Walk_Up_0
+  - first:
+      213: 3831855714405390992
+    second: Cast_Miner_Walk_Up_1
+  - first:
+      213: -1606976756554892924
+    second: Cast_Miner_Walk_Up_2
+  - first:
+      213: 109980192627460432
+    second: Cast_Miner_Walk_Up_3
+  - first:
+      213: 5900174716827240017
+    second: Cast_Miner_Walk_Up_4
+  - first:
+      213: -8983079801282313807
+    second: Cast_Miner_Walk_Up_5
+  - first:
+      213: -8849695323288569716
+    second: Cast_Miner_Walk_Up_6
+  - first:
+      213: 38760738308938276
+    second: Cast_Miner_Walk_Up_7
+  - first:
+      213: -8547986642487178765
+    second: Cast_Miner_Harvest_0
+  - first:
+      213: 8602976819928625643
+    second: Cast_Miner_Harvest_1
+  - first:
+      213: -2538496253206587222
+    second: Cast_Miner_Harvest_2
+  - first:
+      213: 7932946584258154972
+    second: Cast_Miner_Harvest_3
+  - first:
+      213: 741558019339498953
+    second: Cast_Miner_Harvest_4
+  - first:
+      213: 5612705935085711371
+    second: Cast_Miner_Harvest_5
+  - first:
+      213: -8219150223136612155
+    second: Cast_Miner_Harvest_6
+  - first:
+      213: -7713217288979360022
+    second: Cast_Miner_Harvest_7
+  - first:
+      213: 1649530206117187530
+    second: Cast_Miner_Eat_0
+  - first:
+      213: 4070022300116375646
+    second: Cast_Miner_Eat_1
+  - first:
+      213: -5655025056398144226
+    second: Cast_Miner_Eat_2
+  - first:
+      213: 2984204942050224800
+    second: Cast_Miner_Eat_3
+  - first:
+      213: 5533674557672887104
+    second: Cast_Miner_Eat_4
+  - first:
+      213: 6002370052037593830
+    second: Cast_Miner_Eat_5
+  - first:
+      213: 1678461236332227688
+    second: Cast_Miner_Eat_6
+  - first:
+      213: 3243054261061905603
+    second: Cast_Miner_Eat_7
+  - first:
+      213: -3924401447574808131
+    second: Cast_Miner_Net_0
+  - first:
+      213: -6995490189615727390
+    second: Cast_Miner_Net_1
+  - first:
+      213: -91754142369282978
+    second: Cast_Miner_Net_2
+  - first:
+      213: -4890524435715758832
+    second: Cast_Miner_Net_3
+  - first:
+      213: -6518108405332533520
+    second: Cast_Miner_Net_4
+  - first:
+      213: -5099916215075770715
+    second: Cast_Miner_Net_5
+  - first:
+      213: -417545132894011467
+    second: Cast_Miner_Net_6
+  - first:
+      213: -1886388321901953353
+    second: Cast_Miner_Net_7
+  - first:
+      213: 5373601284790355351
+    second: Cast_Miner_Squat_0
+  - first:
+      213: -6343797465108471041
+    second: Cast_Miner_Squat_1
+  - first:
+      213: -6798408296445682372
+    second: Cast_Miner_Squat_2
+  - first:
+      213: -7874927983831818152
+    second: Cast_Miner_Squat_3
+  - first:
+      213: 2594733889720749457
+    second: Cast_Miner_Squat_4
+  - first:
+      213: -3989375525284802862
+    second: Cast_Miner_Squat_5
+  - first:
+      213: -9096372393049124388
+    second: Cast_Miner_Squat_6
+  - first:
+      213: 3217218297083109332
+    second: Cast_Miner_Squat_7
+  - first:
+      213: -3086572340181351329
+    second: Cast_Miner_Stretch_0
+  - first:
+      213: 4094175912505416837
+    second: Cast_Miner_Stretch_1
+  - first:
+      213: 5556406634707163943
+    second: Cast_Miner_Stretch_2
+  - first:
+      213: -496405378801316131
+    second: Cast_Miner_Stretch_3
+  - first:
+      213: 9106394856544248697
+    second: Cast_Miner_Stretch_4
+  - first:
+      213: 8899276868251188353
+    second: Cast_Miner_Stretch_5
+  - first:
+      213: -4247905554425128193
+    second: Cast_Miner_Stretch_6
+  - first:
+      213: 2750054148885964456
+    second: Cast_Miner_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be9c6953453ae87d0800000000000000
+      internalID: -2914212326790477333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e16f82de2cb08700800000000000000
+      internalID: 540638864571589096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7ed5eb9b48c54340800000000000000
+      internalID: 4847500800997842555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b281cb44e58564b0800000000000000
+      internalID: -5447800958664736078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 954813ce0d4e7dd20800000000000000
+      internalID: 3303360437666546777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a16113b30c149a230800000000000000
+      internalID: 3650521266843096602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c08facb7014155f0800000000000000
+      internalID: -769762559817449279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fe2192b57117a100800000000000000
+      internalID: 119083112353312500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6385e77063adec80800000000000000
+      internalID: -8291791704195497110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27c94c86b31824130800000000000000
+      internalID: 3549541548482141298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d61337a726279810800000000000000
+      internalID: 1771926930144302801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0861ddb56298e3d40800000000000000
+      internalID: 5566036987319490176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5caceb544706e4c10800000000000000
+      internalID: 2039673733748017861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af311ca347789ef90800000000000000
+      internalID: -6923854018833738758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3045b6b2102edd40800000000000000
+      internalID: 5610957450497048634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6aab489dd2ec3120800000000000000
+      internalID: 2395038543225006702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79e090b923c6e8860800000000000000
+      internalID: 7534078191242645143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09a1faf587c7d2530800000000000000
+      internalID: 3831855714405390992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4897c3f672fd2b9e0800000000000000
+      internalID: -1606976756554892924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05983e9076ab68100800000000000000
+      internalID: 109980192627460432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1568a3df4a1a1e150800000000000000
+      internalID: 5900174716827240017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b1c49fd380b55380800000000000000
+      internalID: -8983079801282313807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c88f2fcbdf09f2580800000000000000
+      internalID: -8849695323288569716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42ad226afa4b98000800000000000000
+      internalID: 38760738308938276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f984c510737f5980800000000000000
+      internalID: -8547986642487178765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be1f3c256d9e36770800000000000000
+      internalID: 8602976819928625643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa816f37b1375ccd0800000000000000
+      internalID: -2538496253206587222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd11bd843ec771e60800000000000000
+      internalID: 7932946584258154972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c5b213f61b8a4a00800000000000000
+      internalID: 741558019339498953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b00b2818f4654ed40800000000000000
+      internalID: 5612705935085711371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c0ae524b66bfed80800000000000000
+      internalID: -8219150223136612155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae6dbf6fdb525f490800000000000000
+      internalID: -7713217288979360022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acf44ed9bfe44e610800000000000000
+      internalID: 1649530206117187530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e58da52d7bf9b7830800000000000000
+      internalID: 4070022300116375646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1d847d3ca05581b0800000000000000
+      internalID: -5655025056398144226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aa6ed375960a6920800000000000000
+      internalID: 2984204942050224800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04395b801bf8bcc40800000000000000
+      internalID: 5533674557672887104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eac42aa2c3bc4350800000000000000
+      internalID: 6002370052037593830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86c68d00a971b4710800000000000000
+      internalID: 1678461236332227688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cc69e10ba4a10d20800000000000000
+      internalID: 3243054261061905603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db956410da9b989c0800000000000000
+      internalID: -3924401447574808131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec793a7cb60bee90800000000000000
+      internalID: -6995490189615727390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e548869f7160abef0800000000000000
+      internalID: -91754142369282978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0156bc3dfed512cb0800000000000000
+      internalID: -4890524435715758832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fe9aa490f60b85a0800000000000000
+      internalID: -6518108405332533520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ae672019357939b0800000000000000
+      internalID: -5099916215075770715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bfb824f9e4943af0800000000000000
+      internalID: -417545132894011467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7beb694d0d332d5e0800000000000000
+      internalID: -1886388321901953353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7950380e5edd29a40800000000000000
+      internalID: 5373601284790355351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff2af2df0dd46f7a0800000000000000
+      internalID: -6343797465108471041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3d59448ca337a1a0800000000000000
+      internalID: -6798408296445682372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850ebebc8b2a6b290800000000000000
+      internalID: -7874927983831818152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19d0977a9b8520420800000000000000
+      internalID: 2594733889720749457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2de03cba814e2a8c0800000000000000
+      internalID: -3989375525284802862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd113afc08133c180800000000000000
+      internalID: -9096372393049124388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4df9682eefad5ac20800000000000000
+      internalID: 3217218297083109332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f54c1f95fca4a25d0800000000000000
+      internalID: -3086572340181351329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58c98d0fc4f61d830800000000000000
+      internalID: 4094175912505416837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72b185925625c1d40800000000000000
+      internalID: 5556406634707163943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dde44f320f96c19f0800000000000000
+      internalID: -496405378801316131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 973a3c0dfd9606e70800000000000000
+      internalID: 9106394856544248697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18c76f94925908b70800000000000000
+      internalID: 8899276868251188353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffad41597686c05c0800000000000000
+      internalID: -4247905554425128193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Miner_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a6ef619da72a2620800000000000000
+      internalID: 2750054148885964456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Miner_0: 1355416236561922199
+      Cast_Miner_1: -7634070433159740402
+      Cast_Miner_10: 6982656453219217883
+      Cast_Miner_11: -2929577915992942043
+      Cast_Miner_12: 8359241461550268122
+      Cast_Miner_13: -525301921552915264
+      Cast_Miner_14: 1810383585992806378
+      Cast_Miner_15: 5578899725359667834
+      Cast_Miner_16: -728099880703017394
+      Cast_Miner_17: 5176894244748866195
+      Cast_Miner_18: 3183598944367233057
+      Cast_Miner_19: 8369213436437074910
+      Cast_Miner_2: -7750892584747295067
+      Cast_Miner_20: 8389044783094428526
+      Cast_Miner_21: 4229958202198687720
+      Cast_Miner_22: -3424467208398515795
+      Cast_Miner_23: -5299351827503780815
+      Cast_Miner_24: -3040662167809790639
+      Cast_Miner_25: 7158580017294550123
+      Cast_Miner_26: -6165319655164562540
+      Cast_Miner_27: 3115775388268043758
+      Cast_Miner_28: -2583120548544713258
+      Cast_Miner_29: -228457694438054728
+      Cast_Miner_3: -7632442686095300618
+      Cast_Miner_30: 8874967597749449997
+      Cast_Miner_31: -6817957231792458928
+      Cast_Miner_32: -3973236219508737871
+      Cast_Miner_33: -7344827292669378656
+      Cast_Miner_34: 7417661622728731103
+      Cast_Miner_35: 4632192394074462216
+      Cast_Miner_36: -2007816512239296189
+      Cast_Miner_37: 1210307175883600643
+      Cast_Miner_38: 467791073469760918
+      Cast_Miner_39: 1090802374372322201
+      Cast_Miner_4: -7503531006680640850
+      Cast_Miner_40: -644366521724144731
+      Cast_Miner_41: 6607156071063183764
+      Cast_Miner_42: -1002981148156742006
+      Cast_Miner_43: 4061616314094393123
+      Cast_Miner_44: 6431469435982220765
+      Cast_Miner_45: 2215045480070101017
+      Cast_Miner_46: -309276173848510645
+      Cast_Miner_47: 1650197803534291402
+      Cast_Miner_48: -2858171548839427274
+      Cast_Miner_49: -3988896831476546499
+      Cast_Miner_5: 6511724538232807058
+      Cast_Miner_50: -4169997803064518680
+      Cast_Miner_51: 8818227257114639476
+      Cast_Miner_52: 4437497950508299860
+      Cast_Miner_53: -6160920866310486789
+      Cast_Miner_54: 1456078827995505246
+      Cast_Miner_55: -4223076414742536678
+      Cast_Miner_56: 6592540506498622126
+      Cast_Miner_57: -8268505381382155458
+      Cast_Miner_58: 3482788659140392903
+      Cast_Miner_59: 2447208478792591042
+      Cast_Miner_6: -6597883780282164676
+      Cast_Miner_60: -2114724550037825108
+      Cast_Miner_61: 2228664646596482620
+      Cast_Miner_62: 6498967451805499998
+      Cast_Miner_63: -1867553410655218235
+      Cast_Miner_64: -1189876290112339870
+      Cast_Miner_65: 1670397202922633112
+      Cast_Miner_66: -5602053775363355927
+      Cast_Miner_67: -1152990242732233344
+      Cast_Miner_68: 4230650407692909712
+      Cast_Miner_7: -7921603764436967732
+      Cast_Miner_8: 7170600126910279565
+      Cast_Miner_9: -64198926295545384
+      Cast_Miner_Eat_0: 1649530206117187530
+      Cast_Miner_Eat_1: 4070022300116375646
+      Cast_Miner_Eat_2: -5655025056398144226
+      Cast_Miner_Eat_3: 2984204942050224800
+      Cast_Miner_Eat_4: 5533674557672887104
+      Cast_Miner_Eat_5: 6002370052037593830
+      Cast_Miner_Eat_6: 1678461236332227688
+      Cast_Miner_Eat_7: 3243054261061905603
+      Cast_Miner_Harvest_0: -8547986642487178765
+      Cast_Miner_Harvest_1: 8602976819928625643
+      Cast_Miner_Harvest_2: -2538496253206587222
+      Cast_Miner_Harvest_3: 7932946584258154972
+      Cast_Miner_Harvest_4: 741558019339498953
+      Cast_Miner_Harvest_5: 5612705935085711371
+      Cast_Miner_Harvest_6: -8219150223136612155
+      Cast_Miner_Harvest_7: -7713217288979360022
+      Cast_Miner_Net_0: -3924401447574808131
+      Cast_Miner_Net_1: -6995490189615727390
+      Cast_Miner_Net_2: -91754142369282978
+      Cast_Miner_Net_3: -4890524435715758832
+      Cast_Miner_Net_4: -6518108405332533520
+      Cast_Miner_Net_5: -5099916215075770715
+      Cast_Miner_Net_6: -417545132894011467
+      Cast_Miner_Net_7: -1886388321901953353
+      Cast_Miner_Squat_0: 5373601284790355351
+      Cast_Miner_Squat_1: -6343797465108471041
+      Cast_Miner_Squat_2: -6798408296445682372
+      Cast_Miner_Squat_3: -7874927983831818152
+      Cast_Miner_Squat_4: 2594733889720749457
+      Cast_Miner_Squat_5: -3989375525284802862
+      Cast_Miner_Squat_6: -9096372393049124388
+      Cast_Miner_Squat_7: 3217218297083109332
+      Cast_Miner_Stretch_0: -3086572340181351329
+      Cast_Miner_Stretch_1: 4094175912505416837
+      Cast_Miner_Stretch_2: 5556406634707163943
+      Cast_Miner_Stretch_3: -496405378801316131
+      Cast_Miner_Stretch_4: 9106394856544248697
+      Cast_Miner_Stretch_5: 8899276868251188353
+      Cast_Miner_Stretch_6: -4247905554425128193
+      Cast_Miner_Stretch_7: 2750054148885964456
+      Cast_Miner_Walk_0: -2914212326790477333
+      Cast_Miner_Walk_1: 540638864571589096
+      Cast_Miner_Walk_2: 4847500800997842555
+      Cast_Miner_Walk_3: -5447800958664736078
+      Cast_Miner_Walk_4: 3303360437666546777
+      Cast_Miner_Walk_5: 3650521266843096602
+      Cast_Miner_Walk_6: -769762559817449279
+      Cast_Miner_Walk_7: 119083112353312500
+      Cast_Miner_Walk_Down_0: -8291791704195497110
+      Cast_Miner_Walk_Down_1: 3549541548482141298
+      Cast_Miner_Walk_Down_2: 1771926930144302801
+      Cast_Miner_Walk_Down_3: 5566036987319490176
+      Cast_Miner_Walk_Down_4: 2039673733748017861
+      Cast_Miner_Walk_Down_5: -6923854018833738758
+      Cast_Miner_Walk_Down_6: 5610957450497048634
+      Cast_Miner_Walk_Down_7: 2395038543225006702
+      Cast_Miner_Walk_Up_0: 7534078191242645143
+      Cast_Miner_Walk_Up_1: 3831855714405390992
+      Cast_Miner_Walk_Up_2: -1606976756554892924
+      Cast_Miner_Walk_Up_3: 109980192627460432
+      Cast_Miner_Walk_Up_4: 5900174716827240017
+      Cast_Miner_Walk_Up_5: -8983079801282313807
+      Cast_Miner_Walk_Up_6: -8849695323288569716
+      Cast_Miner_Walk_Up_7: 38760738308938276
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

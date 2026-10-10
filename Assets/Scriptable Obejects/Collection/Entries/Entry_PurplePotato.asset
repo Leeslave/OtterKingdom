@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_PurplePotato
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: crop_purple_potato
+  _tab: {fileID: 11400000, guid: dcb3b9557d9798d4290580afb291c277, type: 2}
+  _displayName: 
+  _sortOrder: 15
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: adb123ec915666f4eb48a7eff631cca8, type: 3}
+  _tagline: "\uBCF4\uB78F\uBE5B\uC73C\uB85C \uBB3C\uB4E0 \uADC0\uD55C \uAC10\uC790."
+  _description: "\uC0B6\uC544\uB3C4 \uBCF4\uB77C\uC0C9 \uADF8\uB300\uB85C\uB77C \uB2E4\uB4E4
+    \uC2E0\uAE30\uD574\uD574\uC694."
+  _extraValue: "\uBC2D"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: cefff43c938aaba4a9d102773dbaad76, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

@@ -43,6 +43,9 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
     [Tooltip("일할 때 머리 위 망치 말풍선")]
     [SerializeField] private SpriteRenderer _workBubble;
 
+    [Tooltip("왼쪽 걷기 그림 대신 오른쪽 걷기를 좌우로 뒤집어 씀 (왼쪽 걷기 그림이 따로 없는 모습)")]
+    [SerializeField] private bool _mirrorLeftWalk;
+
     private SpriteFrameAnimator _animator;
     private SpriteRenderer _renderer;
     private PlazaWalkableArea _area;
@@ -271,12 +274,16 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
     {
         _renderer.flipX = false;
         if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
-            _animator.Play(direction.x < 0f ? ClipWalkLeft : ClipWalkRight);
+        {
+            bool left = direction.x < 0f;
+            _renderer.flipX = left && _mirrorLeftWalk;
+            _animator.Play(left && !_mirrorLeftWalk ? ClipWalkLeft : ClipWalkRight);
+        }
         else
             _animator.Play(direction.y < 0f ? ClipWalkDown : ClipWalkUp);
     }
 
-    // 곡괭이질 그림은 오른쪽을 보므로 왼쪽이면 뒤집음
+    // 일하는 그림은 오른쪽을 보므로 왼쪽이면 뒤집음
     private void FaceToward(Vector2 point)
     {
         _renderer.flipX = point.x < transform.position.x;

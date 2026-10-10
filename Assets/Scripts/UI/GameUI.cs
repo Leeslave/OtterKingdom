@@ -148,31 +148,63 @@ public class GameUI : MonoBehaviour
         CloseAllModals();
         var modal = OpenModal("어떤 작물을 심을까요?", out var content);
 
-        foreach (var crop in game.Crops)
+        // 심을 수 있는 작물만 두 줄로 (모종이 없는 작물은 요정 상점에서)
+        AddCropGrid(content, PlantableCrops(), crop => $"{crop.displayName}{SeedSuffix(crop)}", crop =>
         {
-            if (crop == null) continue;
-
-            var cropForClick = crop;
-            string label = game.FarmService.IsUnlimitedSeed(crop.cropId)
-                ? crop.displayName
-                : $"{crop.displayName} (남은 씨앗 {game.FarmService.GetSeedCount(crop.cropId)})";
-
-            CreateButton(content, label, () =>
+            switch (game.PlantFromPrompt(plotIndex, slotIndex, crop.cropId))
             {
-                switch (game.PlantFromPrompt(plotIndex, slotIndex, cropForClick.cropId))
-                {
-                    case PlantResult.Planted:
-                    case PlantResult.Failed:
-                        CloseModal(modal);
-                        break;
-                    case PlantResult.NoSeed:
-                        ShowAlert(GameManager.NoSeedMessage(cropForClick));
-                        break;
-                }
-            });
-        }
+                case PlantResult.Planted:
+                case PlantResult.Failed:
+                    CloseModal(modal);
+                    break;
+                case PlantResult.NoSeed:
+                    ShowAlert(GameManager.NoSeedMessage(crop));
+                    break;
+            }
+        });
 
         CreateButton(content, "취소", () => CloseModal(modal), kind: ButtonKind.Secondary);
+    }
+
+    // 늘 심을 수 있는 작물 + 모종이 있는 작물
+    private List<CropDefinition> PlantableCrops()
+    {
+        var list = new List<CropDefinition>();
+        foreach (var crop in game.Crops)
+        {
+            if (crop != null && (game.FarmService.IsUnlimitedSeed(crop.cropId) || game.FarmService.GetSeedCount(crop.cropId) > 0))
+                list.Add(crop);
+        }
+        return list;
+    }
+
+    private string SeedSuffix(CropDefinition crop) =>
+        game.FarmService.IsUnlimitedSeed(crop.cropId) ? "" : $" ({game.FarmService.GetSeedCount(crop.cropId)})";
+
+    // 작물 버튼 두 개씩 한 줄. 모종이 없는 작물이 있으면 아래에 안내
+    private void AddCropGrid(Transform content, List<CropDefinition> crops, Func<CropDefinition, string> label, Action<CropDefinition> onClick)
+    {
+        for (int i = 0; i < crops.Count; i += 2)
+        {
+            var row = CreateRow(content, ButtonHeight);
+            for (int j = i; j < Mathf.Min(i + 2, crops.Count); j++)
+            {
+                var crop = crops[j];
+                CreateButton(row, label(crop), () => onClick(crop), flexible: true);
+            }
+        }
+        if (crops.Count < CountCrops())
+            CreateLabel(content, "다른 모종은 요정 상점에서 살 수 있어요");
+    }
+
+    private int CountCrops()
+    {
+        int count = 0;
+        foreach (var crop in game.Crops)
+        {
+            if (crop != null) count++;
+        }
+        return count;
     }
 
     // The next furrow (one at a time, in order). The level was already checked.
@@ -391,17 +423,11 @@ public class GameUI : MonoBehaviour
         CloseAllModals();
         OpenModal($"칸 {index + 1}에 등록할 작물", out var content);
 
-        foreach (var crop in game.Crops)
+        AddCropGrid(content, PlantableCrops(), crop => $"{crop.displayName}{SeedSuffix(crop)}", crop =>
         {
-            if (crop == null) continue;
-
-            var cropForClick = crop;
-            CreateButton(content, SeedLabel(crop), () =>
-            {
-                game.SetOfflineCrop(index, cropForClick.cropId);
-                ShowOfflineFarmPrompt();
-            });
-        }
+            game.SetOfflineCrop(index, crop.cropId);
+            ShowOfflineFarmPrompt();
+        });
 
         if (game.GetOfflineCrop(index) != null)
         {
@@ -490,11 +516,28 @@ public class GameUI : MonoBehaviour
             string current = $"현재 Lv.{level} (물고기 확률 {Percent(fishing.FishChanceAt(level))})";
             infoLabel.text = fishing.CanUpgradeRod
                 ? $"{current}\n다음 Lv.{level + 1} (물고기 확률 {Percent(fishing.FishChanceAt(level + 1))})\n" +
-                  $"강화 비용 : {fishing.NextRodUpgradeCost} 골드"
+                  NewFishLine(fishing, level + 1) +
+                  $"강화 비용 : {fishing.NextRodUpgradeCost:N0} 골드"
                 : $"{current}\n최대 레벨이에요!";
             balanceLabel.text = $"보유 골드 : {game.CoinBalance}";
             upgradeButton.interactable = fishing.CanUpgradeRod;
         });
+    }
+
+    private static readonly string[] TierNames = { "흔함", "레어", "에픽" };
+
+    // 다음 레벨에서 처음 낚이는 물고기 (없으면 빈 줄)
+    private string NewFishLine(FishingService fishing, int level)
+    {
+        var fish = fishing.Balance.FirstCaughtAt(level);
+        if (fish.Count == 0) return "";
+        var names = new List<string>();
+        foreach (var f in fish)
+        {
+            string name = game.TryFindItem(f.itemId, out var item) ? item.DisplayName : f.itemId;
+            names.Add($"{name}({TierNames[Mathf.Clamp(f.tier, 0, 2)]})");
+        }
+        return $"새로 낚여요 : {string.Join(", ", names)}\n";
     }
 
     // ---------------------------------------------------------------- mining

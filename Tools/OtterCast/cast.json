@@ -16,7 +16,7 @@
   {"id": "Forest", "concept": "숲", "fur": [172, 132, 106], "hat": [102, 152, 92], "band": [118, 80, 50], "overall": [126, 92, 62], "hatwear": [{"kind": "feather", "color": [118, 186, 96]}]},
   {"id": "Sunny", "concept": "해바라기", "fur": [238, 214, 172], "band": [214, 70, 60], "overall": [202, 72, 62], "hatwear": [{"kind": "flower", "color": [255, 210, 62], "center": [120, 76, 40]}]},
   {"id": "Ink", "concept": "먹물", "fur": [84, 80, 88], "hat": [64, 62, 66], "band": [210, 62, 62], "overall": [124, 124, 130], "neck": [{"kind": "bowtie", "color": [214, 60, 64]}], "hatwear": [{"kind": "feather", "color": [220, 70, 70]}]},
-  {"id": "Peach", "concept": "복숭아", "hat": [248, 246, 240], "band": [240, 166, 150], "overall": [238, 172, 152], "hatwear": [{"kind": "bow", "color": [222, 70, 76]}]},
+  {"id": "Miner", "concept": "광부", "fur": [156, 126, 104], "hat": [236, 188, 56], "band": [70, 70, 78], "overall": [72, 84, 118], "hatwear": [{"kind": "lamp", "color": [255, 236, 140]}], "neck": [{"kind": "kerchief", "color": [206, 64, 56]}]},
   {"id": "Sky", "concept": "하늘", "fur": [152, 164, 186], "hat": [248, 248, 246], "band": [140, 190, 236], "overall": [236, 236, 242], "neck": [{"kind": "scarf", "color": [255, 208, 72], "color2": [255, 244, 200]}], "hatwear": [{"kind": "bow", "color": [255, 208, 72]}]},
-  {"id": "Clover", "concept": "클로버", "fur": [154, 108, 78], "hat": [112, 172, 102], "band": [250, 250, 244], "overall": [226, 212, 178], "hatwear": [{"kind": "flower", "color": [255, 255, 255]}], "neck": [{"kind": "kerchief", "color": [102, 162, 82]}]}
+  {"id": "Fisher", "concept": "낚시꾼", "fur": [198, 152, 112], "hat": [250, 214, 70], "band": [52, 72, 120], "overall": [58, 104, 150], "hatwear": [{"kind": "fish", "color": [104, 168, 224]}], "neck": [{"kind": "scarf", "color": [240, 244, 248], "color2": [80, 140, 210]}]}
 ]
