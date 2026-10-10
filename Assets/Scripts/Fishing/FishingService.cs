@@ -37,13 +37,13 @@ public class FishingService
         return Random.Range(Mathf.Min(range.x, range.y), Mathf.Max(range.x, range.y));
     }
 
-    // Returns the item id of what was hooked.
+    // Returns the item id of what was hooked (물고기는 낚싯대 레벨로 낚을 수 있는 것 중에서).
     public string RollCatch()
     {
-        return Random.value < FishChance ? balance.fishItemId : balance.trashItemId;
+        return balance.RollCatch(RodLevel, Random.value, Random.value);
     }
 
-    public bool IsFish(string itemId) => itemId == balance.fishItemId;
+    public bool IsFish(string itemId) => balance.IsFish(itemId);
 
     // TrySpend rejects a zero cost (throws), so a free upgrade skips it
     // (same as FarmService.TryUnlockPlot).

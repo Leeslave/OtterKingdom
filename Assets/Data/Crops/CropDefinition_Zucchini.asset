@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c519f86bc213e49a99df581246e373, type: 3}
+  m_Name: CropDefinition_Zucchini
+  m_EditorClassIdentifier: OtterKingdom::CropDefinition
+  cropId: crop_zucchini
+  displayName: "\uC560\uD638\uBC15"
+  baseDurationSec: 95
+  yieldCount: 4
+  sellPrice: 83
+  seedType: 1
+  initialSeedCount: 0
+  spriteTint: {r: 1, g: 1, b: 1, a: 1}
+  seedSprites:
+  - {fileID: 21300000, guid: 871a73102ed7c824c8de960884e80e7b, type: 3}
+  - {fileID: 21300000, guid: 6f95626b644f27449beebcdfc8859837, type: 3}
+  - {fileID: 21300000, guid: 2b76179d791faa54093d39ca45a2a93e, type: 3}
+  sproutSprites:
+  - {fileID: 21300000, guid: 6b4297845d7117a4a8096fa50817a02d, type: 3}
+  - {fileID: 21300000, guid: 8c8b5753e4a7fb641a87a9e930e94777, type: 3}
+  - {fileID: 21300000, guid: 08a6cb064bf57054f9d4d6704b3222ff, type: 3}
+  grownSprites:
+  - {fileID: 21300000, guid: 396b4a78461714e4fb23ab4dc9298ddc, type: 3}
+  - {fileID: 21300000, guid: e5102d4e77d48c144b703de29399b928, type: 3}
+  - {fileID: 21300000, guid: 527617ff6d88bfc48aad015f77adebac, type: 3}

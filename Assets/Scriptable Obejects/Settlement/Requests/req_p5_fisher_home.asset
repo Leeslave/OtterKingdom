@@ -20,7 +20,7 @@ MonoBehaviour:
   _description: "\uBC14\uB2E4\uC5D0\uC11C \uD5E4\uC5C4\uCE58\uB358 \uD401\uB2F9\uC774\uAC00
     \uCC3E\uC544\uC654\uC5B4\uC694.\n\uCCA8\uBC99\uC774\uC640 \uD568\uAED8 \uB09A\uC2DC\uB97C
     \uD558\uACE0 \uC2F6\uB300\uC694."
-  _icon: {fileID: 21300000, guid: ab9ca150b50f0a748ae2419bcadb71f3, type: 3}
+  _icon: {fileID: 21300000, guid: c77630cccf31a5d4893fb43a6360ef96, type: 3}
   _requester: {fileID: 11400000, guid: b9c681d6bbf9435381dc3a1e349ef2e6, type: 2}
   _requiredDevelopment: p4_granary_built
   _minResidents: 0

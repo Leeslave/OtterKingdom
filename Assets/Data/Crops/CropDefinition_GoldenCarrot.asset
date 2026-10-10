@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c519f86bc213e49a99df581246e373, type: 3}
+  m_Name: CropDefinition_GoldenCarrot
+  m_EditorClassIdentifier: OtterKingdom::CropDefinition
+  cropId: crop_golden_carrot
+  displayName: "\uD669\uAE08 \uB2F9\uADFC"
+  baseDurationSec: 360
+  yieldCount: 3
+  sellPrice: 1500
+  seedType: 1
+  initialSeedCount: 0
+  spriteTint: {r: 1, g: 1, b: 1, a: 1}
+  seedSprites:
+  - {fileID: 21300000, guid: 44a4ac2ca7c34564090582d529f26bb1, type: 3}
+  - {fileID: 21300000, guid: e0f5228ef1258de47b2d3b2a5691815c, type: 3}
+  - {fileID: 21300000, guid: 9b4f87de5fb78a2428719899bd9edbaa, type: 3}
+  sproutSprites:
+  - {fileID: 21300000, guid: a032d2a743cbb324d955431ffab5250c, type: 3}
+  - {fileID: 21300000, guid: 078bf36bc58d08d4a9a6f4012d55907b, type: 3}
+  - {fileID: 21300000, guid: 2a5bce9dc63aa7847aed8f6a302b10a4, type: 3}
+  grownSprites:
+  - {fileID: 21300000, guid: 489ac555eddcb6e4dbd7bd7627fcf6d2, type: 3}
+  - {fileID: 21300000, guid: 7399436f70831684487317c1a4930472, type: 3}
+  - {fileID: 21300000, guid: e30798b90e351bc4db70261b2e91c9e5, type: 3}

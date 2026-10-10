@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_Radish
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: crop_radish
+  _tab: {fileID: 11400000, guid: dcb3b9557d9798d4290580afb291c277, type: 2}
+  _displayName: 
+  _sortOrder: 10
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 8a928bfd83ee90f469c7d74d23f8c487, type: 3}
+  _tagline: "\uD558\uC597\uACE0 \uC2DC\uC6D0\uD55C \uBFCC\uB9AC\uCC44\uC18C."
+  _description: "\uAD6D\uC744 \uB053\uC774\uBA74 \uC2DC\uC6D0\uD574\uC11C \uD574\uB2EC\uB4E4\uC774
+    \uADF8\uB987\uC9F8 \uB9C8\uC154\uC694."
+  _extraValue: "\uBC2D"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: 17b09199aafdabb4bbda8cb14d8fe176, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

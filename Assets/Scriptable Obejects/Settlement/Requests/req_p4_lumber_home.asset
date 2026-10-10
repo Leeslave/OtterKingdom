@@ -21,7 +21,7 @@ MonoBehaviour:
     \uCC3E\uC544\uC654\uC5B4\uC694.\n\uB298 \uB0AE\uC7A0\uB9CC \uC790\uB358 \uAFB8\uBC85\uC774\uB3C4
     \uAC19\uC774 \uB098\uBB34\uB97C \uD558\uACA0\uB300\uC694. \uB458\uC774 \uC0B4
     \uC9D1\uC774 \uD544\uC694\uD574\uC694."
-  _icon: {fileID: 21300000, guid: 96122e84e50259244b42d66a1f5f18c2, type: 3}
+  _icon: {fileID: 21300000, guid: 500d1033b5622254abc1d583c590d016, type: 3}
   _requester: {fileID: 11400000, guid: a381a5f436d54189960988fc991d7215, type: 2}
   _requiredDevelopment: p4_shop_built
   _minResidents: 0

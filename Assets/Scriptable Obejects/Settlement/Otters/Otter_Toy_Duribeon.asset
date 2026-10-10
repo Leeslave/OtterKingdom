@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_toy_duribeon
   _displayName: "\uB450\uB9AC\uBC88"
-  _portrait: {fileID: 21300000, guid: 4714a1aeba5d41241880dedbe79725e9, type: 3}
-  _plazaPrefab: {fileID: 6466850907306658564, guid: 26fe7d4ec06c86648b5296309b3c87d9, type: 3}
+  _portrait: {fileID: 21300000, guid: 97ca9045c83bde548bd9cd229484210e, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: 397695b2ae751b842aa031cae683e3fa, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 9
   _toyVisitor: 1

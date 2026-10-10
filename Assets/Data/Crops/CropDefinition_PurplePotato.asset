@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c519f86bc213e49a99df581246e373, type: 3}
+  m_Name: CropDefinition_PurplePotato
+  m_EditorClassIdentifier: OtterKingdom::CropDefinition
+  cropId: crop_purple_potato
+  displayName: "\uC790\uC0C9 \uAC10\uC790"
+  baseDurationSec: 170
+  yieldCount: 3
+  sellPrice: 325
+  seedType: 1
+  initialSeedCount: 0
+  spriteTint: {r: 1, g: 1, b: 1, a: 1}
+  seedSprites:
+  - {fileID: 21300000, guid: 2fe70d56b86df61468014bf52ba0c727, type: 3}
+  - {fileID: 21300000, guid: d163309a1a478014a93b8bc9b9dd57a6, type: 3}
+  - {fileID: 21300000, guid: ce7f5c5bcf3cde544b91da8a878d27af, type: 3}
+  sproutSprites:
+  - {fileID: 21300000, guid: cfacf3d0aadc7b34281c4200dd5e6a13, type: 3}
+  - {fileID: 21300000, guid: 50fd50d169aecf14f9a18b9e1e6e6d43, type: 3}
+  - {fileID: 21300000, guid: 44bc26e250f10884eb4540118090abc5, type: 3}
+  grownSprites:
+  - {fileID: 21300000, guid: 3e69f67bc0be5ce4693b4aefde9f8aa7, type: 3}
+  - {fileID: 21300000, guid: 7d70a4005d158c344a8cc048d94f14cb, type: 3}
+  - {fileID: 21300000, guid: f8c21cd180752c64e982ac9aa9c3f202, type: 3}

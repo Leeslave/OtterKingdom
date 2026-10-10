@@ -50,13 +50,13 @@ public static class CollectionSetup
             "푸른 줄무늬를 가진 바다 물고기.", "은빛 배를 반짝이며 바닷속을 헤엄쳐요.", "바다 낚시터"),
         ("Entry_OtterFarmer", "otter_farmer", "Tab_Otter", "농부 해달", "", "ICON_Otter_Farmer", "SIL_Otter",
             "밭을 돌보는 부지런한 친구", "작은 새싹을 보면 그냥 지나치지 못해요.", "당근"),
-        ("Entry_OtterFisher", "otter_fisher", "Tab_Otter", "낚시꾼 해달", "", "ICON_Otter_Fisher", "SIL_Otter",
+        ("Entry_OtterFisher", "otter_fisher", "Tab_Otter", "낚시꾼 해달", "", "ICON_Otter_Cast_Fisher", "SIL_Otter",
             "낚시를 좋아하는 느긋한 친구", "파도 소리를 들으며 찌가 움직이길 기다려요.", "고등어"),
         // 광부 해달: 광장에서 만나 광산에 배치하면 등록 (농부 해달도 같음)
-        ("Entry_OtterMiner", "otter_miner", "Tab_Otter", "광부 해달", "", "ICON_Otter_Miner", "SIL_Otter",
+        ("Entry_OtterMiner", "otter_miner", "Tab_Otter", "광부 해달", "", "ICON_Otter_Cast_Miner", "SIL_Otter",
             "광산을 지키는 듬직한 친구", "곡괭이 소리만 들어도 신이 나요.", "다이아몬드"),
         // 게시판 해달 (P2): 광장에서 만나 게시판 관리를 맡기면 등록. 그림은 임시 (SettlementSetup.P2가 만듦)
-        ("Entry_OtterClerk", "otter_receptionist", "Tab_Otter", "게시판 해달", "", "ICON_Otter_Clerk", "SIL_Otter",
+        ("Entry_OtterClerk", "otter_receptionist", "Tab_Otter", "게시판 해달", "", "ICON_Otter_Cast_Sailor", "SIL_Otter",
             "게시판을 맡은 꼼꼼한 친구", "부탁을 받으면 또박또박 적어 둬요.", "게시판"),
     };
 

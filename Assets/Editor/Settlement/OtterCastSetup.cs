@@ -2,13 +2,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 /// <summary>
 /// 농부 해달을 바탕으로 색 · 소품만 바꾼 해달 20마리(Tools/OtterCast/farmer_cast.py가 만든 그림)를 게임에 넣는다.
 /// 해달마다 묶음 시트(Assets/Sprites/Characters/Cast/Cast_&lt;id&gt;.png, 6열 × 312×180 칸, 0.75배)를 잘라
 /// 농부 해달 애니메이션(FarmerOtter.controller)의 클립을 같은 박자로 그림만 바꿔 덮어쓴 컨트롤러와 광장 프리팹
-/// (PlazaOtter_Cast_&lt;id&gt;)을 만들고, Assignments의 해달에게 광장 모습 · 얼굴 · 도감 얼굴을 연결한다.
+/// (PlazaOtter_Cast_&lt;id&gt;)을 만들고, Assignments의 해달(농부 새싹이를 뺀 20마리)에게 광장 모습 · 얼굴 · 도감 얼굴을 연결한다.
+/// 옛 얼굴을 쓰던 퀘스트 · 부탁 · 튜토리얼 안내 얼굴도 그 해달의 새 얼굴로, 광장의 건설 해달(뚝딱이)도 새 모습으로 바꾼다.
+/// 광산 · 낚시터에서 일하는 모습(곡괭이질 · 낚싯대)은 농부 그림에 없는 동작이라 그대로.
 /// 배치 모드: -executeMethod OtterCastSetup.Apply
 /// </summary>
 public static class OtterCastSetup
@@ -32,14 +35,23 @@ public static class OtterCastSetup
     internal static readonly string[] Looks =
     {
         "Blossom", "Sailor", "Sprout", "Cherry", "Explorer", "Night", "Snow", "Honey", "Mint", "Cocoa",
-        "Lilac", "Pumpkin", "Ocean", "Berry", "Forest", "Sunny", "Ink", "Peach", "Sky", "Clover",
+        "Lilac", "Pumpkin", "Ocean", "Berry", "Forest", "Sunny", "Ink", "Miner", "Sky", "Fisher",
     };
 
-    /// <summary>해달 → 모습. 다른 해달과 모습을 나눠 쓰던 장난감 해달 11마리 + 포근이(농부와 같은 모습이었음)</summary>
+    /// <summary>해달 → 모습 (농부 새싹이만 원래 모습)</summary>
     private static readonly (string otterId, string look)[] Assignments =
     {
+        ("otter_first", "Explorer"),        // 몽실: 처음 온 탐험가
+        ("otter_sleepy", "Night"),          // 꾸벅이: 늘 졸린 (밤하늘 · 별)
+        ("otter_painter", "Berry"),         // 물감이
+        ("otter_builder", "Sunny"),         // 뚝딱이: 건설
+        ("otter_miner", "Miner"),           // 깡깡이: 머리 등
+        ("otter_fisher", "Fisher"),         // 첨벙이: 물고기 핀
+        ("otter_receptionist", "Sailor"),   // 또박이: 단정한 제복
+        ("otter_p3_neighbor", "Snow"),      // 포근이: 목도리
+        ("otter_toy_sallang", "Blossom"),   // 살랑이: 벚꽃
         ("otter_toy_kungkung", "Forest"),   // 나무꾼
-        ("otter_toy_degul", "Ink"),         // 조약돌
+        ("otter_toy_degul", "Mint"),        // 조약돌
         ("otter_toy_bodeul", "Sprout"),     // 풀잎 · 농사
         ("otter_toy_pongdang", "Ocean"),    // 물방울 · 낚시
         ("otter_toy_yeongcha", "Pumpkin"),  // 힘센 운반
@@ -47,10 +59,38 @@ public static class OtterCastSetup
         ("otter_toy_jaejal", "Cherry"),     // 수다쟁이
         ("otter_toy_kongkong", "Cocoa"),    // 망치 소리 · 건설
         ("otter_toy_kkomkkom", "Lilac"),    // 손재주
-        ("otter_toy_duribeon", "Explorer"), // 길찾기
-        ("otter_toy_kkeujeok", "Night"),    // 밤의 메모쟁이
-        ("otter_p3_neighbor", "Snow"),      // 포근이 (목도리)
+        ("otter_toy_duribeon", "Sky"),      // 길찾기
+        ("otter_toy_kkeujeok", "Ink"),      // 밤의 메모쟁이 (먹물)
     };
+
+    // 옛 얼굴을 직접 쓰던 곳: (에셋, 칸, 이 해달의 얼굴로). 부탁 그림은 부탁한 해달, 퀘스트는 그 퀘스트의 해달
+    private static readonly (string asset, string field, string otterId)[] FaceUses =
+    {
+        ("Assets/Scriptable Obejects/Quest/Quests/M03_Miner.asset", "_icon", "otter_miner"),
+        ("Assets/Scriptable Obejects/Quest/Quests/M06_Clerk.asset", "_icon", "otter_receptionist"),
+        ("Assets/Scriptable Obejects/Quest/Quests/M15_Fisher.asset", "_icon", "otter_fisher"),
+        ("Assets/Scriptable Obejects/Quest/Quests/M16_Builder.asset", "_icon", "otter_toy_kongkong"),
+        ("Assets/Scriptable Obejects/Quest/Quests/M17_Recorder.asset", "_icon", "otter_toy_kkeujeok"),
+        ("Assets/Scriptable Obejects/Quest/Quests/Main_Build_3.asset", "_icon", "otter_builder"),
+        ("Assets/Scriptable Obejects/Quest/Quests/Main_Otter_1.asset", "_icon", "otter_fisher"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_assign_receptionist.asset", "_icon", "otter_receptionist"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_assign_miner.asset", "_icon", "otter_miner"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_assign_fisher.asset", "_icon", "otter_fisher"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_p4_trader_home.asset", "_icon", "otter_toy_jjalrang"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_p4_farmer_home.asset", "_icon", "otter_toy_bodeul"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_p4_miner_home.asset", "_icon", "otter_toy_degul"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_p4_lumber_home.asset", "_icon", "otter_sleepy"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_p5_fisher_home.asset", "_icon", "otter_toy_pongdang"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_p5_builder_home.asset", "_icon", "otter_toy_kongkong"),
+        ("Assets/Scriptable Obejects/Settlement/Requests/req_p5_recorder_home.asset", "_icon", "otter_toy_kkeujeok"),
+        ("Assets/Scriptable Obejects/Settlement/LifeRequests/Life_snack.asset", "_icon", "otter_first"),
+        ("Assets/Resources/TutorialStyle.asset", "_guidePortrait", "otter_first"),
+    };
+
+    private const string PlazaScenePath = "Assets/Scenes/Plaza.unity";
+    private const string BuilderOtterId = "otter_builder";
+    // 발 기준점 (칸 아래에서 발바닥까지 = 농부 시트 240칸 중 9칸) — 루트에 그림을 바로 다는 건설 해달용
+    private const float FeetPivotY = 9f / 240f;
 
     internal static string LookOf(string otterId) =>
         Assignments.Where(a => a.otterId == otterId).Select(a => a.look).FirstOrDefault();
@@ -74,7 +114,10 @@ public static class OtterCastSetup
         var portrait = Portrait(otterId);
         if (prefab == null || portrait == null)
             return;
-        otterSo.FindProperty("_plazaPrefab").objectReferenceValue = prefab;
+        // 광장 프리팹이 없던 해달(건설 해달은 씬에 따로 있음)은 그대로 없게
+        var plaza = otterSo.FindProperty("_plazaPrefab");
+        if (plaza.objectReferenceValue != null)
+            plaza.objectReferenceValue = prefab;
         otterSo.FindProperty("_plazaTint").colorValue = Color.white;
         otterSo.FindProperty("_portrait").objectReferenceValue = portrait;
     }
@@ -93,7 +136,9 @@ public static class OtterCastSetup
             return;
         }
 
+        RemoveStaleLooks();
         int made = 0;
+        Dictionary<string, Sprite[]> builderFrames = null;
         foreach (var look in Looks)
         {
             string sheetPath = $"{SheetDir}/Cast_{look}.png";
@@ -102,7 +147,10 @@ public static class OtterCastSetup
                 Debug.LogWarning($"[OtterCastSetup] 그림이 없습니다: {sheetPath} (python Tools/OtterCast/farmer_cast.py)");
                 continue;
             }
-            var frames = Slice(sheetPath, look);
+            bool forBuilder = look == LookOf(BuilderOtterId);
+            var frames = Slice(sheetPath, look, forBuilder);
+            if (forBuilder)
+                builderFrames = frames;
             var controller = BuildController(look, baseController, frames);
             BuildPrefab(look, controller, frames["Harvest"][0]);
             CollectionSetup.ImportSprite(IconDir, $"ICON_Otter_Cast_{look}");
@@ -111,12 +159,15 @@ public static class OtterCastSetup
         AssetDatabase.SaveAssets();
 
         int linked = Link();
+        int faces = RelinkFaces();
         AssetDatabase.SaveAssets();
-        Debug.Log($"[OtterCastSetup] 모습 {made}가지를 만들고 해달 {linked}마리에 연결했습니다.");
+        bool builder = builderFrames != null && ReskinBuilder(builderFrames);
+        Debug.Log($"[OtterCastSetup] 모습 {made}가지를 만들고 해달 {linked}마리 · 얼굴 {faces}곳에 연결했습니다. 건설 해달 {(builder ? "바꿈" : "그대로")}");
     }
 
     // 클립 → 8칸 (칸 순서는 farmer_cast.py의 PACK_CLIPS)
-    private static Dictionary<string, Sprite[]> Slice(string path, string look)
+    // forBuilder: 건설 해달(그림을 루트에 바로 닮)용으로 발 기준점 그림("…_Feet")도 같이 자름
+    private static Dictionary<string, Sprite[]> Slice(string path, string look, bool forBuilder)
     {
         var importer = (TextureImporter)AssetImporter.GetAtPath(path);
         importer.textureType = TextureImporterType.Sprite;
@@ -149,6 +200,16 @@ public static class OtterCastSetup
                     alignment = (int)SpriteAlignment.Center,
                     pivot = new Vector2(0.5f, 0.5f),
                 });
+                if (forBuilder)
+                {
+                    metas.Add(new SpriteMetaData
+                    {
+                        name = $"Cast_{look}_{Clips[c]}_{f}_Feet",
+                        rect = new Rect(col * CellW, texH - (row + 1) * CellH, CellW, CellH),
+                        alignment = (int)SpriteAlignment.Custom,
+                        pivot = new Vector2(0.5f, FeetPivotY),
+                    });
+                }
             }
         }
 #pragma warning disable CS0618 // spritesheet는 쓰지 말라고 하지만 여전히 가장 간단한 방법 (FarmerOtterSpriteSetup과 같음)
@@ -158,8 +219,14 @@ public static class OtterCastSetup
         importer.SaveAndReimport();
 
         var all = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().ToDictionary(s => s.name);
-        return Clips.ToDictionary(clip => clip,
+        var result = Clips.ToDictionary(clip => clip,
             clip => Enumerable.Range(0, FramesPerClip).Select(f => all[$"Cast_{look}_{clip}_{f}"]).ToArray());
+        if (forBuilder)
+        {
+            foreach (var clip in Clips)
+                result[clip + "_Feet"] = Enumerable.Range(0, FramesPerClip).Select(f => all[$"Cast_{look}_{clip}_{f}_Feet"]).ToArray();
+        }
+        return result;
     }
 
     // 농부 해달 그림 이름 → (클립, 칸). 본 시트 "FarmerOtter_Sheet_Walk_Down_3", 동작 시트 "FarmerOtter_IdleAction_Eat_0_5"
@@ -265,7 +332,7 @@ public static class OtterCastSetup
             ApplyTo(so, otter.OtterId);
             so.ApplyModifiedPropertiesWithoutUndo();
 
-            var entry = so.FindProperty("_collectionEntry").objectReferenceValue;
+            var entry = so.FindProperty("_collectionEntry").objectReferenceValue ?? FindEntry(otter.OtterId);
             if (entry != null)
             {
                 var entrySo = new SerializedObject(entry);
@@ -275,5 +342,102 @@ public static class OtterCastSetup
             linked++;
         }
         return linked;
+    }
+
+    private static CollectionEntry FindEntry(string otterId) =>
+        AssetDatabase.FindAssets("t:CollectionEntry")
+            .Select(guid => AssetDatabase.LoadAssetAtPath<CollectionEntry>(AssetDatabase.GUIDToAssetPath(guid)))
+            .FirstOrDefault(e => e != null && e.EntryId == otterId);
+
+    private static int RelinkFaces()
+    {
+        int count = 0;
+        foreach (var (asset, field, otterId) in FaceUses)
+        {
+            var target = AssetDatabase.LoadAssetAtPath<Object>(asset);
+            var face = Portrait(otterId);
+            if (target == null || face == null)
+            {
+                Debug.LogWarning($"[OtterCastSetup] 얼굴을 바꿀 수 없습니다: {asset}");
+                continue;
+            }
+            var so = new SerializedObject(target);
+            so.FindProperty(field).objectReferenceValue = face;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            count++;
+        }
+        return count;
+    }
+
+    // 광장 씬의 건설 해달: 걷기 · 쉬기는 새 모습, 일하기(망치질)는 쪼그려 앉는 동작으로 (수확 동작은 손에 풀이 있음)
+    private static bool ReskinBuilder(Dictionary<string, Sprite[]> frames)
+    {
+        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            return false;
+        var scene = EditorSceneManager.OpenScene(PlazaScenePath, OpenSceneMode.Single);
+        var builder = Object.FindFirstObjectByType<BuilderOtterController>(FindObjectsInactive.Include);
+        if (builder == null)
+        {
+            Debug.LogWarning("[OtterCastSetup] 광장 씬에 건설 해달이 없습니다.");
+            return false;
+        }
+        var idle = frames["Harvest_Feet"][0];
+        var clips = new (string name, Sprite[] frames, float fps)[]
+        {
+            (BuilderOtterController.ClipIdle, new[] { idle }, 1f),
+            (BuilderOtterController.ClipWalkRight, frames["Walk_Feet"], 10f),
+            (BuilderOtterController.ClipWalkLeft, frames["Walk_Feet"], 10f), // 좌우 뒤집어 씀 (_mirrorLeftWalk)
+            (BuilderOtterController.ClipWalkDown, frames["Walk_Down_Feet"], 10f),
+            (BuilderOtterController.ClipWalkUp, frames["Walk_Up_Feet"], 10f),
+            (BuilderOtterController.ClipWork, frames["Squat_Feet"], 6f),
+        };
+        var animator = builder.GetComponent<SpriteFrameAnimator>();
+        var animSo = new SerializedObject(animator);
+        var clipsProp = animSo.FindProperty("clips");
+        clipsProp.arraySize = clips.Length;
+        for (int i = 0; i < clips.Length; i++)
+        {
+            var element = clipsProp.GetArrayElementAtIndex(i);
+            element.FindPropertyRelative("name").stringValue = clips[i].name;
+            element.FindPropertyRelative("fps").floatValue = clips[i].fps;
+            element.FindPropertyRelative("loop").boolValue = true;
+            var list = element.FindPropertyRelative("frames");
+            list.arraySize = clips[i].frames.Length;
+            for (int f = 0; f < clips[i].frames.Length; f++)
+                list.GetArrayElementAtIndex(f).objectReferenceValue = clips[i].frames[f];
+        }
+        animSo.ApplyModifiedPropertiesWithoutUndo();
+        builder.GetComponent<SpriteRenderer>().sprite = idle;
+        // 광부 그림은 작아서 1.1배였음. 새 모습은 광장 해달과 같은 크기
+        float oldScale = builder.transform.localScale.x;
+        builder.transform.localScale = Vector3.one;
+        var bubble = builder.transform.Find("WorkBubble");
+        if (bubble != null && oldScale > 0f)
+        {
+            bubble.localScale = Vector3.one;
+            bubble.localPosition *= oldScale;
+        }
+        var controllerSo = new SerializedObject(builder);
+        controllerSo.FindProperty("_mirrorLeftWalk").boolValue = true;
+        controllerSo.ApplyModifiedPropertiesWithoutUndo();
+        EditorSceneManager.MarkSceneDirty(scene);
+        return EditorSceneManager.SaveScene(scene);
+    }
+
+    // 목록에서 빠진 모습(이전에 만든 것)의 프리팹 · 애니메이션 · 그림을 지움
+    private static void RemoveStaleLooks()
+    {
+        foreach (var guid in AssetDatabase.FindAssets("PlazaOtter_Cast_ t:Prefab", new[] { PrefabDir }))
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            string look = Path.GetFileNameWithoutExtension(path).Substring("PlazaOtter_Cast_".Length);
+            if (Looks.Contains(look))
+                continue;
+            AssetDatabase.DeleteAsset(path);
+            AssetDatabase.DeleteAsset($"{AnimDir}/{look}");
+            AssetDatabase.DeleteAsset($"{SheetDir}/Cast_{look}.png");
+            AssetDatabase.DeleteAsset($"{IconDir}/ICON_Otter_Cast_{look}.png");
+            Debug.Log($"[OtterCastSetup] 목록에서 빠진 모습을 지웠습니다: {look}");
+        }
     }
 }

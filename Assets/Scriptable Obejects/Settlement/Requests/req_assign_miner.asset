@@ -14,15 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_assign_miner
   _order: 3
+  _category: 0
+  _contentVersion: 0
   _title: "\uAD11\uC0B0\uC5D0\uC11C \uC77C\uD560 \uCE5C\uAD6C"
-  _description: "\uAD11\uC0B0 \uC18C\uC2DD\uC744 \uB4E3\uACE0 \uAD11\uBD80 \uD574\uB2EC \uAE61\uAE61\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694.\n\uAD11\uC7A5\uC5D0\uC11C \uB9CC\uB098 \uAD11\uC0B0\uC5D0 \uBC30\uCE58\uD574 \uC8FC\uC138\uC694."
-  _icon: {fileID: 21300000, guid: 5436b78cc2da9ae4b9c403c6b96b3d4d, type: 3}
+  _description: "\uAD11\uC0B0 \uC18C\uC2DD\uC744 \uB4E3\uACE0 \uAD11\uBD80 \uD574\uB2EC
+    \uAE61\uAE61\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694.\n\uAD11\uC7A5\uC5D0\uC11C
+    \uB9CC\uB098 \uAD11\uC0B0\uC5D0 \uBC30\uCE58\uD574 \uC8FC\uC138\uC694."
+  _icon: {fileID: 21300000, guid: 86ccbc71a56bb93438cba76d320dd204, type: 3}
   _requester: {fileID: 11400000, guid: 01434be3ebf84ed69c1bbf9c0735c9c9, type: 2}
   _requiredDevelopment: mine_cleared
   _minResidents: 0
   _construction: {fileID: 0}
   _clearZone: {fileID: 0}
   _assignSpecialist: {fileID: 11400000, guid: 01434be3ebf84ed69c1bbf9c0735c9c9, type: 2}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _building: {fileID: 0}
+  _buildingCount: 1
+  _settleTargets: []
+  _resultDevelopment: 
   _settles: []
   _arrivals:
   - _otter: {fileID: 11400000, guid: b0187b75dfd9a104b8c3725c8a4f5e91, type: 2}
@@ -31,5 +41,7 @@ MonoBehaviour:
     _state: 3
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 4c55a76c841f40cfa32003f79ec97f27, type: 2}
-  _completionMessage: "\uAE61\uAE61\uC774\uAC00 \uAD11\uC0B0\uC5D0\uC11C \uC77C\uD558\uAE30 \uC2DC\uC791\uD574\uC694!\n\uC18C\uC2DD\uC744 \uB4E3\uACE0 \uC0C8 \uD574\uB2EC\uB4E4\uC774 \uCC3E\uC544\uC654\uC5B4\uC694."
+  _completionMessage: "\uAE61\uAE61\uC774\uAC00 \uAD11\uC0B0\uC5D0\uC11C \uC77C\uD558\uAE30
+    \uC2DC\uC791\uD574\uC694!\n\uC18C\uC2DD\uC744 \uB4E3\uACE0 \uC0C8 \uD574\uB2EC\uB4E4\uC774
+    \uCC3E\uC544\uC654\uC5B4\uC694."
   _kingdomLevel: 0

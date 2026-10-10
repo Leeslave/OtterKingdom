@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishFlounder
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_flounder
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 17
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 95711e0ec75f4924d979078aa72d0277, type: 3}
+  _tagline: "\uBAA8\uB798 \uBC14\uB2E5\uC5D0 \uB0A9\uC791 \uC5CE\uB4DC\uB9B0 \uBB3C\uACE0\uAE30."
+  _description: "\uB450 \uB208\uC774 \uD55C\uCABD\uC5D0 \uBAB0\uB824 \uC788\uC5B4\uC11C
+    \uB298 \uD55C\uCABD\uB9CC \uBD10\uC694."
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130 \xB7 \uB09A\uC2EF\uB300 Lv.12"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: de7b263c617a28545bc5baf3bd24d981, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

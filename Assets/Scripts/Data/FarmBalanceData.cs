@@ -5,14 +5,21 @@ public class FarmBalanceData : ScriptableObject
 {
     public int storageCapacityCycles = 6;
 
-    // Cost to go from level (index+1) to (index+2). Index 0 = 1->2.
-    // Same table as the pickaxe / rod upgrade (MiningBalanceData.pickaxeUpgradeCosts).
-    public int[] upgradeCostByLevel = { 100, 200, 400, 800 };
+    // Cost to go from level (index+1) to (index+2). Index 0 = 1->2. 20레벨까지 (낚싯대 강화와 같은 표)
+    public int[] upgradeCostByLevel =
+    {
+        100, 200, 400, 800, 1200, 1700, 2400, 3300, 4500, 6000,
+        8000, 10500, 14000, 18500, 24000, 31000, 40000, 52000, 67000,
+    };
 
-    // Duration multiplier at each level. Index 0 = level 1 (1.00, no reduction).
-    public float[] durationMultiplierByLevel = { 1.00f, 0.90f, 0.80f, 0.70f, 0.60f };
+    // Duration multiplier at each level. Index 0 = level 1 (1.00, no reduction). Lv.5 이후는 한 레벨에 2%씩
+    public float[] durationMultiplierByLevel =
+    {
+        1.00f, 0.90f, 0.80f, 0.70f, 0.60f, 0.58f, 0.56f, 0.54f, 0.52f, 0.50f,
+        0.48f, 0.46f, 0.44f, 0.42f, 0.40f, 0.38f, 0.36f, 0.34f, 0.32f, 0.30f,
+    };
 
-    public int maxFarmLevel = 5;
+    public int maxFarmLevel = 20;
 
     [System.Serializable]
     public struct FurrowUnlock
