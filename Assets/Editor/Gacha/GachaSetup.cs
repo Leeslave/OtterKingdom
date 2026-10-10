@@ -234,7 +234,7 @@ public static class GachaSetup
             for (int i = 0; i < texts.Length; i++)
                 lines.GetArrayElementAtIndex(i).stringValue = texts[i];
         }
-        FillIfEmpty(so, "_portrait", ImportSprite(OtterFolder, "ICON_Otter_Sallang"));
+        FillIfEmpty(so, "_portrait", ImportSprite(OtterFolder, "ICON_Otter_Cast_Blossom"));
         FillIfEmpty(so, "_favoriteToy", pinwheel);
         so.ApplyModifiedPropertiesWithoutUndo();
         return otter;

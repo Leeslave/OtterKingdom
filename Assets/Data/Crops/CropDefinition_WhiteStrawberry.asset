@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c519f86bc213e49a99df581246e373, type: 3}
+  m_Name: CropDefinition_WhiteStrawberry
+  m_EditorClassIdentifier: OtterKingdom::CropDefinition
+  cropId: crop_white_strawberry
+  displayName: "\uD558\uC580 \uB538\uAE30"
+  baseDurationSec: 200
+  yieldCount: 5
+  sellPrice: 270
+  seedType: 1
+  initialSeedCount: 0
+  spriteTint: {r: 1, g: 1, b: 1, a: 1}
+  seedSprites:
+  - {fileID: 21300000, guid: d3cdb495e76e7524695d087c15a273d0, type: 3}
+  - {fileID: 21300000, guid: ebf507e7e63875644b7a22094613b1e5, type: 3}
+  - {fileID: 21300000, guid: 9051b80389b0e3c44a3d238cde6d9998, type: 3}
+  sproutSprites:
+  - {fileID: 21300000, guid: f5305d5d7a341724b86adcf2d5d017ee, type: 3}
+  - {fileID: 21300000, guid: 1745d0f8d5b62da47b3defbe1c96d734, type: 3}
+  - {fileID: 21300000, guid: a043ecb0b4aa9324b8c84ca8b344eab1, type: 3}
+  grownSprites:
+  - {fileID: 21300000, guid: 8afb1cd3c4bcea148bfe5013e63962e8, type: 3}
+  - {fileID: 21300000, guid: c5944a7529955ec41812c4a58b542e65, type: 3}
+  - {fileID: 21300000, guid: fbbc7d5b64b05c74da445907be80b843, type: 3}

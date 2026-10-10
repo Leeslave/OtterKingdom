@@ -45,16 +45,16 @@ public static partial class SettlementSetup
     // 광부·농부: 광장 그림은 광산·밭에서 쓰는 그림 그대로 (광부 = SpecialistOtterSetup이 만드는 PlazaOtter_Miner, 농부 = 농부 모습의 PlazaOtter)
     private static readonly (string asset, string id, string name, string portrait, string prefab, bool builder, string arrival)[] Otters =
     {
-        ("Otter_First", "otter_first", "몽실", "ICON_Otter_Snack", "PlazaOtter_Snack", false, "gb_first_arrival"),
-        ("Otter_Painter", "otter_painter", "물감이", "ICON_Otter_Painter", "PlazaOtter_Painter", false, "gb_painter_arrival"),
-        ("Otter_Sleepy", "otter_sleepy", "꾸벅이", "ICON_Otter_Sleepy", "PlazaOtter_Sleepy", false, "gb_sleepy_arrival"),
-        ("Otter_Builder", "otter_builder", "뚝딱이", "ICON_Otter_Builder", null, true, "gb_builder_arrival"),
-        ("Otter_Miner", "otter_miner", "깡깡이", "ICON_Otter_Miner", "PlazaOtter_Miner", false, "gb_miner_arrival"),
+        ("Otter_First", "otter_first", "몽실", "ICON_Otter_Cast_Explorer", "PlazaOtter_Cast_Explorer", false, "gb_first_arrival"),
+        ("Otter_Painter", "otter_painter", "물감이", "ICON_Otter_Cast_Berry", "PlazaOtter_Cast_Berry", false, "gb_painter_arrival"),
+        ("Otter_Sleepy", "otter_sleepy", "꾸벅이", "ICON_Otter_Cast_Night", "PlazaOtter_Cast_Night", false, "gb_sleepy_arrival"),
+        ("Otter_Builder", "otter_builder", "뚝딱이", "ICON_Otter_Cast_Sunny", null, true, "gb_builder_arrival"),
+        ("Otter_Miner", "otter_miner", "깡깡이", "ICON_Otter_Cast_Miner", "PlazaOtter_Cast_Miner", false, "gb_miner_arrival"),
         ("Otter_Farmer", "otter_farmer", "새싹이", "ICON_Otter_Farmer", "PlazaOtter", false, "gb_farmer_arrival"),
         // 낚시꾼: 광장 그림은 낚시터 해달 그림 그대로 (BuildFisherPlazaPrefab이 만드는 PlazaOtter_Fisher)
-        ("Otter_Fisher", "otter_fisher", "첨벙이", "ICON_Otter_Fisher", "PlazaOtter_Fisher", false, "gb_fisher_arrival"),
+        ("Otter_Fisher", "otter_fisher", "첨벙이", "ICON_Otter_Cast_Fisher", "PlazaOtter_Cast_Fisher", false, "gb_fisher_arrival"),
         // 관리 해달 (P2): 게시판을 보강하면 찾아와 게시판 관리를 맡음. 그림은 임시 (물감이 그림을 물들인 것 — SettlementSetup.P2)
-        ("Otter_Receptionist", ReceptionistOtterId, "또박이", ClerkPortraitName, "PlazaOtter_Clerk", false, "gb_receptionist_arrival"),
+        ("Otter_Receptionist", ReceptionistOtterId, "또박이", "ICON_Otter_Cast_Sailor", "PlazaOtter_Cast_Sailor", false, "gb_receptionist_arrival"),
     };
 
     // 전문 해달: (ID, 일할 지역 에셋, 배치하면 등록되는 도감 항목 에셋, 광장에서 배치 전에 하는 말)
@@ -167,7 +167,7 @@ public static partial class SettlementSetup
             "otter_first", "chair", 0, "con_mine_path", new string[0],
             new[] { ("otter_miner", ResidentState.SpecialNpc) },
             -1, "gb_mine_open", "광산 정비가 끝났어요!\n소식을 듣고 광부 해달이 광장에 찾아왔어요.", 3, MineZonePath, ""),
-        ("req_assign_miner", 3, "광산에서 일할 친구", "광산 소식을 듣고 광부 해달 깡깡이가 찾아왔어요.\n광장에서 만나 광산에 배치해 주세요.", "ICON_Otter_Miner",
+        ("req_assign_miner", 3, "광산에서 일할 친구", "광산 소식을 듣고 광부 해달 깡깡이가 찾아왔어요.\n광장에서 만나 광산에 배치해 주세요.", "ICON_Otter_Cast_Miner",
             "otter_miner", MineOperationalDevelopment, 0, "", new string[0],
             new[] { ("otter_painter", ResidentState.SettlementCandidate), ("otter_builder", ResidentState.SpecialNpc) },
             -1, "gb_miner_assigned", "깡깡이가 광산에서 일하기 시작해요!\n소식을 듣고 새 해달들이 찾아왔어요.", 0, "", "otter_miner"),
@@ -191,7 +191,7 @@ public static partial class SettlementSetup
             "otter_first", SettlementQuestGate.FarmProductionDevelopment, 0, "con_board_upgrade", new string[0],
             new[] { (ReceptionistOtterId, ResidentState.SpecialNpc) },
             -1, "gb_board_upgrade", "게시판이 마을회관이 됐어요!\n소식을 듣고 게시판을 맡아 줄 해달이 찾아왔어요.", 0, "", ""),
-        ("req_assign_receptionist", 8, "게시판을 맡아 줄 친구", "게시판을 정리해 줄 또박이가 찾아왔어요.\n광장에서 만나 게시판 관리를 맡겨 주세요.", ClerkPortraitName,
+        ("req_assign_receptionist", 8, "게시판을 맡아 줄 친구", "게시판을 정리해 줄 또박이가 찾아왔어요.\n광장에서 만나 게시판 관리를 맡겨 주세요.", "ICON_Otter_Cast_Sailor",
             ReceptionistOtterId, BoardUpgradeDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_receptionist_assigned", "또박이가 게시판을 맡았어요!\n이제 주민들의 부탁도 게시판에 붙어요.", 0, "", ""),
@@ -213,7 +213,7 @@ public static partial class SettlementSetup
             "otter_first", FishingFoundDevelopment, 0, "con_fishing_dock", new string[0],
             new[] { ("otter_fisher", ResidentState.SpecialNpc) },
             -1, "gb_fishing_dock", "선착장을 다 고쳤어요!\n소식을 듣고 낚시꾼 해달이 광장에 찾아왔어요.", 0, "", ""),
-        ("req_assign_fisher", 13, "낚시를 할 해달이 필요해요", "광장에서 새로 찾아온 낚시꾼 해달 첨벙이를 만나 보세요.\n낚시터에 배치하면 낚시를 시작해요.", "ICON_Otter_Fisher",
+        ("req_assign_fisher", 13, "낚시를 할 해달이 필요해요", "광장에서 새로 찾아온 낚시꾼 해달 첨벙이를 만나 보세요.\n낚시터에 배치하면 낚시를 시작해요.", "ICON_Otter_Cast_Fisher",
             "otter_fisher", FishingDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_fisher_assigned", "첨벙이가 낚시터에서 일하기 시작해요!\n낚시터에 가서 첫 낚시를 해 봐요.", 0, "", "otter_fisher"),

@@ -49,7 +49,7 @@ public static class QuestSetup
         ("Main_Rock_1", "main_rock_1", "돌 깨는 해달", "광장 바위를 깨서 돌 6개 얻기", QuestGoalType.Gather, 6, "Ore", 30, "item:Mining/돌", QuestKind.Main, 2, "M02_VisitMine", 100, 0f, ""),
         ("M02_MinePath", "main_lv2_mine_path", "광산 길 열기", "광산 길을 막은 나무·바위 치우기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_MinePath", QuestKind.Main, 2, "Main_Rock_1", 0, 0f, "req_mine_path"),
         // Lv.3 → 4 광부와 새 이웃 (220)
-        ("M03_Miner", "main_lv3_miner", "광산에서 일할 친구", "깡깡이를 광산에 배치하기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Miner", QuestKind.Main, 3, "M02_MinePath", 50, 0f, "req_assign_miner"),
+        ("M03_Miner", "main_lv3_miner", "광산에서 일할 친구", "깡깡이를 광산에 배치하기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Cast_Miner", QuestKind.Main, 3, "M02_MinePath", 50, 0f, "req_assign_miner"),
         ("Main_Mine_1", "main_mine_1", "첫 곡괭이질", "광산에서 광석 5개 캐기", QuestGoalType.Mine, 5, "Ore", 30, "item:Mining/돌", QuestKind.Main, 3, "M03_Miner", 70, 0f, ""),
         ("M03_Neighbor", "main_lv3_neighbor", "새 이웃의 집", "게시판 부탁: 새 이웃의 집 짓기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_House_Red", QuestKind.Main, 3, "Main_Mine_1", 100, 0f, "req_neighbor_house"),
         // Lv.4 → 5 먹거리를 길러요 (320)
@@ -63,7 +63,7 @@ public static class QuestSetup
         ("M05_Board", "main_lv5_board", "부탁이 많아졌어요", "게시판을 마을회관으로 넓히기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_GuildOffice", QuestKind.Main, 5, "M05_Furrow", 120, 0f, "req_upgrade_board"),
         ("M05_Harvest", "main_lv5_harvest", "부지런한 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 100, "item:Farming/감자", QuestKind.Main, 5, "M05_Board", 200, 0f, ""),
         // Lv.6 → 7 함께 일하는 마을 (600)
-        ("M06_Clerk", "main_lv6_clerk", "게시판을 맡아 줄 친구", "또박이에게 게시판 맡기기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Clerk", QuestKind.Main, 6, "M05_Harvest", 80, 0f, "req_assign_receptionist"),
+        ("M06_Clerk", "main_lv6_clerk", "게시판을 맡아 줄 친구", "또박이에게 게시판 맡기기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Cast_Sailor", QuestKind.Main, 6, "M05_Harvest", 80, 0f, "req_assign_receptionist"),
         ("M06_Common", "main_lv6_common", "다 같이 쉴 자리", "광장에 쉴 자리 정리하기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_CommonSpace", QuestKind.Main, 6, "M06_Clerk", 100, 0f, "req_prepare_common_space"),
         ("M06_Furrow", "main_lv6_furrow", "고랑 하나 더", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 6, "M06_Common", 60, 0f, ""),
         ("M06_Potato", "main_lv6_potato", "감자 농사", "감자 20개 수확하기", QuestGoalType.Harvest, 20, "only:Farming/감자", 100, "item:Farming/감자", QuestKind.Main, 6, "M06_Furrow", 170, 0f, ""),
@@ -109,16 +109,16 @@ public static class QuestSetup
         ("M14_Sales", "main_lv14_sales", "왕국의 금고", "판매로 80,000골드 벌기", QuestGoalType.EarnFromSales, 80000, "", 2500, "gold", QuestKind.Main, 14, "M14_Harvest", 1700, 0f, ""),
         // Lv.15 → 16 바다가 열렸다 (4,700)
         ("M15_Dock", "main_lv15_dock", "바다로 나가는 선착장", "게시판 부탁: 선착장 고치기", QuestGoalType.Milestone, 1, "", 1000, "settle:ICON_FishingDock", QuestKind.Main, 15, "M14_Sales", 1200, 0f, "req_fishing_dock"),
-        ("M15_Fisher", "main_lv15_fisher", "낚시를 할 해달", "첨벙이를 낚시터에 배치하기", QuestGoalType.Milestone, 1, "", 500, "otter:ICON_Otter_Fisher", QuestKind.Main, 15, "M15_Dock", 500, 0f, "req_assign_fisher"),
+        ("M15_Fisher", "main_lv15_fisher", "낚시를 할 해달", "첨벙이를 낚시터에 배치하기", QuestGoalType.Milestone, 1, "", 500, "otter:ICON_Otter_Cast_Fisher", QuestKind.Main, 15, "M15_Dock", 500, 0f, "req_assign_fisher"),
         ("M15_VisitDock", "main_lv15_visit_dock", "바다가 열렸다", "낚시터에 가 보기", QuestGoalType.VisitZone, 1, "", 300, "place:ICON_Place_FishingSpot", QuestKind.Main, 15, "M15_Fisher", 300, 0f, "Fishing"),
         ("M15_Catch", "main_lv15_catch", "첫 만선", "물고기 30마리 낚기", QuestGoalType.Catch, 30, "Fish", 2000, "item:Fishing/고등어", QuestKind.Main, 15, "M15_VisitDock", 2700, 0f, ""),
         // Lv.16 → 17 바다 마을 (5,600): 다음 레벨은 건설소 (해달의 부탁 42)
-        ("M16_Builder", "main_lv16_builder", "망치 소리", "게시판 부탁: 콩콩이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "settle:ICON_Otter_Builder", QuestKind.Main, 16, "M15_Catch", 1200, 0f, "req_p5_builder_home"),
+        ("M16_Builder", "main_lv16_builder", "망치 소리", "게시판 부탁: 콩콩이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "otter:ICON_Otter_Cast_Cocoa", QuestKind.Main, 16, "M15_Catch", 1200, 0f, "req_p5_builder_home"),
         ("M16_Catch", "main_lv16_catch", "그물 가득", "물고기 100마리 낚기", QuestGoalType.Catch, 100, "Fish", 2500, "item:Fishing/고등어", QuestKind.Main, 16, "M16_Builder", 2000, 0f, ""),
         ("M16_Decor", "main_lv16_decor", "아늑한 광장", "가구나 장난감 4개 놓기", QuestGoalType.PlaceDecor, 4, "", 1500, "item:Decor/나무 벤치", QuestKind.Main, 16, "M16_Catch", 1000, 0f, ""),
         ("M16_Workyard", "main_lv16_workyard", "공사를 빠르게", "게시판 부탁: 건설소 짓기", QuestGoalType.Milestone, 1, "", 2000, "settle:ICON_GuildOffice", QuestKind.Main, 16, "M16_Decor", 1400, 0f, "req_p5_workyard"),
         // Lv.17 → 18 이야기가 모이는 마을 (6,600): 다음 레벨은 기록관 (해달의 부탁 44)
-        ("M17_Recorder", "main_lv17_recorder", "밤의 메모쟁이", "게시판 부탁: 끄적이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "otter:ICON_Otter_Clerk", QuestKind.Main, 17, "M16_Workyard", 1200, 0f, "req_p5_recorder_home"),
+        ("M17_Recorder", "main_lv17_recorder", "밤의 메모쟁이", "게시판 부탁: 끄적이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "otter:ICON_Otter_Cast_Ink", QuestKind.Main, 17, "M16_Workyard", 1200, 0f, "req_p5_recorder_home"),
         ("M17_Mine", "main_lv17_mine", "깊은 광맥", "광산에서 광석 600개 캐기", QuestGoalType.Mine, 600, "Ore", 2500, "item:Mining/다이아몬드", QuestKind.Main, 17, "M17_Recorder", 1700, 0f, ""),
         ("M17_Sales", "main_lv17_sales", "광장의 큰손", "판매로 120,000골드 벌기", QuestGoalType.EarnFromSales, 120000, "", 3000, "gold", QuestKind.Main, 17, "M17_Mine", 1900, 0f, ""),
         ("M17_Archive", "main_lv17_archive", "모두의 기록", "게시판 부탁: 기록관 짓기", QuestGoalType.Milestone, 1, "", 2500, "settle:ICON_TownHall", QuestKind.Main, 17, "M17_Sales", 1800, 0f, "req_p5_archive"),
@@ -150,7 +150,7 @@ public static class QuestSetup
         ("Main_Mine_2", "main_mine_2", "광부의 하루", "광산에서 광석 20개 캐기", QuestGoalType.Mine, 20, "Ore", 80, "item:Mining/다이아몬드", QuestKind.Challenge, 3, "Main_Mine_1", 60, 0f, ""),
         ("Main_Build_1", "main_build_1", "첫 보금자리", "집 1채 짓기", QuestGoalType.CompleteConstruction, 1, "build:con_house_1,con_house_2", 50, "settle:ICON_House_Blue", QuestKind.Challenge, 1, "", 40, 0f, ""),
         ("Main_Build_2", "main_build_2", "왕국을 가꾸는 손", "건축물 2개 짓기", QuestGoalType.CompleteConstruction, 2, "", 100, "settle:ICON_Chair", QuestKind.Challenge, 2, "Main_Build_1", 60, 0f, ""),
-        ("Main_Build_3", "main_build_3", "뚝딱뚝딱", "건설 해달과 공사 1번 끝내기", QuestGoalType.CompleteConstruction, 1, "builder", 150, "settle:ICON_Otter_Builder", QuestKind.Challenge, 3, "", 80, 0f, ""),
+        ("Main_Build_3", "main_build_3", "뚝딱뚝딱", "건설 해달과 공사 1번 끝내기", QuestGoalType.CompleteConstruction, 1, "builder", 150, "otter:ICON_Otter_Cast_Sunny", QuestKind.Challenge, 3, "", 80, 0f, ""),
         ("Main_Gather_2", "main_gather_2", "광장 청소부", "광장에서 재료 40개 줍기", QuestGoalType.Gather, 40, "", 80, "item:Mining/돌", QuestKind.Challenge, 2, "Main_Gather_1", 60, 0f, ""),
         ("Main_Sales_2", "main_sales_2", "첫 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 100, "gold", QuestKind.Challenge, 2, "Main_Sales_1", 80, 0f, ""),
         ("Main_Sales_3", "main_sales_3", "알뜰 상인", "판매로 4,000골드 벌기", QuestGoalType.EarnFromSales, 4000, "", 300, "gold", QuestKind.Challenge, 4, "Main_Sales_2", 140, 0f, ""),
@@ -168,7 +168,7 @@ public static class QuestSetup
         ("Main_Decor_3", "main_decor_3", "해달 놀이공원", "장난감 6개 놓기", QuestGoalType.PlaceDecor, 6, "", 500, "item:Decor/축구공", QuestKind.Challenge, 9, "Main_Decor_2", 300, 0f, ""),
         ("Main_Collection_1", "main_collection_1", "도감 시작", "도감 3칸 채우기", QuestGoalType.CollectionRegister, 3, "", 100, "nav:ICON_Nav_Collection", QuestKind.Challenge, 2, "", 80, 0f, ""),
         ("Main_Collection_2", "main_collection_2", "수집가", "도감 6칸 채우기", QuestGoalType.CollectionRegister, 6, "", 300, "nav:ICON_Nav_Collection", QuestKind.Challenge, 5, "Main_Collection_1", 180, 0f, ""),
-        ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.MeetOtter, 1, "", 200, "otter:ICON_Otter_Fisher", QuestKind.Challenge, 3, "", 120, 0f, ""),
+        ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.MeetOtter, 1, "", 200, "otter:ICON_Otter_Cast_Fisher", QuestKind.Challenge, 3, "", 120, 0f, ""),
         ("Main_Otter_2", "main_otter_2", "해달 친구들", "해달 2마리 만나기", QuestGoalType.MeetOtter, 2, "", 500, "otter:ICON_Otter_Farmer", QuestKind.Challenge, 8, "Main_Otter_1", 300, 0f, ""),
 
         // 일일: Lv.9부터 (성장곡선 5장), 골드만

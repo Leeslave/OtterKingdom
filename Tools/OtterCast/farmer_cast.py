@@ -291,6 +291,21 @@ def neckwear(d, a, kind, color, color2=None):
             outline_poly(d, [(cx - half * 0.6, y), (cx + half * 0.6, y), (cx, y + 20 * k)], color, w)
 
 
+def headlamp(d, cx, cy, r):
+    w = max(2, int(r * 0.2))
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(118, 118, 128), outline=OUTLINE, width=w)
+    g = r * 0.62
+    d.ellipse([cx - g, cy - g, cx + g, cy + g], fill=(255, 236, 140), outline=shade((255, 236, 140), 0.7), width=max(1, w // 2))
+    d.ellipse([cx - g * 0.55, cy - g * 0.6, cx - g * 0.05, cy - g * 0.1], fill=(255, 255, 240))
+
+
+def fish(d, cx, cy, r, color):
+    w = max(2, int(r * 0.17))
+    outline_poly(d, [(cx + r * 0.45, cy), (cx + r * 1.05, cy - r * 0.5), (cx + r * 1.05, cy + r * 0.5)], shade(color, 0.85), w)
+    d.ellipse([cx - r, cy - r * 0.55, cx + r * 0.6, cy + r * 0.55], fill=color, outline=OUTLINE, width=w)
+    d.ellipse([cx - r * 0.62, cy - r * 0.2, cx - r * 0.38, cy + r * 0.04], fill=OUTLINE)
+
+
 def hatwear(d, a, kind, color, center=None):
     k = a['scale']
     px, py = a['pin']
@@ -308,6 +323,16 @@ def hatwear(d, a, kind, color, center=None):
         star(d, px, py, 13 * k, color)
     elif kind == 'cherry':
         cherries(d, px, py, 14 * k, color)
+    elif kind == 'fish':
+        fish(d, px, py, 14 * k, color)
+    elif kind == 'lamp':
+        # 광부 머리 등: 모자 앞쪽 (뒷모습에는 안 보임)
+        if a['view'] == 'back':
+            return
+        hx0, hy0, hx1, hy1 = a['hat']
+        w = hx1 - hx0
+        x = (hx0 + hx1) / 2 if a['view'] == 'front' else hx0 + w * 0.70 if a['view'] == 'side_r' else hx1 - w * 0.70
+        headlamp(d, x, py - (py - hy0) * 0.40, 12 * k)
     elif kind == 'sprout':
         tx, ty = a['top']
         base = ty + 8 * k

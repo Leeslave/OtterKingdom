@@ -16,12 +16,13 @@ MonoBehaviour:
   _tab: {fileID: 11400000, guid: e57bb4e159ee155448fc7c02082cbb58, type: 2}
   _displayName: "\uB09A\uC2DC\uAFBC \uD574\uB2EC"
   _sortOrder: 6
-  _portrait: {fileID: 21300000, guid: ab9ca150b50f0a748ae2419bcadb71f3, type: 3}
+  _portrait: {fileID: 21300000, guid: 8fda13eb26fa1774ab993ccaf0c395d3, type: 3}
   _silhouette: {fileID: 21300000, guid: 8db287fc936d8c24fa151bae0d00fa80, type: 3}
   _tagline: "\uB09A\uC2DC\uB97C \uC88B\uC544\uD558\uB294 \uB290\uAE0B\uD55C \uCE5C\uAD6C"
   _description: "\uD30C\uB3C4 \uC18C\uB9AC\uB97C \uB4E4\uC73C\uBA70 \uCC0C\uAC00
     \uC6C0\uC9C1\uC774\uAE38 \uAE30\uB2E4\uB824\uC694."
   _extraValue: "\uACE0\uB4F1\uC5B4"
+  _hint: 
   _linkedItem: {fileID: 0}
   _unlockLevel: 0
   _story: {fileID: 11400000, guid: 5ad7d4f5dcad13546809bb16bf46e1f3, type: 2}

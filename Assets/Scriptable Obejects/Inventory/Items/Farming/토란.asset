@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uD1A0\uB780"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: crop_taro
+  _displayName: "\uD1A0\uB780"
+  _description: "\uD138\uC637\uC744 \uC785\uC740 \uB3D9\uAE00\uB3D9\uAE00 \uC54C\uBFCC\uB9AC."
+  _icon: {fileID: 21300000, guid: 85c38689b73e8824aa2a9e42d0cb23e9, type: 3}
+  _category: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 1
+  _sellPrice: 90
+  _maxStack: 999

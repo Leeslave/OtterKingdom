@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_builder
   _displayName: "\uB69D\uB531\uC774"
-  _portrait: {fileID: 21300000, guid: 1b9593d4f9dd2834e818bac339d2abbc, type: 3}
+  _portrait: {fileID: 21300000, guid: 9e3fa72eed1c35a4c9f324df90932e33, type: 3}
   _plazaPrefab: {fileID: 0}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 5

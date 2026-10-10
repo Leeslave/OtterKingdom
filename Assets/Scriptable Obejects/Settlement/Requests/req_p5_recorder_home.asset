@@ -20,7 +20,7 @@ MonoBehaviour:
   _description: "\uBC24\uB9C8\uB2E4 \uBB34\uC5B8\uAC00\uB97C \uC801\uB358 \uB044\uC801\uC774\uAC00
     \uCC3E\uC544\uC654\uC5B4\uC694.\n\uB610\uBC15\uC774\uC640 \uD568\uAED8 \uB9C8\uC744
     \uC774\uC57C\uAE30\uB97C \uC801\uC5B4 \uB450\uACE0 \uC2F6\uB300\uC694."
-  _icon: {fileID: 21300000, guid: bf83ac05b525d184a901f628b4a631f8, type: 3}
+  _icon: {fileID: 21300000, guid: 819d74aa7dcb5a245a4500bf5b591d3d, type: 3}
   _requester: {fileID: 11400000, guid: 58898692c33347619cf75afe6c116c9a, type: 2}
   _requiredDevelopment: p5_workyard_built
   _minResidents: 0

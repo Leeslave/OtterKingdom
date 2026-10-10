@@ -580,7 +580,7 @@ public class GameManager : MonoBehaviour
 
     // Save ids -> ItemDefinition. An id with no definition yet is logged once
     // and treated as "can't go in the bag" by every caller.
-    private bool TryFindItem(string itemId, out ItemDefinition item)
+    public bool TryFindItem(string itemId, out ItemDefinition item)
     {
         if (InventoryManager.Instance.Config.ItemDatabase.TryGet(itemId, out item)) return true;
 

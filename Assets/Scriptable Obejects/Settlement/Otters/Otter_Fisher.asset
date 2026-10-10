@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_fisher
   _displayName: "\uCCA8\uBC99\uC774"
-  _portrait: {fileID: 21300000, guid: ab9ca150b50f0a748ae2419bcadb71f3, type: 3}
-  _plazaPrefab: {fileID: 8522304396617631820, guid: b941634342409014b80d3ed3f19d1645, type: 3}
+  _portrait: {fileID: 21300000, guid: 8fda13eb26fa1774ab993ccaf0c395d3, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: 4fbd62c1dd920d4419791157d323adc4, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 4
   _toyVisitor: 0
   _visitTier: 0
+  _favoriteToy: {fileID: 0}
+  _visitCondition: 0
+  _visitConditionValue: 0
   _homelessLine: 
   _isBuilder: 0
   _arrivalEntry: {fileID: 11400000, guid: 8165141d3da63344a9e52ede60f41bef, type: 2}

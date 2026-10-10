@@ -14,18 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::SettlementOtterDefinition
   _otterId: otter_receptionist
   _displayName: "\uB610\uBC15\uC774"
-  _portrait: {fileID: 21300000, guid: bf83ac05b525d184a901f628b4a631f8, type: 3}
-  _plazaPrefab: {fileID: 4988520832519457209, guid: 034a2cd755c6a8241a47b1f6d7ad694a, type: 3}
+  _portrait: {fileID: 21300000, guid: 0dcb8c437bd23e643bdc03913e927f05, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: ed6893ec797376941a605918cfbcbae1, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 10
   _toyVisitor: 0
   _visitTier: 0
+  _favoriteToy: {fileID: 0}
+  _visitCondition: 0
+  _visitConditionValue: 0
   _homelessLine: 
   _isBuilder: 0
   _arrivalEntry: {fileID: 11400000, guid: f777f024e797f0147ab08362820dec2f, type: 2}
   _workRegion: {fileID: 0}
   _collectionEntry: {fileID: 11400000, guid: 6eb185ab25d4bfe41b0a43c33e96ad0d, type: 2}
   _assignLine: 
+  _assignDevelopment: 
+  _moveInLine: 
   _lines:
   - "\uBD80\uD0C1\uC740 \uCC28\uACE1\uCC28\uACE1!"
   - "\uAE00\uC528\uB294 \uB610\uBC15\uB610\uBC15 \uC368\uC57C\uC8E0."

@@ -180,14 +180,20 @@ public class OfflineProductionService
         long catches = (long)Math.Floor(total / perCatch);
         save.offlineFishingProgressSec = (float)(total - catches * perCatch);
 
+        // 한 마리씩 굴림: 물고기인지, 어떤 물고기인지 (낚싯대 레벨로 낚을 수 있는 것 중에서)
         float fishChance = fishingBalance.FishChanceAt(save.rodLevel);
+        var fishCounts = new Dictionary<string, long>();
         long fish = 0;
         for (long i = 0; i < catches; i++)
         {
-            if (random.NextDouble() < fishChance) fish++;
+            if (random.NextDouble() >= fishChance) continue;
+            string id = fishingBalance.RollFish(save.rodLevel, random.NextDouble());
+            fishCounts[id] = (fishCounts.TryGetValue(id, out long n) ? n : 0) + 1;
+            fish++;
         }
 
-        Store(fishingBalance.fishItemId, ClampToInt(fish), bag, report);
+        foreach (var pair in fishCounts)
+            Store(pair.Key, ClampToInt(pair.Value), bag, report);
         Store(fishingBalance.trashItemId, ClampToInt(catches - fish), bag, report);
     }
 

@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: fdb2ef55684b31348835ef5ddb1bd979
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1032694421319544071
+    second: Cast_Fisher_0
+  - first:
+      213: -1811768373078892680
+    second: Cast_Fisher_1
+  - first:
+      213: -1326034533940946281
+    second: Cast_Fisher_2
+  - first:
+      213: -981103638098202866
+    second: Cast_Fisher_3
+  - first:
+      213: 5298422037421937745
+    second: Cast_Fisher_4
+  - first:
+      213: 3089630453696205433
+    second: Cast_Fisher_5
+  - first:
+      213: 6473365135687406167
+    second: Cast_Fisher_6
+  - first:
+      213: -3984980078848398286
+    second: Cast_Fisher_7
+  - first:
+      213: 8229527966973024381
+    second: Cast_Fisher_8
+  - first:
+      213: -4206170935091040490
+    second: Cast_Fisher_9
+  - first:
+      213: 4443608226665646209
+    second: Cast_Fisher_10
+  - first:
+      213: -5458661093907484497
+    second: Cast_Fisher_11
+  - first:
+      213: -8137402561166147969
+    second: Cast_Fisher_12
+  - first:
+      213: -398087242486930664
+    second: Cast_Fisher_13
+  - first:
+      213: -7924559343575404172
+    second: Cast_Fisher_14
+  - first:
+      213: 2030098647007629242
+    second: Cast_Fisher_15
+  - first:
+      213: -4868443870551208518
+    second: Cast_Fisher_16
+  - first:
+      213: -4984825463355763008
+    second: Cast_Fisher_17
+  - first:
+      213: 6934170129216096050
+    second: Cast_Fisher_18
+  - first:
+      213: 6288909771514529031
+    second: Cast_Fisher_19
+  - first:
+      213: 1794617017410909399
+    second: Cast_Fisher_20
+  - first:
+      213: 6252331162632113317
+    second: Cast_Fisher_21
+  - first:
+      213: 4772832650181698321
+    second: Cast_Fisher_22
+  - first:
+      213: 4481017175101680534
+    second: Cast_Fisher_23
+  - first:
+      213: 621475475697967923
+    second: Cast_Fisher_24
+  - first:
+      213: -2523765027397616573
+    second: Cast_Fisher_25
+  - first:
+      213: -509310368354209346
+    second: Cast_Fisher_26
+  - first:
+      213: 7399166821411883113
+    second: Cast_Fisher_27
+  - first:
+      213: -6290449052964655470
+    second: Cast_Fisher_28
+  - first:
+      213: -3009190194379613432
+    second: Cast_Fisher_29
+  - first:
+      213: -1317257055710546791
+    second: Cast_Fisher_30
+  - first:
+      213: -829394137240077476
+    second: Cast_Fisher_31
+  - first:
+      213: 2601227257699920854
+    second: Cast_Fisher_32
+  - first:
+      213: 1903287313107199054
+    second: Cast_Fisher_33
+  - first:
+      213: -5100704973597559021
+    second: Cast_Fisher_34
+  - first:
+      213: 3215387604205153138
+    second: Cast_Fisher_35
+  - first:
+      213: 3638578780100847600
+    second: Cast_Fisher_36
+  - first:
+      213: 7943069026461311008
+    second: Cast_Fisher_37
+  - first:
+      213: 539413613174645443
+    second: Cast_Fisher_38
+  - first:
+      213: -6150755068422720453
+    second: Cast_Fisher_39
+  - first:
+      213: -8379584006118825411
+    second: Cast_Fisher_40
+  - first:
+      213: 9183556834141806930
+    second: Cast_Fisher_41
+  - first:
+      213: -3194768727242537330
+    second: Cast_Fisher_42
+  - first:
+      213: -2203916415092852774
+    second: Cast_Fisher_43
+  - first:
+      213: -3158373971648923869
+    second: Cast_Fisher_44
+  - first:
+      213: 3273826025976942345
+    second: Cast_Fisher_45
+  - first:
+      213: 2545734059255428416
+    second: Cast_Fisher_46
+  - first:
+      213: 7825182330759545356
+    second: Cast_Fisher_47
+  - first:
+      213: 6256056035419435694
+    second: Cast_Fisher_48
+  - first:
+      213: -7029625744394534887
+    second: Cast_Fisher_49
+  - first:
+      213: -7391885055412473942
+    second: Cast_Fisher_50
+  - first:
+      213: 4474901686791383542
+    second: Cast_Fisher_51
+  - first:
+      213: -3964545931611125884
+    second: Cast_Fisher_52
+  - first:
+      213: 1480838328451184595
+    second: Cast_Fisher_53
+  - first:
+      213: -1861120751297794119
+    second: Cast_Fisher_54
+  - first:
+      213: -6860318123328281483
+    second: Cast_Fisher_55
+  - first:
+      213: 1757850150079060806
+    second: Cast_Fisher_56
+  - first:
+      213: -8116786112760627997
+    second: Cast_Fisher_57
+  - first:
+      213: 8099489381447157892
+    second: Cast_Fisher_58
+  - first:
+      213: 7261060631115359168
+    second: Cast_Fisher_59
+  - first:
+      213: 5398044739350707301
+    second: Cast_Fisher_60
+  - first:
+      213: 1818390371418104166
+    second: Cast_Fisher_61
+  - first:
+      213: -7471339352577424480
+    second: Cast_Fisher_62
+  - first:
+      213: 4726670388219084886
+    second: Cast_Fisher_63
+  - first:
+      213: -1159594455044125564
+    second: Cast_Fisher_64
+  - first:
+      213: -8826611303266751067
+    second: Cast_Fisher_65
+  - first:
+      213: 2513896651241927336
+    second: Cast_Fisher_66
+  - first:
+      213: -2577412734143627942
+    second: Cast_Fisher_67
+  - first:
+      213: 1426420823647301601
+    second: Cast_Fisher_68
+  - first:
+      213: -8493914772956288242
+    second: Cast_Fisher_69
+  - first:
+      213: 4001580932389062148
+    second: Cast_Fisher_Walk_0
+  - first:
+      213: 8743235709716749353
+    second: Cast_Fisher_Walk_1
+  - first:
+      213: -913774978318199717
+    second: Cast_Fisher_Walk_2
+  - first:
+      213: 9136646695794353997
+    second: Cast_Fisher_Walk_3
+  - first:
+      213: -1938577709071561666
+    second: Cast_Fisher_Walk_4
+  - first:
+      213: 770846709890973014
+    second: Cast_Fisher_Walk_5
+  - first:
+      213: 2253215226712971726
+    second: Cast_Fisher_Walk_6
+  - first:
+      213: 7430841820042942788
+    second: Cast_Fisher_Walk_7
+  - first:
+      213: 7268792187101735920
+    second: Cast_Fisher_Walk_Down_0
+  - first:
+      213: 6692850964146281930
+    second: Cast_Fisher_Walk_Down_1
+  - first:
+      213: 8602551631768672701
+    second: Cast_Fisher_Walk_Down_2
+  - first:
+      213: -6647139242844510388
+    second: Cast_Fisher_Walk_Down_3
+  - first:
+      213: 8634006685424848665
+    second: Cast_Fisher_Walk_Down_4
+  - first:
+      213: 6170730956747586477
+    second: Cast_Fisher_Walk_Down_5
+  - first:
+      213: 8058995545961610937
+    second: Cast_Fisher_Walk_Down_6
+  - first:
+      213: -534223391393446811
+    second: Cast_Fisher_Walk_Down_7
+  - first:
+      213: 5192119051434837367
+    second: Cast_Fisher_Walk_Up_0
+  - first:
+      213: 3831032956972017288
+    second: Cast_Fisher_Walk_Up_1
+  - first:
+      213: 3491106672467180014
+    second: Cast_Fisher_Walk_Up_2
+  - first:
+      213: -7833374744118372982
+    second: Cast_Fisher_Walk_Up_3
+  - first:
+      213: -4006564987223323424
+    second: Cast_Fisher_Walk_Up_4
+  - first:
+      213: 6138521081901919434
+    second: Cast_Fisher_Walk_Up_5
+  - first:
+      213: -4508488488923108743
+    second: Cast_Fisher_Walk_Up_6
+  - first:
+      213: 92295732761003700
+    second: Cast_Fisher_Walk_Up_7
+  - first:
+      213: -6570684319750464305
+    second: Cast_Fisher_Harvest_0
+  - first:
+      213: -9200969400340333715
+    second: Cast_Fisher_Harvest_1
+  - first:
+      213: 5428506899817778653
+    second: Cast_Fisher_Harvest_2
+  - first:
+      213: 3335558760919778255
+    second: Cast_Fisher_Harvest_3
+  - first:
+      213: 2803649194320127411
+    second: Cast_Fisher_Harvest_4
+  - first:
+      213: 3475674337137290607
+    second: Cast_Fisher_Harvest_5
+  - first:
+      213: -1124262865272907277
+    second: Cast_Fisher_Harvest_6
+  - first:
+      213: 6786645960472332112
+    second: Cast_Fisher_Harvest_7
+  - first:
+      213: -4669812473182105305
+    second: Cast_Fisher_Eat_0
+  - first:
+      213: -8950952023996918047
+    second: Cast_Fisher_Eat_1
+  - first:
+      213: 9136497527831040951
+    second: Cast_Fisher_Eat_2
+  - first:
+      213: -8891933024805586462
+    second: Cast_Fisher_Eat_3
+  - first:
+      213: -1283529810771105641
+    second: Cast_Fisher_Eat_4
+  - first:
+      213: 2647185571942911373
+    second: Cast_Fisher_Eat_5
+  - first:
+      213: 7665302655471645202
+    second: Cast_Fisher_Eat_6
+  - first:
+      213: -3333031084961198979
+    second: Cast_Fisher_Eat_7
+  - first:
+      213: 1151003018551004951
+    second: Cast_Fisher_Net_0
+  - first:
+      213: 511422431629958340
+    second: Cast_Fisher_Net_1
+  - first:
+      213: -5278531810920005135
+    second: Cast_Fisher_Net_2
+  - first:
+      213: 9016914998206893297
+    second: Cast_Fisher_Net_3
+  - first:
+      213: -2264055293002674629
+    second: Cast_Fisher_Net_4
+  - first:
+      213: -796678826565270650
+    second: Cast_Fisher_Net_5
+  - first:
+      213: -612825412488128857
+    second: Cast_Fisher_Net_6
+  - first:
+      213: 1337669029962374295
+    second: Cast_Fisher_Net_7
+  - first:
+      213: 1446123482473662230
+    second: Cast_Fisher_Squat_0
+  - first:
+      213: -8805070644572854218
+    second: Cast_Fisher_Squat_1
+  - first:
+      213: 7170721641803075156
+    second: Cast_Fisher_Squat_2
+  - first:
+      213: -6512369001376367346
+    second: Cast_Fisher_Squat_3
+  - first:
+      213: -5033146718685875974
+    second: Cast_Fisher_Squat_4
+  - first:
+      213: -5939133963869488484
+    second: Cast_Fisher_Squat_5
+  - first:
+      213: 3957427739087464693
+    second: Cast_Fisher_Squat_6
+  - first:
+      213: -343488667789786150
+    second: Cast_Fisher_Squat_7
+  - first:
+      213: -1111859256101017916
+    second: Cast_Fisher_Stretch_0
+  - first:
+      213: -7165300828401893408
+    second: Cast_Fisher_Stretch_1
+  - first:
+      213: 2756758279985186219
+    second: Cast_Fisher_Stretch_2
+  - first:
+      213: -8432308681215632003
+    second: Cast_Fisher_Stretch_3
+  - first:
+      213: -7397047590626465585
+    second: Cast_Fisher_Stretch_4
+  - first:
+      213: 6323380621262499970
+    second: Cast_Fisher_Stretch_5
+  - first:
+      213: 3563129722618897031
+    second: Cast_Fisher_Stretch_6
+  - first:
+      213: -1157785543268180968
+    second: Cast_Fisher_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 406c60f18a8788730800000000000000
+      internalID: 4001580932389062148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92c5d29ed86365970800000000000000
+      internalID: 8743235709716749353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5414b4af7e9153f0800000000000000
+      internalID: -913774978318199717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d47a11503c3ebce70800000000000000
+      internalID: 9136646695794353997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3c8c4938d9c815e0800000000000000
+      internalID: -1938577709071561666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65d745f9ff892ba00800000000000000
+      internalID: 770846709890973014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec95ab68f47054f10800000000000000
+      internalID: 2253215226712971726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 449d6c9d347af1760800000000000000
+      internalID: 7430841820042942788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fb65528bffefd460800000000000000
+      internalID: 7268792187101735920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acdd19cdd78c1ec50800000000000000
+      internalID: 6692850964146281930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db9578d7127626770800000000000000
+      internalID: 8602551631768672701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c47a1b1a31e90c3a0800000000000000
+      internalID: -6647139242844510388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91f8811e55722d770800000000000000
+      internalID: 8634006685424848665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dab32797c17d2a550800000000000000
+      internalID: 6170730956747586477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9be3f7b20cd47df60800000000000000
+      internalID: 8058995545961610937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5640a4de7ae0698f0800000000000000
+      internalID: -534223391393446811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 775cf4ca4cc1e0840800000000000000
+      internalID: 5192119051434837367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 886a12b3d209a2530800000000000000
+      internalID: 3831032956972017288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee9f66d9507e27030800000000000000
+      internalID: 3491106672467180014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a85de485c234a4390800000000000000
+      internalID: -7833374744118372982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ec490f2f52d568c0800000000000000
+      internalID: -4006564987223323424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acca2059668603550800000000000000
+      internalID: 6138521081901919434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97aecc73b91ae61c0800000000000000
+      internalID: -4508488488923108743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b6018dda76e74100800000000000000
+      internalID: 92295732761003700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcc5b069c6d30d4a0800000000000000
+      internalID: -6570684319750464305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6bb97744179f4080800000000000000
+      internalID: -9200969400340333715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddd4560934ee55b40800000000000000
+      internalID: 5428506899817778653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc3c01045094a4e20800000000000000
+      internalID: 3335558760919778255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b5e24e761098e620800000000000000
+      internalID: 2803649194320127411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6d620c05631c3030800000000000000
+      internalID: 3475674337137290607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f9de3171e0d560f0800000000000000
+      internalID: -1124262865272907277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0570b4a3b820f2e50800000000000000
+      internalID: 6786645960472332112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 721da402c4e713fb0800000000000000
+      internalID: -4669812473182105305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e69910fe84d7c380800000000000000
+      internalID: -8950952023996918047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b39a95281c5bce70800000000000000
+      internalID: 9136497527831040951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e9f5e18602899480800000000000000
+      internalID: -8891933024805586462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7982d52007cff2ee0800000000000000
+      internalID: -1283529810771105641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8d42369041bcb420800000000000000
+      internalID: 2647185571942911373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 212fe331720a06a60800000000000000
+      internalID: 7665302655471645202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7c8d8b23e1beb1d0800000000000000
+      internalID: -3333031084961198979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71f8228a52f29ff00800000000000000
+      internalID: 1151003018551004951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cc587fedffe81700800000000000000
+      internalID: 511422431629958340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f1838ae843eeb6b0800000000000000
+      internalID: -5278531810920005135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fc830eca64822d70800000000000000
+      internalID: 9016914998206893297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3e8bbcd4b57490e0800000000000000
+      internalID: -2264055293002674629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 683808604d0a1f4f0800000000000000
+      internalID: -796678826565270650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a61053c88ece77f0800000000000000
+      internalID: -612825412488128857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79cd2fd35ea509210800000000000000
+      internalID: 1337669029962374295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 617813a35a9a11410800000000000000
+      internalID: 1446123482473662230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 638e30866ea1ec580800000000000000
+      internalID: -8805070644572854218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45ec0e25755838360800000000000000
+      internalID: 7170721641803075156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0d32b2b5ea6f95a0800000000000000
+      internalID: -6512369001376367346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af03e42e9bba62ab0800000000000000
+      internalID: -5033146718685875974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9af9127025f39da0800000000000000
+      internalID: -5939133963869488484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f8e594bf8b9be630800000000000000
+      internalID: 3957427739087464693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad3840460eeab3bf0800000000000000
+      internalID: -343488667789786150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c66edfb5e1e190f0800000000000000
+      internalID: -1111859256101017916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0effa462cdcbf8c90800000000000000
+      internalID: -7165300828401893408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba5422abc09f14620800000000000000
+      internalID: 2756758279985186219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7d13b34eeb6afa80800000000000000
+      internalID: -8432308681215632003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc8ec065868685990800000000000000
+      internalID: -7397047590626465585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 280b0fd1c2921c750800000000000000
+      internalID: 6323380621262499970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 782e55dba97c27130800000000000000
+      internalID: 3563129722618897031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Fisher_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81cda6fbe28beefe0800000000000000
+      internalID: -1157785543268180968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Fisher_0: -1032694421319544071
+      Cast_Fisher_1: -1811768373078892680
+      Cast_Fisher_10: 4443608226665646209
+      Cast_Fisher_11: -5458661093907484497
+      Cast_Fisher_12: -8137402561166147969
+      Cast_Fisher_13: -398087242486930664
+      Cast_Fisher_14: -7924559343575404172
+      Cast_Fisher_15: 2030098647007629242
+      Cast_Fisher_16: -4868443870551208518
+      Cast_Fisher_17: -4984825463355763008
+      Cast_Fisher_18: 6934170129216096050
+      Cast_Fisher_19: 6288909771514529031
+      Cast_Fisher_2: -1326034533940946281
+      Cast_Fisher_20: 1794617017410909399
+      Cast_Fisher_21: 6252331162632113317
+      Cast_Fisher_22: 4772832650181698321
+      Cast_Fisher_23: 4481017175101680534
+      Cast_Fisher_24: 621475475697967923
+      Cast_Fisher_25: -2523765027397616573
+      Cast_Fisher_26: -509310368354209346
+      Cast_Fisher_27: 7399166821411883113
+      Cast_Fisher_28: -6290449052964655470
+      Cast_Fisher_29: -3009190194379613432
+      Cast_Fisher_3: -981103638098202866
+      Cast_Fisher_30: -1317257055710546791
+      Cast_Fisher_31: -829394137240077476
+      Cast_Fisher_32: 2601227257699920854
+      Cast_Fisher_33: 1903287313107199054
+      Cast_Fisher_34: -5100704973597559021
+      Cast_Fisher_35: 3215387604205153138
+      Cast_Fisher_36: 3638578780100847600
+      Cast_Fisher_37: 7943069026461311008
+      Cast_Fisher_38: 539413613174645443
+      Cast_Fisher_39: -6150755068422720453
+      Cast_Fisher_4: 5298422037421937745
+      Cast_Fisher_40: -8379584006118825411
+      Cast_Fisher_41: 9183556834141806930
+      Cast_Fisher_42: -3194768727242537330
+      Cast_Fisher_43: -2203916415092852774
+      Cast_Fisher_44: -3158373971648923869
+      Cast_Fisher_45: 3273826025976942345
+      Cast_Fisher_46: 2545734059255428416
+      Cast_Fisher_47: 7825182330759545356
+      Cast_Fisher_48: 6256056035419435694
+      Cast_Fisher_49: -7029625744394534887
+      Cast_Fisher_5: 3089630453696205433
+      Cast_Fisher_50: -7391885055412473942
+      Cast_Fisher_51: 4474901686791383542
+      Cast_Fisher_52: -3964545931611125884
+      Cast_Fisher_53: 1480838328451184595
+      Cast_Fisher_54: -1861120751297794119
+      Cast_Fisher_55: -6860318123328281483
+      Cast_Fisher_56: 1757850150079060806
+      Cast_Fisher_57: -8116786112760627997
+      Cast_Fisher_58: 8099489381447157892
+      Cast_Fisher_59: 7261060631115359168
+      Cast_Fisher_6: 6473365135687406167
+      Cast_Fisher_60: 5398044739350707301
+      Cast_Fisher_61: 1818390371418104166
+      Cast_Fisher_62: -7471339352577424480
+      Cast_Fisher_63: 4726670388219084886
+      Cast_Fisher_64: -1159594455044125564
+      Cast_Fisher_65: -8826611303266751067
+      Cast_Fisher_66: 2513896651241927336
+      Cast_Fisher_67: -2577412734143627942
+      Cast_Fisher_68: 1426420823647301601
+      Cast_Fisher_69: -8493914772956288242
+      Cast_Fisher_7: -3984980078848398286
+      Cast_Fisher_8: 8229527966973024381
+      Cast_Fisher_9: -4206170935091040490
+      Cast_Fisher_Eat_0: -4669812473182105305
+      Cast_Fisher_Eat_1: -8950952023996918047
+      Cast_Fisher_Eat_2: 9136497527831040951
+      Cast_Fisher_Eat_3: -8891933024805586462
+      Cast_Fisher_Eat_4: -1283529810771105641
+      Cast_Fisher_Eat_5: 2647185571942911373
+      Cast_Fisher_Eat_6: 7665302655471645202
+      Cast_Fisher_Eat_7: -3333031084961198979
+      Cast_Fisher_Harvest_0: -6570684319750464305
+      Cast_Fisher_Harvest_1: -9200969400340333715
+      Cast_Fisher_Harvest_2: 5428506899817778653
+      Cast_Fisher_Harvest_3: 3335558760919778255
+      Cast_Fisher_Harvest_4: 2803649194320127411
+      Cast_Fisher_Harvest_5: 3475674337137290607
+      Cast_Fisher_Harvest_6: -1124262865272907277
+      Cast_Fisher_Harvest_7: 6786645960472332112
+      Cast_Fisher_Net_0: 1151003018551004951
+      Cast_Fisher_Net_1: 511422431629958340
+      Cast_Fisher_Net_2: -5278531810920005135
+      Cast_Fisher_Net_3: 9016914998206893297
+      Cast_Fisher_Net_4: -2264055293002674629
+      Cast_Fisher_Net_5: -796678826565270650
+      Cast_Fisher_Net_6: -612825412488128857
+      Cast_Fisher_Net_7: 1337669029962374295
+      Cast_Fisher_Squat_0: 1446123482473662230
+      Cast_Fisher_Squat_1: -8805070644572854218
+      Cast_Fisher_Squat_2: 7170721641803075156
+      Cast_Fisher_Squat_3: -6512369001376367346
+      Cast_Fisher_Squat_4: -5033146718685875974
+      Cast_Fisher_Squat_5: -5939133963869488484
+      Cast_Fisher_Squat_6: 3957427739087464693
+      Cast_Fisher_Squat_7: -343488667789786150
+      Cast_Fisher_Stretch_0: -1111859256101017916
+      Cast_Fisher_Stretch_1: -7165300828401893408
+      Cast_Fisher_Stretch_2: 2756758279985186219
+      Cast_Fisher_Stretch_3: -8432308681215632003
+      Cast_Fisher_Stretch_4: -7397047590626465585
+      Cast_Fisher_Stretch_5: 6323380621262499970
+      Cast_Fisher_Stretch_6: 3563129722618897031
+      Cast_Fisher_Stretch_7: -1157785543268180968
+      Cast_Fisher_Walk_0: 4001580932389062148
+      Cast_Fisher_Walk_1: 8743235709716749353
+      Cast_Fisher_Walk_2: -913774978318199717
+      Cast_Fisher_Walk_3: 9136646695794353997
+      Cast_Fisher_Walk_4: -1938577709071561666
+      Cast_Fisher_Walk_5: 770846709890973014
+      Cast_Fisher_Walk_6: 2253215226712971726
+      Cast_Fisher_Walk_7: 7430841820042942788
+      Cast_Fisher_Walk_Down_0: 7268792187101735920
+      Cast_Fisher_Walk_Down_1: 6692850964146281930
+      Cast_Fisher_Walk_Down_2: 8602551631768672701
+      Cast_Fisher_Walk_Down_3: -6647139242844510388
+      Cast_Fisher_Walk_Down_4: 8634006685424848665
+      Cast_Fisher_Walk_Down_5: 6170730956747586477
+      Cast_Fisher_Walk_Down_6: 8058995545961610937
+      Cast_Fisher_Walk_Down_7: -534223391393446811
+      Cast_Fisher_Walk_Up_0: 5192119051434837367
+      Cast_Fisher_Walk_Up_1: 3831032956972017288
+      Cast_Fisher_Walk_Up_2: 3491106672467180014
+      Cast_Fisher_Walk_Up_3: -7833374744118372982
+      Cast_Fisher_Walk_Up_4: -4006564987223323424
+      Cast_Fisher_Walk_Up_5: 6138521081901919434
+      Cast_Fisher_Walk_Up_6: -4508488488923108743
+      Cast_Fisher_Walk_Up_7: 92295732761003700
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

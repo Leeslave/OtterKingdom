@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishTuna
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_tuna
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 18
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 277d2e5a45368f144868961cb9a60075, type: 3}
+  _tagline: "\uB113\uC740 \uBC14\uB2E4\uB97C \uB204\uBE44\uB294 \uD798\uC13C \uBB3C\uACE0\uAE30."
+  _description: "\uB09A\uC73C\uBA74 \uB09A\uC2EF\uB300\uAC00 \uD65C\uCC98\uB7FC \uD718\uC5B4\uC694!"
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130 \xB7 \uB09A\uC2EF\uB300 Lv.15"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: dd7a78731271f5f4298014f52ecef5c8, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

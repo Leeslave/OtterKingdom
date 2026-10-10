@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishGoldenMackerel
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_golden_mackerel
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 19
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 5c5e24c1124e03a499c8602db0540e97, type: 3}
+  _tagline: "\uC804\uC124\uB85C\uB9CC \uB4E3\uB358 \uAE08\uBE5B \uACE0\uB4F1\uC5B4."
+  _description: "\uBE44\uB298 \uD558\uB098\uD558\uB098\uAC00 \uD574\uCC98\uB7FC \uBC18\uC9DD\uC5EC\uC694."
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130 \xB7 \uB09A\uC2EF\uB300 Lv.18"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: e962450e436d57c49a0dbad1bae65277, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}
