@@ -31,6 +31,9 @@ public class GachaBannerDefinition : ScriptableObject
     [Tooltip("탭·배너에 보일 이름")]
     [SerializeField] private string _title;
 
+    [Tooltip("탭에 보일 짧은 이름 (비우면 이름). 탭이 여러 개면 좁아지므로 짧게")]
+    [SerializeField] private string _tabTitle;
+
     [Tooltip("배너 아래 한 줄 소개")]
     [TextArea]
     [SerializeField] private string _subtitle;
@@ -130,6 +133,7 @@ public class GachaBannerDefinition : ScriptableObject
     public GachaBannerKind Kind => _kind;
     public bool IsPickup => _kind == GachaBannerKind.Pickup;
     public string Title => _title;
+    public string TabTitle => string.IsNullOrWhiteSpace(_tabTitle) ? _title : _tabTitle;
     public string Subtitle => _subtitle;
     public int SortOrder => _sortOrder;
     public Sprite BannerArt => _bannerArt;

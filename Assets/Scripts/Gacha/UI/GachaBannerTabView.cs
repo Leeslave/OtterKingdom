@@ -37,7 +37,7 @@ public class GachaBannerTabView : MonoBehaviour
         Banner = banner;
         _background.sprite = selected ? _selectedSprite : _normalSprite;
         _icon.sprite = banner.ShellIcon;
-        _label.text = banner.Title;
+        _label.text = banner.TabTitle;
         _newDot.SetActive(isNew && !selected);
         transform.localScale = selected ? Vector3.one : Vector3.one * 0.96f;
     }

@@ -81,6 +81,13 @@ public class GachaScreenView : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _goldCostText;
 
+    [Header("안내 줄 (포인트 · 골드 뽑기 줄이 없을 때)")]
+    [SerializeField] private GameObject _noteGroup;
+
+    [SerializeField] private Image _noteIcon;
+
+    [SerializeField] private TextMeshProUGUI _noteText;
+
     [Header("작은 버튼 · 보유")]
     [SerializeField] private Button _ratesButton;
 
@@ -239,6 +246,14 @@ public class GachaScreenView : MonoBehaviour
             _goldButtonImage.sprite = state.GoldAvailable ? _coinButton : _idleButton;
             _goldCostText.text = NumberFormatter.Short(state.GoldCost);
             _goldCostText.color = state.GoldAvailable && !state.GoldAffordable ? _shortColor : _costColor;
+        }
+
+        bool note = !state.ShowPoints && !state.ShowGold && !string.IsNullOrEmpty(state.Note);
+        _noteGroup.SetActive(note);
+        if (note)
+        {
+            _noteText.text = state.Note;
+            _noteIcon.sprite = state.NoteIcon;
         }
 
         _shardText.text = state.Shards.ToString("N0");

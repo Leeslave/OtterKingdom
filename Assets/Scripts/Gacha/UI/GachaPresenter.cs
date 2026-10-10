@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -477,15 +478,12 @@ public class GachaPresenter : MonoBehaviour
         }
         else if (selected.IsGoldBanner)
         {
-            // 골드 배너: 레어 장난감 먼저, 그다음 가구
-            state.HighlightLabel = "레어 장난감 · 가구";
-            foreach (var item in table.Standard(GachaTable.Rare))
+            // 골드 배너: 레어 장난감 둘 + 가구 셋 (칸이 다섯이라 둘 다 보이게)
+            state.HighlightLabel = "레어 · 가구";
+            foreach (var item in table.Standard(GachaTable.Rare).Take(2))
                 state.Highlights.Add((item, GachaTable.Rare, false));
-            foreach (var item in table.Standard(GachaTable.Common))
-            {
-                if (IsFurniture(item))
-                    state.Highlights.Add((item, GachaTable.Common, false));
-            }
+            foreach (var item in table.Standard(GachaTable.Common).Where(IsFurniture).Take(3))
+                state.Highlights.Add((item, GachaTable.Common, false));
         }
         else
         {
@@ -505,6 +503,10 @@ public class GachaPresenter : MonoBehaviour
         state.PointsGoal = selected.ExchangePoints;
         state.PointsReward = manager.PointsReward(selected);
 
+        // 골드 배너는 포인트 · 오늘의 골드 뽑기 줄 대신 안내 한 줄
+        state.Note = selected.IsGoldBanner ? GoldBannerNote(selected) : null;
+        state.NoteIcon = manager.Gold != null ? manager.Gold.Icon : null;
+
         state.ShowGold = selected.HasDailyGoldPull;
         state.GoldAvailable = manager.CanGoldPullToday(selected);
         state.GoldCost = manager.GoldPullCost(selected);
@@ -520,6 +522,12 @@ public class GachaPresenter : MonoBehaviour
 
         _screen.Render(state);
         _dirty = false;
+    }
+
+    private static string GoldBannerNote(GachaBannerDefinition banner)
+    {
+        int free = 10 - banner.GoldTenPulls;
+        return free > 0 ? $"골드로 언제든 뽑아요\n10회 뽑기는 <b>{free}번 공짜</b>!" : "골드로 언제든 뽑아요";
     }
 
     private static string PeriodText(TimeSpan left)

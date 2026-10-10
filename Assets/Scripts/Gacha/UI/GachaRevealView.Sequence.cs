@@ -323,7 +323,32 @@ public partial class GachaRevealView
             yield return SingleRoutine(bestPull, true, false);
             yield return GachaTween.Wait(1.1f);
         }
+        // 결과 10칸만 보이게 뗏목 · 큰 연출을 살짝 걷어 냄 (결과 뒤 막이 같이 어두워짐)
+        yield return FadeStageOut(0.25f);
         ShowResults(true);
+    }
+
+    private IEnumerator FadeStageOut(float seconds)
+    {
+        var groups = new List<CanvasGroup>();
+        foreach (var stage in new[] { _raft, _single })
+        {
+            if (!stage.gameObject.activeSelf)
+                continue;
+            var group = stage.GetComponent<CanvasGroup>();
+            if (group == null)
+                group = stage.gameObject.AddComponent<CanvasGroup>();
+            groups.Add(group);
+        }
+        yield return GachaTween.Run(seconds, t =>
+        {
+            foreach (var group in groups)
+                group.alpha = 1f - t;
+        });
+        _raft.gameObject.SetActive(false);
+        _single.gameObject.SetActive(false);
+        foreach (var group in groups)
+            group.alpha = 1f;
     }
 
     private IEnumerator OpenSlot(GachaRaftSlotView slot, GachaPull pull, bool last)

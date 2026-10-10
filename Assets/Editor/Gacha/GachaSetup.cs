@@ -22,6 +22,8 @@ public static class GachaSetup
     internal const string PickupBannerPath = BannerFolder + "/Banner_Pickup_Spring.asset";
     internal const string GoldBannerPath = BannerFolder + "/Banner_Gold.asset";
     private const string GachaGlobalUIPath = "Assets/Resources/GlobalUI.prefab";
+    private const string TitleFontPath = "Assets/Fonts/Cafe24Ssurround-v2.0 SDF.asset";
+    private const string BodyFontPath = "Assets/Fonts/NanumSquareRoundOTFR SDF.asset";
     private const string ShardPath = CurrencyFolder + "/Shard.asset";
     private const string ItemFolder = "Assets/Scriptable Obejects/Inventory/Items/Decor";
     private const string ItemDatabasePath = "Assets/Scriptable Obejects/Inventory/ItemDatabase.asset";
@@ -289,6 +291,7 @@ public static class GachaSetup
             so.FindProperty("_bannerId").stringValue = "standard_seaside";
             so.FindProperty("_kind").enumValueIndex = (int)GachaBannerKind.Standard;
             so.FindProperty("_title").stringValue = "바닷가 보물 조개";
+            so.FindProperty("_tabTitle").stringValue = "보물 조개";
             so.FindProperty("_subtitle").stringValue = "늘 열려 있는 보물 조개. 하루 한 번은 골드로!";
             so.FindProperty("_sortOrder").intValue = 1;
             so.FindProperty("_themeColor").colorValue = new Color(1f, 0.86f, 0.5f);
@@ -425,6 +428,88 @@ public static class GachaSetup
             PrefabUtility.UnloadPrefabContents(root);
         }
         Debug.Log($"[GachaSetup] 골드 배너를 만들어 전역 UI에 붙였습니다 (뽑기 {gold.Pool.Count}종).");
+    }
+
+    /// <summary>
+    /// 전역 UI 프리팹 안의 뽑기 화면(화면 · 확률 · 교환소 · 연출)과 HUD 뽑기 버튼만 새로 만들어 바꾼다 (같은 그리기 순서, 프레젠터 연결).
+    /// Build Global UI는 정착 설정을 처음 상태로 다시 만들므로, 뽑기 화면만 고쳤을 때는 이 메뉴를 쓴다.
+    /// 배치 모드: -executeMethod GachaSetup.RebuildScreens
+    /// </summary>
+    [MenuItem("Tools/Gacha/Rebuild Gacha Screens")]
+    public static void RebuildScreens()
+    {
+        _titleFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(TitleFontPath);
+        _bodyFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BodyFontPath) ?? _titleFont;
+        ImportArt();
+        FillTabTitle(StandardBannerPath, "보물 조개");
+
+        var root = PrefabUtility.LoadPrefabContents(GachaGlobalUIPath);
+        try
+        {
+            var rootRect = (RectTransform)root.transform;
+            var presenter = root.GetComponentInChildren<GachaPresenter>(true);
+            if (presenter == null)
+            {
+                Debug.LogError("[GachaSetup] 전역 UI에 뽑기 프레젠터가 없습니다. Build Global UI를 먼저 실행하세요.");
+                return;
+            }
+
+            // 예전 화면이 있던 자리(그리기 순서)를 기억하고 지움
+            int first = -1;
+            foreach (var name in new[] { "GachaScreen", "GachaRates", "GachaExchange", "GachaReveal" })
+            {
+                var old = rootRect.Find(name);
+                if (old == null)
+                    continue;
+                if (first < 0 || old.GetSiblingIndex() < first)
+                    first = old.GetSiblingIndex();
+                Object.DestroyImmediate(old.gameObject);
+            }
+            var screens = BuildScreens(rootRect);
+            if (first >= 0)
+            {
+                screens.screen.transform.SetSiblingIndex(first);
+                screens.rates.transform.SetSiblingIndex(first + 1);
+                screens.exchange.transform.SetSiblingIndex(first + 2);
+                screens.reveal.transform.SetSiblingIndex(first + 3);
+            }
+
+            var hud = (RectTransform)rootRect.Find("HudSafeArea");
+            var oldButton = hud.Find("GachaButton");
+            int buttonIndex = oldButton != null ? oldButton.GetSiblingIndex() : -1;
+            if (oldButton != null)
+                Object.DestroyImmediate(oldButton.gameObject);
+            var hudButton = BuildHudButton(hud);
+            if (buttonIndex >= 0)
+                hudButton.transform.SetSiblingIndex(buttonIndex);
+
+            Set(presenter, "_screen", screens.screen);
+            Set(presenter, "_reveal", screens.reveal);
+            Set(presenter, "_rates", screens.rates);
+            Set(presenter, "_exchange", screens.exchange);
+            Set(presenter, "_hudButton", hudButton);
+            PrefabUtility.SaveAsPrefabAsset(root, GachaGlobalUIPath);
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+        AssetDatabase.SaveAssets();
+        Debug.Log("[GachaSetup] 전역 UI의 뽑기 화면을 다시 만들었습니다.");
+    }
+
+    // 이미 있는 배너에 탭 이름이 비어 있으면 채움 (사람이 고친 이름은 그대로)
+    private static void FillTabTitle(string path, string tabTitle)
+    {
+        var banner = AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(path);
+        if (banner == null)
+            return;
+        var so = new SerializedObject(banner);
+        var prop = so.FindProperty("_tabTitle");
+        if (!string.IsNullOrEmpty(prop.stringValue))
+            return;
+        prop.stringValue = tabTitle;
+        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     private static void AddUnique(SerializedProperty list, Object value)
@@ -626,11 +711,13 @@ public static class GachaSetup
         // ── 눈여겨볼 장난감 (픽업 = 확률 UP, 상시 = 에픽)
         var highlights = CreateRect("Highlights", safe);
         Place(highlights, new Vector2(0, 1), new Vector2(30, -1032), new Vector2(1020, 150));
-        var highlightLabel = Label("Label", highlights, _titleFont, "확률 UP!", 36, Cocoa, TextAlignmentOptions.Left);
-        Place(highlightLabel.rectTransform, new Vector2(0, 0.5f), new Vector2(16, 0), new Vector2(230, 60));
-        var chips = new GachaToyChipView[3];
+        var highlightLabel = Label("Label", highlights, _titleFont, "확률 UP!", 34, Cocoa, TextAlignmentOptions.Left, 22);
+        highlightLabel.textWrappingMode = TextWrappingModes.NoWrap;
+        Place(highlightLabel.rectTransform, new Vector2(0, 0.5f), new Vector2(16, 0), new Vector2(214, 60));
+        // 다섯 칸 (픽업 3 · 상시 에픽 2 · 골드 레어 2 + 가구 3)
+        var chips = new GachaToyChipView[5];
         for (int i = 0; i < chips.Length; i++)
-            chips[i] = BuildToyChip(highlights, new Vector2(250 + i * 160, -5));
+            chips[i] = BuildToyChip(highlights, new Vector2(246 + i * 154, -7));
 
         // ── 아래: 천장 · 포인트/골드 뽑기 패널, 작은 버튼, 뽑기 버튼 (화면이 길면 위와 사이가 벌어짐)
         var info = CreateImage("Info", safe, Common("UI_Button_Paper"), false);
@@ -648,11 +735,11 @@ public static class GachaSetup
 
         var points = CreateRect("Points", info.rectTransform);
         Place(points, new Vector2(0, 1), new Vector2(36, -140), new Vector2(950, 130));
-        var rewardFrame = CreateImage("RewardFrame", points, LoadSprite(InventorySpriteFolder, "UI_Inventory_Slot_Filled"), false);
+        var rewardFrame = CreateImage("RewardFrame", points, Common("UI_Button_Paper"), false);
         Place(rewardFrame.rectTransform, new Vector2(0, 1), new Vector2(0, -6), new Vector2(116, 116));
-        rewardFrame.color = new Color(1f, 0.84f, 0.42f);
+        rewardFrame.color = new Color(1f, 0.86f, 0.45f);
         var rewardIcon = CreateImage("Icon", rewardFrame.rectTransform, null, false);
-        Stretch(rewardIcon.rectTransform, 16);
+        IconInFrame(rewardIcon.rectTransform, 14);
         rewardIcon.preserveAspect = true;
         var pointsText = Label("Text", points, _titleFont, "별빛 포인트 <b>0</b> / 100", 30, Cocoa, TextAlignmentOptions.Left);
         Place(pointsText.rectTransform, new Vector2(0, 1), new Vector2(136, -8), new Vector2(520, 48));
@@ -674,6 +761,19 @@ public static class GachaSetup
         Place(goldButtonImage.rectTransform, new Vector2(1, 1), new Vector2(0, -12), new Vector2(300, 104));
         var goldButton = MakeButton(goldButtonImage);
         var (_, goldCost) = BuildCostRow(goldButtonImage.rectTransform, AssetDatabase.LoadAssetAtPath<Currency>(GoldPath).Icon, 38, 0, 8);
+
+        // 안내 줄: 포인트 · 오늘의 골드 뽑기 줄이 없는 배너(골드 조개)에서 빈자리 대신
+        var note = CreateRect("Note", info.rectTransform);
+        Place(note, new Vector2(0, 1), new Vector2(36, -140), new Vector2(950, 130));
+        var noteFrame = CreateImage("IconFrame", note, Common("UI_Button_Paper"), false);
+        Place(noteFrame.rectTransform, new Vector2(0, 1), new Vector2(0, -6), new Vector2(116, 116));
+        noteFrame.color = new Color(1f, 0.86f, 0.45f);
+        var noteIcon = CreateImage("Icon", noteFrame.rectTransform, AssetDatabase.LoadAssetAtPath<Currency>(GoldPath).Icon, false);
+        IconInFrame(noteIcon.rectTransform, 18);
+        noteIcon.preserveAspect = true;
+        var noteText = Label("Text", note, _titleFont, "골드로 언제든 뽑아요", 32, Cocoa, TextAlignmentOptions.Left, 22);
+        Place(noteText.rectTransform, new Vector2(0, 1), new Vector2(140, -6), new Vector2(800, 116));
+        note.gameObject.SetActive(false);
 
         var links = CreateRect("Links", safe);
         Place(links, new Vector2(0.5f, 0), new Vector2(0, 264), new Vector2(1020, 90));
@@ -744,6 +844,9 @@ public static class GachaSetup
         Set(view, "_goldButton", goldButton);
         Set(view, "_goldButtonImage", goldButtonImage);
         Set(view, "_goldCostText", goldCost);
+        Set(view, "_noteGroup", note.gameObject);
+        Set(view, "_noteIcon", noteIcon);
+        Set(view, "_noteText", noteText);
         Set(view, "_ratesButton", ratesButton);
         Set(view, "_exchangeButton", exchangeButton);
         Set(view, "_shardText", shardText);
@@ -773,12 +876,14 @@ public static class GachaSetup
         background.rectTransform.sizeDelta = new Vector2(500, 110);
         var button = MakeButton(background);
         var icon = CreateImage("Icon", background.rectTransform, Art("Shell_Pickup"), false);
-        Place(icon.rectTransform, new Vector2(0, 0.5f), new Vector2(22, 4), new Vector2(80, 80));
+        Place(icon.rectTransform, new Vector2(0, 0.5f), new Vector2(16, 4), new Vector2(68, 68));
         icon.preserveAspect = true;
-        var label = Label("Label", background.rectTransform, _titleFont, "봄바람 픽업", 36, Cocoa, TextAlignmentOptions.Left, 24);
+        // 탭이 셋이면 폭이 좁아짐 → 한 줄로, 넘치면 글자를 줄임
+        var label = Label("Label", background.rectTransform, _titleFont, "봄바람 픽업", 34, Cocoa, TextAlignmentOptions.Left, 22);
+        label.textWrappingMode = TextWrappingModes.NoWrap;
         Stretch(label.rectTransform, 0);
-        label.rectTransform.offsetMin = new Vector2(116, 8);
-        label.rectTransform.offsetMax = new Vector2(-24, 0);
+        label.rectTransform.offsetMin = new Vector2(92, 8);
+        label.rectTransform.offsetMax = new Vector2(-18, 0);
         var dot = CreateImage("NewDot", background.rectTransform, Common("UI_Badge"), false);
         Place(dot.rectTransform, new Vector2(1, 1), new Vector2(-6, -2), new Vector2(34, 34));
 
@@ -795,10 +900,10 @@ public static class GachaSetup
 
     private static GachaToyChipView BuildToyChip(RectTransform parent, Vector2 position)
     {
-        var frame = CreateImage("Chip", parent, LoadSprite(InventorySpriteFolder, "UI_Inventory_Slot_Filled"), false);
-        Place(frame.rectTransform, new Vector2(0, 1), position, new Vector2(140, 140));
+        var frame = CreateImage("Chip", parent, Common("UI_Button_Paper"), false);
+        Place(frame.rectTransform, new Vector2(0, 1), position, new Vector2(136, 136));
         var icon = CreateImage("Icon", frame.rectTransform, null, false);
-        Stretch(icon.rectTransform, 18);
+        IconInFrame(icon.rectTransform, 16);
         icon.preserveAspect = true;
         var up = CreateImage("Up", frame.rectTransform, Common("UI_Tag_Highlight"), false);
         Place(up.rectTransform, new Vector2(1, 1), new Vector2(8, 10), new Vector2(70, 40));
@@ -1154,11 +1259,19 @@ public static class GachaSetup
         Stretch(flash.rectTransform, 0);
         flash.color = new Color(1, 1, 1, 0);
 
+        // 10회 결과 뒤를 어둡게 (화면 전체 — 뗏목 장난감이 결과 위로 비치지 않게). 결과가 켜고 끔
+        var backdrop = CreateImage("ResultsBackdrop", root, null, false);
+        Stretch(backdrop.rectTransform, 0);
+        backdrop.color = new Color(0.05f, 0.08f, 0.16f, 0.55f);
+        var backdropGroup = backdrop.gameObject.AddComponent<CanvasGroup>();
+        backdropGroup.blocksRaycasts = false;
+        backdrop.gameObject.SetActive(false);
+
         var safe = CreateRect("SafeArea", root);
         Stretch(safe, 0);
         safe.gameObject.AddComponent<SafeAreaFltter>();
         var card = BuildCard(safe);
-        var results = BuildResults(safe);
+        var results = BuildResults(safe, backdropGroup);
 
         var hint = CreateImage("TapHint", safe, Common("UI_Button_Paper"), false);
         Place(hint.rectTransform, new Vector2(0.5f, 0), new Vector2(0, 220), new Vector2(860, 110));
@@ -1425,7 +1538,7 @@ public static class GachaSetup
     }
 
     // 10회 결과: 10칸 (5 × 2) + 요약 + 버튼
-    private static GachaResultsView BuildResults(RectTransform safe)
+    private static GachaResultsView BuildResults(RectTransform safe, CanvasGroup backdrop)
     {
         var root = CreateRect("Results", safe);
         Stretch(root, 0);
@@ -1457,6 +1570,7 @@ public static class GachaSetup
         Set(view, "_group", group);
         SetArray(view, "_cells", cells);
         Set(view, "_summaryText", summary);
+        Set(view, "_backdrop", backdrop);
         Set(view, "_okButton", okButton);
         Set(view, "_againButton", againButton);
         Set(view, "_againImage", againImage);
@@ -1470,15 +1584,16 @@ public static class GachaSetup
     private static GachaResultCellView BuildResultCell(RectTransform grid, int index)
     {
         var cell = CreateRect($"Cell{index}", grid);
-        var frame = CreateImage("Frame", cell, LoadSprite(InventorySpriteFolder, "UI_Inventory_Slot_Filled"), false);
+        var frame = CreateImage("Frame", cell, Common("UI_Button_Paper"), false);
         Place(frame.rectTransform, new Vector2(0.5f, 1), Vector2.zero, new Vector2(170, 170));
         var icon = CreateImage("Icon", frame.rectTransform, null, false);
-        Stretch(icon.rectTransform, 22);
+        IconInFrame(icon.rectTransform, 20);
         icon.preserveAspect = true;
         var (newBadge, _) = Tag(frame.rectTransform, "New", Common("UI_Tag_Highlight"), "NEW", Color.white, new Vector2(-6, 10), new Vector2(80, 36), 20);
         var (featured, _) = Tag(frame.rectTransform, "Featured", Common("UI_Tag_Level"), "픽업", Cocoa, new Vector2(96, 10), new Vector2(80, 36), 20);
         var name = Label("Name", cell, _bodyFont, "회전목마", 24, Cocoa, TextAlignmentOptions.Center, 16);
-        TopBand(name.rectTransform, 0, 0, 176, 56);
+        name.textWrappingMode = TextWrappingModes.NoWrap;
+        TopBand(name.rectTransform, -6, -6, 178, 40);
 
         var view = cell.gameObject.AddComponent<GachaResultCellView>();
         Set(view, "_frame", frame);
@@ -1556,6 +1671,13 @@ public static class GachaSetup
             label.fontSizeMax = size;
         }
         return label;
+    }
+
+    // 종이 칸(UI_Button_Paper) 안 아이콘: 아래쪽 입체 턱만큼 위로
+    private static void IconInFrame(RectTransform icon, float inset)
+    {
+        Stretch(icon, inset);
+        icon.offsetMin = new Vector2(inset, inset + 6);
     }
 
     private static void Center(RectTransform rect, float x, float y, float width, float height) =>

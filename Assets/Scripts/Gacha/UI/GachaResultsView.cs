@@ -12,6 +12,9 @@ public class GachaResultsView : MonoBehaviour
 
     [SerializeField] private CanvasGroup _group;
 
+    [Tooltip("결과 뒤를 어둡게 하는 막 (뗏목 장난감이 비치지 않게, 화면 전체)")]
+    [SerializeField] private CanvasGroup _backdrop;
+
     [Tooltip("결과 칸 10개 (뽑은 순서)")]
     [SerializeField] private GachaResultCellView[] _cells = new GachaResultCellView[10];
 
@@ -35,9 +38,9 @@ public class GachaResultsView : MonoBehaviour
     [Tooltip("칸 테두리에 곱하는 색")]
     [SerializeField] private Color[] _frameColors =
     {
-        new Color(0.93f, 0.89f, 0.82f, 1f),
-        new Color(0.62f, 0.8f, 1f, 1f),
-        new Color(1f, 0.84f, 0.42f, 1f),
+        new Color(1f, 0.96f, 0.88f, 1f),
+        new Color(0.68f, 0.85f, 1f, 1f),
+        new Color(1f, 0.86f, 0.45f, 1f),
     };
 
     public event Action OnOk;
@@ -86,6 +89,7 @@ public class GachaResultsView : MonoBehaviour
     public void Hide()
     {
         StopAllCoroutines();
+        _backdrop.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
@@ -94,9 +98,11 @@ public class GachaResultsView : MonoBehaviour
     {
         foreach (var cell in _cells)
             cell.transform.localScale = Vector3.zero;
+        _backdrop.gameObject.SetActive(true);
         yield return GachaTween.Run(0.3f, t =>
         {
             _group.alpha = t;
+            _backdrop.alpha = t;
             _panel.localScale = Vector3.one * Mathf.Lerp(0.9f, 1f, GachaTween.OutBack(t));
         });
         foreach (var cell in _cells)
@@ -110,6 +116,8 @@ public class GachaResultsView : MonoBehaviour
 
     private void Settle()
     {
+        _backdrop.gameObject.SetActive(true);
+        _backdrop.alpha = 1f;
         _group.alpha = 1f;
         _panel.localScale = Vector3.one;
         foreach (var cell in _cells)

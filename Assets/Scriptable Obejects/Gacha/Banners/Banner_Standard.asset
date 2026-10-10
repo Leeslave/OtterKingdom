@@ -15,6 +15,7 @@ MonoBehaviour:
   _bannerId: standard_seaside
   _kind: 0
   _title: "\uBC14\uB2F7\uAC00 \uBCF4\uBB3C \uC870\uAC1C"
+  _tabTitle: "\uBCF4\uBB3C \uC870\uAC1C"
   _subtitle: "\uB298 \uC5F4\uB824 \uC788\uB294 \uBCF4\uBB3C \uC870\uAC1C. \uD558\uB8E8
     \uD55C \uBC88\uC740 \uACE8\uB4DC\uB85C!"
   _sortOrder: 1
@@ -50,3 +51,6 @@ MonoBehaviour:
   _dailyGoldPull: 1
   _goldPullBase: 1000
   _goldPullPerLevel: 800
+  _goldCostBase: 500
+  _goldCostPerLevel: 250
+  _goldTenPulls: 9
