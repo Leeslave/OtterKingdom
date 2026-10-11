@@ -25,4 +25,4 @@ MonoBehaviour:
   _hint: 
   _linkedItem: {fileID: 11400000, guid: 17b09199aafdabb4bbda8cb14d8fe176, type: 2}
   _unlockLevel: 0
-  _story: {fileID: 0}
+  _story: {fileID: 11400000, guid: 7ca3bf1117ac7e14cbf422a4995b5055, type: 2}

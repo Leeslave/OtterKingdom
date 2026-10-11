@@ -616,6 +616,7 @@ public static partial class SettlementSetup
         so.FindProperty("_textTemplate").objectReferenceValue = text;
         so.FindProperty("_sortingOrder").intValue = OverlayOrder - 2;
         so.ApplyModifiedPropertiesWithoutUndo();
+        ChopFxSetup.Fill(fx); // 도끼 · 곡괭이 · 반짝 · 먼지 · 나무 조각
         return fx;
     }
 

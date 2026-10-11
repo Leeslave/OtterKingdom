@@ -302,12 +302,13 @@ public static class GlobalUISetup
         var quest = QuestSetup.BuildScreen(rootRect);
         var decorMode = DecorModeSetup.BuildScreen(rootRect, hud.gameObject);
         var fairyShop = FairyShopSetup.BuildScreens(rootRect);
-        var gacha = GachaSetup.BuildScreens(rootRect);
-        var shop = CurrencyShopSetup.BuildScreens(rootRect);
         var settings = SettingsSetup.BuildScreen(rootRect);
         SettlementSetup.BuildPopups(rootRect, ref settlement);
         var levelUp = ProgressionSetup.BuildPopup(rootRect);
         var travel = BuildTravelPopup(rootRect, cardPrefab);
+        // 뽑기는 게임 화면을 다 가리므로 정착·레벨업 팝업 위, 재화 충전(부족·충전 팝업)은 그 위
+        var gacha = GachaSetup.BuildScreens(rootRect);
+        var shop = CurrencyShopSetup.BuildScreens(rootRect);
         var fader = BuildFader(rootRect);
         BuildEventSystem(rootRect);
 

@@ -9,7 +9,7 @@ public static class SettlementRoleRules
 {
     /// <summary>
     /// 지금 이 역할을 맡길 수 있는지: 맡을 해달이 찾아왔고 광장에서 만났으며, 앞선 발전이 열렸고,
-    /// 역할이 비어 있고, 그 해달이 다른 역할을 맡고 있지 않음
+    /// 역할이 비어 있고, 그 해달이 다른 역할을 맡고 있지 않으며, 주민 작업에 나가 있지 않음
     /// </summary>
     public static bool CanAssign(ManagementRoleDefinition role, Settlement settlement)
     {
@@ -25,6 +25,7 @@ public static class SettlementRoleRules
             && !settlement.HasRole(otterId)
             && settlement.TryGetResidentState(otterId, out _)
             && settlement.HasMet(otterId)
+            && settlement.GetWorkState(otterId) == ResidentWorkState.Idle
             && settlement.HasDevelopment(role.RequiredDevelopment);
     }
 

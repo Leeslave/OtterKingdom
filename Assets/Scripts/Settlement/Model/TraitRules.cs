@@ -45,6 +45,7 @@ public static class TraitRules
         return counts;
     }
 
+    // 마을에 사는 해달: 주민 + 역할을 맡아 와 있는 해달(또박이 등). 역할 해달을 빼면 기록관(기록 2명 = 또박이 + 끄적이)을 지을 수 없음
     private static bool IsSettled(Settlement settlement, string otterId) =>
-        settlement.TryGetResidentState(otterId, out var state) && state == ResidentState.Resident;
+        settlement.TryGetResidentState(otterId, out var state) && (state == ResidentState.Resident || state == ResidentState.SpecialNpc);
 }

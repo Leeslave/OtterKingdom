@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Story_Entry_Mackerel
   m_EditorClassIdentifier: OtterKingdom::CollectionStory
   _cuts:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: b50b19ba474bfb64ca818f521c8e33d0, type: 3}
+  - {fileID: 21300000, guid: 85ffd6e4d0ecbd24a895ff5321b833c9, type: 3}
   _lines:
   - _cut: 0
     _text: "\uCCA8\uBC99\u2026 \uC7A1\uC558\uC5B4\uC694\uC624\u2026"

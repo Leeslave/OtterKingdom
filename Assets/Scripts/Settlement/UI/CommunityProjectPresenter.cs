@@ -22,6 +22,8 @@ public class CommunityProjectPresenter : MonoBehaviour
     private const float RefreshSeconds = 0.4f;
     private const string PlazaScene = "Plaza";
     private const string NoRefundNote = "넣은 재료는 돌려받을 수 없어요.";
+    private const string DoneColor = "#5E8C3A";
+    private const string CurrentColor = "#C0702A";
 
     private static CommunityProjectPresenter _instance;
 
@@ -316,24 +318,30 @@ public class CommunityProjectPresenter : MonoBehaviour
         }
     }
 
-    // "재료 ✓ → 상자 설치 → 완료" (지금 단계는 [ ])
+    // "재료 모으기 → 상자 설치": 끝낸 단계는 초록, 지금 단계는 굵은 주황, 남은 단계는 그대로 (✓는 글꼴에 없어 색으로 구분)
     private string StagesText(CommunityProjectDefinition project, ProjectStatus status)
     {
         var text = new StringBuilder();
         bool delivered = status.Phase == ProjectPhase.Stage;
-        text.Append(delivered ? "재료 ✓" : "[재료 모으기]");
+        AppendStage(text, "재료 모으기", delivered ? -1 : 0);
         for (int i = 0; i < project.Stages.Count; i++)
         {
             text.Append("  →  ");
-            string label = project.Stages[i].Label;
-            if (delivered && i < status.StageIndex)
-                text.Append(label).Append(" ✓");
-            else if (delivered && i == status.StageIndex)
-                text.Append('[').Append(label).Append(']');
-            else
-                text.Append(label);
+            int state = !delivered ? 1 : i < status.StageIndex ? -1 : i == status.StageIndex ? 0 : 1;
+            AppendStage(text, project.Stages[i].Label, state);
         }
         return text.ToString();
+    }
+
+    // state: -1 끝냄, 0 지금, 1 남음
+    private static void AppendStage(StringBuilder text, string label, int state)
+    {
+        if (state < 0)
+            text.Append("<color=").Append(DoneColor).Append('>').Append(label).Append("</color>");
+        else if (state == 0)
+            text.Append("<b><color=").Append(CurrentColor).Append('>').Append(label).Append("</color></b>");
+        else
+            text.Append(label);
     }
 
     private string ResultText(CommunityProjectDefinition project)
@@ -368,10 +376,12 @@ public class CommunityProjectPresenter : MonoBehaviour
             var icon = material.IsGold ? (gold != null ? gold.Icon : null) : material.Item.Icon;
             row.Icon.sprite = icon;
             row.Icon.enabled = icon != null;
-            row.Label.text = material.Remaining <= 0
-                ? $"{name}  {material.Required:N0} / {material.Required:N0} ✓"
+            // 같은 꼴로: "이름  넣음 n / m · 보유 k", 다 넣었으면 초록 "· 완료"이고 [넣기]를 숨김 (✓는 글꼴에 없어 □로 보임)
+            bool full = material.Remaining <= 0;
+            row.Label.text = full
+                ? $"{name}  넣음 {material.Required:N0} / {material.Required:N0} · <color={DoneColor}>완료</color>"
                 : $"{name}  넣음 {material.Delivered:N0} / {material.Required:N0} · 보유 {owned:N0}";
-            row.Button.gameObject.SetActive(delivering);
+            row.Button.gameObject.SetActive(delivering && !full);
             row.Button.interactable = delivering && material.Deliverable(owned) > 0;
         }
     }
@@ -402,7 +412,7 @@ public class CommunityProjectPresenter : MonoBehaviour
         string preview = _manager.DeliverAllPreview(_project);
         if (preview == null)
             return;
-        _confirmText.text = $"{preview}\n을(를) 넣을까요?\n{NoRefundNote}";
+        _confirmText.text = $"{preview}\n모두 넣을까요?\n{NoRefundNote}";
         _confirmRoot.SetActive(true);
     }
 

@@ -1039,11 +1039,11 @@ public partial class SettlementManager : MonoBehaviour
     /// <summary>이 해달이 맡는 관리 역할 (관리 해달이 아니면 null)</summary>
     public ManagementRoleDefinition FindRole(SettlementOtterDefinition otter) => _config.FindRoleFor(otter);
 
-    /// <summary>광장에서 말을 걸면 역할을 맡길 수 있는지 (만났고, 앞선 발전이 열렸고, 아직 아무도 안 맡음)</summary>
+    /// <summary>광장에서 말을 걸면 역할을 맡길 수 있는지 (만났고, 앞선 발전이 열렸고, 아직 아무도 안 맡음, 작업·공사 중이 아님)</summary>
     public bool CanAssignRole(SettlementOtterDefinition otter)
     {
         var role = FindRole(otter);
-        return role != null && SettlementRoleRules.CanAssign(role, Settlement);
+        return role != null && SettlementRoleRules.CanAssign(role, Settlement) && !IsConstructionWorker(otter);
     }
 
     /// <summary>이 해달이 역할을 맡아 근무 중이면 그 역할 (아니면 null)</summary>

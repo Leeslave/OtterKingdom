@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Story_Entry_SweetPotato
   m_EditorClassIdentifier: OtterKingdom::CollectionStory
   _cuts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 5f9990a7c887a9e4c94098c455719942, type: 3}
+  - {fileID: 21300000, guid: 48ab3ec23301ec24e80a1852538b9006, type: 3}
+  - {fileID: 21300000, guid: dcac50c36b50ee24392b3275ec7f1308, type: 3}
   _lines:
   - _cut: 0
     _text: "\uD6C4~ \uD6C4~ \uC557, \uB728\uAC70!"

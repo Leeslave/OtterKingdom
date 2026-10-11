@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Story_Entry_OtterFarmer
   m_EditorClassIdentifier: OtterKingdom::CollectionStory
   _cuts:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: b45d0dd2ceb60a345b0591c8527aeaf3, type: 3}
+  - {fileID: 21300000, guid: 169d52d6b36c19046a9bfaf351f9ed20, type: 3}
   _lines:
   - _cut: 0
     _text: "\uCC98\uC74C \uBD59\uACA0\uC2B5\uB2C8\uB2E4, {\uC774\uB984}\uB2D8! \uC624\uB298\uBD80\uD130

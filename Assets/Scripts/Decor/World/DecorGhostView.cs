@@ -2,7 +2,7 @@
 
 /// <summary>
 /// 꾸미기 모드에서 들고 있는 물건의 미리보기: 반투명한 물건 그림 + 차지할 칸 (놓을 수 있으면 초록, 없으면 빨강).
-/// 늘 다른 것들보다 위에 그린다.
+/// 칸은 땅 위에, 물건 그림은 놓였을 때와 같은 앞뒤 순서로 그린다 (DecorBoardView.GhostItemSortingOrder).
 /// </summary>
 public class DecorGhostView : MonoBehaviour
 {
@@ -34,12 +34,13 @@ public class DecorGhostView : MonoBehaviour
         }
 
         _tile.sortingOrder = sortingOrder;
-        _toy.sortingOrder = sortingOrder + 1;
     }
 
-    public void Show(DecorDefinition decor, DecorRotation rotation, Rect worldRect, bool canPlace, float fill)
+    /// <param name="itemSortingOrder">물건 그림의 정렬 순서 (자리마다 달라짐)</param>
+    public void Show(DecorDefinition decor, DecorRotation rotation, Rect worldRect, bool canPlace, float fill, int itemSortingOrder)
     {
         WorldRect = worldRect;
+        _toy.sortingOrder = itemSortingOrder;
         transform.position = new Vector3(worldRect.xMin, worldRect.yMin, 0f);
 
         _tile.sprite = canPlace ? _okSprite : _blockedSprite;

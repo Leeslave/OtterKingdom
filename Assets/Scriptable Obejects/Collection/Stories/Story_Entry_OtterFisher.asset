@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Story_Entry_OtterFisher
   m_EditorClassIdentifier: OtterKingdom::CollectionStory
   _cuts:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 10b5f19cca4442a4fbe4c429fcd9d59e, type: 3}
+  - {fileID: 21300000, guid: 66f2c1d1c4190b04ab7df9b3377f5965, type: 3}
+  - {fileID: 21300000, guid: ce25322416ac98c4b827226161939755, type: 3}
   _lines:
   - _cut: 0
     _text: "\uC544\u2026 {\uC774\uB984}\uB2D8\uC774\uB2E4\u2026 \uC548\uB155\uD558\uC138\uC694\uC624\u2026"
   - _cut: 1
     _text: "\uC774\uAC74\uC694\u2026 \uC81C\uC77C \uC88B\uC544\uD558\uB294 \uB3CC\uC774\uC5D0\uC694.
       \uACA8\uB4DC\uB791\uC774\uC5D0 \uB123\uC5B4 \uB2E4\uB140\uC694."
-  - _cut: 0
+  - _cut: 2
     _text: "\uBB3C\uACB0 \uC18C\uB9AC \uB4E3\uB2E4 \uBCF4\uBA74\u2026 \uBB3C\uACE0\uAE30\uAC00
       \uBA3C\uC800 \uC640\uC694\u2026 \uCFE8\u2026"
