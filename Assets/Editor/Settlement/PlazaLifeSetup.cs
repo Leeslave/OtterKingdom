@@ -392,7 +392,8 @@ public static class PlazaLifeSetup
     // 장난감 해달 힌트: 어떤 장난감을 놓으면 오는지 + 방문 조건
     private static string ToyHint(SettlementOtterDefinition otter)
     {
-        string toy = otter.FavoriteToy != null ? $"{otter.FavoriteToy.DisplayName}을(를) 광장에 놓으면 찾아와요"
+        string toy = otter.FavoriteToy != null
+            ? $"{otter.FavoriteToy.DisplayName}{KoreanParticle.ObjectParticle(otter.FavoriteToy.DisplayName)} 광장에 놓으면 찾아와요"
             : otter.VisitTier >= 2 ? "에픽 장난감을 광장에 놓으면 찾아와요"
             : otter.VisitTier == 1 ? "레어 장난감(퍼즐 등)을 광장에 놓으면 찾아와요"
             : "장난감(축구공 등)을 광장에 놓으면 찾아와요";

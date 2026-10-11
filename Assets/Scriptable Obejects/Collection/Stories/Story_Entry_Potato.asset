@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Story_Entry_Potato
   m_EditorClassIdentifier: OtterKingdom::CollectionStory
   _cuts:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 8bcb893afe39c1e4c9ac39cea5158ac3, type: 3}
   - {fileID: 0}
   _lines:
   - _cut: 0

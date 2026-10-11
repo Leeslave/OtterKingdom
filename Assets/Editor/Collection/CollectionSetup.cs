@@ -95,6 +95,73 @@ public static class CollectionSetup
             (1, "오이는요, 먹기 전에 볼에 한 번 대 보는 거예요."),
             (1, "해달 규칙이에요. 방금 제가 만들었어요!"),
         }),
+        // 작물 11종 (도감_컷씬_일러스트_프롬프트 7장). 말하는 해달은 농부 해달, 딸기 · 황금 감자는 낚시꾼 해달이 말없이 함께 나옴
+        ("Entry_Radish", 2, new[]
+        {
+            (0, "무를 숭덩숭덩 썰어서 보글보글~"),
+            (1, "국은요, 숟가락 말고 그릇째 마시는 거예요!"),
+            (1, "카아~ 시원하다! {이름}님 것도 떠 올게요!"),
+        }),
+        ("Entry_Raspberry", 2, new[]
+        {
+            (0, "산딸기는요, 손가락에 쏙 끼워서 먹어요!"),
+            (1, "냠! …으으읍! 새, 새콤해요!"),
+            (1, "입이 안 펴져요… 그래도 하나만 더요!"),
+        }),
+        ("Entry_Taro", 2, new[]
+        {
+            (0, "얘도 털옷을 입었네요! 저처럼요!"),
+            (0, "털 고르기 해 줄게요. 슥슥, 슥슥…"),
+            (1, "앗, 삶았더니 미끄러워요! 거기 서요!"),
+        }),
+        ("Entry_Zucchini", 2, new[]
+        {
+            (0, "애호박이에요! 길쭉한 게 꼭 방망이 같아요!"),
+            (1, "얇게 썰어서 지글지글~ 냄새 좋죠?"),
+            (1, "어? 광장 해달들이 다 모였어요! 줄 서세요~"),
+        }),
+        ("Entry_Beet", 2, new[]
+        {
+            (0, "으앗! {이름}님, 제 손이 빨개졌어요!"),
+            (1, "물에 박박 씻어도… 안 지워져요."),
+            (1, "괜찮아요. 오늘은 빨간 손 해달 할래요!"),
+        }),
+        ("Entry_PurplePotato", 2, new[]
+        {
+            (0, "어? 삶았는데도 보라색이에요!"),
+            (1, "먹으면 저도 보라색이 될까요? 메롱~"),
+            (1, "…혀만 보라색이 됐어요. 반만 성공이에요!"),
+        }),
+        ("Entry_Strawberry", 2, new[]
+        {
+            (0, "제일 빨간 딸기! 제가 먼저 찜했어요!"),
+            (1, "…반으로 나누면 둘 다 먼저 찜한 거예요."),
+            (1, "음~ 반쪽짜리가 제일 달아요!"),
+        }),
+        ("Entry_WhiteStrawberry", 2, new[]
+        {
+            (0, "하얀 딸기는… 아직 덜 익은 거 아니에요?"),
+            (1, "한 입만… 냠. …!!"),
+            (1, "{이름}님! 하얀 게 더 달아요! 속았어요!"),
+        }),
+        ("Entry_Blueberry", 2, new[]
+        {
+            (0, "{이름}님! 덤불에서 보석을 찾았어요!"),
+            (1, "배 위에 올려놓고 하나씩… 냠, 냠."),
+            (1, "어? 입이 파래졌다고요? 보석 먹어서 그래요!"),
+        }),
+        ("Entry_GoldenCarrot", 2, new[]
+        {
+            (0, "우와앗, 눈부셔요! 당근이 빛나요!"),
+            (1, "아삭! …방금 제 입에서도 빛났죠? 그렇죠?"),
+            (1, "{이름}님도 한 입… 아, 다 먹었네요. 헤헤."),
+        }),
+        ("Entry_GoldenPotato", 2, new[]
+        {
+            (0, "쉿! {이름}님, 흙 속에서 뭔가 빛나요…!"),
+            (0, "살살… 살살… 황금 감자예요!"),
+            (1, "이런 날은 다 같이 손잡고 춤추는 거예요!"),
+        }),
         ("Entry_Mackerel", 2, new[]
         {
             (0, "첨벙… 잡았어요오…"),
@@ -107,15 +174,23 @@ public static class CollectionSetup
             (1, "새싹 하나도 그냥 안 지나칠게요. 맡겨 주세요!"),
             (1, "…그런데 당근은 가끔 제가 먹어도 되죠? 가끔이요!"),
         }),
-        ("Entry_OtterFisher", 2, new[]
+        // C컷 = A컷에서 잠든 모습 (마지막 줄 "쿨…")
+        ("Entry_OtterFisher", 3, new[]
         {
             (0, "아… {이름}님이다… 안녕하세요오…"),
             (1, "이건요… 제일 좋아하는 돌이에요. 겨드랑이에 넣어 다녀요."),
-            (0, "물결 소리 듣다 보면… 물고기가 먼저 와요… 쿨…"),
+            (2, "물결 소리 듣다 보면… 물고기가 먼저 와요… 쿨…"),
         }),
     };
 
     #region 데이터
+
+    /// <summary>
+    /// 도감 데이터만 다시 채움 (이야기 에셋 · 컷 그림 · DB). 컷 그림을 Cutscenes 폴더에 넣은 뒤 누르면 빈 컷 칸에 들어간다.
+    /// Build Global UI와 달리 정착 설정 데이터를 건드리지 않는다
+    /// </summary>
+    [MenuItem("Tools/Collection/Apply Stories And Cutscenes")]
+    public static void ApplyStories() => CreateData();
 
     public static void CreateData()
     {
@@ -598,8 +673,8 @@ public static class CollectionSetup
 
         var description = CreateText("Description", box.rectTransform, _bodyFont, "설명", 26, Cocoa);
         description.alignment = TextAlignmentOptions.TopLeft;
-        description.enableAutoSizing = true; // 긴 설명은 박스 안에서 글자를 줄임
-        description.fontSizeMin = 22;
+        description.enableAutoSizing = true; // 긴 설명 · 여러 줄 힌트(못 만난 해달)는 박스 안에서 글자를 줄임
+        description.fontSizeMin = 20;
         description.fontSizeMax = 26;
         TopBand(description.rectTransform, 28, 28, 26, 76);
 

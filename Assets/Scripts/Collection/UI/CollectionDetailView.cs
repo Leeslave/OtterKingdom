@@ -87,10 +87,11 @@ public class CollectionDetailView : MonoBehaviour
         _badge.SetActive(state != CollectionState.Unknown);
         _badgeText.text = visited ? _visitedBadge : tab != null ? tab.CollectedLabel : "";
 
-        // 못 만난 해달은 만나는 방법 힌트 (어떤 장난감 · 언제 · 어떤 가구가 있으면 찾아오는지)
+        // 못 만난 해달은 만나는 방법 힌트 (어떤 장난감 · 언제 · 어떤 가구가 있으면 찾아오는지).
+        // 힌트는 여러 줄이라 한 줄짜리 소개 칸이 아니라 설명 상자에 넣음 (소개 칸은 "아직 만나지 못했어요")
         string hint = !collected && !string.IsNullOrEmpty(entry.Hint) ? entry.Hint : null;
-        _taglineText.text = collected ? entry.Tagline : hint ?? (visited ? _visitedTagline : _unknownTagline);
-        _descriptionText.text = collected ? entry.Description : "";
+        _taglineText.text = collected ? entry.Tagline : visited ? _visitedTagline : _unknownTagline;
+        _descriptionText.text = collected ? entry.Description : hint ?? "";
         _extraText.text = collected && tab != null && !string.IsNullOrEmpty(entry.ExtraValue)
             ? $"{tab.ExtraLabel}: {entry.ExtraValue}"
             : "";

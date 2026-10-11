@@ -22,4 +22,7 @@ MonoBehaviour:
   _description: "\uC798 \uC775\uC740 \uB538\uAE30\uB97C \uBCF4\uBA74 \uD574\uB2EC\uB4E4\uC774
     \uC11C\uB85C \uBA39\uACA0\uB2E4\uACE0 \uB2E4\uD248\uC694."
   _extraValue: "\uBC2D"
+  _hint: 
   _linkedItem: {fileID: 11400000, guid: 52b044dd060e85f4a81743b1db156a2d, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 11400000, guid: 0c5aff8138b95e548843594fbf693fda, type: 2}
