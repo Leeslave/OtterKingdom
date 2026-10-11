@@ -169,6 +169,10 @@ public class RockNodeView : MonoBehaviour, IDecorBlocker
         Damaged.TryGetValue(_pointId, out int done);
         done += damage;
         _shakeTimer = ShakeSeconds;
+        // 곡괭이가 누른 자리를 내리찍고 반짝, 약점이면 더 크게
+        _fx.Swing(false, world);
+        _fx.Impact(world, crit ? 0.75f : 0.45f);
+        _fx.Puff(world, crit ? 0.6f : 0.4f, new Vector2(Random.Range(-0.3f, 0.3f), 0.4f));
 
         int chips = crit ? 8 : 4;
         for (int i = 0; i < chips; i++)
@@ -199,6 +203,12 @@ public class RockNodeView : MonoBehaviour, IDecorBlocker
 
         Damaged.Remove(_pointId);
         HideWeakSpot();
+        // 깨질 때: 큰 덩이 · 먼지구름 (자갈 그림으로 바뀌는 순간을 가림)
+        for (int i = 0; i < 5; i++)
+            _fx.Burst(_chipSprite, Center, new Vector2(Random.Range(-3.2f, 3.2f), Random.Range(3f, 6.5f)), Random.Range(0.3f, 0.45f), GroundY - Random.Range(0f, 0.2f), 1.1f);
+        for (int i = 0; i < 4; i++)
+            _fx.Puff(Center + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.3f, 0.2f), 0f), Random.Range(0.7f, 1f),
+                new Vector2(Random.Range(-0.8f, 0.8f), Random.Range(0.3f, 0.8f)));
         for (int i = 0; i < 10; i++)
             _fx.Burst(_chipSprite, Center, new Vector2(Random.Range(-3.5f, 3.5f), Random.Range(4f, 8f)), Random.Range(0.15f, 0.3f), GroundY, 1f);
         for (int i = 0; i < added; i++)

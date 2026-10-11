@@ -1875,6 +1875,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 2118812594}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &541772127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2497,6 +2504,8 @@ MonoBehaviour:
     \uBCF4\uB0B4 \uC815\uBE44\uD574\uC694"
   _preparingGuide: "\uC8FC\uBBFC \uD574\uB2EC\uC774 \uC8FC\uBCC0\uC744 \uC815\uB9AC\uD558\uACE0
     \uC788\uC5B4\uC694"
+  _awaitingSpecialistGuide: "\uAD11\uC7A5\uC5D0\uC11C {0} \uB9CC\uB098 {1}\uC5D0
+    \uBC30\uCE58\uD574 \uC8FC\uC138\uC694"
 --- !u!4 &779818355
 Transform:
   m_ObjectHideFlags: 0
@@ -3099,6 +3108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::ClearingObstacleView
   _obstacleId: mine_rock_02
+  _projectObstacle: 0
   _kind: 0
   _hits: 4
   _reward: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
@@ -3108,6 +3118,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5548a367510f1b24785e281ec69ba252, type: 3}
   - {fileID: 21300000, guid: d986e5d358a8e3a48b95b89fa8ee1fda, type: 3}
   _pieceSprite: {fileID: 21300000, guid: 67f7bd9dd4af3f64d991342bc0f6a552, type: 3}
+  _clearedSprite: {fileID: 21300000, guid: 64bb0adb02d198f4a959df515938c0dc, type: 3}
+  _clearedScale: 0.85
   _renderer: {fileID: 207841684}
   _tapArea: {fileID: 989453131}
   _fx: {fileID: 1210347997}
@@ -3478,6 +3490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::ClearingObstacleView
   _obstacleId: mine_tree_01
+  _projectObstacle: 0
   _kind: 1
   _hits: 3
   _reward: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
@@ -3485,6 +3498,8 @@ MonoBehaviour:
   _sprites:
   - {fileID: 21300000, guid: fcdb2e734a6b77b479cbc4fa3cace65a, type: 3}
   _pieceSprite: {fileID: 21300000, guid: bfa3600794c213c479b3d13b405ef138, type: 3}
+  _clearedSprite: {fileID: 21300000, guid: c1661d9e3358a114488e88664e21c509, type: 3}
+  _clearedScale: 0.42
   _renderer: {fileID: 1399513767}
   _tapArea: {fileID: 1104599319}
   _fx: {fileID: 1721262130}
@@ -3814,6 +3829,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 5693276}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &1217374494
 GameObject:
   m_ObjectHideFlags: 0
@@ -5003,6 +5025,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 844373844}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &1742440813
 GameObject:
   m_ObjectHideFlags: 0
@@ -5302,6 +5331,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 926417609}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &2040952302
 GameObject:
   m_ObjectHideFlags: 0
@@ -5333,6 +5369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::ClearingObstacleView
   _obstacleId: mine_rock_01
+  _projectObstacle: 0
   _kind: 0
   _hits: 4
   _reward: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
@@ -5342,6 +5379,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5548a367510f1b24785e281ec69ba252, type: 3}
   - {fileID: 21300000, guid: d986e5d358a8e3a48b95b89fa8ee1fda, type: 3}
   _pieceSprite: {fileID: 21300000, guid: 67f7bd9dd4af3f64d991342bc0f6a552, type: 3}
+  _clearedSprite: {fileID: 21300000, guid: 64bb0adb02d198f4a959df515938c0dc, type: 3}
+  _clearedScale: 0.85
   _renderer: {fileID: 1880698240}
   _tapArea: {fileID: 2040952305}
   _fx: {fileID: 2004133564}
@@ -5616,6 +5655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::ClearingObstacleView
   _obstacleId: mine_tree_02
+  _projectObstacle: 0
   _kind: 1
   _hits: 3
   _reward: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
@@ -5623,6 +5663,8 @@ MonoBehaviour:
   _sprites:
   - {fileID: 21300000, guid: fcdb2e734a6b77b479cbc4fa3cace65a, type: 3}
   _pieceSprite: {fileID: 21300000, guid: bfa3600794c213c479b3d13b405ef138, type: 3}
+  _clearedSprite: {fileID: 21300000, guid: c1661d9e3358a114488e88664e21c509, type: 3}
+  _clearedScale: 0.42
   _renderer: {fileID: 1425335996}
   _tapArea: {fileID: 2122954903}
   _fx: {fileID: 497412070}

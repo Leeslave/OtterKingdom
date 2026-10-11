@@ -3780,9 +3780,14 @@ MonoBehaviour:
   - {fileID: 700000031}
   - {fileID: 1093326231}
   - {fileID: 558309110}
-  _guide: "\uBC2D\uC744 \uB36E\uC740 \uC7A1\uBAA9\uACFC \uBC14\uC704\uB97C \uD1A1\uD1A1 \uB20C\uB7EC \uCE58\uC6CC\uC694!"
-  _awaitingWorkersGuide: "\uB2E4 \uCE58\uC6E0\uC5B4\uC694! \uB9DD\uCE58 \uD45C\uC9C0\uD310\uC744 \uB20C\uB7EC \uC8FC\uBBFC \uD574\uB2EC\uC744 \uBCF4\uB0B4\uC694"
-  _preparingGuide: "\uC8FC\uBBFC \uD574\uB2EC\uC774 \uB18D\uACBD\uC9C0\uB97C \uAC1C\uAC04\uD558\uACE0 \uC788\uC5B4\uC694"
+  _guide: "\uBC2D\uC744 \uB36E\uC740 \uC7A1\uBAA9\uACFC \uBC14\uC704\uB97C \uD1A1\uD1A1
+    \uB20C\uB7EC \uCE58\uC6CC\uC694!"
+  _awaitingWorkersGuide: "\uB2E4 \uCE58\uC6E0\uC5B4\uC694! \uB9DD\uCE58 \uD45C\uC9C0\uD310\uC744
+    \uB20C\uB7EC \uC8FC\uBBFC \uD574\uB2EC\uC744 \uBCF4\uB0B4\uC694"
+  _preparingGuide: "\uC8FC\uBBFC \uD574\uB2EC\uC774 \uB18D\uACBD\uC9C0\uB97C \uAC1C\uAC04\uD558\uACE0
+    \uC788\uC5B4\uC694"
+  _awaitingSpecialistGuide: "\uAD11\uC7A5\uC5D0\uC11C {0} \uB9CC\uB098 {1}\uC5D0
+    \uBC30\uCE58\uD574 \uC8FC\uC138\uC694"
 --- !u!1 &873073629
 GameObject:
   m_ObjectHideFlags: 0
@@ -3810,7 +3815,7 @@ Transform:
   m_GameObject: {fileID: 873073629}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3, y: 2.0, z: 0}
+  m_LocalPosition: {x: -2.3, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3867,6 +3872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::ClearingObstacleView
   _obstacleId: farm_tree_01
+  _projectObstacle: 0
   _kind: 1
   _hits: 3
   _reward: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
@@ -3874,6 +3880,8 @@ MonoBehaviour:
   _sprites:
   - {fileID: 21300000, guid: fcdb2e734a6b77b479cbc4fa3cace65a, type: 3}
   _pieceSprite: {fileID: 21300000, guid: bfa3600794c213c479b3d13b405ef138, type: 3}
+  _clearedSprite: {fileID: 21300000, guid: c1661d9e3358a114488e88664e21c509, type: 3}
+  _clearedScale: 0.42
   _renderer: {fileID: 827207413}
   _tapArea: {fileID: 1094598671}
   _fx: {fileID: 941889349}
@@ -4035,6 +4043,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 1919640111}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &1280114290
 GameObject:
   m_ObjectHideFlags: 0
@@ -4097,7 +4112,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4144,7 +4159,7 @@ MonoBehaviour:
   m_text: "+3 \uB3CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4301,6 +4316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::ClearingObstacleView
   _obstacleId: farm_rock_01
+  _projectObstacle: 0
   _kind: 0
   _hits: 4
   _reward: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
@@ -4310,6 +4326,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5548a367510f1b24785e281ec69ba252, type: 3}
   - {fileID: 21300000, guid: d986e5d358a8e3a48b95b89fa8ee1fda, type: 3}
   _pieceSprite: {fileID: 21300000, guid: 67f7bd9dd4af3f64d991342bc0f6a552, type: 3}
+  _clearedSprite: {fileID: 21300000, guid: 64bb0adb02d198f4a959df515938c0dc, type: 3}
+  _clearedScale: 0.85
   _renderer: {fileID: 616617349}
   _tapArea: {fileID: 968337901}
   _fx: {fileID: 1754317443}
@@ -4471,6 +4489,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 1024503406}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &227601973
 GameObject:
   m_ObjectHideFlags: 0
@@ -4533,7 +4558,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4580,7 +4605,7 @@ MonoBehaviour:
   m_text: "+3 \uB3CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4728,7 +4753,7 @@ Transform:
   m_GameObject: {fileID: 930863576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4856,7 +4881,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4903,7 +4928,7 @@ MonoBehaviour:
   m_text: "\uD1A1\uD1A1 \uB20C\uB7EC \uCE58\uC6CC\uC694!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5059,6 +5084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::ClearingObstacleView
   _obstacleId: farm_tree_02
+  _projectObstacle: 0
   _kind: 1
   _hits: 3
   _reward: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
@@ -5066,6 +5092,8 @@ MonoBehaviour:
   _sprites:
   - {fileID: 21300000, guid: fcdb2e734a6b77b479cbc4fa3cace65a, type: 3}
   _pieceSprite: {fileID: 21300000, guid: bfa3600794c213c479b3d13b405ef138, type: 3}
+  _clearedSprite: {fileID: 21300000, guid: c1661d9e3358a114488e88664e21c509, type: 3}
+  _clearedScale: 0.42
   _renderer: {fileID: 1640491754}
   _tapArea: {fileID: 1075409721}
   _fx: {fileID: 638300088}
@@ -5227,6 +5255,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 2073516869}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &910706911
 GameObject:
   m_ObjectHideFlags: 0
@@ -5289,7 +5324,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5336,7 +5371,7 @@ MonoBehaviour:
   m_text: "+3 \uB3CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5492,6 +5527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::ClearingObstacleView
   _obstacleId: farm_rock_02
+  _projectObstacle: 0
   _kind: 0
   _hits: 4
   _reward: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
@@ -5501,6 +5537,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5548a367510f1b24785e281ec69ba252, type: 3}
   - {fileID: 21300000, guid: d986e5d358a8e3a48b95b89fa8ee1fda, type: 3}
   _pieceSprite: {fileID: 21300000, guid: 67f7bd9dd4af3f64d991342bc0f6a552, type: 3}
+  _clearedSprite: {fileID: 21300000, guid: 64bb0adb02d198f4a959df515938c0dc, type: 3}
+  _clearedScale: 0.85
   _renderer: {fileID: 647315074}
   _tapArea: {fileID: 614535279}
   _fx: {fileID: 1579710252}
@@ -5662,6 +5700,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 1942876671}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &489084295
 GameObject:
   m_ObjectHideFlags: 0
@@ -5724,7 +5769,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5771,7 +5816,7 @@ MonoBehaviour:
   m_text: "+3 \uB3CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5940,7 +5985,7 @@ Transform:
   m_GameObject: {fileID: 1168032567}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0, y: 0.1, z: 0}
+  m_LocalPosition: {x: -1, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6064,7 +6109,7 @@ Transform:
   m_GameObject: {fileID: 535391431}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: -7.0, z: 0}
+  m_LocalPosition: {x: 0.2, y: -7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6402,7 +6447,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6449,7 +6494,7 @@ MonoBehaviour:
   m_text: "\uB20C\uB7EC\uC11C \uD574\uB2EC\uC744 \uBCF4\uB0B4\uC694!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6675,7 +6720,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6722,7 +6767,7 @@ MonoBehaviour:
   m_text: "\uAD11\uC0B0 \uC8FC\uBCC0 \uC815\uB9AC\n0:30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

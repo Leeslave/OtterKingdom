@@ -164,6 +164,7 @@ public static partial class SettlementSetup
             so.FindProperty("_hint").objectReferenceValue =
                 CreateTapHint(node, "hint_obstacle", "톡톡 눌러 치워요!", new Vector3(0f, Mathf.Max(1f, 1.35f * scale), 0f));
         so.ApplyModifiedPropertiesWithoutUndo();
+        ChopFxSetup.FillObstacle(view); // 치운 뒤 그루터기 · 자갈
         return view;
     }
 }

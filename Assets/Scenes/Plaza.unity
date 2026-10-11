@@ -14935,6 +14935,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 203319620}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &362773805
 GameObject:
   m_ObjectHideFlags: 0
@@ -24649,6 +24656,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 1114336510}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &553267568
 GameObject:
   m_ObjectHideFlags: 0
@@ -72782,6 +72796,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 1494307887}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &1740695419
 GameObject:
   m_ObjectHideFlags: 0
@@ -77007,6 +77028,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::PlazaNodeFx
   _textTemplate: {fileID: 1272473058}
   _sortingOrder: 31998
+  _axe: {fileID: 21300000, guid: de93069ce7aa3604ea923f71186aff54, type: 3}
+  _pickaxe: {fileID: 21300000, guid: 140cbaa6c2e60a34daeed588fdde8c03, type: 3}
+  _impact: {fileID: 21300000, guid: 2da913f4fc0d7d849990448babfc5ca1, type: 3}
+  _dust: {fileID: 21300000, guid: 2258ad31de5ba91489a8ee216cf3ee80, type: 3}
+  _woodChip: {fileID: 21300000, guid: dffc57b58171cde46a72e2a0a5f86f41, type: 3}
+  _toolSize: 1.15
+  _dustColor: {r: 1, g: 1, b: 1, a: 0.9}
 --- !u!1 &1829267556
 GameObject:
   m_ObjectHideFlags: 0
