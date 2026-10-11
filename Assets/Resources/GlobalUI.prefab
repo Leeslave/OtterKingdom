@@ -68349,7 +68349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBCF4\uBB3C \uC870\uAC1C \uBF51\uAE30"
+  m_text: "\uC870\uAC1C \uBF51\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}

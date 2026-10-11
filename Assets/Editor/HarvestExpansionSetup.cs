@@ -34,7 +34,7 @@ public static class HarvestExpansionSetup
     private static readonly string[] RarityAssets = { "Common", "Rare", "Epic" };
 
     // 채소: (그림 Id, 작물 Id(crop_ 뒤), 이름, 바탕 밭 그림, 등급, 자라는 초, 한 번 수확량, 모종 값, 왕국 레벨, 소개, 도감 설명)
-    // 등급이 높을수록 모종이 비싸고 오래 자라지만 한 번 거두는 값(모종값 × 1.5)이 커서 칸당 벌이가 큼
+    // 등급이 높을수록 모종이 비싸고 오래 자라지만 한 번 거두는 값(모종값 × CropPricing 배율, 지금 2)이 커서 칸당 벌이가 큼
     private static readonly (string art, string id, string name, string baseField, int tier, float seconds, int yield, int seedPrice, int level,
         string tagline, string description)[] Crops =
     {

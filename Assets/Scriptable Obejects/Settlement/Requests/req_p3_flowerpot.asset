@@ -31,5 +31,5 @@ MonoBehaviour:
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 0}
-  _completionMessage: "\uC774\uC6C3\uC9D1 \uC55E\uC774 \uD658\uD574\uC838\uC694"
+  _completionMessage: "\uD658\uC601 \uD654\uBD84\uC744 \uB193\uC558\uC5B4\uC694! \uC774\uC6C3\uC9D1 \uC55E\uC774 \uD658\uD574\uC84C\uC5B4\uC694."
   _kingdomLevel: 0

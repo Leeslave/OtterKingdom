@@ -40,6 +40,6 @@ MonoBehaviour:
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: f24f9350cccbb864bb8e53753e72c0dd, type: 2}
   _completionMessage: "\uAC74\uC124\uC18C\uAC00 \uC0DD\uACBC\uC5B4\uC694! \uACF5\uC0AC\uAC00
-    \uB354 \uBE68\uB9AC \uB05D\uB098\uC694. (\uACF5\uC0AC \uC2DC\uAC04 \u221215%)\n\uBA54\uBAA8\uC7C1\uC774
+    \uB354 \uBE68\uB9AC \uB05D\uB098\uC694. (\uACF5\uC0AC \uC2DC\uAC04 -15%)\n\uBA54\uBAA8\uC7C1\uC774
     \uB044\uC801\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
   _kingdomLevel: 17

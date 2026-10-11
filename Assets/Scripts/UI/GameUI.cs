@@ -26,6 +26,8 @@ public class GameUI : MonoBehaviour
     private const int ScreenSortingOrder = 90;
     private const float PanelWidth = 900f;
     private const int TitleFontSize = 48;
+    // 안내 띠의 최대 폭 (화면 폭 대비)
+    private const float GuideMaxWidthRatio = 0.9f;
     private const int BodyFontSize = 40;
     private const float ButtonHeight = 110f;
     // Corner feature buttons (rod/pickaxe upgrade) sit just above GlobalUI's bottom nav bar
@@ -328,6 +330,15 @@ public class GameUI : MonoBehaviour
         label.fontSize = TitleFontSize;
         label.color = style.TextColor;
 
+        // 한 줄로 화면보다 길면 양쪽이 잘렸음 (4차 QA: "…다 치웠어요! 망치 표지판을 눌러…") → 화면 폭 안에서 줄바꿈
+        float maxText = screenLayer.rect.width * GuideMaxWidthRatio - layout.padding.horizontal;
+        if (maxText > 0f && label.GetPreferredValues(message).x > maxText)
+        {
+            label.textWrappingMode = TextWrappingModes.Normal;
+            go.AddComponent<LayoutElement>().preferredWidth = maxText + layout.padding.horizontal;
+            label.gameObject.AddComponent<LayoutElement>().preferredWidth = maxText;
+        }
+
         guideBubble = (RectTransform)go.transform;
         guideBubble.anchorMin = guideBubble.anchorMax = guideBubble.pivot = new Vector2(0.5f, 0.75f);
     }
@@ -513,9 +524,9 @@ public class GameUI : MonoBehaviour
         SetRefresher(modal, () =>
         {
             int level = fishing.RodLevel;
-            string current = $"현재 Lv.{level} (물고기 확률 {Percent(fishing.FishChanceAt(level))})";
+            string current = $"현재 Lv.{level} ({RodEffect(fishing, level)})";
             infoLabel.text = fishing.CanUpgradeRod
-                ? $"{current}\n다음 Lv.{level + 1} (물고기 확률 {Percent(fishing.FishChanceAt(level + 1))})\n" +
+                ? $"{current}\n다음 Lv.{level + 1} ({RodEffect(fishing, level + 1)})\n" +
                   NewFishLine(fishing, level + 1) +
                   $"강화 비용 : {fishing.NextRodUpgradeCost:N0} 골드"
                 : $"{current}\n최대 레벨이에요!";
@@ -525,6 +536,14 @@ public class GameUI : MonoBehaviour
     }
 
     private static readonly string[] TierNames = { "흔함", "레어", "에픽" };
+
+    // 물고기 확률은 Lv.10에서 끝(95%)이라 그 뒤 강화는 레어 · 에픽이 잘 낚이는 것만 오름 → 함께 보여 줌 (5차 QA: "95% → 95%"로 효과가 없어 보였음)
+    private static string RodEffect(FishingService fishing, int level)
+    {
+        string text = $"물고기 확률 {Percent(fishing.FishChanceAt(level))}";
+        float luck = fishing.Balance.RareLuckAt(level) - 1f;
+        return luck > 0f ? $"{text} · 레어 · 에픽 +{Percent(luck)}" : text;
+    }
 
     // 다음 레벨에서 처음 낚이는 물고기 (없으면 빈 줄)
     private string NewFishLine(FishingService fishing, int level)

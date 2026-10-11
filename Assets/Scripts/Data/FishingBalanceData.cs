@@ -66,13 +66,16 @@ public class FishingBalanceData : ScriptableObject
         return Mathf.Clamp(baseFishChance + (rodLevel - 1) * fishChancePerRodLevel, 0f, maxFishChance);
     }
 
+    /// <summary>레어 · 에픽 무게 배율 (WeightAt과 같은 식)</summary>
+    public float RareLuckAt(int rodLevel) => 1f + rareLuckPerRodLevel * Mathf.Max(0, rodLevel - 1);
+
     public bool HasFishTable => fishTable != null && fishTable.Length > 0;
 
     public float WeightAt(FishEntry fish, int rodLevel)
     {
         if (rodLevel < fish.minRodLevel)
             return 0f;
-        float luck = fish.tier > 0 ? 1f + rareLuckPerRodLevel * Mathf.Max(0, rodLevel - 1) : 1f;
+        float luck = fish.tier > 0 ? RareLuckAt(rodLevel) : 1f;
         return Mathf.Max(0f, fish.weight) * luck;
     }
 

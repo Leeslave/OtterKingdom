@@ -26,6 +26,8 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
 {
     // 완성 순간 카메라가 현장으로 미끄러져 가는 시간 (별빛은 그 뒤에)
     private const float CameraArriveSeconds = 0.6f;
+    // [만나러 가기]로 카메라를 보낸 해달이 서 있는 시간 (초)
+    private const float FocusHoldSeconds = 8f;
     // 주민 작업에 보낸 해달이 광장을 떠나기 시작한 뒤 길을 못 찾아도 이만큼 지나면 내보냄
     private const float LeaveLimitSeconds = 12f;
     // 관리 해달이 근무 자리로 가는 길을 못 찾아도 이만큼 지나면 그 자리로 옮김
@@ -474,7 +476,11 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     {
         Transform target = null;
         if (_spawned.TryGetValue(otterId, out var agent) && agent != null)
+        {
             target = agent.transform;
+            // 카메라가 가는 동안 걸어가 버려 누르기 어려웠음 (4 · 6차 QA) → 잠깐 그 자리에 세움
+            agent.HoldStill(FocusHoldSeconds);
+        }
         else if (_builderInitialized && _views.TryGetValue(otterId, out var view) && view != null)
             target = view.transform;
         if (target == null)

@@ -41,6 +41,8 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     // After stepping aside (or failing to), wait this long before checking again.
     private const float OverlapRetrySeconds = 1.5f;
     private float nextOverlapCheck;
+    // Until then an idle otter stays put even when standing on another (HoldStill)
+    private float holdUntil;
 
     public enum State { Idle, Walk, Play }
 
@@ -172,7 +174,7 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
             case State.Idle:
                 stateTimer -= Time.deltaTime;
                 // Standing on another otter: move off now instead of waiting out the idle
-                if (stateTimer > 0f && !hasTask && Time.time >= nextOverlapCheck
+                if (stateTimer > 0f && !hasTask && Time.time >= nextOverlapCheck && Time.time >= holdUntil
                     && PlazaCrowd.IsOverlapping(this, settings.otterBodyWidth * OverlapInWidths))
                 {
                     stateTimer = 0f;
@@ -502,6 +504,16 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
             else if (walkingToHabit) EnterHabit();
             else EnterIdle(settings.RollIdleSeconds());
         }
+    }
+
+    // Stand still for a while where it is (the camera was just sent to this
+    // otter by [만나러 가기], so the player can tap it before it wanders off).
+    // An otter on a task or using a spot keeps doing that.
+    public void HoldStill(float seconds)
+    {
+        if (!initialized || hasTask || spotSession != null) return;
+        holdUntil = Time.time + seconds;
+        EnterIdle(seconds);
     }
 
     // Speed of the current walk (faster on the way to a task). Visuals match the walk clip to it.

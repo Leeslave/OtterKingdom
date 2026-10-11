@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "오이"
   baseDurationSec: 45
   yieldCount: 4
-  sellPrice: 15
+  sellPrice: 9
   seedType: 0
   initialSeedCount: 0
   spriteTint: {r: 1, g: 1, b: 1, a: 1}

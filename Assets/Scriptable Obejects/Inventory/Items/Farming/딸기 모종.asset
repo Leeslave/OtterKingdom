@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::ItemDefinition
   _itemId: seed_strawberry
   _displayName: "\uB538\uAE30 \uBAA8\uC885"
-  _description: "\uBC2D\uC5D0 \uC2EC\uC73C\uBA74 \uB538\uAE30\uAC00 \uC5F4\uB824\uC694."
+  _description: "\uBC2D\uC5D0 \uC2EC\uC73C\uBA74 \uB538\uAE30\uAC00 \uC5F4\uB824\uC694. \uC2EC\uC744 \uB54C\uB9C8\uB2E4 \uD558\uB098\uC529 \uC368\uC694."
   _icon: {fileID: -8219364252428169312, guid: 0062ccdbfb2609948ae4090c90be839f, type: 3}
   _category: {fileID: 11400000, guid: 21ef8cc3a93812d4dac1f6a4f756b488, type: 2}
   _rarity: {fileID: 11400000, guid: 92826ade59cca8b4f9ec100f9c9a27f3, type: 2}

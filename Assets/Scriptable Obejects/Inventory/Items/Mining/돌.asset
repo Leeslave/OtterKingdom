@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::ItemDefinition
   _itemId: ore_stone
   _displayName: "\uB3CC"
-  _description: "\uAD11\uC0B0\uC5D0\uC11C \uCE94 \uD3C9\uBC94\uD55C \uB3CC\uC774\uB2E4."
+  _description: "\uAD11\uC0B0\uC5D0\uC11C \uCE94 \uD3C9\uBC94\uD55C \uB3CC. \uC9D1\uC744 \uC9D3\uACE0 \uAE38\uC744 \uC5EC\uB294 \uB370 \uC368\uC694."
   _icon: {fileID: 21300000, guid: 5e32cc5d73137d5469cfdf69f9db3dbd, type: 3}
   _category: {fileID: 11400000, guid: c0aaf6ff75ccefa499fe320afcbcbb59, type: 2}
   _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}

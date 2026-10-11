@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e25a1f28254f90999b9a1e43deb752, type: 3}
   m_Name: CropPricing
   m_EditorClassIdentifier: OtterKingdom::CropPricing
-  _harvestToSeedRatio: 1.5
+  _harvestToSeedRatio: 2

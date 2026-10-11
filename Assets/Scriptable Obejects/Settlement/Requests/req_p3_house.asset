@@ -33,5 +33,5 @@ MonoBehaviour:
     _state: 0
   _stageOnComplete: -1
   _completionEntry: {fileID: 0}
-  _completionMessage: "\uC644\uC131\uB418\uBA74 \uC0C8 \uC774\uC6C3\uC774 \uCC3E\uC544\uC640\uC694"
+  _completionMessage: "\uC0C8 \uC774\uC6C3\uC758 \uC9D1\uC774 \uC644\uC131\uB410\uC5B4\uC694! \uC0C8 \uC774\uC6C3\uC774 \uCC3E\uC544\uC654\uC5B4\uC694."
   _kingdomLevel: 0

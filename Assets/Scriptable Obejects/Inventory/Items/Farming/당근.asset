@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   _itemId: crop_carrot
   _displayName: "\uB2F9\uADFC"
-  _description: "\uB2F9\uADFC\uC774\uB2E4."
+  _description: "\uBC2D\uC5D0\uC11C \uAC13 \uBF51\uC740 \uC544\uC0AD\uD55C \uC8FC\uD669 \uBFCC\uB9AC\uCC44\uC18C."
   _icon: {fileID: -5859083586626064994, guid: 125917c9ef5a91e478059e3954180ecc, type: 3}
   _category: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
   _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
-  _sellPrice: 10
+  _sellPrice: 6
   _maxStack: 999

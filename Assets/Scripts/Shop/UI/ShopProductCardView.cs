@@ -50,6 +50,7 @@ public class ShopProductCardView : MonoBehaviour
     }
 
     private static readonly Color LockedIconColor = new Color(0.55f, 0.55f, 0.55f, 0.8f);
+    private static readonly Color LockedButtonColor = new Color(0.7f, 0.68f, 0.66f, 1f);
 
     /// <param name="categoryLabel">분류 칩 글자 (null이면 칩 숨김)</param>
     /// <param name="locked">아직 레벨이 안 됨: 가격 대신 "Lv.N", 그림은 흐리게</param>
@@ -79,9 +80,11 @@ public class ShopProductCardView : MonoBehaviour
         }
 
         _priceButtonImage.sprite = _priceButtonSprites.Get(product.PriceCurrency);
+        // 잠긴 칸의 "Lv.N" 버튼이 사는 버튼과 같은 노란색이라 눌러질 것처럼 보였음 (4차 QA) → 회색으로 · "Lv.N부터"
+        _priceButtonImage.color = locked ? LockedButtonColor : Color.white;
         _priceIcon.sprite = product.PriceCurrency.Icon;
         _priceIcon.enabled = _priceIcon.sprite != null && !locked;
-        _priceText.text = locked ? $"Lv.{product.RequiredLevel}" : product.Price.ToString("N0");
+        _priceText.text = locked ? $"Lv.{product.RequiredLevel}부터" : product.Price.ToString("N0");
         _icon.color = locked ? LockedIconColor : Color.white;
     }
 }

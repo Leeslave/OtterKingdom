@@ -41,6 +41,8 @@ public static class FairyShopSetup
         ("Seed_Strawberry", "shop_seed_strawberry", "Farming/딸기 모종", 1, false, 300, 11),
         ("Toy_SoccerBall", "shop_toy_soccerball", "Decor/축구공", 1, false, 800, 1),
         ("Toy_Puzzle", "shop_toy_puzzle", "Decor/퍼즐", 1, true, 25, 1),
+        // 목재는 광장 나무 · 나뭇가지 · 숲 개간에서만 나와 건설이 목재 줍기에 막힘(4차 QA) → 남는 골드로 살 수 있게
+        ("Material_Wood", "shop_material_wood", "Mining/목재", 10, false, 300, 4),
     };
 
     // (탭 이름, 분류 에셋)

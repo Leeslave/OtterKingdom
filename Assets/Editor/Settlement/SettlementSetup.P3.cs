@@ -208,11 +208,16 @@ public static partial class SettlementSetup
         otters.TryGetValue("otter_first", out var first);
         otters.TryGetValue("otter_builder", out var builder);
 
-        var reqSupply = CreateP3Request("req_p3_supply_box", "우리 마을의 첫 비축", conSupply, "p3_supply_01_paid", clerk, null);
-        var reqHouse = CreateP3Request("req_p3_house", "새 이웃 맞이하기", conHouse, "p3_neighbor_01_paid", builder, neighbor);
-        var reqPot = CreateP3Request("req_p3_flowerpot", "환영 화분", conPot, "p3_welcome_01_paid", neighbor, null);
-        var reqLine = CreateP3Request("req_p3_clothesline", "환영 빨랫줄", conLine, "p3_welcome_01_paid", neighbor, null);
-        var reqTable = CreateP3Request("req_p3_table", "우리 마을의 첫 모임", conTable, "p3_gathering_01_paid", clerk, null);
+        var reqSupply = CreateP3Request("req_p3_supply_box", "우리 마을의 첫 비축", conSupply, "p3_supply_01_paid", clerk, null,
+            "비축 상자를 놓았어요! 첫 비축 완료!");
+        var reqHouse = CreateP3Request("req_p3_house", "새 이웃 맞이하기", conHouse, "p3_neighbor_01_paid", builder, neighbor,
+            "새 이웃의 집이 완성됐어요! 새 이웃이 찾아왔어요.");
+        var reqPot = CreateP3Request("req_p3_flowerpot", "환영 화분", conPot, "p3_welcome_01_paid", neighbor, null,
+            "환영 화분을 놓았어요! 이웃집 앞이 환해졌어요.");
+        var reqLine = CreateP3Request("req_p3_clothesline", "환영 빨랫줄", conLine, "p3_welcome_01_paid", neighbor, null,
+            "빨랫줄을 걸었어요! 이웃집 앞에 생활 소품이 생겼어요.");
+        var reqTable = CreateP3Request("req_p3_table", "우리 마을의 첫 모임", conTable, "p3_gathering_01_paid", clerk, null,
+            "공동 식탁이 생겼어요! 이제 모임을 열 수 있어요.");
 
         // 공동사업 (경험치 = 기획서 11장: 구간 시작 레벨의 필요 경험치 E7 800 · E8 1,050 · E9 1,350 × 비율)
         var supply = CreateProject("p3_supply_01", 1, "우리 마을의 첫 비축",
@@ -342,8 +347,9 @@ public static partial class SettlementSetup
     }
 
     // 게시판에 보이지 않는 사업 건설 부탁 (조건 = 사업의 납품 완료 발전). arrival이 있으면 완성될 때 그 해달이 방문으로 찾아옴
+    // done: 완료 창 문구 (비우면 건설의 진행 안내 — 예전엔 "완성되면 새 이웃이 찾아와요"처럼 진행형 문구가 완료 창에 떴음)
     private static BoardRequestDefinition CreateP3Request(string id, string title, ConstructionDefinition construction, string requires,
-        SettlementOtterDefinition requester, SettlementOtterDefinition arrival)
+        SettlementOtterDefinition requester, SettlementOtterDefinition arrival, string done = null)
     {
         var request = LoadOrCreate<BoardRequestDefinition>($"{DataFolder}/Requests/{id}.asset").asset;
         var so = new SerializedObject(request);
@@ -373,7 +379,7 @@ public static partial class SettlementSetup
         }
         so.FindProperty("_stageOnComplete").intValue = -1;
         so.FindProperty("_completionEntry").objectReferenceValue = null;
-        so.FindProperty("_completionMessage").stringValue = construction.ProgressHint;
+        so.FindProperty("_completionMessage").stringValue = string.IsNullOrEmpty(done) ? construction.ProgressHint : done;
         so.FindProperty("_kingdomLevel").intValue = 0;
         so.ApplyModifiedPropertiesWithoutUndo();
         return request;

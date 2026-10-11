@@ -218,7 +218,7 @@ public static partial class SettlementSetup
             new (string, ResidentState)[0],
             -1, "gb_fisher_assigned", "첨벙이가 낚시터에서 일하기 시작해요!\n낚시터에 가서 첫 낚시를 해 봐요.", 0, "", "otter_fisher"),
         // 선택 주민 부탁 (메인 진행의 조건이 아님)
-        ("req_rest_corner", 20, "쉬어 갈 벤치를 놓아 주세요", "꾸벅이가 쉬어 갈 벤치를 갖고 싶대요.\n벤치를 만들어 마음에 드는 곳에 놓아 줘요.", "ICON_Chair",
+        ("req_rest_corner", 20, "쉬어 갈 벤치를 만들어 주세요", "꾸벅이가 쉬어 갈 벤치를 갖고 싶대요.\n벤치를 만들어 마음에 드는 곳에 놓아 줘요.", "ICON_Chair",
             "otter_sleepy", BoardManagedDevelopment, 0, "con_rest_corner", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_rest_corner", "광장에 쉬어 갈 벤치가 생겼어요!", 0, "", ""),
@@ -491,7 +491,7 @@ public static partial class SettlementSetup
         var so = new SerializedObject(apple);
         so.FindProperty("_itemId").stringValue = "fruit_apple";
         so.FindProperty("_displayName").stringValue = "사과";
-        so.FindProperty("_description").stringValue = "광장 나무를 흔들면 가끔 떨어지는 빨간 사과. 팔면 골드가 된다.";
+        so.FindProperty("_description").stringValue = "광장 나무를 흔들면 가끔 떨어지는 빨간 사과.";
         so.FindProperty("_icon").objectReferenceValue = LoadArt("ICON_Item_Apple");
         so.FindProperty("_category").objectReferenceValue = crops;
         if (potato != null)

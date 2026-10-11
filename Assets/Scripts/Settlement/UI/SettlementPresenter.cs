@@ -681,18 +681,20 @@ public class SettlementPresenter : MonoBehaviour
     private void OpenBuildRequest(BoardRequestDefinition request, RequestStatus status)
     {
         var building = request.Building;
+        var active = _manager.ActiveBuildingOf(building);
         _costs.Clear();
         var gold = _manager.Config.GoldCurrency;
+        // 짓는 중이면 비용은 이미 냄 → 낸 만큼 채운 것으로 (부탁 건물은 하나만 짓는 시설이라 비용이 오르지 않아 보이는 값 = 낸 값)
+        // 6차 QA: 공사 중인데 남은 골드 · 목재와 비교해 빨간색(모자람)으로 보였음
         int goldCost = _manager.BuildingGoldCost(building);
         if (goldCost > 0)
-            _costs.Add((gold != null ? gold.Icon : null, goldCost, _manager.GoldBalance));
+            _costs.Add((gold != null ? gold.Icon : null, goldCost, active != null ? goldCost : _manager.GoldBalance));
         foreach (var cost in _manager.BuildingItemCosts(building))
-            _costs.Add((cost.Item.Icon, cost.Amount, _manager.ItemCount(cost.Item)));
+            _costs.Add((cost.Item.Icon, cost.Amount, active != null ? cost.Amount : _manager.ItemCount(cost.Item)));
 
         string note;
         string button = "자리 고르기";
         bool canPress = false;
-        var active = _manager.ActiveBuildingOf(building);
         if (status == RequestStatus.Locked)
             note = "아직 할 수 없어요.";
         else if (active != null)
@@ -743,6 +745,7 @@ public class SettlementPresenter : MonoBehaviour
             else if (building != null)
             {
                 note = $"{home.DisplayName} 짓는 중 · {FormatTime(building.Remaining(SettlementManager.NowTicks))}";
+                button = "진행 중";
                 canPress = false;
             }
             else if (home != null)

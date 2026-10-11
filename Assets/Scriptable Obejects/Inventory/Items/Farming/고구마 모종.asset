@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::ItemDefinition
   _itemId: seed_sweet_potato
   _displayName: "\uACE0\uAD6C\uB9C8 \uBAA8\uC885"
-  _description: "\uBC2D\uC5D0 \uC2EC\uC73C\uBA74 \uACE0\uAD6C\uB9C8\uAC00 \uC790\uB77C\uC694."
+  _description: "\uBC2D\uC5D0 \uC2EC\uC73C\uBA74 \uACE0\uAD6C\uB9C8\uAC00 \uC790\uB77C\uC694. \uC2EC\uC744 \uB54C\uB9C8\uB2E4 \uD558\uB098\uC529 \uC368\uC694."
   _icon: {fileID: 2899055153566729205, guid: 0b1bde50674f82f4d83d5ce8c3facc64, type: 3}
   _category: {fileID: 11400000, guid: 21ef8cc3a93812d4dac1f6a4f756b488, type: 2}
   _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}

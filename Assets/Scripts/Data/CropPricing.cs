@@ -11,9 +11,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "OtterKingdom/Crop Pricing", fileName = "CropPricing")]
 public class CropPricing : ScriptableObject
 {
-    [Tooltip("한 번 수확해서 파는 값 = 모종 하나 값 × 이 배율 (1.5 = 모종값의 1.5배)")]
+    // 2배: 한 번 거두면 모종값만큼 남음 → 사서 심는 작물이 공짜 당근 · 오이보다 칸당 더 벎 (흔함 무 1.6골드/초 > 당근 1.0)
+    [Tooltip("한 번 수확해서 파는 값 = 모종 하나 값 × 이 배율 (2 = 모종값의 2배)")]
     [Min(0.1f)]
-    [SerializeField] private float _harvestToSeedRatio = 1.5f;
+    [SerializeField] private float _harvestToSeedRatio = 2f;
 
     public float HarvestToSeedRatio => _harvestToSeedRatio;
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uD669\uAE08 \uB2F9\uADFC"
   baseDurationSec: 360
   yieldCount: 3
-  sellPrice: 1500
+  sellPrice: 2000
   seedType: 1
   initialSeedCount: 0
   spriteTint: {r: 1, g: 1, b: 1, a: 1}

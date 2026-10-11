@@ -88,7 +88,7 @@ public static partial class SettlementSetup
             ("otter_toy_kongkong", "입주", "콩콩! 오늘부터 이 마을 건설 해달이에요.")),
         (42, "req_p5_workyard", "건설소", "뚝딱이랑 같이 쓸 건설소가 있으면\n공사를 훨씬 빨리 끝낼 수 있어요.",
             "otter_toy_kongkong", P5BuilderSettled, "Building_Workyard", null, P5WorkyardBuilt, 17, "otter_toy_kkeujeok",
-            "건설소가 생겼어요! 공사가 더 빨리 끝나요. (공사 시간 −15%)\n메모쟁이 끄적이가 찾아왔어요.",
+            "건설소가 생겼어요! 공사가 더 빨리 끝나요. (공사 시간 -15%)\n메모쟁이 끄적이가 찾아왔어요.",
             ("otter_builder", "건설소", "콩콩이랑 같이 지으니 하루면 뚝딱이에요!")),
         (43, "req_p5_recorder_home", "끄적이가 살 집", "밤마다 무언가를 적던 끄적이가 찾아왔어요.\n또박이와 함께 마을 이야기를 적어 두고 싶대요.",
             "otter_toy_kkeujeok", P5WorkyardBuilt, null, new[] { "otter_toy_kkeujeok" }, P5RecorderSettled, 0, null,
@@ -96,7 +96,7 @@ public static partial class SettlementSetup
             ("otter_toy_kkeujeok", "입주", "끄적끄적… 이 마을 이야기를 모두 적어 둘게요.")),
         (44, "req_p5_archive", "기록관", "찾아온 해달들을 모두 적어 두는 기록관이 있으면\n소문을 듣고 더 많은 해달이 찾아와요.",
             "otter_toy_kkeujeok", P5RecorderSettled, "Building_Archive", null, P5ArchiveBuilt, 18, null,
-            "기록관이 생겼어요! 장난감 해달이 더 자주 찾아와요. (방문 간격 −20%)",
+            "기록관이 생겼어요! 장난감 해달이 더 자주 찾아와요. (방문 간격 -20%)",
             ("otter_receptionist", "기록관", "끄적이랑 같이 정리하니 기록관이 가득 찼어요!")),
     };
 
