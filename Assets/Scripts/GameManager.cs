@@ -266,6 +266,8 @@ public class GameManager : MonoBehaviour
         else StartSpecialistWork();
         if (CurrentZoneId == ZoneTutorials.Plaza && !save.tutorialsDone.Contains(ZoneTutorials.FairyShop))
             StartCoroutine(PlayFairyShopTutorialWhenReady());
+        if (CurrentZoneId == ZoneTutorials.Farm && !save.tutorialsDone.Contains(ZoneTutorials.FarmOffline))
+            StartCoroutine(PlayFarmOfflineTutorialWhenReady());
     }
 
     private void Update()
@@ -726,6 +728,7 @@ public class GameManager : MonoBehaviour
     // Called by OfflineFarmNpcView when the player taps the farm NPC.
     public void RequestOfflineFarmPrompt()
     {
+        CompleteFarmOfflineTutorial();
         gameUI.ShowOfflineFarmPrompt();
     }
 
@@ -936,6 +939,9 @@ public class GameManager : MonoBehaviour
     {
         zoneTutorialPending = false;
         if (!save.tutorialsDone.Contains(CurrentZoneId)) save.tutorialsDone.Add(CurrentZoneId);
+        // The farm guide already showed its offline step (the NPC was visible).
+        if (CurrentZoneId == ZoneTutorials.Farm && IsOfflineFarmUnlocked && !save.tutorialsDone.Contains(ZoneTutorials.FarmOffline))
+            save.tutorialsDone.Add(ZoneTutorials.FarmOffline);
         // The mine / farm guide is the specialist's first-production guide:
         // finishing (or skipping) it is what starts production.
         StartSpecialistWork();
@@ -1006,6 +1012,37 @@ public class GameManager : MonoBehaviour
 
         if (fairy == null || save.tutorialsDone.Contains(ZoneTutorials.FairyShop)) yield break;
         fairyPointer = TutorialPointer.Show(() => TutorialTargets.World(fairy), ZoneTutorials.FairyShopPointerMessage);
+    }
+
+    // Offline farming unlocks with the farm upgrade, after the farm's first
+    // visit guide (whose offline step drops out while the NPC is hidden).
+    // Once unlocked — on entering the farm or right after the upgrade — one
+    // card points at the NPC. Seeing it, or tapping the NPC first, is done.
+    private IEnumerator PlayFarmOfflineTutorialWhenReady()
+    {
+        var navigator = FindAnyObjectByType<SceneNavigator>();
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(FeatureTutorialPollSeconds);
+            if (save.tutorialsDone.Contains(ZoneTutorials.FarmOffline)) yield break;
+            if (!IsOfflineFarmUnlocked) continue;
+            if (zoneTutorialPending || gameUI.IsModalOpen || (navigator != null && navigator.IsTraveling)) continue;
+            if (SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy || TutorialOverlay.IsShowing) continue;
+            break;
+        }
+
+        // Let the NPC's Update show it before the card measures its target.
+        yield return null;
+        var npc = FindAnyObjectByType<OfflineFarmNpcView>();
+        if (npc == null) yield break;
+        TutorialOverlay.Play(ZoneTutorials.FarmOfflineSteps(npc), CompleteFarmOfflineTutorial);
+    }
+
+    private void CompleteFarmOfflineTutorial()
+    {
+        if (save.tutorialsDone.Contains(ZoneTutorials.FarmOffline)) return;
+        save.tutorialsDone.Add(ZoneTutorials.FarmOffline);
+        SaveNow();
     }
 
     private void HandleFairyShopOpened()

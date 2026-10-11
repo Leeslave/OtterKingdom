@@ -31,6 +31,9 @@ public static class ZoneTutorials
 
     public const string FairyShopPointerMessage = "요정을 눌러 상점을 열어 보세요!";
 
+    // 오프라인 농사: 밭 첫 방문 튜토리얼 때는 아직 잠겨(밭 Lv.1) 그 장이 빠지므로, 열린 뒤 밭에서 한 번 따로 (6차 QA: Lv.16까지 등록 칸이 비어 있었음)
+    public const string FarmOffline = "Farm.Offline";
+
     public static bool Has(string sceneName) => System.Array.IndexOf(AllIds, sceneName) >= 0;
 
     public static List<TutorialStep> For(string sceneName, GameUI gameUI)
@@ -95,6 +98,17 @@ public static class ZoneTutorials
             TutorialStep.TryIt("해달 게시판",
                 "해달들의 부탁과 방명록이 붙어 있어요.\n게시판을 눌러 첫 부탁을 확인해 봐요!",
                 () => TutorialTargets.World(board), board),
+        };
+    }
+
+    /// <summary>오프라인 농사 소개 (밭 강화로 열린 뒤 밭에서 한 번). 설명을 보거나 NPC를 먼저 누르면 완료</summary>
+    public static List<TutorialStep> FarmOfflineSteps(OfflineFarmNpcView npc)
+    {
+        return new List<TutorialStep>
+        {
+            TutorialStep.At("오프라인 농사가 열렸어요!",
+                "이 해달에게 작물을 등록해 두면\n게임을 꺼 둔 동안에도 농사를 지어요.\n눌러서 등록해 봐요!",
+                () => TutorialTargets.World(npc)),
         };
     }
 
