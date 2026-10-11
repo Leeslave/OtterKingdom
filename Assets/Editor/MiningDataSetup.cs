@@ -49,9 +49,9 @@ public static class MiningDataSetup
         }
 
         var diamond = LoadOrCreateItem("다이아몬드", balance.diamondItemId, "다이아몬드",
-            "광산 깊은 곳에서 캔 반짝이는 보석이다.", diamondIcon, ore, rare, 50);
+            "광산 깊은 곳에서 캔 반짝이는 보석.", diamondIcon, ore, rare, 50);
         var stone = LoadOrCreateItem("돌", balance.stoneItemId, "돌",
-            "광산에서 캔 평범한 돌이다.", stoneIcon, ore, common, 1);
+            "광산에서 캔 평범한 돌. 집을 짓고 길을 여는 데 써요.", stoneIcon, ore, common, 1);
 
         AddToDatabase(diamond, stone);
         AssignBalanceToGameManager(balance);

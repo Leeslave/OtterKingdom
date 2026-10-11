@@ -491,7 +491,7 @@ public static partial class SettlementSetup
         var so = new SerializedObject(apple);
         so.FindProperty("_itemId").stringValue = "fruit_apple";
         so.FindProperty("_displayName").stringValue = "사과";
-        so.FindProperty("_description").stringValue = "광장 나무를 흔들면 가끔 떨어지는 빨간 사과. 팔면 골드가 된다.";
+        so.FindProperty("_description").stringValue = "광장 나무를 흔들면 가끔 떨어지는 빨간 사과.";
         so.FindProperty("_icon").objectReferenceValue = LoadArt("ICON_Item_Apple");
         so.FindProperty("_category").objectReferenceValue = crops;
         if (potato != null)
