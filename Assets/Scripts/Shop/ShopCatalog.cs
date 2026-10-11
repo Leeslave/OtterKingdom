@@ -39,7 +39,7 @@ public class ShopCatalog : ScriptableObject
 
     public IReadOnlyList<Tab> Tabs => _tabs;
 
-    /// <returns>빈 칸을 뺀 상품 (SortOrder 순)</returns>
+    /// <returns>빈 칸을 뺀 상품: 탭 순서(탭이 없는 재료가 맨 앞) → 필요 레벨 낮은 순 → SortOrder 순</returns>
     public List<ShopProduct> Products
     {
         get
@@ -50,7 +50,23 @@ public class ShopCatalog : ScriptableObject
                 if (product != null && product.Item != null && product.PriceCurrency != null)
                     result.Add(product);
             }
-            result.Sort((a, b) => a.SortOrder.CompareTo(b.SortOrder));
+            // 모종이 레벨 순이 아니었음(고구마 Lv.8 · 딸기 Lv.11 · 무 Lv.5 …, 4차 QA) → 같은 탭 안에서는 지금 살 수 있는 것부터
+            // List.Sort는 안정 정렬이 아니라 목록 순서로 마지막 동점을 가름
+            var group = new Dictionary<ShopProduct, int>();
+            var order = new Dictionary<ShopProduct, int>();
+            for (int i = 0; i < result.Count; i++)
+            {
+                var tab = FindTab(result[i]);
+                group[result[i]] = tab != null ? _tabs.IndexOf(tab) : -1;
+                order[result[i]] = i;
+            }
+            result.Sort((a, b) =>
+            {
+                int c = group[a].CompareTo(group[b]);
+                if (c == 0) c = a.RequiredLevel.CompareTo(b.RequiredLevel);
+                if (c == 0) c = a.SortOrder.CompareTo(b.SortOrder);
+                return c != 0 ? c : order[a].CompareTo(order[b]);
+            });
             return result;
         }
     }

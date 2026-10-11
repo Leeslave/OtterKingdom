@@ -160,11 +160,31 @@ public class TownHallPresenter : MonoBehaviour
             _hall.ShowAllDone(AllDoneMessage);
         else if (_hallTarget != null)
             _hall.ShowNext(_hallTarget.Title, _hallTarget.Description, true);
+        else if (TerritoryFirstGoal(out var capTitle, out var capText))
+            _hall.ShowNext(capTitle, capText, false);
         else if (_manager.FindLevelLockedRequest(out int lockedLevel) is BoardRequestDefinition locked)
             _hall.ShowNext(locked.Title, $"왕국 Lv.{lockedLevel}에 열려요. 퀘스트로 레벨을 올려요.", false);
         else
             _hall.ShowNext("다음 발전을 준비하고 있어요", "진행 중인 일이 끝나면 새 부탁이 열려요.", false);
         ShowTerritory();
+    }
+
+    // 레벨을 묶은 부탁이 아직 게시판에 없고(앞 발전 전) 숲 개간으로 이어갈 수 있을 때: 먼 레벨 잠금(선착장 Lv.15) 대신 그 부탁과 개간을 알림.
+    // 4차 QA: Lv.10에서 경험치가 넘쳐도 "다음 목표: 선착장 Lv.15"만 보여 숲 개간 → 영토 확장 → 첫 모임 길을 몰랐음
+    private bool TerritoryFirstGoal(out string title, out string text)
+    {
+        title = text = null;
+        var cap = _manager.LevelCapRequest;
+        if (cap == null || string.IsNullOrEmpty(cap.RequiredDevelopment) || _manager.Settlement.HasDevelopment(cap.RequiredDevelopment))
+            return false;
+        bool canClear = _manager.OpenTerritoryMissions.Count > 0 || _manager.WorkingTerritory(out _) != null
+            || (_manager.TerritoryChances > 0
+                && (_manager.CurrentTerritory(TerritoryDirection.West) != null || _manager.CurrentTerritory(TerritoryDirection.North) != null));
+        if (!canClear)
+            return false;
+        title = cap.Title;
+        text = $"끝내면 다음 레벨(Lv.{cap.KingdomLevel})로 올라가요.\n먼저 숲을 개간해 땅을 넓혀요. (아래 영토 확장)";
+        return true;
     }
 
     // 영토 확장 카드: 미션이 열려 있으면 [가 보기], 아니면 개간 기회 안내 (개간 레벨 전·다 넓혔으면 숨김)
@@ -327,7 +347,8 @@ public class TownHallPresenter : MonoBehaviour
     {
         var config = _manager.Config;
         var text = new StringBuilder("0123456789:/ ,.!?()·\"명단계완료진행중다음아직가보기지금하고있어요모든마쳤어요마을회관길드게시판에서눌러발전현황볼수열리기를기다리고")
-            .Append(AllDoneMessage).Append("다음 발전을 준비하고 있어요진행 중인 일이 끝나면 새 부탁이 열려요.지금 진행 중인 일이 없어요.아직 완료한 발전이 없어요.가는 중");
+            .Append(AllDoneMessage).Append("다음 발전을 준비하고 있어요진행 중인 일이 끝나면 새 부탁이 열려요.지금 진행 중인 일이 없어요.아직 완료한 발전이 없어요.가는 중")
+            .Append("끝내면 다음 레벨(Lv.)로 올라가요.먼저 숲을 개간해 땅을 넓혀요. (아래 영토 확장)");
         foreach (var request in config.Requests)
         {
             if (request == null)

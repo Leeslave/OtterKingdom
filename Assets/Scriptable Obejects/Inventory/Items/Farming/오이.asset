@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   _itemId: crop_cucumber
   _displayName: "\uC624\uC774"
-  _description: "\uC624\uC774\uB2E4."
+  _description: "\uC2DC\uC6D0\uD558\uACE0 \uC544\uC0AD\uD55C \uCD08\uB85D \uCC44\uC18C."
   _icon: {fileID: 4983911747869673532, guid: e5cfaad6ceca98f4f8696f06f6cff759, type: 3}
   _category: {fileID: 11400000, guid: 837489572697d1345a566031bcf8a1a3, type: 2}
   _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
   _isSellable: 1
-  _sellPrice: 15
+  _sellPrice: 9
   _maxStack: 999

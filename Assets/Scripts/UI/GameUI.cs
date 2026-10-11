@@ -26,6 +26,8 @@ public class GameUI : MonoBehaviour
     private const int ScreenSortingOrder = 90;
     private const float PanelWidth = 900f;
     private const int TitleFontSize = 48;
+    // 안내 띠의 최대 폭 (화면 폭 대비)
+    private const float GuideMaxWidthRatio = 0.9f;
     private const int BodyFontSize = 40;
     private const float ButtonHeight = 110f;
     // Corner feature buttons (rod/pickaxe upgrade) sit just above GlobalUI's bottom nav bar
@@ -327,6 +329,15 @@ public class GameUI : MonoBehaviour
         if (style.TitleFont != null) label.font = style.TitleFont;
         label.fontSize = TitleFontSize;
         label.color = style.TextColor;
+
+        // 한 줄로 화면보다 길면 양쪽이 잘렸음 (4차 QA: "…다 치웠어요! 망치 표지판을 눌러…") → 화면 폭 안에서 줄바꿈
+        float maxText = screenLayer.rect.width * GuideMaxWidthRatio - layout.padding.horizontal;
+        if (maxText > 0f && label.GetPreferredValues(message).x > maxText)
+        {
+            label.textWrappingMode = TextWrappingModes.Normal;
+            go.AddComponent<LayoutElement>().preferredWidth = maxText + layout.padding.horizontal;
+            label.gameObject.AddComponent<LayoutElement>().preferredWidth = maxText;
+        }
 
         guideBubble = (RectTransform)go.transform;
         guideBubble.anchorMin = guideBubble.anchorMax = guideBubble.pivot = new Vector2(0.5f, 0.75f);

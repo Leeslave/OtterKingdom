@@ -24,10 +24,10 @@ public class CropPricingTests
     }
 
     [Test]
-    public void DefaultRatio_IsOneAndAHalf()
+    public void DefaultRatio_IsTwo()
     {
         var pricing = ScriptableObject.CreateInstance<CropPricing>();
-        Assert.AreEqual(1.5f, pricing.HarvestToSeedRatio);
+        Assert.AreEqual(2f, pricing.HarvestToSeedRatio);
         Object.DestroyImmediate(pricing);
     }
 }

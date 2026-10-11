@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "당근"
   baseDurationSec: 30
   yieldCount: 5
-  sellPrice: 10
+  sellPrice: 6
   seedType: 0
   initialSeedCount: 0
   spriteTint: {r: 1, g: 1, b: 1, a: 1}

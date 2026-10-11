@@ -155,7 +155,7 @@ public class FairyShopPresenter : MonoBehaviour
     // 새 글자가 한꺼번에 추가되면 D3D12 에디터에서 GPU가 멈춰 크래시가 났다)
     private void PrepareGlyphs()
     {
-        var text = new StringBuilder("0123456789,x:개 전체보유합계취소구매하기요정상점").Append(_dialogue).Append(BagFullText);
+        var text = new StringBuilder("0123456789,x:개 전체보유합계취소구매하기요정상점Lv.부터").Append(_dialogue).Append(BagFullText);
         foreach (var tab in _catalog.Tabs)
         {
             if (tab != null)

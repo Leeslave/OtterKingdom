@@ -654,7 +654,7 @@ public static class GachaSetup
         // ── 위: 제목 · 보유 뽑기권 · 조개 · 닫기
         var title = CreateImage("Title", safe, Common("UI_Ribbon_Peach"), false);
         Place(title.rectTransform, new Vector2(0, 1), new Vector2(30, -80), new Vector2(380, 100));
-        var titleText = CreateText("Label", title.rectTransform, _titleFont, "보물 조개 뽑기", 40, Cocoa);
+        var titleText = CreateText("Label", title.rectTransform, _titleFont, "조개 뽑기", 40, Cocoa); // 탭(픽업 · 보물 · 골드)과 상관없는 이름
         Stretch(titleText.rectTransform, 0);
         titleText.rectTransform.offsetMin = new Vector2(0, 10);
 

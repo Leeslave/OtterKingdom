@@ -117,4 +117,36 @@ public class HarvestExpansionTests
         Assert.AreEqual(20, service.MaxRodLevel);
         Assert.AreEqual(20, service.RodLevel, "세이브의 레벨은 끝으로 맞춤");
     }
+
+    // 4차 QA: 사서 심는 모종(무 · 토란 …)이 공짜 당근보다 칸당 덜 벌어서 살 까닭이 없었음
+    [Test]
+    public void BoughtSeeds_EarnMorePerSecondThanFreeCrops()
+    {
+        var crops = LoadAll<CropDefinition>();
+        var items = LoadAll<ItemDefinition>();
+        var products = LoadAll<ShopProduct>();
+        Assert.IsNotEmpty(crops);
+
+        double GoldPerSecond(CropDefinition crop)
+        {
+            var item = items.First(i => i.ItemId == crop.cropId);
+            double seed = 0;
+            if (crop.seedType == SeedType.Consumable)
+            {
+                var product = products.First(p => p.Item != null && p.Item.ItemId == crop.SeedItemId);
+                seed = (double)product.Price / product.BundleSize;
+            }
+            return (item.SellPrice * crop.yieldCount - seed) / crop.baseDurationSec;
+        }
+
+        double bestFree = crops.Where(c => c.seedType != SeedType.Consumable).Max(GoldPerSecond);
+        foreach (var crop in crops.Where(c => c.seedType == SeedType.Consumable))
+            Assert.Greater(GoldPerSecond(crop), bestFree, $"{crop.displayName}: 공짜 작물({bestFree:0.00}/초)보다 더 벌어야 함");
+    }
+
+    private static System.Collections.Generic.List<T> LoadAll<T>() where T : Object =>
+        UnityEditor.AssetDatabase.FindAssets($"t:{typeof(T).Name}")
+            .Select(guid => UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid)))
+            .Where(a => a != null)
+            .ToList();
 }

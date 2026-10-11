@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uB538\uAE30"
   baseDurationSec: 120
   yieldCount: 5
-  sellPrice: 90
+  sellPrice: 120
   seedType: 1
   initialSeedCount: 0
   spriteTint: {r: 1, g: 1, b: 1, a: 1}

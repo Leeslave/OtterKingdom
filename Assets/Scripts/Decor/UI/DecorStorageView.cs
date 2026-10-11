@@ -93,6 +93,19 @@ public class DecorStorageView : MonoBehaviour
             if (decor != null && decor.Item != null && (_selectedCategory == null || _selectedCategory.Contains(decor.Item)))
                 shown.Add(decor);
         }
+        // 가진 것을 앞으로 (4차 QA: ×0 칸 사이를 한참 밀어야 가진 장난감이 보였음): 보관함에 있음 → 다 놓음 → 없음, 같은 무리는 목록 순서
+        var group = new Dictionary<DecorDefinition, int>();
+        var order = new Dictionary<DecorDefinition, int>();
+        for (int i = 0; i < shown.Count; i++)
+        {
+            group[shown[i]] = count(shown[i]) > 0 ? 0 : placed(shown[i]) > 0 ? 1 : 2;
+            order[shown[i]] = i;
+        }
+        shown.Sort((a, b) =>
+        {
+            int c = group[a].CompareTo(group[b]);
+            return c != 0 ? c : order[a].CompareTo(order[b]);
+        });
 
         EnsureSlots(shown.Count);
         for (int i = 0; i < _slots.Count; i++)
