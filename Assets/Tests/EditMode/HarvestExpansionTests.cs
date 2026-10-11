@@ -74,6 +74,16 @@ public class HarvestExpansionTests
         Assert.IsFalse(_balance.IsFish(_balance.trashItemId));
     }
 
+    // 물고기 확률이 끝난 뒤(Lv.10~)에도 강화마다 레어 · 에픽 배율은 오름 (강화 창이 이 값을 보여 줌)
+    [Test]
+    public void RareLuck_KeepsGrowingAfterFishChanceCap()
+    {
+        _balance.rareLuckPerRodLevel = 0.05f;
+        Assert.AreEqual(1f, _balance.RareLuckAt(1), 1e-5);
+        Assert.AreEqual(1.45f, _balance.RareLuckAt(10), 1e-5);
+        Assert.Greater(_balance.RareLuckAt(11), _balance.RareLuckAt(10));
+    }
+
     [Test]
     public void EmptyTable_FallsBackToSingleFish()
     {

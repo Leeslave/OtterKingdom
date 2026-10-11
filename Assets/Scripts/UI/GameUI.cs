@@ -524,9 +524,9 @@ public class GameUI : MonoBehaviour
         SetRefresher(modal, () =>
         {
             int level = fishing.RodLevel;
-            string current = $"현재 Lv.{level} (물고기 확률 {Percent(fishing.FishChanceAt(level))})";
+            string current = $"현재 Lv.{level} ({RodEffect(fishing, level)})";
             infoLabel.text = fishing.CanUpgradeRod
-                ? $"{current}\n다음 Lv.{level + 1} (물고기 확률 {Percent(fishing.FishChanceAt(level + 1))})\n" +
+                ? $"{current}\n다음 Lv.{level + 1} ({RodEffect(fishing, level + 1)})\n" +
                   NewFishLine(fishing, level + 1) +
                   $"강화 비용 : {fishing.NextRodUpgradeCost:N0} 골드"
                 : $"{current}\n최대 레벨이에요!";
@@ -536,6 +536,14 @@ public class GameUI : MonoBehaviour
     }
 
     private static readonly string[] TierNames = { "흔함", "레어", "에픽" };
+
+    // 물고기 확률은 Lv.10에서 끝(95%)이라 그 뒤 강화는 레어 · 에픽이 잘 낚이는 것만 오름 → 함께 보여 줌 (5차 QA: "95% → 95%"로 효과가 없어 보였음)
+    private static string RodEffect(FishingService fishing, int level)
+    {
+        string text = $"물고기 확률 {Percent(fishing.FishChanceAt(level))}";
+        float luck = fishing.Balance.RareLuckAt(level) - 1f;
+        return luck > 0f ? $"{text} · 레어 · 에픽 +{Percent(luck)}" : text;
+    }
 
     // 다음 레벨에서 처음 낚이는 물고기 (없으면 빈 줄)
     private string NewFishLine(FishingService fishing, int level)
