@@ -651,7 +651,8 @@ public class DecorModePresenter : MonoBehaviour
     private void UpdateGhost()
     {
         var result = _session.Check(_layout);
-        _ghost.Show(_session.Decor, _session.Rotation, _board.AreaWorldRect(_session.Area), result == DecorPlacementResult.Ok, _board.Fill);
+        var rect = _board.AreaWorldRect(_session.Area);
+        _ghost.Show(_session.Decor, _session.Rotation, rect, result == DecorPlacementResult.Ok, _board.Fill, _board.GhostItemSortingOrder(_session.Decor, rect));
     }
 
     private string ReasonText(DecorPlacementResult result)

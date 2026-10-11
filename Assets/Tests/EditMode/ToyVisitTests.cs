@@ -75,6 +75,17 @@ public class ToyVisitTests
         Assert.AreEqual(0, counts[(int)OtterTrait.None]);
     }
 
+    [Test]
+    public void TraitCount_CountsRoleOtters()
+    {
+        var settlement = new Settlement();
+        settlement.SetResident(_first.OtterId, ResidentState.SpecialNpc);
+
+        // 역할로 와 있는 해달(또박이)을 빼면 기록관(기록 2명 = 또박이 + 끄적이)을 지을 수 없음
+        Assert.AreEqual(1, TraitRules.Count(_config, settlement, OtterTrait.Exploring));
+        Assert.AreEqual(1, TraitRules.CountAll(_config, settlement)[(int)OtterTrait.Exploring]);
+    }
+
     #endregion
 
     #region 방문 시계

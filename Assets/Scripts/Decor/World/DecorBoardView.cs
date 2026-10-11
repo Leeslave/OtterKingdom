@@ -67,8 +67,19 @@ public class DecorBoardView : MonoBehaviour
     /// <summary>꾸미기 모드 격자 표시의 정렬 순서 (땅 위, 물건·해달 아래)</summary>
     public int OverlaySortingOrder => _depthSorted ? PlazaDepth.FlatPropOrder + 1 : _sortingOrder;
 
-    /// <summary>꾸미기 모드 미리보기의 정렬 순서 (모든 것 위)</summary>
-    public int GhostSortingOrder => _depthSorted ? short.MaxValue - 10 : _sortingOrder + 50;
+    /// <summary>꾸미기 모드 미리보기 칸(초록/빨강)의 정렬 순서. 앞뒤 정렬하는 장소면 격자 바로 위(땅), 아니면 모든 것 위</summary>
+    public int GhostSortingOrder => _depthSorted ? PlazaDepth.FlatPropOrder + 2 : _sortingOrder + 50;
+
+    /// <summary>
+    /// 미리보기 물건 그림의 정렬 순서. 앞뒤 정렬하는 장소면 놓였을 때와 같은 규칙(건물·건설 자리는 칸 가운데 높이, 물건은 앞 모서리)이라
+    /// 들고 옮기는 동안에도 앞에 있는 건물에 가려진다
+    /// </summary>
+    public int GhostItemSortingOrder(DecorDefinition decor, Rect worldRect)
+    {
+        if (!_depthSorted)
+            return _sortingOrder + 51;
+        return PlazaDepth.SortingOrderFor(decor.IsBuilding ? worldRect.center.y : worldRect.yMin);
+    }
 
     // 길이 끊겼다고 보는 걷기 영역 크기 (걷기 칸 수). 이보다 작은 틈은 세지 않음
     private const int MinRegionCells = 12;

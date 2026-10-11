@@ -11,8 +11,15 @@ using UnityEngine.UI;
 /// </summary>
 public class SettlementTaskPopupView : MonoBehaviour
 {
+    // 끝난 모습은 안내와 [확인]뿐이라 판을 줄임 (아래 기준이라 같은 가운데에 오게 올려 줌). 설명 칸은 보상 줄까지 들어가게 키움
+    private const float DonePanelHeight = 540f;
+    private const float DoneDescriptionHeight = 250f;
+
     [Header("연출")]
     [SerializeField] private UIPopupAnimator _animator;
+
+    [Tooltip("창 판 (끝난 모습에서는 높이를 줄임)")]
+    [SerializeField] private RectTransform _panel;
 
     [Header("내용")]
     [SerializeField] private TextMeshProUGUI _titleText;
@@ -59,6 +66,10 @@ public class SettlementTaskPopupView : MonoBehaviour
     [SerializeField] private Button _closeButton;
 
     private bool _done;
+    private bool _sizesSaved;
+    private Vector2 _panelSize;
+    private Vector2 _panelPosition;
+    private float _descriptionHeight;
 
     public bool IsOpen => _animator.IsOpen;
     public SettlementTaskDefinition Task { get; private set; }
@@ -73,6 +84,23 @@ public class SettlementTaskPopupView : MonoBehaviour
         _closeButton.onClick.AddListener(() => _animator.Hide());
         foreach (var chip in _workerChips)
             chip.OnClicked += c => OnWorkerClicked?.Invoke(c.Otter);
+    }
+
+    // 끝난 모습이면 판을 줄이고 설명 칸을 키움, 아니면 원래 크기. 원래 크기는 처음 부를 때 기억 (화면이 꺼진 채 불릴 수 있어 Awake 대신)
+    private void SetCompact(bool compact)
+    {
+        if (!_sizesSaved)
+        {
+            _sizesSaved = true;
+            _panelSize = _panel.sizeDelta;
+            _panelPosition = _panel.anchoredPosition;
+            _descriptionHeight = _descriptionText.rectTransform.sizeDelta.y;
+        }
+        float height = compact ? DonePanelHeight : _panelSize.y;
+        _panel.sizeDelta = new Vector2(_panelSize.x, height);
+        _panel.anchoredPosition = _panelPosition + Vector2.up * ((_panelSize.y - height) * 0.5f);
+        var description = _descriptionText.rectTransform;
+        description.sizeDelta = new Vector2(description.sizeDelta.x, compact ? DoneDescriptionHeight : _descriptionHeight);
     }
 
     private void HandleStart()
@@ -90,6 +118,7 @@ public class SettlementTaskPopupView : MonoBehaviour
         IReadOnlyList<(Sprite icon, int need, int have)> costs, string note, bool canStart)
     {
         BindHeader(task, task.Description, true);
+        SetCompact(false);
         _assignGroup.SetActive(true);
         _progressGroup.SetActive(false);
         for (int i = 0; i < _workerChips.Count; i++)
@@ -109,6 +138,7 @@ public class SettlementTaskPopupView : MonoBehaviour
     public void ShowWorking(SettlementTaskDefinition task, float progress, string remaining, string crew)
     {
         BindHeader(task, task.Description, true);
+        SetCompact(false);
         _assignGroup.SetActive(false);
         _progressGroup.SetActive(true);
         BindCosts(null);
@@ -124,6 +154,7 @@ public class SettlementTaskPopupView : MonoBehaviour
     public void ShowDone(SettlementTaskDefinition task, string message)
     {
         BindHeader(task, message, false);
+        SetCompact(true);
         _assignGroup.SetActive(false);
         _progressGroup.SetActive(false);
         BindCosts(null);

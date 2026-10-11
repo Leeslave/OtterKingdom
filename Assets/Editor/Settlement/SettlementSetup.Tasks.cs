@@ -257,6 +257,7 @@ public static partial class SettlementSetup
 
         var view = screen.gameObject.AddComponent<SettlementTaskPopupView>();
         Set(view, "_animator", animator);
+        Set(view, "_panel", panel);
         Set(view, "_titleText", title);
         Set(view, "_descriptionText", description);
         Set(view, "_workersText", workers);

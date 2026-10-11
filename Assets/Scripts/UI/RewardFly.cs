@@ -36,7 +36,8 @@ public class RewardFly : MonoBehaviour
     /// <summary>world에서 아이콘 count개(최대 5)가 target으로 날아감. amountLabel이 있으면 그 자리에 "+N"이 떠올랐다 사라짐</summary>
     public static void FromWorld(Sprite icon, Vector3 world, RewardTarget target, int count, int amountLabel = 0)
     {
-        if (icon == null || count <= 0)
+        // 뽑기 화면이 게임을 가리는 동안은 날리지 않음 (보상은 이미 받았고, 날아갈 가방 버튼도 가려져 있음)
+        if (icon == null || count <= 0 || GachaPresenter.IsCovering)
             return;
         var fly = Instance();
         var camera = Camera.main;

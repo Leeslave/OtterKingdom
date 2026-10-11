@@ -42,7 +42,13 @@ public class GachaPresenter : MonoBehaviour
     [Tooltip("골드 배너 뽑기 버튼 (겨자)")]
     [SerializeField] private Sprite _goldButton;
 
+    // 뽑기 화면이 열린 동안 전역 UI 캔버스 순서: 알림 띠(150)·장소 팝업(200) 위, 튜토리얼(500) 아래
+    private const int CoverSortingOrder = 250;
+
     private readonly GachaScreenState _state = new GachaScreenState();
+    private Canvas _canvas;
+    private int _baseSortingOrder;
+    private bool _covering;
     private GachaBannerDefinition _selected;
     private int _lastCount = 1;
     private bool _dirty;
@@ -52,6 +58,9 @@ public class GachaPresenter : MonoBehaviour
 
     public bool IsOpen => _screen.IsOpen;
 
+    /// <summary>뽑기 화면이 게임 화면을 다 가리는 중 (보상 날아가기·알림 띠는 쉬거나 기다림)</summary>
+    public static bool IsCovering => Instance != null && (Instance.IsOpen || GachaRevealView.IsPlaying);
+
     private void Awake()
     {
         // 중복은 GlobalUIRoot가 먼저 꺼서 여기까지 오지 않지만, 혹시 모를 경우를 대비
@@ -59,6 +68,8 @@ public class GachaPresenter : MonoBehaviour
             return;
 
         Instance = this;
+        _canvas = GetComponentInChildren<Canvas>().rootCanvas;
+        _baseSortingOrder = _canvas.sortingOrder;
     }
 
     private void OnDestroy()
@@ -96,11 +107,13 @@ public class GachaPresenter : MonoBehaviour
         _reveal.OnAgain -= HandleAgain;
         _exchange.OnExchange -= HandleShardExchange;
         Bind(null, null);
+        SetCovering(false);
     }
 
     // 재화 · 뽑기 기록이 바뀌면 열린 화면을 다시 그림. 매니저들은 늦게 생길 수 있어 바뀌었는지만 보고 다시 붙음
     private void Update()
     {
+        SetCovering(IsCovering);
         Bind(CurrencyManager.Instance, GachaManager.Instance);
         if (_dirty && _screen.IsOpen)
         {
@@ -127,6 +140,15 @@ public class GachaPresenter : MonoBehaviour
             if (_boundManager != null)
                 _boundManager.OnChanged += MarkDirty;
         }
+    }
+
+    // 열린 동안 전역 UI를 장소 팝업·알림 띠 위로 올려, 뒤에서 뜬 다른 화면(수확 팝업 등)이 뽑기 위에 보이지 않게
+    private void SetCovering(bool covering)
+    {
+        if (_covering == covering || _canvas == null)
+            return;
+        _covering = covering;
+        _canvas.sortingOrder = covering ? CoverSortingOrder : _baseSortingOrder;
     }
 
     private void HandleCurrencyChanged(Currency currency, int balance) => MarkDirty();

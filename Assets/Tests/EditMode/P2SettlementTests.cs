@@ -292,6 +292,20 @@ public class P2SettlementTests
     }
 
     [Test]
+    public void WorkingOtter_GetsRoleOnlyAfterTask()
+    {
+        var settlement = ClerkMet();
+        settlement.SetResident("otter_receptionist", ResidentState.Resident);
+        settlement.StartTask("task_test", new[] { "otter_receptionist" }, 0, 100);
+        // 작업에 나간 해달에게 역할을 맡기면 작업 · 근무를 동시에 하게 됨
+        Assert.IsFalse(SettlementRoleRules.CanAssign(_role, settlement), "작업 중에는 역할을 맡길 수 없음");
+        Assert.IsFalse(SettlementRoleRules.Assign(_role, settlement));
+
+        settlement.FinishTask("task_test", null);
+        Assert.IsTrue(SettlementRoleRules.Assign(_role, settlement), "작업이 끝나면 맡길 수 있음");
+    }
+
+    [Test]
     public void Save_RoundTrip_KeepsRolesAndVersion()
     {
         var settlement = ClerkMet();

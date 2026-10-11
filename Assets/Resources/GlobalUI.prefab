@@ -25167,6 +25167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::SettlementTaskPopupView
   _animator: {fileID: 7454503007179487670}
+  _panel: {fileID: 3781929567481499514}
   _titleText: {fileID: 3011269030159168509}
   _descriptionText: {fileID: 2445831371763275114}
   _workersText: {fileID: 485474469468339221}
@@ -75283,14 +75284,6 @@ RectTransform:
   - {fileID: 4486895674063081666}
   - {fileID: 4736154094147178754}
   - {fileID: 4084130721826100380}
-  - {fileID: 6965296040919345204}
-  - {fileID: 8193111406754997660}
-  - {fileID: 4227780967589531978}
-  - {fileID: 5347129360076686657}
-  - {fileID: 4909320885854328587}
-  - {fileID: 2748405595250374998}
-  - {fileID: 7739696609088934253}
-  - {fileID: 1152059977802130446}
   - {fileID: 5091794887301136052}
   - {fileID: 38336188373721567}
   - {fileID: 3809802411313064248}
@@ -75300,6 +75293,14 @@ RectTransform:
   - {fileID: 9051313853449063244}
   - {fileID: 7067060429335432878}
   - {fileID: 5839915552417377762}
+  - {fileID: 6965296040919345204}
+  - {fileID: 8193111406754997660}
+  - {fileID: 4227780967589531978}
+  - {fileID: 5347129360076686657}
+  - {fileID: 4909320885854328587}
+  - {fileID: 2748405595250374998}
+  - {fileID: 7739696609088934253}
+  - {fileID: 1152059977802130446}
   - {fileID: 2445702434896755508}
   - {fileID: 1346073067862480665}
   m_Father: {fileID: 0}
@@ -108237,7 +108238,7 @@ MonoBehaviour:
   m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 22
+  m_fontSizeMin: 20
   m_fontSizeMax: 26
   m_fontStyle: 0
   m_HorizontalAlignment: 1

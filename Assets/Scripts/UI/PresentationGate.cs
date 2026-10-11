@@ -17,7 +17,7 @@ public static class PresentationGate
             if (_navigator != null && _navigator.IsTraveling)
                 return true;
             if (SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy || TutorialOverlay.IsShowing || GatheringDirector.IsPlaying
-                || GachaRevealView.IsPlaying)
+                || GachaPresenter.IsCovering)
                 return true;
             return GameManager.Instance != null && GameManager.Instance.IsModalOpen;
         }

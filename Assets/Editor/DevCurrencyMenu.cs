@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// OtterKingdom/Cheat: Play 중에 조개 · 금화(골드) 등 재화를 주거나 0으로 만든다 (뽑기 디버그용 치트).
+/// OtterKingdom/Cheat: Play 중에 조개 · 금화(골드) 등 재화를 주거나 0으로 만든다 (뽑기 디버그용 치트). 목재 · 돌 같은 재료는 가방에 넣는다.
 /// 개발자 지급(TestGet · TestUse)이라 분석 로그 · 퀘스트에 세지 않는다. 에디터 메뉴라 빌드에는 들어가지 않는다.
 /// Play 중이 아니면 안내 창만 띄운다 (재화는 세이브를 불러온 뒤의 매니저가 가지고 있음).
 /// </summary>
@@ -14,6 +14,8 @@ public static class DevCurrencyMenu
     private const string TicketPickupPath = "Assets/Scriptable Obejects/Gacha/Currencies/TicketPickup.asset";
     private const string TicketStandardPath = "Assets/Scriptable Obejects/Gacha/Currencies/TicketStandard.asset";
     private const string ShardPath = "Assets/Scriptable Obejects/Gacha/Currencies/Shard.asset";
+    private const string WoodPath = "Assets/Scriptable Obejects/Inventory/Items/Mining/목재.asset";
+    private const string StonePath = "Assets/Scriptable Obejects/Inventory/Items/Mining/돌.asset";
 
     // 조개 (뽑기 1회 30 · 10회 300)
     [MenuItem(Root + "조개 +300 (10회 뽑기 1번)", false, 0)]
@@ -59,6 +61,47 @@ public static class DevCurrencyMenu
         Give(GemPath, 30000);
         Tickets();
         Shards();
+    }
+
+    // 재료 (가방 아이템, 한 칸에 최대 999개)
+    [MenuItem(Root + "목재 +100", false, 80)]
+    private static void Wood100() => GiveItem(WoodPath, 100);
+
+    [MenuItem(Root + "목재 가득 (999)", false, 81)]
+    private static void WoodFull() => GiveItem(WoodPath, 999);
+
+    [MenuItem(Root + "돌 +100", false, 82)]
+    private static void Stone100() => GiveItem(StonePath, 100);
+
+    [MenuItem(Root + "돌 가득 (999)", false, 83)]
+    private static void StoneFull() => GiveItem(StonePath, 999);
+
+    [MenuItem(Root + "목재 · 돌 가득 (999씩)", false, 84)]
+    private static void MaterialsFull()
+    {
+        GiveItem(WoodPath, 999);
+        GiveItem(StonePath, 999);
+    }
+
+    // 넣을 수 있는 만큼만 들어감 (한 칸 최대 개수 · 처음 넣는 종류는 빈 칸 필요)
+    private static void GiveItem(string path, int amount)
+    {
+        if (!EditorApplication.isPlaying || InventoryManager.Instance == null)
+        {
+            EditorUtility.DisplayDialog("치트", "Play 중에만 쓸 수 있어요.\nPlay를 누른 뒤 다시 골라 주세요.", "확인");
+            return;
+        }
+        var item = AssetDatabase.LoadAssetAtPath<ItemDefinition>(path);
+        if (item == null)
+        {
+            Debug.LogWarning($"[Cheat] 아이템이 없습니다: {path}");
+            return;
+        }
+        var bag = InventoryManager.Instance.Inventory;
+        int room = item.MaxStack - bag.GetCount(item);
+        int added = room > 0 ? bag.Add(item, Mathf.Min(amount, room), ItemChangeReason.Test) : 0;
+        Debug.Log($"[Cheat] {item.DisplayName} +{added:N0} (지금 {bag.GetCount(item):N0}"
+            + (added < amount ? $", 한 칸 최대 {item.MaxStack:N0} 또는 가방이 가득 참)" : ")"));
     }
 
     private static void Give(string path, int amount)
