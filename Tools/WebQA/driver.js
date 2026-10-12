@@ -1,5 +1,7 @@
-const { chromium } = require(process.env.PLAYWRIGHT_PATH || '/opt/node-tools/node_modules/playwright');
 const http = require('http'); const fs = require('fs'); const path = require('path');
+// Playwright 위치는 컨테이너마다 다름: PLAYWRIGHT_PATH → 예전 경로 → 전역 설치(node22)
+const PW = [process.env.PLAYWRIGHT_PATH, '/opt/node-tools/node_modules/playwright', '/opt/node22/lib/node_modules/playwright'].find(p => p && fs.existsSync(p)) || 'playwright';
+const { chromium } = require(PW);
 // 게임 칸 주소 (Unity Play 페이지가 아니라 그 안의 frame). 다른 빌드면 QA_URL로 바꿈
 const URL_ = process.env.QA_URL || 'https://play-prod.struckd.com/api/v1/games/game/1b13367a-07d5-4ca7-80a9-9ff2598b3cc5/build/latest/frame';
 // 브라우저 프로필(IndexedDB 세이브 포함) · 스크린샷이 남는 곳. 저장소 밖(스크래치패드 등)을 권장
