@@ -55,6 +55,12 @@ public class TopBarView : MonoBehaviour
 
     private void Refresh()
     {
+        _nameText.richText = false;
+        _nameText.enableAutoSizing = true;
+        _nameText.fontSizeMin = 20f;
+        _nameText.fontSizeMax = 32f;
+        _nameText.textWrappingMode = TextWrappingModes.NoWrap;
+        _nameText.overflowMode = TextOverflowModes.Ellipsis;
         _nameText.text = _profile.Name;
         _levelText.text = $"Lv.{_profile.Level}";
         _expBar.SetRatio(_profile.ExpRatio);

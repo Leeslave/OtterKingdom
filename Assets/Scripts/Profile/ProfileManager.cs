@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +7,7 @@ using UnityEngine;
 public class ProfileSaveData
 {
     public string name;
+    public bool nameChosen;
     public int level = 1;
     public int exp;
 }
@@ -34,6 +35,15 @@ public class ProfileManager : MonoBehaviour
     public LevelProgress Progress { get; private set; }
     public LevelTable LevelTable => _levelTable;
     public int Level => Progress.Level;
+    public bool HasChosenName { get; private set; }
+
+    public void ChooseName(string name)
+    {
+        if (!PlayerProfile.TryNormalizeNewName(name, out var normalized))
+            throw new ArgumentException("이름은 1~4자로 입력해 주세요.", nameof(name));
+        Profile.SetName(normalized);
+        HasChosenName = true;
+    }
 
     /// <summary>새 레벨에 도달했을 때 (한 번에 여러 레벨이 오르면 레벨마다 한 번씩)</summary>
     public event Action<int> OnLevelUp;
@@ -125,6 +135,9 @@ public class ProfileManager : MonoBehaviour
 
         if (!string.IsNullOrWhiteSpace(saved.name))
             Profile.SetName(saved.name);
+        // Preserve names already customized by older versions.
+        HasChosenName = saved.nameChosen ||
+            (!string.IsNullOrWhiteSpace(saved.name) && saved.name.Trim() != _defaultName);
         Progress.Load(saved.level, saved.exp, _levelTable);
         SyncProfile();
         OnExpChanged?.Invoke();
@@ -136,6 +149,7 @@ public class ProfileManager : MonoBehaviour
             throw new ArgumentNullException(nameof(result));
 
         result.name = Profile.Name;
+        result.nameChosen = HasChosenName;
         result.level = Progress.Level;
         result.exp = Progress.Exp;
     }

@@ -51,6 +51,7 @@ public class GameUI : MonoBehaviour
     private RectTransform guideBubble;
     private RectTransform screenLayer;
     private GameObject offlineReportModal;
+    private GameObject playerNameModal;
 
     private readonly List<GameObject> modals = new List<GameObject>();
     private readonly Dictionary<GameObject, Action> modalRefreshers = new Dictionary<GameObject, Action>();
@@ -647,6 +648,62 @@ public class GameUI : MonoBehaviour
 
     private static string Percent(float chance) => $"{Mathf.RoundToInt(chance * 100f)}%";
 
+    public void ShowPlayerNameSetup(Action<string> onConfirm)
+    {
+        if (playerNameModal != null) return;
+        var modal = OpenModal("어떤 이름으로 불러드릴까요?", out var content);
+        playerNameModal = modal;
+        CreateLabel(content, "해달들이 부를 이름을 정해 주세요.\n1~4자로 입력할 수 있어요.");
+
+        var fieldObject = new GameObject("PlayerNameInput", typeof(RectTransform),
+            typeof(Image), typeof(TMP_InputField), typeof(LayoutElement));
+        fieldObject.transform.SetParent(content, false);
+        fieldObject.GetComponent<Image>().color = Color.white;
+        fieldObject.GetComponent<LayoutElement>().preferredHeight = 110f;
+
+        var viewport = new GameObject("TextArea", typeof(RectTransform), typeof(RectMask2D));
+        viewport.transform.SetParent(fieldObject.transform, false);
+        var viewportRect = (RectTransform)viewport.transform;
+        Stretch(viewportRect);
+        viewportRect.offsetMin = new Vector2(24f, 10f);
+        viewportRect.offsetMax = new Vector2(-24f, -10f);
+        var inputText = CreateLabel(viewport.transform, "", TextAnchor.MiddleLeft);
+        Stretch(inputText.rectTransform);
+        inputText.richText = false;
+        inputText.textWrappingMode = TextWrappingModes.NoWrap;
+        var placeholder = CreateLabel(viewport.transform, "이름 입력", TextAnchor.MiddleLeft);
+        Stretch(placeholder.rectTransform);
+        placeholder.color = new Color(0.5f, 0.5f, 0.5f);
+
+        var input = fieldObject.GetComponent<TMP_InputField>();
+        input.textViewport = viewportRect;
+        input.textComponent = inputText;
+        input.placeholder = placeholder;
+        input.targetGraphic = fieldObject.GetComponent<Image>();
+        input.lineType = TMP_InputField.LineType.SingleLine;
+        input.characterLimit = PlayerProfile.MaxNameLength;
+        input.richText = false;
+        var hint = CreateLabel(content, "이름을 입력하면 시작할 수 있어요.");
+        bool confirmed = false;
+        void Confirm()
+        {
+            if (confirmed || !PlayerProfile.TryNormalizeNewName(input.text, out var name)) return;
+            confirmed = true;
+            onConfirm(name);
+            playerNameModal = null;
+            CloseModal(modal);
+        }
+        var button = CreateButton(content, "이 이름으로 시작", Confirm, kind: ButtonKind.Primary);
+        button.interactable = false;
+        input.onValueChanged.AddListener(value =>
+        {
+            button.interactable = PlayerProfile.TryNormalizeNewName(value, out _);
+            hint.text = button.interactable ? "준비되었다면 해달들을 만나러 가요!" : "이름을 1~4자로 입력해 주세요. (<, > 제외)";
+        });
+        input.onSubmit.AddListener(_ => Confirm());
+        input.ActivateInputField();
+    }
+
     // ---------------------------------------------------------- modal plumbing
 
     // Each modal is a full-screen dim blocker (eats clicks meant for anything
@@ -711,6 +768,7 @@ public class GameUI : MonoBehaviour
     public bool CloseTopModal()
     {
         if (modals.Count == 0) return false;
+        if (modals[modals.Count - 1] == playerNameModal) return true;
         CloseModal(modals[modals.Count - 1]);
         return true;
     }

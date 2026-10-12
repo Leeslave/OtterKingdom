@@ -3,6 +3,46 @@ using NUnit.Framework;
 
 public class SellQuantityTests
 {
+    [TestCase("7", 7)]
+    [TestCase("0", 1)]
+    [TestCase("999", 12)]
+    [TestCase("999999999999999999999999999", 12)]
+    [TestCase("0004", 4)]
+    public void TypedQuantity_ClampsToAvailableRange(string text, int expected)
+    {
+        var quantity = new SellQuantity();
+        quantity.Reset(12);
+        Assert.IsTrue(quantity.TrySetFromText(text));
+        Assert.AreEqual(expected, quantity.Value);
+        Assert.AreEqual(expected * 15, quantity.Total(15));
+    }
+
+    [TestCase("")]
+    [TestCase(null)]
+    [TestCase("-3")]
+    [TestCase("1.5")]
+    [TestCase("12a")]
+    public void InvalidTypedQuantity_PreservesPreviousSelection(string text)
+    {
+        var quantity = new SellQuantity();
+        quantity.Reset(12);
+        quantity.TrySetFromText("7");
+        Assert.IsFalse(quantity.TrySetFromText(text));
+        Assert.AreEqual(7, quantity.Value);
+    }
+
+    [Test]
+    public void TypedMaximum_SupportsButtonsWithoutOverflow()
+    {
+        var quantity = new SellQuantity();
+        quantity.Reset(int.MaxValue);
+        quantity.TrySetFromText("9999999999");
+        quantity.Increase();
+        Assert.AreEqual(int.MaxValue, quantity.Value);
+        quantity.Decrease();
+        Assert.AreEqual(int.MaxValue - 1, quantity.Value);
+    }
+
     [Test]
     public void Reset_StartsAtOneWithMaxOwned()
     {
