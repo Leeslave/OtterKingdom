@@ -14,7 +14,7 @@ import sys
 import urllib.request
 
 PORT = os.environ.get('QA_PORT', '8777')
-IDB = os.environ.get('QA_IDB', '/idbfs/6005a7260c1b7009def43bce62143115')
+IDB = os.environ.get('QA_IDB', '/idbfs/de024c23b4f64e0d2cae79afd60e4395')
 
 OPEN = "const db=await new Promise((r,j)=>{const q=indexedDB.open('/idbfs');q.onsuccess=()=>r(q.result);q.onerror=j});"
 

@@ -1,11 +1,11 @@
 # WebQA — Claude 클라우드 세션에서 웹 빌드 플레이 QA
 
 Claude Code 클라우드 세션(claude.ai/code)의 헤드리스 Chromium으로 Unity Play 웹 빌드를 띄워, 스크린샷을 보며 누르고 끌어서 플레이하는 도구.
-5~8차 QA(`Docs/QA_플레이테스트_기록.md`)를 이걸로 했다. 화면을 보고 누르는 방식이라 타격감 · 소리 · 빠른 조작은 판단 못 함.
+5~9차 QA(`Docs/QA_플레이테스트_기록.md`)를 이걸로 했다. 화면을 보고 누르는 방식이라 타격감 · 소리 · 빠른 조작은 판단 못 함.
 
 ## 다른 사람이 이어서 할 때 — 새 세션 첫 메시지
 
-> develop 브랜치에서 Tools/WebQA/README.md를 읽고, Docs/QA_플레이테스트_기록.md의 마지막 "이어서 할 때"부터 웹 빌드로 이어서 QA 해줘. 세이브는 Docs/QA_saves/web8_lv19_save.json
+> develop 브랜치에서 Tools/WebQA/README.md를 읽고, Docs/QA_플레이테스트_기록.md의 마지막 "이어서 할 때"부터 웹 빌드로 이어서 QA 해줘. 세이브는 Docs/QA_saves/web9_lv20_save.json
 
 ## 준비 (사람이 한 번)
 
@@ -13,7 +13,8 @@ Claude Code 클라우드 세션(claude.ai/code)의 헤드리스 Chromium으로 U
 2. **네트워크 허용**: 세션 위쪽 환경 칩(예: 「환경이름 · OtterKingdom」) → Edit → Network access → 허용 도메인에 세 개 (환경은 계정마다 따로)
    - `play.unity.com` · `play-prod.struckd.com` · `cdn.play.unity.com` (게임 파일 loader.js · wasm · data가 여기)
    - 바꾼 뒤 막히면 새 세션
-3. **빌드**: Unity Play에 최신 빌드 업로드 (지금 주소 `play.unity.com/en/games/1b13367a-07d5-4ca7-80a9-9ff2598b3cc5/otterkingdom`).
+3. **빌드**: Unity Play에 최신 빌드 업로드 (지금 주소 `play.unity.com/en/games/fbd6f0ba-5b3f-427f-8598-e63410b5fbb2/ottorkingdombuild`, 9차부터. 8차까지는 `1b13367a-…/otterkingdom`).
+   **새 게임으로 올리면 게임 ID가 바뀜** → `QA_URL`과 세이브 폴더(`QA_IDB`, `idb.py keys`)도 바뀜. 같은 게임에 새 빌드를 올리면 그대로
    게임 칸 주소는 `https://play-prod.struckd.com/api/v1/games/game/<게임ID>/build/latest/frame` — 다른 게임 ID면 `QA_URL`로.
 
 ## 띄우기
@@ -52,9 +53,10 @@ curl -sS --retry-connrefused --retry 40 --retry-delay 3 -X POST http://127.0.0.1
 
 ## 세이브
 
-- 게임 세이브는 IndexedDB `/idbfs/6005a7260c1b7009def43bce62143115/save.json` (게임 주소가 같으면 같은 폴더. 다르면 `idb.py keys`)
+- 게임 세이브는 IndexedDB `/idbfs/de024c23b4f64e0d2cae79afd60e4395/save.json` (`fbd6f0ba…` 게임. 게임 주소가 같으면 같은 폴더. 다르면 `idb.py keys` → `QA_IDB`)
 - **넣기**: `python3 idb.py load Docs/QA_saves/web7_lv18_save.json` → `q.sh reload` → 타이틀 두 번 누르기
-- **저장시키기**: 이 빌드는 `autoSyncPersistentDataPath`가 꺼져 있어 게임 안 저장이 IndexedDB로 안 감 → 설정(톱니 `(418,53)`) 열고 음악/효과음 칸 `(340,358)`을 두 번 누른 뒤 닫기 `(408,192)` → `PlayerPrefs.Save()`가 save.json을 옮김. `savets.py get`의 시각이 바뀌었으면 성공 (안 바뀌면 `(340,411)`도 시도)
+- **저장시키기**: 이 빌드는 `autoSyncPersistentDataPath`가 꺼져 있어 게임 안 저장이 IndexedDB로 안 감 → 설정(톱니 `(418,53)`) 열고 음악/효과음 칸 `(340,358)`을 두 번 누른 뒤 닫기 `(408,192)` → `PlayerPrefs.Save()`가 save.json을 옮김. `savets.py get`의 시각이 바뀌었으면 성공 (안 바뀌면 `(340,411)`도 시도). 9차 빌드 설정 화면은 배경음 · 효과음 슬라이더 + 진동 토글 — `(340,358)`이 진동 토글이라 그대로 됨
+  - **새로 고치기 전에 꼭 시각이 바뀌었는지 확인** (9차: 창이 닫히던 중에 톱니를 눌러 저장이 안 된 채 새로 고쳐 판매 · 퀘스트 · 구매가 한 판 날아감)
 - **꺼내기**: `python3 idb.py dump Docs/QA_saves/webN_lvXX_save.json` (커밋해 두면 다음 사람이 이어 감)
 - **오프라인 보상 시험**: 저장시킨 뒤 `savets.py set <과거 시각>` → `q.sh reload` → 들어가면 "쉬는 동안 모인 것" 창. 세이브 JSON은 들여쓰기(`"lastSaveUtc": "…"`) 형식
 

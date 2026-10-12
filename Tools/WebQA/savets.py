@@ -2,7 +2,7 @@ import os,json,sys,urllib.request
 # 저장 시각만 바꿈 (오프라인 보상 시험: 과거로 돌리고 q.sh reload). savets.py get | savets.py set 2026-10-11T09:00:00.0000000Z
 PORT=os.environ.get('QA_PORT','8777')
 # Unity가 정한 IndexedDB 폴더 (같은 게임 주소면 같음). 다르면 idb.py keys로 확인해 QA_IDB에
-IDB=os.environ.get('QA_IDB','/idbfs/6005a7260c1b7009def43bce62143115')
+IDB=os.environ.get('QA_IDB','/idbfs/de024c23b4f64e0d2cae79afd60e4395')
 # usage: savets.py get | savets.py set ISO
 mode=sys.argv[1]; ts=sys.argv[2] if len(sys.argv)>2 else ''
 js='''(async()=>{const db=await new Promise(r=>{const q=indexedDB.open('/idbfs');q.onsuccess=()=>r(q.result)});const k='%s/save.json';
