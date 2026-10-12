@@ -45,6 +45,7 @@ public class ShopPurchasePopupView : MonoBehaviour
     public event Action<int> OnConfirmed;
 
     private readonly SellQuantity _quantity = new SellQuantity();
+    private TMP_InputField _quantityInput;
 
     private void Awake()
     {
@@ -52,7 +53,12 @@ public class ShopPurchasePopupView : MonoBehaviour
         _plusButton.onClick.AddListener(() => { _quantity.Increase(); Refresh(); });
         _cancelButton.onClick.AddListener(Hide);
         _closeButton.onClick.AddListener(Hide);
-        _confirmButton.onClick.AddListener(() => OnConfirmed?.Invoke(_quantity.Value));
+        _confirmButton.onClick.AddListener(() =>
+        {
+            QuantityInput.Commit(_quantityInput, _quantity);
+            Refresh();
+            OnConfirmed?.Invoke(_quantity.Value);
+        });
     }
 
     /// <param name="owned">지금 가방에 있는 개수</param>
@@ -93,7 +99,8 @@ public class ShopPurchasePopupView : MonoBehaviour
 
     private void Refresh()
     {
-        _quantityText.text = _quantity.Value.ToString();
+        if (_quantityInput == null) _quantityInput = QuantityInput.Create(_quantityText, _quantity, Refresh);
+        if (!_quantityInput.isFocused) _quantityInput.SetTextWithoutNotify(_quantity.Value.ToString());
         _minusButton.interactable = _quantity.CanDecrease;
         _plusButton.interactable = _quantity.CanIncrease;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 /// <summary>
 /// 상단바에 보이는 플레이어 정보 (순수 C#): 이름, 레벨, 다음 레벨까지 진행 비율.
@@ -6,6 +6,17 @@
 /// </summary>
 public class PlayerProfile
 {
+    public const int MaxNameLength = 4;
+
+    public static bool TryNormalizeNewName(string name, out string normalized)
+    {
+        normalized = name?.Trim() ?? string.Empty;
+        if (normalized.Length == 0 || normalized.Length > MaxNameLength) return false;
+        foreach (char character in normalized)
+            if (char.IsControl(character) || character == '<' || character == '>') return false;
+        return true;
+    }
+
     public event Action OnChanged;
 
     public string Name { get; private set; }

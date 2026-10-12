@@ -33,6 +33,7 @@ public class SellPopupView : MonoBehaviour
     public event Action<int> OnConfirmed;
 
     private readonly SellQuantity _quantity = new SellQuantity();
+    private TMP_InputField _quantityInput;
     private ItemDefinition _item;
     private Currency _currency;
 
@@ -43,7 +44,12 @@ public class SellPopupView : MonoBehaviour
         _minusButton.onClick.AddListener(() => { _quantity.Decrease(); Refresh(); });
         _plusButton.onClick.AddListener(() => { _quantity.Increase(); Refresh(); });
         _maxButton.onClick.AddListener(() => { _quantity.SetToMax(); Refresh(); });
-        _confirmButton.onClick.AddListener(() => OnConfirmed?.Invoke(_quantity.Value));
+        _confirmButton.onClick.AddListener(() =>
+        {
+            QuantityInput.Commit(_quantityInput, _quantity);
+            Refresh();
+            OnConfirmed?.Invoke(_quantity.Value);
+        });
         _cancelButton.onClick.AddListener(Hide);
     }
 
@@ -74,7 +80,8 @@ public class SellPopupView : MonoBehaviour
 
     private void Refresh()
     {
-        _quantityText.text = NumberFormatter.Short(_quantity.Value);
+        if (_quantityInput == null) _quantityInput = QuantityInput.Create(_quantityText, _quantity, Refresh);
+        if (!_quantityInput.isFocused) _quantityInput.SetTextWithoutNotify(_quantity.Value.ToString());
         _minusButton.interactable = _quantity.CanDecrease;
         _plusButton.interactable = _quantity.CanIncrease;
         _maxButton.interactable = _quantity.CanIncrease;

@@ -226,6 +226,7 @@ public class GameManager : MonoBehaviour
         saveService.DiscardCorruptedAndStartOver();
         Time.timeScale = 1f;
         SaveNow();
+        ShowPlayerNameSetup();
     }
 
     private static void QuitGame()
@@ -261,6 +262,7 @@ public class GameManager : MonoBehaviour
             pendingAbsenceSec = 0;
         }
 
+        ShowPlayerNameSetup();
         if (zoneTutorialPending) StartCoroutine(PlayZoneTutorialWhenReady());
         // This zone's guide was already seen (e.g. reset by the dev tool): a
         // specialist placed here starts working right away.
@@ -269,6 +271,17 @@ public class GameManager : MonoBehaviour
             StartCoroutine(PlayFairyShopTutorialWhenReady());
         if (CurrentZoneId == ZoneTutorials.Farm && !save.tutorialsDone.Contains(ZoneTutorials.FarmOffline))
             StartCoroutine(PlayFarmOfflineTutorialWhenReady());
+    }
+
+    private void ShowPlayerNameSetup()
+    {
+        var profile = ProfileManager.Instance;
+        if (saveService.WritesBlocked || profile == null || profile.HasChosenName) return;
+        gameUI.ShowPlayerNameSetup(name =>
+        {
+            profile.ChooseName(name);
+            SaveNow();
+        });
     }
 
     private void Update()
