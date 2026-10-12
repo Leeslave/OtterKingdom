@@ -236,8 +236,21 @@ public class QuestManager : MonoBehaviour
 
     private readonly List<ConstructionDefinition> _buildings = new List<ConstructionDefinition>();
 
+    // 처음부터 열린 밭 1을 뺀 열린 고랑 수. 밭 상태는 게임 쪽(GameManager)이 세이브를 불러온 뒤·고랑을 연 뒤 알려 줌 (-1 = 아직 모름)
+    private int _openedFurrows = -1;
+
+    /// <summary>열린 고랑 수가 바뀌었을 때 (게임 쪽이 부름). 고랑 열기 퀘스트를 다시 센다</summary>
+    public void SetOpenedFurrows(int count)
+    {
+        count = Math.Max(0, count);
+        if (count == _openedFurrows)
+            return;
+        _openedFurrows = count;
+        RefreshRecordGoals();
+    }
+
     /// <summary>
-    /// 기록으로 세는 퀘스트(새 해달 만나기, 건설 완료)를 정착 기록에서 다시 센다. 퀘스트가 열리기 전에 만난 해달·지은 건물도
+    /// 기록으로 세는 퀘스트(새 해달 만나기, 건설 완료, 장소 가 보기, 고랑 열기)를 기록에서 다시 센다. 퀘스트가 열리기 전에 만난 해달·지은 건물·연 고랑도
     /// 들어가고(소급), 같은 기록을 두 번 세지 않는다 (더하지 않고 맞춤). 받은 보상은 그대로라 다시 받을 수 없다.
     /// 불러오기·레벨업·보상 받기·정착 변화 때 부른다
     /// </summary>
@@ -255,6 +268,17 @@ public class QuestManager : MonoBehaviour
                 continue;
             int value = Log.HasVisited(quest.Target) ? 1 : QuestProgressRules.FromArrival(quest, scene);
             Log.SetProgressAtLeast(quest, value);
+        }
+
+        // 고랑 열기: 퀘스트가 열리기 전에 연 고랑도 들어감
+        if (_openedFurrows >= 0)
+        {
+            foreach (var quest in _database.Quests)
+            {
+                if (quest == null || quest.GoalType != QuestGoalType.UnlockFurrow || !IsAvailable(quest))
+                    continue;
+                Log.SetProgressAtLeast(quest, QuestProgressRules.FromOpenedFurrows(quest, _openedFurrows));
+            }
         }
 
         var settlement = _settlementManager != null ? _settlementManager : SettlementManager.Instance;

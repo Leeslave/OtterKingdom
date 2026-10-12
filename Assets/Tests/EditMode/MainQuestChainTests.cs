@@ -44,7 +44,7 @@ public class MainQuestChainTests
     }
 
     [Test]
-    public void PaidTransactions_CountFurrowAndBagSeparately()
+    public void PaidTransactions_CountBagNotFurrow()
     {
         var furrow = Quest("furrow", QuestGoalType.UnlockFurrow);
         var bag = Quest("bag", QuestGoalType.ExpandBag);
@@ -53,11 +53,36 @@ public class MainQuestChainTests
         var openFurrow = new CurrencyChange(null, -300, TransactionSource.PlotUnlock);
         var expandBag = new CurrencyChange(null, -10, TransactionSource.InventoryExpand);
 
-        Assert.AreEqual(1, QuestProgressRules.From(furrow, openFurrow));
+        Assert.AreEqual(0, QuestProgressRules.From(furrow, openFurrow), "고랑은 거래가 아니라 열린 고랑 수로 셈");
         Assert.AreEqual(0, QuestProgressRules.From(furrow, expandBag));
         Assert.AreEqual(1, QuestProgressRules.From(bag, expandBag));
         Assert.AreEqual(0, QuestProgressRules.From(upgrade, openFurrow), "고랑 열기는 업그레이드가 아님");
-        Assert.AreEqual(0, QuestProgressRules.From(furrow, new CurrencyChange(null, 300, TransactionSource.PlotUnlock)), "받은 돈은 세지 않음");
+        Assert.AreEqual(0, QuestProgressRules.From(bag, new CurrencyChange(null, 10, TransactionSource.InventoryExpand)), "받은 돈은 세지 않음");
+    }
+
+    [Test]
+    public void OpenedFurrows_CountFurrowsOpenedBeforeTheQuest()
+    {
+        var third = Quest("furrow_3", QuestGoalType.UnlockFurrow, target: "3");
+        var noOrder = Quest("furrow_any", QuestGoalType.UnlockFurrow);
+
+        Assert.AreEqual(0, QuestProgressRules.FromOpenedFurrows(third, 2), "셋째 고랑이 아직 안 열림");
+        Assert.AreEqual(1, QuestProgressRules.FromOpenedFurrows(third, 3));
+        Assert.AreEqual(1, QuestProgressRules.FromOpenedFurrows(third, 6), "체인보다 고랑을 먼저 다 열어도 끝남 (8차 QA: 체인이 막혔던 경우)");
+        Assert.AreEqual(0, QuestProgressRules.FromOpenedFurrows(noOrder, 0));
+        Assert.AreEqual(1, QuestProgressRules.FromOpenedFurrows(noOrder, 1), "순번이 없으면 첫 고랑");
+        Assert.AreEqual(0, QuestProgressRules.FromOpenedFurrows(Quest("harvest", QuestGoalType.Harvest), 6));
+    }
+
+    [Test]
+    public void OpenedFurrows_RecountFinishesQuestWithoutDoubling()
+    {
+        var quest = Quest("furrow_5", QuestGoalType.UnlockFurrow, target: "5");
+        var log = new QuestLog();
+
+        log.SetProgressAtLeast(quest, QuestProgressRules.FromOpenedFurrows(quest, 6));
+        Assert.AreEqual(QuestStatus.Claimable, log.GetStatus(quest));
+        Assert.IsFalse(log.SetProgressAtLeast(quest, QuestProgressRules.FromOpenedFurrows(quest, 6)), "다시 세도 그대로");
     }
 
     [Test]

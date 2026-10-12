@@ -470,11 +470,17 @@ Lv.12~15 부탁(꾸벅이·쿵쿵이 입주 → 목공소 · 채석 작업소 ·
 - 요정 상점 모종 레벨 순 · 고구마 150 · 산딸기 260 · 딸기 300 · 비트 500 · 자색 감자 650, 30개 사기 정상
 - 가방 탭 전체 · 농사 · 낚시 · 꾸미기 · 광산, 아이템 설명(광어 · 다이아몬드 · 축구공)
 
+## 수정 (2026-10-12, `claude/jolly-cray-49h9xa`) — 8차 QA 반영 (에디터 컴파일 미확인)
+- 고랑 퀘스트(`UnlockFurrow`)를 기록으로 셈: 밭 1을 뺀 열린 고랑 수가 퀘스트 순번(`_target` 1~6) 이상이면 완료 (`QuestProgressRules.FromOpenedFurrows`). 열린 고랑 수는 `GameManager`가 세이브를 불러온 뒤 · 고랑을 연 뒤 `QuestManager.SetOpenedFurrows`로 알려 줌. 고랑 열기 거래(`PlotUnlock`)로는 더 이상 세지 않음
+- 데이터: M05 · M06 · M08 · M09 · M11 · M13 고랑 퀘스트 `_target` = 1 ~ 6 (`QuestSetup.cs` 표도)
+- EditMode `OpenedFurrows_CountFurrowsOpenedBeforeTheQuest` · `OpenedFurrows_RecountFinishesQuestWithoutDoubling`, `PaidTransactions_CountBagNotFurrow`(고랑은 거래로 안 셈)
+- web7 · web8 같은 세이브는 불러오면 막힌 고랑 퀘스트가 바로 "보상 받기"가 됨
+
 ### 이어서 할 때 (8차 → 9차)
 
 - 세이브: `Docs/QA_saves/web8_lv19_save.json` (Lv.19 · 메인 `main_lv11_furrow`에서 막힘 · 골드 약 59,300)
 - 9차에서 볼 것:
-  1. 고랑 퀘스트 막힘을 고친 빌드로 이 세이브를 넣고 "고랑 다섯째 칸"이 바로 끝나는지 → Lv.11 ~ 19 메인 → **Lv.20** (Lv.20 내용 · 레벨표 끝)
+  1. 위 수정이 들어간 빌드로 이 세이브를 넣고 "고랑 다섯째 칸"이 바로 끝나는지 → Lv.11 ~ 19 메인 → **Lv.20** (Lv.20 내용 · 레벨표 끝)
   2. 6 · 7차 수정 화면 (위 7차 "볼 것" 1번 그대로)
   3. 밭 · 낚싯대 Lv.20, 오프라인 농사 999개 한도 · 산 모종 수확량 정한 뒤 다시
 - 벤치 공사 "설 자리" 버그는 에디터에서 (5차 "높음" 첫 항목)

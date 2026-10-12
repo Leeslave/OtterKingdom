@@ -180,6 +180,7 @@ public class GameManager : MonoBehaviour
         farmService = new FarmService(save, cropDefinitions, farmBalance, new FarmHost(this));
         farmService.Harvested += HandleFarmHarvested;
         farmService.NoticeRaised += HandleFarmNotice;
+        ReportOpenedFurrows();
         fishingService = new FishingService(save, fishingBalance);
         miningService = new MiningService(save, miningBalance);
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
@@ -1146,8 +1147,21 @@ public class GameManager : MonoBehaviour
     public FurrowUnlockResult TryUnlockNextFurrow()
     {
         var result = farmService.TryUnlockNextFurrow(KingdomLevel, CurrencyManager.Instance, goldCurrency);
-        if (result == FurrowUnlockResult.Opened) SaveNow();
+        if (result == FurrowUnlockResult.Opened)
+        {
+            ReportOpenedFurrows();
+            SaveNow();
+        }
         return result;
+    }
+
+    // Furrow quests count the furrows that are open (beyond plot 1's starting
+    // three), not the unlocks made while the quest was showing — so opening
+    // furrows ahead of the main quest chain can't block it.
+    private void ReportOpenedFurrows()
+    {
+        if (QuestManager.Instance != null)
+            QuestManager.Instance.SetOpenedFurrows(farmService.OpenSlotCount - PlotSaveData.SlotCount);
     }
 
     // Player's "change crop" confirmation — the old crop is thrown away.
