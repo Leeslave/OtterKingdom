@@ -3,7 +3,7 @@ const http = require('http'); const fs = require('fs'); const path = require('pa
 const PW = [process.env.PLAYWRIGHT_PATH, '/opt/node-tools/node_modules/playwright', '/opt/node22/lib/node_modules/playwright'].find(p => p && fs.existsSync(p)) || 'playwright';
 const { chromium } = require(PW);
 // 게임 칸 주소 (Unity Play 페이지가 아니라 그 안의 frame). 다른 빌드면 QA_URL로 바꿈
-const URL_ = process.env.QA_URL || 'https://play-prod.struckd.com/api/v1/games/game/1b13367a-07d5-4ca7-80a9-9ff2598b3cc5/build/latest/frame';
+const URL_ = process.env.QA_URL || 'https://play-prod.struckd.com/api/v1/games/game/fbd6f0ba-5b3f-427f-8598-e63410b5fbb2/build/latest/frame';
 // 브라우저 프로필(IndexedDB 세이브 포함) · 스크린샷이 남는 곳. 저장소 밖(스크래치패드 등)을 권장
 const DIR = process.env.QA_DIR || path.join(__dirname, '.qa');
 fs.mkdirSync(path.join(DIR, 'shots'), { recursive: true }); let page, ctx, logs = [];
