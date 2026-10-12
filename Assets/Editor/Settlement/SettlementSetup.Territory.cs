@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -18,7 +18,7 @@ using static GlobalUISetup;
 public static partial class SettlementSetup
 {
     private const string TerritoryArtFolder = "Assets/Art/Plaza/Territory";
-    private const string WorldMapPath = "Assets/Art/Plaza/Plaza_WorldMap.jpg";
+    private const string WorldMapPath = "Assets/Art/Plaza/AlignedOtterMap/Plaza_Aligned_4072.png"; // 최초 지도와 걷기·영토 좌표를 일치시킨다
     private const string TerritoryLayoutPath = "Assets/Art/Plaza/territory_layout.json";
     private const string TerritoryFolder = DataFolder + "/Territory";
     private const string TerritoryRootName = "Territory";
@@ -236,6 +236,9 @@ public static partial class SettlementSetup
         var mapCenter = W((layout.map.x0 + layout.map.x1) * 0.5f, (layout.map.y0 + layout.map.y1) * 0.5f);
         map.transform.position = new Vector3(mapCenter.x, mapCenter.y, background.transform.position.z);
         background.enabled = mapSprite == null;
+        // 고해상도 조각이 있으면 지도 그림 대신 조각을 깜 (PlazaWorldMapHD)
+        if (mapSprite != null)
+            PlazaWorldMapHD.ApplyTiles(map);
 
         // 2) 숲: 묶음마다 그늘 + 나무·덤불 (개간한 조각 / 열린 칸에서 사라짐)
         var forest = new GameObject("Forest").transform;

@@ -1,0 +1,24 @@
+{
+  "nativeSize": [
+    2116,
+    2070
+  ],
+  "coastMeanErrorOriginalPixels": 4.468981742858887,
+  "coast95PercentileOriginalPixels": 13.59731674194336,
+  "method": "Original map quadrants redrawn with image_gen, minimal-difference seams, semantic registration, coast contour registration; small details redrawn.",
+  "finalSize": [
+    8144,
+    7968
+  ],
+  "tileSize": [
+    4072,
+    3984
+  ],
+  "tilePPU": 80,
+  "worldSize": [
+    101.8,
+    99.6
+  ],
+  "walkingInteriorWaterPixels": 1919,
+  "walkingInteriorPixels": 1109853
+}
