@@ -1,0 +1,149 @@
+{
+  "units": "pixels; x right, y down; rotations in radians",
+  "view": "front-right three-quarter",
+  "legSolver": {
+    "type": "rigid straight leg, sole-anchored",
+    "stanceFraction": 0.6,
+    "cycleSeconds": 0.84,
+    "stepHalfWidth": 10,
+    "lift": 11,
+    "width": 60,
+    "height": 76,
+    "nearX": -10,
+    "farX": 31,
+    "swingAngle": 0.055,
+    "rearInset": 0,
+    "frontInset": 0
+  },
+  "bodyRearInset": 0,
+  "bones": [
+    {
+      "name": "hips",
+      "parent": null,
+      "pos": [
+        0,
+        -43
+      ]
+    },
+    {
+      "name": "body",
+      "parent": "hips",
+      "pos": [
+        0,
+        -54
+      ],
+      "part": "body",
+      "width": 170,
+      "pivot": [
+        0.5,
+        0.6
+      ],
+      "layer": 5
+    },
+    {
+      "name": "tail",
+      "parent": "hips",
+      "pos": [
+        -42,
+        -5
+      ],
+      "part": "tail",
+      "width": 100,
+      "pivot": [
+        0.9,
+        0.55
+      ],
+      "layer": 0
+    },
+    {
+      "name": "backpack",
+      "parent": "body",
+      "pos": [
+        -62,
+        -27
+      ],
+      "part": "backpack",
+      "width": 78,
+      "pivot": [
+        0.6,
+        0.3
+      ],
+      "layer": 2
+    },
+    {
+      "name": "farArm",
+      "parent": "body",
+      "pos": [
+        68,
+        -51
+      ],
+      "part": "arm",
+      "width": 44,
+      "pivot": [
+        0.55,
+        0.18
+      ],
+      "layer": 1
+    },
+    {
+      "name": "farLeg",
+      "parent": "hips",
+      "pos": [
+        34,
+        0
+      ],
+      "part": "leg",
+      "width": 47,
+      "pivot": [
+        0.45,
+        0.22
+      ],
+      "layer": 3
+    },
+    {
+      "name": "nearLeg",
+      "parent": "hips",
+      "pos": [
+        -26,
+        -4
+      ],
+      "part": "leg",
+      "width": 50,
+      "pivot": [
+        0.45,
+        0.22
+      ],
+      "layer": 4
+    },
+    {
+      "name": "nearArm",
+      "parent": "body",
+      "pos": [
+        -65,
+        -53
+      ],
+      "part": "arm",
+      "width": 55,
+      "pivot": [
+        0.55,
+        0.18
+      ],
+      "layer": 6
+    },
+    {
+      "name": "head",
+      "parent": "body",
+      "pos": [
+        0,
+        -54
+      ],
+      "part": "head",
+      "width": 270,
+      "pivot": [
+        0.5,
+        0.9
+      ],
+      "layer": 7
+    }
+  ]
+}

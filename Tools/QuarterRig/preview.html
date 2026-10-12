@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>수달 ¾뷰 리깅 실험</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f3eb;color:#283f35;font-family:system-ui,'Malgun Gothic',sans-serif}main{max-width:1120px;margin:auto;padding:34px 28px}header{display:flex;justify-content:space-between;align-items:center}small,.eyebrow{font-size:11px;letter-spacing:2px;color:#728174}h1{font-size:30px;letter-spacing:-1.2px;margin:8px 0}p{color:#6c766b;font-size:14px;line-height:1.65}.pill{padding:9px 14px;border:1px solid #d5dbcc;border-radius:30px;font-size:12px}.layout{display:grid;grid-template-columns:1fr 260px;gap:22px;margin-top:26px}.stage{border:1px solid #d7ddce;background:#e8eddf;border-radius:22px;overflow:hidden;position:relative}canvas{width:100%;display:block}.stage-label{position:absolute;left:22px;top:20px;font-size:11px;letter-spacing:1px;color:#748470;pointer-events:none}.bottom{display:flex;justify-content:space-between;padding:17px 22px;border-top:1px solid #d7ddce;font-size:12px;color:#62725f}aside{background:#fffef9;padding:22px;border-radius:22px;border:1px solid #e1e3d9}h2{font-size:15px;margin:0 0 18px}.buttons{display:flex;gap:8px;margin-bottom:18px}button{background:#edf0e6;color:#3a5546;border:0;padding:11px 15px;border-radius:9px;font:inherit;font-size:13px;cursor:pointer}button.active{background:#355a45;color:white}button:focus-visible,input:focus-visible{outline:3px solid #e3a84e;outline-offset:3px}label{display:block;font-size:13px;margin:19px 0}input[type=range]{width:100%;accent-color:#507758;margin-top:12px}input[type=checkbox]{accent-color:#507758}output{float:right;color:#809079}hr{border:0;border-top:1px solid #e7e9df;margin:24px 0}.note{font-size:12px;line-height:1.8;color:#7a8377}footer{font-size:12px;color:#81897d;margin-top:20px;line-height:1.8}@media(max-width:760px){.layout{grid-template-columns:1fr}main{padding:20px}aside{display:block}header .pill{display:none}}
+</style>
+<main><header><div><div class="eyebrow">OTTER KINGDOM · MOTION STUDY 04</div><h1>수달, 또박또박</h1><p>다리 원화 재제작 · 통통한 바지와 작은 발</p></div><div class="pill">새 다리 원화 적용</div></header>
+<div class="layout"><div class="stage"><div class="stage-label">LIVE RIG / FRONT ¾</div><canvas id="stage" width="1000" height="740" aria-label="분리한 수달 파츠를 관절로 움직이는 애니메이션"></canvas><div class="bottom"><span id="status">걷기 · 1.00×</span><span>좌우 반전은 미리보기용</span></div></div>
+<aside><h2>움직임</h2><div class="buttons"><button id="walk" class="active">걷기</button><button id="idle">대기</button></div><button id="pause">일시정지</button><label>재생 속도 <output id="speedVal">1.00×</output><input id="speed" type="range" min="0.25" max="1.75" step="0.05" value="1"></label><label>보폭 <output id="strideVal">100%</output><input id="stride" type="range" min="0" max="1.5" step="0.05" value="1"></label><hr><h2>구조 확인</h2><label><input id="bones" type="checkbox"> 관절과 연결선</label><label><input id="explode" type="checkbox"> 파츠 펼쳐 보기</label><label><input id="flip" type="checkbox"> 왼쪽으로 보기</label><label><input id="small" type="checkbox"> 게임 크기 비교</label><p class="note">머리와 모자는 함께 움직이고,<br>팔·다리는 반대 박자로 움직여요.<br>꼬리와 가방에는 조금 늦게<br>따라오는 움직임을 넣었어요.</p></aside></div>
+<footer><label><input id="legacy" type="checkbox"> 이전 다리와 비교</label>시안을 바탕으로 생성·보완한 파츠를 사용했습니다. 바지와 발을 한 장으로 다시 그렸으며, 다리 그림을 변형하지 않습니다. 앞쪽 한 방향의 실험이며 Unity 연결은 포함하지 않습니다. 참고: <a href="https://www.nintendo.co.jp/3ds/abej/about/index.html" target="_blank" rel="noopener">New 슈퍼 마리오브라더스 2</a>의 짧은 다리와 큰 발 실루엣을 목표로 재해석했습니다. 원작 모션을 추출한 결과는 아닙니다.</footer></main>
+<script>
+/*__DATA__*/
+const canvas=document.querySelector('canvas'),ctx=canvas.getContext('2d');
+const $=id=>document.getElementById(id);
+const state={mode:'walk',paused:false,speed:1,stride:1,bones:false,explode:false,flip:false,small:false,legacy:false};
+const imgs={};let clock=0,previous=0;
+const mul=(a,b)=>[a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];
+function local(x,y,r=0){return [Math.cos(r),Math.sin(r),-Math.sin(r),Math.cos(r),x,y]}
+function pose(t){
+  const p=t*Math.PI*2/0.84,w=state.mode==='walk'?state.stride:0,s=Math.sin(p),c=Math.cos(p),bob=-3.8*w*(1-Math.cos(2*p));
+  const breathe=state.mode==='idle'?Math.sin(t*3)*.6:0;
+  const motion={hips:[0,bob,0],body:[0,breathe,-.04*s*w],head:[0,0,.024*Math.sin(p-.4)*w],
+  nearArm:[0,0,.38*Math.sin(p-.15)*w],farArm:[0,0,-.38*Math.sin(p-.15)*w],tail:[0,0,.13*Math.sin(p-.8)*w+(state.mode==='idle'?.025*Math.sin(t*2):0)],backpack:[0,0,.045*Math.sin(p-.6)*w],
+  nearLeg:[9*c*w,-bob-7*Math.max(0,s)*w,-.14*c*w],farLeg:[-9*c*w,-bob-7*Math.max(0,-s)*w,.14*c*w]};
+  const mats={};
+  for(const b of RIG.bones){const d=motion[b.name]||[0,0,0];let [x,y]=b.pos;
+    if(state.explode&&b.part){const offsets={head:[0,-65],nearArm:[-75,0],farArm:[75,0],nearLeg:[-35,30],farLeg:[35,30],tail:[-90,15],backpack:[-80,-30]};const o=offsets[b.name]||[0,0];x+=o[0];y+=o[1];}
+    if(b.name==='hips'&&!state.legacy)y+=8;
+    mats[b.name]=mul(b.parent?mats[b.parent]:[1,0,0,1,0,0],local(x+d[0],y+d[1],d[2]));
+  }return mats;
+}
+function legPose(t,near,mats){
+ const cfg=RIG.legSolver,w=state.mode==='walk'?state.stride:0;
+ const q=((t/cfg.cycleSeconds+(near?0:.5))%1+1)%1,stance=q<cfg.stanceFraction;
+ const u=stance?q/cfg.stanceFraction:(q-cfg.stanceFraction)/(1-cfg.stanceFraction);
+ const ease=u*u*(3-2*u),step=cfg.stepHalfWidth*w;
+ const travel=stance?step*(1-2*u):step*(-1+2*ease);
+ const lift=stance?0:cfg.lift*w*Math.pow(Math.sin(Math.PI*u),1.3);
+ const floor=near?0:-4;
+ const sole=[(near?cfg.nearX:cfg.farX)+travel,floor-lift];
+ if(state.explode){sole[0]+=near?-75:75;sole[1]+=25;}
+ return {sole,angle:stance?0:cfg.swingAngle*w*Math.sin(2*Math.PI*u),stance,floor,lift};
+}
+function drawLeg(t,near,mats){
+ const p=legPose(t,near,mats),im=imgs.solidLeg;
+ const width=RIG.legSolver.width*(near?1:.94),height=RIG.legSolver.height*(near?1:.94);
+ ctx.save();ctx.translate(...p.sole);ctx.rotate(p.angle);
+ // Retain the drawn paw; render the straight fabric as a clean solid shape
+ // so generated transparency/shading cannot make the trousers look dented.
+ ctx.drawImage(im,0,im.height*.78,im.width,im.height*.22,-width*.55,-height*.22,width,height*.22);
+ ctx.fillStyle='#698653';ctx.strokeStyle='#301007';ctx.lineWidth=5.2;
+ // Inset the thicker stroke to preserve the approved outer leg footprint.
+ ctx.beginPath();ctx.roundRect(-width*.51+.85,-height+2.85,width*.85-1.7,height*.80-1.7,10);ctx.fill();ctx.stroke();
+ if(state.bones){ctx.strokeStyle='#ed5e66';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(0,-height*.75);ctx.lineTo(0,0);ctx.stroke();for(const y of [-height*.75,0]){ctx.beginPath();ctx.arc(0,y,2.5,0,Math.PI*2);ctx.stroke();}}
+ ctx.restore();
+}
+function character(t,x,y,scale){
+  ctx.save();ctx.translate(x,y);ctx.scale(state.flip?-scale:scale,scale);
+  const mats=pose(t);
+  for(const b of [...RIG.bones].filter(b=>b.part).sort((a,b)=>a.layer-b.layer)){
+    if(!state.legacy&&(b.name==='nearLeg'||b.name==='farLeg')){drawLeg(t,b.name==='nearLeg',mats);continue;}
+    const im=imgs[b.part],h=b.width*im.height/im.width;ctx.save();ctx.transform(...mats[b.name]);
+    if(b.name==='body'&&RIG.bodyRearInset===0){
+      // Opaque fabric backing inside the outline prevents residual generated alpha
+      // in the cloth from exposing the backpack behind the torso.
+      ctx.fillStyle='#73976a';ctx.fillRect(-60,-30,62,54);
+    }
+    if(b.name==='body'&&!state.legacy&&RIG.bodyRearInset>0){
+      // Taper only the lower rear silhouette; keep the chest and front edge fixed.
+      if(!imgs.bodyTapered){
+        const surface=document.createElement('canvas');surface.width=im.width;surface.height=im.height;
+        const painter=surface.getContext('2d');
+        for(let row=0;row<im.height;row++){
+          const u=(row+.5)/im.height,k=Math.max(0,Math.min(1,(u-.55)/.4));
+          const inset=RIG.bodyRearInset*im.width/b.width*k*k*(3-2*k);
+          painter.drawImage(im,0,row,im.width,1,inset,row,im.width-inset,1);
+        }
+        imgs.bodyTapered=surface;
+      }
+      ctx.drawImage(imgs.bodyTapered,-b.pivot[0]*b.width,-b.pivot[1]*h,b.width,h);
+    }else ctx.drawImage(im,-b.pivot[0]*b.width,-b.pivot[1]*h,b.width,h);
+    ctx.restore();
+  }
+  if(state.bones){ctx.strokeStyle='#f05e65';ctx.fillStyle='#fff5c1';ctx.lineWidth=1.5/scale;
+    for(const b of RIG.bones){if(!state.legacy&&b.name.endsWith('Leg'))continue;const a=mats[b.name];if(b.parent){const p=mats[b.parent];ctx.beginPath();ctx.moveTo(a[4],a[5]);ctx.lineTo(p[4],p[5]);ctx.stroke();}ctx.beginPath();ctx.arc(a[4],a[5],3.2/scale,0,Math.PI*2);ctx.fill();ctx.stroke();}
+  }ctx.restore();
+}
+function render(t){
+ ctx.clearRect(0,0,1000,740);ctx.fillStyle='#e8eddf';ctx.fillRect(0,0,1000,740);
+ ctx.strokeStyle='#dbe2d2';ctx.lineWidth=1;
+ for(let y=420;y<750;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(1000,y);ctx.stroke();}
+ const groundSpeed=2*RIG.legSolver.stepHalfWidth/(RIG.legSolver.stanceFraction*RIG.legSolver.cycleSeconds)*1.48;
+ const spacing=groundSpeed*RIG.legSolver.cycleSeconds;
+ const shift=state.mode==='walk'?(t*groundSpeed*state.stride)%spacing:0;
+ for(let x=-spacing;x<1100;x+=spacing){ctx.beginPath();ctx.moveTo(x-shift,420);ctx.lineTo(x-180-shift,740);ctx.stroke();}
+ ctx.fillStyle='#59704b20';ctx.beginPath();ctx.ellipse(500,601,125,20,0,0,Math.PI*2);ctx.fill();
+ character(t,500,598,state.explode?1.13:1.48);
+ if(state.small){ctx.fillStyle='#f8f8f0ed';ctx.fillRect(760,500,210,208);character(t,865,673,.44);ctx.fillStyle='#718069';ctx.font='15px sans-serif';ctx.fillText('약 150px 높이',803,697);}
+}
+window.renderAt=t=>{render(t);return pose(t)};
+function loop(ts){if(previous&&!state.paused)clock+=Math.min(.05,(ts-previous)/1000)*state.speed;previous=ts;render(clock);requestAnimationFrame(loop)}
+function status(){$('status').textContent=`${state.mode==='walk'?'걷기':'대기'} · ${state.speed.toFixed(2)}×${state.paused?' · 정지':''}`}
+for(const mode of ['walk','idle'])$(mode).onclick=()=>{state.mode=mode;for(const m of ['walk','idle'])$(m).classList.toggle('active',m===mode);status()};
+$('pause').onclick=()=>{state.paused=!state.paused;$('pause').textContent=state.paused?'재생':'일시정지';status()};
+for(const key of ['speed','stride'])$(key).oninput=e=>{state[key]=+e.target.value;$(key+'Val').textContent=key==='speed'?state[key].toFixed(2)+'×':Math.round(state[key]*100)+'%';status()};
+for(const key of ['bones','explode','flip','small','legacy'])$(key).onchange=e=>state[key]=e.target.checked;
+window.legDiagnostics=t=>[true,false].map(near=>legPose(t,near,pose(t)));
+window.rigReady=Promise.all(Object.entries(SOURCES).map(([key,src])=>new Promise((resolve,reject)=>{const im=new Image;im.onload=()=>{imgs[key]=im;resolve()};im.onerror=reject;im.src=src}))).then(()=>{requestAnimationFrame(loop);return true});
+</script></html>
