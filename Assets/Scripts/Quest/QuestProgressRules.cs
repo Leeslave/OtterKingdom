@@ -98,7 +98,8 @@ public static class QuestProgressRules
     }
 
     /// <summary>
-    /// 값을 낸 거래 1번 = 1회: 생산 업그레이드(밭·낚싯대·곡괭이 강화), 고랑 열기, 가방 칸 늘리기
+    /// 값을 낸 거래 1번 = 1회: 생산 업그레이드(밭·낚싯대·곡괭이 강화), 가방 칸 늘리기.
+    /// 고랑 열기는 거래가 아니라 열린 고랑 수로 센다 (FromOpenedFurrows)
     /// </summary>
     public static int From(QuestDefinition quest, CurrencyChange change)
     {
@@ -113,13 +114,26 @@ public static class QuestProgressRules
                 return change.Source == TransactionSource.FarmUpgrade
                     || change.Source == TransactionSource.RodUpgrade
                     || change.Source == TransactionSource.PickaxeUpgrade ? 1 : 0;
-            case QuestGoalType.UnlockFurrow:
-                return change.Source == TransactionSource.PlotUnlock ? 1 : 0;
             case QuestGoalType.ExpandBag:
                 return change.Source == TransactionSource.InventoryExpand ? 1 : 0;
             default:
                 return 0;
         }
+    }
+
+    /// <summary>
+    /// 고랑 열기: 처음부터 열린 밭 1을 뺀, 지금 열린 고랑 수가 이 퀘스트의 순번(Target, 1부터) 이상이면 1.
+    /// 기록으로 다시 세는 값이라, 메인 체인보다 고랑을 먼저 열어도 퀘스트가 열리자마자 끝난다
+    /// (예전에는 퀘스트가 열린 동안 연 고랑만 세서, 미리 다 열면 체인이 영영 막혔다). Target이 비면 첫 고랑
+    /// </summary>
+    public static int FromOpenedFurrows(QuestDefinition quest, int openedFurrows)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        if (quest.GoalType != QuestGoalType.UnlockFurrow)
+            return 0;
+
+        int needed = int.TryParse(quest.Target, out int order) && order > 0 ? order : 1;
+        return openedFurrows >= needed ? 1 : 0;
     }
 
     /// <summary>장난감 놓기: 놓은 것 하나 = 1 (옮기기는 세지 않음)</summary>

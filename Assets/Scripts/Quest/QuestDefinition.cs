@@ -72,7 +72,7 @@ public class QuestDefinition : ScriptableObject
     [SerializeField]
     private bool _builderOnly;
 
-    [Tooltip("정착 단계: 끝낸 부탁 ID 또는 열린 발전 ID (예: req_chair, supply_ready) / 장소 가 보기: 씬 이름 (예: Mine)")]
+    [Tooltip("정착 단계: 끝낸 부탁 ID 또는 열린 발전 ID (예: req_chair, supply_ready) / 장소 가 보기: 씬 이름 (예: Mine) / 고랑 열기: 몇 번째 고랑인지 (밭 1을 뺀 순번, 예: 3)")]
     [SerializeField]
     private string _target;
 

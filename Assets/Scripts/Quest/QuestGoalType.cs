@@ -16,7 +16,7 @@ public enum QuestGoalType
     MeetOtter,          // 광장에서 처음 만난 해달 수 (처음부터 함께한 첫 해달 제외). 도감 등록과 별개, 기록으로 다시 셈
     Milestone,          // 정착 진행 한 단계 (Target = 끝낸 부탁 ID 또는 열린 발전 ID). 이루면 1, 기록으로 다시 셈
     VisitZone,          // 장소에 가 보기 (Target = 씬 이름). 도착하거나 이미 그곳에 있으면 1
-    UnlockFurrow,       // 밭 고랑 한 칸 열기 (연 횟수)
+    UnlockFurrow,       // 밭 고랑 열기 (Target = 몇 번째 고랑). 열린 고랑 수로 다시 셈 → 퀘스트가 열리기 전에 연 고랑도 들어감
     ExpandBag,          // 가방 칸 늘리기 (늘린 횟수)
     CompleteDaily,      // 일일 퀘스트 보상 받기 (받은 수)
 }

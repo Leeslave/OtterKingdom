@@ -1,11 +1,11 @@
 # WebQA — Claude 클라우드 세션에서 웹 빌드 플레이 QA
 
 Claude Code 클라우드 세션(claude.ai/code)의 헤드리스 Chromium으로 Unity Play 웹 빌드를 띄워, 스크린샷을 보며 누르고 끌어서 플레이하는 도구.
-5~7차 QA(`Docs/QA_플레이테스트_기록.md`)를 이걸로 했다. 화면을 보고 누르는 방식이라 타격감 · 소리 · 빠른 조작은 판단 못 함.
+5~8차 QA(`Docs/QA_플레이테스트_기록.md`)를 이걸로 했다. 화면을 보고 누르는 방식이라 타격감 · 소리 · 빠른 조작은 판단 못 함.
 
 ## 다른 사람이 이어서 할 때 — 새 세션 첫 메시지
 
-> develop 브랜치에서 Tools/WebQA/README.md를 읽고, Docs/QA_플레이테스트_기록.md의 마지막 "이어서 할 때"부터 웹 빌드로 이어서 QA 해줘. 세이브는 Docs/QA_saves/web7_lv18_save.json
+> develop 브랜치에서 Tools/WebQA/README.md를 읽고, Docs/QA_플레이테스트_기록.md의 마지막 "이어서 할 때"부터 웹 빌드로 이어서 QA 해줘. 세이브는 Docs/QA_saves/web8_lv19_save.json
 
 ## 준비 (사람이 한 번)
 
@@ -26,6 +26,13 @@ curl -sS --retry-connrefused --retry 40 --retry-delay 3 -X POST http://127.0.0.1
 ```
 
 - Playwright 1.56 + `/opt/pw-browsers` Chromium(SwiftShader WebGL 2.0)으로 450×900 세로. `playwright install` 하지 말 것
+- Playwright 위치는 컨테이너마다 다름: driver.js가 `PLAYWRIGHT_PATH` → `/opt/node-tools/…` → `/opt/node22/lib/node_modules/playwright` 순으로 찾음. `bang.py` 등은 PIL이 필요 (`pip install pillow`)
+- `page.goto: net::ERR_CERT_AUTHORITY_INVALID`면 브라우저 인증서 저장소가 비어 있는 것 (8차). 검증을 끄지 말고 프록시 CA를 넣음:
+  ```bash
+  apt-get install -y libnss3-tools   # certutil
+  cd <스크래치패드> && awk '/BEGIN CERT/{n++} {print > ("ca-" n ".pem")}' /root/.ccr/agent-proxy-ca.crt
+  for f in ca-*.pem; do certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n "ccr-$f" -i $f; done
+  ```
 - 첫 화면(타이틀)은 `(225,600)`을 두 번(3초 간격) 눌러야 들어감 (첫 클릭은 캔버스 포커스)
 - 콘솔: `q.sh logs '{"n":40}'` (`Shader … not supported` · `Bounds Source is not assigned` · `No FarmBalanceData` 경고는 원래 있음)
 
