@@ -66,8 +66,12 @@ function character(t,x,y,scale){
   const mats=pose(t);
   for(const b of [...activeBones()].filter(b=>b.part).sort((a,b)=>a.layer-b.layer)){
     if((state.rear||!state.legacy)&&(b.name==='nearLeg'||b.name==='farLeg')){drawLeg(t,b.name==='nearLeg',mats);continue;}
-    const im=imgs[b.part],h=b.width*im.height/im.width;ctx.save();ctx.transform(...mats[b.name]);
+    const im=imgs[b.part],h=b.height??b.width*im.height/im.width;ctx.save();ctx.transform(...mats[b.name]);
     if(state.rear&&b.name==='farArm')ctx.scale(-1,1);
+    if(state.rear&&b.name==='body'){
+      // Interior fabric backing for alpha defects in the generated torso.
+      ctx.fillStyle='#628767';ctx.beginPath();ctx.roundRect(-59,-6,118,51,17);ctx.fill();
+    }
     if(!state.rear&&b.name==='body'&&RIG.bodyRearInset===0){
       // Opaque fabric backing inside the outline prevents residual generated alpha
       // in the cloth from exposing the backpack behind the torso.

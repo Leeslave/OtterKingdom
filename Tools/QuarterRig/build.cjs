@@ -38,6 +38,9 @@ async function main() {
     fs.writeFileSync(path.join(out,'RearStudy','parts',name+'.png'),data);
     images[name]='data:image/png;base64,'+data.toString('base64');
   }
+  const bareTorso=await sharp(path.join(out,'RearStudy','rear-body-no-sleeves-v3.png')).trim().png().toBuffer();
+  fs.writeFileSync(path.join(out,'RearStudy','parts','rearBody-no-sleeves.png'),bareTorso);
+  images.rearBody='data:image/png;base64,'+bareTorso.toString('base64');
   const rig = {
     units:'pixels; x right, y down; rotations in radians', view:'front-right three-quarter',
     legSolver:{type:'rigid straight leg, sole-anchored',stanceFraction:.6,cycleSeconds:.84,stepHalfWidth:10,lift:11,width:60,height:76,nearX:-10,farX:31,swingAngle:.055,rearInset:0,frontInset:0},
@@ -56,7 +59,7 @@ async function main() {
   };
   rig.rearBones=[
     {name:'hips',parent:null,pos:[0,-43]},
-    {name:'body',parent:'hips',pos:[0,-54],part:'rearBody',width:170,pivot:[.5,.6],layer:4},
+    {name:'body',parent:'hips',pos:[0,-54],part:'rearBody',width:143,height:130,pivot:[.5,.6],layer:4},
     {name:'farLeg',parent:'hips',pos:[31,0],part:'rearLeg',width:47,pivot:[.5,.2],layer:0},
     {name:'nearLeg',parent:'hips',pos:[-10,0],part:'rearLeg',width:50,pivot:[.5,.2],layer:1},
     {name:'farArm',parent:'body',pos:[-74,-51],part:'rearArm',width:48,pivot:[.42,.15],layer:2},

@@ -30,6 +30,12 @@ using Random = UnityEngine.Random;
 // after one loop (hasExitTime, exitTime = 1). `randomActionTriggers` expects
 // any additional action clips to be wired the same way (Any State -> trigger
 // -> clip state -> exit time 1 -> Idle) once those sprites exist.
+//
+// With a QuarterRigView assigned (the cutout quarter-view farmer) the sprite
+// and Animator are switched off and the rig is driven instead: it walks,
+// faces the way it goes, and harvests with QuarterRigView.PlayHarvest, holding
+// up the slot's crop (its bag icon). The rig has no idle actions yet, so at
+// waypoints and toys it just waits.
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class FarmerOtterController : MonoBehaviour
@@ -80,6 +86,10 @@ public class FarmerOtterController : MonoBehaviour
     // crop sprite doesn't draw over its legs when it walks up to a plant.
     [SerializeField] private int spriteSortingOrder = 2;
 
+    [Header("Cutout rig (optional)")]
+    [Tooltip("Replaces the sprite + Animator when set. Sorted at Sprite Sorting Order like the sprite.")]
+    [SerializeField] private QuarterRigView rigView;
+
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     private static readonly int WalkDirHash = Animator.StringToHash("WalkDir");
     private static readonly int HarvestHash = Animator.StringToHash("Harvest");
@@ -106,13 +116,20 @@ public class FarmerOtterController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = spriteSortingOrder;
+        if (rigView != null)
+        {
+            spriteRenderer.enabled = false;
+            animator.enabled = false;
+            rigView.SortingOrder = spriteSortingOrder;
+            return;
+        }
         ApplyAnimSpeeds();
     }
 
     // Lets the speed sliders be tuned live in Play Mode.
     private void OnValidate()
     {
-        if (animator != null) ApplyAnimSpeeds();
+        if (animator != null && rigView == null) ApplyAnimSpeeds();
     }
 
     private void ApplyAnimSpeeds()
@@ -280,7 +297,7 @@ public class FarmerOtterController : MonoBehaviour
 
     private IEnumerator PlayRandomActionOrWait()
     {
-        if (randomActionTriggers == null || randomActionTriggers.Length == 0)
+        if (rigView != null || randomActionTriggers == null || randomActionTriggers.Length == 0)
         {
             yield return new WaitForSeconds(Random.Range(wanderWaitRangeSec.x, wanderWaitRangeSec.y));
             yield break;
@@ -319,13 +336,21 @@ public class FarmerOtterController : MonoBehaviour
         }
 
         SetMoving(false);
-        animator.SetTrigger(HarvestHash);
+        if (rigView != null)
+        {
+            rigView.PlayHarvest(HarvestIcon(plotIndex, slotIndex));
+            yield return new WaitWhile(() => rigView.IsActing);
+        }
+        else
+        {
+            animator.SetTrigger(HarvestHash);
 
-        // Wait for the Any State -> Harvest transition to start, then for the
-        // Harvest state to finish and hand control back to Idle.
-        yield return null;
-        yield return new WaitUntil(() =>
-            !animator.GetCurrentAnimatorStateInfo(0).IsName("Harvest") && !animator.IsInTransition(0));
+            // Wait for the Any State -> Harvest transition to start, then for the
+            // Harvest state to finish and hand control back to Idle.
+            yield return null;
+            yield return new WaitUntil(() =>
+                !animator.GetCurrentAnimatorStateInfo(0).IsName("Harvest") && !animator.IsInTransition(0));
+        }
 
         isHarvesting = false;
         activeRoutine = StartCoroutine(WanderRoutine());
@@ -382,13 +407,30 @@ public class FarmerOtterController : MonoBehaviour
         transform.position = destination;
     }
 
-    private void SetMoving(bool moving) => animator.SetBool(IsMovingHash, moving);
+    // The crop the rig pulls out: its bag icon (the slot's grown sprite includes the soil).
+    private static Sprite HarvestIcon(int plotIndex, int slotIndex)
+    {
+        var game = GameManager.Instance;
+        var crop = game.FarmService.Plots[plotIndex].GetSlotCrop(slotIndex);
+        return crop != null && game.TryFindItem(crop.cropId, out var item) ? item.Icon : null;
+    }
+
+    private void SetMoving(bool moving)
+    {
+        if (rigView != null) rigView.SetWalking(moving, moveSpeed);
+        else animator.SetBool(IsMovingHash, moving);
+    }
 
     // MoveTo walks one axis at a time, so each leg is either purely vertical
     // (front/back walk) or purely horizontal (side walk, mirrored by flipX).
     private void SetWalkDir(Vector3 destination)
     {
         Vector2 delta = destination - transform.position;
+        if (rigView != null)
+        {
+            rigView.Face(delta);
+            return;
+        }
         WalkDir dir = Mathf.Abs(delta.y) > Mathf.Abs(delta.x)
             ? (delta.y < 0f ? WalkDir.Down : WalkDir.Up)
             : WalkDir.Side;
@@ -399,6 +441,7 @@ public class FarmerOtterController : MonoBehaviour
     {
         float dx = destination.x - transform.position.x;
         if (Mathf.Abs(dx) < 0.001f) return;
-        spriteRenderer.flipX = dx < 0f;
+        if (rigView != null) rigView.Face(new Vector2(dx, 0f));
+        else spriteRenderer.flipX = dx < 0f;
     }
 }

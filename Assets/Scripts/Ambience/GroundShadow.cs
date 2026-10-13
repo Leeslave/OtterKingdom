@@ -4,6 +4,7 @@
 /// 발밑의 흐린 타원 그림자. 해달·소품이 바닥에 붙어 보이게 한다.
 /// 대상 그림(가장 큰 SpriteRenderer)의 폭에 맞춰 크기를 정하고, 그림이 꺼지거나 바뀌면 따라간다
 /// (바위가 깨져 자갈이 되면 그림자도 작아짐). AmbienceDirector가 붙인다.
+/// 조각 리그 해달(QuarterRigView)은 조각 그림 대신 리그의 발 위치와 폭을 쓴다.
 /// </summary>
 public class GroundShadow : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GroundShadow : MonoBehaviour
     private const int OverlayOrderFrom = 30000;
 
     private SpriteRenderer _source;
+    private QuarterRigView _rig;
     private SpriteRenderer _shadow;
     private float _alpha;
     private Sprite _sizedFor;
@@ -25,8 +27,10 @@ public class GroundShadow : MonoBehaviour
         if (existing != null)
             return existing;
 
-        var source = LargestRenderer(target);
-        if (source == null)
+        // 리그는 조각마다 그림이 따로라 가장 큰 그림(머리)이 몸통이 아님. 옛 스프라이트는 꺼져 있음
+        var rig = target.GetComponentInChildren<QuarterRigView>(true);
+        var source = rig != null ? null : LargestRenderer(target);
+        if (rig == null && source == null)
             return null;
 
         var view = target.AddComponent<GroundShadow>();
@@ -38,6 +42,7 @@ public class GroundShadow : MonoBehaviour
         view._alpha = color.a;
         view._shadow.sortingOrder = sortingOrder;
         view._source = source;
+        view._rig = rig;
         view._widthFactor = widthFactor;
         view._yOffset = yOffset;
         view.Fit();
@@ -66,6 +71,12 @@ public class GroundShadow : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (_rig != null)
+        {
+            if (_shadow.enabled != _rig.isActiveAndEnabled)
+                _shadow.enabled = _rig.isActiveAndEnabled;
+            return;
+        }
         bool visible = _source.enabled && _source.gameObject.activeInHierarchy && _source.sprite != null;
         if (_shadow.enabled != visible)
             _shadow.enabled = visible;
@@ -82,6 +93,12 @@ public class GroundShadow : MonoBehaviour
     // 그림 폭의 일정 비율, 높이는 폭의 0.3. 부모 크기·뒤집기와 상관없이 같은 크기로
     private void Fit()
     {
+        if (_rig != null)
+        {
+            var feet = _rig.transform.position;
+            Place(feet.x, feet.y, _rig.Width * _widthFactor);
+            return;
+        }
         _sizedFor = _source.sprite;
         if (_sizedFor == null)
             return;
@@ -92,7 +109,11 @@ public class GroundShadow : MonoBehaviour
         float centerX = _source.transform.position.x + spriteBounds.center.x * _source.transform.lossyScale.x;
         // 그림 아래 끝(발·바닥 닿는 곳)에 그림자 가운데를 둬서 절반이 그림 밑으로 보이게
         float bottomY = _source.transform.position.y + spriteBounds.min.y * Mathf.Abs(_source.transform.lossyScale.y);
+        Place(centerX, bottomY, width);
+    }
 
+    private void Place(float centerX, float bottomY, float width)
+    {
         var parentScale = transform.lossyScale;
         var shadowSize = _shadow.sprite.bounds.size;
         var t = _shadow.transform;

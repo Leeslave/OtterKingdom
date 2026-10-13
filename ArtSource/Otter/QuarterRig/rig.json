@@ -163,7 +163,8 @@
         -54
       ],
       "part": "rearBody",
-      "width": 170,
+      "width": 143,
+      "height": 130,
       "pivot": [
         0.5,
         0.6

@@ -17,6 +17,12 @@ using UnityEngine.Rendering;
 // (the miner's plaza look reuses its mine clips). It has its own left walk,
 // so the sprite is never mirrored.
 //
+// A prefab with a QuarterRigView (the cutout quarter-view otter) is posed
+// through it instead: walk on/off at the agent's speed, facing towards the
+// walk (rear view when heading up, mirrored when heading left) or the toy.
+// On a chair or bench it sits down and dozes; elsewhere it has no play
+// actions yet, so it just stands while playing.
+//
 // Sorting goes through a SortingGroup on the root so any child renderers
 // (e.g. a future shadow) move in depth together with the body.
 //
@@ -47,6 +53,8 @@ public class OtterVisualController : MonoBehaviour
     [SerializeField] private SortingGroup sortingGroup;
     [Tooltip("Optional. Code-driven clips (Idle, WalkRight, WalkLeft, WalkDown, WalkUp) used when there is no Animator controller.")]
     [SerializeField] private SpriteFrameAnimator frameAnimator;
+    [Tooltip("Optional. Code-posed cutout rig; replaces the sprite, Animator and frame clips.")]
+    [SerializeField] private QuarterRigView rigView;
 
     [Header("Facing")]
     [Tooltip("True if the unflipped sprite faces right.")]
@@ -77,7 +85,9 @@ public class OtterVisualController : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<OtterWanderAgent>();
-        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (rigView == null) rigView = GetComponentInChildren<QuarterRigView>();
+        // The rig's part renderers must not be flipped one by one.
+        if (spriteRenderer == null && rigView == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (animator == null) animator = GetComponentInChildren<Animator>();
         if (sortingGroup == null) sortingGroup = GetComponent<SortingGroup>();
         if (frameAnimator == null) frameAnimator = GetComponentInChildren<SpriteFrameAnimator>();
@@ -116,6 +126,11 @@ public class OtterVisualController : MonoBehaviour
         if (hasIsMoving) animator.SetBool(IsMovingHash, walking);
         if (hasWalkAnimSpeed) animator.SetFloat(WalkAnimSpeedHash, agent.CurrentWalkSpeed / walkAnimReferenceSpeed);
         if (UsesFrameClips) frameAnimator.Play(FrameClip(walking));
+        if (rigView != null)
+        {
+            rigView.SetWalking(walking, agent.CurrentWalkSpeed);
+            rigView.SetSitting(agent.IsSeated);
+        }
 
         if (agent.CurrentState == OtterWanderAgent.State.Play) UpdatePlay();
 
@@ -125,6 +140,7 @@ public class OtterVisualController : MonoBehaviour
     private void UpdatePlay()
     {
         float dx = agent.LookTarget.x - transform.position.x;
+        if (rigView != null) rigView.Face(agent.LookTarget - (Vector2)transform.position, minHorizontalRatioToFlip);
         if (spriteRenderer != null && !UsesFrameClips && Mathf.Abs(dx) > 0.01f)
         {
             spriteRenderer.flipX = (dx > 0f) != spriteFacesRight;
@@ -168,6 +184,7 @@ public class OtterVisualController : MonoBehaviour
 
     private void UpdateFacing(Vector2 dir)
     {
+        if (rigView != null) rigView.Face(dir, minHorizontalRatioToFlip);
         if (Mathf.Abs(dir.x) < minHorizontalRatioToFlip * dir.magnitude) return;
 
         facingRight = dir.x > 0f;

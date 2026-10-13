@@ -124,6 +124,9 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     // Sitting on a chair / standing at a spot (for bubbles etc.).
     public bool IsAtSpot => spotSession != null && spotPhase != SpotPhase.None;
 
+    // Settled on a chair or bench (hopped up and staying; not while hopping on or off).
+    public bool IsSeated => spotSession != null && spotSession.Hops && spotPhase == SpotPhase.Stay;
+
     // Working at the task spot (not walking there).
     public bool IsOnTask => hasTask && CurrentState == State.Play && playSession == null;
 
