@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": [
+    "arm position/scale affects render",
+    "leg sole offset and paw scale",
+    "reload restores settings",
+    "JSON export/import round trip",
+    "invalid import preserves state",
+    "reset restores all default values",
+    "body resize/reset",
+    "390px layout",
+    "no page errors"
+  ]
+}

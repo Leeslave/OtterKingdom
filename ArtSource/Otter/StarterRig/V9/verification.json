@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "baselineUnchanged": true,
+  "exactV9LegSolver": true,
+  "byteIdenticalMotionFunctions": true,
+  "bonePositionsPreserved": true,
+  "checks": {
+    "maxGroundError": 0,
+    "maxSlideError": 1.1855902926072304e-9,
+    "checks": 808
+  },
+  "walkFrames": 24,
+  "pageErrors": [],
+  "controlsChecked": [
+    "walk",
+    "idle",
+    "pause",
+    "speed",
+    "bones",
+    "explode",
+    "flip",
+    "small"
+  ],
+  "mobileWidth": 390
+}

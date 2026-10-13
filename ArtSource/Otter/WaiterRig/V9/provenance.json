@@ -1,0 +1,15 @@
+{
+  "baseline": "QuarterRig/Baseline-V9",
+  "hashes": {
+    "preview.html": "1bbb1e593fff9b9725787fef4bf65579e24950d2cc1c455dbee5ded52b9bd74d",
+    "rig.json": "b662cde3985e661857b26125e5619921695da696a242a35c02ea9c2fca53548e",
+    "walk.gif": "4fff674ea17d2b4570931c75ebc72a5f6c7b370cd45553d3955be56af52414a8"
+  },
+  "changes": [
+    "New reference character artwork",
+    "No backpack",
+    "Display heights fitted to new parts",
+    "Whole rounded sprite legs on unchanged sole path",
+    "Bare/waiter body and arm swaps"
+  ]
+}
