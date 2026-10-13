@@ -20,8 +20,9 @@ using UnityEngine.Rendering;
 // A prefab with a QuarterRigView (the cutout quarter-view otter) is posed
 // through it instead: walk on/off at the agent's speed, facing towards the
 // walk (rear view when heading up, mirrored when heading left) or the toy.
-// On a chair or bench it sits down and dozes; elsewhere it has no play
-// actions yet, so it just stands while playing.
+// On a chair or bench it sits down and dozes; with a soccer ball it does
+// keepy-uppy (started with the ball's bounce) and at a puzzle it squats and
+// fiddles with the pieces. Other toys and spots it just stands facing.
 //
 // Sorting goes through a SortingGroup on the root so any child renderers
 // (e.g. a future shadow) move in depth together with the body.
@@ -44,6 +45,10 @@ public class OtterVisualController : MonoBehaviour
         "Squat", "Stretch", "Net", "Eat",
         "Happy", "Yawn", "Sleep", "Paint", "Wave", "Write",
     };
+    // Toys a rigged otter plays with in its own way instead of standing beside them (by item id).
+    private static readonly string[] ToyItemIds = { "toy_soccerball", "toy_puzzle" };
+    private static readonly QuarterRigView.Loop[] ToyLoops = { QuarterRigView.Loop.Kick, QuarterRigView.Loop.Puzzle };
+
     // Short breather in Idle between two play actions.
     private const float PlayActionGapSeconds = 0.4f;
 
@@ -130,6 +135,8 @@ public class OtterVisualController : MonoBehaviour
         {
             rigView.SetWalking(walking, agent.CurrentWalkSpeed);
             rigView.SetSitting(agent.IsSeated);
+            var loop = ToyLoop(agent.PlayToy);
+            if (rigView.CurrentLoop != loop) rigView.PlayLoop(loop);
         }
 
         if (agent.CurrentState == OtterWanderAgent.State.Play) UpdatePlay();
@@ -180,6 +187,13 @@ public class OtterVisualController : MonoBehaviour
             if (preferredTriggers.Count > 0) return preferredTriggers[Random.Range(0, preferredTriggers.Count)];
         }
         return playTriggers[Random.Range(0, playTriggers.Count)];
+    }
+
+    private static QuarterRigView.Loop ToyLoop(PlacedDecorView toy)
+    {
+        var item = toy != null && toy.Placed != null && toy.Placed.Decor != null ? toy.Placed.Decor.Item : null;
+        int i = item != null ? System.Array.IndexOf(ToyItemIds, item.ItemId) : -1;
+        return i >= 0 ? ToyLoops[i] : QuarterRigView.Loop.None;
     }
 
     private void UpdateFacing(Vector2 dir)

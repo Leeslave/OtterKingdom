@@ -1,9 +1,11 @@
-"""Build rig-editor.html: the V14 rig parts, pivots and any saved tuning packed into one page.
+"""Build rig-editor.html: every QuarterRigView rig's parts, pivots and saved tuning packed into one page.
+
+Rigs come from the plaza prefabs that use QuarterRigView (their resourceFolder and characterScale).
 
     python Tools/QuarterRig/build_rig_editor.py              # -> Tools/QuarterRig/rig-editor.html
     python Tools/QuarterRig/build_rig_editor.py --body OUT   # page body only (for publishing as an artifact)
 
-Rerun after re-exporting the parts or changing Resources/QuarterRigV14/tuning.json.
+Rerun after re-exporting parts, adding a rig prefab or changing a rig's tuning.json.
 The page's pose code is a port of QuarterRigView.cs; change both together.
 """
 import argparse
@@ -17,10 +19,15 @@ from PIL import Image
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-RIG = ROOT / "Assets/Resources/QuarterRigV14"
+RESOURCES = ROOT / "Assets/Resources"
+PREFABS = ROOT / "Assets/Prefabs/Plaza"
+RIG_VIEW_GUID = "a29eaed5e9ac4a1badeddf527641c691"  # QuarterRigView.cs
+RIG_LABELS = {"QuarterRigV14": "농부", "WaiterRigV14": "웨이터"}
 BENCH_PNG = ROOT / "Assets/Art/Plaza/Props/Prop_Bench.png"
 BENCH_PREFAB = ROOT / "Assets/Prefabs/Plaza/Prop_Bench.prefab"
 CROP_ICON = ROOT / "Assets/Art/Item/Vegetable/Carrot.png"
+BALL_ICON = ROOT / "Assets/Art/Item/Toy/ICON_Toy_SoccerBall.png"
+PUZZLE_ICON = ROOT / "Assets/Art/Item/Toy/ICON_Toy_Puzzle.png"
 
 
 def data_uri(image):
@@ -59,25 +66,45 @@ def bench():
             "seat": [float(seat.group(1)), float(seat.group(2))]}
 
 
-def crop_icon():
-    # Held at ~95 rig px (190 image px at 2x), so a 256 px copy is plenty.
-    image = Image.open(CROP_ICON).convert("RGBA")
-    box = image.getchannel("A").getbbox()
-    image = image.crop(box)
-    image.thumbnail((256, 256), Image.LANCZOS)
+def icon(path, size=256, trim=True):
+    # Shown at well under 256 screen px, so a small copy is plenty.
+    image = Image.open(path).convert("RGBA")
+    if trim:
+        image = image.crop(image.getchannel("A").getbbox())
+    image.thumbnail((size, size), Image.LANCZOS)
     return {"src": data_uri(image), "w": image.width, "h": image.height, "pivot": [.5, .5]}
 
 
+def rig_prefabs():
+    """(resourceFolder, characterScale) of each plaza prefab that uses QuarterRigView, farmer first."""
+    found = {}
+    for prefab in sorted(PREFABS.glob("*.prefab")):
+        text = prefab.read_text(encoding="utf-8")
+        if RIG_VIEW_GUID not in text:
+            continue
+        folder = re.search(r"resourceFolder: (\S+)", text).group(1)
+        scale = float(re.search(r"characterScale: ([\d.]+)", text).group(1))
+        if (RESOURCES / folder / "rig.json").exists():
+            found.setdefault(folder, scale)
+    return sorted(found.items(), key=lambda item: item[0] != "QuarterRigV14")
+
+
+def build_rig(folder, scale):
+    root = RESOURCES / folder
+    rig = json.loads((root / "rig.json").read_text(encoding="utf-8"))
+    tuning_path = root / "tuning.json"
+    return {"label": RIG_LABELS.get(folder, folder), "scale": scale,
+            "rig": {"legSolver": rig["legSolver"], "bones": rig["bones"], "rearBones": rig["rearBones"]},
+            "sprites": {png.stem: sprite(png) for png in sorted(root.glob("*.png"))},
+            "tuning": json.loads(tuning_path.read_text(encoding="utf-8")) if tuning_path.exists() else None}
+
+
 def build_data():
-    rig = json.loads((RIG / "rig.json").read_text(encoding="utf-8"))
-    sprites = {}
-    for png in sorted(RIG.glob("*.png")):
-        sprites[png.stem] = sprite(png)
-    sprites["crop"] = crop_icon()
-    tuning_path = RIG / "tuning.json"
-    tuning = json.loads(tuning_path.read_text(encoding="utf-8")) if tuning_path.exists() else None
-    return {"rig": {"legSolver": rig["legSolver"], "bones": rig["bones"], "rearBones": rig["rearBones"]},
-            "sprites": sprites, "bench": bench(), "tuning": tuning}
+    # Toys are drawn as the plaza does it: the whole icon (padding included) fitted to the cell.
+    return {"rigs": {folder: build_rig(folder, scale) for folder, scale in rig_prefabs()},
+            "shared": {"crop": icon(CROP_ICON), "ball": icon(BALL_ICON, trim=False),
+                       "puzzle": icon(PUZZLE_ICON, trim=False)},
+            "bench": bench()}
 
 
 def main():

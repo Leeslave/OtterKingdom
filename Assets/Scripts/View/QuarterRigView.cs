@@ -13,6 +13,14 @@ using UnityEngine.Rendering;
 // PlayHarvest crouches at the crop, tugs twice, pops it out holding the crop
 // up (sprite given by the caller, e.g. the crop's item icon) and tucks it
 // into the backpack. IsActing is true until it is back to idle.
+// PlayLoop runs a toy loop until it is changed or stopped:
+//   Kick   - keepy-uppy beside a ball: wind up, kick the near leg forward
+//            (swinging from the hip), balance with the arms - one kick per two
+//            bounces of the toy (PlacedDecorView's Bounce, 2.2 a second),
+//            landing on the second touchdown when started with the toy.
+//   Puzzle - crouch at a puzzle beside the feet, hands on it fiddling with
+//            the pieces, head tilting while it thinks, then a little "got it"
+//            lift of the arm before going back to it.
 //
 // SetSitting(true) settles onto a seat whose surface is this transform (a
 // chair or bench spot): bottom on the seat, legs stretched out in front, and
@@ -55,16 +63,21 @@ public sealed class QuarterRigView : MonoBehaviour
 
     // One action key: time (s) and offsets from the idle pose - hips drop (rig px, + = down),
     // angles (rad, + = clockwise: near arm swings out/back, far arm in), feet spread (rig px),
-    // and the held crop's scale (0 = hidden).
+    // the held crop's scale (0 = hidden), the near leg's kick (degrees forward, swung from the hip)
+    // and how busily the hands fiddle (0..1, small quick taps on top of the arm angles).
     private readonly struct Key
     {
-        public readonly float t, hips, body, head, near, far, tail, pack, spread, crop;
-        public Key(float t, float hips, float body, float head, float near, float far, float tail, float pack, float spread, float crop)
+        public readonly float t, hips, body, head, near, far, tail, pack, spread, crop, kick, fiddle;
+        public Key(float t, float hips, float body, float head, float near, float far, float tail, float pack, float spread, float crop,
+            float kick = 0f, float fiddle = 0f)
         {
             this.t = t; this.hips = hips; this.body = body; this.head = head; this.near = near;
-            this.far = far; this.tail = tail; this.pack = pack; this.spread = spread; this.crop = crop;
+            this.far = far; this.tail = tail; this.pack = pack; this.spread = spread; this.crop = crop; this.kick = kick;
+            this.fiddle = fiddle;
         }
     }
+
+    public enum Loop { None, Kick, Puzzle }
 
     private static readonly Key[] HarvestKeys =
     {
@@ -82,6 +95,35 @@ public sealed class QuarterRigView : MonoBehaviour
         new Key(2.24f,  0f,   0f,    0f,    0f,    0f,  -.03f, -.07f,  0f,   0f),
         new Key(2.40f,  0f,   0f,    0f,    0f,    0f,    0f,    0f,   0f,   0f),
     };
+    // Keepy-uppy, looped: two of the toy's bounces (1 / 2.2 s each) per kick, the kick landing on the second.
+    private static readonly Key[] KickKeys =
+    {
+        //       t     hips   body   head   near   far    tail   pack  spread crop  kick
+        new Key(0f,     0f,   0f,    0f,    0f,    0f,    0f,    0f,   0f,   0f,   0f),
+        new Key(.27f,   4f, -.02f,   0f,   .22f, -.15f,  .05f,   0f,   0f,   0f, -18f),  // wind up, leg back
+        new Key(.455f, -7f, -.07f, -.06f,  .55f, -.45f,  .16f, -.05f,  0f,   0f,  58f),  // kick on the bounce
+        new Key(.62f,  -2f, -.03f, -.03f,  .30f, -.25f,  .08f,   0f,   0f,   0f,  28f),  // follow through
+        new Key(.909f,  0f,   0f,    0f,    0f,    0f,    0f,    0f,   0f,   0f,   0f),
+    };
+    // Kicks swing the leg about a hip this far above the sole.
+    private const float KickHipHeight = 64f;
+
+    // Puzzle on the ground beside the feet: squat into reach (first key), then loop from PuzzleLoopFrom.
+    private static readonly Key[] PuzzleKeys =
+    {
+        //       t     hips   body   head   near   far    tail   pack  spread crop  kick  fiddle
+        new Key(0f,     0f,   0f,    0f,    0f,    0f,    0f,    0f,   0f,   0f,   0f,  0f),
+        new Key(.30f,  24f,  .06f,  .12f, -.70f, -.50f,  .10f,   0f,   6f,   0f,   0f,  1f),  // squat, hands on the pieces
+        new Key(1.20f, 22f,  .04f,  .02f, -.65f, -.45f,  .14f,   0f,   6f,   0f,   0f,  1f),  // head up a little: hmm
+        new Key(1.90f, 24f,  .07f,  .14f, -.72f, -.52f,  .10f,   0f,   6f,   0f,   0f,  1f),
+        new Key(2.15f,  6f, -.04f, -.10f, -1.50f, -.90f, -.10f, -.03f,  3f,   0f,   0f,  0f),  // got it! arm up
+        new Key(2.45f, 10f, -.02f, -.06f, -1.30f, -.80f, -.04f,   0f,   3f,   0f,   0f,  0f),
+        new Key(2.90f, 24f,  .06f,  .12f, -.70f, -.50f,  .10f,   0f,   6f,   0f,   0f,  1f),  // = the .30 key, back to it
+    };
+    private const float PuzzleLoopFrom = .30f;
+    // Fiddling taps: a quick wobble of both forearms (rad) and a slow head tilt.
+    private const float FiddleTapsPerSecond = 3f, FiddleNear = .12f, FiddleFar = .09f, FiddleHead = .035f;
+
     // From here on the crop is going into the backpack, so it draws behind the body.
     private const float HarvestStashTime = 1.95f;
     // Held-crop sorting inside the rig: over the body while shown, under it while stashed.
@@ -136,6 +178,8 @@ public sealed class QuarterRigView : MonoBehaviour
     private Vector3 handOffset;
     private Key[] action;
     private float actionTime;
+    private bool actionLoops;
+    private float actionLoopFrom;
     private bool sitting;
     private float sitBlend, nodTime, zTimer;
     private SpriteRenderer frontHead;
@@ -147,6 +191,7 @@ public sealed class QuarterRigView : MonoBehaviour
     // Widest part (the hat brim, 270 rig px) in world units, e.g. for the ground shadow.
     public float Width => 2.7f * characterScale * Mathf.Abs(transform.lossyScale.x);
     public bool IsActing => action != null;
+    public Loop CurrentLoop => action == KickKeys ? Loop.Kick : action == PuzzleKeys ? Loop.Puzzle : Loop.None;
     public bool IsSitting => sitting;
 
     public int SortingOrder
@@ -162,12 +207,30 @@ public sealed class QuarterRigView : MonoBehaviour
         facingRear = false;
         action = HarvestKeys;
         actionTime = 0f;
+        actionLoops = false;
         if (heldCrop != null) heldCrop.sprite = crop;
+    }
+
+    // Start a toy loop (from its beginning, so a Kick started with the toy's bounce stays in time),
+    // or with Loop.None stop one that is running (a harvest is left alone).
+    public void PlayLoop(Loop loop)
+    {
+        if (loop == Loop.None)
+        {
+            if (actionLoops) StopAction();
+            return;
+        }
+        walking = false;
+        action = loop == Loop.Kick ? KickKeys : PuzzleKeys;
+        actionTime = 0f;
+        actionLoops = true;
+        actionLoopFrom = loop == Loop.Kick ? 0f : PuzzleLoopFrom;
     }
 
     public void StopAction()
     {
         action = null;
+        actionLoops = false;
         if (heldCrop != null) heldCrop.gameObject.SetActive(false);
     }
 
@@ -293,7 +356,12 @@ public sealed class QuarterRigView : MonoBehaviour
             if (action != null)
             {
                 actionTime += dt;
-                if (actionTime >= action[action.Length - 1].t) StopAction();
+                float length = action[action.Length - 1].t;
+                if (actionTime >= length)
+                {
+                    if (actionLoops) actionTime = actionLoopFrom + (actionTime - length);
+                    else StopAction();
+                }
             }
             sitBlend = Mathf.MoveTowards(sitBlend, sitting ? 1f : 0f, dt / SitBlendSeconds);
             if (sitting) nodTime += dt;
@@ -321,7 +389,7 @@ public sealed class QuarterRigView : MonoBehaviour
         {
             var joint = v.joints[b.name];
             var tuned = v.TuningOf(b.name);
-            if (IsLeg(b)) { PoseLeg(joint, b.name == "nearLeg", w, a.spread, sb, tuned); continue; }
+            if (IsLeg(b)) { PoseLeg(joint, b.name == "nearLeg", w, a.spread, sb, tuned, b.name == "nearLeg" ? a.kick : 0f); continue; }
             float x = b.pos[0], y = b.pos[1], angle = 0f;
             switch (b.name)
             {
@@ -342,11 +410,12 @@ public sealed class QuarterRigView : MonoBehaviour
                 case "hips": y += a.hips; break;
                 case "body": angle += a.body; break;
                 case "head": angle += a.head; break;
-                case "nearArm": angle += a.near; break;
-                case "farArm": angle += a.far; break;
+                case "nearArm": angle += a.near + a.fiddle * FiddleNear * Mathf.Sin(clock * FiddleTapsPerSecond * Mathf.PI * 2f); break;
+                case "farArm": angle += a.far + a.fiddle * FiddleFar * Mathf.Sin(clock * FiddleTapsPerSecond * Mathf.PI * 2f + 1.3f); break;
                 case "tail": angle += a.tail; break;
                 case "backpack": angle += a.pack; break;
             }
+            if (b.name == "head") angle += a.fiddle * FiddleHead * Mathf.Sin(clock * 1.3f);
             // Sitting and dozing: settled on the seat, hands in the lap, slow deep breaths, nodding off.
             switch (b.name)
             {
@@ -366,7 +435,7 @@ public sealed class QuarterRigView : MonoBehaviour
     }
 
     // Rigid leg with its sole on the ground: slides back during stance, lifts and swings forward otherwise.
-    private void PoseLeg(Transform joint, bool near, float w, float spread, float sit, PartTuning tuned)
+    private void PoseLeg(Transform joint, bool near, float w, float spread, float sit, PartTuning tuned, float kick)
     {
         float q = Mathf.Repeat(phase + (near ? 0f : .5f), 1f);
         bool stance = q < legs.stanceFraction;
@@ -385,8 +454,16 @@ public sealed class QuarterRigView : MonoBehaviour
         var seated = (near ? SitNearHip : SitFarHip) + toFoot * length;
 
         var position = Vector2.Lerp(stand, seated, sit) + new Vector2(tuned.x, -tuned.y);
+        float rotation = Mathf.Lerp(swing, degrees, sit) - tuned.rotation;
+        if (kick != 0f)
+        {
+            // Swing about the hip: the sole moves forward and up, the leg turned to keep pointing at the hip.
+            var hip = position + Vector2.up * KickHipHeight;
+            position = hip + new Vector2(Mathf.Sin(kick * Mathf.Deg2Rad), -Mathf.Cos(kick * Mathf.Deg2Rad)) * KickHipHeight;
+            rotation += kick;
+        }
         joint.localPosition = position / RigPixelsPerUnit;
-        joint.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(swing, degrees, sit) - tuned.rotation);
+        joint.localRotation = Quaternion.Euler(0f, 0f, rotation);
         joint.localScale = new Vector3(1f, Mathf.Lerp(1f, SitLegForeshorten, sit), 1f);
     }
 
@@ -477,7 +554,8 @@ public sealed class QuarterRigView : MonoBehaviour
         u = u * u * (3f - 2f * u);
         return new Key(t, Mathf.Lerp(k0.hips, k1.hips, u), Mathf.Lerp(k0.body, k1.body, u), Mathf.Lerp(k0.head, k1.head, u),
             Mathf.Lerp(k0.near, k1.near, u), Mathf.Lerp(k0.far, k1.far, u), Mathf.Lerp(k0.tail, k1.tail, u),
-            Mathf.Lerp(k0.pack, k1.pack, u), Mathf.Lerp(k0.spread, k1.spread, u), Mathf.Lerp(k0.crop, k1.crop, u));
+            Mathf.Lerp(k0.pack, k1.pack, u), Mathf.Lerp(k0.spread, k1.spread, u), Mathf.Lerp(k0.crop, k1.crop, u),
+            Mathf.Lerp(k0.kick, k1.kick, u), Mathf.Lerp(k0.fiddle, k1.fiddle, u));
     }
 
     private static bool IsLeg(Bone b) => b.name.EndsWith("Leg", StringComparison.Ordinal);

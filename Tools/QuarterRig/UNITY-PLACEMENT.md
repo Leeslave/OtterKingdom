@@ -40,19 +40,35 @@ held-crop scale; smoothstep between keys).
   on a chair, bench, log or stump and staying), so rigged otters doze on any
   sit spot.
 
+- `PlayLoop(Loop.Kick / Loop.Puzzle)` (see `kick.gif`, `puzzle.gif`) loops a toy
+  game until `PlayLoop(Loop.None)`. Kick: keepy-uppy, the near leg swung from
+  the hip (`KickHipHeight`), one kick per two of the ball's bounces (2.2/s),
+  landing on the second when started with the toy. Puzzle: squat with both
+  hands on the pieces, fiddling (quick forearm taps) and tilting the head, then
+  a "got it" lift of the arm. In the plaza `OtterVisualController` starts them
+  when the agent plays with `toy_soccerball` / `toy_puzzle`
+  (`OtterWanderAgent.PlayToy`); other toys still just get stood beside.
+
+Every QuarterRigView rig shares these motions: the waiter
+(`PlazaOtter_WaiterRigged`, `Resources/WaiterRigV14`, see
+`ArtSource/Otter/WaiterRig/V14/doze.gif`) sits, dozes, kicks and fiddles the
+same way; it has no backpack, so a harvest just tucks the crop behind it.
+
 `make_sleep_parts.py` makes `front-head-sleep.png` (the eyes painted over with
 the nearest fur/muzzle and redrawn as closed lids, same size and pivot as
-`front-head`) and `fx-z.png`. Rerun it after re-exporting the parts.
+`front-head`) and `fx-z.png`. Rerun it after re-exporting the parts; the waiter
+needs `--rig WaiterRigV14 --eye-luma 110 --fill shapes` (its eyes fade to brown
+and cover the muzzle edge, which `shapes` redraws from fitted ellipses).
 
 ## Rig editor (tuning.json)
 
-`Tools/QuarterRig/rig-editor.html` (open it directly in Chrome/Edge) previews the
-rig in the four directions with the four motions (stand, walk, harvest, sit and
-doze), using a port of `QuarterRigView`'s pose code, and adjusts single parts per
+`Tools/QuarterRig/rig-editor.html` (open it directly in Chrome/Edge) previews each
+QuarterRigView rig (farmer, waiter) in the four directions with every motion
+(stand, walk, harvest, sit and doze, kick, puzzle; toys as the plaza shows them), using a port of `QuarterRigView`'s pose code, and adjusts single parts per
 view: offset (rig px, y down) and rotation (degrees, clockwise) on the joint, which
 carry the attached parts, and a scale on that part's sprite only. Click a part to
 select it, drag to move it. "tuning.json 저장" writes the file (pick
-`Assets/Resources/QuarterRigV14/tuning.json`); `QuarterRigView` reads it when it
+`Assets/Resources/<rig folder>/tuning.json`, shown on the page); `QuarterRigView` reads it when it
 builds the rig (Play, scene reload). Only changed parts are written:
 
 ```json
