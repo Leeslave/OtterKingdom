@@ -1,0 +1,147 @@
+{
+  "view": "northeast; northwest via horizontal mirroring",
+  "bones": [
+    {
+      "name": "hips",
+      "parent": null,
+      "pos": [
+        0,
+        -43
+      ]
+    },
+    {
+      "name": "body",
+      "parent": "hips",
+      "pos": [
+        0,
+        -54
+      ],
+      "part": "rearBody",
+      "width": 170,
+      "pivot": [
+        0.5,
+        0.6
+      ],
+      "layer": 4
+    },
+    {
+      "name": "farLeg",
+      "parent": "hips",
+      "pos": [
+        31,
+        0
+      ],
+      "part": "rearLeg",
+      "width": 47,
+      "pivot": [
+        0.5,
+        0.2
+      ],
+      "layer": 0
+    },
+    {
+      "name": "nearLeg",
+      "parent": "hips",
+      "pos": [
+        -10,
+        0
+      ],
+      "part": "rearLeg",
+      "width": 50,
+      "pivot": [
+        0.5,
+        0.2
+      ],
+      "layer": 1
+    },
+    {
+      "name": "farArm",
+      "parent": "body",
+      "pos": [
+        -74,
+        -51
+      ],
+      "part": "rearArm",
+      "width": 48,
+      "pivot": [
+        0.42,
+        0.15
+      ],
+      "layer": 2
+    },
+    {
+      "name": "nearArm",
+      "parent": "body",
+      "pos": [
+        61,
+        -53
+      ],
+      "part": "rearArm",
+      "width": 58,
+      "pivot": [
+        0.42,
+        0.15
+      ],
+      "layer": 5
+    },
+    {
+      "name": "tail",
+      "parent": "hips",
+      "pos": [
+        -6,
+        -18
+      ],
+      "part": "rearTail",
+      "width": 118,
+      "pivot": [
+        0.9,
+        0.23
+      ],
+      "layer": 6
+    },
+    {
+      "name": "backpack",
+      "parent": "body",
+      "pos": [
+        -10,
+        -40
+      ],
+      "part": "rearPack",
+      "width": 110,
+      "pivot": [
+        0.5,
+        0.25
+      ],
+      "layer": 7
+    },
+    {
+      "name": "head",
+      "parent": "body",
+      "pos": [
+        0,
+        -57
+      ],
+      "part": "rearHead",
+      "width": 270,
+      "pivot": [
+        0.5,
+        0.9
+      ],
+      "layer": 8
+    }
+  ],
+  "legSolver": {
+    "type": "rigid straight leg, sole-anchored",
+    "stanceFraction": 0.6,
+    "cycleSeconds": 0.84,
+    "stepHalfWidth": 10,
+    "lift": 11,
+    "width": 60,
+    "height": 76,
+    "nearX": -10,
+    "farX": 31,
+    "swingAngle": 0.055,
+    "rearInset": 0,
+    "frontInset": 0
+  }
+}

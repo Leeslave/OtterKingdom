@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -18,7 +18,7 @@ using static GlobalUISetup;
 public static partial class SettlementSetup
 {
     private const string TerritoryArtFolder = "Assets/Art/Plaza/Territory";
-    private const string WorldMapPath = "Assets/Art/Plaza/AlignedOtterMap/Plaza_Aligned_4072.png"; // 최초 지도와 걷기·영토 좌표를 일치시킨다
+    private const string WorldMapPath = "Assets/Art/Plaza/AlignedOtterMap/Plaza_Aligned_4072.png"; // 기존 지도 크기·걷기·영토 좌표를 유지한다
     private const string TerritoryLayoutPath = "Assets/Art/Plaza/territory_layout.json";
     private const string TerritoryFolder = DataFolder + "/Territory";
     private const string TerritoryRootName = "Territory";

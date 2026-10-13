@@ -15,7 +15,12 @@ await page.screenshot({path:path.join(out,'preview.png')});
 await page.click('#idle');
 if(!(await page.locator('#status').innerText()).includes('대기'))throw Error('Idle toggle failed');
 await page.click('#walk');
+for(const dir of ['nw','ne','sw','se']){
+ await page.click('#'+dir);await page.evaluate(()=>window.renderAt(.21));
+ if(!(await page.locator('#'+dir).getAttribute('class')).includes('active'))throw Error('Direction failed: '+dir);
+}
 for(const id of ['bones','explode','flip','small','legacy']){await page.check('#'+id);await page.evaluate(()=>window.renderAt(.21));await page.uncheck('#'+id);}
+await page.click('#ne');
 const diagnostics=await page.evaluate(()=>{
  const failures=[];
  for(const stride of [0,1,1.5]){
@@ -38,5 +43,15 @@ for(let i=0;i<24;i++){
  const data=await page.locator('canvas').evaluate(c=>c.toDataURL('image/png').split(',')[1]);
  fs.writeFileSync(path.join(frames,`${String(i).padStart(2,'0')}.png`),Buffer.from(data,'base64'));
 }
+const nwFrames=path.resolve(__dirname,'../../tmp/quarter-rig-nw');fs.mkdirSync(nwFrames,{recursive:true});
+await page.click('#nw');
+for(let i=0;i<24;i++){
+ await page.evaluate(t=>window.renderAt(t),i*.84/24);
+ const data=await page.locator('canvas').evaluate(c=>c.toDataURL('image/png').split(',')[1]);
+ fs.writeFileSync(path.join(nwFrames,`${String(i).padStart(2,'0')}.png`),Buffer.from(data,'base64'));
+}
+await page.check('#bones');await page.check('#explode');
+await page.evaluate(()=>window.renderAt(.21));
+await page.screenshot({path:path.join(out,'RearStudy','rig-inspection.png')});
 await browser.close();if(errors.length)throw Error(errors.join('\n'));console.log('PASS: load, controls, 24 animation frames, no browser errors.');
 })().catch(e=>{console.error(e);process.exit(1)});
