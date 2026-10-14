@@ -21,6 +21,9 @@ RESOURCES = pathlib.Path(__file__).resolve().parents[2] / "Assets/Resources"
 OUT = RESOURCES / "QuarterRigV14"
 EYE_LUMA = 70
 FILL = "nearest"
+DETACH = 0   # >0: open the dark mask with a disc this wide first (glasses touching an eye)
+LID_WIDTH = 10   # closed-eye line, sprite px
+OPEN_EYES = 2   # 1 for a face that already has one eye shut (the 작업반장's scarred wink)
 OUTLINE = (48, 16, 7)  # #301007, the exporter's outline brown
 CREAM = (250, 236, 206)
 
@@ -30,18 +33,30 @@ def eye_components(rgba):
     rgb = rgba[:, :, :3].astype(float)
     luma = rgb[:, :, 0] * .3 + rgb[:, :, 1] * .59 + rgb[:, :, 2] * .11
     dark = ((luma < EYE_LUMA) & (rgba[:, :, 3] > 200)).astype(np.uint8)
+    if DETACH:
+        # Thin lines touching an eye (glasses) are opened away so the eye stands alone.
+        dark = cv2.morphologyEx(dark, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (DETACH, DETACH)))
     n, labels, stats, _ = cv2.connectedComponentsWithStats(dark, 8)
     h = rgba.shape[0]
     eyes = [i for i in range(1, n)
             if stats[i, 1] > h * .35 and 1000 < stats[i, 4] < 12000 and stats[i, 3] > stats[i, 2]]
-    if len(eyes) != 2:
-        raise SystemExit(f"expected 2 eyes in front-head, found {len(eyes)}")
+    # An ear's dark inner outline can pass too (chef); the eyes are the two biggest.
+    eyes = sorted(eyes, key=lambda i: -stats[i, 4])[:2] if len(eyes) > 2 else eyes
+    if len(eyes) != OPEN_EYES:
+        raise SystemExit(f"expected {OPEN_EYES} open eyes in front-head, found {len(eyes)}")
     return labels, [stats[i] for i in eyes], eyes
 
 
 def sleep_head():
-    src = OUT / "front-head.png"
-    rgba = np.array(Image.open(src).convert("RGBA"))
+    rgba = np.array(Image.open(OUT / "front-head.png").convert("RGBA"))
+    result = close_eyes(rgba)
+    dst = OUT / "front-head-sleep.png"
+    Image.fromarray(result).save(dst, optimize=True)
+    copy_meta(OUT / "front-head.png.meta", dst)
+
+
+def close_eyes(rgba):
+    """The head (RGBA array) with its open eyes painted over and redrawn as closed lids."""
     labels, stats, ids = eye_components(rgba)
 
     mask = np.zeros(labels.shape, np.uint8)
@@ -52,7 +67,9 @@ def sleep_head():
         cv2.drawContours(mask, contours, -1, 1, cv2.FILLED)
     mask = cv2.dilate(mask, np.ones((7, 7), np.uint8))
 
-    if FILL == "shapes":
+    if FILL == "split":
+        out = fill_split(rgba, mask)
+    elif FILL == "shapes":
         out = fill_by_shapes(rgba, mask)
     else:
         out = fill_nearest(rgba, mask)
@@ -64,15 +81,38 @@ def sleep_head():
     for x, y, w, h, _ in stats:
         cx, cy = (x + w / 2) * 4, (y + h * .58) * 4
         rx, ry = w * .66 * 4, h * .24 * 4
-        draw.arc((cx - rx, cy - ry, cx + rx, cy + ry), 15, 165, fill=OUTLINE + (255,), width=int(10 * 4))
+        draw.arc((cx - rx, cy - ry, cx + rx, cy + ry), 15, 165, fill=OUTLINE + (255,), width=int(LID_WIDTH * 4))
     image = big.resize(image.size, Image.LANCZOS)
     # Keep the original silhouette exactly (the arcs stay inside the face).
     result = np.array(image)
     result[:, :, 3] = rgba[:, :, 3]
-    dst = OUT / "front-head-sleep.png"
-    Image.fromarray(result).save(dst, optimize=True)
-    copy_meta(OUT / "front-head.png.meta", dst)
-    print(f"{dst.name}: eyes at {[(int(s[0]), int(s[1])) for s in stats]}")
+    print(f"closed eyes at {[(int(s[0]), int(s[1])) for s in stats]}")
+    return result
+
+
+def fill_split(rgba, mask):
+    """Flat fur above the muzzle's edge, flat cream below it: each painted pixel takes whichever of the two
+    is nearest outside the eye, that map blurred so the muzzle's edge runs on smoothly (for an eye that sits
+    on the edge, where blending colours leaves a haze)."""
+    rgb = rgba[:, :, :3].astype(np.float32)
+    inside = mask.astype(bool)
+    opaque = rgba[:, :, 3] > 200
+    luma = rgb @ np.array([.3, .59, .11], np.float32)
+    cream = opaque & (luma > 200) & (rgb.max(axis=2) - rgb.min(axis=2) < 40)
+    _, nearest = cv2.distanceTransformWithLabels(mask.astype(np.uint8), cv2.DIST_L2, 5, labelType=cv2.DIST_LABEL_PIXEL)
+    lut = np.zeros(nearest.max() + 1, np.float32)
+    lut[nearest[~inside]] = cream[~inside]
+    side = cv2.GaussianBlur(np.where(inside, lut[nearest], cream.astype(np.float32)), (0, 0), 5)
+    below = np.clip((side - .5) * 4 + .5, 0, 1)[..., None]
+    ring = cv2.dilate(mask.astype(np.uint8), np.ones((25, 25), np.uint8)).astype(bool) & ~inside & opaque
+    pink = rgb[:, :, 0] - rgb[:, :, 1] > 90
+    fur = np.median(rgb[ring & ~cream & ~pink & (luma > 70)], axis=0)
+    cream_colour = np.median(rgb[ring & cream], axis=0)
+    paint = below * cream_colour + (1 - below) * fur
+    soft = cv2.GaussianBlur(inside.astype(np.float32), (0, 0), 1.2)[..., None]
+    out = rgba.copy()
+    out[:, :, :3] = np.clip(rgb * (1 - soft) + paint * soft, 0, 255).astype(np.uint8)
+    return out
 
 
 def fill_nearest(rgba, mask):
@@ -181,11 +221,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--rig", default="QuarterRigV14", help="folder under Assets/Resources")
     parser.add_argument("--eye-luma", type=int, default=70, help="pixels darker than this count as eye")
-    parser.add_argument("--fill", choices=["nearest", "shapes"], default="nearest",
+    parser.add_argument("--detach", type=int, default=0, help="px: cut thin lines (glasses) off the eyes")
+    parser.add_argument("--lid", type=float, default=10, help="closed-eye line width (match a drawn wink)")
+    parser.add_argument("--fill", choices=["nearest", "shapes", "split"], default="nearest",
                         help="shapes: rebuild a muzzle/blush edge the eyes cover (waiter)")
+    parser.add_argument("--open-eyes", type=int, default=2, help="1 if the face already has one eye shut")
     args = parser.parse_args()
     OUT = RESOURCES / args.rig
     EYE_LUMA = args.eye_luma
     FILL = args.fill
+    OPEN_EYES = args.open_eyes
+    LID_WIDTH = args.lid
+    DETACH = args.detach
     sleep_head()
     z_letter()

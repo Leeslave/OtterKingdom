@@ -127,6 +127,9 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     // The toy being played with right now (null while walking to it or doing anything else).
     public PlacedDecorView PlayToy => CurrentState == State.Play && playSession != null && !walkingToPlay ? playSession.Toy : null;
 
+    // Staying at a favourite place of its trait (e.g. a fisher at the shore).
+    public bool IsAtHabit => atHabit && CurrentState == State.Play;
+
     // Settled on a chair or bench (hopped up and staying; not while hopping on or off).
     public bool IsSeated => spotSession != null && spotSession.Hops && spotPhase == SpotPhase.Stay;
 

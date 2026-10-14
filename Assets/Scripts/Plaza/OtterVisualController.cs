@@ -22,7 +22,10 @@ using UnityEngine.Rendering;
 // walk (rear view when heading up, mirrored when heading left) or the toy.
 // On a chair or bench it sits down and dozes; with a soccer ball it does
 // keepy-uppy (started with the ball's bounce) and at a puzzle it squats and
-// fiddles with the pieces. Other toys and spots it just stands facing.
+// fiddles with the pieces. A rig with a rod (the sailor) fishes, one with a
+// hammer builds and one with a rock to break (the miner) mines at its favourite
+// place, and with workWhenIdle now and then between walks: on stopping, with
+// workChance it stays put for a while (workSeconds) doing it. Other toys and spots it just stands facing.
 //
 // Sorting goes through a SortingGroup on the root so any child renderers
 // (e.g. a future shadow) move in depth together with the body.
@@ -60,6 +63,14 @@ public class OtterVisualController : MonoBehaviour
     [SerializeField] private SpriteFrameAnimator frameAnimator;
     [Tooltip("Optional. Code-posed cutout rig; replaces the sprite, Animator and frame clips.")]
     [SerializeField] private QuarterRigView rigView;
+    [Tooltip("Rig with a rod, hammer or rock only: also fish / build / mine now and then between walks, not just at its favourite place.")]
+    [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("fishWhenIdle")] private bool workWhenIdle;
+    [Tooltip("workWhenIdle: chance, each time it stops walking, that it stays to work.")]
+    [SerializeField, Range(0f, 1f)] private float workChance = .35f;
+    [Tooltip("workWhenIdle: how long it works when it does (seconds, random in range).")]
+    [SerializeField] private Vector2 workSeconds = new Vector2(5f, 9f);
+    private bool workingHere;
+    private OtterWanderAgent.State lastState = OtterWanderAgent.State.Walk;
 
     [Header("Facing")]
     [Tooltip("True if the unflipped sprite faces right.")]
@@ -136,6 +147,23 @@ public class OtterVisualController : MonoBehaviour
             rigView.SetWalking(walking, agent.CurrentWalkSpeed);
             rigView.SetSitting(agent.IsSeated);
             var loop = ToyLoop(agent.PlayToy);
+            var work = rigView.CanFish ? QuarterRigView.Loop.Fish : rigView.CanBuild ? QuarterRigView.Loop.Build
+                : rigView.CanMine ? QuarterRigView.Loop.Mine : QuarterRigView.Loop.None;
+            // Just stopped: now and then stay a while and work.
+            var state = agent.CurrentState;
+            if (state != lastState)
+            {
+                workingHere = false;
+                if (state == OtterWanderAgent.State.Idle && workWhenIdle && work != QuarterRigView.Loop.None && Random.value < workChance)
+                {
+                    agent.HoldStill(Random.Range(workSeconds.x, workSeconds.y));
+                    workingHere = agent.CurrentState == OtterWanderAgent.State.Idle;
+                }
+                lastState = state;
+            }
+            if (loop == QuarterRigView.Loop.None && work != QuarterRigView.Loop.None
+                && (agent.IsAtHabit || (workingHere && state == OtterWanderAgent.State.Idle)))
+                loop = work;
             if (rigView.CurrentLoop != loop) rigView.PlayLoop(loop);
         }
 

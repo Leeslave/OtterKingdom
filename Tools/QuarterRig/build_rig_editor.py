@@ -6,6 +6,9 @@ Rigs come from the plaza prefabs that use QuarterRigView (their resourceFolder a
     python Tools/QuarterRig/build_rig_editor.py --body OUT   # page body only (for publishing as an artifact)
 
 Rerun after re-exporting parts, adding a rig prefab or changing a rig's tuning.json.
+The last rig, "꾸미기", is cut from the user's reference pictures (Tools/CustomOtter/build.py: body
+parts, a head per head fur, expression overlays, tint weights); the page tints its fur, swaps the
+head fur and expression, and draws hats and accessories.
 The page's pose code is a port of QuarterRigView.cs; change both together.
 """
 import argparse
@@ -14,6 +17,7 @@ import io
 import json
 import pathlib
 import re
+import sys
 
 from PIL import Image
 
@@ -22,12 +26,14 @@ ROOT = HERE.parents[1]
 RESOURCES = ROOT / "Assets/Resources"
 PREFABS = ROOT / "Assets/Prefabs/Plaza"
 RIG_VIEW_GUID = "a29eaed5e9ac4a1badeddf527641c691"  # QuarterRigView.cs
-RIG_LABELS = {"QuarterRigV14": "농부", "WaiterRigV14": "웨이터"}
+RIG_LABELS = {"QuarterRigV14": "농부", "WaiterRigV14": "웨이터", "PainterRigV14": "화가", "ChefRigV1": "요리사",
+              "ExplorerRigV14": "탐험가", "FisherRigV1": "뱃사람", "SleepyRigV14": "잠꾸러기", "ClownRigV14": "광대", "BaseballRigV1": "야구 해달", "ArtisanRigV1": "작업반장", "PajamaRigV1": "잠옷 해달", "ReceptionRigV1": "안내원", "MinerRigV1": "광부"}
 BENCH_PNG = ROOT / "Assets/Art/Plaza/Props/Prop_Bench.png"
 BENCH_PREFAB = ROOT / "Assets/Prefabs/Plaza/Prop_Bench.prefab"
 CROP_ICON = ROOT / "Assets/Art/Item/Vegetable/Carrot.png"
 BALL_ICON = ROOT / "Assets/Art/Item/Toy/ICON_Toy_SoccerBall.png"
 PUZZLE_ICON = ROOT / "Assets/Art/Item/Toy/ICON_Toy_Puzzle.png"
+CUSTOM = "CustomOtter"
 
 
 def data_uri(image):
@@ -99,12 +105,49 @@ def build_rig(folder, scale):
             "tuning": json.loads(tuning_path.read_text(encoding="utf-8")) if tuning_path.exists() else None}
 
 
+def build_custom(scale):
+    """The customisable otter (Tools/CustomOtter): its parts, rig and the page's data."""
+    sys.path.insert(0, str(ROOT / "Tools/CustomOtter"))
+    import build as custom
+    sprites, rig, data = custom.build()
+    out = {}
+    for name, (image, pivot, weight) in sprites.items():
+        out[name] = {"src": data_uri(Image.fromarray(image)), "w": image.shape[1], "h": image.shape[0],
+                     "pivot": [float(pivot[0]), float(pivot[1])]}
+        if weight is not None:
+            out[name]["tint"] = data_uri(Image.fromarray(weight))
+    return {"label": "꾸미기", "scale": scale, "rig": rig, "sprites": out, "tuning": None,
+            "custom": json.loads(json.dumps(data, default=float))}
+
+
 def build_data():
+    rigs = {folder: build_rig(folder, scale) for folder, scale in rig_prefabs()}
+    rigs[CUSTOM] = build_custom(rigs["QuarterRigV14"]["scale"])
     # Toys are drawn as the plaza does it: the whole icon (padding included) fitted to the cell.
-    return {"rigs": {folder: build_rig(folder, scale) for folder, scale in rig_prefabs()},
+    return {"rigs": rigs,
             "shared": {"crop": icon(CROP_ICON), "ball": icon(BALL_ICON, trim=False),
                        "puzzle": icon(PUZZLE_ICON, trim=False)},
             "bench": bench()}
+
+
+# The published page has a size limit: its pictures go in smaller (drawn at the same size, a little softer).
+BODY_IMAGE_SCALE = .7
+
+
+def shrink_images(node):
+    """Every embedded picture (src / tint) at BODY_IMAGE_SCALE of its pixels; sizes and pivots stay."""
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key in ("src", "tint") and isinstance(value, str) and value.startswith("data:image/png;base64,"):
+                image = Image.open(io.BytesIO(base64.b64decode(value.split(",", 1)[1])))
+                size = (max(1, round(image.width * BODY_IMAGE_SCALE)), max(1, round(image.height * BODY_IMAGE_SCALE)))
+                node[key] = data_uri(image.resize(size, Image.LANCZOS))
+            else:
+                shrink_images(value)
+    elif isinstance(node, list):
+        for value in node:
+            shrink_images(value)
+    return node
 
 
 def main():
@@ -113,7 +156,10 @@ def main():
     args = parser.parse_args()
 
     template = (HERE / "rig-editor.template.html").read_text(encoding="utf-8")
-    body = template.replace("/*RIG_DATA*/null", json.dumps(build_data(), separators=(",", ":")))
+    data = build_data()
+    if args.body:
+        shrink_images(data)
+    body = template.replace("/*RIG_DATA*/null", json.dumps(data, separators=(",", ":")))
     if args.body:
         # The artifact viewer can't hand out files, so the published page copies the JSON instead.
         body = body.replace("const CAN_SAVE_FILES = true;", "const CAN_SAVE_FILES = false;")

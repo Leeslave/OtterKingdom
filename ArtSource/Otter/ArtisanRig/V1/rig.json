@@ -1,0 +1,325 @@
+{
+  "units": "pixels; x right, y down; rotations in radians",
+  "view": "front-right three-quarter",
+  "legSolver": {
+    "type": "rigid straight leg, sole-anchored",
+    "stanceFraction": 0.6,
+    "cycleSeconds": 0.84,
+    "stepHalfWidth": 10,
+    "lift": 11,
+    "width": 60,
+    "height": 76,
+    "nearX": -10,
+    "farX": 31,
+    "swingAngle": 0.055,
+    "rearInset": 0,
+    "frontInset": 0
+  },
+  "bodyRearInset": 0,
+  "bones": [
+    {
+      "name": "hips",
+      "parent": null,
+      "pos": [
+        0,
+        -43
+      ]
+    },
+    {
+      "name": "body",
+      "parent": "hips",
+      "pos": [
+        0,
+        -54
+      ],
+      "part": "body",
+      "width": 160,
+      "pivot": [
+        0.5,
+        0.6
+      ],
+      "layer": 5,
+      "height": 155
+    },
+    {
+      "name": "tail",
+      "parent": "hips",
+      "pos": [
+        -42,
+        -5
+      ],
+      "part": "tail",
+      "width": 100,
+      "pivot": [
+        0.9,
+        0.55
+      ],
+      "layer": 0,
+      "height": 55
+    },
+    {
+      "name": "farArm",
+      "parent": "body",
+      "pos": [
+        61,
+        -51
+      ],
+      "part": "arm",
+      "width": 40,
+      "pivot": [
+        0.5,
+        0.15
+      ],
+      "layer": 1,
+      "height": 76
+    },
+    {
+      "name": "farLeg",
+      "parent": "hips",
+      "pos": [
+        34,
+        0
+      ],
+      "part": "leg",
+      "width": 56.4,
+      "pivot": [
+        0.55,
+        1
+      ],
+      "layer": 3,
+      "height": 71.44
+    },
+    {
+      "name": "nearLeg",
+      "parent": "hips",
+      "pos": [
+        -26,
+        -4
+      ],
+      "part": "leg",
+      "width": 60,
+      "pivot": [
+        0.55,
+        1
+      ],
+      "layer": 4,
+      "height": 76
+    },
+    {
+      "name": "nearArm",
+      "parent": "body",
+      "pos": [
+        -60,
+        -53
+      ],
+      "part": "arm",
+      "width": 48,
+      "pivot": [
+        0.5,
+        0.15
+      ],
+      "layer": 6,
+      "height": 88
+    },
+    {
+      "name": "head",
+      "parent": "body",
+      "pos": [
+        0,
+        -83
+      ],
+      "part": "head",
+      "width": 270,
+      "pivot": [
+        0.5,
+        0.9
+      ],
+      "layer": 7,
+      "height": 205
+    }
+  ],
+  "rearBones": [
+    {
+      "name": "hips",
+      "parent": null,
+      "pos": [
+        0,
+        -43
+      ]
+    },
+    {
+      "name": "body",
+      "parent": "hips",
+      "pos": [
+        0,
+        -54
+      ],
+      "part": "rearBody",
+      "width": 160,
+      "height": 155,
+      "pivot": [
+        0.5,
+        0.6
+      ],
+      "layer": 4
+    },
+    {
+      "name": "farLeg",
+      "parent": "hips",
+      "pos": [
+        31,
+        0
+      ],
+      "part": "rearLeg",
+      "width": 56.4,
+      "pivot": [
+        0.55,
+        1
+      ],
+      "layer": 0,
+      "height": 71.44
+    },
+    {
+      "name": "nearLeg",
+      "parent": "hips",
+      "pos": [
+        -10,
+        0
+      ],
+      "part": "rearLeg",
+      "width": 60,
+      "pivot": [
+        0.55,
+        1
+      ],
+      "layer": 1,
+      "height": 76
+    },
+    {
+      "name": "farArm",
+      "parent": "body",
+      "pos": [
+        -61,
+        -53
+      ],
+      "part": "rearArm",
+      "width": 40,
+      "pivot": [
+        0.5,
+        0.15
+      ],
+      "layer": 2,
+      "height": 76
+    },
+    {
+      "name": "nearArm",
+      "parent": "body",
+      "pos": [
+        60,
+        -54
+      ],
+      "part": "rearArm",
+      "width": 48,
+      "pivot": [
+        0.5,
+        0.15
+      ],
+      "layer": 5,
+      "height": 88
+    },
+    {
+      "name": "tail",
+      "parent": "hips",
+      "pos": [
+        -6,
+        -18
+      ],
+      "part": "rearTail",
+      "width": 100,
+      "pivot": [
+        0.9,
+        0.23
+      ],
+      "layer": 6,
+      "height": 55
+    },
+    {
+      "name": "head",
+      "parent": "body",
+      "pos": [
+        0,
+        -83
+      ],
+      "part": "rearHead",
+      "width": 270,
+      "pivot": [
+        0.5,
+        0.9
+      ],
+      "layer": 8,
+      "height": 205
+    }
+  ],
+  "approvedSettings": {
+    "version": 1,
+    "adjustments": {
+      "nearArm": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "farArm": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "nearLeg": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "farLeg": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "body": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "head": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "tail": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      }
+    }
+  },
+  "source": "Attached artisan-cap otter, image_gen atlas; V14 farmer animation and separate sleeve joints"
+}
