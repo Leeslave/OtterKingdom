@@ -54,6 +54,8 @@ public class DistrictTestWindow : EditorWindow
                 manager.Settlement.UnlockDevelopment(DistrictGuideRules.Promotion);
             SettlementManager.DevOrderOverride = Mathf.Max(SettlementManager.DevOrderOverride, manager.Config.CastleOrder);
             _order = SettlementManager.DevOrderOverride;
+            // 성은 왕국 Lv.16(CastleLevel)부터라, 레벨이 낮은 세이브에서도 바로 열리게 준비 발전을 직접 엶
+            manager.Settlement.UnlockDevelopment(CastleRules.Ready);
         }
         if (GUILayout.Button("성 재료 넉넉히 받기 (골드 · 목재 · 돌)"))
             GiveCastleMaterials(manager);

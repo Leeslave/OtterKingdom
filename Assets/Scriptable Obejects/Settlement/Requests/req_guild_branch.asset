@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_guild_branch
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_guild_branch
-  _order: 17
+  _order: 18
   _category: 0
   _contentVersion: 4
   _title: "\uAE38\uB4DC\uAC00 \uC0C8 \uC9D1\uC744 \uCC3E\uC544\uC694"

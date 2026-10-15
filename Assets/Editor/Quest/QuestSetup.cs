@@ -58,21 +58,22 @@ public static class QuestSetup
         ("M04_Mine", "main_lv4_mine", "광석 모으기", "광산에서 광석 20개 캐기", QuestGoalType.Mine, 20, "Ore", 80, "item:Mining/돌", QuestKind.Main, 4, "M10_Decor", 80, 0f, ""),
         ("M04_Sales", "main_lv4_sales", "첫 장사", "판매로 300골드 벌기", QuestGoalType.EarnFromSales, 300, "", 50, "gold", QuestKind.Main, 4, "M04_Mine", 100, 0f, ""),
         // Lv.5 → 6 부탁이 많아졌어요 (450)
-        ("M10_Upgrade", "main_lv10_upgrade", "더 좋은 도구", "생산 업그레이드 1회", QuestGoalType.Upgrade, 1, "", 300, "place:ICON_Place_Farm", QuestKind.Main, 5, "M04_Sales", 100, 0f, ""),
+        // 곡괭이 강화: 대상 "pickaxe" = 곡괭이 레벨로 다시 셈 (곡괭이 강화는 4번이 끝이라, 미리 다 올려도 막히지 않게)
+        ("M10_Upgrade", "main_lv10_upgrade", "더 좋은 도구", "광산 곡괭이 강화하기", QuestGoalType.Upgrade, 1, "", 300, "place:ICON_Place_Mine", QuestKind.Main, 5, "M04_Sales", 100, 0f, QuestProgressRules.PickaxeTarget),
         ("M05_Board", "main_lv5_board", "부탁이 많아졌어요", "게시판을 마을회관으로 넓히기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_GuildOffice", QuestKind.Main, 5, "M10_Upgrade", 120, 0f, "req_upgrade_board"),
         ("M05_Mine", "main_lv5_mine", "부지런한 광부", "광산에서 광석 60개 캐기", QuestGoalType.Mine, 60, "Ore", 150, "item:Mining/다이아몬드", QuestKind.Main, 5, "M05_Board", 230, 0f, ""),
-        // Lv.6 → 7 함께 일하는 마을 (600)
+        // Lv.6 → 7 함께 일하는 마을 (600): 또박이를 배치하면 바로 행정 해달 승격 → 첫 구역(중앙 = 주거) 튜토리얼이 나와서 첫 구역도 여기
         ("M06_Clerk", "main_lv6_clerk", "게시판을 맡아 줄 친구", "또박이에게 게시판 맡기기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Cast_Sailor", QuestKind.Main, 6, "M05_Mine", 80, 0f, "req_assign_receptionist"),
-        ("M06_Common", "main_lv6_common", "다 같이 쉴 자리", "광장에 쉴 자리 정리하기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_CommonSpace", QuestKind.Main, 6, "M06_Clerk", 100, 0f, "req_prepare_common_space"),
-        ("M06_Shop", "main_lv6_shop", "요정 상점 단골", "요정 상점에서 물건 사기", QuestGoalType.ShopPurchase, 1, "", 100, "npc:Fairy", QuestKind.Main, 6, "M06_Common", 230, 0f, ""),
+        ("M07_District", "main_lv7_district", "왕국의 첫 구역", "또박이와 첫 구역 정하기", QuestGoalType.Milestone, 1, "", 150, "settle:ICON_TownHall", QuestKind.Main, 6, "M06_Clerk", 60, 0f, "district_first"),
+        ("M06_Common", "main_lv6_common", "다 같이 쉴 자리", "광장에 쉴 자리 정리하기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_CommonSpace", QuestKind.Main, 6, "M07_District", 100, 0f, "req_prepare_common_space"),
+        ("M06_Shop", "main_lv6_shop", "요정 상점 단골", "요정 상점에서 물건 사기", QuestGoalType.ShopPurchase, 1, "", 100, "npc:Fairy", QuestKind.Main, 6, "M06_Common", 170, 0f, ""),
         ("M06_Guild", "main_lv6_guild", "큰 부탁도 함께", "길드 접수 창구 만들기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_GuildOffice", QuestKind.Main, 6, "M06_Shop", 190, 0f, "req_build_guild_office"),
-        // Lv.7 → 8 우리 마을의 길드 (240 + 첫 비축 560): 행정 해달 또박이와 첫 구역
+        // Lv.7 → 8 우리 마을의 길드 (240 + 첫 비축 560)
         ("M07_TownHall", "main_lv7_town_hall", "우리 마을의 길드", "마을 길드로 넓히기", QuestGoalType.Milestone, 1, "", 300, "settle:ICON_TownHall", QuestKind.Main, 7, "M06_Guild", 80, 0f, "req_upgrade_town_hall"),
         ("M07_Supply", "main_lv7_supply", "우리 마을의 첫 비축", "공동사업: 비축 상자 만들기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_TownHall", QuestKind.Main, 7, "M07_TownHall", 0, 0f, "supply_ready"),
-        ("M07_Mine", "main_lv7_mine", "광석 모으기", "광산에서 광석 50개 캐기", QuestGoalType.Mine, 50, "Ore", 200, "item:Mining/다이아몬드", QuestKind.Main, 7, "M07_Supply", 100, 0f, ""),
-        ("M07_District", "main_lv7_district", "왕국의 첫 구역", "또박이와 첫 구역 정하기", QuestGoalType.Milestone, 1, "", 150, "settle:ICON_TownHall", QuestKind.Main, 7, "M07_Mine", 60, 0f, "district_first"),
+        ("M07_Mine", "main_lv7_mine", "광석 모으기", "광산에서 광석 50개 캐기", QuestGoalType.Mine, 50, "Ore", 200, "item:Mining/다이아몬드", QuestKind.Main, 7, "M07_Supply", 160, 0f, ""),
         // Lv.8 → 9 영토 넓히기 (450 + 영토 미션 600)
-        ("M08_Territory", "main_lv8_territory", "영토 넓히기", "숲을 개간해 첫 영토 열기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_Clearing", QuestKind.Main, 8, "M07_District", 0, 0f, "territory_first"),
+        ("M08_Territory", "main_lv8_territory", "영토 넓히기", "숲을 개간해 첫 영토 열기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_Clearing", QuestKind.Main, 8, "M07_Mine", 0, 0f, "territory_first"),
         ("M08_District", "main_lv8_district", "넓어진 땅의 쓰임", "새로 넓힌 땅의 구역 정하기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_Clearing", QuestKind.Main, 8, "M08_Territory", 300, 0f, "district_second"),
         ("M08_Sales", "main_lv8_sales", "알뜰 살림", "판매로 3,000골드 벌기", QuestGoalType.EarnFromSales, 3000, "", 200, "gold", QuestKind.Main, 8, "M08_District", 150, 0f, ""),
         // Lv.9 → 10 새 이웃 (400 + 610 + 340)

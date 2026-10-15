@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_build_castle
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_build_castle
-  _order: 14
+  _order: 17
   _category: 0
   _contentVersion: 2
   _title: "\uC655\uAD6D\uC758 \uC131\uC744 \uC138\uC6CC\uC694"

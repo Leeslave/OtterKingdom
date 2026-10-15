@@ -136,6 +136,31 @@ public static class QuestProgressRules
         return openedFurrows >= needed ? 1 : 0;
     }
 
+    /// <summary>업그레이드 목표의 대상이 이 값이면 곡괭이 레벨로 다시 센다 (FromPickaxeLevel)</summary>
+    public const string PickaxeTarget = "pickaxe";
+
+    /// <summary>
+    /// 곡괭이 강화(대상 "pickaxe"): 지금까지 올린 횟수 = 곡괭이 레벨 - 1. 기록으로 다시 세는 값이라,
+    /// 곡괭이를 미리 다 올려 둬도(강화는 4번이 끝) 퀘스트가 열리자마자 끝난다 (밭 전 Lv.5 메인이 막히지 않게)
+    /// </summary>
+    public static int FromPickaxeLevel(QuestDefinition quest, int pickaxeLevel)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        if (quest.GoalType != QuestGoalType.Upgrade || quest.Target != PickaxeTarget)
+            return 0;
+        return Math.Max(0, pickaxeLevel - 1);
+    }
+
+    /// <summary>
+    /// 일일 퀘스트 끝내기: 오늘 받은 일일 퀘스트 수. 기록으로 다시 세는 값이라, 이 퀘스트가 열리기 전에 오늘 일일을 받았어도 들어간다
+    /// (Lv.9엔 밭 · 낚시가 없어 일일이 "오늘의 장사" 하나뿐 — 먼저 받으면 다음 날까지 막혔음)
+    /// </summary>
+    public static int FromClaimedDailies(QuestDefinition quest, int claimedToday)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        return quest.GoalType == QuestGoalType.CompleteDaily ? Math.Max(0, claimedToday) : 0;
+    }
+
     /// <summary>장난감 놓기: 놓은 것 하나 = 1 (옮기기는 세지 않음)</summary>
     public static int From(QuestDefinition quest, PlacedDecor placed)
     {

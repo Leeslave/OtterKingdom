@@ -183,6 +183,7 @@ public partial class GameManager : MonoBehaviour
         ReportOpenedFurrows();
         fishingService = new FishingService(save, fishingBalance);
         miningService = new MiningService(save, miningBalance);
+        ReportPickaxeLevel();
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
             otterVisitBalance, miningBalance);
         gameUI = GameUI.Create(this);
@@ -1318,7 +1319,17 @@ public partial class GameManager : MonoBehaviour
     {
         if (!miningService.TryUpgradePickaxe(CurrencyManager.Instance, goldCurrency)) return false;
         SaveNow();
+        ReportPickaxeLevel();
         return true;
+    }
+
+    // The Lv.5 "better tool" quest counts the pickaxe level, not upgrades made while
+    // it was showing — the pickaxe only has four upgrades, so maxing it early would
+    // otherwise block the main chain until the farm opens.
+    private void ReportPickaxeLevel()
+    {
+        if (QuestManager.Instance != null)
+            QuestManager.Instance.SetPickaxeLevel(miningService.PickaxeLevel);
     }
 
     // Called by TickMining each time a find comes up. Same rules as

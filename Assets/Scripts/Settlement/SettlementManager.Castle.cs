@@ -18,7 +18,7 @@ public partial class SettlementManager
     // Update에서 (이사 틱과 같은 간격)
     private void TickCastle()
     {
-        if (!CastleRules.ShouldOpen(_config, Settlement, DistrictOrder != null ? DistrictOrder.Score : 0))
+        if (!CastleRules.ShouldOpen(_config, Settlement, DistrictOrder != null ? DistrictOrder.Score : 0, PlayerLevel))
             return;
         Settlement.UnlockDevelopment(CastleRules.Ready);
         GameNotices.Post(new GameNotice("또박이: 왕국 질서도 80 달성! 게시판에서 왕국의 성을 세울 수 있어요"));

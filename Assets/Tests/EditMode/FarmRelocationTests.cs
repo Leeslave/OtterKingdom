@@ -68,5 +68,26 @@ public class FarmRelocationTests
         Assert.AreEqual(SettlementManager.FarmDiscoveredDevelopment, new SerializedObject(zone).FindProperty("_requiredDevelopment").stringValue);
         var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
         Assert.IsNull(config.FindDistrictTypeUnlock(DistrictType.Agricultural), "농업 지역은 처음부터 고를 수 있어야 밭이 열림");
+        Assert.AreEqual(10, config.FarmDiscoverLevel, "농업 지역을 일찍 정해도 밭 발견은 Lv.10");
+        Assert.Greater(config.CastleLevel, 12, "성 → 길드 지부(상업 지역)는 짤랑이 가게(Lv.12) 뒤");
+    }
+
+    [Test]
+    public void NoSeedOnSale_BeforeFarm()
+    {
+        foreach (var guid in AssetDatabase.FindAssets("t:ShopProduct", new[] { "Assets/Scriptable Obejects/Shop/Products" }))
+        {
+            var product = AssetDatabase.LoadAssetAtPath<ShopProduct>(AssetDatabase.GUIDToAssetPath(guid));
+            if (product != null && product.name.StartsWith("Seed_"))
+                Assert.GreaterOrEqual(product.RequiredLevel, 10, product.name);
+        }
+    }
+
+    [Test]
+    public void UpgradeGoals_BeforeFarm_CountPickaxeLevel()
+    {
+        // 밭 전에는 곡괭이 강화(4번이 끝)뿐이라, 열린 동안의 강화만 세면 미리 다 올린 플레이어의 체인이 막힘
+        foreach (var quest in MainChain().Where(q => q.RequiredLevel < 10 && q.GoalType == QuestGoalType.Upgrade))
+            Assert.AreEqual(QuestProgressRules.PickaxeTarget, quest.Target, quest.QuestId);
     }
 }

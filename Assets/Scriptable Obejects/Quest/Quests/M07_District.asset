@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv7_district
   _title: "\uC655\uAD6D\uC758 \uCCAB \uAD6C\uC5ED"
   _description: "\uB610\uBC15\uC774\uC640 \uCCAB \uAD6C\uC5ED \uC815\uD558\uAE30"
-  _sortOrder: 24
+  _sortOrder: 18
   _kind: 0
-  _requiredLevel: 7
-  _prerequisite: {fileID: 11400000, guid: 2214c334a866ed744957998e575c699a, type: 2}
+  _requiredLevel: 6
+  _prerequisite: {fileID: 11400000, guid: e1c2fee7777b42447ba4ba39bc0d422d, type: 2}
   _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
   _goalType: 11
   _goal: 1
