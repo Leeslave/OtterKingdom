@@ -1,0 +1,72 @@
+[
+  {
+    "stem": "Shy",
+    "label": "수줍은",
+    "description": "41 top-left: ivory fluffy fur with long braided side lock, small white flower at left ear, pink cardigan, cream skirt with pink flower print, small brown flower satchel",
+    "number": 41,
+    "source": "exec-6d8614e4-4604-4037-ac85-25796ef3bf80.png"
+  },
+  {
+    "stem": "Playful",
+    "label": "장난꾸러기",
+    "description": "42 top second: warm brown fur with tousled spiky forelock, joyful open smile, cream green-striped shirt, tan shorts, dark green crossbody bag",
+    "number": 42,
+    "source": "exec-9fd25f6b-780c-41bc-b21b-c434541a45ec.png"
+  },
+  {
+    "stem": "Laidback",
+    "label": "느긋한",
+    "description": "43 top middle: grey taupe fur, sleepy half-closed eyes, cream knit beanie with tiny navy patch, navy blue hoodie and taupe trousers",
+    "number": 43,
+    "source": "exec-2ea2e7b3-95db-48bb-8612-c05bb643a6c0.png"
+  },
+  {
+    "stem": "Neat",
+    "label": "단정한",
+    "description": "44 top fourth: burnt orange fur and tidy tuft, friendly smile, ivory cable-knit sweater white shirt collar, brown plaid trousers and brown crossbody satchel",
+    "number": 44,
+    "source": "exec-d9eccda1-42c0-45ea-bccf-407c6021d57e.png"
+  },
+  {
+    "stem": "Fluffy",
+    "label": "복슬복슬",
+    "description": "45 top right: extra fluffy ivory fur, happy crescent eyes, yellow cardigan over navy blue short overalls with white flower emblem",
+    "number": 45,
+    "source": "exec-b06ceb9c-59a7-41cf-b21c-e38e89f46934.png"
+  },
+  {
+    "stem": "Fashion",
+    "label": "꾸미는",
+    "description": "46 bottom left: long wavy warm brown hair/fur, large black hair bow, wink, black cardigan white neck bow, pink plaid skirt and pink heart-shaped crossbody bag",
+    "number": 46,
+    "source": "exec-24903d37-99dc-4269-8dc7-06c6474383ea.png"
+  },
+  {
+    "stem": "Sleepy",
+    "label": "잠꾸러기",
+    "description": "47 bottom second: pale blue-grey fur, sleepy closed eyes and yawning mouth, cream pajama top with teddy bear pattern and matching drawstring pants",
+    "number": 47,
+    "source": "exec-63dcf5c2-a3e7-4982-805c-eec93f00e793.png"
+  },
+  {
+    "stem": "Walker",
+    "label": "산책하는",
+    "description": "48 bottom middle: golden orange fur, green ribbed knit pompom beanie, cream sweatshirt small green leaf emblem, olive shorts and brown crossbody pouch, cheerful open smile",
+    "number": 48,
+    "source": "exec-6cdbeece-7c7d-4c61-b250-79481240c4d0.png"
+  },
+  {
+    "stem": "Quiet",
+    "label": "조용한",
+    "description": "49 bottom fourth: taupe fur, round spectacles, blue plaid scarf, brown knit cardigan and dark cuffed trousers, gentle reserved smile",
+    "number": 49,
+    "source": "exec-af5a938a-81fa-429a-9162-f1284a4f7367.png"
+  },
+  {
+    "stem": "Lively",
+    "label": "활발한",
+    "description": "50 bottom right: vivid orange fur and spiky tuft, happy open mouth and crescent eyes, blue jacket with bear patch over cream hoodie, dark shorts",
+    "number": 50,
+    "source": "exec-3c7535d2-cffc-4db0-bfe5-f746a030a49e.png"
+  }
+]
