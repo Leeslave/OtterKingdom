@@ -545,95 +545,6 @@ public static partial class SettlementSetup
         return view;
     }
 
-    // 마을회관: 정착 단계 · 마을 발전 n/m · 주민 현황 칩 3개 · 지금 하는 일 · 다음 목표 [가 보기] (또는 모두 마침 + 이동·꾸미기·도감) · 완료한 발전
-    private static TownHallPopupView BuildTownHallPopup(RectTransform canvas)
-    {
-        var (screen, panel, animator) = BuildPopupShell(canvas, "TownHallPopup", LoadPanelSprite());
-        Place(panel, new Vector2(0.5f, 0.5f), new Vector2(0, 0), new Vector2(940, 1640));
-        panel.pivot = new Vector2(0.5f, 0.5f);
-
-        BuildTitleBoard(panel, "마을회관 · 발전 현황");
-        var close = BuildCloseButton(panel);
-
-        var stage = Label("Stage", panel, _titleFont, "05 · 작은 마을", 32, Cocoa, TextAlignmentOptions.Left, 22);
-        TopBand(stage.rectTransform, 64, 470, 130, 56);
-        var progress = Label("Progress", panel, _bodyFont, "마을 발전 0 / 12", 28, Green, TextAlignmentOptions.Right, 20);
-        TopBand(progress.rectTransform, 470, 64, 130, 56);
-
-        SectionTitle(panel, "주민 현황", 196);
-        var labor = CreateRect("Labor", panel);
-        TopBand(labor, 50, 50, 246, 76);
-        Row(labor, 16, TextAnchor.MiddleCenter);
-        var settled = BuildStatChip(labor, "Settled", "정착 주민");
-        var available = BuildStatChip(labor, "Available", "보낼 수 있음");
-        var workingCount = BuildStatChip(labor, "Working", "작업 중");
-
-        SectionTitle(panel, "지금 하는 일", 340);
-        var work = Label("Work", panel, _bodyFont, "지금 진행 중인 일이 없어요.", 26, Body, TextAlignmentOptions.TopLeft, 18);
-        work.textWrappingMode = TextWrappingModes.Normal;
-        TopBand(work.rectTransform, 74, 64, 390, 140);
-
-        SectionTitle(panel, "다음 목표", 546);
-        var card = CreateImage("NextCard", panel, Common("UI_Box_Inset"), false);
-        TopBand(card.rectTransform, 50, 50, 596, 260);
-
-        var next = CreateRect("Next", card.rectTransform);
-        Stretch(next, 0);
-        var nextTitle = Label("Title", next, _titleFont, "우리 마을의 회의소", 34, Cocoa, TextAlignmentOptions.TopLeft, 22);
-        TopBand(nextTitle.rectTransform, 28, 240, 24, 52);
-        var nextDescription = Label("Description", next, _bodyFont, "", 26, Body, TextAlignmentOptions.TopLeft, 18);
-        nextDescription.textWrappingMode = TextWrappingModes.Normal;
-        TopBand(nextDescription.rectTransform, 28, 240, 84, 150);
-        var (go, _, goImage) = BuildButton(next, "GoButton", Common("UI_Ribbon_Peach"), "가 보기", 32, Cocoa);
-        goImage.pixelsPerUnitMultiplier = 1.4f;
-        Place(goImage.rectTransform, new Vector2(1, 0.5f), new Vector2(-24, 0), new Vector2(200, 96));
-
-        var done = CreateRect("AllDone", card.rectTransform);
-        Stretch(done, 0);
-        var doneText = Label("Message", done, _titleFont, "현재 준비된 마을 발전을 모두 마쳤어요!", 28, Cocoa, TextAlignmentOptions.Center, 18);
-        doneText.textWrappingMode = TextWrappingModes.Normal;
-        TopBand(doneText.rectTransform, 24, 24, 18, 120);
-        var buttons = CreateRect("Buttons", done);
-        BottomBand(buttons, 20, 96);
-        buttons.offsetMin = new Vector2(24, buttons.offsetMin.y);
-        buttons.offsetMax = new Vector2(-24, buttons.offsetMax.y);
-        Row(buttons, 18, TextAnchor.MiddleCenter);
-        var travel = BuildRowButton(buttons, "TravelButton", "생산하러 가기", 270);
-        var decor = BuildRowButton(buttons, "DecorButton", "꾸미기", 230);
-        var codex = BuildRowButton(buttons, "CodexButton", "도감", 230);
-        done.gameObject.SetActive(false);
-
-        SectionTitle(panel, "완료한 발전", 878);
-        var completed = Label("Completed", panel, _bodyFont, "아직 완료한 발전이 없어요.", 26, Body, TextAlignmentOptions.TopLeft, 18);
-        completed.textWrappingMode = TextWrappingModes.Normal;
-        TopBand(completed.rectTransform, 74, 64, 928, 640);
-
-        var view = screen.gameObject.AddComponent<TownHallPopupView>();
-        BuildDistrictHallCard(panel, view);
-        Set(view, "_animator", animator);
-        Set(view, "_stageText", stage);
-        Set(view, "_progressText", progress);
-        Set(view, "_settledText", settled);
-        Set(view, "_availableText", available);
-        Set(view, "_workingText", workingCount);
-        Set(view, "_workText", work);
-        Set(view, "_nextGroup", next.gameObject);
-        Set(view, "_nextTitleText", nextTitle);
-        Set(view, "_nextDescriptionText", nextDescription);
-        Set(view, "_goButton", go);
-        Set(view, "_doneGroup", done.gameObject);
-        Set(view, "_doneText", doneText);
-        Set(view, "_travelButton", travel);
-        Set(view, "_decorButton", decor);
-        Set(view, "_codexButton", codex);
-        Set(view, "_completedText", completed);
-        Set(view, "_closeButton", close);
-
-        CornerClose(close);
-        screen.gameObject.SetActive(false);
-        return view;
-    }
-
     // 패널 위에 걸친 제목판 (게시판과 같은 모양). 제목 글자를 돌려줌
     private static TextMeshProUGUI BuildTitleBoard(RectTransform panel, string text)
     {
@@ -643,38 +554,6 @@ public static partial class SettlementSetup
         Stretch(title.rectTransform, 10);
         title.rectTransform.offsetMin = new Vector2(10, 18);
         return title;
-    }
-
-    private static void SectionTitle(RectTransform panel, string text, float top)
-    {
-        var label = Label($"Section_{text}", panel, _titleFont, text, 30, LightBrown, TextAlignmentOptions.Left, 20);
-        TopBand(label.rectTransform, 64, 64, top, 44);
-    }
-
-    // "정착 주민  3명" 칩 (값 글자를 돌려줌)
-    private static TextMeshProUGUI BuildStatChip(RectTransform parent, string name, string key)
-    {
-        var bg = CreateImage(name, parent, Common("UI_Chip_Normal"), false);
-        bg.pixelsPerUnitMultiplier = 1.4f;
-        var element = bg.gameObject.AddComponent<LayoutElement>();
-        element.preferredWidth = 266;
-        element.preferredHeight = 72;
-        var keyText = Label("Key", bg.rectTransform, _bodyFont, key, 24, Body, TextAlignmentOptions.Left, 16);
-        TopLeft(keyText.rectTransform, 20, 10, 150, 52);
-        var valueText = Label("Value", bg.rectTransform, _titleFont, "0명", 30, Cocoa, TextAlignmentOptions.Right, 18);
-        Place(valueText.rectTransform, new Vector2(1, 1), new Vector2(-20, -10), new Vector2(90, 52));
-        valueText.rectTransform.pivot = new Vector2(1, 1);
-        return valueText;
-    }
-
-    private static Button BuildRowButton(RectTransform parent, string name, string text, float width)
-    {
-        var (button, _, image) = BuildButton(parent, name, Common("UI_Button_Paper"), text, 28, Cocoa);
-        image.pixelsPerUnitMultiplier = 1.4f;
-        var element = image.gameObject.AddComponent<LayoutElement>();
-        element.preferredWidth = width;
-        element.preferredHeight = 92;
-        return button;
     }
 
     #endregion

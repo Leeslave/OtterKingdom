@@ -66,6 +66,8 @@ public partial class SettlementManager
             {
                 _districtOrder = DistrictRules.Evaluate(_config, Settlement, DistrictPlacements());
                 _districtOrderFrame = frame;
+                if (DevOrderOverride >= 0)
+                    _districtOrder.Score = Math.Min(DistrictRules.MaxOrder, DevOrderOverride);
             }
             return _districtOrder;
         }
@@ -84,7 +86,7 @@ public partial class SettlementManager
             if (placed.Decor is IDistrictBuilding building && building.District != DistrictType.None)
             {
                 var area = placed.Area;
-                list.Add(new DistrictPlacement(building.District, new RectInt(area.position - board.SaveOrigin, area.size)));
+                list.Add(new DistrictPlacement(building.District, new RectInt(area.position - board.SaveOrigin, area.size), Settlement.IsRelocating(placed.InstanceId)));
             }
         }
         return list;

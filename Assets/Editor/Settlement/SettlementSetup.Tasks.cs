@@ -21,7 +21,7 @@ public static partial class SettlementSetup
     private const string MineOperationalDevelopment = "mine_cleared";
     private const string FarmRegionPath = DataFolder + "/Regions/Region_farm.asset";
     // 농경지는 새 이웃의 집을 지으면 발견 (밭 장소도 이때부터 갈 수 있음 = 개간되지 않은 농경지)
-    internal const string FarmDiscoverDevelopment = "house_2";
+    internal const string FarmDiscoverDevelopment = "farm_discovered"; // 농업 지역을 정하면 (SettlementManager.DistrictMilestones, 밭 재배치)
     private const string FarmPlayerClearDevelopment = "farm_path_open";
     internal const string FarmOperationalDevelopment = "farmland";
     private const string FishingRegionPath = DataFolder + "/Regions/Region_fishing.asset";

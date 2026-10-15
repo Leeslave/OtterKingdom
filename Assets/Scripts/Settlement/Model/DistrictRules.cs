@@ -22,11 +22,14 @@ public readonly struct DistrictPlacement
     public DistrictType Type { get; }
     /// <summary>차지한 칸 (광장 격자 세이브 좌표)</summary>
     public RectInt Area { get; }
+    /// <summary>이사 중 (새 자리에 있지만 아직 맞는 구역으로 치지 않음)</summary>
+    public bool Moving { get; }
 
-    public DistrictPlacement(DistrictType type, RectInt area)
+    public DistrictPlacement(DistrictType type, RectInt area, bool moving = false)
     {
         Type = type;
         Area = area;
+        Moving = moving;
     }
 }
 
@@ -221,7 +224,7 @@ public static class DistrictRules
                     continue;
                 order.Buildings++;
                 var block = BlockAt(config, settlement, placement.Area);
-                if (block != null && TypeOf(block, settlement) == placement.Type)
+                if (!placement.Moving && block != null && TypeOf(block, settlement) == placement.Type)
                     order.AddMatching(placement.Type);
             }
         }

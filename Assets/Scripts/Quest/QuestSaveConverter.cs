@@ -53,7 +53,7 @@ public static class QuestSaveConverter
         if (log.DailyDay > 0)
             result.Add(new QuestSaveEntry(DailyDayId, log.DailyDay, false));
         if (log.MainChainReady)
-            result.Add(new QuestSaveEntry(MainChainId, 1, false));
+            result.Add(new QuestSaveEntry(MainChainId, log.MainChainVersion, false));
 
         var zones = new List<string>(log.VisitedZones);
         zones.Sort(string.CompareOrdinal);
@@ -80,7 +80,7 @@ public static class QuestSaveConverter
             if (line.questId == MainChainId)
             {
                 if (line.progress > 0)
-                    log.MarkMainChainReady();
+                    log.MarkMainChainReady(line.progress);
                 continue;
             }
             if (line.questId.StartsWith(VisitedPrefix, StringComparison.Ordinal))

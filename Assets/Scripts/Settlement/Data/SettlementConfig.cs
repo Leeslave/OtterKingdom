@@ -237,6 +237,18 @@ public class SettlementConfig : ScriptableObject
     [Min(0)]
     [SerializeField] private int _castleOrder = 80;
 
+    [Tooltip("다 지은 구역 건물을 옮기는 데 걸리는 시간 (초, 건설 해달이 들고 옮김). 행정 해달이 생긴 뒤부터")]
+    [Min(0)]
+    [SerializeField] private float _relocationSeconds = 90f;
+
+    [Tooltip("이사 지시서 한 장을 끝냈을 때 건물 하나마다 주는 골드")]
+    [Min(0)]
+    [SerializeField] private int _relocationGoldPerBuilding = 150;
+
+    [Tooltip("이사 지시서 한 장을 끝냈을 때 주는 경험치")]
+    [Min(0)]
+    [SerializeField] private int _relocationExp = 40;
+
     [Tooltip("구역 보너스 (용도별 왕국 보유 효과)")]
     [SerializeField] private List<DistrictBonusEntry> _districtBonuses = new List<DistrictBonusEntry>();
 
@@ -265,6 +277,9 @@ public class SettlementConfig : ScriptableObject
     public int OrderPerDistrict => Mathf.Max(0, _orderPerDistrict);
     public int RelocationOrder => Mathf.Max(0, _relocationOrder);
     public int CastleOrder => Mathf.Max(0, _castleOrder);
+    public float RelocationSeconds => Mathf.Max(0f, _relocationSeconds);
+    public int RelocationGoldPerBuilding => Mathf.Max(0, _relocationGoldPerBuilding);
+    public int RelocationExp => Mathf.Max(0, _relocationExp);
     public IReadOnlyList<DistrictBonusEntry> DistrictBonuses => _districtBonuses;
 
     public DistrictBlockDefinition FindDistrictBlock(string blockId)

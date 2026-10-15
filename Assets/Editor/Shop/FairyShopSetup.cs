@@ -36,9 +36,9 @@ public static class FairyShopSetup
     // 모종은 왕국 레벨로 열림 (Docs/레벨별_메인퀘스트.md)
     private static readonly (string asset, string id, string item, int bundle, bool gem, int price, int level)[] Products =
     {
-        ("Seed_Potato", "shop_seed_potato", "Farming/감자 모종", 1, false, 100, 4),
-        ("Seed_SweetPotato", "shop_seed_sweetpotato", "Farming/고구마 모종", 1, false, 150, 8),
-        ("Seed_Strawberry", "shop_seed_strawberry", "Farming/딸기 모종", 1, false, 300, 11),
+        ("Seed_Potato", "shop_seed_potato", "Farming/감자 모종", 1, false, 100, 11), // 밭이 Lv.10에 열려 모종도 그 뒤 (밭 재배치)
+        ("Seed_SweetPotato", "shop_seed_sweetpotato", "Farming/고구마 모종", 1, false, 150, 12),
+        ("Seed_Strawberry", "shop_seed_strawberry", "Farming/딸기 모종", 1, false, 300, 13),
         ("Toy_SoccerBall", "shop_toy_soccerball", "Decor/축구공", 1, false, 800, 1),
         ("Toy_Puzzle", "shop_toy_puzzle", "Decor/퍼즐", 1, true, 25, 1),
         // 목재는 광장 나무 · 나뭇가지 · 숲 개간에서만 나와 건설이 목재 줍기에 막힘(4차 QA) → 남는 골드로 살 수 있게

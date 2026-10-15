@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv8_territory
   _title: "\uC601\uD1A0 \uB113\uD788\uAE30"
   _description: "\uC232\uC744 \uAC1C\uAC04\uD574 \uCCAB \uC601\uD1A0 \uC5F4\uAE30"
-  _sortOrder: 27
+  _sortOrder: 25
   _kind: 0
   _requiredLevel: 8
-  _prerequisite: {fileID: 11400000, guid: 5464339e69286294d9c1587e5885bc18, type: 2}
+  _prerequisite: {fileID: 11400000, guid: 6e96418204b5e1243b2321bca020edba, type: 2}
   _icon: {fileID: 21300000, guid: d385ccec0040cad4ab1f52dd7d5acedd, type: 3}
   _goalType: 11
   _goal: 1

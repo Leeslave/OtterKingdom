@@ -186,4 +186,6 @@ public class SettlementSaveData
     public List<BuildingSaveData> buildings = new List<BuildingSaveData>();
     // 용도를 정한 구역 블록 (구역·이사. 옛 세이브는 없음 = 아무 블록도 정하지 않음)
     public List<DistrictSaveData> districts = new List<DistrictSaveData>();
+    // 이사 지시서 · 옮기는 중인 건물 (구역·이사 4단계. 옛 세이브는 없음 = 지시서 없음)
+    public RelocationSaveData relocation = new RelocationSaveData();
 }

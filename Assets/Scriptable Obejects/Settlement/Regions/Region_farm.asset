@@ -15,7 +15,7 @@ MonoBehaviour:
   _regionId: region_farm
   _displayName: "\uBC2D"
   _zone: {fileID: 11400000, guid: b29d28b957a746941a62e5c52ff9be76, type: 2}
-  _discoverDevelopment: house_2
+  _discoverDevelopment: farm_discovered
   _playerClearDevelopment: farm_path_open
   _operationalDevelopment: farmland
   _productionDevelopment: farm_working

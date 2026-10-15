@@ -174,13 +174,14 @@ public static partial class SettlementSetup
         ("req_neighbor_house", 4, "새 이웃의 집", "물감이가 이웃이 되고 싶대요.\n건설 해달과 집을 지어 줘요.", "ICON_House_Red",
             "otter_painter", PainterIntroDevelopment, 0, "con_house_2", new[] { "otter_painter", "otter_builder" },
             new (string, ResidentState)[0],
-            // 광산 발견(의자)처럼: 새 이웃의 집을 지으면(주민이 늘면) 몽실이가 밭 자리를 발견 → 밭(개간되지 않은 농경지)에 갈 수 있음
-            2, "gb_neighbor_settle", "새 이웃의 집 완성! 몽실이가 마을 옆에서\n밭을 만들 만한 땅을 발견했어요.", 0, "", ""),
-        ("req_farmland", 5, "먹거리를 길러요", "몽실이가 찾은 땅을 밭으로 만들어요.\n밭에 가서 잡목과 바위를 치우고\n주민과 함께 농경지를 개간해요.", "ICON_Clearing",
+            // 밭은 Lv.10 농업 지역에서 (구역·이사 5막 · Docs/밭해금_재배치_기획.md)
+            2, "gb_neighbor_settle", "새 이웃의 집 완성!\n물감이가 이웃이 됐어요.", 0, "", ""),
+        // 밭 (Lv.10): 농업 지역을 정하면(farm_discovered) 열림. 순서는 성 뒤
+        ("req_farmland", 15, "먹거리를 길러요", "몽실이가 찾은 땅을 밭으로 만들어요.\n밭에 가서 잡목과 바위를 치우고\n주민과 함께 농경지를 개간해요.", "ICON_Clearing",
             "otter_first", FarmDiscoverDevelopment, 3, "con_farmland", new string[0],
             new[] { ("otter_farmer", ResidentState.SpecialNpc) },
             3, "gb_farmland", "농경지 개간이 끝났어요!\n소식을 듣고 농부 해달이 광장에 찾아왔어요.", 0, FarmZonePath, ""),
-        ("req_assign_farmer", 6, "농사를 지을 해달이 필요해요", "광장으로 돌아가 새로 찾아온 농부 해달 새싹이를 만나 보세요.\n밭에 배치하면 농사를 시작해요.", "ICON_Otter_Farmer",
+        ("req_assign_farmer", 16,"농사를 지을 해달이 필요해요", "광장으로 돌아가 새로 찾아온 농부 해달 새싹이를 만나 보세요.\n밭에 배치하면 농사를 시작해요.", "ICON_Otter_Farmer",
             "otter_farmer", FarmOperationalDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_farmer_assigned", "새싹이가 밭에서 일하기 시작해요!\n당근을 심어 첫 수확을 해 봐요.", 0, "", "otter_farmer"),
@@ -188,7 +189,7 @@ public static partial class SettlementSetup
         // P2 게시판 성장 · 관리 해달 · 마을회관: 농부가 일하기 시작하면(farm_working) 열림. 첫 수확 퀘스트 보상과는 상관없음.
         // 분류(메인/주민)·역할·주민 작업·콘텐츠 버전은 P2Requests 표 (SettlementSetup.P2)
         ("req_upgrade_board", 7, "부탁이 많아졌어요", "게시판에 부탁이 넘쳐요!\n건설 해달과 함께 게시판을 마을회관으로 넓혀요.", "ICON_GuildOffice",
-            "otter_first", SettlementQuestGate.FarmProductionDevelopment, 0, "con_board_upgrade", new string[0],
+            "otter_first", SettlementQuestGate.FairyDevelopment, 0, "con_board_upgrade", new string[0],
             new[] { (ReceptionistOtterId, ResidentState.SpecialNpc) },
             -1, "gb_board_upgrade", "게시판이 마을회관이 됐어요!\n소식을 듣고 게시판을 맡아 줄 해달이 찾아왔어요.", 0, "", ""),
         ("req_assign_receptionist", 8, "게시판을 맡아 줄 친구", "게시판을 정리해 줄 또박이가 찾아왔어요.\n광장에서 만나 게시판 관리를 맡겨 주세요.", "ICON_Otter_Cast_Sailor",

@@ -22,7 +22,7 @@ MonoBehaviour:
     \uB113\uD600\uC694."
   _icon: {fileID: 21300000, guid: 7378b420846c8a2449ac9600afbe4ea4, type: 3}
   _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
-  _requiredDevelopment: farm_working
+  _requiredDevelopment: fairy_arrived
   _minResidents: 0
   _construction: {fileID: 11400000, guid: 5e77e94bb45e3e94f861edd634fb117a, type: 2}
   _clearZone: {fileID: 0}
