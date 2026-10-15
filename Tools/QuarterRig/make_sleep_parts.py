@@ -39,7 +39,7 @@ def eye_components(rgba):
     n, labels, stats, _ = cv2.connectedComponentsWithStats(dark, 8)
     h = rgba.shape[0]
     eyes = [i for i in range(1, n)
-            if stats[i, 1] > h * .35 and 1000 < stats[i, 4] < 12000 and stats[i, 3] > stats[i, 2]]
+            if stats[i, 1] > h * .35 and 1000 < stats[i, 4] < 12000 and stats[i, 3] > .9 * stats[i, 2]]   # (round eyes too)
     # An ear's dark inner outline can pass too (chef); the eyes are the two biggest.
     eyes = sorted(eyes, key=lambda i: -stats[i, 4])[:2] if len(eyes) > 2 else eyes
     if len(eyes) != OPEN_EYES:
@@ -55,7 +55,16 @@ def sleep_head():
     copy_meta(OUT / "front-head.png.meta", dst)
 
 
-def close_eyes(rgba):
+def smile_head():
+    """front-head-smile.png: the eyes as happy upward arcs (^ ^), for smiling while it works (the 행상인)."""
+    rgba = np.array(Image.open(OUT / "front-head.png").convert("RGBA"))
+    result = close_eyes(rgba, smile=True)
+    dst = OUT / "front-head-smile.png"
+    Image.fromarray(result).save(dst, optimize=True)
+    copy_meta(OUT / "front-head.png.meta", dst)
+
+
+def close_eyes(rgba, smile=False):
     """The head (RGBA array) with its open eyes painted over and redrawn as closed lids."""
     labels, stats, ids = eye_components(rgba)
 
@@ -79,6 +88,12 @@ def close_eyes(rgba):
     big = image.resize((image.width * 4, image.height * 4), Image.LANCZOS)
     draw = ImageDraw.Draw(big)
     for x, y, w, h, _ in stats:
+        if smile:
+            # Happy eyes: arcs bowed upwards, a little above the eye's middle.
+            cx, cy = (x + w / 2) * 4, (y + h * .62) * 4
+            rx, ry = w * .8 * 4, h * .42 * 4
+            draw.arc((cx - rx, cy - ry, cx + rx, cy + ry), 195, 345, fill=OUTLINE + (255,), width=int(LID_WIDTH * 1.25 * 4))
+            continue
         cx, cy = (x + w / 2) * 4, (y + h * .58) * 4
         rx, ry = w * .66 * 4, h * .24 * 4
         draw.arc((cx - rx, cy - ry, cx + rx, cy + ry), 15, 165, fill=OUTLINE + (255,), width=int(LID_WIDTH * 4))
@@ -203,6 +218,28 @@ def z_letter():
     print(f"{dst.name}: {size}x{size}")
 
 
+def note_letter():
+    """fx-note.png: a chunky cream eighth note with the outline brown, like the "z" (for the 음악가)."""
+    size, k = 72, 4
+    big = Image.new("RGBA", (size * k, size * k), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(big)
+
+    def note(colour, grow):
+        g = grow * k
+        draw.ellipse((10 * k - g, 44 * k - g, 32 * k + g, 62 * k + g), fill=colour)                 # head
+        draw.rectangle((27 * k - g, 12 * k - g, 33 * k + g, 54 * k + g), fill=colour)                # stem
+        draw.polygon([(27 * k - g, 10 * k - g), (54 * k + g, 22 * k), (54 * k + g, 32 * k + g),       # flag
+                      (33 * k - g, 22 * k + g)], fill=colour)
+    note(OUTLINE + (255,), 5.5)
+    note(CREAM + (255,), 0)
+    dst = OUT / "fx-note.png"
+    big.resize((size, size), Image.LANCZOS).save(dst, optimize=True)
+    template = (OUT / "front-head.png.meta").read_text(encoding="utf-8")
+    meta = re.sub(r"spritePivot: \{x: [^,]+, y: [^}]+\}", "spritePivot: {x: 0.5, y: 0.5}", template)
+    write_meta(meta, dst)
+    print(f"{dst.name}: {size}x{size}")
+
+
 def copy_meta(template_path, dst):
     write_meta(template_path.read_text(encoding="utf-8"), dst)
 
@@ -225,6 +262,8 @@ if __name__ == "__main__":
     parser.add_argument("--lid", type=float, default=10, help="closed-eye line width (match a drawn wink)")
     parser.add_argument("--fill", choices=["nearest", "shapes", "split"], default="nearest",
                         help="shapes: rebuild a muzzle/blush edge the eyes cover (waiter)")
+    parser.add_argument("--note", action="store_true", help="also make fx-note.png (plays guitar when seated)")
+    parser.add_argument("--smile", action="store_true", help="make front-head-smile.png (happy ^ ^ eyes) instead")
     parser.add_argument("--open-eyes", type=int, default=2, help="1 if the face already has one eye shut")
     args = parser.parse_args()
     OUT = RESOURCES / args.rig
@@ -233,5 +272,10 @@ if __name__ == "__main__":
     OPEN_EYES = args.open_eyes
     LID_WIDTH = args.lid
     DETACH = args.detach
-    sleep_head()
-    z_letter()
+    if args.smile:
+        smile_head()
+    else:
+        sleep_head()
+        z_letter()
+        if args.note:
+            note_letter()

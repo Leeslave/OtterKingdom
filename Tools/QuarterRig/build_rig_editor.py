@@ -26,8 +26,8 @@ ROOT = HERE.parents[1]
 RESOURCES = ROOT / "Assets/Resources"
 PREFABS = ROOT / "Assets/Prefabs/Plaza"
 RIG_VIEW_GUID = "a29eaed5e9ac4a1badeddf527641c691"  # QuarterRigView.cs
-RIG_LABELS = {"QuarterRigV14": "농부", "WaiterRigV14": "웨이터", "PainterRigV14": "화가", "ChefRigV1": "요리사",
-              "ExplorerRigV14": "탐험가", "FisherRigV1": "뱃사람", "SleepyRigV14": "잠꾸러기", "ClownRigV14": "광대", "BaseballRigV1": "야구 해달", "ArtisanRigV1": "작업반장", "PajamaRigV1": "잠옷 해달", "ReceptionRigV1": "안내원", "MinerRigV1": "광부"}
+RIG_LABELS = {"QuarterRigV14": "농부", "WaiterRigV14": "웨이터", "ChefRigV1": "요리사",
+              "FisherRigV1": "뱃사람", "BaseballRigV1": "야구 해달", "ArtisanRigV1": "작업반장", "PajamaRigV1": "잠옷 해달", "ReceptionRigV1": "안내원", "MinerRigV1": "광부", "PhotographerRigV1": "사진가", "MusicianRigV1": "음악가", "MerchantRigV1": "행상인", "BardRigV1": "공연복 음악가", "DiverRigV1": "잠수부", "CleanerRigV1": "청소부"}
 BENCH_PNG = ROOT / "Assets/Art/Plaza/Props/Prop_Bench.png"
 BENCH_PREFAB = ROOT / "Assets/Prefabs/Plaza/Prop_Bench.prefab"
 CROP_ICON = ROOT / "Assets/Art/Item/Vegetable/Carrot.png"
