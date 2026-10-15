@@ -24,20 +24,35 @@ public enum TerritoryBlock
 /// 영토 확장 규칙 (데이터 + 상태 → 결과). 진행의 원본은 발전 · 끝낸 작업 기록이라 따로 저장하지 않는다.
 /// - 개간 기회: 왕국 Lv.(시작 레벨)에 1번, 그 뒤 레벨이 오를 때마다 1번씩 쌓임. 시작한 개간(진행 중 포함)만큼 씀
 /// - 개간은 한 번에 한 곳만 (북쪽을 개간하는 동안 서쪽은 못 함). 방향은 기회가 생길 때마다 고름
-/// - 한 단계 = 개간 3번 → 영토 확장 미션 → 땅이 열림. 같은 방향의 다음 단계는 그 뒤에
-/// - 열린 땅은 칸으로 나뉜다: (서쪽 단계 i, 북쪽 단계 j) 칸은 서쪽을 i단계, 북쪽을 j단계까지 넓히면 열림 → 칸마다 발전
+/// - 한 단계 = 개간 N번 → 영토 확장 미션 → 땅이 열림. 같은 방향의 다음 단계는 그 뒤에
+/// - 방향 = 중앙 공터 둘레의 구역 블록 하나, 단계 = 그 블록이 커지는 단계 (땅 · 걷기 영역 · 카메라 · 부지 칸이 그 단계의 발전으로 열림)
 /// </summary>
 public static class TerritoryRules
 {
     /// <summary>어느 방향이든 처음으로 땅을 넓힘 (새 이웃 맞이하기가 여기서 열림)</summary>
     public const string FirstDevelopment = "territory_first";
 
-    /// <summary>처음 넓힌 방향 (새 이웃의 집 자리가 그 땅에 생김)</summary>
-    public static string HomeDevelopment(TerritoryDirection direction) =>
-        direction == TerritoryDirection.West ? "territory_home_west" : "territory_home_north";
+    /// <summary>처음 넓힌 방향을 고를 때 여러 방향이 한꺼번에 열린 세이브(옮긴 세이브)에서 앞에 두는 순서</summary>
+    private static readonly TerritoryDirection[] HomePreference =
+    {
+        TerritoryDirection.NorthEast, TerritoryDirection.South, TerritoryDirection.West, TerritoryDirection.NorthWest, TerritoryDirection.North,
+    };
 
-    /// <summary>지도 칸 (서쪽 단계, 북쪽 단계)이 열린 발전. (0, 0) = 처음 광장</summary>
-    public static string CellDevelopment(int westTier, int northTier) => $"territory_cell_{westTier}_{northTier}";
+    /// <summary>방향의 짧은 이름 (발전 ID에 씀: territory_ne_1 등)</summary>
+    public static string DirectionKey(TerritoryDirection direction)
+    {
+        switch (direction)
+        {
+            case TerritoryDirection.NorthEast: return "ne";
+            case TerritoryDirection.South: return "s";
+            case TerritoryDirection.NorthWest: return "nw";
+            case TerritoryDirection.West: return "w";
+            default: return "north";
+        }
+    }
+
+    /// <summary>처음 넓힌 방향 (새 이웃의 집 자리가 그 땅에 생김)</summary>
+    public static string HomeDevelopment(TerritoryDirection direction) => $"territory_home_{DirectionKey(direction)}";
 
     #region 찾기
 
@@ -247,8 +262,8 @@ public static class TerritoryRules
     #region 기록 맞추기
 
     /// <summary>
-    /// 기록에서 따라오는 발전을 연다 (여러 번 해도 같음): 개간을 다 끝낸 단계의 미션 열림, 넓힌 단계로 열리는 칸,
-    /// 처음 넓힘, 새 이웃 집 자리 방향 (한 방향만 넓혔으면 그쪽, 옮긴 세이브처럼 둘 다면 서쪽)
+    /// 기록에서 따라오는 발전을 연다 (여러 번 해도 같음): 개간을 다 끝낸 단계의 미션 열림, 처음 넓힘,
+    /// 새 이웃 집 자리 방향 (처음 넓힌 쪽. 옮긴 세이브처럼 여러 방향이면 북동 → 남 → 서 → 북서 순)
     /// </summary>
     /// <returns>무엇이든 열었으면 true</returns>
     public static bool Sync(SettlementConfig config, Settlement settlement)
@@ -262,24 +277,32 @@ public static class TerritoryRules
                 changed |= Unlock(settlement, territory.ClearedDevelopment);
         }
 
-        int west = ExpandedTier(config, settlement, TerritoryDirection.West);
-        int north = ExpandedTier(config, settlement, TerritoryDirection.North);
-        for (int i = 0; i <= west; i++)
+        TerritoryDirection? first = null;
+        bool hasHome = false;
+        foreach (var direction in HomePreference)
         {
-            for (int j = 0; j <= north; j++)
-            {
-                if (i > 0 || j > 0)
-                    changed |= Unlock(settlement, CellDevelopment(i, j));
-            }
+            hasHome |= settlement.HasDevelopment(HomeDevelopment(direction));
+            if (first == null && ExpandedTier(config, settlement, direction) > 0)
+                first = direction;
         }
-        if (west + north > 0)
+        if (first != null)
         {
             changed |= Unlock(settlement, FirstDevelopment);
-            if (!settlement.HasDevelopment(HomeDevelopment(TerritoryDirection.West))
-                && !settlement.HasDevelopment(HomeDevelopment(TerritoryDirection.North)))
-                changed |= Unlock(settlement, HomeDevelopment(west > 0 ? TerritoryDirection.West : TerritoryDirection.North));
+            if (!hasHome)
+                changed |= Unlock(settlement, HomeDevelopment(first.Value));
         }
         return changed;
+    }
+
+    /// <summary>아직 넓힐 단계가 남은 방향이 있는지</summary>
+    public static bool AnyLeft(SettlementConfig config, Settlement settlement)
+    {
+        foreach (var territory in config.Territories)
+        {
+            if (territory != null && !string.IsNullOrEmpty(territory.ExpansionId) && !IsExpanded(territory, settlement))
+                return true;
+        }
+        return false;
     }
 
     private static bool Unlock(Settlement settlement, string development)

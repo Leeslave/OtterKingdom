@@ -30,8 +30,16 @@ MonoBehaviour:
   _spotPoints: []
   _coziness: 2
   _construction: {fileID: 11400000, guid: c7d36a11d95d81641aa8d5d8ae0274b0, type: 2}
-  _defaultCell: {x: -13, y: 18}
-  _alternateDevelopment: territory_home_north
-  _alternateCell: {x: 14, y: 46}
-  _pivotOffset: {x: 0.07500076, y: 0.47500038}
+  _defaultCell: {x: -6, y: 51}
+  _alternates:
+  - _development: territory_home_ne
+    _cell: {x: -6, y: 51}
+  - _development: territory_home_s
+    _cell: {x: -30, y: 29}
+  - _development: territory_home_nw
+    _cell: {x: -42, y: 62}
+  - _development: territory_home_w
+    _cell: {x: -49, y: 39}
+  _pivotOffset: {x: -0.125, y: 0.3750038}
   _worldScale: {x: 1, y: 1}
+  _district: 0

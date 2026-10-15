@@ -54,7 +54,7 @@ public class TraitRequirement
 /// 놓인 자리는 꾸미기 세이브, 공사·완성 기록은 정착 세이브(SettlementSaveData.buildings)가 원본이다
 /// </summary>
 [CreateAssetMenu(fileName = "Building", menuName = "Game Data/Settlement/Building")]
-public class BuildingDefinition : DecorDefinition
+public class BuildingDefinition : DecorDefinition, IDistrictBuilding
 {
     [Header("건물")]
     [Tooltip("세이브에 저장되는 ID (예: bld_small_house). 저장 데이터가 생긴 뒤에는 바꾸지 않는다")]
@@ -110,6 +110,10 @@ public class BuildingDefinition : DecorDefinition
     [Tooltip("다 지으면 요정 상점이 이 건물 앞으로 이사함")]
     [SerializeField] private bool _hostsFairyShop;
 
+    [Header("구역")]
+    [Tooltip("이 건물이 있어야 할 구역 (구역·이사). None이면 어디에 놓아도 됨")]
+    [SerializeField] private DistrictType _district;
+
     [Header("그림")]
     [Tooltip("완성 그림의 가로가 차지한 칸 가로의 몇 배인지 (지붕 처마가 칸보다 조금 넓어도 됨)")]
     [Range(0.5f, 1.5f)]
@@ -134,6 +138,10 @@ public class BuildingDefinition : DecorDefinition
     public float WidthFill => _widthFill;
     public IReadOnlyList<BuildingBonus> Bonuses => _bonuses;
     public bool HostsFairyShop => _hostsFairyShop;
+    public DistrictType District => _district;
+
+    /// <summary>테스트·설정 도구용: 구역</summary>
+    public void SetupDistrict(DistrictType district) => _district = district;
 
     /// <summary>테스트·설정 도구용: 효과</summary>
     public void SetupEffects(IEnumerable<BuildingBonus> bonuses, bool hostsFairyShop)

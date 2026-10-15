@@ -54,4 +54,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8e68b085425e8754db433da8ced5c70a, type: 3}
   _bonuses: []
   _hostsFairyShop: 0
+  _district: 2
   _widthFill: 0.9

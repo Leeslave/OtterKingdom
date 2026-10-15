@@ -2,11 +2,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>영토를 넓히는 방향 (광장은 지도의 남동쪽 끝에서 시작해 서쪽·북쪽으로 넓어진다)</summary>
+/// <summary>
+/// 영토를 넓히는 방향 = 구역 블록 하나 (구역·이사: 지도 가운데 공터에서 시작해 사방의 블록으로 넓어진다).
+/// 에셋에 숫자로 저장되므로 순서를 바꾸지 않는다. North는 옛 구조(남동쪽 광장에서 북쪽으로)의 값이라 지금은 쓰지 않는다
+/// </summary>
 public enum TerritoryDirection
 {
     West = 0,
     North = 1,
+    NorthEast = 2,
+    South = 3,
+    NorthWest = 4,
 }
 
 /// <summary>숲 개간 한 번: 주민 해달을 보내는 작업 + 끝나면 받는 재료 (나무를 많이)</summary>
@@ -32,15 +38,15 @@ public class TerritoryClearingStep
 }
 
 /// <summary>
-/// 영토 확장 한 단계 (예: 서쪽 1단계). 진행: 숲 개간 3번(왕국 레벨이 오를 때마다 한 번씩 할 수 있음)
-/// → 마을회관에 영토 확장 미션(재료 납품, 공동사업과 같은 납품 규칙) → 그 땅이 열리고 걷기 영역·카메라 범위가 넓어진다.
+/// 영토 확장 한 단계 (예: 북동쪽 1단계 = 북동쪽 구역 블록의 첫 땅). 진행: 숲 개간 N번(왕국 레벨이 오를 때마다 한 번씩 할 수 있음)
+/// → 마을회관에 영토 확장 미션(재료 납품, 공동사업과 같은 납품 규칙) → 그 땅이 열리고 걷기 영역·카메라 범위·구역 블록이 넓어진다.
 /// 같은 방향의 다음 단계는 앞 단계를 넓힌 뒤에 열린다. 진행은 모두 발전 기록으로 남는다 (세이브 형식을 바꾸지 않음).
 /// </summary>
 [CreateAssetMenu(fileName = "Territory", menuName = "Game Data/Settlement/Territory Expansion")]
 public class TerritoryExpansionDefinition : ScriptableObject
 {
     [Header("식별")]
-    [Tooltip("ID (예: territory_west_1). 넓힌 뒤의 발전 ID와 같음")]
+    [Tooltip("ID (예: territory_ne_1). 넓힌 뒤의 발전 ID와 같음")]
     [SerializeField] private string _expansionId;
 
     [SerializeField] private TerritoryDirection _direction;

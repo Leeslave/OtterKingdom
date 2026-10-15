@@ -146,13 +146,14 @@ public partial class SettlementManager : MonoBehaviour
         Settlement.OnChanged += () =>
         {
             // 공동사업의 단계·완료는 기록에서 계산하므로, 무엇이 바뀌든 다음 프레임에 다시 봄 (바꾸는 도중에 다시 바꾸지 않게)
+            _districtOrderFrame = -1;
             _projectsDirty = true;
             _territoryVersion++;
             OnChanged?.Invoke();
         };
         Settlement.OnDevelopmentUnlocked += id => OnDevelopmentUnlocked?.Invoke(id);
-        // 왕국 보유 효과(특성 건물): 판매·개간·채굴·수확이 여기서 합계를 물음
-        KingdomBonus.Source = BonusPercent;
+        // 왕국 보유 효과(특성 건물 + 구역): 판매·개간·채굴·수확이 여기서 합계를 물음
+        KingdomBonus.Source = TotalBonusPercent;
     }
 
     private void OnDestroy()
@@ -1113,7 +1114,8 @@ public partial class SettlementManager : MonoBehaviour
     }
 
     /// <summary>마을회관이 있어 발전 현황 화면을 볼 수 있는지</summary>
-    public bool IsTownHallOpen => !string.IsNullOrEmpty(_config.TownHallDevelopment) && Settlement.HasDevelopment(_config.TownHallDevelopment);
+    public bool IsTownHallOpen => Settlement.HasDevelopment(DistrictGuideRules.TownHall)
+        || (!string.IsNullOrEmpty(_config.TownHallDevelopment) && Settlement.HasDevelopment(_config.TownHallDevelopment));
 
     /// <summary>지금 보이는 큰 부탁 (없으면 null)</summary>
     public MilestoneGroupDefinition VisibleMilestone
@@ -1268,7 +1270,6 @@ public partial class SettlementManager : MonoBehaviour
         // 지역·작업·전문 해달을 먼저 맞춘 뒤 (옛 세이브 옮기기) 꺼 둔 동안 끝난 건설·주민 작업을 처리
         MigrateSpecialists();
         MigrateVersion(fairyShopSeen);
-        MigrateTerritory();
         ReconcileRecords();
         ReconcileBuildings();
         ReconcilePlots();
@@ -1298,6 +1299,7 @@ public partial class SettlementManager : MonoBehaviour
             Debug.Log("[SettlementManager] P3 전 세이브: 이미 광장에 있던 요정을 그대로 둡니다.");
         if (SettlementMigration.MigrateLamp(_config, Settlement, from))
             Debug.Log("[SettlementManager] 버전 4 전 세이브: 첫 집과 함께 있던 가로등을 그대로 둡니다.");
+        MigrateCenterStart(from);
         if (SettlementMigration.MigrateToCurrent(Settlement) && from > 0)
             Debug.Log($"[SettlementManager] 정착 세이브를 버전 {from} → {SettlementSaveData.CurrentVersion}으로 옮겼습니다.");
     }

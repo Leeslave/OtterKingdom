@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94beaf52d1d90d745bbf3e6bb32b87bf, type: 3}
+  m_Name: District_west
+  m_EditorClassIdentifier: OtterKingdom::DistrictBlockDefinition
+  _blockId: district_west
+  _displayName: "\uC11C\uCABD \uB4E4\uD310"
+  _fixedType: 0
+  _suggestedType: 5
+  _stages:
+  - _development: territory_w_1
+    _areas:
+    - x: -58
+      y: 34
+      width: 16
+      height: 16
+  - _development: territory_w_2
+    _areas:
+    - x: -74
+      y: 34
+      width: 16
+      height: 16
+  - _development: territory_w_3
+    _areas:
+    - x: -74
+      y: 18
+      width: 32
+      height: 16
+  _slots:
+  - _slotId: district_west_01
+    _area:
+      x: -52
+      y: 43
+      width: 8
+      height: 5
+    _stage: 0
+  - _slotId: district_west_02
+    _area:
+      x: -57
+      y: 39
+      width: 4
+      height: 3
+    _stage: 0
+  - _slotId: district_west_03
+    _area:
+      x: -52
+      y: 37
+      width: 8
+      height: 5
+    _stage: 0
+  - _slotId: district_west_04
+    _area:
+      x: -57
+      y: 35
+      width: 4
+      height: 3
+    _stage: 0
+  - _slotId: district_west_05
+    _area:
+      x: -71
+      y: 40
+      width: 8
+      height: 5
+    _stage: 1
+  - _slotId: district_west_06
+    _area:
+      x: -62
+      y: 36
+      width: 4
+      height: 3
+    _stage: 1
+  - _slotId: district_west_07
+    _area:
+      x: -71
+      y: 34
+      width: 8
+      height: 5
+    _stage: 1
+  - _slotId: district_west_08
+    _area:
+      x: -55
+      y: 25
+      width: 8
+      height: 5
+    _stage: 2
+  - _slotId: district_west_09
+    _area:
+      x: -69
+      y: 23
+      width: 4
+      height: 3
+    _stage: 2
+  - _slotId: district_west_10
+    _area:
+      x: -63
+      y: 21
+      width: 4
+      height: 3
+    _stage: 2
+  - _slotId: district_west_11
+    _area:
+      x: -55
+      y: 19
+      width: 8
+      height: 5
+    _stage: 2

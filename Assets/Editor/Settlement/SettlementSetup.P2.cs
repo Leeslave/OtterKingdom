@@ -192,6 +192,7 @@ public static partial class SettlementSetup
         Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
         BuildP2(root, plazaRoot.Find("Props"), root.GetComponent<SettlementPlazaView>(), ToWorld);
         ApplyBoardExpansion(plazaRoot);
+        ApplyCenterStart(plazaRoot);
         ApplyPlotAnchors(plazaRoot);
 
         EditorSceneManager.MarkSceneDirty(scene);
@@ -548,10 +549,10 @@ public static partial class SettlementSetup
     private static TownHallPopupView BuildTownHallPopup(RectTransform canvas)
     {
         var (screen, panel, animator) = BuildPopupShell(canvas, "TownHallPopup", LoadPanelSprite());
-        Place(panel, new Vector2(0.5f, 0.5f), new Vector2(0, 0), new Vector2(940, 1420));
+        Place(panel, new Vector2(0.5f, 0.5f), new Vector2(0, 0), new Vector2(940, 1640));
         panel.pivot = new Vector2(0.5f, 0.5f);
 
-        BuildTitleBoard(panel, "마을 길드");
+        BuildTitleBoard(panel, "마을회관 · 발전 현황");
         var close = BuildCloseButton(panel);
 
         var stage = Label("Stage", panel, _titleFont, "05 · 작은 마을", 32, Cocoa, TextAlignmentOptions.Left, 22);
@@ -605,9 +606,10 @@ public static partial class SettlementSetup
         SectionTitle(panel, "완료한 발전", 878);
         var completed = Label("Completed", panel, _bodyFont, "아직 완료한 발전이 없어요.", 26, Body, TextAlignmentOptions.TopLeft, 18);
         completed.textWrappingMode = TextWrappingModes.Normal;
-        TopBand(completed.rectTransform, 74, 64, 928, 420);
+        TopBand(completed.rectTransform, 74, 64, 928, 640);
 
         var view = screen.gameObject.AddComponent<TownHallPopupView>();
+        BuildDistrictHallCard(panel, view);
         Set(view, "_animator", animator);
         Set(view, "_stageText", stage);
         Set(view, "_progressText", progress);

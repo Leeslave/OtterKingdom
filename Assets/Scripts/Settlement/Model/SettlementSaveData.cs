@@ -135,10 +135,10 @@ public class SettlementSaveData
 {
     /// <summary>
     /// 정착 세이브 버전. 0 = P2 전 (필드가 없던 세이브), 2 = P2 (관리 역할), 3 = P3 (공동사업·집·생활 의뢰·요정 방문 순서),
-    /// 4 = 가로등이 첫 집과 따로 지어짐 (건설 모드).
+    /// 4 = 가로등이 첫 집과 따로 지어짐 (건설 모드), 5 = 지도 가운데 공터에서 시작 (구역·이사, CenterStartMigration).
     /// 불러올 때 낮은 버전이면 SettlementManager가 한 번 옮기고 이 값으로 올린다
     /// </summary>
-    public const int CurrentVersion = 4;
+    public const int CurrentVersion = CenterStartMigration.Version;
 
     public int version;
     // 새 게임 처리(첫 해달 도착, 시작 재료)를 했는지. 재접속 때 다시 하지 않게
@@ -184,4 +184,6 @@ public class SettlementSaveData
     public int toyVisitSerial;
     // 자리를 골라 지은 건물의 공사·완성 기록 (P4. 놓인 자리는 꾸미기 세이브)
     public List<BuildingSaveData> buildings = new List<BuildingSaveData>();
+    // 용도를 정한 구역 블록 (구역·이사. 옛 세이브는 없음 = 아무 블록도 정하지 않음)
+    public List<DistrictSaveData> districts = new List<DistrictSaveData>();
 }

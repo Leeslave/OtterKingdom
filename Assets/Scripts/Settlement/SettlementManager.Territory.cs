@@ -11,8 +11,8 @@ using UnityEngine;
 /// </summary>
 public partial class SettlementManager
 {
-    /// <summary>P3의 광장 동쪽 확장 (지금은 없음). 이 발전이 있는 세이브는 서쪽 1단계를 넓힌 것으로 옮김</summary>
-    public const string LegacyPlazaExpandDevelopment = "plaza_expand_01";
+    /// <summary>P3의 광장 동쪽 확장 (지금은 없음). 이 발전이 있는 세이브는 영토 한 단계를 넓힌 것으로 옮김 (CenterStartMigration)</summary>
+    public const string LegacyPlazaExpandDevelopment = CenterStartMigration.LegacyPlazaExpandDevelopment;
 
     private int _territoryVersion;
     private readonly List<CommunityProjectDefinition> _territoryMissions = new List<CommunityProjectDefinition>();
@@ -41,6 +41,9 @@ public partial class SettlementManager
     public TerritoryBlock GetTerritoryBlock(TerritoryDirection direction) =>
         TerritoryRules.GetBlock(_config, Settlement, PlayerLevel, direction);
 
+    /// <summary>아직 넓힐 단계가 남은 방향이 있는지</summary>
+    public bool AnyTerritoryLeft => TerritoryRules.AnyLeft(_config, Settlement);
+
     /// <summary>남은 개간 기회</summary>
     public int TerritoryChances => TerritoryRules.AvailableChances(_config, Settlement, PlayerLevel);
 
@@ -63,7 +66,7 @@ public partial class SettlementManager
         return territory;
     }
 
-    /// <summary>지금 재료를 넣을 수 있는 영토 확장 미션들 (숲 개간을 다 끝낸 단계. 서쪽 먼저)</summary>
+    /// <summary>지금 재료를 넣을 수 있는 영토 확장 미션들 (숲 개간을 다 끝낸 단계. 방향 순)</summary>
     public IReadOnlyList<CommunityProjectDefinition> OpenTerritoryMissions
     {
         get
@@ -87,9 +90,9 @@ public partial class SettlementManager
         if (working != null)
             return $"{task.Title} 중이에요.";
         if (PlayerLevel < _config.TerritoryStartLevel)
-            return $"Lv.{_config.TerritoryStartLevel}부터 광장 가장자리의 숲을 개간할 수 있어요.";
+            return $"Lv.{_config.TerritoryStartLevel}부터 공터 둘레의 숲을 개간할 수 있어요.";
         return chances > 0
-            ? $"개간 기회 {chances}번 · 광장 가장자리의 점선 원을 눌러 해달을 보내요."
+            ? $"개간 기회 {chances}번 · 공터 가장자리의 점선 원을 눌러 해달을 보내요."
             : "레벨이 오르면 개간 기회가 생겨요.";
     }
 
@@ -168,27 +171,45 @@ public partial class SettlementManager
         TerritoryRules.Sync(_config, Settlement);
     }
 
-    // P3의 동쪽 확장을 끝낸 세이브: 그 땅이 없어졌으므로 서쪽 1단계를 넓힌 것으로 (새 이웃의 집도 서쪽으로). 보상은 다시 주지 않음
-    private void MigrateTerritory()
+    // 버전 5 전 세이브 (광장이 남동쪽 끝에서 시작하던 때): 영토 진행을 새 방향 단계로, 열린 블록에 용도, 열린 땅 밖 물건을 공터 · 부지 칸으로
+    private void MigrateCenterStart(int fromVersion)
     {
-        if (!Settlement.HasDevelopment(LegacyPlazaExpandDevelopment))
+        if (fromVersion >= CenterStartMigration.Version)
             return;
-        var first = TerritoryRules.InDirection(_config, TerritoryDirection.West);
-        if (first.Count == 0 || TerritoryRules.IsExpanded(first[0], Settlement))
-            return;
-        var territory = first[0];
-        for (int i = 0; i < territory.Clearings.Count; i++)
-            Settlement.UnlockDevelopment(territory.ClearingDevelopment(i + 1));
-        if (territory.Mission != null)
+        if (CenterStartMigration.MigrateTerritory(_config, Settlement, fromVersion))
+            Debug.Log("[SettlementManager] 버전 5 전 세이브: 영토 진행을 중앙 공터 둘레의 새 단계로 옮겼습니다.");
+        foreach (var block in CenterStartMigration.DesignateOpened(_config, Settlement))
+            Debug.Log($"[SettlementManager] 버전 5 전 세이브: '{block.DisplayName}'을(를) {Districts.DisplayName(DistrictTypeOf(block))}으로 정했습니다.");
+        int moved = RelocateCenterStart();
+        if (moved > 0)
+            Debug.Log($"[SettlementManager] 버전 5 전 세이브: 광장 물건 {moved}개를 공터 · 구역 부지로 옮겼습니다.");
+    }
+
+    // 열린 땅 밖에 놓인 광장 물건을 옮김 (자리는 CenterStartMigration.PlanDecor). 씬을 열기 전이라 걷기 영역 막힘은 보지 않음
+    private int RelocateCenterStart()
+    {
+        var decor = DecorManager.Instance;
+        var board = decor != null ? decor.FindBoard(_config.PlazaBoardId) : null;
+        if (board == null)
+            return 0;
+        var layout = decor.GetLayout(board);
+        var placed = new List<PlacedForMigration>();
+        foreach (var p in layout.Placed)
         {
-            Settlement.MarkProjectCompleted(territory.Mission.ProjectId);
-            Settlement.AddReward(CommunityProjectRules.RewardKey(territory.Mission, 0));
-            if (!string.IsNullOrEmpty(territory.Mission.PaidDevelopment))
-                Settlement.UnlockDevelopment(territory.Mission.PaidDevelopment);
+            var district = p.Decor is IDistrictBuilding building ? building.District : DistrictType.None;
+            placed.Add(new PlacedForMigration(p.InstanceId, district, new RectInt(p.Area.position - board.SaveOrigin, p.Area.size)));
         }
-        Settlement.UnlockDevelopment(territory.ExpandedDevelopment);
-        TerritoryRules.Sync(_config, Settlement);
-        Debug.Log("[SettlementManager] 광장 동쪽 확장을 끝낸 세이브: 서쪽 1단계를 넓힌 것으로 옮겼습니다.");
+        int moved = 0;
+        foreach (var pair in CenterStartMigration.PlanDecor(_config, Settlement, placed))
+        {
+            if (!layout.TryGet(pair.Key, out var p))
+                continue;
+            if (layout.TryMove(pair.Key, pair.Value + board.SaveOrigin, p.Rotation) == DecorPlacementResult.Ok)
+                moved++;
+            else
+                Debug.LogWarning($"[SettlementManager] 버전 5 전 세이브: '{p.Decor.DisplayName}'을(를) {pair.Value}로 옮기지 못했습니다.");
+        }
+        return moved;
     }
 
     #endregion

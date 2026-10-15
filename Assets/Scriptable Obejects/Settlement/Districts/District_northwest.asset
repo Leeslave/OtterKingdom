@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94beaf52d1d90d745bbf3e6bb32b87bf, type: 3}
+  m_Name: District_northwest
+  m_EditorClassIdentifier: OtterKingdom::DistrictBlockDefinition
+  _blockId: district_northwest
+  _displayName: "\uBD81\uC11C\uCABD \uC232"
+  _fixedType: 0
+  _suggestedType: 4
+  _stages:
+  - _development: territory_nw_1
+    _areas:
+    - x: -52
+      y: 58
+      width: 18
+      height: 14
+  - _development: territory_nw_2
+    _areas:
+    - x: -70
+      y: 58
+      width: 18
+      height: 14
+  - _development: territory_nw_3
+    _areas:
+    - x: -70
+      y: 72
+      width: 36
+      height: 14
+  _slots:
+  - _slotId: district_northwest_01
+    _area:
+      x: -42
+      y: 69
+      width: 4
+      height: 3
+    _stage: 0
+  - _slotId: district_northwest_02
+    _area:
+      x: -51
+      y: 67
+      width: 8
+      height: 5
+    _stage: 0
+  - _slotId: district_northwest_03
+    _area:
+      x: -52
+      y: 61
+      width: 4
+      height: 3
+    _stage: 0
+  - _slotId: district_northwest_04
+    _area:
+      x: -42
+      y: 61
+      width: 8
+      height: 5
+    _stage: 0
+  - _slotId: district_northwest_05
+    _area:
+      x: -70
+      y: 67
+      width: 8
+      height: 5
+    _stage: 1
+  - _slotId: district_northwest_06
+    _area:
+      x: -61
+      y: 64
+      width: 4
+      height: 3
+    _stage: 1
+  - _slotId: district_northwest_07
+    _area:
+      x: -70
+      y: 61
+      width: 8
+      height: 5
+    _stage: 1
+  - _slotId: district_northwest_08
+    _area:
+      x: -44
+      y: 79
+      width: 4
+      height: 3
+    _stage: 2
+  - _slotId: district_northwest_09
+    _area:
+      x: -65
+      y: 77
+      width: 8
+      height: 5
+    _stage: 2
+  - _slotId: district_northwest_10
+    _area:
+      x: -56
+      y: 77
+      width: 8
+      height: 5
+    _stage: 2
+  - _slotId: district_northwest_11
+    _area:
+      x: -47
+      y: 75
+      width: 4
+      height: 3
+    _stage: 2

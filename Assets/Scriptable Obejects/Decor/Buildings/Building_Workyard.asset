@@ -53,4 +53,5 @@ MonoBehaviour:
   - _kind: 5
     _percent: 15
   _hostsFairyShop: 0
+  _district: 4
   _widthFill: 0.95

@@ -97,10 +97,15 @@ public class ConstructionPlotTests
     public void DefaultCell_FollowsTerritoryDirection()
     {
         var plot = Plot("con_p3_house", "새 이웃의 집", new Vector2Int(-16, 19), new Vector2Int(6, 4));
-        plot.SetupPlot(plot.Construction, plot.DefaultCell, Vector2.zero, Vector2.one, "territory_home_north", new Vector2Int(11, 47));
+        plot.SetupPlot(plot.Construction, plot.DefaultCell, Vector2.zero, Vector2.one, new[]
+        {
+            new PlotAlternateCell("territory_home_ne", new Vector2Int(-8, 52)),
+            new PlotAlternateCell("territory_home_s", new Vector2Int(-30, 30)),
+        });
 
-        Assert.AreEqual(new Vector2Int(-16, 19), plot.DefaultCellFor(_ => false), "서쪽을 먼저 넓혔거나 아직 넓히기 전");
-        Assert.AreEqual(new Vector2Int(11, 47), plot.DefaultCellFor(id => id == "territory_home_north"), "북쪽을 먼저 넓힘");
+        Assert.AreEqual(new Vector2Int(-16, 19), plot.DefaultCellFor(_ => false), "아직 넓히기 전");
+        Assert.AreEqual(new Vector2Int(-8, 52), plot.DefaultCellFor(id => id == "territory_home_ne"), "북동쪽을 먼저 넓힘");
+        Assert.AreEqual(new Vector2Int(-30, 30), plot.DefaultCellFor(id => id == "territory_home_s"), "남쪽을 먼저 넓힘");
         var plain = Plot("con_house_1", "작은 집", new Vector2Int(20, 23), new Vector2Int(6, 4));
         Assert.AreEqual(new Vector2Int(20, 23), plain.DefaultCellFor(_ => true), "다른 칸이 없는 자리");
     }
