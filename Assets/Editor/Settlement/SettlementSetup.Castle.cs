@@ -99,7 +99,7 @@ public static partial class SettlementSetup
         var request = AssetDatabase.LoadAssetAtPath<BoardRequestDefinition>(path);
         var so = new SerializedObject(request);
         so.FindProperty("_requestId").stringValue = CastleRules.RequestId;
-        so.FindProperty("_order").intValue = 14;
+        so.FindProperty("_order").intValue = 17; // 밭 개간(15) · 새싹이(16) 뒤 — 성은 Lv.16부터라 게시판 다음 목표가 밭을 먼저 가리키게
         so.FindProperty("_title").stringValue = "왕국의 성을 세워요";
         so.FindProperty("_description").stringValue = "구역이 반듯하게 정리됐어요!\n마을 길드를 넓혀 해달 왕국의 성을 세워요.";
         var receptionist = AssetDatabase.LoadAssetAtPath<SettlementOtterDefinition>($"{DataFolder}/Otters/Otter_Receptionist.asset");

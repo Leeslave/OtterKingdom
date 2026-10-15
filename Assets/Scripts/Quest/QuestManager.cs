@@ -252,8 +252,20 @@ public class QuestManager : MonoBehaviour
         RefreshRecordGoals();
     }
 
+    // 곡괭이 레벨. 게임 쪽(GameManager)이 세이브를 불러온 뒤·강화한 뒤 알려 줌 (-1 = 아직 모름)
+    private int _pickaxeLevel = -1;
+
+    /// <summary>곡괭이 레벨이 바뀌었을 때 (게임 쪽이 부름). 곡괭이 강화 퀘스트를 다시 센다</summary>
+    public void SetPickaxeLevel(int level)
+    {
+        if (level == _pickaxeLevel)
+            return;
+        _pickaxeLevel = level;
+        RefreshRecordGoals();
+    }
+
     /// <summary>
-    /// 기록으로 세는 퀘스트(새 해달 만나기, 건설 완료, 장소 가 보기, 고랑 열기)를 기록에서 다시 센다. 퀘스트가 열리기 전에 만난 해달·지은 건물·연 고랑도
+    /// 기록으로 세는 퀘스트(새 해달 만나기, 건설 완료, 장소 가 보기, 고랑 열기, 곡괭이 강화, 일일 끝내기)를 기록에서 다시 센다. 퀘스트가 열리기 전에 만난 해달·지은 건물·연 고랑도
     /// 들어가고(소급), 같은 기록을 두 번 세지 않는다 (더하지 않고 맞춤). 받은 보상은 그대로라 다시 받을 수 없다.
     /// 불러오기·레벨업·보상 받기·정착 변화 때 부른다
     /// </summary>
@@ -282,6 +294,28 @@ public class QuestManager : MonoBehaviour
                     continue;
                 Log.SetProgressAtLeast(quest, QuestProgressRules.FromOpenedFurrows(quest, _openedFurrows));
             }
+        }
+
+        // 곡괭이 강화: 퀘스트가 열리기 전에 올린 곡괭이도 들어감
+        if (_pickaxeLevel >= 0)
+        {
+            foreach (var quest in _database.Quests)
+            {
+                if (quest == null || quest.GoalType != QuestGoalType.Upgrade || !IsAvailable(quest))
+                    continue;
+                Log.SetProgressAtLeast(quest, QuestProgressRules.FromPickaxeLevel(quest, _pickaxeLevel));
+            }
+        }
+
+        // 일일 끝내기: 퀘스트가 열리기 전에 오늘 받은 일일도 들어감 (일일 수령 기록은 매일 새벽 초기화)
+        int claimedDailies = -1;
+        foreach (var quest in _database.Quests)
+        {
+            if (quest == null || quest.GoalType != QuestGoalType.CompleteDaily || !IsAvailable(quest))
+                continue;
+            if (claimedDailies < 0)
+                claimedDailies = CountClaimedDailies();
+            Log.SetProgressAtLeast(quest, QuestProgressRules.FromClaimedDailies(quest, claimedDailies));
         }
 
         var settlement = _settlementManager != null ? _settlementManager : SettlementManager.Instance;
@@ -314,6 +348,17 @@ public class QuestManager : MonoBehaviour
             }
             Log.SetProgressAtLeast(quest, value);
         }
+    }
+
+    private int CountClaimedDailies()
+    {
+        int count = 0;
+        foreach (var quest in _database.Quests)
+        {
+            if (quest != null && quest.Kind == QuestKind.Daily && Log.GetStatus(quest) == QuestStatus.Claimed)
+                count++;
+        }
+        return count;
     }
 
     // 정착 단계: 끝낸 부탁이거나 열린 발전

@@ -18,6 +18,9 @@ public static partial class SettlementSetup
             so.FindProperty("_order").intValue = 15;
         });
         Patch<BoardRequestDefinition>($"{RequestFolder}/req_assign_farmer.asset", so => so.FindProperty("_order").intValue = 16);
+        // 성 · 길드 지부는 밭 뒤 순서 (성은 Lv.16부터, SettlementConfig.CastleLevel)
+        Patch<BoardRequestDefinition>($"{RequestFolder}/{CastleRules.RequestId}.asset", so => so.FindProperty("_order").intValue = 17);
+        Patch<BoardRequestDefinition>($"{RequestFolder}/{GuildBranchRequestId}.asset", so => so.FindProperty("_order").intValue = 18);
         Patch<BoardRequestDefinition>($"{RequestFolder}/req_upgrade_board.asset",
             so => so.FindProperty("_requiredDevelopment").stringValue = SettlementQuestGate.FairyDevelopment);
         Patch<BoardRequestDefinition>($"{RequestFolder}/req_neighbor_house.asset",
@@ -47,8 +50,12 @@ public static partial class SettlementSetup
             }
         });
 
-        // 모종: 밭이 열린 뒤 레벨로
-        foreach (var (asset, level) in new[] { ("Seed_Potato", 11), ("Seed_SweetPotato", 12), ("Seed_Strawberry", 13) })
+        // 모종: 밭이 열린 뒤 레벨로 (무 · 토란 · 애호박 · 라즈베리는 예전에 Lv.5 · 6 · 8 · 9라 밭 전에 팔렸음 — 값 순서대로 Lv.10~13)
+        foreach (var (asset, level) in new[]
+        {
+            ("Seed_Potato", 11), ("Seed_SweetPotato", 12), ("Seed_Strawberry", 13),
+            ("Seed_Radish", 10), ("Seed_Taro", 11), ("Seed_Zucchini", 12), ("Seed_Raspberry", 13),
+        })
             Patch<ScriptableObject>($"Assets/Scriptable Obejects/Shop/Products/{asset}.asset", so => so.FindProperty("_requiredLevel").intValue = level);
 
         AssetDatabase.SaveAssets();

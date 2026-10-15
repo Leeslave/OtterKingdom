@@ -256,6 +256,8 @@ MonoBehaviour:
   _orderPerDistrict: 10
   _relocationOrder: 10
   _castleOrder: 80
+  _castleLevel: 16
+  _farmDiscoverLevel: 10
   _relocationSeconds: 90
   _relocationGoldPerBuilding: 150
   _relocationExp: 40

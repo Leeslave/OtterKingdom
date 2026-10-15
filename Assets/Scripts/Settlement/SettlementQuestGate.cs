@@ -42,9 +42,10 @@ public static class SettlementQuestGate
             // 장난감은 요정 상점에서 사므로 상점이 나오기 전에는 놓을 수 없음
             case QuestGoalType.PlaceDecor:
                 return FairyDevelopment;
-            // 도감의 작물·물고기 칸은 밭이 열려야 채울 수 있음 (탭을 정한 해달 만나기는 언제든)
+            // 도감은 새 해달을 만나도(해달 칸) 채워져 언제든 할 수 있음 (작물·물고기 칸은 밭·낚시터가 열리면 더해짐).
+            // 예전엔 밭 뒤로 숨겼는데, 밭이 Lv.10으로 가며 도감 시작(Lv.2) · 수집가(Lv.5)가 Lv.10까지 안 보였음
             case QuestGoalType.CollectionRegister:
-                return quest.CollectionTab != null ? null : FarmDevelopment;
+                return null;
             default:
                 return null;
         }

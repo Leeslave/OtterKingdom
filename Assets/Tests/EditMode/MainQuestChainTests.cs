@@ -107,6 +107,30 @@ public class MainQuestChainTests
     }
 
     [Test]
+    public void CompleteDaily_CountsDailiesClaimedTodayFromRecord()
+    {
+        // Lv.9엔 일일이 하나뿐이라, 이 퀘스트가 열리기 전에 받은 오늘의 일일도 기록으로 셈
+        var goal = Quest("daily_goal", QuestGoalType.CompleteDaily);
+        var other = Quest("mine", QuestGoalType.Mine);
+
+        Assert.AreEqual(1, QuestProgressRules.FromClaimedDailies(goal, 1));
+        Assert.AreEqual(0, QuestProgressRules.FromClaimedDailies(goal, 0));
+        Assert.AreEqual(0, QuestProgressRules.FromClaimedDailies(other, 1));
+    }
+
+    [Test]
+    public void PickaxeUpgrade_CountsPickaxeLevelFromRecord()
+    {
+        // 곡괭이 강화는 4번이 끝: 미리 다 올려도 대상이 "pickaxe"인 업그레이드 퀘스트는 곡괭이 레벨로 끝남
+        var pickaxe = Quest("pickaxe", QuestGoalType.Upgrade, target: QuestProgressRules.PickaxeTarget);
+        var anyUpgrade = Quest("upgrade", QuestGoalType.Upgrade, goal: 2);
+
+        Assert.AreEqual(0, QuestProgressRules.FromPickaxeLevel(pickaxe, 1), "강화 전 (Lv.1)");
+        Assert.AreEqual(4, QuestProgressRules.FromPickaxeLevel(pickaxe, 5));
+        Assert.AreEqual(0, QuestProgressRules.FromPickaxeLevel(anyUpgrade, 5), "대상이 없는 업그레이드 퀘스트는 예전처럼 열린 동안의 강화만");
+    }
+
+    [Test]
     public void ShopPurchase_WithItem_CountsOnlyThatItem()
     {
         var potatoSeed = Item();

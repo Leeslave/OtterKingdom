@@ -72,7 +72,7 @@ public static partial class SettlementSetup
         var request = AssetDatabase.LoadAssetAtPath<BoardRequestDefinition>(path);
         var so = new SerializedObject(request);
         so.FindProperty("_requestId").stringValue = GuildBranchRequestId;
-        so.FindProperty("_order").intValue = 17;
+        so.FindProperty("_order").intValue = 18; // 성(17) 뒤
         so.FindProperty("_title").stringValue = "길드가 새 집을 찾아요";
         so.FindProperty("_description").stringValue = "마을 길드가 왕국의 성이 됐어요!\n길드는 상업 지역에 지부를 열고 싶대요.";
         so.FindProperty("_icon").objectReferenceValue = LoadArt("ICON_GuildOffice");
