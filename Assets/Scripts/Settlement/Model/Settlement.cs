@@ -658,6 +658,7 @@ public partial class Settlement
         LoadVisits(saved);
         LoadBuildings(saved);
         LoadDistricts(saved);
+        LoadRelocation(saved);
 
         OnChanged?.Invoke();
     }
@@ -741,6 +742,7 @@ public partial class Settlement
         WriteVisits(result);
         WriteBuildings(result);
         WriteDistricts(result);
+        WriteRelocation(result);
     }
 
     #endregion

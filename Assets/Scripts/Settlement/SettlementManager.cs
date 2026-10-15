@@ -189,6 +189,7 @@ public partial class SettlementManager : MonoBehaviour
             UpdateProjects(false);
         }
         TickToyVisits();
+        TickRelocation();
         FinishDueBuildings();
         CompleteRecordRequests();
         if (Settlement.Job == null)
@@ -709,7 +710,8 @@ public partial class SettlementManager : MonoBehaviour
 
         PayCost(task.RequiredGold, task.RequiredItems);
         long now = NowTicks;
-        Settlement.StartTask(task.TaskId, ids, now, now + TimeSpan.FromSeconds(DevTimers.Duration(task.DurationSeconds)).Ticks);
+        // 생산 구역 효과: 주민 작업이 빨리 끝남
+        Settlement.StartTask(task.TaskId, ids, now, now + TimeSpan.FromSeconds(DevTimers.Duration(KingdomBonus.Faster(KingdomBonusKind.ProductionSpeed, task.DurationSeconds))).Ticks);
         OnTaskStarted?.Invoke(task);
         SaveRequested?.Invoke();
         return TaskStartResult.Started;

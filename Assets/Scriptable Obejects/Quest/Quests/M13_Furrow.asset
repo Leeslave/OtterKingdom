@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv13_furrow
   _title: "\uB9C8\uC9C0\uB9C9 \uACE0\uB791"
   _description: "\uBC2D\uC758 \uACE0\uB791 \uD55C \uCE78 \uB354 \uC5F4\uAE30"
-  _sortOrder: 47
+  _sortOrder: 53
   _kind: 0
   _requiredLevel: 13
-  _prerequisite: {fileID: 11400000, guid: 7e4df81921d86a840a56b9bb9b966406, type: 2}
+  _prerequisite: {fileID: 11400000, guid: 77c4fc6b5d2c1cb4ca266527ea98901d, type: 2}
   _icon: {fileID: 21300000, guid: 6f94875465a48ea498a43b677de0b768, type: 3}
   _goalType: 13
   _goal: 1
@@ -30,5 +30,5 @@ MonoBehaviour:
   _target: 6
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 0
-  _expReward: 300
+  _expReward: 200
   _expPercentOfLevel: 0

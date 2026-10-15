@@ -1,25 +1,29 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 마을회관 발전 현황 화면: 발전 현황 · 주민 현황(정착 / 보낼 수 있음 / 작업 중) · 지금 하는 일 · 다음 목표 [가 보기] · 완료한 발전.
-/// 준비된 발전을 다 끝내면 다음 목표 대신 "모두 마쳤어요" + 생산(이동) · 꾸미기 · 도감 버튼.
+/// 마을회관 발전 현황 화면: 머리말(정착 단계 · 마을 발전 막대) 아래로 카드가 내용 길이만큼 쌓인다 (스크롤).
+/// 주민 현황 · 지금 하는 일 · 다음 목표 [가 보기](또는 모두 마침 + 생산 · 꾸미기 · 도감) · 왕국 질서도 [이사하기][구역 정하기] · 영토 확장 [가 보기] · 완료한 발전(칩).
 /// 왕국 레벨·정착 단계·시설은 서로 다른 숫자라 섞지 않는다 (여기는 정착 단계와 발전 기록만). 받은 값만 그리고 클릭을 알린다.
-/// 영토 확장 카드(개간 기회 · 영토 확장 미션 [가 보기])는 프리팹을 다시 만들지 않도록 다음 목표 카드를 복사해 그 아래에 둔다
-/// (보일 때만 완료한 발전 칸을 아래로 내림).
+/// 만들기: Tools/Settlement/Rebuild District UI (SettlementSetup.BuildTownHallPopup)
 /// </summary>
 public class TownHallPopupView : MonoBehaviour
 {
     [Header("연출")]
     [SerializeField] private UIPopupAnimator _animator;
 
-    [Header("발전 현황")]
+    [Tooltip("카드 목록 (열 때 맨 위로)")]
+    [SerializeField] private ScrollRect _scroll;
+
+    [Header("머리말")]
     [Tooltip("정착 단계 (예: 05 · 작은 마을)")]
     [SerializeField] private TextMeshProUGUI _stageText;
     [Tooltip("메인 발전 진행 (예: 마을 발전 10 / 12)")]
     [SerializeField] private TextMeshProUGUI _progressText;
+    [SerializeField] private ProgressBarView _progressBar;
 
     [Header("주민 현황")]
     [SerializeField] private TextMeshProUGUI _settledText;
@@ -42,22 +46,35 @@ public class TownHallPopupView : MonoBehaviour
     [SerializeField] private Button _decorButton;
     [SerializeField] private Button _codexButton;
 
-    [Header("완료한 발전")]
-    [SerializeField] private TextMeshProUGUI _completedText;
-
-    [Header("버튼")]
-    [SerializeField] private Button _closeButton;
-
     [Header("왕국 질서도")]
     [SerializeField] private GameObject _districtCard;
+    [Tooltip("점수 (예: 80 / 100)")]
     [SerializeField] private TextMeshProUGUI _orderText;
     [SerializeField] private TextMeshProUGUI _orderGoal;
     [SerializeField] private TextMeshProUGUI _districtNote;
     [SerializeField] private ProgressBarView _orderBar;
     [SerializeField] private Button _districtButton;
-    private bool _districtShown;
-    private const float DistrictShift = 210f;
-    public event Action OnDistrictClicked;
+    [Tooltip("[이사하기] (이사 지시서가 있을 때만)")]
+    [SerializeField] private Button _relocationButton;
+
+    [Header("영토 확장")]
+    [SerializeField] private GameObject _territoryCard;
+    [SerializeField] private TextMeshProUGUI _territoryTitle;
+    [SerializeField] private TextMeshProUGUI _territoryDescription;
+    [SerializeField] private Button _territoryButton;
+
+    [Header("완료한 발전")]
+    [Tooltip("개수 (머리말 오른쪽)")]
+    [SerializeField] private TextMeshProUGUI _completedCount;
+    [Tooltip("칩이 줄바꿈되며 놓이는 곳")]
+    [SerializeField] private RectTransform _completedFlow;
+    [Tooltip("칩 하나 (꺼 둔 원본, 개수만큼 복사)")]
+    [SerializeField] private GameObject _completedChip;
+    [Tooltip("아직 없을 때 글")]
+    [SerializeField] private TextMeshProUGUI _completedEmpty;
+
+    [Header("버튼")]
+    [SerializeField] private Button _closeButton;
 
     public bool IsOpen => _animator.IsOpen;
 
@@ -66,42 +83,40 @@ public class TownHallPopupView : MonoBehaviour
     public event Action OnDecorClicked;
     public event Action OnCodexClicked;
     public event Action OnTerritoryClicked;
+    public event Action OnDistrictClicked;
+    public event Action OnRelocationClicked;
 
-    // 영토 확장 카드 (다음 목표 카드의 복사본) · 그때 옮기는 완료한 발전 칸의 원래 자리
-    private const float TerritoryTop = 918f;
-    private const float TerritoryHeight = 176f;
-    private const float CompletedShift = 226f;
-    private RectTransform _territoryCard;
-    private RectTransform _territorySection;
-    private TextMeshProUGUI _territoryTitle;
-    private TextMeshProUGUI _territoryDescription;
-    private Button _territoryButton;
-    private RectTransform _completedSection;
-    private Vector2 _completedSectionMin, _completedSectionMax, _completedTextMin, _completedTextMax;
-    private bool _territoryShown;
+    private readonly List<TextMeshProUGUI> _chips = new List<TextMeshProUGUI>();
 
     private void Awake()
     {
-        BuildTerritoryCard();
-        if (_districtButton != null) _districtButton.onClick.AddListener(() => OnDistrictClicked?.Invoke());
         _goButton.onClick.AddListener(() => OnGoClicked?.Invoke());
         _travelButton.onClick.AddListener(() => OnTravelClicked?.Invoke());
         _decorButton.onClick.AddListener(() => OnDecorClicked?.Invoke());
         _codexButton.onClick.AddListener(() => OnCodexClicked?.Invoke());
+        _territoryButton.onClick.AddListener(() => OnTerritoryClicked?.Invoke());
+        _districtButton.onClick.AddListener(() => OnDistrictClicked?.Invoke());
+        _relocationButton.onClick.AddListener(() => OnRelocationClicked?.Invoke());
         _closeButton.onClick.AddListener(() => _animator.Hide());
+        _completedChip.SetActive(false);
     }
 
-    public void Show(string stage, string progress, LaborSummary labor, string work, string completed)
+    public void Show(string stage, int progressDone, int progressTotal, LaborSummary labor, string work, IReadOnlyList<string> completed)
     {
         _stageText.text = stage;
-        _progressText.text = progress;
+        _progressText.text = $"마을 발전 {progressDone} / {progressTotal}";
+        _progressBar.SetProgress(progressDone, progressTotal);
         _settledText.text = $"{labor.Settled}명";
         _availableText.text = $"{labor.Available}명";
         _workingText.text = $"{labor.Working}명";
         _workText.text = work;
-        _completedText.text = completed;
+        ShowCompleted(completed);
         if (!_animator.IsOpen)
+        {
             _animator.Show();
+            _scroll.verticalNormalizedPosition = 1f;
+        }
+        LayoutRebuilder.MarkLayoutForRebuild(_scroll.content);
     }
 
     /// <summary>다음 목표 (canGo면 [가 보기])</summary>
@@ -114,115 +129,6 @@ public class TownHallPopupView : MonoBehaviour
         _goButton.gameObject.SetActive(canGo);
     }
 
-    /// <summary>영토 확장 카드 (canGo면 [가 보기] = 영토 확장 미션)</summary>
-    public void ShowTerritory(string title, string description, bool canGo)
-    {
-        if (_territoryCard == null)
-            return;
-        SetTerritoryVisible(true);
-        _territoryTitle.text = title;
-        _territoryDescription.text = description;
-        _territoryButton.gameObject.SetActive(canGo);
-    }
-
-    public void HideTerritory() => SetTerritoryVisible(false);
-
-    private void SetTerritoryVisible(bool visible)
-    {
-        if (_territoryCard == null || _territoryShown == visible)
-            return;
-        _territoryShown = visible;
-        _territoryCard.gameObject.SetActive(visible);
-        _territorySection.gameObject.SetActive(visible);
-        LayoutDistrictSections();
-    }
-
-    public void ShowDistrict(bool visible, int score, string goal, int pending)
-    {
-        if (_districtCard == null) return;
-        _districtShown = visible;
-        _districtCard.SetActive(visible);
-        if (visible)
-        {
-            _orderText.text = $"왕국 질서도 {score} / 100 · 행정 해달 또박이";
-            _orderGoal.text = goal;
-            _orderBar.SetRatio(score / 100f);
-            _districtNote.text = pending > 0 ? $"이 땅을 뭘로 쓸까요? · 미지정 {pending}곳" : "정한 구역의 용도도 다시 바꿀 수 있어요.";
-            _districtButton.gameObject.SetActive(true);
-        }
-        LayoutDistrictSections();
-    }
-
-    private void LayoutDistrictSections()
-    {
-        float district = _districtShown ? DistrictShift : 0f;
-        if (_territoryCard != null)
-        {
-            PlaceTop(_territoryCard, TerritoryTop + district, TerritoryHeight);
-            PlaceTop(_territorySection, TerritoryTop - 48f + district, 44f);
-        }
-        var shift = new Vector2(0f, -district - (_territoryShown ? CompletedShift : 0f));
-        if (_completedSection != null)
-        {
-            _completedSection.offsetMin = _completedSectionMin + shift;
-            _completedSection.offsetMax = _completedSectionMax + shift;
-        }
-        // 완료한 발전 글 칸은 위만 내리고 아래 끝은 그대로 (패널 안에 남게)
-        var completed = _completedText.rectTransform;
-        completed.offsetMax = _completedTextMax + shift;
-        completed.offsetMin = _completedTextMin;
-    }
-
-    // 다음 목표 카드("NextCard")와 그 제목("Section_다음 목표")을 복사해 영토 확장 카드를 만듦 (모두 마침 칸은 뺌)
-    private void BuildTerritoryCard()
-    {
-        var nextCard = _nextGroup != null ? _nextGroup.transform.parent as RectTransform : null;
-        var panel = nextCard != null ? nextCard.parent as RectTransform : null;
-        var nextSection = panel != null ? panel.Find("Section_다음 목표") as RectTransform : null;
-        if (nextSection == null)
-            return;
-        _completedSection = panel.Find("Section_완료한 발전") as RectTransform;
-
-        _territorySection = Instantiate(nextSection, panel);
-        _territorySection.name = "Section_영토 확장";
-        _territorySection.GetComponent<TextMeshProUGUI>().text = "영토 확장";
-        PlaceTop(_territorySection, TerritoryTop - 48f, 44f);
-
-        _territoryCard = Instantiate(nextCard, panel);
-        _territoryCard.name = "TerritoryCard";
-        PlaceTop(_territoryCard, TerritoryTop, TerritoryHeight);
-        var done = _territoryCard.Find("AllDone");
-        if (done != null)
-            Destroy(done.gameObject);
-        var next = _territoryCard.Find("Next");
-        next.gameObject.SetActive(true);
-        _territoryTitle = next.Find("Title").GetComponent<TextMeshProUGUI>();
-        _territoryDescription = next.Find("Description").GetComponent<TextMeshProUGUI>();
-        var description = _territoryDescription.rectTransform;
-        description.offsetMin = new Vector2(description.offsetMin.x, -76f - 86f);
-        description.offsetMax = new Vector2(description.offsetMax.x, -76f);
-        _territoryButton = next.Find("GoButton").GetComponent<Button>();
-        _territoryButton.onClick.RemoveAllListeners();
-        _territoryButton.onClick.AddListener(() => OnTerritoryClicked?.Invoke());
-
-        if (_completedSection != null)
-        {
-            _completedSectionMin = _completedSection.offsetMin;
-            _completedSectionMax = _completedSection.offsetMax;
-        }
-        _completedTextMin = _completedText.rectTransform.offsetMin;
-        _completedTextMax = _completedText.rectTransform.offsetMax;
-        _territoryCard.gameObject.SetActive(false);
-        _territorySection.gameObject.SetActive(false);
-    }
-
-    // 위쪽 띠 (왼쪽·오른쪽 여백은 원본 그대로)
-    private static void PlaceTop(RectTransform rect, float top, float height)
-    {
-        rect.offsetMin = new Vector2(rect.offsetMin.x, -top - height);
-        rect.offsetMax = new Vector2(rect.offsetMax.x, -top);
-    }
-
     /// <summary>준비된 발전을 모두 끝냄: 생산·꾸미기·도감으로</summary>
     public void ShowAllDone(string message)
     {
@@ -231,5 +137,60 @@ public class TownHallPopupView : MonoBehaviour
         _doneText.text = message;
     }
 
+    /// <summary>영토 확장 카드 (canGo면 [가 보기] = 영토 확장 미션)</summary>
+    public void ShowTerritory(string title, string description, bool canGo)
+    {
+        _territoryCard.SetActive(true);
+        _territoryTitle.text = title;
+        _territoryDescription.text = description;
+        _territoryButton.gameObject.SetActive(canGo);
+    }
+
+    public void HideTerritory() => _territoryCard.SetActive(false);
+
+    /// <summary>왕국 질서도 카드 (행정 해달이 생긴 뒤에만 보임)</summary>
+    public void ShowDistrict(bool visible, int score, string goal, int pending)
+    {
+        _districtCard.SetActive(visible);
+        if (!visible)
+            return;
+        _orderText.text = $"{score} / 100";
+        _orderGoal.text = goal;
+        _orderBar.SetRatio(score / 100f);
+        _districtNote.text = pending > 0 ? $"이 땅을 뭘로 쓸까요? · 미지정 {pending}곳" : "정한 구역의 용도도 다시 바꿀 수 있어요.";
+        _relocationButton.gameObject.SetActive(false);
+    }
+
+    /// <summary>이사 지시서 한 줄 (null이면 [이사하기]를 숨김). ShowDistrict 뒤에 부름</summary>
+    public void ShowRelocation(string line)
+    {
+        if (!_districtCard.activeSelf)
+            return;
+        bool show = !string.IsNullOrEmpty(line);
+        _relocationButton.gameObject.SetActive(show);
+        if (show)
+            _districtNote.text = line;
+    }
+
     public void Hide() => _animator.Hide();
+
+    // 완료한 발전: 이름마다 칩 하나 (모자라면 원본을 복사)
+    private void ShowCompleted(IReadOnlyList<string> completed)
+    {
+        int count = completed != null ? completed.Count : 0;
+        _completedCount.text = count > 0 ? $"{count}개" : "";
+        _completedEmpty.gameObject.SetActive(count == 0);
+        while (_chips.Count < count)
+        {
+            var chip = Instantiate(_completedChip, _completedFlow);
+            _chips.Add(chip.GetComponentInChildren<TextMeshProUGUI>(true));
+        }
+        for (int i = 0; i < _chips.Count; i++)
+        {
+            bool used = i < count;
+            _chips[i].transform.parent.gameObject.SetActive(used);
+            if (used)
+                _chips[i].text = completed[i];
+        }
+    }
 }

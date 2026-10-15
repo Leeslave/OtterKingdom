@@ -35,7 +35,11 @@ public class DecorModePresenter : MonoBehaviour
     private const string HintBuildPlace = "자리를 고르고 [확인]을 누르면 공사를 시작해요";
     private const string HintBuildStarted = "공사를 시작했어요!";
     private const string HintMoved = "옮겼어요!";
+    private const string HintRelocating = "건설 해달이 건물을 들고 이사를 시작했어요!";
+    private const string HintStillRelocating = "이사가 끝나면 다시 옮길 수 있어요";
     private const string HintUnderConstruction = "공사가 끝나면 옮길 수 있어요";
+    private const string HintNeedDistrict = "{0}부터 정해 주세요 (마을회관 → 구역 정하기)";
+    private const string HintOutsideDistrict = "{0} 안에만 지을 수 있어요";
     private const string HintCutsPath = "해달이 지나갈 길이 막혀요. 다른 자리를 골라 주세요";
     private const string HintNoStand = "공사할 해달이 설 자리가 막혀요. 다른 자리를 골라 주세요";
 
@@ -359,13 +363,25 @@ public class DecorModePresenter : MonoBehaviour
             return;
         }
 
+        // 특성 건물은 맞는 구역에만: 그 용도의 구역이 없으면 시작하지 않고, 있으면 그 구역의 빈 부지 칸에서 시작
+        var required = settlement.RequiredDistrictFor(building);
+        if (!settlement.HasDistrictFor(required))
+        {
+            _view.ShowHint(string.Format(HintNeedDistrict, Districts.DisplayName(required)), true);
+            return;
+        }
+
         CancelSession();
         var center = _board.WorldToCell(_camera.transform.position);
-        bool found = DecorEditSession.TryFindFreeNear(_layout, building, center, DecorRotation.R0, out var origin);
+        bool inDistrict = settlement.TryFindDistrictSpot(building, building.Footprint, out var origin);
+        bool found = inDistrict || DecorEditSession.TryFindFreeNear(_layout, building, center, DecorRotation.R0, out origin);
         _session = DecorEditSession.ForNew(building, origin);
-        _view.ShowHint(found ? $"{HintBuildPlace} ({settlement.BuildingCostText(building)})" : HintNoRoom, !found);
+        string where = required != DistrictType.None ? $" · {Districts.DisplayName(required)} 안에" : "";
+        _view.ShowHint(found ? $"{HintBuildPlace} ({settlement.BuildingCostText(building)}{where})" : HintNoRoom, !found);
         ShowSession();
         RefreshStorage();
+        if (inDistrict && _cameraDrag is PlazaCameraController camera)
+            camera.PanTo(_ghost.WorldRect.center + Vector2.up * 1f);
         BuildPlacementBegan?.Invoke(this);
     }
 
@@ -413,12 +429,39 @@ public class DecorModePresenter : MonoBehaviour
             _view.ShowHint($"{HintUnderConstruction} ({SettlementManager.FormatShort(remaining)} 남음)", true);
             return;
         }
+        if (settlement != null && settlement.IsLoaded && settlement.Settlement.TryGetRelocation(placed.InstanceId, out var move))
+        {
+            _view.ShowHint($"{HintStillRelocating} ({SettlementManager.FormatShort(move.Remaining(SettlementManager.NowTicks))} 남음)", true);
+            return;
+        }
 
         CancelSession();
         _session = DecorEditSession.ForPlaced(placed);
         _board.SetHidden(placed.InstanceId, true);
         _view.ShowHint(HintPlace);
         ShowSession();
+    }
+
+    // 다 지은 건물 옮기기: 광장이면 정착 쪽이 옮김 (행정 해달 뒤 구역 건물은 이사 시간이 걸림), 아니면 바로
+    private bool MovePlacedBuilding(out bool timed)
+    {
+        timed = false;
+        var settlement = SettlementManager.Instance;
+        if (settlement != null && settlement.IsLoaded && settlement.PlazaBoard == _board.Board)
+        {
+            var result = settlement.TryRelocate(_session.InstanceId, _session.Origin, _session.Rotation, null, out var placement);
+            if (result == RelocationStartResult.Blocked)
+                _view.ShowHint(ReasonText(placement), true);
+            timed = result == RelocationStartResult.Started;
+            return result == RelocationStartResult.Started || result == RelocationStartResult.Instant;
+        }
+        var moved = _layout.TryMove(_session.InstanceId, _session.Origin, _session.Rotation);
+        if (moved != DecorPlacementResult.Ok)
+        {
+            _view.ShowHint(ReasonText(moved), true);
+            return false;
+        }
+        return true;
     }
 
     private void RotateSession()
@@ -470,6 +513,11 @@ public class DecorModePresenter : MonoBehaviour
             _view.ShowHint(ReasonText(check), true);
             return;
         }
+        if (OutsideRequiredDistrict())
+        {
+            _view.ShowHint(OutsideDistrictText(), true);
+            return;
+        }
         if (_board.WouldCutPath(_session.Area))
         {
             _view.ShowHint(HintCutsPath, true);
@@ -478,15 +526,11 @@ public class DecorModePresenter : MonoBehaviour
 
         if (!_session.IsNew)
         {
-            var moved = _layout.TryMove(_session.InstanceId, _session.Origin, _session.Rotation);
-            if (moved != DecorPlacementResult.Ok)
-            {
-                _view.ShowHint(ReasonText(moved), true);
+            if (!MovePlacedBuilding(out bool timed))
                 return;
-            }
             _board.SetHidden(_session.InstanceId, false);
             EndSession();
-            _view.ShowHint(HintMoved);
+            _view.ShowHint(timed ? HintRelocating : HintMoved);
             return;
         }
 
@@ -547,15 +591,11 @@ public class DecorModePresenter : MonoBehaviour
 
         if (!_session.IsNew)
         {
-            var moved = _layout.TryMove(_session.InstanceId, _session.Origin, _session.Rotation);
-            if (moved != DecorPlacementResult.Ok)
-            {
-                _view.ShowHint(ReasonText(moved), true);
+            if (!MovePlacedBuilding(out bool timed))
                 return;
-            }
             _board.SetHidden(_session.InstanceId, false);
             EndSession();
-            _view.ShowHint(HintMoved);
+            _view.ShowHint(timed ? HintRelocating : HintMoved);
             return;
         }
 
@@ -652,7 +692,22 @@ public class DecorModePresenter : MonoBehaviour
     {
         var result = _session.Check(_layout);
         var rect = _board.AreaWorldRect(_session.Area);
-        _ghost.Show(_session.Decor, _session.Rotation, rect, result == DecorPlacementResult.Ok, _board.Fill, _board.GhostItemSortingOrder(_session.Decor, rect));
+        bool ok = result == DecorPlacementResult.Ok && !OutsideRequiredDistrict();
+        _ghost.Show(_session.Decor, _session.Rotation, rect, ok, _board.Fill, _board.GhostItemSortingOrder(_session.Decor, rect));
+    }
+
+    // 새로 짓는 특성 건물이 들어가야 할 구역 밖에 있는지 (SettlementManager.DistrictBuildings)
+    private bool OutsideRequiredDistrict()
+    {
+        var settlement = SettlementManager.Instance;
+        return _session != null && _session.IsNew && settlement != null && settlement.IsLoaded
+            && settlement.PlazaBoard == _board.Board && !settlement.FitsRequiredDistrict(_session.Decor, _session.Area);
+    }
+
+    private string OutsideDistrictText()
+    {
+        var required = SettlementManager.Instance.RequiredDistrictFor(_session.Decor);
+        return string.Format(HintOutsideDistrict, Districts.DisplayName(required));
     }
 
     private string ReasonText(DecorPlacementResult result)
@@ -803,7 +858,9 @@ public class DecorModePresenter : MonoBehaviour
     private void ShowPlacementHint()
     {
         var result = _session.Check(_layout);
-        if (result == DecorPlacementResult.Ok && _session.Decor.IsBuilding && _board.WouldCutPath(_session.Area))
+        if (result == DecorPlacementResult.Ok && OutsideRequiredDistrict())
+            _view.ShowHint(OutsideDistrictText(), true);
+        else if (result == DecorPlacementResult.Ok && _session.Decor.IsBuilding && _board.WouldCutPath(_session.Area))
             _view.ShowHint(HintCutsPath, true);
         else
             _view.ShowHint(result == DecorPlacementResult.Ok ? HintPlace : ReasonText(result), result != DecorPlacementResult.Ok);
@@ -857,7 +914,7 @@ public class DecorModePresenter : MonoBehaviour
         var text = new StringBuilder("0123456789x()·!,. 전체배치됨상점꾸미기모드완료보관함");
         text.Append(HintIdle).Append(HintPlace).Append(HintPlaced).Append(HintStored).Append(HintNoRoom)
             .Append(HintEmpty).Append(HintShop).Append(HintFairyComing).Append(HintOccupied).Append(HintUnavailable).Append(HintLocked)
-            .Append(HintBuildPlace).Append(HintBuildStarted).Append(HintMoved).Append(HintUnderConstruction).Append(HintCutsPath)
+            .Append(HintBuildPlace).Append(HintBuildStarted).Append(HintMoved).Append(HintNeedDistrict).Append(HintOutsideDistrict).Append("주거상업생산농업 지역 안에").Append(HintRelocating).Append(HintStillRelocating).Append(HintUnderConstruction).Append(HintCutsPath)
             .Append("건물다지음잠김무료골드목재돌남음짓기이자리에지을까요?왕국레벨부터특성해달이모자라요더없어요다른건물을짓는중이에요건설재료Lv.G/")
             .Append("광장 아늑함 해달 방문 빨라짐%")
             .Append(HintNoStand).Append("다른 공사가 끝나면 시작할 수 있어요 건설 해달이 있어야 개가 더 필요해요 작업하러 가 있어요 지금은 지을 수 없어요");

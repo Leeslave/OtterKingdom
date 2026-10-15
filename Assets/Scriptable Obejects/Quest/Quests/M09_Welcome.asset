@@ -16,7 +16,7 @@ MonoBehaviour:
   _title: "\uD658\uC601 \uACF5\uAC04 \uAFB8\uBBF8\uAE30"
   _description: "\uACF5\uB3D9\uC0AC\uC5C5: \uD654\uBD84\uC774\uB098 \uBE68\uB7AB\uC904
     \uB193\uAE30"
-  _sortOrder: 31
+  _sortOrder: 29
   _kind: 0
   _requiredLevel: 9
   _prerequisite: {fileID: 11400000, guid: db00d42a8a4cbc143a0a4d68459a5f35, type: 2}

@@ -560,5 +560,6 @@ public class FarmService
     private CropDefinition LookupCrop(string id) =>
         !string.IsNullOrEmpty(id) && cropsById.TryGetValue(id, out var c) ? c : null;
 
-    private float CurrentDurationMultiplier => balance.DurationMultiplierAt(save.farmLevel);
+    // 밭 레벨 배율 × 왕국 효과(농업 구역: 자라는 시간 −%)
+    private float CurrentDurationMultiplier => KingdomBonus.Shorten(KingdomBonusKind.GrowSpeed, balance.DurationMultiplierAt(save.farmLevel));
 }

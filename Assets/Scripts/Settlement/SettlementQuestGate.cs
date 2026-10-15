@@ -7,6 +7,8 @@ public static class SettlementQuestGate
     // 목표 종류 → 필요한 발전 (SettlementSetup의 건설 결과 ID, 지역의 생산 발전 ID)
     public const string FarmDevelopment = "farmland";
     public const string FishingDevelopment = "fishing_dock";
+    // 요정이 광장에 오면 상점이 열림 (광부를 배치하면 초대 — 밭보다 먼저)
+    public const string FairyDevelopment = "fairy_arrived";
     // 농부·광부·낚시꾼이 일하기 시작하면 열림 (그 전에는 수확·채굴·낚시를 할 수 없음)
     public const string FarmProductionDevelopment = "farm_working";
     public const string MineProductionDevelopment = "mine_working";
@@ -34,12 +36,12 @@ public static class SettlementQuestGate
                 return MineProductionDevelopment;
             case QuestGoalType.Catch:
                 return FishingProductionDevelopment;
-            // 요정 상점은 밭이 열릴 때 광장에 나옴
+            // 요정 상점은 요정이 광장에 오면 열림 (모종 같은 밭 상품은 밭이 열린 뒤 레벨로 판매)
             case QuestGoalType.ShopPurchase:
-                return FarmDevelopment;
+                return FairyDevelopment;
             // 장난감은 요정 상점에서 사므로 상점이 나오기 전에는 놓을 수 없음
             case QuestGoalType.PlaceDecor:
-                return FarmDevelopment;
+                return FairyDevelopment;
             // 도감의 작물·물고기 칸은 밭이 열려야 채울 수 있음 (탭을 정한 해달 만나기는 언제든)
             case QuestGoalType.CollectionRegister:
                 return quest.CollectionTab != null ? null : FarmDevelopment;

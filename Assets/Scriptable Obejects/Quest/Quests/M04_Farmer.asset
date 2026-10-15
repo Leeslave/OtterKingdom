@@ -15,9 +15,9 @@ MonoBehaviour:
   _questId: main_lv4_farmer
   _title: "\uB18D\uC0AC\uB97C \uC9C0\uC744 \uD574\uB2EC"
   _description: "\uC0C8\uC2F9\uC774\uB97C \uBC2D\uC5D0 \uBC30\uCE58\uD558\uAE30"
-  _sortOrder: 11
+  _sortOrder: 34
   _kind: 0
-  _requiredLevel: 4
+  _requiredLevel: 10
   _prerequisite: {fileID: 11400000, guid: e6a03267587b9e04cb38c3f7f10e655d, type: 2}
   _icon: {fileID: 21300000, guid: 4951d4902ad1b814cbbff2ea208b0a11, type: 3}
   _goalType: 11
@@ -30,5 +30,5 @@ MonoBehaviour:
   _target: req_assign_farmer
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 50
-  _expReward: 60
+  _expReward: 200
   _expPercentOfLevel: 0

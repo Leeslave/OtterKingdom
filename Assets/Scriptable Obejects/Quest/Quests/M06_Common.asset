@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv6_common
   _title: "\uB2E4 \uAC19\uC774 \uC274 \uC790\uB9AC"
   _description: "\uAD11\uC7A5\uC5D0 \uC274 \uC790\uB9AC \uC815\uB9AC\uD558\uAE30"
-  _sortOrder: 19
+  _sortOrder: 18
   _kind: 0
   _requiredLevel: 6
   _prerequisite: {fileID: 11400000, guid: e1c2fee7777b42447ba4ba39bc0d422d, type: 2}

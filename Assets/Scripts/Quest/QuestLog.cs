@@ -41,9 +41,15 @@ public class QuestLog
     public int DailyDay { get; private set; }
 
     /// <summary>레벨별 메인 체인을 이 기록에 맞췄는지 (메인 체인이 생기기 전 세이브는 false → QuestManager가 한 번 맞춤)</summary>
-    public bool MainChainReady { get; private set; }
+    public bool MainChainReady => MainChainVersion > 0;
 
-    public void MarkMainChainReady() => MainChainReady = true;
+    /// <summary>
+    /// 메인 체인을 맞춘 표의 판 (0 = 옛 세이브, 1 = 레벨별 메인, 2 = 밭을 Lv.10으로 옮긴 표).
+    /// 판이 오르면 QuestManager가 지나온 레벨의 새 메인을 한 번 넘긴다
+    /// </summary>
+    public int MainChainVersion { get; private set; }
+
+    public void MarkMainChainReady(int version = 1) => MainChainVersion = System.Math.Max(MainChainVersion, version);
 
     // 가 본 장소 (씬 이름). 장소 가 보기 퀘스트가 열리기 전에 다녀왔어도 기록으로 세려고 남김
     private readonly HashSet<string> _visitedZones = new HashSet<string>();

@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv10_upgrade
   _title: "\uB354 \uC88B\uC740 \uB3C4\uAD6C"
   _description: "\uC0DD\uC0B0 \uC5C5\uADF8\uB808\uC774\uB4DC 1\uD68C"
-  _sortOrder: 36
+  _sortOrder: 14
   _kind: 0
-  _requiredLevel: 10
-  _prerequisite: {fileID: 11400000, guid: df656ecee22dc3a46ae982393d321498, type: 2}
+  _requiredLevel: 5
+  _prerequisite: {fileID: 11400000, guid: c8f73d7e2f940364bbba6951c9655a2c, type: 2}
   _icon: {fileID: 21300000, guid: 6f94875465a48ea498a43b677de0b768, type: 3}
   _goalType: 3
   _goal: 1
@@ -30,5 +30,5 @@ MonoBehaviour:
   _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 300
-  _expReward: 200
+  _expReward: 100
   _expPercentOfLevel: 0

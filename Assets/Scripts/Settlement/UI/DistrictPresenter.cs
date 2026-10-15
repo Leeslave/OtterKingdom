@@ -92,6 +92,7 @@ public class DistrictPresenter : MonoBehaviour
         var target = _block;
         var game = GameManager.Instance;
         if (game == null || target == null) return;
+        if (_manager.Settlement.GetDistrict(target.BlockId) == type) return; // 현재 용도 칸 (강조만)
         game.ShowConfirm("구역 정하기", $"{target.DisplayName}{KoreanParticle.ObjectParticle(target.DisplayName)} {Districts.DisplayName(type)}으로 정할까요?\n기존 건물은 그대로 두고 용도만 바꿔요.", () =>
         {
             var result = _manager.TryDesignateDistrict(target, type);
@@ -102,7 +103,8 @@ public class DistrictPresenter : MonoBehaviour
                 return;
             }
             Hide();
-            game.ShowGuide($"{target.DisplayName}{KoreanParticle.SubjectParticle(target.DisplayName)} {Districts.DisplayName(type)}이 되었어요!\n왕국 질서도 {_manager.DistrictOrder.Score} / 100");
+            // ShowGuide(아래 말풍선)는 HideGuide를 부를 때까지 남는 "할 일 안내"라 완료 알림에는 잠깐 뜨는 알림을 씀
+            GameNotices.Post(new GameNotice($"{target.DisplayName}{KoreanParticle.SubjectParticle(target.DisplayName)} {Districts.DisplayName(type)}이 되었어요!\n왕국 질서도 {_manager.DistrictOrder.Score} / 100"));
         });
     }
 }

@@ -182,7 +182,7 @@ public class SettlementTaskPopupView : MonoBehaviour
         _descriptionText.text = description;
         _infoRow.SetActive(showInfo);
         _workersText.text = $"{task.RequiredWorkers}명";
-        _durationText.text = FormatDuration(task.DurationSeconds);
+        _durationText.text = FormatDuration(KingdomBonus.Faster(KingdomBonusKind.ProductionSpeed, task.DurationSeconds)); // 생산 구역 효과만큼 빨리
     }
 
     // 가진 / 필요 (넉넉하면 체크, 모자라면 빨강). 비용이 없으면 줄째 숨김
