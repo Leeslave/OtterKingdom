@@ -17,7 +17,7 @@ using UnityEngine.SceneManagement;
 // farm keeps ticking in every scene — crops grow and the working farmer
 // harvests and replants them wherever the player is (FarmService); the farm
 // scene's otter only shows it.
-public class GameManager : MonoBehaviour
+public partial class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
@@ -267,6 +267,8 @@ public class GameManager : MonoBehaviour
         // This zone's guide was already seen (e.g. reset by the dev tool): a
         // specialist placed here starts working right away.
         else StartSpecialistWork();
+        if (CurrentZoneId == ZoneTutorials.Plaza)
+            StartCoroutine(PlayDistrictGuideWhenReady());
         if (CurrentZoneId == ZoneTutorials.Plaza && !save.tutorialsDone.Contains(ZoneTutorials.FairyShop))
             StartCoroutine(PlayFairyShopTutorialWhenReady());
         if (CurrentZoneId == ZoneTutorials.Farm && !save.tutorialsDone.Contains(ZoneTutorials.FarmOffline))
@@ -364,6 +366,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
+        CloseDistrictGuide();
         SceneNavigator.BeforeLeave -= SaveNow;
         SettlementManager.SaveRequested -= SaveNow;
         DecorManager.SaveRequested -= SaveNow;

@@ -24,9 +24,22 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 0
   _construction: {fileID: 11400000, guid: 91d8ef75c793fa44f9c07ebc9047c74f, type: 2}
-  _defaultCell: {x: -16, y: 19}
-  _alternateDevelopment: territory_home_north
-  _alternateCell: {x: 11, y: 47}
-  _pivotOffset: {x: -0.79999924, y: 0.6000004}
+  _defaultCell: {x: -10, y: 52}
+  _alternates:
+  - _development: territory_home_ne
+    _cell: {x: -10, y: 52}
+  - _development: territory_home_s
+    _cell: {x: -34, y: 30}
+  - _development: territory_home_nw
+    _cell: {x: -46, y: 63}
+  - _development: territory_home_w
+    _cell: {x: -53, y: 40}
+  _pivotOffset: {x: 0, y: 0.5000038}
   _worldScale: {x: 1, y: 1}
+  _district: 2

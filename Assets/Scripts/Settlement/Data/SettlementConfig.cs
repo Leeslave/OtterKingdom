@@ -26,6 +26,69 @@ public class LevelDevelopment
     }
 }
 
+/// <summary>구역 용도가 열리는 조건 (구역·이사): 그 용도의 시설이 생겨야 쓸모 있는 구역은 그때 함께 열린다 (예: 상업 = 가게)</summary>
+[Serializable]
+public class DistrictTypeUnlock
+{
+    [SerializeField] private DistrictType _district;
+
+    [Tooltip("이 발전이 열리면 이 용도를 고를 수 있음")]
+    [SerializeField] private string _development;
+
+    [Tooltip("잠겨 있을 때 보일 말 (예: 가게를 지을 수 있게 되면 상업 지역을 정할 수 있어요)")]
+    [SerializeField] private string _lockedHint;
+
+    public DistrictType District => _district;
+    public string Development => _development;
+    public string LockedHint => _lockedHint;
+
+    public DistrictTypeUnlock() { }
+
+    public DistrictTypeUnlock(DistrictType district, string development, string lockedHint)
+    {
+        _district = district;
+        _development = development;
+        _lockedHint = lockedHint;
+    }
+}
+
+/// <summary>구역 보너스 한 줄 (구역·이사): 그 용도의 구역에 맞게 들어선 건물이 주는 왕국 보유 효과. 수치는 임시</summary>
+[Serializable]
+public class DistrictBonusEntry
+{
+    [SerializeField] private DistrictType _district;
+    [SerializeField] private KingdomBonusKind _kind;
+
+    [Tooltip("그 용도의 구역을 정하기만 해도 주는 %")]
+    [Min(0)]
+    [SerializeField] private int _flatPercent;
+
+    [Tooltip("그 용도의 구역에 들어선 맞는 건물 하나마다 더하는 %")]
+    [Min(0)]
+    [SerializeField] private int _perBuildingPercent;
+
+    [Tooltip("최대 % (0 = 제한 없음)")]
+    [Min(0)]
+    [SerializeField] private int _maxPercent;
+
+    public DistrictType District => _district;
+    public KingdomBonusKind Kind => _kind;
+    public int FlatPercent => Mathf.Max(0, _flatPercent);
+    public int PerBuildingPercent => Mathf.Max(0, _perBuildingPercent);
+    public int MaxPercent => Mathf.Max(0, _maxPercent);
+
+    public DistrictBonusEntry() { }
+
+    public DistrictBonusEntry(DistrictType district, KingdomBonusKind kind, int flatPercent, int perBuildingPercent, int maxPercent)
+    {
+        _district = district;
+        _kind = kind;
+        _flatPercent = flatPercent;
+        _perBuildingPercent = perBuildingPercent;
+        _maxPercent = maxPercent;
+    }
+}
+
 /// <summary>
 /// 정착 진행(P0: 빈 광장 → 첫 집 → 건설 해달 → 농경지 개간 → 밭 해금, P1: 개간 지역 · 주민 작업 · 전문 해달 배치,
 /// P2: 게시판 성장 → 관리 해달 → 주민 부탁 · 공동 작업 → 접수소 · 큰 부탁 → 마을회관,
@@ -150,6 +213,84 @@ public class SettlementConfig : ScriptableObject
 
     [Tooltip("광장 꾸미기 격자 ID (장난감 방문이 장난감을 세고, 건물을 짓는 격자)")]
     [SerializeField] private string _plazaBoardId = "plaza";
+
+    [Header("구역 · 왕국 질서도 (구역·이사)")]
+    [Tooltip("구역 후보 블록 (중앙 공터 + 용도를 고르는 블록)")]
+    [SerializeField] private List<DistrictBlockDefinition> _districtBlocks = new List<DistrictBlockDefinition>();
+
+    [Tooltip("처음 정하는 구역의 용도 (튜토리얼로 고정, None = 고정 없음)")]
+    [SerializeField] private DistrictType _firstDistrict = DistrictType.Residential;
+
+    [Tooltip("질서도: 구역 건물이 모두 맞는 구역에 있을 때 받는 점수 (비율만큼)")]
+    [Min(0)]
+    [SerializeField] private int _orderMatchWeight = 60;
+
+    [Tooltip("질서도: 용도를 정한 블록 하나마다 받는 점수")]
+    [Min(0)]
+    [SerializeField] private int _orderPerDistrict = 10;
+
+    [Tooltip("이사 지시서가 열리는 질서도")]
+    [Min(0)]
+    [SerializeField] private int _relocationOrder = 10;
+
+    [Tooltip("마을회관을 성으로 올릴 수 있는 질서도")]
+    [Min(0)]
+    [SerializeField] private int _castleOrder = 80;
+
+    [Tooltip("구역 보너스 (용도별 왕국 보유 효과)")]
+    [SerializeField] private List<DistrictBonusEntry> _districtBonuses = new List<DistrictBonusEntry>();
+
+    [Tooltip("용도가 열리는 조건 (표에 없는 용도는 처음부터)")]
+    [SerializeField] private List<DistrictTypeUnlock> _districtTypeUnlocks = new List<DistrictTypeUnlock>();
+
+    public IReadOnlyList<DistrictTypeUnlock> DistrictTypeUnlocks => _districtTypeUnlocks;
+
+    public DistrictTypeUnlock FindDistrictTypeUnlock(DistrictType type)
+    {
+        foreach (var unlock in _districtTypeUnlocks)
+        {
+            if (unlock != null && unlock.District == type)
+                return unlock;
+        }
+        return null;
+    }
+
+    /// <summary>테스트·설정 도구용: 용도가 열리는 조건</summary>
+    public void SetupDistrictTypeUnlocks(IEnumerable<DistrictTypeUnlock> unlocks) =>
+        _districtTypeUnlocks = unlocks != null ? new List<DistrictTypeUnlock>(unlocks) : new List<DistrictTypeUnlock>();
+
+    public IReadOnlyList<DistrictBlockDefinition> DistrictBlocks => _districtBlocks;
+    public DistrictType FirstDistrict => _firstDistrict;
+    public int OrderMatchWeight => Mathf.Max(0, _orderMatchWeight);
+    public int OrderPerDistrict => Mathf.Max(0, _orderPerDistrict);
+    public int RelocationOrder => Mathf.Max(0, _relocationOrder);
+    public int CastleOrder => Mathf.Max(0, _castleOrder);
+    public IReadOnlyList<DistrictBonusEntry> DistrictBonuses => _districtBonuses;
+
+    public DistrictBlockDefinition FindDistrictBlock(string blockId)
+    {
+        if (string.IsNullOrEmpty(blockId))
+            return null;
+        foreach (var block in _districtBlocks)
+        {
+            if (block != null && block.BlockId == blockId)
+                return block;
+        }
+        return null;
+    }
+
+    /// <summary>테스트·설정 도구용: 구역 · 질서도</summary>
+    public void SetupDistricts(IEnumerable<DistrictBlockDefinition> blocks, DistrictType firstDistrict, int matchWeight, int perDistrict,
+        int relocationOrder, int castleOrder, IEnumerable<DistrictBonusEntry> bonuses)
+    {
+        _districtBlocks = blocks != null ? new List<DistrictBlockDefinition>(blocks) : new List<DistrictBlockDefinition>();
+        _firstDistrict = firstDistrict;
+        _orderMatchWeight = matchWeight;
+        _orderPerDistrict = perDistrict;
+        _relocationOrder = relocationOrder;
+        _castleOrder = castleOrder;
+        _districtBonuses = bonuses != null ? new List<DistrictBonusEntry>(bonuses) : new List<DistrictBonusEntry>();
+    }
 
     public IReadOnlyList<float> ToyVisitMinutes => _toyVisitMinutes;
     public int MaxWaitingVisitors => Mathf.Max(1, _maxWaitingVisitors);

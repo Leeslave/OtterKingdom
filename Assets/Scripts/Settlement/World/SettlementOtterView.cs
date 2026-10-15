@@ -155,8 +155,16 @@ public class SettlementOtterView : MonoBehaviour
         else if (assignedRole != null)
         {
             // 근무 중인 관리 해달: 한마디 하고 게시판의 부탁 탭을 엶
-            line = PickLine(assignedRole.WorkingLines);
-            manager.RequestBoard(true);
+            if (manager.IsAdministrator && _otter.OtterId == DistrictGuideRules.Receptionist)
+            {
+                line = "행정 해달 또박이예요!\n구역을 정하고 왕국을 정돈해 봐요.";
+                manager.RequestTownHall();
+            }
+            else
+            {
+                line = PickLine(assignedRole.WorkingLines);
+                manager.RequestBoard(true);
+            }
         }
         else if (manager.TryHearIntro(_otter))
             line = _otter.IntroLine;

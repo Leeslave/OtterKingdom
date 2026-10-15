@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94beaf52d1d90d745bbf3e6bb32b87bf, type: 3}
+  m_Name: District_south
+  m_EditorClassIdentifier: OtterKingdom::DistrictBlockDefinition
+  _blockId: district_south
+  _displayName: "\uB0A8\uCABD \uBC14\uB2F7\uAE38"
+  _fixedType: 0
+  _suggestedType: 3
+  _stages:
+  - _development: territory_s_1
+    _areas:
+    - x: -40
+      y: 26
+      width: 18
+      height: 12
+  - _development: territory_s_2
+    _areas:
+    - x: -22
+      y: 26
+      width: 18
+      height: 12
+  - _development: territory_s_3
+    _areas:
+    - x: -40
+      y: 12
+      width: 36
+      height: 14
+  _slots:
+  - _slotId: district_south_01
+    _area:
+      x: -32
+      y: 35
+      width: 4
+      height: 3
+    _stage: 0
+  - _slotId: district_south_02
+    _area:
+      x: -30
+      y: 30
+      width: 4
+      height: 3
+    _stage: 0
+  - _slotId: district_south_03
+    _area:
+      x: -40
+      y: 26
+      width: 8
+      height: 5
+    _stage: 0
+  - _slotId: district_south_04
+    _area:
+      x: -22
+      y: 32
+      width: 8
+      height: 5
+    _stage: 1
+  - _slotId: district_south_05
+    _area:
+      x: -9
+      y: 29
+      width: 4
+      height: 3
+    _stage: 1
+  - _slotId: district_south_06
+    _area:
+      x: -22
+      y: 26
+      width: 8
+      height: 5
+    _stage: 1
+  - _slotId: district_south_07
+    _area:
+      x: -33
+      y: 17
+      width: 8
+      height: 5
+    _stage: 2
+  - _slotId: district_south_08
+    _area:
+      x: -15
+      y: 17
+      width: 8
+      height: 5
+    _stage: 2
+  - _slotId: district_south_09
+    _area:
+      x: -27
+      y: 13
+      width: 4
+      height: 3
+    _stage: 2
+  - _slotId: district_south_10
+    _area:
+      x: -18
+      y: 12
+      width: 4
+      height: 3
+    _stage: 2

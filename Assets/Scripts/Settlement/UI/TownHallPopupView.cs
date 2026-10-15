@@ -48,6 +48,17 @@ public class TownHallPopupView : MonoBehaviour
     [Header("버튼")]
     [SerializeField] private Button _closeButton;
 
+    [Header("왕국 질서도")]
+    [SerializeField] private GameObject _districtCard;
+    [SerializeField] private TextMeshProUGUI _orderText;
+    [SerializeField] private TextMeshProUGUI _orderGoal;
+    [SerializeField] private TextMeshProUGUI _districtNote;
+    [SerializeField] private ProgressBarView _orderBar;
+    [SerializeField] private Button _districtButton;
+    private bool _districtShown;
+    private const float DistrictShift = 210f;
+    public event Action OnDistrictClicked;
+
     public bool IsOpen => _animator.IsOpen;
 
     public event Action OnGoClicked;
@@ -72,6 +83,7 @@ public class TownHallPopupView : MonoBehaviour
     private void Awake()
     {
         BuildTerritoryCard();
+        if (_districtButton != null) _districtButton.onClick.AddListener(() => OnDistrictClicked?.Invoke());
         _goButton.onClick.AddListener(() => OnGoClicked?.Invoke());
         _travelButton.onClick.AddListener(() => OnTravelClicked?.Invoke());
         _decorButton.onClick.AddListener(() => OnDecorClicked?.Invoke());
@@ -122,7 +134,34 @@ public class TownHallPopupView : MonoBehaviour
         _territoryShown = visible;
         _territoryCard.gameObject.SetActive(visible);
         _territorySection.gameObject.SetActive(visible);
-        var shift = new Vector2(0f, visible ? -CompletedShift : 0f);
+        LayoutDistrictSections();
+    }
+
+    public void ShowDistrict(bool visible, int score, string goal, int pending)
+    {
+        if (_districtCard == null) return;
+        _districtShown = visible;
+        _districtCard.SetActive(visible);
+        if (visible)
+        {
+            _orderText.text = $"왕국 질서도 {score} / 100 · 행정 해달 또박이";
+            _orderGoal.text = goal;
+            _orderBar.SetRatio(score / 100f);
+            _districtNote.text = pending > 0 ? $"이 땅을 뭘로 쓸까요? · 미지정 {pending}곳" : "정한 구역의 용도도 다시 바꿀 수 있어요.";
+            _districtButton.gameObject.SetActive(true);
+        }
+        LayoutDistrictSections();
+    }
+
+    private void LayoutDistrictSections()
+    {
+        float district = _districtShown ? DistrictShift : 0f;
+        if (_territoryCard != null)
+        {
+            PlaceTop(_territoryCard, TerritoryTop + district, TerritoryHeight);
+            PlaceTop(_territorySection, TerritoryTop - 48f + district, 44f);
+        }
+        var shift = new Vector2(0f, -district - (_territoryShown ? CompletedShift : 0f));
         if (_completedSection != null)
         {
             _completedSection.offsetMin = _completedSectionMin + shift;

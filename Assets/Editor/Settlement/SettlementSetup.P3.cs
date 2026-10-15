@@ -47,7 +47,8 @@ public static partial class SettlementSetup
     private static readonly Vector2 TablePixel = new Vector2(720, 808);
     private static readonly Vector2[] HallDecorPixels = { new Vector2(765, 730), new Vector2(885, 730) };
     // 이웃집 묶음: territory_layout.json의 homes (서쪽 / 북쪽 첫 땅). 화분·빨랫줄은 집 기준 (예전 동쪽 배치와 같은 간격)
-    private static readonly Vector2 HouseFallbackPixel = new Vector2(-520, 560);
+    // 새 이웃 집 묶음의 기본 자리 (지도 배치가 없을 때 · 아직 넓히기 전): 북동쪽 1단계 땅
+    private static readonly Vector2 HouseFallbackPixel = new Vector2(-400, -840);
     private static readonly Vector2 FlowerPotOffset = new Vector2(-100, 28);
     private static readonly Vector2 ClotheslineOffset = new Vector2(115, 45);
     private static readonly Vector2[] TidyStandPixels = { new Vector2(795, 748), new Vector2(855, 752) };
@@ -449,6 +450,7 @@ public static partial class SettlementSetup
         Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
         BuildP3(root, plazaRoot.Find("Props"), root.GetComponent<SettlementPlazaView>(), background, ToWorld);
         ApplyBoardExpansion(plazaRoot);
+        ApplyCenterStart(plazaRoot);
         ApplyPlotAnchors(plazaRoot);
 
         EditorSceneManager.MarkSceneDirty(scene);
@@ -514,18 +516,24 @@ public static partial class SettlementSetup
             Object.DestroyImmediate(tidyHint.gameObject);
         taskSites.Add(tidy);
 
-        // 6) 이웃집 묶음 (집 · 환영 소품 · 공사 현장): 처음 넓힌 영토 쪽으로 옮겨짐 (서쪽 / 북쪽 첫 땅)
+        // 6) 이웃집 묶음 (집 · 환영 소품 · 공사 현장): 처음 넓힌 영토 쪽 첫 땅으로 옮겨짐 (방향마다 자리, 아직 넓히기 전 = 첫 자리)
         var layout = LoadTerritoryLayout();
-        Vector2 westHome = layout != null && layout.homes != null ? new Vector2(layout.homes.west[0], layout.homes.west[1]) : HouseFallbackPixel;
-        Vector2 northHome = layout != null && layout.homes != null ? new Vector2(layout.homes.north[0], layout.homes.north[1]) : HouseFallbackPixel;
+        var homeSpots = layout != null && layout.homes != null && layout.homes.list != null ? layout.homes.list : new HomeSpot[0];
+        Vector2 westHome = homeSpots.Length > 0 ? new Vector2(homeSpots[0].x, homeSpots[0].y) : HouseFallbackPixel;
         var neighborhood = new GameObject("Neighborhood").transform;
         neighborhood.SetParent(p3, false);
         neighborhood.position = toWorld(westHome);
         var anchor = neighborhood.gameObject.AddComponent<TerritoryAnchor>();
         var anchorSo = new SerializedObject(anchor);
-        anchorSo.FindProperty("_westPosition").vector3Value = toWorld(westHome);
-        anchorSo.FindProperty("_northPosition").vector3Value = toWorld(northHome);
-        anchorSo.FindProperty("_northDevelopment").stringValue = TerritoryRules.HomeDevelopment(TerritoryDirection.North);
+        anchorSo.FindProperty("_defaultPosition").vector3Value = toWorld(westHome);
+        var spots = anchorSo.FindProperty("_spots");
+        spots.arraySize = homeSpots.Length;
+        for (int i = 0; i < homeSpots.Length; i++)
+        {
+            var element = spots.GetArrayElementAtIndex(i);
+            element.FindPropertyRelative("development").stringValue = homeSpots[i].development;
+            element.FindPropertyRelative("position").vector3Value = toWorld(new Vector2(homeSpots[i].x, homeSpots[i].y));
+        }
         anchorSo.ApplyModifiedPropertiesWithoutUndo();
 
         // 이웃집 (같은 집 그림을 거울처럼 뒤집어 재사용) + 공사 현장

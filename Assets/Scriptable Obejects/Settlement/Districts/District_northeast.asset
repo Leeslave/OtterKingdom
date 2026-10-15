@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94beaf52d1d90d745bbf3e6bb32b87bf, type: 3}
+  m_Name: District_northeast
+  m_EditorClassIdentifier: OtterKingdom::DistrictBlockDefinition
+  _blockId: district_northeast
+  _displayName: "\uBD81\uB3D9\uCABD \uC5B8\uB355"
+  _fixedType: 0
+  _suggestedType: 2
+  _stages:
+  - _development: territory_ne_1
+    _areas:
+    - x: -16
+      y: 46
+      width: 18
+      height: 16
+  - _development: territory_ne_2
+    _areas:
+    - x: 2
+      y: 46
+      width: 18
+      height: 16
+  - _development: territory_ne_3
+    _areas:
+    - x: -16
+      y: 62
+      width: 36
+      height: 16
+  _slots:
+  - _slotId: district_northeast_01
+    _area:
+      x: -15
+      y: 57
+      width: 8
+      height: 5
+    _stage: 0
+  - _slotId: district_northeast_02
+    _area:
+      x: -6
+      y: 57
+      width: 8
+      height: 5
+    _stage: 0
+  - _slotId: district_northeast_03
+    _area:
+      x: -4
+      y: 53
+      width: 4
+      height: 3
+    _stage: 0
+  - _slotId: district_northeast_04
+    _area:
+      x: -9
+      y: 49
+      width: 4
+      height: 3
+    _stage: 0
+  - _slotId: district_northeast_05
+    _area:
+      x: 3
+      y: 55
+      width: 8
+      height: 5
+    _stage: 1
+  - _slotId: district_northeast_06
+    _area:
+      x: 7
+      y: 49
+      width: 4
+      height: 3
+    _stage: 1
+  - _slotId: district_northeast_07
+    _area:
+      x: 12
+      y: 49
+      width: 8
+      height: 5
+    _stage: 1
+  - _slotId: district_northeast_08
+    _area:
+      x: -4
+      y: 74
+      width: 4
+      height: 3
+    _stage: 2
+  - _slotId: district_northeast_09
+    _area:
+      x: -10
+      y: 68
+      width: 8
+      height: 5
+    _stage: 2
+  - _slotId: district_northeast_10
+    _area:
+      x: 8
+      y: 68
+      width: 8
+      height: 5
+    _stage: 2
+  - _slotId: district_northeast_11
+    _area:
+      x: 7
+      y: 64
+      width: 4
+      height: 3
+    _stage: 2

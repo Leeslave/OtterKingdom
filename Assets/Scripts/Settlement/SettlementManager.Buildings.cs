@@ -243,8 +243,11 @@ public partial class SettlementManager
             if (layout.TryGet(record.InstanceId, out var existing) && existing.Decor.SaveId == record.BuildingId)
                 continue;
             var building = FindBuilding(record.BuildingId);
-            // 처음 광장(세이브 기준 칸에서 24 × 33칸)의 가운데쯤부터 찾음
-            var center = board.SaveOrigin + new Vector2Int(12, 16);
+            // 중앙 공터의 가운데쯤부터 찾음
+            var start = CenterStartMigration.StartBlock(_config);
+            var center = board.SaveOrigin + (start != null
+                ? Vector2Int.RoundToInt(start.Stages[0].Areas[0].center)
+                : new Vector2Int(12, 16));
             if (building == null || !DecorEditSession.TryFindFreeNear(layout, building, center, DecorRotation.R0, out var origin)
                 || !layout.LoadPlaced(record.InstanceId, building, origin, DecorRotation.R0))
             {

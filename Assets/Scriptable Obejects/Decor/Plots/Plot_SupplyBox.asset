@@ -24,9 +24,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 0
   _construction: {fileID: 11400000, guid: 0a9492bfa41fa6c40b131b5218e3fc22, type: 2}
-  _defaultCell: {x: 20, y: 13}
-  _alternateDevelopment: 
-  _alternateCell: {x: 0, y: 0}
-  _pivotOffset: {x: 0.3249998, y: 0.7250004}
+  _defaultCell: {x: -39, y: 41}
+  _alternates: []
+  _pivotOffset: {x: -0.29999924, y: 0.10000038}
   _worldScale: {x: 1, y: 1}
+  _district: 0

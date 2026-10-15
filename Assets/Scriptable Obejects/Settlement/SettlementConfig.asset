@@ -145,21 +145,34 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b005bbbe40bd6d24da6abfd32b9dc8d7, type: 2}
   - {fileID: 11400000, guid: 156d5847280c5304d88321217bf4c373, type: 2}
   - {fileID: 11400000, guid: 741939d959ed2134facded6b4d5d7147, type: 2}
-  - {fileID: 11400000, guid: 0e1d716526375e24d809a0244f7545e3, type: 2}
-  - {fileID: 11400000, guid: f5b1d855caaef5f44bb5a1a8a18869ee, type: 2}
-  - {fileID: 11400000, guid: 1714f73ffc3776740865cf8551e24480, type: 2}
-  - {fileID: 11400000, guid: b8aa8cd583633fe4384969043c1c7678, type: 2}
-  - {fileID: 11400000, guid: 530dbfac009933c4ab988042beac3beb, type: 2}
-  - {fileID: 11400000, guid: fdaabcf7454e2f246b30c6f6aba69973, type: 2}
-  - {fileID: 11400000, guid: 3a24ccb6dfaedb84589c73a3f23abf84, type: 2}
-  - {fileID: 11400000, guid: c9059088449304448a986dbf5d32cfb8, type: 2}
-  - {fileID: 11400000, guid: 002ee510f3f94774788b281c789c4108, type: 2}
-  - {fileID: 11400000, guid: 7f0b18e169606f04a91ae545d8d9b921, type: 2}
-  - {fileID: 11400000, guid: 61b31d7b1c213f34f82e3ffbf5f7b29f, type: 2}
-  - {fileID: 11400000, guid: ed8aff918a46b57429b33c88e6155b6a, type: 2}
-  - {fileID: 11400000, guid: 994db66c166cb75438a322ef619aad27, type: 2}
-  - {fileID: 11400000, guid: 9d96805879f38534e9f088496c8a8ba8, type: 2}
-  - {fileID: 11400000, guid: bfcf3870f76e2a44baa00e40bb89a3da, type: 2}
+  - {fileID: 11400000, guid: fefa2a9714e049d4b9b54a886b22ba32, type: 2}
+  - {fileID: 11400000, guid: 9795368f221b75c40927f562e90d8b98, type: 2}
+  - {fileID: 11400000, guid: 70afca36128ebad45baa821ac3623a62, type: 2}
+  - {fileID: 11400000, guid: 4d079154168b8314693b8283b8fbff83, type: 2}
+  - {fileID: 11400000, guid: daa81d4a3d0f85a4f9e3b667d33e02bf, type: 2}
+  - {fileID: 11400000, guid: 678fbb3daa2546e42bdf646c233a3761, type: 2}
+  - {fileID: 11400000, guid: a5f983d944f037f4ba989cb63219b150, type: 2}
+  - {fileID: 11400000, guid: b57ffae8d996af54188da1e9ca08216c, type: 2}
+  - {fileID: 11400000, guid: e70a5a5da76f67342a5cf0e6cf904942, type: 2}
+  - {fileID: 11400000, guid: b694d1b2bd7f6ce4b98f100b2ff9b18a, type: 2}
+  - {fileID: 11400000, guid: e12cc18ddcdc06a48884ee6ec07cba09, type: 2}
+  - {fileID: 11400000, guid: d1fbe916555f9ee4691ddd79f63a4b4c, type: 2}
+  - {fileID: 11400000, guid: 604ede990b9704546b1d8125bd07101b, type: 2}
+  - {fileID: 11400000, guid: 72cadf1dd9294ee48b127ce6ee063363, type: 2}
+  - {fileID: 11400000, guid: 16308e2161c21a5428f2469bd53ee491, type: 2}
+  - {fileID: 11400000, guid: ff899e139382c07428e8d71cf898e8e9, type: 2}
+  - {fileID: 11400000, guid: 29849120a3bb92e47a3443eb0592a659, type: 2}
+  - {fileID: 11400000, guid: 50461d3c6135dac40b2beeffc5fab58d, type: 2}
+  - {fileID: 11400000, guid: 9fceb79a300af5941943f216bc6dcb1c, type: 2}
+  - {fileID: 11400000, guid: f28e01f275399cb43beda5a924a23c5a, type: 2}
+  - {fileID: 11400000, guid: a62b93006799a2d4cb781550afc760e5, type: 2}
+  - {fileID: 11400000, guid: 5555b87ca327f554abddc5ef350c533d, type: 2}
+  - {fileID: 11400000, guid: 8c9837d2a411f6942821b60582da4503, type: 2}
+  - {fileID: 11400000, guid: 5d19bcd3a35441d459df535eebb017e0, type: 2}
+  - {fileID: 11400000, guid: f625725aa1b17cd4db7947463a9307c8, type: 2}
+  - {fileID: 11400000, guid: 3e8b40d5334f5f7429ee6c64bf31ddb2, type: 2}
+  - {fileID: 11400000, guid: 35f1a9968f672ef418e1365b90532ca2, type: 2}
+  - {fileID: 11400000, guid: 10b3408e97da7e440a0430031a514cc6, type: 2}
   _boardUpgradeDevelopment: board_upgraded
   _boardManagedDevelopment: receptionist_assigned
   _guildDevelopment: guild_office_built
@@ -190,11 +203,18 @@ MonoBehaviour:
   _fairyInvitedDevelopment: fairy_invited
   _fairyArrivedDevelopment: fairy_arrived
   _territories:
-  - {fileID: 11400000, guid: 6c0c328b9411dc141a705ac221abab8b, type: 2}
-  - {fileID: 11400000, guid: 30cecac7e8801ea49b12635187275a04, type: 2}
-  - {fileID: 11400000, guid: cc3fd2b7c2f8ef643a6baa196049120b, type: 2}
-  - {fileID: 11400000, guid: 1e025a2e26d1c3f449b857675c47ef80, type: 2}
-  - {fileID: 11400000, guid: fc6ab743ea060434ca4d5abbbee347f0, type: 2}
+  - {fileID: 11400000, guid: a69095c4c32183a4ba6f1958c0e2fde8, type: 2}
+  - {fileID: 11400000, guid: 69406c84052466241a1c2d70591b4843, type: 2}
+  - {fileID: 11400000, guid: 5339955fa8ade1c419f4c1fe827e5144, type: 2}
+  - {fileID: 11400000, guid: fb3038a0d9c1305428830d2a27e6ec7a, type: 2}
+  - {fileID: 11400000, guid: 41d086d5aebfcc54892d044fed81a80d, type: 2}
+  - {fileID: 11400000, guid: d5f4a4791c369b246b47f815d46293ac, type: 2}
+  - {fileID: 11400000, guid: f2affe7437d448446b82742de96b918d, type: 2}
+  - {fileID: 11400000, guid: e4fb03476279b7849b6594e8459d6886, type: 2}
+  - {fileID: 11400000, guid: 97c1cefc34834db4c9361fe80ff0ad83, type: 2}
+  - {fileID: 11400000, guid: ba97b37e8832aad4da74eba9e5a96ec4, type: 2}
+  - {fileID: 11400000, guid: 3257f79b4bdb79a41816f14fe3967d05, type: 2}
+  - {fileID: 11400000, guid: c62a0a9e8bcd986409c791e7bbfd63b2, type: 2}
   _territoryStartLevel: 6
   _levelDevelopments:
   - _level: 15
@@ -222,3 +242,50 @@ MonoBehaviour:
   - 60
   _maxWaitingVisitors: 2
   _plazaBoardId: plaza
+  _districtBlocks:
+  - {fileID: 11400000, guid: 29f2e3cc187893048a182f95bd2f1f0f, type: 2}
+  - {fileID: 11400000, guid: 9aa9d93942f359941af3d503feda586c, type: 2}
+  - {fileID: 11400000, guid: 750bac1e3e6026346a52db59a077422e, type: 2}
+  - {fileID: 11400000, guid: 3a6dc8d257dc3e74aa85b1504540c816, type: 2}
+  - {fileID: 11400000, guid: c43499e0e918c0f4b8932fef7909c255, type: 2}
+  _firstDistrict: 2
+  _orderMatchWeight: 60
+  _orderPerDistrict: 10
+  _relocationOrder: 10
+  _castleOrder: 80
+  _districtBonuses:
+  - _district: 2
+    _kind: 6
+    _flatPercent: 0
+    _perBuildingPercent: 5
+    _maxPercent: 20
+  - _district: 3
+    _kind: 0
+    _flatPercent: 0
+    _perBuildingPercent: 5
+    _maxPercent: 10
+  - _district: 4
+    _kind: 7
+    _flatPercent: 0
+    _perBuildingPercent: 5
+    _maxPercent: 20
+  - _district: 5
+    _kind: 8
+    _flatPercent: 10
+    _perBuildingPercent: 0
+    _maxPercent: 10
+  _districtTypeUnlocks:
+  - _district: 3
+    _development: p4_trader_settled
+    _lockedHint: "\uC7A5\uC0AC\uD558\uB294 \uD574\uB2EC\uC774 \uB9C8\uC744\uC5D0
+      \uC0B4\uAC8C \uB418\uBA74 \uC0C1\uC5C5 \uC9C0\uC5ED\uC744 \uC815\uD560 \uC218
+      \uC788\uC5B4\uC694"
+  - _district: 4
+    _development: p4_lumber_settled
+    _lockedHint: "\uB098\uBB34 \uD558\uB294 \uD574\uB2EC\uC774 \uB9C8\uC744\uC5D0
+      \uC0B4\uAC8C \uB418\uBA74 \uC0DD\uC0B0 \uC9C0\uC5ED\uC744 \uC815\uD560 \uC218
+      \uC788\uC5B4\uC694"
+  - _district: 5
+    _development: farmland
+    _lockedHint: "\uBC2D\uC744 \uC77C\uAD6C\uBA74 \uB18D\uC5C5 \uC9C0\uC5ED\uC744
+      \uC815\uD560 \uC218 \uC788\uC5B4\uC694"

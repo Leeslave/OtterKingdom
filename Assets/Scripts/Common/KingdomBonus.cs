@@ -9,7 +9,9 @@ public enum KingdomBonusKind
     HarvestYield = 3, // 밭 수확량 +%
     FishYield = 4,    // 낚은 물고기 +% (어업 작업소)
     BuildSpeed = 5,   // 공사 시간 −% (건설소)
-    VisitSpeed = 6,   // 장난감 해달 방문 간격 −% (기록관)
+    VisitSpeed = 6,   // 장난감 해달 방문 간격 −% (기록관 · 주거 구역)
+    ProductionSpeed = 7, // 생산 속도 +% (생산 구역. 쓰는 곳은 구역·이사 5단계에서 붙임)
+    GrowSpeed = 8,       // 밭 자라는 시간 −% (농업 구역. 쓰는 곳은 구역·이사 5단계에서 붙임)
 }
 
 /// <summary>

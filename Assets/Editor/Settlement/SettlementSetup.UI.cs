@@ -25,6 +25,7 @@ public static partial class SettlementSetup
         public ConstructionCompletePopupView complete;
         public MilestonePopupView milestone;
         public TownHallPopupView hall;
+        public DistrictPopupView district;
     }
 
     /// <summary>HUD 요소(칩·안내 띠·진행 말풍선)</summary>
@@ -45,6 +46,7 @@ public static partial class SettlementSetup
         // 게시판 카드에서 열고, [가 보기]가 건설·작업 화면을 그 위에 엶
         screens.milestone = BuildMilestonePopup(canvas);
         screens.hall = BuildTownHallPopup(canvas);
+        screens.district = BuildDistrictPopup(canvas);
         screens.construction = BuildConstructionPopup(canvas);
         screens.task = BuildTaskPopup(canvas);
         screens.complete = BuildCompletePopup(canvas);
@@ -671,6 +673,8 @@ public static partial class SettlementSetup
         Set(tasks, "_popup", screens.task);
 
         // 큰 부탁 · 마을회관 (전역 UI 연결은 GlobalUIPresenter를 만든 뒤 LinkGlobalUI)
+        var districts = root.AddComponent<DistrictPresenter>();
+        Set(districts, "_popup", screens.district);
         var town = root.AddComponent<TownHallPresenter>();
         Set(town, "_milestone", screens.milestone);
         Set(town, "_hall", screens.hall);

@@ -19,7 +19,22 @@ public static class ZoneTutorials
     public const string FairyShop = "FairyShop";
     // 건설 모드: 처음 건물 자리를 고를 때 (첫 집). 실제로 공사를 시작해야 완료
     public const string Build = "Build";
-    public static readonly string[] FeatureIds = { FairyShop, Build };
+    public const string District = "District.Center";
+    public const string DistrictIntro = "District.Center.Intro";
+    public static readonly string[] FeatureIds = { FairyShop, Build, District };
+
+    public static List<TutorialStep> DistrictSteps(DistrictMapView map = null, DistrictBlockDefinition block = null)
+    {
+        const string message = "마을회관이 생겼으니 마을을 정돈해 봐요.\n강조된 중앙 공터를 해달들이 살\n첫 주거 구역으로 정할 거예요!";
+        return new List<TutorialStep>
+        {
+            map != null && block != null
+                ? TutorialStep.At("중앙 공터를 주거 구역으로", message, () => map.GuideTarget(block))
+                : TutorialStep.Info("중앙 공터를 주거 구역으로", message),
+            TutorialStep.Info("어울리는 건물과 보너스", "주거 지역에는 집과 쉬는 자리가 어울려요.\n맞는 구역에 건물이 들어서면 보너스를 받아요.\n구역의 용도는 나중에 다시 바꿀 수 있어요."),
+            TutorialStep.Info("왕국 질서도", "구역을 정하고 건물을 알맞게 놓을수록\n왕국 질서도가 올라가요. 마을회관에서 볼 수 있어요.\n이제 강조된 [주거 지역]을 눌러 정해 봐요!"),
+        };
+    }
 
     // 건설 모드 설명을 끝까지 봤음 (완료가 아님). 다음에 자리를 고를 때는 설명 없이 [확인] 강조만
     public const string BuildIntro = "Build.Intro";

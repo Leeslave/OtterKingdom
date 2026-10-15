@@ -176,8 +176,9 @@ public static partial class SettlementSetup
 
         // P2: 게시판 보강·관리 해달 근무 자리·광장 주민 작업·접수소 → 마을회관·바닷가 벤치 (SettlementSetup.P2)
         BuildP2(root, props, view, ToWorld);
-        // 게시판 부탁 건물을 건설 모드에서 자리를 골라 짓게 (SettlementSetup.Plots)
+        // 게시판 부탁 건물을 건설 모드에서 자리를 골라 짓게 (SettlementSetup.Plots), 시작 묶음은 중앙 공터로 (SettlementSetup.CenterStart)
         ApplyBoardExpansion(plazaRoot);
+        ApplyCenterStart(plazaRoot);
         ApplyPlotAnchors(plazaRoot);
 
         EditorSceneManager.MarkSceneDirty(scene);
@@ -221,7 +222,10 @@ public static partial class SettlementSetup
             for (int i = 0; i < PropGates.Length; i++)
             {
                 var g = PropGates[i];
-                if (g.prop == kind && !matched.Contains(i) && Vector2.Distance(pixel, new Vector2(g.x, g.y)) < 6f)
+                // 옛 광장 자리 또는 중앙 공터로 옮긴 자리 (SettlementSetup.CenterStart)
+                var moved = CenterStartPixel(kind, new Vector2(g.x, g.y));
+                bool at = Vector2.Distance(pixel, new Vector2(g.x, g.y)) < 6f || (moved.HasValue && Vector2.Distance(pixel, moved.Value) < 6f);
+                if (g.prop == kind && !matched.Contains(i) && at)
                 {
                     AddGate(prop.gameObject, g.development, true, kind.StartsWith("House"));
                     matched.Add(i);

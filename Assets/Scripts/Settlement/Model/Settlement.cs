@@ -108,6 +108,8 @@ public partial class Settlement
     public IReadOnlyList<string> ResidentOrder => _residentOrder;
     public IReadOnlyList<string> Guestbook => _guestbook;
     public IReadOnlyCollection<string> Developments => _developments;
+    /// <summary>끝낸 주민 작업 ID</summary>
+    public IReadOnlyCollection<string> CompletedTaskIds => _completedTasks;
     /// <summary>진행 중인 주민 작업</summary>
     public IReadOnlyCollection<SettlementTaskJob> TaskJobs => _tasks.Values;
     /// <summary>광장에서 처음 만난 해달</summary>
@@ -655,6 +657,7 @@ public partial class Settlement
         LoadP3(saved);
         LoadVisits(saved);
         LoadBuildings(saved);
+        LoadDistricts(saved);
 
         OnChanged?.Invoke();
     }
@@ -737,6 +740,7 @@ public partial class Settlement
         WriteP3(result);
         WriteVisits(result);
         WriteBuildings(result);
+        WriteDistricts(result);
     }
 
     #endregion

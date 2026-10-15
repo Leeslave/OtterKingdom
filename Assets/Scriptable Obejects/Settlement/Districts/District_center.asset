@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94beaf52d1d90d745bbf3e6bb32b87bf, type: 3}
+  m_Name: District_center
+  m_EditorClassIdentifier: OtterKingdom::DistrictBlockDefinition
+  _blockId: district_center
+  _displayName: "\uC911\uC559 \uACF5\uD130"
+  _fixedType: 1
+  _suggestedType: 1
+  _stages:
+  - _development: 
+    _areas:
+    - x: -42
+      y: 38
+      width: 26
+      height: 20
+  _slots: []

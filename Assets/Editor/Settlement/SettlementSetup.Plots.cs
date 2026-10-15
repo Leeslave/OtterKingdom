@@ -101,6 +101,7 @@ public static partial class SettlementSetup
         var scene = EditorSceneManager.OpenScene(PlazaScenePath, OpenSceneMode.Single);
         var plazaRoot = GameObject.Find("PlazaRoot").transform;
         ApplyBoardExpansion(plazaRoot);
+        ApplyCenterStart(plazaRoot);
         if (!ApplyPlotAnchors(plazaRoot))
             return;
 
@@ -362,30 +363,29 @@ public static partial class SettlementSetup
             var pivotOffset = (Vector2)site.position - new Vector2(area.center.x, area.yMin);
             var defaultCell = layoutCell - board.Board.SaveOrigin;
 
-            // 영토 묶음 안: 북쪽을 먼저 넓히면 북쪽 자리 (서쪽 · 북쪽 자리 차이만큼)
-            string alternateDevelopment = null;
-            var alternateCell = default(Vector2Int);
+            // 영토 묶음 안: 처음 넓힌 방향마다 그 땅의 자리 (기본 자리와의 차이만큼)
+            var alternates = new List<PlotAlternateCell>();
             var territory = site.GetComponentInParent<TerritoryAnchor>(true);
             if (territory != null)
             {
-                var tSo = new SerializedObject(territory);
-                Vector3 west = tSo.FindProperty("_westPosition").vector3Value;
-                Vector3 north = tSo.FindProperty("_northPosition").vector3Value;
-                var shift = new Vector2Int(Mathf.RoundToInt((north.x - west.x) / cell), Mathf.RoundToInt((north.y - west.y) / cell));
-                alternateDevelopment = tSo.FindProperty("_northDevelopment").stringValue;
-                alternateCell = defaultCell + shift;
-                if (((Vector2)(territory.transform.position - west)).sqrMagnitude > 0.0001f)
-                    Debug.LogWarning($"[SettlementSetup] {row.asset}: 영토 묶음이 서쪽 자리에 있지 않습니다 (기본 칸이 서쪽 기준이 아님).");
+                Vector3 home = territory.DefaultPosition;
+                foreach (var spot in territory.Spots)
+                {
+                    var shift = new Vector2Int(Mathf.RoundToInt((spot.position.x - home.x) / cell), Mathf.RoundToInt((spot.position.y - home.y) / cell));
+                    alternates.Add(new PlotAlternateCell(spot.development, defaultCell + shift));
+                }
+                if (((Vector2)(territory.transform.position - home)).sqrMagnitude > 0.0001f)
+                    Debug.LogWarning($"[SettlementSetup] {row.asset}: 영토 묶음이 기본 자리에 있지 않습니다 (기본 칸이 기본 자리 기준이 아님).");
             }
 
             var plot = LoadOrCreate<ConstructionPlotDefinition>($"{PlotFolder}/{row.asset}.asset").asset;
             var renderer = art.GetComponent<SpriteRenderer>();
             plot.SetupPlacement(row.size, false, renderer != null ? renderer.sprite : null);
-            plot.SetupPlot(construction, defaultCell, pivotOffset, new Vector2(art.lossyScale.x, art.lossyScale.y), alternateDevelopment, alternateCell);
+            plot.SetupPlot(construction, defaultCell, pivotOffset, new Vector2(art.lossyScale.x, art.lossyScale.y), alternates);
             EditorUtility.SetDirty(plot);
             plots.Add(plot);
             Debug.Log($"[SettlementSetup] {row.asset}: 기본 칸 {defaultCell} (격자 {layoutCell}) · 발밑 {pivotOffset}"
-                + (alternateDevelopment != null ? $" · {alternateDevelopment} {alternateCell}" : ""));
+                + (alternates.Count > 0 ? $" · 방향 자리 {alternates.Count}곳" : ""));
 
             var anchor = site.GetComponent<ConstructionPlotAnchor>();
             if (anchor == null)

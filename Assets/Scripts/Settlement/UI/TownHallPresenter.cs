@@ -40,6 +40,7 @@ public class TownHallPresenter : MonoBehaviour
         _hall.OnDecorClicked += HandleDecor;
         _hall.OnCodexClicked += HandleCodex;
         _hall.OnTerritoryClicked += HandleTerritory;
+        _hall.OnDistrictClicked += HandleDistrict;
     }
 
     // SettlementManager가 같은 오브젝트에 붙어 있어 깨어나는 순서가 같을 수 있으므로 Start에서 연결
@@ -61,6 +62,7 @@ public class TownHallPresenter : MonoBehaviour
         _hall.OnDecorClicked -= HandleDecor;
         _hall.OnCodexClicked -= HandleCodex;
         _hall.OnTerritoryClicked -= HandleTerritory;
+        _hall.OnDistrictClicked -= HandleDistrict;
         if (_manager != null)
         {
             _manager.OnMilestoneRequested -= OpenMilestone;
@@ -167,6 +169,10 @@ public class TownHallPresenter : MonoBehaviour
         else
             _hall.ShowNext("다음 발전을 준비하고 있어요", "진행 중인 일이 끝나면 새 부탁이 열려요.", false);
         ShowTerritory();
+        var order = _manager.DistrictOrder;
+        int pending = _manager.PendingDistrictBlocks().Count;
+        _hall.ShowDistrict(_manager.IsAdministrator, order != null ? order.Score : 0,
+            DistrictGuideRules.OrderGoal(config, order != null ? order.Score : 0), pending);
     }
 
     // 레벨을 묶은 부탁이 아직 게시판에 없고(앞 발전 전) 숲 개간으로 이어갈 수 있을 때: 먼 레벨 잠금(선착장 Lv.15) 대신 그 부탁과 개간을 알림.
@@ -179,7 +185,7 @@ public class TownHallPresenter : MonoBehaviour
             return false;
         bool canClear = _manager.OpenTerritoryMissions.Count > 0 || _manager.WorkingTerritory(out _) != null
             || (_manager.TerritoryChances > 0
-                && (_manager.CurrentTerritory(TerritoryDirection.West) != null || _manager.CurrentTerritory(TerritoryDirection.North) != null));
+                && _manager.AnyTerritoryLeft);
         if (!canClear)
             return false;
         title = cap.Title;
@@ -199,13 +205,19 @@ public class TownHallPresenter : MonoBehaviour
             _hall.ShowTerritory(_territoryMission.Title, string.IsNullOrEmpty(_territoryMission.Line) ? step : $"{_territoryMission.Line}\n{step}", true);
             return;
         }
-        bool anyLeft = _manager.CurrentTerritory(TerritoryDirection.West) != null || _manager.CurrentTerritory(TerritoryDirection.North) != null;
+        bool anyLeft = _manager.AnyTerritoryLeft;
         if (!anyLeft || _manager.Config.Territories.Count == 0 || _manager.PlayerLevel < _manager.Config.TerritoryStartLevel)
         {
             _hall.HideTerritory();
             return;
         }
         _hall.ShowTerritory("숲 개간", _manager.TerritoryChanceText(), false);
+    }
+
+    private void HandleDistrict()
+    {
+        _hall.Hide();
+        _manager.RequestDistrict();
     }
 
     private void HandleTerritory()

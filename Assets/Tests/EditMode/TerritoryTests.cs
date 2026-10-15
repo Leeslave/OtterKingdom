@@ -6,9 +6,10 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 /// <summary>
-/// 영토 확장 (서쪽·북쪽 숲 개간 → 마을회관 영토 확장 미션 → 땅):
-/// 개간 기회(Lv.6에 1번, 레벨마다 1번 쌓임), 한 번에 한 곳만, 3번 끝내야 미션, 미션 납품 → 땅·칸 발전·경험치 한 번,
-/// 같은 방향 다음 단계는 앞 단계를 넓힌 뒤, 모서리 칸은 두 방향을 다 넓혀야, 진행 중 개간의 세이브 왕복, 동쪽 확장 세이브 옮기기.
+/// 영토 확장 (중앙 공터 둘레 방향마다 숲 개간 → 마을회관 영토 확장 미션 → 땅 = 구역 블록 단계):
+/// 개간 기회(Lv.6에 1번, 레벨마다 1번 쌓임), 한 번에 한 곳만, 3번 끝내야 미션, 미션 납품 → 땅 발전·경험치 한 번,
+/// 같은 방향 다음 단계는 앞 단계를 넓힌 뒤, 이웃집 자리는 처음 넓힌 방향, 진행 중 개간의 세이브 왕복,
+/// 옛 세이브(남동쪽 광장에서 서쪽 · 북쪽) 옮기기 (버전 5).
 /// </summary>
 public class TerritoryTests
 {
@@ -19,9 +20,9 @@ public class TerritoryTests
     private ItemDefinition _stone;
     private SettlementOtterDefinition _first;
     private SettlementOtterDefinition _painter;
-    private TerritoryExpansionDefinition _west1;
-    private TerritoryExpansionDefinition _west2;
-    private TerritoryExpansionDefinition _north1;
+    private TerritoryExpansionDefinition _ne1;
+    private TerritoryExpansionDefinition _ne2;
+    private TerritoryExpansionDefinition _s1;
     private SettlementConfig _config;
     private LevelTable _levelTable;
 
@@ -61,9 +62,9 @@ public class TerritoryTests
         _first = Otter("otter_first");
         _painter = Otter("otter_painter");
 
-        _west1 = Territory("territory_west_1", TerritoryDirection.West, 1, 500);
-        _west2 = Territory("territory_west_2", TerritoryDirection.West, 2, 1000);
-        _north1 = Territory("territory_north_1", TerritoryDirection.North, 1, 500);
+        _ne1 = Territory("territory_ne_1", TerritoryDirection.NorthEast, 1, 500);
+        _ne2 = Territory("territory_ne_2", TerritoryDirection.NorthEast, 2, 1000);
+        _s1 = Territory("territory_s_1", TerritoryDirection.South, 1, 500);
 
         _config = Create<SettlementConfig>();
         var so = new SerializedObject(_config);
@@ -73,7 +74,7 @@ public class TerritoryTests
         otters.GetArrayElementAtIndex(0).objectReferenceValue = _first;
         otters.GetArrayElementAtIndex(1).objectReferenceValue = _painter;
         so.ApplyModifiedPropertiesWithoutUndo();
-        _config.SetupTerritory(new[] { _west1, _west2, _north1 }, 6);
+        _config.SetupTerritory(new[] { _ne1, _ne2, _s1 }, 6);
 
         _levelTable = Create<LevelTable>();
         var tableSo = new SerializedObject(_levelTable);
@@ -170,6 +171,14 @@ public class TerritoryTests
         return save;
     }
 
+    // 중앙 공터 시작(버전 5) 전 세이브
+    private static SettlementSaveData OldSave(Settlement settlement)
+    {
+        var save = Saved(settlement);
+        save.version = 4;
+        return save;
+    }
+
     private ProfileManager Profile(int level)
     {
         var go = new GameObject("ProfileManager");
@@ -226,17 +235,19 @@ public class TerritoryTests
         var profile = Profile(5);
         var manager = Manager(Saved(Village()));
         Assert.AreEqual(0, manager.TerritoryChances);
-        Assert.AreEqual(TerritoryBlock.NoChance, manager.GetTerritoryBlock(TerritoryDirection.West));
-        Assert.AreEqual(TaskStartResult.NotAvailable, Start(manager, _west1), "Lv.5에는 개간할 수 없음");
+        Assert.AreEqual(TerritoryBlock.NoChance, manager.GetTerritoryBlock(TerritoryDirection.NorthEast));
+        Assert.AreEqual(TaskStartResult.NotAvailable, Start(manager, _ne1), "Lv.5에는 개간할 수 없음");
 
         profile.ReachLevel(6);
         Assert.AreEqual(1, manager.TerritoryChances);
-        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.West));
-        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.North));
+        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.NorthEast));
+        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.South));
+        Assert.AreEqual(TerritoryBlock.AllDone, manager.GetTerritoryBlock(TerritoryDirection.West), "단계가 없는 방향");
 
         // 기회는 쌓임 (Lv.6 → 9: 4번)
         profile.ReachLevel(9);
         Assert.AreEqual(4, manager.TerritoryChances);
+        Assert.IsTrue(manager.AnyTerritoryLeft);
     }
 
     [Test]
@@ -245,19 +256,19 @@ public class TerritoryTests
         var profile = Profile(8);
         var manager = Manager(Saved(Village()));
         Assert.AreEqual(3, manager.TerritoryChances);
-        Assert.AreEqual(TaskStartResult.Started, Start(manager, _north1));
+        Assert.AreEqual(TaskStartResult.Started, Start(manager, _s1));
         Assert.AreEqual(2, manager.TerritoryChances, "시작한 개간은 기회를 씀");
 
-        // 북쪽을 개간하는 동안 서쪽은 못 함 (기회와 쉬는 주민이 있어도)
-        Assert.AreEqual(TerritoryBlock.OtherClearing, manager.GetTerritoryBlock(TerritoryDirection.West));
-        Assert.AreEqual(TaskStartResult.NotAvailable, Start(manager, _west1, _painter));
-        Assert.AreEqual(SettlementTaskState.Locked, manager.GetTaskState(_west1.Clearings[0].Task));
-        Assert.AreEqual(_north1, manager.WorkingTerritory(out _));
+        // 남쪽을 개간하는 동안 북동쪽은 못 함 (기회와 쉬는 주민이 있어도)
+        Assert.AreEqual(TerritoryBlock.OtherClearing, manager.GetTerritoryBlock(TerritoryDirection.NorthEast));
+        Assert.AreEqual(TaskStartResult.NotAvailable, Start(manager, _ne1, _painter));
+        Assert.AreEqual(SettlementTaskState.Locked, manager.GetTaskState(_ne1.Clearings[0].Task));
+        Assert.AreEqual(_s1, manager.WorkingTerritory(out _));
 
         manager.DevFinishTasks();
-        Assert.AreEqual(1, manager.TerritoryClearingsDone(_north1));
-        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.West), "끝나면 다른 방향도 고를 수 있음");
-        Assert.AreEqual(TaskStartResult.Started, Start(manager, _west1, _painter));
+        Assert.AreEqual(1, manager.TerritoryClearingsDone(_s1));
+        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.NorthEast), "끝나면 다른 방향도 고를 수 있음");
+        Assert.AreEqual(TaskStartResult.Started, Start(manager, _ne1, _painter));
         _ = profile;
     }
 
@@ -270,42 +281,40 @@ public class TerritoryTests
         wallet.Items[_stone] = 100;
         var manager = Manager(Saved(Village()), wallet);
 
-        Clear(manager, profile, _west1);
-        Clear(manager, profile, _west1);
-        Assert.AreEqual(TerritoryStage.Clearing, manager.GetTerritoryStage(_west1));
+        Clear(manager, profile, _ne1);
+        Clear(manager, profile, _ne1);
+        Assert.AreEqual(TerritoryStage.Clearing, manager.GetTerritoryStage(_ne1));
         Assert.AreEqual(0, manager.OpenTerritoryMissions.Count, "3번 다 끝내야 미션");
-        Assert.AreEqual(ProjectPhase.Locked, manager.GetProjectStatus(_west1.Mission).Phase);
-        Clear(manager, profile, _west1);
+        Assert.AreEqual(ProjectPhase.Locked, manager.GetProjectStatus(_ne1.Mission).Phase);
+        Clear(manager, profile, _ne1);
 
-        Assert.AreEqual(TerritoryStage.Cleared, manager.GetTerritoryStage(_west1));
-        Assert.IsTrue(manager.HasDevelopment(_west1.ClearedDevelopment));
-        Assert.AreEqual(TerritoryBlock.Mission, manager.GetTerritoryBlock(TerritoryDirection.West));
-        CollectionAssert.AreEqual(new[] { _west1.Mission }, manager.OpenTerritoryMissions);
-        Assert.IsFalse(manager.HasDevelopment(TerritoryRules.CellDevelopment(1, 0)), "미션 전에는 땅이 열리지 않음");
-        Assert.AreEqual(ProjectPhase.Delivering, manager.GetProjectStatus(_west1.Mission).Phase);
+        Assert.AreEqual(TerritoryStage.Cleared, manager.GetTerritoryStage(_ne1));
+        Assert.IsTrue(manager.HasDevelopment(_ne1.ClearedDevelopment));
+        Assert.AreEqual(TerritoryBlock.Mission, manager.GetTerritoryBlock(TerritoryDirection.NorthEast));
+        CollectionAssert.AreEqual(new[] { _ne1.Mission }, manager.OpenTerritoryMissions);
+        Assert.IsFalse(manager.HasDevelopment("territory_ne_1"), "미션 전에는 땅이 열리지 않음");
+        Assert.AreEqual(ProjectPhase.Delivering, manager.GetProjectStatus(_ne1.Mission).Phase);
 
         int expBefore = profile.Progress.Exp;
         int levelBefore = profile.Level;
-        Assert.IsTrue(manager.TryDeliverAll(_west1.Mission));
+        Assert.IsTrue(manager.TryDeliverAll(_ne1.Mission));
         Assert.AreEqual(100000 - 500, wallet.GoldAmount);
         Assert.AreEqual(60, wallet.Count(_wood));
         Assert.AreEqual(85, wallet.Count(_stone));
 
-        Assert.AreEqual(TerritoryStage.Expanded, manager.GetTerritoryStage(_west1));
-        Assert.IsTrue(manager.HasDevelopment("territory_west_1"));
-        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.CellDevelopment(1, 0)));
-        Assert.IsFalse(manager.HasDevelopment(TerritoryRules.CellDevelopment(1, 1)), "북쪽을 넓히기 전 모서리는 닫힘");
+        Assert.AreEqual(TerritoryStage.Expanded, manager.GetTerritoryStage(_ne1));
+        Assert.IsTrue(manager.HasDevelopment("territory_ne_1"));
         Assert.IsTrue(manager.HasDevelopment(TerritoryRules.FirstDevelopment));
-        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.West)));
+        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.NorthEast)));
         Assert.IsTrue(profile.Level > levelBefore || profile.Progress.Exp > expBefore, "미션 경험치");
         Assert.AreEqual(0, manager.OpenTerritoryMissions.Count);
-        Assert.AreEqual(_west2, manager.CurrentTerritory(TerritoryDirection.West), "다음 단계로");
+        Assert.AreEqual(_ne2, manager.CurrentTerritory(TerritoryDirection.NorthEast), "다음 단계로");
 
         // 다시 불러와도 경험치를 두 번 주지 않음
         int level = profile.Level;
         int exp = profile.Progress.Exp;
         var again = Manager(Saved(manager.Settlement), wallet);
-        Assert.AreEqual(TerritoryStage.Expanded, again.GetTerritoryStage(_west1));
+        Assert.AreEqual(TerritoryStage.Expanded, again.GetTerritoryStage(_ne1));
         Assert.AreEqual(level, profile.Level);
         Assert.AreEqual(exp, profile.Progress.Exp);
     }
@@ -315,32 +324,29 @@ public class TerritoryTests
     {
         var profile = Profile(12);
         var manager = Manager(Saved(Village()), Rich());
-        Assert.AreEqual(TerritoryStage.Locked, manager.GetTerritoryStage(_west2));
-        Assert.AreEqual(TaskStartResult.NotAvailable, manager.TryStartTask(_west2.Clearings[0].Task, new[] { _first }));
+        Assert.AreEqual(TerritoryStage.Locked, manager.GetTerritoryStage(_ne2));
+        Assert.AreEqual(TaskStartResult.NotAvailable, manager.TryStartTask(_ne2.Clearings[0].Task, new[] { _first }));
         for (int i = 0; i < 3; i++)
-            Clear(manager, profile, _west1);
-        // 미션 전: 서쪽 2단계는 아직 잠김, 북쪽은 할 수 있음
-        Assert.AreEqual(TerritoryStage.Locked, manager.GetTerritoryStage(_west2));
-        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.North));
+            Clear(manager, profile, _ne1);
+        // 미션 전: 북동쪽 2단계는 아직 잠김, 남쪽은 할 수 있음
+        Assert.AreEqual(TerritoryStage.Locked, manager.GetTerritoryStage(_ne2));
+        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.South));
     }
 
     [Test]
-    public void CornerCellNeedsBothDirections()
+    public void HomeFollowsTheFirstExpandedDirection()
     {
         var settlement = Village();
-        settlement.UnlockDevelopment("territory_north_1");
+        settlement.UnlockDevelopment("territory_s_1");
         var profile = Profile(6);
         var manager = Manager(Saved(settlement));
-        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.CellDevelopment(0, 1)));
-        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.North)), "북쪽을 먼저 넓힘 → 이웃집도 북쪽");
-        Assert.IsFalse(manager.HasDevelopment(TerritoryRules.CellDevelopment(1, 1)));
+        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.FirstDevelopment));
+        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.South)), "남쪽을 먼저 넓힘 → 이웃집도 남쪽");
 
         settlement = manager.Settlement;
-        settlement.UnlockDevelopment("territory_west_1");
+        settlement.UnlockDevelopment("territory_ne_1");
         manager = Manager(Saved(settlement));
-        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.CellDevelopment(1, 0)));
-        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.CellDevelopment(1, 1)));
-        Assert.IsFalse(manager.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.West)), "집 자리는 처음 넓힌 쪽 그대로");
+        Assert.IsFalse(manager.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.NorthEast)), "집 자리는 처음 넓힌 쪽 그대로");
         _ = profile;
     }
 
@@ -349,31 +355,63 @@ public class TerritoryTests
     {
         var profile = Profile(6);
         var manager = Manager(Saved(Village()));
-        Assert.AreEqual(TaskStartResult.Started, Start(manager, _west1));
+        Assert.AreEqual(TaskStartResult.Started, Start(manager, _ne1));
         var again = Manager(Saved(manager.Settlement));
-        Assert.AreEqual(_west1, again.WorkingTerritory(out var task));
-        Assert.AreEqual(_west1.Clearings[0].Task, task);
+        Assert.AreEqual(_ne1, again.WorkingTerritory(out var task));
+        Assert.AreEqual(_ne1.Clearings[0].Task, task);
         Assert.AreEqual(0, again.TerritoryChances);
         Assert.AreEqual(SettlementTaskState.Working, again.GetTaskState(task));
         again.DevFinishTasks();
-        Assert.IsTrue(again.HasDevelopment("territory_west_1_c1"));
+        Assert.IsTrue(again.HasDevelopment("territory_ne_1_c1"));
         StringAssert.Contains("1/3", again.TerritoryDoneMessage(task));
         _ = profile;
     }
 
     [Test]
-    public void LegacyEastExpansionBecomesWestTierOne()
+    public void OldSave_ExpandedTiersMoveToNewTiersWithoutReward()
     {
+        // 버전 4 세이브: 옛 광장 동쪽 확장(= 옛 서쪽 1단계) + 옛 북쪽 1단계를 넓힘
         var settlement = Village();
         settlement.UnlockDevelopment(SettlementManager.LegacyPlazaExpandDevelopment);
-        var profile = Profile(9);
+        settlement.UnlockDevelopment("territory_north_1");
+        var profile = Profile(12);
         int exp = profile.Progress.Exp;
-        var manager = Manager(Saved(settlement));
-        Assert.AreEqual(TerritoryStage.Expanded, manager.GetTerritoryStage(_west1));
-        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.CellDevelopment(1, 0)));
+        var manager = Manager(OldSave(settlement));
+
+        // 새 단계 순서: 북동 1 → (서 1 없음) → 남 1
+        Assert.AreEqual(TerritoryStage.Expanded, manager.GetTerritoryStage(_ne1));
+        Assert.AreEqual(TerritoryStage.Expanded, manager.GetTerritoryStage(_s1));
+        Assert.AreEqual(TerritoryStage.Clearing, manager.GetTerritoryStage(_ne2), "북동 2단계는 아직 개간 전");
+        Assert.AreEqual(0, manager.TerritoryClearingsDone(_ne2));
         Assert.IsTrue(manager.HasDevelopment(TerritoryRules.FirstDevelopment));
-        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.West)));
+        Assert.IsTrue(manager.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.NorthEast)));
+        Assert.IsTrue(manager.Settlement.HasReward(CommunityProjectRules.RewardKey(_ne1.Mission, 0)), "보상은 받은 것으로");
         Assert.AreEqual(exp, profile.Progress.Exp, "옮길 때 미션 경험치를 주지 않음");
-        Assert.AreEqual(9 - 6 + 1 - 3, manager.TerritoryChances, "옮긴 개간 3번은 쓴 기회");
+        Assert.AreEqual(12 - 6 + 1 - 6, manager.TerritoryChances, "옮긴 개간 6번은 쓴 기회");
+        Assert.AreEqual(SettlementSaveData.CurrentVersion, manager.Settlement.Version);
+
+        // 다시 불러와도 또 옮기지 않음
+        var again = Manager(Saved(manager.Settlement));
+        Assert.AreEqual(0, again.TerritoryClearingsDone(_ne2));
+    }
+
+    [Test]
+    public void OldSave_PartialAndWorkingClearingsCarryOver()
+    {
+        // 옛 서쪽 1단계를 2번 개간하고 3번째를 하는 중 (해달이 일하는 중)
+        var settlement = Village();
+        settlement.UnlockDevelopment("territory_west_1_c1");
+        settlement.UnlockDevelopment("territory_west_1_c2");
+        settlement.StartTask("task_territory_west_1_3", new[] { "otter_first" }, 0, long.MaxValue / 2);
+        var profile = Profile(8);
+        var manager = Manager(OldSave(settlement));
+
+        Assert.AreEqual(3, manager.TerritoryClearingsDone(_ne1), "개간 3번 = 북동 1단계 개간 끝");
+        Assert.AreEqual(TerritoryStage.Cleared, manager.GetTerritoryStage(_ne1));
+        CollectionAssert.AreEqual(new[] { _ne1.Mission }, manager.OpenTerritoryMissions);
+        Assert.IsNull(manager.WorkingTerritory(out _));
+        Assert.IsFalse(manager.Settlement.TryGetTaskJob("task_territory_west_1_3", out _), "옛 개간 작업은 끝남 (해달은 쉼)");
+        Assert.AreNotEqual(ResidentWorkState.Working, manager.Settlement.GetWorkState("otter_first"));
+        _ = profile;
     }
 }
