@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21bf3c5778b2f79489589cdca7cb1806, type: 3}
+  m_Name: gb_otter_toy_duribeon_arrival
+  m_EditorClassIdentifier: OtterKingdom::GuestbookEntryDefinition
+  _entryId: gb_otter_toy_duribeon_arrival
+  _otter: {fileID: 11400000, guid: a9e5c7ebbc35434f9d5eb8a89b9499a8, type: 2}
+  _tag: "\uCCAB \uBC29\uBB38"
+  _message: "\uAE38\uC744 \uCC3E\uB2E4\uAC00 \uC774 \uB9C8\uC744\uC744 \uBC1C\uACAC\uD588\uC5B4\uC694."

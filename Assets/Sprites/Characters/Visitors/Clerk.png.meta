@@ -1,0 +1,837 @@
+fileFormatVersion: 2
+guid: 5aaff7e08019a1e44b5b1cb959f977c3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1275117128306786066
+    second: Clerk_0
+  - first:
+      213: 130137549835091798
+    second: Clerk_1
+  - first:
+      213: 2419359377009407202
+    second: Clerk_2
+  - first:
+      213: 260837942915227907
+    second: Clerk_3
+  - first:
+      213: -7899728503149481607
+    second: Clerk_4
+  - first:
+      213: 3458654303981803320
+    second: Clerk_5
+  - first:
+      213: -5432307744811117126
+    second: Clerk_6
+  - first:
+      213: -8223292894562724452
+    second: Clerk_7
+  - first:
+      213: 8991624619594309877
+    second: Clerk_8
+  - first:
+      213: 8554137174232750005
+    second: Clerk_9
+  - first:
+      213: 8630597142791178323
+    second: Clerk_10
+  - first:
+      213: 8300503894545106206
+    second: Clerk_11
+  - first:
+      213: 5342043287112867926
+    second: Clerk_12
+  - first:
+      213: 6780090127110995569
+    second: Clerk_13
+  - first:
+      213: 2040946426378936155
+    second: Clerk_14
+  - first:
+      213: -7675057364912244608
+    second: Clerk_15
+  - first:
+      213: -2359863243095289238
+    second: Clerk_16
+  - first:
+      213: 8064703728866409968
+    second: Clerk_17
+  - first:
+      213: 5448312122456708043
+    second: Clerk_18
+  - first:
+      213: 2121938508168984487
+    second: Clerk_19
+  - first:
+      213: -5551950567032140851
+    second: Clerk_20
+  - first:
+      213: 1942388863882120562
+    second: Clerk_21
+  - first:
+      213: 6234778314497203228
+    second: Clerk_22
+  - first:
+      213: 8028558726941711879
+    second: Clerk_23
+  - first:
+      213: -6783901359520915924
+    second: Clerk_0_0
+  - first:
+      213: 7214175798367032838
+    second: Clerk_0_1
+  - first:
+      213: -7218560574811454842
+    second: Clerk_0_2
+  - first:
+      213: -5791510856724086089
+    second: Clerk_0_3
+  - first:
+      213: 8538906921872697772
+    second: Clerk_1_0
+  - first:
+      213: -6520530885547263691
+    second: Clerk_1_1
+  - first:
+      213: 1475796313603896341
+    second: Clerk_1_2
+  - first:
+      213: 9100572352163373274
+    second: Clerk_1_3
+  - first:
+      213: -4646666378151956265
+    second: Clerk_2_0
+  - first:
+      213: -3589436738682974793
+    second: Clerk_2_1
+  - first:
+      213: 241012091667909699
+    second: Clerk_2_2
+  - first:
+      213: 9127703710514846349
+    second: Clerk_2_3
+  - first:
+      213: 585395211707632979
+    second: Clerk_3_0
+  - first:
+      213: -7520658168160708859
+    second: Clerk_3_1
+  - first:
+      213: 4831021260274486919
+    second: Clerk_3_2
+  - first:
+      213: 5132612502171520357
+    second: Clerk_3_3
+  - first:
+      213: -1753609004313267980
+    second: Clerk_4_0
+  - first:
+      213: 4103436644754814888
+    second: Clerk_4_1
+  - first:
+      213: -2540084788921930917
+    second: Clerk_4_2
+  - first:
+      213: 8812171685878969244
+    second: Clerk_4_3
+  - first:
+      213: -7264149721727660667
+    second: Clerk_5_0
+  - first:
+      213: 3129965898520672557
+    second: Clerk_5_1
+  - first:
+      213: 5471559565152470287
+    second: Clerk_5_2
+  - first:
+      213: 6788661380931143913
+    second: Clerk_5_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 132
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Clerk_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2e577af7adbad1a0800000000000000
+      internalID: -6783901359520915924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_0_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60613e09aa6ed1460800000000000000
+      internalID: 7214175798367032838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_0_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68249bc176582db90800000000000000
+      internalID: -7218560574811454842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_0_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b284208f8b60afa0800000000000000
+      internalID: -5791510856724086089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca9a858ba9a408670800000000000000
+      internalID: 8538906921872697772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_1_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 539fdf3f4bb6285a0800000000000000
+      internalID: -6520530885547263691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_1_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 514f0399de41b7410800000000000000
+      internalID: 1475796313603896341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_1_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad0607f565abb4e70800000000000000
+      internalID: 9100572352163373274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d070845c89b38fb0800000000000000
+      internalID: -4646666378151956265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_2_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bd8017cd42cf2ec0800000000000000
+      internalID: -3589436738682974793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_2_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34c807e683f385300800000000000000
+      internalID: 241012091667909699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_2_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8a90400a2e1cae70800000000000000
+      internalID: 9127703710514846349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35d4c0fe7ddbf1800800000000000000
+      internalID: 585395211707632979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_3_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50714a10e3141a790800000000000000
+      internalID: -7520658168160708859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_3_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78e45098d3c3b0340800000000000000
+      internalID: 4831021260274486919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_3_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56d89a180e3ba3740800000000000000
+      internalID: 5132612502171520357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f03bfec6ede9a7e0800000000000000
+      internalID: -1753609004313267980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_4_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a77ee033e552f830800000000000000
+      internalID: 4103436644754814888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_4_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5b6fe8a75ecfbcd0800000000000000
+      internalID: -2540084788921930917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_4_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c93329c957f1b4a70800000000000000
+      internalID: 8812171685878969244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58d8b21b05e803b90800000000000000
+      internalID: -7264149721727660667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_5_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d293964c66fdf6b20800000000000000
+      internalID: 3129965898520672557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_5_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f05cd485f62eeeb40800000000000000
+      internalID: 5471559565152470287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clerk_5_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e840dede8b263e50800000000000000
+      internalID: 6788661380931143913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Clerk_0: -1275117128306786066
+      Clerk_0_0: -6783901359520915924
+      Clerk_0_1: 7214175798367032838
+      Clerk_0_2: -7218560574811454842
+      Clerk_0_3: -5791510856724086089
+      Clerk_1: 130137549835091798
+      Clerk_10: 8630597142791178323
+      Clerk_11: 8300503894545106206
+      Clerk_12: 5342043287112867926
+      Clerk_13: 6780090127110995569
+      Clerk_14: 2040946426378936155
+      Clerk_15: -7675057364912244608
+      Clerk_16: -2359863243095289238
+      Clerk_17: 8064703728866409968
+      Clerk_18: 5448312122456708043
+      Clerk_19: 2121938508168984487
+      Clerk_1_0: 8538906921872697772
+      Clerk_1_1: -6520530885547263691
+      Clerk_1_2: 1475796313603896341
+      Clerk_1_3: 9100572352163373274
+      Clerk_2: 2419359377009407202
+      Clerk_20: -5551950567032140851
+      Clerk_21: 1942388863882120562
+      Clerk_22: 6234778314497203228
+      Clerk_23: 8028558726941711879
+      Clerk_2_0: -4646666378151956265
+      Clerk_2_1: -3589436738682974793
+      Clerk_2_2: 241012091667909699
+      Clerk_2_3: 9127703710514846349
+      Clerk_3: 260837942915227907
+      Clerk_3_0: 585395211707632979
+      Clerk_3_1: -7520658168160708859
+      Clerk_3_2: 4831021260274486919
+      Clerk_3_3: 5132612502171520357
+      Clerk_4: -7899728503149481607
+      Clerk_4_0: -1753609004313267980
+      Clerk_4_1: 4103436644754814888
+      Clerk_4_2: -2540084788921930917
+      Clerk_4_3: 8812171685878969244
+      Clerk_5: 3458654303981803320
+      Clerk_5_0: -7264149721727660667
+      Clerk_5_1: 3129965898520672557
+      Clerk_5_2: 5471559565152470287
+      Clerk_5_3: 6788661380931143913
+      Clerk_6: -5432307744811117126
+      Clerk_7: -8223292894562724452
+      Clerk_8: 8991624619594309877
+      Clerk_9: 8554137174232750005
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

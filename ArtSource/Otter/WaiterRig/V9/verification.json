@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "unchangedBaseline": true,
+  "exactV9Motion": true,
+  "contact": {
+    "error": 0,
+    "n": 288
+  },
+  "walkFramesPerAppearance": 24,
+  "bareWaiterSwitch": true,
+  "controls": [
+    "idle",
+    "walk",
+    "flip",
+    "small",
+    "bones",
+    "explode",
+    "tuning",
+    "reset"
+  ],
+  "mobileWidth": 390,
+  "pageErrors": []
+}

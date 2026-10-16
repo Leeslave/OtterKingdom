@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: 8c119bffa79c3584597750ebc060c904
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7428232759947321770
+    second: Cast_Ink_0
+  - first:
+      213: -2249912043739124868
+    second: Cast_Ink_1
+  - first:
+      213: -7657083280630737391
+    second: Cast_Ink_2
+  - first:
+      213: -227660418572903633
+    second: Cast_Ink_3
+  - first:
+      213: 1980073876735444665
+    second: Cast_Ink_4
+  - first:
+      213: -5606450349216501766
+    second: Cast_Ink_5
+  - first:
+      213: -1466306052345119674
+    second: Cast_Ink_6
+  - first:
+      213: -9059464963715321472
+    second: Cast_Ink_7
+  - first:
+      213: -357170604699100898
+    second: Cast_Ink_8
+  - first:
+      213: -6420129580424950849
+    second: Cast_Ink_9
+  - first:
+      213: 732446119020010752
+    second: Cast_Ink_10
+  - first:
+      213: -5441028923123130571
+    second: Cast_Ink_11
+  - first:
+      213: 1729054455867045742
+    second: Cast_Ink_12
+  - first:
+      213: 7734940607505522444
+    second: Cast_Ink_13
+  - first:
+      213: -2092914646244367827
+    second: Cast_Ink_14
+  - first:
+      213: -6241275114148095592
+    second: Cast_Ink_15
+  - first:
+      213: 7166073975851920554
+    second: Cast_Ink_16
+  - first:
+      213: -2489369433013546751
+    second: Cast_Ink_17
+  - first:
+      213: 3491771344831529625
+    second: Cast_Ink_18
+  - first:
+      213: -8628368362269461390
+    second: Cast_Ink_19
+  - first:
+      213: -1749652676261104726
+    second: Cast_Ink_20
+  - first:
+      213: -1538793979899103318
+    second: Cast_Ink_21
+  - first:
+      213: -5730567985009241870
+    second: Cast_Ink_22
+  - first:
+      213: 8642569624054247280
+    second: Cast_Ink_23
+  - first:
+      213: -8149110832276453438
+    second: Cast_Ink_24
+  - first:
+      213: -8795891610538344122
+    second: Cast_Ink_25
+  - first:
+      213: 109520447144905181
+    second: Cast_Ink_26
+  - first:
+      213: -3210648129959533519
+    second: Cast_Ink_27
+  - first:
+      213: 8928717942695219975
+    second: Cast_Ink_28
+  - first:
+      213: -3336542555285899497
+    second: Cast_Ink_29
+  - first:
+      213: 6824890431880745605
+    second: Cast_Ink_30
+  - first:
+      213: -8876693699648317953
+    second: Cast_Ink_31
+  - first:
+      213: -6766676601959507432
+    second: Cast_Ink_32
+  - first:
+      213: 2876035152022311247
+    second: Cast_Ink_33
+  - first:
+      213: 7495449774361276364
+    second: Cast_Ink_34
+  - first:
+      213: 3089850407120080783
+    second: Cast_Ink_35
+  - first:
+      213: 8723381263065608509
+    second: Cast_Ink_36
+  - first:
+      213: -948755313138809802
+    second: Cast_Ink_37
+  - first:
+      213: 690094063408745450
+    second: Cast_Ink_38
+  - first:
+      213: -2928341551271491572
+    second: Cast_Ink_39
+  - first:
+      213: -7467406408275405645
+    second: Cast_Ink_40
+  - first:
+      213: 3518208742944741722
+    second: Cast_Ink_41
+  - first:
+      213: -4094007381891052655
+    second: Cast_Ink_42
+  - first:
+      213: 6573326253481738861
+    second: Cast_Ink_43
+  - first:
+      213: 4725086717711104229
+    second: Cast_Ink_44
+  - first:
+      213: -6703802042742216501
+    second: Cast_Ink_45
+  - first:
+      213: -8348655669532579130
+    second: Cast_Ink_46
+  - first:
+      213: 7828956030476308753
+    second: Cast_Ink_47
+  - first:
+      213: 2997319258414072487
+    second: Cast_Ink_48
+  - first:
+      213: 208132728300164072
+    second: Cast_Ink_49
+  - first:
+      213: 4155893952229296112
+    second: Cast_Ink_50
+  - first:
+      213: 8152795063369543079
+    second: Cast_Ink_51
+  - first:
+      213: 1537528644814315040
+    second: Cast_Ink_52
+  - first:
+      213: -8835990260508392695
+    second: Cast_Ink_53
+  - first:
+      213: -4046821024789853058
+    second: Cast_Ink_54
+  - first:
+      213: -2102496224661178095
+    second: Cast_Ink_55
+  - first:
+      213: 2957400336145243103
+    second: Cast_Ink_56
+  - first:
+      213: 8753061944609791087
+    second: Cast_Ink_57
+  - first:
+      213: 8596655844826745164
+    second: Cast_Ink_58
+  - first:
+      213: 810485745968183967
+    second: Cast_Ink_59
+  - first:
+      213: -8966783460946208184
+    second: Cast_Ink_60
+  - first:
+      213: -1116892672477423942
+    second: Cast_Ink_61
+  - first:
+      213: -6742551006264201914
+    second: Cast_Ink_62
+  - first:
+      213: 2941098735358096938
+    second: Cast_Ink_63
+  - first:
+      213: 5271238433477370291
+    second: Cast_Ink_64
+  - first:
+      213: -4758691469733331439
+    second: Cast_Ink_65
+  - first:
+      213: -3171581192090364755
+    second: Cast_Ink_66
+  - first:
+      213: 4261800639974172784
+    second: Cast_Ink_67
+  - first:
+      213: -5318175565596340703
+    second: Cast_Ink_68
+  - first:
+      213: -4209372823406003456
+    second: Cast_Ink_69
+  - first:
+      213: 7153107337396786436
+    second: Cast_Ink_Walk_0
+  - first:
+      213: -7058376970483544880
+    second: Cast_Ink_Walk_1
+  - first:
+      213: -2696124612875922202
+    second: Cast_Ink_Walk_2
+  - first:
+      213: -4458418353204540138
+    second: Cast_Ink_Walk_3
+  - first:
+      213: 2736104377700908171
+    second: Cast_Ink_Walk_4
+  - first:
+      213: -1473467123592511420
+    second: Cast_Ink_Walk_5
+  - first:
+      213: -3920966017210821535
+    second: Cast_Ink_Walk_6
+  - first:
+      213: 4028067204743728548
+    second: Cast_Ink_Walk_7
+  - first:
+      213: -7862810799995560412
+    second: Cast_Ink_Walk_Down_0
+  - first:
+      213: -1283408898664110665
+    second: Cast_Ink_Walk_Down_1
+  - first:
+      213: -2829251302821907820
+    second: Cast_Ink_Walk_Down_2
+  - first:
+      213: 7828496577729713995
+    second: Cast_Ink_Walk_Down_3
+  - first:
+      213: 5375126984736987546
+    second: Cast_Ink_Walk_Down_4
+  - first:
+      213: -3930953919289462306
+    second: Cast_Ink_Walk_Down_5
+  - first:
+      213: 7897776741146843977
+    second: Cast_Ink_Walk_Down_6
+  - first:
+      213: 6334576848056234681
+    second: Cast_Ink_Walk_Down_7
+  - first:
+      213: 541921642540296290
+    second: Cast_Ink_Walk_Up_0
+  - first:
+      213: -6049295828330185165
+    second: Cast_Ink_Walk_Up_1
+  - first:
+      213: 2823648103495091112
+    second: Cast_Ink_Walk_Up_2
+  - first:
+      213: -464248933141586508
+    second: Cast_Ink_Walk_Up_3
+  - first:
+      213: 7174687847830131451
+    second: Cast_Ink_Walk_Up_4
+  - first:
+      213: -9210438809939586874
+    second: Cast_Ink_Walk_Up_5
+  - first:
+      213: -6944690231989091137
+    second: Cast_Ink_Walk_Up_6
+  - first:
+      213: -856012215249004162
+    second: Cast_Ink_Walk_Up_7
+  - first:
+      213: -8134577884228788890
+    second: Cast_Ink_Harvest_0
+  - first:
+      213: -4597198971571563144
+    second: Cast_Ink_Harvest_1
+  - first:
+      213: -4853277692805024228
+    second: Cast_Ink_Harvest_2
+  - first:
+      213: 1081830869769581908
+    second: Cast_Ink_Harvest_3
+  - first:
+      213: -3855631851471775359
+    second: Cast_Ink_Harvest_4
+  - first:
+      213: 4069662751672280121
+    second: Cast_Ink_Harvest_5
+  - first:
+      213: -1665536670292018947
+    second: Cast_Ink_Harvest_6
+  - first:
+      213: 8858557298148103633
+    second: Cast_Ink_Harvest_7
+  - first:
+      213: -7656331576381706583
+    second: Cast_Ink_Eat_0
+  - first:
+      213: -3859964954094960887
+    second: Cast_Ink_Eat_1
+  - first:
+      213: -2195862096484865880
+    second: Cast_Ink_Eat_2
+  - first:
+      213: 1470864540432584318
+    second: Cast_Ink_Eat_3
+  - first:
+      213: -6616455755378907715
+    second: Cast_Ink_Eat_4
+  - first:
+      213: -3853318289296657700
+    second: Cast_Ink_Eat_5
+  - first:
+      213: -8194392242730411824
+    second: Cast_Ink_Eat_6
+  - first:
+      213: 1750761786013478898
+    second: Cast_Ink_Eat_7
+  - first:
+      213: -3276072554548495499
+    second: Cast_Ink_Net_0
+  - first:
+      213: 1402840993345490256
+    second: Cast_Ink_Net_1
+  - first:
+      213: 354715536183463951
+    second: Cast_Ink_Net_2
+  - first:
+      213: -486260549588082786
+    second: Cast_Ink_Net_3
+  - first:
+      213: -866396160631090962
+    second: Cast_Ink_Net_4
+  - first:
+      213: 7317148808208253215
+    second: Cast_Ink_Net_5
+  - first:
+      213: -3440765783615858798
+    second: Cast_Ink_Net_6
+  - first:
+      213: -3587585274496540172
+    second: Cast_Ink_Net_7
+  - first:
+      213: -8615311851015896937
+    second: Cast_Ink_Squat_0
+  - first:
+      213: -5901815560844107430
+    second: Cast_Ink_Squat_1
+  - first:
+      213: 944203116675032676
+    second: Cast_Ink_Squat_2
+  - first:
+      213: -2724975765573804700
+    second: Cast_Ink_Squat_3
+  - first:
+      213: 6050086312504516040
+    second: Cast_Ink_Squat_4
+  - first:
+      213: 5517462791371267142
+    second: Cast_Ink_Squat_5
+  - first:
+      213: -6481155781397102131
+    second: Cast_Ink_Squat_6
+  - first:
+      213: 8718875575808162661
+    second: Cast_Ink_Squat_7
+  - first:
+      213: -4763022053030355530
+    second: Cast_Ink_Stretch_0
+  - first:
+      213: -1056447451891187834
+    second: Cast_Ink_Stretch_1
+  - first:
+      213: -3845193135545784084
+    second: Cast_Ink_Stretch_2
+  - first:
+      213: 195428555187989235
+    second: Cast_Ink_Stretch_3
+  - first:
+      213: -2704731165813772922
+    second: Cast_Ink_Stretch_4
+  - first:
+      213: 41680994406429606
+    second: Cast_Ink_Stretch_5
+  - first:
+      213: -7834786471941406629
+    second: Cast_Ink_Stretch_6
+  - first:
+      213: 8595109596452785391
+    second: Cast_Ink_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40596cd7931f44360800000000000000
+      internalID: 7153107337396786436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dcc78fca8b9b0e90800000000000000
+      internalID: -7058376970483544880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e4d75303f0759ad0800000000000000
+      internalID: -2696124612875922202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61d492521248022c0800000000000000
+      internalID: -4458418353204540138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8cf04d5f6898f520800000000000000
+      internalID: 2736104377700908171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4404d0635713d8be0800000000000000
+      internalID: -1473467123592511420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16455c77e2ee599c0800000000000000
+      internalID: -3920966017210821535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ad8626f7c196e730800000000000000
+      internalID: 4028067204743728548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42ed8228c3fa1e290800000000000000
+      internalID: -7862810799995560412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b5ec8d086a603ee0800000000000000
+      internalID: -1283408898664110665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4923dfa1eea7cb8d0800000000000000
+      internalID: -2829251302821907820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b47d0f8092864ac60800000000000000
+      internalID: 7828496577729713995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a995dd39389489a40800000000000000
+      internalID: 5375126984736987546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed1725ccc327279c0800000000000000
+      internalID: -3930953919289462306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94b56631a1a8a9d60800000000000000
+      internalID: 7897776741146843977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b23ecec410f8e750800000000000000
+      internalID: 6334576848056234681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 268e5b7dcda458700800000000000000
+      internalID: 541921642540296290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33e7023ae759c0ca0800000000000000
+      internalID: -6049295828330185165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a3c7836dfc9f2720800000000000000
+      internalID: 2823648103495091112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bdddb41e08ae89f0800000000000000
+      internalID: -464248933141586508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf21a30a59c919360800000000000000
+      internalID: 7174687847830131451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c0541c83b2fd2080800000000000000
+      internalID: -9210438809939586874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb44a2f47018f9f90800000000000000
+      internalID: -6944690231989091137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7910b2fc65de14f0800000000000000
+      internalID: -856012215249004162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66d5bcc538c2c1f80800000000000000
+      internalID: -8134577884228788890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8759fa174e77330c0800000000000000
+      internalID: -4597198971571563144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c167704f6a1b5acb0800000000000000
+      internalID: -4853277692805024228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 455faabb17f630f00800000000000000
+      internalID: 1081830869769581908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 189d754524b0e7ac0800000000000000
+      internalID: -3855631851471775359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 934a01de5b85a7830800000000000000
+      internalID: 4069662751672280121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df87bd60933d2e8e0800000000000000
+      internalID: -1665536670292018947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d5df829deaefea70800000000000000
+      internalID: 8858557298148103633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ae692b0ffe3fb590800000000000000
+      internalID: -7656331576381706583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90f76b14356ae6ac0800000000000000
+      internalID: -3859964954094960887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a86643be0bb681e0800000000000000
+      internalID: -2195862096484865880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7ec33da18f896410800000000000000
+      internalID: 1470864540432584318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db52d84cb80ad24a0800000000000000
+      internalID: -6616455755378907715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd2f4ff7e63468ac0800000000000000
+      internalID: -3853318289296657700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d856d5cbaba74e80800000000000000
+      internalID: -8194392242730411824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ff69a58194fb4810800000000000000
+      internalID: 1750761786013478898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57bfab77e5d0982d0800000000000000
+      internalID: -3276072554548495499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05dc6bc6374e77310800000000000000
+      internalID: 1402840993345490256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f00178a96e33ce400800000000000000
+      internalID: 354715536183463951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9f14814b947049f0800000000000000
+      internalID: -486260549588082786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee052d24841f9f3f0800000000000000
+      internalID: -866396160631090962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f110de9b21cbb8560800000000000000
+      internalID: 7317148808208253215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2971240ffb1ff30d0800000000000000
+      internalID: -3440765783615858798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f126306336563ec0800000000000000
+      internalID: -3587585274496540172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7900cf27483407880800000000000000
+      internalID: -8615311851015896937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a51a30e340a881ea0800000000000000
+      internalID: -5901815560844107430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4666b356bbb7a1d00800000000000000
+      internalID: 944203116675032676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46ddc6f8af0fe2ad0800000000000000
+      internalID: -2724975765573804700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cdd84d427936f350800000000000000
+      internalID: 6050086312504516040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64c9e1d0d27f19c40800000000000000
+      internalID: 5517462791371267142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc14bdbc72f4e06a0800000000000000
+      internalID: -6481155781397102131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56bffd0442baff870800000000000000
+      internalID: 8718875575808162661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd16c7ada856edb0800000000000000
+      internalID: -4763022053030355530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68fb82ac3aeb651f0800000000000000
+      internalID: -1056447451891187834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce8e507473123aac0800000000000000
+      internalID: -3845193135545784084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3faa2fa4c3d46b200800000000000000
+      internalID: 195428555187989235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68dedb0c55dd67ad0800000000000000
+      internalID: -2704731165813772922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a3fa71c4a4149000800000000000000
+      internalID: 41680994406429606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5085e8d63f354390800000000000000
+      internalID: -7834786471941406629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Ink_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fec8e1e93a6f74770800000000000000
+      internalID: 8595109596452785391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Ink_0: -7428232759947321770
+      Cast_Ink_1: -2249912043739124868
+      Cast_Ink_10: 732446119020010752
+      Cast_Ink_11: -5441028923123130571
+      Cast_Ink_12: 1729054455867045742
+      Cast_Ink_13: 7734940607505522444
+      Cast_Ink_14: -2092914646244367827
+      Cast_Ink_15: -6241275114148095592
+      Cast_Ink_16: 7166073975851920554
+      Cast_Ink_17: -2489369433013546751
+      Cast_Ink_18: 3491771344831529625
+      Cast_Ink_19: -8628368362269461390
+      Cast_Ink_2: -7657083280630737391
+      Cast_Ink_20: -1749652676261104726
+      Cast_Ink_21: -1538793979899103318
+      Cast_Ink_22: -5730567985009241870
+      Cast_Ink_23: 8642569624054247280
+      Cast_Ink_24: -8149110832276453438
+      Cast_Ink_25: -8795891610538344122
+      Cast_Ink_26: 109520447144905181
+      Cast_Ink_27: -3210648129959533519
+      Cast_Ink_28: 8928717942695219975
+      Cast_Ink_29: -3336542555285899497
+      Cast_Ink_3: -227660418572903633
+      Cast_Ink_30: 6824890431880745605
+      Cast_Ink_31: -8876693699648317953
+      Cast_Ink_32: -6766676601959507432
+      Cast_Ink_33: 2876035152022311247
+      Cast_Ink_34: 7495449774361276364
+      Cast_Ink_35: 3089850407120080783
+      Cast_Ink_36: 8723381263065608509
+      Cast_Ink_37: -948755313138809802
+      Cast_Ink_38: 690094063408745450
+      Cast_Ink_39: -2928341551271491572
+      Cast_Ink_4: 1980073876735444665
+      Cast_Ink_40: -7467406408275405645
+      Cast_Ink_41: 3518208742944741722
+      Cast_Ink_42: -4094007381891052655
+      Cast_Ink_43: 6573326253481738861
+      Cast_Ink_44: 4725086717711104229
+      Cast_Ink_45: -6703802042742216501
+      Cast_Ink_46: -8348655669532579130
+      Cast_Ink_47: 7828956030476308753
+      Cast_Ink_48: 2997319258414072487
+      Cast_Ink_49: 208132728300164072
+      Cast_Ink_5: -5606450349216501766
+      Cast_Ink_50: 4155893952229296112
+      Cast_Ink_51: 8152795063369543079
+      Cast_Ink_52: 1537528644814315040
+      Cast_Ink_53: -8835990260508392695
+      Cast_Ink_54: -4046821024789853058
+      Cast_Ink_55: -2102496224661178095
+      Cast_Ink_56: 2957400336145243103
+      Cast_Ink_57: 8753061944609791087
+      Cast_Ink_58: 8596655844826745164
+      Cast_Ink_59: 810485745968183967
+      Cast_Ink_6: -1466306052345119674
+      Cast_Ink_60: -8966783460946208184
+      Cast_Ink_61: -1116892672477423942
+      Cast_Ink_62: -6742551006264201914
+      Cast_Ink_63: 2941098735358096938
+      Cast_Ink_64: 5271238433477370291
+      Cast_Ink_65: -4758691469733331439
+      Cast_Ink_66: -3171581192090364755
+      Cast_Ink_67: 4261800639974172784
+      Cast_Ink_68: -5318175565596340703
+      Cast_Ink_69: -4209372823406003456
+      Cast_Ink_7: -9059464963715321472
+      Cast_Ink_8: -357170604699100898
+      Cast_Ink_9: -6420129580424950849
+      Cast_Ink_Eat_0: -7656331576381706583
+      Cast_Ink_Eat_1: -3859964954094960887
+      Cast_Ink_Eat_2: -2195862096484865880
+      Cast_Ink_Eat_3: 1470864540432584318
+      Cast_Ink_Eat_4: -6616455755378907715
+      Cast_Ink_Eat_5: -3853318289296657700
+      Cast_Ink_Eat_6: -8194392242730411824
+      Cast_Ink_Eat_7: 1750761786013478898
+      Cast_Ink_Harvest_0: -8134577884228788890
+      Cast_Ink_Harvest_1: -4597198971571563144
+      Cast_Ink_Harvest_2: -4853277692805024228
+      Cast_Ink_Harvest_3: 1081830869769581908
+      Cast_Ink_Harvest_4: -3855631851471775359
+      Cast_Ink_Harvest_5: 4069662751672280121
+      Cast_Ink_Harvest_6: -1665536670292018947
+      Cast_Ink_Harvest_7: 8858557298148103633
+      Cast_Ink_Net_0: -3276072554548495499
+      Cast_Ink_Net_1: 1402840993345490256
+      Cast_Ink_Net_2: 354715536183463951
+      Cast_Ink_Net_3: -486260549588082786
+      Cast_Ink_Net_4: -866396160631090962
+      Cast_Ink_Net_5: 7317148808208253215
+      Cast_Ink_Net_6: -3440765783615858798
+      Cast_Ink_Net_7: -3587585274496540172
+      Cast_Ink_Squat_0: -8615311851015896937
+      Cast_Ink_Squat_1: -5901815560844107430
+      Cast_Ink_Squat_2: 944203116675032676
+      Cast_Ink_Squat_3: -2724975765573804700
+      Cast_Ink_Squat_4: 6050086312504516040
+      Cast_Ink_Squat_5: 5517462791371267142
+      Cast_Ink_Squat_6: -6481155781397102131
+      Cast_Ink_Squat_7: 8718875575808162661
+      Cast_Ink_Stretch_0: -4763022053030355530
+      Cast_Ink_Stretch_1: -1056447451891187834
+      Cast_Ink_Stretch_2: -3845193135545784084
+      Cast_Ink_Stretch_3: 195428555187989235
+      Cast_Ink_Stretch_4: -2704731165813772922
+      Cast_Ink_Stretch_5: 41680994406429606
+      Cast_Ink_Stretch_6: -7834786471941406629
+      Cast_Ink_Stretch_7: 8595109596452785391
+      Cast_Ink_Walk_0: 7153107337396786436
+      Cast_Ink_Walk_1: -7058376970483544880
+      Cast_Ink_Walk_2: -2696124612875922202
+      Cast_Ink_Walk_3: -4458418353204540138
+      Cast_Ink_Walk_4: 2736104377700908171
+      Cast_Ink_Walk_5: -1473467123592511420
+      Cast_Ink_Walk_6: -3920966017210821535
+      Cast_Ink_Walk_7: 4028067204743728548
+      Cast_Ink_Walk_Down_0: -7862810799995560412
+      Cast_Ink_Walk_Down_1: -1283408898664110665
+      Cast_Ink_Walk_Down_2: -2829251302821907820
+      Cast_Ink_Walk_Down_3: 7828496577729713995
+      Cast_Ink_Walk_Down_4: 5375126984736987546
+      Cast_Ink_Walk_Down_5: -3930953919289462306
+      Cast_Ink_Walk_Down_6: 7897776741146843977
+      Cast_Ink_Walk_Down_7: 6334576848056234681
+      Cast_Ink_Walk_Up_0: 541921642540296290
+      Cast_Ink_Walk_Up_1: -6049295828330185165
+      Cast_Ink_Walk_Up_2: 2823648103495091112
+      Cast_Ink_Walk_Up_3: -464248933141586508
+      Cast_Ink_Walk_Up_4: 7174687847830131451
+      Cast_Ink_Walk_Up_5: -9210438809939586874
+      Cast_Ink_Walk_Up_6: -6944690231989091137
+      Cast_Ink_Walk_Up_7: -856012215249004162
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

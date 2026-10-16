@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a6f3e4780aca24786e1d59775051a1, type: 3}
+  m_Name: Banner_Pickup_Spring
+  m_EditorClassIdentifier: OtterKingdom::GachaBannerDefinition
+  _bannerId: pickup_spring_breeze
+  _kind: 1
+  _title: "\uBD04\uBC14\uB78C \uD53D\uC5C5"
+  _subtitle: "\uBC9A\uAF43 \uBC14\uB78C\uAC1C\uBE44\uB97C \uB450\uBA74 \uD55C\uC815
+    \uD574\uB2EC \uC0B4\uB791\uC774\uAC00 \uC640\uC694!"
+  _sortOrder: 0
+  _startDate: 2026-10-07
+  _endDate: 2026-10-20
+  _bannerArt: {fileID: 21300000, guid: 344a0bcd65eadf7458232109ce946814, type: 3}
+  _shellIcon: {fileID: 21300000, guid: 570986b521ec2144e95634e957877a7b, type: 3}
+  _themeColor: {r: 1, g: 0.78, b: 0.86, a: 1}
+  _pool:
+  - {fileID: 11400000, guid: 4a7324cefa30f064ab142b871705d967, type: 2}
+  - {fileID: 11400000, guid: 73d033e5216468740a51db8946b9e19c, type: 2}
+  - {fileID: 11400000, guid: 558a9741e106d984299c4ef6ccedf6b4, type: 2}
+  - {fileID: 11400000, guid: c4782a9d90516344b8c08dc426471c16, type: 2}
+  - {fileID: 11400000, guid: f2c62dc7c6ac8e64a96a1f7a5dc06b54, type: 2}
+  - {fileID: 11400000, guid: 4c43ce999aa7e664fba89cc823005e8e, type: 2}
+  - {fileID: 11400000, guid: 234686ba816311a4bbe518dd8d5abd62, type: 2}
+  - {fileID: 11400000, guid: 6744559d31ae52b419caaefe2354738a, type: 2}
+  - {fileID: 11400000, guid: 421a829fe909de14b9df27f155e65b9d, type: 2}
+  - {fileID: 11400000, guid: dca27b669949d12438b70fc5b6320268, type: 2}
+  - {fileID: 11400000, guid: 936a8fb2f5ff76f47af1d0cd020aaef2, type: 2}
+  - {fileID: 11400000, guid: a657349a8b3d4b348a6b21687ec1ea5c, type: 2}
+  _featured:
+  - {fileID: 11400000, guid: 458852b7db310b54786db1e633998149, type: 2}
+  - {fileID: 11400000, guid: f7d633c6e1c719149b5e690518ed9936, type: 2}
+  - {fileID: 11400000, guid: 5b9c762d3d46d4e42b6455ac2adaef86, type: 2}
+  _featuredOtter: {fileID: 11400000, guid: bf4dfd66db3129046978627df495f2bd, type: 2}
+  _epicRate: 0.03
+  _rareRate: 0.15
+  _featuredShare: 0.5
+  _epicPity: 60
+  _rarePity: 10
+  _gem: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+  _gemCost: 30
+  _ticket: {fileID: 11400000, guid: 6781026faece7ac4d8584b63318c36ed, type: 2}
+  _exchangePoints: 100
+  _dailyGoldPull: 0
+  _goldPullBase: 1000
+  _goldPullPerLevel: 800

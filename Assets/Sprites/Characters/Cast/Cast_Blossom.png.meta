@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: 3622a53cb7daf1946a0cb6c97dc76213
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7568558047081388710
+    second: Cast_Blossom_0
+  - first:
+      213: 7575864962538916133
+    second: Cast_Blossom_1
+  - first:
+      213: -4328428340284299062
+    second: Cast_Blossom_2
+  - first:
+      213: -8573256273146775774
+    second: Cast_Blossom_3
+  - first:
+      213: -8118540368874067656
+    second: Cast_Blossom_4
+  - first:
+      213: -112342373447978579
+    second: Cast_Blossom_5
+  - first:
+      213: 5231511184215313555
+    second: Cast_Blossom_6
+  - first:
+      213: -7408225526921373144
+    second: Cast_Blossom_7
+  - first:
+      213: 5815339902744479869
+    second: Cast_Blossom_8
+  - first:
+      213: -4263533758513042062
+    second: Cast_Blossom_9
+  - first:
+      213: -211812910167785021
+    second: Cast_Blossom_10
+  - first:
+      213: -2248810901458441857
+    second: Cast_Blossom_11
+  - first:
+      213: -7946018950884581112
+    second: Cast_Blossom_12
+  - first:
+      213: -8320743147093441242
+    second: Cast_Blossom_13
+  - first:
+      213: 1126001769938944294
+    second: Cast_Blossom_14
+  - first:
+      213: -875843761631392234
+    second: Cast_Blossom_15
+  - first:
+      213: -2414679420132793958
+    second: Cast_Blossom_16
+  - first:
+      213: -9001273187602954632
+    second: Cast_Blossom_17
+  - first:
+      213: -3788088401365090830
+    second: Cast_Blossom_18
+  - first:
+      213: -8045519358129592715
+    second: Cast_Blossom_19
+  - first:
+      213: -5290823993878078930
+    second: Cast_Blossom_20
+  - first:
+      213: 8339015675693515383
+    second: Cast_Blossom_21
+  - first:
+      213: -974268310164686414
+    second: Cast_Blossom_22
+  - first:
+      213: -6490190507348561440
+    second: Cast_Blossom_23
+  - first:
+      213: -3174729343928328531
+    second: Cast_Blossom_24
+  - first:
+      213: 7359859284319611546
+    second: Cast_Blossom_25
+  - first:
+      213: 1544427761472627120
+    second: Cast_Blossom_26
+  - first:
+      213: 344898066986284835
+    second: Cast_Blossom_27
+  - first:
+      213: 233503549391548164
+    second: Cast_Blossom_28
+  - first:
+      213: -4435895598086597031
+    second: Cast_Blossom_29
+  - first:
+      213: 6071646133493360568
+    second: Cast_Blossom_30
+  - first:
+      213: -6768175457894979004
+    second: Cast_Blossom_31
+  - first:
+      213: -8594709206426074179
+    second: Cast_Blossom_32
+  - first:
+      213: 4997680996486198322
+    second: Cast_Blossom_33
+  - first:
+      213: 7777660951085240998
+    second: Cast_Blossom_34
+  - first:
+      213: 2086619653549385121
+    second: Cast_Blossom_35
+  - first:
+      213: -1897880436755929370
+    second: Cast_Blossom_36
+  - first:
+      213: 4713361263275509711
+    second: Cast_Blossom_37
+  - first:
+      213: 9142023695805413924
+    second: Cast_Blossom_38
+  - first:
+      213: 907731468458353798
+    second: Cast_Blossom_39
+  - first:
+      213: -7312480694358593005
+    second: Cast_Blossom_40
+  - first:
+      213: 313990674011594106
+    second: Cast_Blossom_41
+  - first:
+      213: 8837430989563621292
+    second: Cast_Blossom_42
+  - first:
+      213: -898550496736617333
+    second: Cast_Blossom_43
+  - first:
+      213: -6288576355581678868
+    second: Cast_Blossom_44
+  - first:
+      213: 50594671231840404
+    second: Cast_Blossom_45
+  - first:
+      213: 7254175440941882695
+    second: Cast_Blossom_46
+  - first:
+      213: 2166479757476225756
+    second: Cast_Blossom_47
+  - first:
+      213: 4689065863489535558
+    second: Cast_Blossom_48
+  - first:
+      213: -8178108695735725276
+    second: Cast_Blossom_49
+  - first:
+      213: 2749300258407136452
+    second: Cast_Blossom_50
+  - first:
+      213: 5637743076651244171
+    second: Cast_Blossom_51
+  - first:
+      213: 6883153787547372664
+    second: Cast_Blossom_52
+  - first:
+      213: 7016836878560332029
+    second: Cast_Blossom_53
+  - first:
+      213: -3008281476619603624
+    second: Cast_Blossom_54
+  - first:
+      213: -2159393358970339408
+    second: Cast_Blossom_55
+  - first:
+      213: 9111232323610541542
+    second: Cast_Blossom_56
+  - first:
+      213: -3655389640863358816
+    second: Cast_Blossom_57
+  - first:
+      213: -7905419702414532721
+    second: Cast_Blossom_58
+  - first:
+      213: 3051545078469298112
+    second: Cast_Blossom_59
+  - first:
+      213: 6605123182381184218
+    second: Cast_Blossom_60
+  - first:
+      213: -6930819533806652136
+    second: Cast_Blossom_61
+  - first:
+      213: 3246502926879375661
+    second: Cast_Blossom_62
+  - first:
+      213: 7872512188800115140
+    second: Cast_Blossom_63
+  - first:
+      213: -6821138122992430847
+    second: Cast_Blossom_64
+  - first:
+      213: 8398412899191281162
+    second: Cast_Blossom_65
+  - first:
+      213: -2089367249171509827
+    second: Cast_Blossom_66
+  - first:
+      213: 902038098990259622
+    second: Cast_Blossom_67
+  - first:
+      213: -1010967385780722275
+    second: Cast_Blossom_68
+  - first:
+      213: -9017656834463920117
+    second: Cast_Blossom_69
+  - first:
+      213: 4071856641803359779
+    second: Cast_Blossom_Walk_0
+  - first:
+      213: -934743113028795102
+    second: Cast_Blossom_Walk_1
+  - first:
+      213: -3517796228470988094
+    second: Cast_Blossom_Walk_2
+  - first:
+      213: 4340470753994396309
+    second: Cast_Blossom_Walk_3
+  - first:
+      213: -637160996434501558
+    second: Cast_Blossom_Walk_4
+  - first:
+      213: 6267896348221361
+    second: Cast_Blossom_Walk_5
+  - first:
+      213: 3719181797835926256
+    second: Cast_Blossom_Walk_6
+  - first:
+      213: -5625437360968484412
+    second: Cast_Blossom_Walk_7
+  - first:
+      213: 3143596735789978279
+    second: Cast_Blossom_Walk_Down_0
+  - first:
+      213: -3395174200519553356
+    second: Cast_Blossom_Walk_Down_1
+  - first:
+      213: 5635995739511977522
+    second: Cast_Blossom_Walk_Down_2
+  - first:
+      213: -4965415891464755423
+    second: Cast_Blossom_Walk_Down_3
+  - first:
+      213: 4211752774860270826
+    second: Cast_Blossom_Walk_Down_4
+  - first:
+      213: -8098669611644916111
+    second: Cast_Blossom_Walk_Down_5
+  - first:
+      213: -3106182031028838814
+    second: Cast_Blossom_Walk_Down_6
+  - first:
+      213: 8010009978302388247
+    second: Cast_Blossom_Walk_Down_7
+  - first:
+      213: -4562702166184654167
+    second: Cast_Blossom_Walk_Up_0
+  - first:
+      213: -8426419660218919013
+    second: Cast_Blossom_Walk_Up_1
+  - first:
+      213: 1302666016849590900
+    second: Cast_Blossom_Walk_Up_2
+  - first:
+      213: 8329371126965882592
+    second: Cast_Blossom_Walk_Up_3
+  - first:
+      213: -1889389220569350205
+    second: Cast_Blossom_Walk_Up_4
+  - first:
+      213: 3382124555276130880
+    second: Cast_Blossom_Walk_Up_5
+  - first:
+      213: 5648276196652093985
+    second: Cast_Blossom_Walk_Up_6
+  - first:
+      213: -4597134912681742735
+    second: Cast_Blossom_Walk_Up_7
+  - first:
+      213: -6139614757650446988
+    second: Cast_Blossom_Harvest_0
+  - first:
+      213: -7716851654071690442
+    second: Cast_Blossom_Harvest_1
+  - first:
+      213: -2990835863430789741
+    second: Cast_Blossom_Harvest_2
+  - first:
+      213: 7221570530822474257
+    second: Cast_Blossom_Harvest_3
+  - first:
+      213: -7928702940165460086
+    second: Cast_Blossom_Harvest_4
+  - first:
+      213: -42033443310497543
+    second: Cast_Blossom_Harvest_5
+  - first:
+      213: 4832648058390295236
+    second: Cast_Blossom_Harvest_6
+  - first:
+      213: 8301143955120379733
+    second: Cast_Blossom_Harvest_7
+  - first:
+      213: -1414142040042746223
+    second: Cast_Blossom_Eat_0
+  - first:
+      213: 3254625988468644140
+    second: Cast_Blossom_Eat_1
+  - first:
+      213: -7410595152282759524
+    second: Cast_Blossom_Eat_2
+  - first:
+      213: -6381273439278349963
+    second: Cast_Blossom_Eat_3
+  - first:
+      213: -5206217384141895580
+    second: Cast_Blossom_Eat_4
+  - first:
+      213: -864657177265845629
+    second: Cast_Blossom_Eat_5
+  - first:
+      213: 80896745236081893
+    second: Cast_Blossom_Eat_6
+  - first:
+      213: -9006588976157519790
+    second: Cast_Blossom_Eat_7
+  - first:
+      213: 1804886978368181212
+    second: Cast_Blossom_Net_0
+  - first:
+      213: 7923939268206671779
+    second: Cast_Blossom_Net_1
+  - first:
+      213: 8180332433538777712
+    second: Cast_Blossom_Net_2
+  - first:
+      213: -8350084279224952895
+    second: Cast_Blossom_Net_3
+  - first:
+      213: -7652992520666271233
+    second: Cast_Blossom_Net_4
+  - first:
+      213: 7236015556483119862
+    second: Cast_Blossom_Net_5
+  - first:
+      213: -6012285270527038158
+    second: Cast_Blossom_Net_6
+  - first:
+      213: 479669092670047248
+    second: Cast_Blossom_Net_7
+  - first:
+      213: 9195790460786393929
+    second: Cast_Blossom_Squat_0
+  - first:
+      213: 6715478705289252852
+    second: Cast_Blossom_Squat_1
+  - first:
+      213: -6900945458770361960
+    second: Cast_Blossom_Squat_2
+  - first:
+      213: -5233766741470472628
+    second: Cast_Blossom_Squat_3
+  - first:
+      213: -3686356381561575793
+    second: Cast_Blossom_Squat_4
+  - first:
+      213: -409046887348293077
+    second: Cast_Blossom_Squat_5
+  - first:
+      213: -9058735535357606333
+    second: Cast_Blossom_Squat_6
+  - first:
+      213: 4223260568260471581
+    second: Cast_Blossom_Squat_7
+  - first:
+      213: 8455348899874023617
+    second: Cast_Blossom_Stretch_0
+  - first:
+      213: -4170773080538718837
+    second: Cast_Blossom_Stretch_1
+  - first:
+      213: 1169657787047136723
+    second: Cast_Blossom_Stretch_2
+  - first:
+      213: -3576744664824699979
+    second: Cast_Blossom_Stretch_3
+  - first:
+      213: 2471614300284369088
+    second: Cast_Blossom_Stretch_4
+  - first:
+      213: -8744389064084760614
+    second: Cast_Blossom_Stretch_5
+  - first:
+      213: -7528013843097767854
+    second: Cast_Blossom_Stretch_6
+  - first:
+      213: 2589796991267305361
+    second: Cast_Blossom_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3261107ca04228830800000000000000
+      internalID: 4071856641803359779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2250da757102703f0800000000000000
+      internalID: -934743113028795102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c227c1e7f64e2fc0800000000000000
+      internalID: -3517796228470988094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 592dec967237c3c30800000000000000
+      internalID: 4340470753994396309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a40a9c613795827f0800000000000000
+      internalID: -637160996434501558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bf13575e94461000800000000000000
+      internalID: 6267896348221361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0faeb1bd3203d9330800000000000000
+      internalID: 3719181797835926256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c93349668e6ee1b0800000000000000
+      internalID: -5625437360968484412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a2d6d1639c40ab20800000000000000
+      internalID: 3143596735789978279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4be06739d0be1e0d0800000000000000
+      internalID: -3395174200519553356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 236f939a344173e40800000000000000
+      internalID: 5635995739511977522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 127e92bfd8c471bb0800000000000000
+      internalID: -4965415891464755423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aecef4b75d6237a30800000000000000
+      internalID: 4211752774860270826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17e67a495eebb9f80800000000000000
+      internalID: -8098669611644916111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26e13d866ef94e4d0800000000000000
+      internalID: -3106182031028838814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7185c0ce2a5492f60800000000000000
+      internalID: 8010009978302388247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aa88a8dd860ea0c0800000000000000
+      internalID: -4562702166184654167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b979840d6f75f0b80800000000000000
+      internalID: -8426419660218919013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47afa4b27dff31210800000000000000
+      internalID: 1302666016849590900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ee4239b8eed79370800000000000000
+      internalID: 8329371126965882592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cff289a38a87c5e0800000000000000
+      internalID: -1889389220569350205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04a1c5f1d58bfee20800000000000000
+      internalID: 3382124555276130880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1221eb66645b26e40800000000000000
+      internalID: 5648276196652093985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17eee015722b330c0800000000000000
+      internalID: -4597134912681742735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 475cf7038e4bbcaa0800000000000000
+      internalID: -6139614757650446988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63bdba66e4c38e490800000000000000
+      internalID: -7716851654071690442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39585bad0aa6e76d0800000000000000
+      internalID: -2990835863430789741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11a4a12e22c283460800000000000000
+      internalID: 7221570530822474257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8fa7d91fa697f190800000000000000
+      internalID: -7928702940165460086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f09ac65ecaaa6ff0800000000000000
+      internalID: -42033443310497543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c2b5dcfdc3011340800000000000000
+      internalID: 4832648058390295236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 557d4522276933370800000000000000
+      internalID: 8301143955120379733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19e4e499e45ff5ce0800000000000000
+      internalID: -1414142040042746223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c299d6fb711ca2d20800000000000000
+      internalID: 3254625988468644140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9e44f5d8f6482990800000000000000
+      internalID: -7410595152282759524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 571cd2dcd992177a0800000000000000
+      internalID: -6381273439278349963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46842c27fdccfb7b0800000000000000
+      internalID: -5206217384141895580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38ac390e0ee1004f0800000000000000
+      internalID: -864657177265845629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ec284349276f1100800000000000000
+      internalID: 80896745236081893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2509e2e8b0b220380800000000000000
+      internalID: -9006588976157519790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd31d55e42f3c0910800000000000000
+      internalID: 1804886978368181212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a73a3718cc77fd60800000000000000
+      internalID: 7923939268206671779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0728fadc101668170800000000000000
+      internalID: 8180332433538777712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c71934b69a8e1c80800000000000000
+      internalID: -8350084279224952895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff137f889db1bc590800000000000000
+      internalID: -7652992520666271233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fa70618fcd7b6460800000000000000
+      internalID: 7236015556483119862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23d2ce1a662109ca0800000000000000
+      internalID: -6012285270527038158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01405569f7028a600800000000000000
+      internalID: 479669092670047248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9434914e3b20e9f70800000000000000
+      internalID: 9195790460786393929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ff47756d4c223d50800000000000000
+      internalID: 6715478705289252852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 891c5a30baaea30a0800000000000000
+      internalID: -6900945458770361960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c461669d0eced57b0800000000000000
+      internalID: -5233766741470472628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f862781f66e67dcc0800000000000000
+      internalID: -3686356381561575793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b22302fe506c25af0800000000000000
+      internalID: -409046887348293077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3464dcc9608e84280800000000000000
+      internalID: -9058735535357606333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1b641d6c190c9a30800000000000000
+      internalID: 4223260568260471581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c82bfca60f675570800000000000000
+      internalID: 8455348899874023617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8d5abf1bff6e16c0800000000000000
+      internalID: -4170773080538718837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ddc6b96f857b3010800000000000000
+      internalID: 1169657787047136723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b3a9d08da9dc5ec0800000000000000
+      internalID: -3576744664824699979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c8b9366c10fc4220800000000000000
+      internalID: 2471614300284369088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad7da69d970b5a680800000000000000
+      internalID: -8744389064084760614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2503fe97b4f178790800000000000000
+      internalID: -7528013843097767854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Blossom_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 197fcd864aec0f320800000000000000
+      internalID: 2589796991267305361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Blossom_0: 7568558047081388710
+      Cast_Blossom_1: 7575864962538916133
+      Cast_Blossom_10: -211812910167785021
+      Cast_Blossom_11: -2248810901458441857
+      Cast_Blossom_12: -7946018950884581112
+      Cast_Blossom_13: -8320743147093441242
+      Cast_Blossom_14: 1126001769938944294
+      Cast_Blossom_15: -875843761631392234
+      Cast_Blossom_16: -2414679420132793958
+      Cast_Blossom_17: -9001273187602954632
+      Cast_Blossom_18: -3788088401365090830
+      Cast_Blossom_19: -8045519358129592715
+      Cast_Blossom_2: -4328428340284299062
+      Cast_Blossom_20: -5290823993878078930
+      Cast_Blossom_21: 8339015675693515383
+      Cast_Blossom_22: -974268310164686414
+      Cast_Blossom_23: -6490190507348561440
+      Cast_Blossom_24: -3174729343928328531
+      Cast_Blossom_25: 7359859284319611546
+      Cast_Blossom_26: 1544427761472627120
+      Cast_Blossom_27: 344898066986284835
+      Cast_Blossom_28: 233503549391548164
+      Cast_Blossom_29: -4435895598086597031
+      Cast_Blossom_3: -8573256273146775774
+      Cast_Blossom_30: 6071646133493360568
+      Cast_Blossom_31: -6768175457894979004
+      Cast_Blossom_32: -8594709206426074179
+      Cast_Blossom_33: 4997680996486198322
+      Cast_Blossom_34: 7777660951085240998
+      Cast_Blossom_35: 2086619653549385121
+      Cast_Blossom_36: -1897880436755929370
+      Cast_Blossom_37: 4713361263275509711
+      Cast_Blossom_38: 9142023695805413924
+      Cast_Blossom_39: 907731468458353798
+      Cast_Blossom_4: -8118540368874067656
+      Cast_Blossom_40: -7312480694358593005
+      Cast_Blossom_41: 313990674011594106
+      Cast_Blossom_42: 8837430989563621292
+      Cast_Blossom_43: -898550496736617333
+      Cast_Blossom_44: -6288576355581678868
+      Cast_Blossom_45: 50594671231840404
+      Cast_Blossom_46: 7254175440941882695
+      Cast_Blossom_47: 2166479757476225756
+      Cast_Blossom_48: 4689065863489535558
+      Cast_Blossom_49: -8178108695735725276
+      Cast_Blossom_5: -112342373447978579
+      Cast_Blossom_50: 2749300258407136452
+      Cast_Blossom_51: 5637743076651244171
+      Cast_Blossom_52: 6883153787547372664
+      Cast_Blossom_53: 7016836878560332029
+      Cast_Blossom_54: -3008281476619603624
+      Cast_Blossom_55: -2159393358970339408
+      Cast_Blossom_56: 9111232323610541542
+      Cast_Blossom_57: -3655389640863358816
+      Cast_Blossom_58: -7905419702414532721
+      Cast_Blossom_59: 3051545078469298112
+      Cast_Blossom_6: 5231511184215313555
+      Cast_Blossom_60: 6605123182381184218
+      Cast_Blossom_61: -6930819533806652136
+      Cast_Blossom_62: 3246502926879375661
+      Cast_Blossom_63: 7872512188800115140
+      Cast_Blossom_64: -6821138122992430847
+      Cast_Blossom_65: 8398412899191281162
+      Cast_Blossom_66: -2089367249171509827
+      Cast_Blossom_67: 902038098990259622
+      Cast_Blossom_68: -1010967385780722275
+      Cast_Blossom_69: -9017656834463920117
+      Cast_Blossom_7: -7408225526921373144
+      Cast_Blossom_8: 5815339902744479869
+      Cast_Blossom_9: -4263533758513042062
+      Cast_Blossom_Eat_0: -1414142040042746223
+      Cast_Blossom_Eat_1: 3254625988468644140
+      Cast_Blossom_Eat_2: -7410595152282759524
+      Cast_Blossom_Eat_3: -6381273439278349963
+      Cast_Blossom_Eat_4: -5206217384141895580
+      Cast_Blossom_Eat_5: -864657177265845629
+      Cast_Blossom_Eat_6: 80896745236081893
+      Cast_Blossom_Eat_7: -9006588976157519790
+      Cast_Blossom_Harvest_0: -6139614757650446988
+      Cast_Blossom_Harvest_1: -7716851654071690442
+      Cast_Blossom_Harvest_2: -2990835863430789741
+      Cast_Blossom_Harvest_3: 7221570530822474257
+      Cast_Blossom_Harvest_4: -7928702940165460086
+      Cast_Blossom_Harvest_5: -42033443310497543
+      Cast_Blossom_Harvest_6: 4832648058390295236
+      Cast_Blossom_Harvest_7: 8301143955120379733
+      Cast_Blossom_Net_0: 1804886978368181212
+      Cast_Blossom_Net_1: 7923939268206671779
+      Cast_Blossom_Net_2: 8180332433538777712
+      Cast_Blossom_Net_3: -8350084279224952895
+      Cast_Blossom_Net_4: -7652992520666271233
+      Cast_Blossom_Net_5: 7236015556483119862
+      Cast_Blossom_Net_6: -6012285270527038158
+      Cast_Blossom_Net_7: 479669092670047248
+      Cast_Blossom_Squat_0: 9195790460786393929
+      Cast_Blossom_Squat_1: 6715478705289252852
+      Cast_Blossom_Squat_2: -6900945458770361960
+      Cast_Blossom_Squat_3: -5233766741470472628
+      Cast_Blossom_Squat_4: -3686356381561575793
+      Cast_Blossom_Squat_5: -409046887348293077
+      Cast_Blossom_Squat_6: -9058735535357606333
+      Cast_Blossom_Squat_7: 4223260568260471581
+      Cast_Blossom_Stretch_0: 8455348899874023617
+      Cast_Blossom_Stretch_1: -4170773080538718837
+      Cast_Blossom_Stretch_2: 1169657787047136723
+      Cast_Blossom_Stretch_3: -3576744664824699979
+      Cast_Blossom_Stretch_4: 2471614300284369088
+      Cast_Blossom_Stretch_5: -8744389064084760614
+      Cast_Blossom_Stretch_6: -7528013843097767854
+      Cast_Blossom_Stretch_7: 2589796991267305361
+      Cast_Blossom_Walk_0: 4071856641803359779
+      Cast_Blossom_Walk_1: -934743113028795102
+      Cast_Blossom_Walk_2: -3517796228470988094
+      Cast_Blossom_Walk_3: 4340470753994396309
+      Cast_Blossom_Walk_4: -637160996434501558
+      Cast_Blossom_Walk_5: 6267896348221361
+      Cast_Blossom_Walk_6: 3719181797835926256
+      Cast_Blossom_Walk_7: -5625437360968484412
+      Cast_Blossom_Walk_Down_0: 3143596735789978279
+      Cast_Blossom_Walk_Down_1: -3395174200519553356
+      Cast_Blossom_Walk_Down_2: 5635995739511977522
+      Cast_Blossom_Walk_Down_3: -4965415891464755423
+      Cast_Blossom_Walk_Down_4: 4211752774860270826
+      Cast_Blossom_Walk_Down_5: -8098669611644916111
+      Cast_Blossom_Walk_Down_6: -3106182031028838814
+      Cast_Blossom_Walk_Down_7: 8010009978302388247
+      Cast_Blossom_Walk_Up_0: -4562702166184654167
+      Cast_Blossom_Walk_Up_1: -8426419660218919013
+      Cast_Blossom_Walk_Up_2: 1302666016849590900
+      Cast_Blossom_Walk_Up_3: 8329371126965882592
+      Cast_Blossom_Walk_Up_4: -1889389220569350205
+      Cast_Blossom_Walk_Up_5: 3382124555276130880
+      Cast_Blossom_Walk_Up_6: 5648276196652093985
+      Cast_Blossom_Walk_Up_7: -4597134912681742735
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

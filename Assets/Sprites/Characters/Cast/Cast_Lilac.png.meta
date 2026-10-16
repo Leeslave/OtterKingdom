@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: 52633af3c4100d443956529c35e5e054
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8131416567425384330
+    second: Cast_Lilac_0
+  - first:
+      213: 2582543651740799443
+    second: Cast_Lilac_1
+  - first:
+      213: -2064204425608435374
+    second: Cast_Lilac_2
+  - first:
+      213: -7967181216966730136
+    second: Cast_Lilac_3
+  - first:
+      213: 7232454062291561549
+    second: Cast_Lilac_4
+  - first:
+      213: 2203467133967088048
+    second: Cast_Lilac_5
+  - first:
+      213: 6567054196445260923
+    second: Cast_Lilac_6
+  - first:
+      213: -9113739263974036537
+    second: Cast_Lilac_7
+  - first:
+      213: -8700799493407110387
+    second: Cast_Lilac_8
+  - first:
+      213: -8766316106932049595
+    second: Cast_Lilac_9
+  - first:
+      213: -130235957189326197
+    second: Cast_Lilac_10
+  - first:
+      213: 7140214803246647639
+    second: Cast_Lilac_11
+  - first:
+      213: 3456043540075753233
+    second: Cast_Lilac_12
+  - first:
+      213: 3627337670163072232
+    second: Cast_Lilac_13
+  - first:
+      213: 3377980996769503010
+    second: Cast_Lilac_14
+  - first:
+      213: 391816060986361178
+    second: Cast_Lilac_15
+  - first:
+      213: 902469548418740671
+    second: Cast_Lilac_16
+  - first:
+      213: 6211981051293315077
+    second: Cast_Lilac_17
+  - first:
+      213: -4039489621662032698
+    second: Cast_Lilac_18
+  - first:
+      213: 6026455624145899323
+    second: Cast_Lilac_19
+  - first:
+      213: 7356401825358681187
+    second: Cast_Lilac_20
+  - first:
+      213: -3255419047680262458
+    second: Cast_Lilac_21
+  - first:
+      213: -2149803737617087948
+    second: Cast_Lilac_22
+  - first:
+      213: -1222508658886745249
+    second: Cast_Lilac_23
+  - first:
+      213: 8324555309761009751
+    second: Cast_Lilac_24
+  - first:
+      213: 597166653513324810
+    second: Cast_Lilac_25
+  - first:
+      213: 7368868092089897776
+    second: Cast_Lilac_26
+  - first:
+      213: 1974274660582509353
+    second: Cast_Lilac_27
+  - first:
+      213: 7711188405873681158
+    second: Cast_Lilac_28
+  - first:
+      213: 9016011413377180622
+    second: Cast_Lilac_29
+  - first:
+      213: -7195066833023894524
+    second: Cast_Lilac_30
+  - first:
+      213: -2661171888978813602
+    second: Cast_Lilac_31
+  - first:
+      213: 8618666589666560701
+    second: Cast_Lilac_32
+  - first:
+      213: 1179066532987138119
+    second: Cast_Lilac_33
+  - first:
+      213: -4980148881754995811
+    second: Cast_Lilac_34
+  - first:
+      213: 5129370501884076688
+    second: Cast_Lilac_35
+  - first:
+      213: 1426352351372482400
+    second: Cast_Lilac_36
+  - first:
+      213: 6878133402933123501
+    second: Cast_Lilac_37
+  - first:
+      213: 4899497132465830487
+    second: Cast_Lilac_38
+  - first:
+      213: 8040965188376934831
+    second: Cast_Lilac_39
+  - first:
+      213: 1325812452984946687
+    second: Cast_Lilac_40
+  - first:
+      213: -198006502721041073
+    second: Cast_Lilac_41
+  - first:
+      213: 1166784206347129635
+    second: Cast_Lilac_42
+  - first:
+      213: 5808044609130956271
+    second: Cast_Lilac_43
+  - first:
+      213: 2614927665784407406
+    second: Cast_Lilac_44
+  - first:
+      213: 2362198505859483889
+    second: Cast_Lilac_45
+  - first:
+      213: 435287697204205626
+    second: Cast_Lilac_46
+  - first:
+      213: -1653424067316297017
+    second: Cast_Lilac_47
+  - first:
+      213: 5790488339197984713
+    second: Cast_Lilac_48
+  - first:
+      213: 4242309249427483488
+    second: Cast_Lilac_49
+  - first:
+      213: -8346358674635165089
+    second: Cast_Lilac_50
+  - first:
+      213: -3940765963684923943
+    second: Cast_Lilac_51
+  - first:
+      213: -2363823656109600556
+    second: Cast_Lilac_52
+  - first:
+      213: 6324796732805195598
+    second: Cast_Lilac_53
+  - first:
+      213: 1655776038272129999
+    second: Cast_Lilac_54
+  - first:
+      213: -8747115505991435444
+    second: Cast_Lilac_55
+  - first:
+      213: -6937215827727213592
+    second: Cast_Lilac_56
+  - first:
+      213: 7507823203057896735
+    second: Cast_Lilac_57
+  - first:
+      213: 3594251277030941682
+    second: Cast_Lilac_58
+  - first:
+      213: -1281151421947168477
+    second: Cast_Lilac_59
+  - first:
+      213: 6059074896646083450
+    second: Cast_Lilac_60
+  - first:
+      213: -7640613282531144367
+    second: Cast_Lilac_61
+  - first:
+      213: -3495329575949830256
+    second: Cast_Lilac_62
+  - first:
+      213: -2993719960285297951
+    second: Cast_Lilac_63
+  - first:
+      213: -1202895366356531804
+    second: Cast_Lilac_64
+  - first:
+      213: -122387453128099025
+    second: Cast_Lilac_65
+  - first:
+      213: -8927852225577260013
+    second: Cast_Lilac_66
+  - first:
+      213: 3110724115126816549
+    second: Cast_Lilac_67
+  - first:
+      213: -2744851016427206227
+    second: Cast_Lilac_68
+  - first:
+      213: -3321708611716196256
+    second: Cast_Lilac_69
+  - first:
+      213: 2524549752649498068
+    second: Cast_Lilac_Walk_0
+  - first:
+      213: 6434547665251264288
+    second: Cast_Lilac_Walk_1
+  - first:
+      213: -5739466725052827897
+    second: Cast_Lilac_Walk_2
+  - first:
+      213: -4289899994774464879
+    second: Cast_Lilac_Walk_3
+  - first:
+      213: 423188860201418469
+    second: Cast_Lilac_Walk_4
+  - first:
+      213: -5958557734592079790
+    second: Cast_Lilac_Walk_5
+  - first:
+      213: 7886113525549444718
+    second: Cast_Lilac_Walk_6
+  - first:
+      213: 3002995722326134143
+    second: Cast_Lilac_Walk_7
+  - first:
+      213: 2822425443220415044
+    second: Cast_Lilac_Walk_Down_0
+  - first:
+      213: 2794496837322086689
+    second: Cast_Lilac_Walk_Down_1
+  - first:
+      213: 6015434190394910380
+    second: Cast_Lilac_Walk_Down_2
+  - first:
+      213: -2094497148534447299
+    second: Cast_Lilac_Walk_Down_3
+  - first:
+      213: -1104589493173825232
+    second: Cast_Lilac_Walk_Down_4
+  - first:
+      213: -2738737217815285013
+    second: Cast_Lilac_Walk_Down_5
+  - first:
+      213: 1196164257986531546
+    second: Cast_Lilac_Walk_Down_6
+  - first:
+      213: -2203916702058365011
+    second: Cast_Lilac_Walk_Down_7
+  - first:
+      213: 1650280304862274131
+    second: Cast_Lilac_Walk_Up_0
+  - first:
+      213: 3867548012906016919
+    second: Cast_Lilac_Walk_Up_1
+  - first:
+      213: 5756286574319781309
+    second: Cast_Lilac_Walk_Up_2
+  - first:
+      213: -3123493194955265136
+    second: Cast_Lilac_Walk_Up_3
+  - first:
+      213: -3630204498434693871
+    second: Cast_Lilac_Walk_Up_4
+  - first:
+      213: 4774506632682781378
+    second: Cast_Lilac_Walk_Up_5
+  - first:
+      213: -8216527731656940385
+    second: Cast_Lilac_Walk_Up_6
+  - first:
+      213: 5771891127233425194
+    second: Cast_Lilac_Walk_Up_7
+  - first:
+      213: -703422652191167340
+    second: Cast_Lilac_Harvest_0
+  - first:
+      213: 5206725166292178721
+    second: Cast_Lilac_Harvest_1
+  - first:
+      213: 8797257118028774410
+    second: Cast_Lilac_Harvest_2
+  - first:
+      213: 2299761026036585264
+    second: Cast_Lilac_Harvest_3
+  - first:
+      213: -513275380254362095
+    second: Cast_Lilac_Harvest_4
+  - first:
+      213: -3286998206836934148
+    second: Cast_Lilac_Harvest_5
+  - first:
+      213: 725554572733950373
+    second: Cast_Lilac_Harvest_6
+  - first:
+      213: -2528136533147049185
+    second: Cast_Lilac_Harvest_7
+  - first:
+      213: 6955502193871712397
+    second: Cast_Lilac_Eat_0
+  - first:
+      213: -2337825910312363500
+    second: Cast_Lilac_Eat_1
+  - first:
+      213: 4771412491169475916
+    second: Cast_Lilac_Eat_2
+  - first:
+      213: -5380646336472567314
+    second: Cast_Lilac_Eat_3
+  - first:
+      213: -8237918240468829769
+    second: Cast_Lilac_Eat_4
+  - first:
+      213: -5144734041001443860
+    second: Cast_Lilac_Eat_5
+  - first:
+      213: 3050583130902830510
+    second: Cast_Lilac_Eat_6
+  - first:
+      213: 1553953336465830219
+    second: Cast_Lilac_Eat_7
+  - first:
+      213: -6839874382711863493
+    second: Cast_Lilac_Net_0
+  - first:
+      213: -3956020867517221760
+    second: Cast_Lilac_Net_1
+  - first:
+      213: -8432427446546384378
+    second: Cast_Lilac_Net_2
+  - first:
+      213: -4950211743724318171
+    second: Cast_Lilac_Net_3
+  - first:
+      213: -2610756423302123005
+    second: Cast_Lilac_Net_4
+  - first:
+      213: -2209345493735092707
+    second: Cast_Lilac_Net_5
+  - first:
+      213: 2952095738697835970
+    second: Cast_Lilac_Net_6
+  - first:
+      213: 6694136648737402160
+    second: Cast_Lilac_Net_7
+  - first:
+      213: -4323213013951212087
+    second: Cast_Lilac_Squat_0
+  - first:
+      213: -4749994899520789554
+    second: Cast_Lilac_Squat_1
+  - first:
+      213: -6104210729027150299
+    second: Cast_Lilac_Squat_2
+  - first:
+      213: -2842658893822771933
+    second: Cast_Lilac_Squat_3
+  - first:
+      213: -2801670469799147881
+    second: Cast_Lilac_Squat_4
+  - first:
+      213: -1384145964635663305
+    second: Cast_Lilac_Squat_5
+  - first:
+      213: -2172429457656207484
+    second: Cast_Lilac_Squat_6
+  - first:
+      213: -4830086146740644837
+    second: Cast_Lilac_Squat_7
+  - first:
+      213: -3992244289840532689
+    second: Cast_Lilac_Stretch_0
+  - first:
+      213: 5815221543812598809
+    second: Cast_Lilac_Stretch_1
+  - first:
+      213: 1233258329017009461
+    second: Cast_Lilac_Stretch_2
+  - first:
+      213: -8677568603820770690
+    second: Cast_Lilac_Stretch_3
+  - first:
+      213: -6047143235416850786
+    second: Cast_Lilac_Stretch_4
+  - first:
+      213: 4175330643178060800
+    second: Cast_Lilac_Stretch_5
+  - first:
+      213: -5808043722233250168
+    second: Cast_Lilac_Stretch_6
+  - first:
+      213: 755935580223692120
+    second: Cast_Lilac_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dd3978df90090320800000000000000
+      internalID: 2524549752649498068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 027ee95820b1c4950800000000000000
+      internalID: 6434547665251264288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7073d0d2c615950b0800000000000000
+      internalID: -5739466725052827897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19694810fa63774c0800000000000000
+      internalID: -4289899994774464879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ee3535b6087fd500800000000000000
+      internalID: 423188860201418469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2589bf76f43fe4da0800000000000000
+      internalID: -5958557734592079790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6e27c4187a117d60800000000000000
+      internalID: 7886113525549444718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7d444be2b8cca920800000000000000
+      internalID: 3002995722326134143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4426d2c9cf44b2720800000000000000
+      internalID: 2822425443220415044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1291982511c08c620800000000000000
+      internalID: 2794496837322086689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca66a38668d1b7350800000000000000
+      internalID: 6015434190394910380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d332986c0f9dee2e0800000000000000
+      internalID: -2094497148534447299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 031deb455b5bba0f0800000000000000
+      internalID: -1104589493173825232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be27af6c20d0ef9d0800000000000000
+      internalID: -2738737217815285013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad05e4a1e01a99010800000000000000
+      internalID: 1196164257986531546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dafb243bf6d1a61e0800000000000000
+      internalID: -2203916702058365011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 352a3279139f6e610800000000000000
+      internalID: 1650280304862274131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 790f7053d6a4ca530800000000000000
+      internalID: 3867548012906016919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db54ea7242072ef40800000000000000
+      internalID: 5756286574319781309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09b6758fc7f17a4d0800000000000000
+      internalID: -3123493194955265136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11566c80e3cee9dc0800000000000000
+      internalID: -3630204498434693871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cabdca6c74724240800000000000000
+      internalID: 4774506632682781378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f942173af8709fd80800000000000000
+      internalID: -8216527731656940385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2f2af04660e91050800000000000000
+      internalID: 5771891127233425194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49cae2123d0fc36f0800000000000000
+      internalID: -703422652191167340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1279eebc3f0024840800000000000000
+      internalID: 5206725166292178721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0cb1ed2db2261a70800000000000000
+      internalID: 8797257118028774410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 033d231f7746aef10800000000000000
+      internalID: 2299761026036585264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1163cf7d2ca70e8f0800000000000000
+      internalID: -513275380254362095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf97320db8c3262d0800000000000000
+      internalID: -3286998206836934148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a9a7fc2a00b11a00800000000000000
+      internalID: 725554572733950373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f13251eb7314aecd0800000000000000
+      internalID: -2528136533147049185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d807c2cb468e68060800000000000000
+      internalID: 6955502193871712397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41a902d88bf5e8fd0800000000000000
+      internalID: -2337825910312363500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4da4057166773240800000000000000
+      internalID: 4771412491169475916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee1bb843aaa1455b0800000000000000
+      internalID: -5380646336472567314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b9f424b1090dad80800000000000000
+      internalID: -8237918240468829769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cedbf3ec5ab3a98b0800000000000000
+      internalID: -5144734041001443860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ead1343e139d55a20800000000000000
+      internalID: 3050583130902830510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4134998350c09510800000000000000
+      internalID: 1553953336465830219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b374a26fc72e311a0800000000000000
+      internalID: -6839874382711863493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0847a9b1bf36919c0800000000000000
+      internalID: -3956020867517221760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60a395e0aeff9fa80800000000000000
+      internalID: -8432427446546384378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522585c75a05d4bb0800000000000000
+      internalID: -4950211743724318171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 302f10a8ddab4cbd0800000000000000
+      internalID: -2610756423302123005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1e4fc3aaf3d651e0800000000000000
+      internalID: -2209345493735092707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c56708fe63f7f820800000000000000
+      internalID: 2952095738697835970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03daae1a0d956ec50800000000000000
+      internalID: 6694136648737402160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c5971f4bacd004c0800000000000000
+      internalID: -4323213013951212087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec365213ec0a41eb0800000000000000
+      internalID: -4749994899520789554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52e5536feac794ba0800000000000000
+      internalID: -6104210729027150299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32db6101cc8dc88d0800000000000000
+      internalID: -2842658893822771933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7968be53d877e19d0800000000000000
+      internalID: -2801670469799147881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 734d99424968acce0800000000000000
+      internalID: -1384145964635663305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 487aec41beaf9d1e0800000000000000
+      internalID: -2172429457656207484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b141dfc8d3618fcb0800000000000000
+      internalID: -4830086146740644837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f23397f58f2b898c0800000000000000
+      internalID: -3992244289840532689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91c06290f21d3b050800000000000000
+      internalID: 5815221543812598809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 535c9598ae96d1110800000000000000
+      internalID: 1233258329017009461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7a3e2f9455139780800000000000000
+      internalID: -8677568603820770690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9e721b344b341ca0800000000000000
+      internalID: -6047143235416850786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00c7e6e1911c1f930800000000000000
+      internalID: 4175330643178060800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88e7958c10fa56fa0800000000000000
+      internalID: -5808043722233250168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Lilac_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85ddf44b76f9d7a00800000000000000
+      internalID: 755935580223692120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Lilac_0: 8131416567425384330
+      Cast_Lilac_1: 2582543651740799443
+      Cast_Lilac_10: -130235957189326197
+      Cast_Lilac_11: 7140214803246647639
+      Cast_Lilac_12: 3456043540075753233
+      Cast_Lilac_13: 3627337670163072232
+      Cast_Lilac_14: 3377980996769503010
+      Cast_Lilac_15: 391816060986361178
+      Cast_Lilac_16: 902469548418740671
+      Cast_Lilac_17: 6211981051293315077
+      Cast_Lilac_18: -4039489621662032698
+      Cast_Lilac_19: 6026455624145899323
+      Cast_Lilac_2: -2064204425608435374
+      Cast_Lilac_20: 7356401825358681187
+      Cast_Lilac_21: -3255419047680262458
+      Cast_Lilac_22: -2149803737617087948
+      Cast_Lilac_23: -1222508658886745249
+      Cast_Lilac_24: 8324555309761009751
+      Cast_Lilac_25: 597166653513324810
+      Cast_Lilac_26: 7368868092089897776
+      Cast_Lilac_27: 1974274660582509353
+      Cast_Lilac_28: 7711188405873681158
+      Cast_Lilac_29: 9016011413377180622
+      Cast_Lilac_3: -7967181216966730136
+      Cast_Lilac_30: -7195066833023894524
+      Cast_Lilac_31: -2661171888978813602
+      Cast_Lilac_32: 8618666589666560701
+      Cast_Lilac_33: 1179066532987138119
+      Cast_Lilac_34: -4980148881754995811
+      Cast_Lilac_35: 5129370501884076688
+      Cast_Lilac_36: 1426352351372482400
+      Cast_Lilac_37: 6878133402933123501
+      Cast_Lilac_38: 4899497132465830487
+      Cast_Lilac_39: 8040965188376934831
+      Cast_Lilac_4: 7232454062291561549
+      Cast_Lilac_40: 1325812452984946687
+      Cast_Lilac_41: -198006502721041073
+      Cast_Lilac_42: 1166784206347129635
+      Cast_Lilac_43: 5808044609130956271
+      Cast_Lilac_44: 2614927665784407406
+      Cast_Lilac_45: 2362198505859483889
+      Cast_Lilac_46: 435287697204205626
+      Cast_Lilac_47: -1653424067316297017
+      Cast_Lilac_48: 5790488339197984713
+      Cast_Lilac_49: 4242309249427483488
+      Cast_Lilac_5: 2203467133967088048
+      Cast_Lilac_50: -8346358674635165089
+      Cast_Lilac_51: -3940765963684923943
+      Cast_Lilac_52: -2363823656109600556
+      Cast_Lilac_53: 6324796732805195598
+      Cast_Lilac_54: 1655776038272129999
+      Cast_Lilac_55: -8747115505991435444
+      Cast_Lilac_56: -6937215827727213592
+      Cast_Lilac_57: 7507823203057896735
+      Cast_Lilac_58: 3594251277030941682
+      Cast_Lilac_59: -1281151421947168477
+      Cast_Lilac_6: 6567054196445260923
+      Cast_Lilac_60: 6059074896646083450
+      Cast_Lilac_61: -7640613282531144367
+      Cast_Lilac_62: -3495329575949830256
+      Cast_Lilac_63: -2993719960285297951
+      Cast_Lilac_64: -1202895366356531804
+      Cast_Lilac_65: -122387453128099025
+      Cast_Lilac_66: -8927852225577260013
+      Cast_Lilac_67: 3110724115126816549
+      Cast_Lilac_68: -2744851016427206227
+      Cast_Lilac_69: -3321708611716196256
+      Cast_Lilac_7: -9113739263974036537
+      Cast_Lilac_8: -8700799493407110387
+      Cast_Lilac_9: -8766316106932049595
+      Cast_Lilac_Eat_0: 6955502193871712397
+      Cast_Lilac_Eat_1: -2337825910312363500
+      Cast_Lilac_Eat_2: 4771412491169475916
+      Cast_Lilac_Eat_3: -5380646336472567314
+      Cast_Lilac_Eat_4: -8237918240468829769
+      Cast_Lilac_Eat_5: -5144734041001443860
+      Cast_Lilac_Eat_6: 3050583130902830510
+      Cast_Lilac_Eat_7: 1553953336465830219
+      Cast_Lilac_Harvest_0: -703422652191167340
+      Cast_Lilac_Harvest_1: 5206725166292178721
+      Cast_Lilac_Harvest_2: 8797257118028774410
+      Cast_Lilac_Harvest_3: 2299761026036585264
+      Cast_Lilac_Harvest_4: -513275380254362095
+      Cast_Lilac_Harvest_5: -3286998206836934148
+      Cast_Lilac_Harvest_6: 725554572733950373
+      Cast_Lilac_Harvest_7: -2528136533147049185
+      Cast_Lilac_Net_0: -6839874382711863493
+      Cast_Lilac_Net_1: -3956020867517221760
+      Cast_Lilac_Net_2: -8432427446546384378
+      Cast_Lilac_Net_3: -4950211743724318171
+      Cast_Lilac_Net_4: -2610756423302123005
+      Cast_Lilac_Net_5: -2209345493735092707
+      Cast_Lilac_Net_6: 2952095738697835970
+      Cast_Lilac_Net_7: 6694136648737402160
+      Cast_Lilac_Squat_0: -4323213013951212087
+      Cast_Lilac_Squat_1: -4749994899520789554
+      Cast_Lilac_Squat_2: -6104210729027150299
+      Cast_Lilac_Squat_3: -2842658893822771933
+      Cast_Lilac_Squat_4: -2801670469799147881
+      Cast_Lilac_Squat_5: -1384145964635663305
+      Cast_Lilac_Squat_6: -2172429457656207484
+      Cast_Lilac_Squat_7: -4830086146740644837
+      Cast_Lilac_Stretch_0: -3992244289840532689
+      Cast_Lilac_Stretch_1: 5815221543812598809
+      Cast_Lilac_Stretch_2: 1233258329017009461
+      Cast_Lilac_Stretch_3: -8677568603820770690
+      Cast_Lilac_Stretch_4: -6047143235416850786
+      Cast_Lilac_Stretch_5: 4175330643178060800
+      Cast_Lilac_Stretch_6: -5808043722233250168
+      Cast_Lilac_Stretch_7: 755935580223692120
+      Cast_Lilac_Walk_0: 2524549752649498068
+      Cast_Lilac_Walk_1: 6434547665251264288
+      Cast_Lilac_Walk_2: -5739466725052827897
+      Cast_Lilac_Walk_3: -4289899994774464879
+      Cast_Lilac_Walk_4: 423188860201418469
+      Cast_Lilac_Walk_5: -5958557734592079790
+      Cast_Lilac_Walk_6: 7886113525549444718
+      Cast_Lilac_Walk_7: 3002995722326134143
+      Cast_Lilac_Walk_Down_0: 2822425443220415044
+      Cast_Lilac_Walk_Down_1: 2794496837322086689
+      Cast_Lilac_Walk_Down_2: 6015434190394910380
+      Cast_Lilac_Walk_Down_3: -2094497148534447299
+      Cast_Lilac_Walk_Down_4: -1104589493173825232
+      Cast_Lilac_Walk_Down_5: -2738737217815285013
+      Cast_Lilac_Walk_Down_6: 1196164257986531546
+      Cast_Lilac_Walk_Down_7: -2203916702058365011
+      Cast_Lilac_Walk_Up_0: 1650280304862274131
+      Cast_Lilac_Walk_Up_1: 3867548012906016919
+      Cast_Lilac_Walk_Up_2: 5756286574319781309
+      Cast_Lilac_Walk_Up_3: -3123493194955265136
+      Cast_Lilac_Walk_Up_4: -3630204498434693871
+      Cast_Lilac_Walk_Up_5: 4774506632682781378
+      Cast_Lilac_Walk_Up_6: -8216527731656940385
+      Cast_Lilac_Walk_Up_7: 5771891127233425194
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

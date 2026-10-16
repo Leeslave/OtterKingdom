@@ -1,0 +1,93 @@
+{
+  "version": 2,
+  "adjustments": {
+    "nearArm": {
+      "x": 46,
+      "y": 5,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "farArm": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "nearLeg": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "farLeg": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "body": {
+      "x": 0,
+      "y": 0,
+      "width": 80,
+      "height": 94,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "head": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "tail": {
+      "x": 0,
+      "y": 0,
+      "width": 75,
+      "height": 93,
+      "pawWidth": 100,
+      "pawHeight": 100
+    }
+  },
+  "outfit": {
+    "hat": {
+      "mode": "custom",
+      "color": "#859e78",
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "rotation": 0,
+      "png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAoCAYAAABpYH0BAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAlUlEQVRoge2W0QkDQRCFrvqtykrSjOkhB3ks+DENiDLv+XDszs8MnuCdVwIFkAC6rCgDCaAZyL1LoIQJoBnIPsUSJoCubeqJEEDXRjVjCKA3XUOaAJqB7FMsYQLo2qaeCAF0bVQzhgB60zWkCaAZyD7FEiaArm3qiRBA10Y1YwigN11DmgCagexTLGEC6Nqmngj/B/gFuYPTu+ZRwUkAAAAASUVORK5CYII="
+    },
+    "top": {
+      "mode": "custom",
+      "color": "#7f9b88",
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "rotation": 0,
+      "png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAoCAYAAABpYH0BAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAlUlEQVRoge2W0QkDQRCFrvqtykrSjOkhB3ks+DENiDLv+XDszs8MnuCdVwIFkAC6rCgDCaAZyL1LoIQJoBnIPsUSJoCubeqJEEDXRjVjCKA3XUOaAJqB7FMsYQLo2qaeCAF0bVQzhgB60zWkCaAZyD7FEiaArm3qiRBA10Y1YwigN11DmgCagexTLGEC6Nqmngj/B/gFuYPTu+ZRwUkAAAAASUVORK5CYII="
+    },
+    "bottom": {
+      "mode": "custom",
+      "color": "#6b859e",
+      "x": 14,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "rotation": 0,
+      "png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAoCAYAAABpYH0BAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAlUlEQVRoge2W0QkDQRCFrvqtykrSjOkhB3ks+DENiDLv+XDszs8MnuCdVwIFkAC6rCgDCaAZyL1LoIQJoBnIPsUSJoCubeqJEEDXRjVjCKA3XUOaAJqB7FMsYQLo2qaeCAF0bVQzhgB60zWkCaAZyD7FEiaArm3qiRBA10Y1YwigN11DmgCagexTLGEC6Nqmngj/B/gFuYPTu+ZRwUkAAAAASUVORK5CYII="
+    }
+  }
+}

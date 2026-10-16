@@ -1,0 +1,252 @@
+{
+  "character": "Chief",
+  "source": "ArtSource/Otter/FrontRig/Source/ChiefOtter_Front.png",
+  "note": "Front view only. rect = atlas rect with Unity bottom-left origin. pivot = normalized joint position (Unity convention). position = joint relative to the feet centre (Root), px, y up. Parents are listed before children; order = sorting order. swaps = alternative sprites for a bone (Head_Blink for blinking).",
+  "scale": 0.4308,
+  "atlas": {
+    "file": "ChiefOtter_FrontRigParts.png",
+    "width": 1024,
+    "height": 344
+  },
+  "bones": [
+    {
+      "name": "Root",
+      "parent": null,
+      "part": null,
+      "position": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Leg_L",
+      "parent": "Root",
+      "part": "Leg_L",
+      "position": [
+        -81.8,
+        150.8
+      ]
+    },
+    {
+      "name": "Leg_R",
+      "parent": "Root",
+      "part": "Leg_R",
+      "position": [
+        79.3,
+        150.8
+      ]
+    },
+    {
+      "name": "Body",
+      "parent": "Root",
+      "part": "Body",
+      "position": [
+        0.0,
+        158.5
+      ]
+    },
+    {
+      "name": "Scarf",
+      "parent": "Body",
+      "part": "Scarf",
+      "position": [
+        107.7,
+        393.7
+      ]
+    },
+    {
+      "name": "Arm_L",
+      "parent": "Body",
+      "part": "Arm_L",
+      "position": [
+        -148.2,
+        339.4
+      ]
+    },
+    {
+      "name": "Arm_R",
+      "parent": "Body",
+      "part": "Arm_R",
+      "position": [
+        148.2,
+        339.4
+      ]
+    },
+    {
+      "name": "Head",
+      "parent": "Body",
+      "part": "Head",
+      "position": [
+        1.7,
+        410.9
+      ]
+    }
+  ],
+  "parts": [
+    {
+      "name": "Leg_L",
+      "bone": "Leg_L",
+      "parent": "Root",
+      "order": 0,
+      "rect": [
+        4,
+        5,
+        84,
+        103
+      ],
+      "pivot": [
+        3.1701,
+        -3.4364
+      ],
+      "position": [
+        -81.8,
+        150.8
+      ]
+    },
+    {
+      "name": "Leg_R",
+      "bone": "Leg_R",
+      "parent": "Root",
+      "order": 0,
+      "rect": [
+        92,
+        5,
+        86,
+        103
+      ],
+      "pivot": [
+        4.0627,
+        -3.4364
+      ],
+      "position": [
+        79.3,
+        150.8
+      ]
+    },
+    {
+      "name": "Body",
+      "bone": "Body",
+      "parent": "Root",
+      "order": 10,
+      "rect": [
+        620,
+        196,
+        170,
+        144
+      ],
+      "pivot": [
+        2.0655,
+        -2.8764
+      ],
+      "position": [
+        0.0,
+        158.5
+      ]
+    },
+    {
+      "name": "Arm_L",
+      "bone": "Arm_L",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        865,
+        219,
+        75,
+        121
+      ],
+      "pivot": [
+        3.3327,
+        -2.085
+      ],
+      "position": [
+        -148.2,
+        339.4
+      ]
+    },
+    {
+      "name": "Arm_R",
+      "bone": "Arm_R",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        794,
+        217,
+        67,
+        123
+      ],
+      "pivot": [
+        5.2584,
+        -2.0185
+      ],
+      "position": [
+        148.2,
+        339.4
+      ]
+    },
+    {
+      "name": "Scarf",
+      "bone": "Scarf",
+      "parent": "Body",
+      "order": 25,
+      "rect": [
+        182,
+        59,
+        70,
+        49
+      ],
+      "pivot": [
+        4.7974,
+        -5.6532
+      ],
+      "position": [
+        107.7,
+        393.7
+      ]
+    },
+    {
+      "name": "Head",
+      "bone": "Head",
+      "parent": "Body",
+      "order": 30,
+      "rect": [
+        4,
+        112,
+        304,
+        228
+      ],
+      "pivot": [
+        1.3778,
+        -1.2797
+      ],
+      "position": [
+        1.7,
+        410.9
+      ]
+    },
+    {
+      "name": "Head_Blink",
+      "bone": "Head",
+      "parent": "Body",
+      "order": 30,
+      "rect": [
+        312,
+        112,
+        304,
+        228
+      ],
+      "pivot": [
+        1.3778,
+        -1.2797
+      ],
+      "position": [
+        1.7,
+        410.9
+      ]
+    }
+  ],
+  "swaps": {
+    "Head": {
+      "blink": "Head_Blink"
+    }
+  }
+}

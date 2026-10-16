@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "browser": "Chromium headless",
+  "clips": [
+    "idle",
+    "walk",
+    "wave"
+  ],
+  "phaseSamples": 4,
+  "finiteTransforms": true,
+  "controls": true,
+  "mobileWidth": 390,
+  "noHorizontalOverflow": true,
+  "pageErrors": [],
+  "frames": [
+    "idle-0.png",
+    "idle-0.2125.png",
+    "idle-0.425.png",
+    "idle-0.6375.png",
+    "walk-0.png",
+    "walk-0.2125.png",
+    "walk-0.425.png",
+    "walk-0.6375.png",
+    "wave-0.png",
+    "wave-0.2125.png",
+    "wave-0.425.png",
+    "wave-0.6375.png"
+  ]
+}

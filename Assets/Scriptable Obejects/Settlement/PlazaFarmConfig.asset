@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d35daf0fe481e46bcadbc5e852afc0, type: 3}
+  m_Name: PlazaFarmConfig
+  m_EditorClassIdentifier: OtterKingdom::PlazaFarmConfig
+  _soils:
+  - _name: "\uBCF4\uD1B5 \uD759"
+    _durationMultiplier: 1
+    _bonusChance: 0
+    _requiredBuilding: 
+    _requiredDevelopment: 
+    _gold: 0
+    _items: []
+    _sprite: {fileID: 21300000, guid: deab738774228af4480b49c057842de9, type: 3}
+  - _name: "\uAE30\uB984\uC9C4 \uD759"
+    _durationMultiplier: 0.8
+    _bonusChance: 0.05
+    _requiredBuilding: bld_granary
+    _requiredDevelopment: 
+    _gold: 300
+    _items:
+    - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+      _amount: 10
+    _sprite: {fileID: 21300000, guid: e432b800810f42542ad1af4f5c10183f, type: 3}
+  - _name: "\uD669\uAE08 \uD759"
+    _durationMultiplier: 0.6
+    _bonusChance: 0.15
+    _requiredBuilding: 
+    _requiredDevelopment: castle_built
+    _gold: 1500
+    _items:
+    - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
+      _amount: 20
+    _sprite: {fileID: 21300000, guid: c806c24de0c02fb4193ca97fe04961a6, type: 3}
+  _fieldsByLevel:
+  - {x: 10, y: 3}
+  - {x: 11, y: 5}
+  - {x: 12, y: 7}
+  - {x: 13, y: 9}
+  _fastBuild:
+    _requiredBuilding: bld_workyard
+    _label: "\uAC74\uC124\uC18C"
+  _crateCapacity: 20
+  _bigCrate:
+    _requiredBuilding: bld_granary
+    _label: "\uB18D\uC5C5 \uCC3D\uACE0"
+  _cart:
+    _requiredBuilding: bld_workyard
+    _label: "\uAC74\uC124\uC18C"
+  _cartSeconds: 60
+  _pathUnlock:
+    _requiredBuilding: bld_granary
+    _label: "\uB18D\uC5C5 \uCC3D\uACE0"
+  _sprinklerUnlock:
+    _requiredBuilding: bld_workshop
+    _label: "\uBAA9\uACF5\uC18C"
+  _stonePathSprite: {fileID: 21300000, guid: b19b3571e94ba1141901b45c540abe45, type: 3}
+  _pathSpeed: 1.6
+  _stonePath:
+    _requiredBuilding: bld_quarry
+    _label: "\uCC44\uC11D \uC791\uC5C5\uC18C"
+  _stonePathSpeed: 2
+  _sprinklerRange: 3
+  _sprinklerBonus: 0.25
+  _sprinklerMax: 0.5
+  _farmerOtterId: otter_farmer
+  _harvestSeconds: 1.6
+  _offlineEfficiency: 0.6

@@ -1,0 +1,88 @@
+{
+  "props": [
+    {
+      "name": "Bench",
+      "width": 253,
+      "height": 239,
+      "pivotX": 0.3585,
+      "pivotY": 0.0084
+    },
+    {
+      "name": "Bush",
+      "width": 307,
+      "height": 280,
+      "pivotX": 0.4962,
+      "pivotY": 0.0107
+    },
+    {
+      "name": "Fence_Falling",
+      "width": 260,
+      "height": 233,
+      "pivotX": 0.8834,
+      "pivotY": 0.0129
+    },
+    {
+      "name": "Fence_Rising",
+      "width": 263,
+      "height": 228,
+      "pivotX": 0.1175,
+      "pivotY": 0.0132
+    },
+    {
+      "name": "House_Blue",
+      "width": 314,
+      "height": 359,
+      "pivotX": 0.5528,
+      "pivotY": 0.0056
+    },
+    {
+      "name": "House_Red",
+      "width": 346,
+      "height": 389,
+      "pivotX": 0.5507,
+      "pivotY": 0.0077
+    },
+    {
+      "name": "Lamp",
+      "width": 175,
+      "height": 307,
+      "pivotX": 0.7144,
+      "pivotY": 0.0098
+    },
+    {
+      "name": "Log",
+      "width": 283,
+      "height": 208,
+      "pivotX": 0.2857,
+      "pivotY": 0.0144
+    },
+    {
+      "name": "Picnic",
+      "width": 407,
+      "height": 271,
+      "pivotX": 0.4755,
+      "pivotY": 0.0074
+    },
+    {
+      "name": "Rock",
+      "width": 338,
+      "height": 238,
+      "pivotX": 0.6159,
+      "pivotY": 0.0126
+    },
+    {
+      "name": "Stump",
+      "width": 265,
+      "height": 207,
+      "pivotX": 0.5292,
+      "pivotY": 0.0145
+    },
+    {
+      "name": "Tree",
+      "width": 378,
+      "height": 423,
+      "pivotX": 0.4404,
+      "pivotY": 0.0047
+    }
+  ]
+}

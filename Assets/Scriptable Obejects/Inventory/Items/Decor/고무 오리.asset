@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uACE0\uBB34 \uC624\uB9AC"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: toy_rubberduck
+  _displayName: "\uACE0\uBB34 \uC624\uB9AC"
+  _description: "\uBB3C\uC5D0 \uB744\uC6B0\uBA74 \uB465\uC2E4\uB465\uC2E4, \uB204\uB974\uBA74
+    \uAF49\uAF49 \uC18C\uB9AC\uAC00 \uB098\uC694."
+  _icon: {fileID: 21300000, guid: e7ccce3a9614771409a152eb09e8f5e0, type: 3}
+  _category: {fileID: 11400000, guid: b17fe1ae81840fe4d9794a3ea8059425, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 0
+  _sellPrice: 0
+  _maxStack: 99

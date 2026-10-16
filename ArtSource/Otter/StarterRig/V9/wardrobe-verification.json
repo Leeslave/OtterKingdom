@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "checks": [
+    "approved settings applied and reset",
+    "rounded legs render",
+    "samples render",
+    "24 walk phases",
+    "all 3 PNG slots decode",
+    "offset controls",
+    "PNG-inclusive JSON round trip",
+    "reload persistence",
+    "invalid import preserves state",
+    "mobile no overflow",
+    "no page errors"
+  ]
+}

@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: 785875343909bc245a9ca963fc3f716f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8586983633266222193
+    second: Cast_Sailor_0
+  - first:
+      213: -6254133010567678455
+    second: Cast_Sailor_1
+  - first:
+      213: 765820238311829435
+    second: Cast_Sailor_2
+  - first:
+      213: 8710833100507089426
+    second: Cast_Sailor_3
+  - first:
+      213: 9052638781243905145
+    second: Cast_Sailor_4
+  - first:
+      213: 6519915037545726386
+    second: Cast_Sailor_5
+  - first:
+      213: -6150972272663726925
+    second: Cast_Sailor_6
+  - first:
+      213: -243185192905589037
+    second: Cast_Sailor_7
+  - first:
+      213: -2738761807733176016
+    second: Cast_Sailor_8
+  - first:
+      213: -1413644344756859849
+    second: Cast_Sailor_9
+  - first:
+      213: 4010394247158185265
+    second: Cast_Sailor_10
+  - first:
+      213: 1900116464879761695
+    second: Cast_Sailor_11
+  - first:
+      213: -5290562589383346581
+    second: Cast_Sailor_12
+  - first:
+      213: -3003474391796558626
+    second: Cast_Sailor_13
+  - first:
+      213: -3289965888978976670
+    second: Cast_Sailor_14
+  - first:
+      213: -88328689569595253
+    second: Cast_Sailor_15
+  - first:
+      213: 967106181258766962
+    second: Cast_Sailor_16
+  - first:
+      213: -3914067281420838899
+    second: Cast_Sailor_17
+  - first:
+      213: 3801443038988522858
+    second: Cast_Sailor_18
+  - first:
+      213: -1829184133290064009
+    second: Cast_Sailor_19
+  - first:
+      213: -4842523248553791600
+    second: Cast_Sailor_20
+  - first:
+      213: -4846882277051154255
+    second: Cast_Sailor_21
+  - first:
+      213: 4649076424654038499
+    second: Cast_Sailor_22
+  - first:
+      213: -3614580330476504960
+    second: Cast_Sailor_23
+  - first:
+      213: -2079439466713285624
+    second: Cast_Sailor_24
+  - first:
+      213: -2308586943521271271
+    second: Cast_Sailor_25
+  - first:
+      213: 8371399547200933586
+    second: Cast_Sailor_26
+  - first:
+      213: -7621383816389183253
+    second: Cast_Sailor_27
+  - first:
+      213: -2378910936750489422
+    second: Cast_Sailor_28
+  - first:
+      213: -3032068404596935223
+    second: Cast_Sailor_29
+  - first:
+      213: 2555850596484959129
+    second: Cast_Sailor_30
+  - first:
+      213: -3250690363177665666
+    second: Cast_Sailor_31
+  - first:
+      213: -576847220008281320
+    second: Cast_Sailor_32
+  - first:
+      213: -2029074743345687727
+    second: Cast_Sailor_33
+  - first:
+      213: -2403321434130724488
+    second: Cast_Sailor_34
+  - first:
+      213: 7077354680132561021
+    second: Cast_Sailor_35
+  - first:
+      213: 2234603315992433835
+    second: Cast_Sailor_36
+  - first:
+      213: -4021241297580299394
+    second: Cast_Sailor_37
+  - first:
+      213: -5845264750495450889
+    second: Cast_Sailor_38
+  - first:
+      213: 5440456180774732013
+    second: Cast_Sailor_39
+  - first:
+      213: 3063204190395390034
+    second: Cast_Sailor_40
+  - first:
+      213: -7217720976615682170
+    second: Cast_Sailor_41
+  - first:
+      213: -5356068103468435673
+    second: Cast_Sailor_42
+  - first:
+      213: 5101185986477957849
+    second: Cast_Sailor_43
+  - first:
+      213: 7191385643654907642
+    second: Cast_Sailor_44
+  - first:
+      213: -3895247331018392904
+    second: Cast_Sailor_45
+  - first:
+      213: -7713264145160333121
+    second: Cast_Sailor_46
+  - first:
+      213: -7577694399658414351
+    second: Cast_Sailor_47
+  - first:
+      213: -451271158091703232
+    second: Cast_Sailor_48
+  - first:
+      213: 5735013064082315948
+    second: Cast_Sailor_49
+  - first:
+      213: -5876604441926300005
+    second: Cast_Sailor_50
+  - first:
+      213: -5354887415267992038
+    second: Cast_Sailor_51
+  - first:
+      213: 6456692590691952219
+    second: Cast_Sailor_52
+  - first:
+      213: -1476575165348483286
+    second: Cast_Sailor_53
+  - first:
+      213: 645566395847480246
+    second: Cast_Sailor_54
+  - first:
+      213: -2648316889669200485
+    second: Cast_Sailor_55
+  - first:
+      213: -9002013402403326137
+    second: Cast_Sailor_56
+  - first:
+      213: -2764305610370268217
+    second: Cast_Sailor_57
+  - first:
+      213: -9083251373742855433
+    second: Cast_Sailor_58
+  - first:
+      213: 4040465385948711120
+    second: Cast_Sailor_59
+  - first:
+      213: 6017384951170226204
+    second: Cast_Sailor_60
+  - first:
+      213: 3760939719191166950
+    second: Cast_Sailor_61
+  - first:
+      213: -1259067326428433745
+    second: Cast_Sailor_62
+  - first:
+      213: -1892356739217521540
+    second: Cast_Sailor_63
+  - first:
+      213: -6169428545868554743
+    second: Cast_Sailor_64
+  - first:
+      213: -4703194216096420834
+    second: Cast_Sailor_65
+  - first:
+      213: 8450648097595942032
+    second: Cast_Sailor_66
+  - first:
+      213: -5255709525735755953
+    second: Cast_Sailor_67
+  - first:
+      213: 1384362760831445365
+    second: Cast_Sailor_68
+  - first:
+      213: -2795027188831931619
+    second: Cast_Sailor_69
+  - first:
+      213: -8051615324114179926
+    second: Cast_Sailor_Walk_0
+  - first:
+      213: 5213470394087508118
+    second: Cast_Sailor_Walk_1
+  - first:
+      213: -1208420556366603706
+    second: Cast_Sailor_Walk_2
+  - first:
+      213: -1071754038430253224
+    second: Cast_Sailor_Walk_3
+  - first:
+      213: 1974813231037785447
+    second: Cast_Sailor_Walk_4
+  - first:
+      213: 3503280874407299010
+    second: Cast_Sailor_Walk_5
+  - first:
+      213: -3976009600960856376
+    second: Cast_Sailor_Walk_6
+  - first:
+      213: 780815560722840534
+    second: Cast_Sailor_Walk_7
+  - first:
+      213: -3567511917875965827
+    second: Cast_Sailor_Walk_Down_0
+  - first:
+      213: 7879053668226978680
+    second: Cast_Sailor_Walk_Down_1
+  - first:
+      213: -104583355961741978
+    second: Cast_Sailor_Walk_Down_2
+  - first:
+      213: -8527276762493317462
+    second: Cast_Sailor_Walk_Down_3
+  - first:
+      213: 4726556651787656594
+    second: Cast_Sailor_Walk_Down_4
+  - first:
+      213: 5848545148143691522
+    second: Cast_Sailor_Walk_Down_5
+  - first:
+      213: 8581024148727520480
+    second: Cast_Sailor_Walk_Down_6
+  - first:
+      213: -8865834228037533194
+    second: Cast_Sailor_Walk_Down_7
+  - first:
+      213: -5530822525081617479
+    second: Cast_Sailor_Walk_Up_0
+  - first:
+      213: 1968602385765058722
+    second: Cast_Sailor_Walk_Up_1
+  - first:
+      213: 7119494303765414109
+    second: Cast_Sailor_Walk_Up_2
+  - first:
+      213: -2562481097306740781
+    second: Cast_Sailor_Walk_Up_3
+  - first:
+      213: -340673083606826833
+    second: Cast_Sailor_Walk_Up_4
+  - first:
+      213: -929562673874018044
+    second: Cast_Sailor_Walk_Up_5
+  - first:
+      213: -8908866854811744772
+    second: Cast_Sailor_Walk_Up_6
+  - first:
+      213: 5491881030131880808
+    second: Cast_Sailor_Walk_Up_7
+  - first:
+      213: 8808468491399492029
+    second: Cast_Sailor_Harvest_0
+  - first:
+      213: 2553456415892531490
+    second: Cast_Sailor_Harvest_1
+  - first:
+      213: 3818804795782730666
+    second: Cast_Sailor_Harvest_2
+  - first:
+      213: -4563628763345908464
+    second: Cast_Sailor_Harvest_3
+  - first:
+      213: 1167164662958790767
+    second: Cast_Sailor_Harvest_4
+  - first:
+      213: 1773649315956390714
+    second: Cast_Sailor_Harvest_5
+  - first:
+      213: -4027747211898888389
+    second: Cast_Sailor_Harvest_6
+  - first:
+      213: -3409229433315257842
+    second: Cast_Sailor_Harvest_7
+  - first:
+      213: 6455304550609336782
+    second: Cast_Sailor_Eat_0
+  - first:
+      213: 6004977144339283477
+    second: Cast_Sailor_Eat_1
+  - first:
+      213: -6324347514312635406
+    second: Cast_Sailor_Eat_2
+  - first:
+      213: 8875744833558139013
+    second: Cast_Sailor_Eat_3
+  - first:
+      213: -3698968630605671749
+    second: Cast_Sailor_Eat_4
+  - first:
+      213: -2047467978446562555
+    second: Cast_Sailor_Eat_5
+  - first:
+      213: 8030696875447864797
+    second: Cast_Sailor_Eat_6
+  - first:
+      213: 6579399122581667316
+    second: Cast_Sailor_Eat_7
+  - first:
+      213: -2016071209962573035
+    second: Cast_Sailor_Net_0
+  - first:
+      213: 4066260357778484303
+    second: Cast_Sailor_Net_1
+  - first:
+      213: -5003648851857113171
+    second: Cast_Sailor_Net_2
+  - first:
+      213: -3542797661781284764
+    second: Cast_Sailor_Net_3
+  - first:
+      213: 6908605059075199614
+    second: Cast_Sailor_Net_4
+  - first:
+      213: 3002169525717815099
+    second: Cast_Sailor_Net_5
+  - first:
+      213: 8585996844886070947
+    second: Cast_Sailor_Net_6
+  - first:
+      213: 6797333478913231691
+    second: Cast_Sailor_Net_7
+  - first:
+      213: -2112230678943297403
+    second: Cast_Sailor_Squat_0
+  - first:
+      213: -8067019537255140648
+    second: Cast_Sailor_Squat_1
+  - first:
+      213: 7512837858537160657
+    second: Cast_Sailor_Squat_2
+  - first:
+      213: 3306508227827719001
+    second: Cast_Sailor_Squat_3
+  - first:
+      213: -46245805760048205
+    second: Cast_Sailor_Squat_4
+  - first:
+      213: -5277742900884675033
+    second: Cast_Sailor_Squat_5
+  - first:
+      213: 2722464872114536494
+    second: Cast_Sailor_Squat_6
+  - first:
+      213: 1590525404409896995
+    second: Cast_Sailor_Squat_7
+  - first:
+      213: 5662944652163897819
+    second: Cast_Sailor_Stretch_0
+  - first:
+      213: 7999734045278212857
+    second: Cast_Sailor_Stretch_1
+  - first:
+      213: -5943828704502875332
+    second: Cast_Sailor_Stretch_2
+  - first:
+      213: -189460205228941273
+    second: Cast_Sailor_Stretch_3
+  - first:
+      213: 6609733560628736424
+    second: Cast_Sailor_Stretch_4
+  - first:
+      213: 1428038655968281844
+    second: Cast_Sailor_Stretch_5
+  - first:
+      213: -1803431973691042397
+    second: Cast_Sailor_Stretch_6
+  - first:
+      213: -3494511582718370243
+    second: Cast_Sailor_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa82512a58ae24090800000000000000
+      internalID: -8051615324114179926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6980a9683b7f95840800000000000000
+      internalID: 5213470394087508118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64a1d7e08e3da3fe0800000000000000
+      internalID: -1208420556366603706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85f36c4616d5021f0800000000000000
+      internalID: -1071754038430253224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 765afbdab22f76b10800000000000000
+      internalID: 1974813231037785447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c78773e4672e9030800000000000000
+      internalID: 3503280874407299010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ce7f2f655062d8c0800000000000000
+      internalID: -3976009600960856376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6db7bf39d9306da00800000000000000
+      internalID: 780815560722840534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d70d70befc6ad7ec0800000000000000
+      internalID: -3567511917875965827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87358e4f095085d60800000000000000
+      internalID: 7879053668226978680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66d6b7aedf17c8ef0800000000000000
+      internalID: -104583355961741978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aae8426c6f609a980800000000000000
+      internalID: -8527276762493317462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29d10908b3a189140800000000000000
+      internalID: 4726556651787656594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20760f743d43a2150800000000000000
+      internalID: 5848545148143691522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ecd3f1cffbe51770800000000000000
+      internalID: 8581024148727520480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f1c2582eba36f480800000000000000
+      internalID: -8865834228037533194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bbf7cc87329e33b0800000000000000
+      internalID: -5530822525081617479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a843839071e15b10800000000000000
+      internalID: 1968602385765058722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd0ca5c39568dc260800000000000000
+      internalID: 7119494303765414109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d7e063c40d307cd0800000000000000
+      internalID: -2562481097306740781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa0041ba2afa54bf0800000000000000
+      internalID: -340673083606826833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 401e6435ca78913f0800000000000000
+      internalID: -929562673874018044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf5c1b7fbc85d5480800000000000000
+      internalID: -8908866854811744772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86397bd13b4173c40800000000000000
+      internalID: 5491881030131880808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db176157c67fd3a70800000000000000
+      internalID: 8808468491399492029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22967bad413bf6320800000000000000
+      internalID: 2553456415892531490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa310379abe1ff430800000000000000
+      internalID: 3818804795782730666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01d0302a1dbbaa0c0800000000000000
+      internalID: -4563628763345908464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f681c0ab31a923010800000000000000
+      internalID: 1167164662958790767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3bf1b9d7a44d9810800000000000000
+      internalID: 1773649315956390714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3f52bd20419a18c0800000000000000
+      internalID: -4027747211898888389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e02107da4ebffa0d0800000000000000
+      internalID: -3409229433315257842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec938008949d59950800000000000000
+      internalID: 6455304550609336782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51ebea4a5e6f55350800000000000000
+      internalID: 6004977144339283477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fb454d81776b38a0800000000000000
+      internalID: -6324347514312635406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 580dd3186eafc2b70800000000000000
+      internalID: 8875744833558139013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb29f61e0af9aacc0800000000000000
+      internalID: -3698968630605671749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50b94b7b8bee593e0800000000000000
+      internalID: -2047467978446562555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dddc8ef7244c27f60800000000000000
+      internalID: 8030696875447864797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd3ff094a8be4b50800000000000000
+      internalID: 6579399122581667316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 513f9488ae97504e0800000000000000
+      internalID: -2016071209962573035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4ca3ad50424e6830800000000000000
+      internalID: 4066260357778484303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daff34431e77f8ab0800000000000000
+      internalID: -5003648851857113171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46821721c4475dec0800000000000000
+      internalID: -3542797661781284764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e72d4a7a2bb40ef50800000000000000
+      internalID: 6908605059075199614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3fc9e70749d9a920800000000000000
+      internalID: 3002169525717815099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a61f0ec3a6972770800000000000000
+      internalID: 8585996844886070947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4b4e7609caf45e50800000000000000
+      internalID: 6797333478913231691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58017e97369dfa2e0800000000000000
+      internalID: -2112230678943297403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d275c5c8703c0090800000000000000
+      internalID: -8067019537255140648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dfb6354a36f24860800000000000000
+      internalID: 7512837858537160657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95bd39ee6b313ed20800000000000000
+      internalID: 3306508227827719001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b312574fa3bb5ff0800000000000000
+      internalID: -46245805760048205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 726ede85bc0b1c6b0800000000000000
+      internalID: -5277742900884675033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e20cddf706328c520800000000000000
+      internalID: 2722464872114536494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3202618ad6ea21610800000000000000
+      internalID: 1590525404409896995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd95de65822d69e40800000000000000
+      internalID: 5662944652163897819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f21862dab3c40f60800000000000000
+      internalID: 7999734045278212857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3bf556f847438da0800000000000000
+      internalID: -5943828704502875332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 720a14872f6ee5df0800000000000000
+      internalID: -189460205228941273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a1f04d47ad7abb50800000000000000
+      internalID: 6609733560628736424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f4048e679961d310800000000000000
+      internalID: 1428038655968281844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a55097cc2ce8f6e0800000000000000
+      internalID: -1803431973691042397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Sailor_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3e5590fa30018fc0800000000000000
+      internalID: -3494511582718370243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Sailor_0: 8586983633266222193
+      Cast_Sailor_1: -6254133010567678455
+      Cast_Sailor_10: 4010394247158185265
+      Cast_Sailor_11: 1900116464879761695
+      Cast_Sailor_12: -5290562589383346581
+      Cast_Sailor_13: -3003474391796558626
+      Cast_Sailor_14: -3289965888978976670
+      Cast_Sailor_15: -88328689569595253
+      Cast_Sailor_16: 967106181258766962
+      Cast_Sailor_17: -3914067281420838899
+      Cast_Sailor_18: 3801443038988522858
+      Cast_Sailor_19: -1829184133290064009
+      Cast_Sailor_2: 765820238311829435
+      Cast_Sailor_20: -4842523248553791600
+      Cast_Sailor_21: -4846882277051154255
+      Cast_Sailor_22: 4649076424654038499
+      Cast_Sailor_23: -3614580330476504960
+      Cast_Sailor_24: -2079439466713285624
+      Cast_Sailor_25: -2308586943521271271
+      Cast_Sailor_26: 8371399547200933586
+      Cast_Sailor_27: -7621383816389183253
+      Cast_Sailor_28: -2378910936750489422
+      Cast_Sailor_29: -3032068404596935223
+      Cast_Sailor_3: 8710833100507089426
+      Cast_Sailor_30: 2555850596484959129
+      Cast_Sailor_31: -3250690363177665666
+      Cast_Sailor_32: -576847220008281320
+      Cast_Sailor_33: -2029074743345687727
+      Cast_Sailor_34: -2403321434130724488
+      Cast_Sailor_35: 7077354680132561021
+      Cast_Sailor_36: 2234603315992433835
+      Cast_Sailor_37: -4021241297580299394
+      Cast_Sailor_38: -5845264750495450889
+      Cast_Sailor_39: 5440456180774732013
+      Cast_Sailor_4: 9052638781243905145
+      Cast_Sailor_40: 3063204190395390034
+      Cast_Sailor_41: -7217720976615682170
+      Cast_Sailor_42: -5356068103468435673
+      Cast_Sailor_43: 5101185986477957849
+      Cast_Sailor_44: 7191385643654907642
+      Cast_Sailor_45: -3895247331018392904
+      Cast_Sailor_46: -7713264145160333121
+      Cast_Sailor_47: -7577694399658414351
+      Cast_Sailor_48: -451271158091703232
+      Cast_Sailor_49: 5735013064082315948
+      Cast_Sailor_5: 6519915037545726386
+      Cast_Sailor_50: -5876604441926300005
+      Cast_Sailor_51: -5354887415267992038
+      Cast_Sailor_52: 6456692590691952219
+      Cast_Sailor_53: -1476575165348483286
+      Cast_Sailor_54: 645566395847480246
+      Cast_Sailor_55: -2648316889669200485
+      Cast_Sailor_56: -9002013402403326137
+      Cast_Sailor_57: -2764305610370268217
+      Cast_Sailor_58: -9083251373742855433
+      Cast_Sailor_59: 4040465385948711120
+      Cast_Sailor_6: -6150972272663726925
+      Cast_Sailor_60: 6017384951170226204
+      Cast_Sailor_61: 3760939719191166950
+      Cast_Sailor_62: -1259067326428433745
+      Cast_Sailor_63: -1892356739217521540
+      Cast_Sailor_64: -6169428545868554743
+      Cast_Sailor_65: -4703194216096420834
+      Cast_Sailor_66: 8450648097595942032
+      Cast_Sailor_67: -5255709525735755953
+      Cast_Sailor_68: 1384362760831445365
+      Cast_Sailor_69: -2795027188831931619
+      Cast_Sailor_7: -243185192905589037
+      Cast_Sailor_8: -2738761807733176016
+      Cast_Sailor_9: -1413644344756859849
+      Cast_Sailor_Eat_0: 6455304550609336782
+      Cast_Sailor_Eat_1: 6004977144339283477
+      Cast_Sailor_Eat_2: -6324347514312635406
+      Cast_Sailor_Eat_3: 8875744833558139013
+      Cast_Sailor_Eat_4: -3698968630605671749
+      Cast_Sailor_Eat_5: -2047467978446562555
+      Cast_Sailor_Eat_6: 8030696875447864797
+      Cast_Sailor_Eat_7: 6579399122581667316
+      Cast_Sailor_Harvest_0: 8808468491399492029
+      Cast_Sailor_Harvest_1: 2553456415892531490
+      Cast_Sailor_Harvest_2: 3818804795782730666
+      Cast_Sailor_Harvest_3: -4563628763345908464
+      Cast_Sailor_Harvest_4: 1167164662958790767
+      Cast_Sailor_Harvest_5: 1773649315956390714
+      Cast_Sailor_Harvest_6: -4027747211898888389
+      Cast_Sailor_Harvest_7: -3409229433315257842
+      Cast_Sailor_Net_0: -2016071209962573035
+      Cast_Sailor_Net_1: 4066260357778484303
+      Cast_Sailor_Net_2: -5003648851857113171
+      Cast_Sailor_Net_3: -3542797661781284764
+      Cast_Sailor_Net_4: 6908605059075199614
+      Cast_Sailor_Net_5: 3002169525717815099
+      Cast_Sailor_Net_6: 8585996844886070947
+      Cast_Sailor_Net_7: 6797333478913231691
+      Cast_Sailor_Squat_0: -2112230678943297403
+      Cast_Sailor_Squat_1: -8067019537255140648
+      Cast_Sailor_Squat_2: 7512837858537160657
+      Cast_Sailor_Squat_3: 3306508227827719001
+      Cast_Sailor_Squat_4: -46245805760048205
+      Cast_Sailor_Squat_5: -5277742900884675033
+      Cast_Sailor_Squat_6: 2722464872114536494
+      Cast_Sailor_Squat_7: 1590525404409896995
+      Cast_Sailor_Stretch_0: 5662944652163897819
+      Cast_Sailor_Stretch_1: 7999734045278212857
+      Cast_Sailor_Stretch_2: -5943828704502875332
+      Cast_Sailor_Stretch_3: -189460205228941273
+      Cast_Sailor_Stretch_4: 6609733560628736424
+      Cast_Sailor_Stretch_5: 1428038655968281844
+      Cast_Sailor_Stretch_6: -1803431973691042397
+      Cast_Sailor_Stretch_7: -3494511582718370243
+      Cast_Sailor_Walk_0: -8051615324114179926
+      Cast_Sailor_Walk_1: 5213470394087508118
+      Cast_Sailor_Walk_2: -1208420556366603706
+      Cast_Sailor_Walk_3: -1071754038430253224
+      Cast_Sailor_Walk_4: 1974813231037785447
+      Cast_Sailor_Walk_5: 3503280874407299010
+      Cast_Sailor_Walk_6: -3976009600960856376
+      Cast_Sailor_Walk_7: 780815560722840534
+      Cast_Sailor_Walk_Down_0: -3567511917875965827
+      Cast_Sailor_Walk_Down_1: 7879053668226978680
+      Cast_Sailor_Walk_Down_2: -104583355961741978
+      Cast_Sailor_Walk_Down_3: -8527276762493317462
+      Cast_Sailor_Walk_Down_4: 4726556651787656594
+      Cast_Sailor_Walk_Down_5: 5848545148143691522
+      Cast_Sailor_Walk_Down_6: 8581024148727520480
+      Cast_Sailor_Walk_Down_7: -8865834228037533194
+      Cast_Sailor_Walk_Up_0: -5530822525081617479
+      Cast_Sailor_Walk_Up_1: 1968602385765058722
+      Cast_Sailor_Walk_Up_2: 7119494303765414109
+      Cast_Sailor_Walk_Up_3: -2562481097306740781
+      Cast_Sailor_Walk_Up_4: -340673083606826833
+      Cast_Sailor_Walk_Up_5: -929562673874018044
+      Cast_Sailor_Walk_Up_6: -8908866854811744772
+      Cast_Sailor_Walk_Up_7: 5491881030131880808
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

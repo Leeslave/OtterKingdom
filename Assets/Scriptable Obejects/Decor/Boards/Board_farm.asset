@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4f2c37776658c43b09e03007345868, type: 3}
+  m_Name: Board_farm
+  m_EditorClassIdentifier: OtterKingdom::DecorBoardDefinition
+  _boardId: farm
+  _zone: {fileID: 11400000, guid: b29d28b957a746941a62e5c52ff9be76, type: 2}
+  _size: {x: 13, y: 16}
+  _regions:
+  - {fileID: 11400000, guid: c8f7a77793cbd284984d64dff418f1d7, type: 2}

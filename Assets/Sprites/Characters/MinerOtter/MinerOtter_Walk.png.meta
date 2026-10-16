@@ -1,0 +1,1090 @@
+fileFormatVersion: 2
+guid: 257acf434ebeef34997b0207cc554571
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4978447610980263563
+    second: MinerOtter_Walk_0
+  - first:
+      213: -8176038233495556515
+    second: MinerOtter_Walk_1
+  - first:
+      213: 4798153723938103628
+    second: MinerOtter_Walk_2
+  - first:
+      213: 300101129654073471
+    second: MinerOtter_Walk_3
+  - first:
+      213: -705381887032415552
+    second: MinerOtter_Walk_4
+  - first:
+      213: -9173609436799185495
+    second: MinerOtter_Walk_5
+  - first:
+      213: 2613327929071595364
+    second: MinerOtter_Walk_6
+  - first:
+      213: 6000481389306028633
+    second: MinerOtter_Walk_7
+  - first:
+      213: -1967024355904724201
+    second: MinerOtter_Walk_8
+  - first:
+      213: 8556554885070093961
+    second: MinerOtter_Walk_9
+  - first:
+      213: 183718839095914086
+    second: MinerOtter_Walk_10
+  - first:
+      213: -8199534783347409562
+    second: MinerOtter_Walk_11
+  - first:
+      213: -4915464459011977157
+    second: MinerOtter_Walk_12
+  - first:
+      213: 4113302392258550975
+    second: MinerOtter_Walk_13
+  - first:
+      213: 3800299567140291991
+    second: MinerOtter_Walk_14
+  - first:
+      213: -7431471906459455945
+    second: MinerOtter_Walk_15
+  - first:
+      213: 6627734999156655471
+    second: MinerOtter_Walk_16
+  - first:
+      213: 530775585944970774
+    second: MinerOtter_Walk_17
+  - first:
+      213: -503168877716350739
+    second: MinerOtter_Walk_18
+  - first:
+      213: -851267195245986261
+    second: MinerOtter_Walk_19
+  - first:
+      213: 8698399796233554785
+    second: MinerOtter_Walk_20
+  - first:
+      213: -1242811564222510191
+    second: MinerOtter_Walk_21
+  - first:
+      213: -5269692581804148624
+    second: MinerOtter_Walk_22
+  - first:
+      213: 4249932362863512369
+    second: MinerOtter_Walk_23
+  - first:
+      213: 5528402525751030094
+    second: MinerOtter_Walk_24
+  - first:
+      213: 4309368080564343289
+    second: MinerOtter_Walk_25
+  - first:
+      213: 3652540266828188466
+    second: MinerOtter_Walk_26
+  - first:
+      213: -8532587931300088488
+    second: MinerOtter_Walk_27
+  - first:
+      213: -4602338254341479295
+    second: MinerOtter_Walk_28
+  - first:
+      213: -7455402377379525965
+    second: MinerOtter_Walk_29
+  - first:
+      213: 1242933701641728285
+    second: MinerOtter_Walk_30
+  - first:
+      213: 777087986597295392
+    second: MinerOtter_Walk_31
+  - first:
+      213: 4357963951839021188
+    second: MinerOtter_Walk_0_0
+  - first:
+      213: 4372506444559475572
+    second: MinerOtter_Walk_0_1
+  - first:
+      213: -4676224555598775007
+    second: MinerOtter_Walk_0_2
+  - first:
+      213: -8527705172162691676
+    second: MinerOtter_Walk_0_3
+  - first:
+      213: 8656842800003084829
+    second: MinerOtter_Walk_0_4
+  - first:
+      213: 4312019504829749809
+    second: MinerOtter_Walk_0_5
+  - first:
+      213: -7546600550120745264
+    second: MinerOtter_Walk_0_6
+  - first:
+      213: -7658076204774451404
+    second: MinerOtter_Walk_0_7
+  - first:
+      213: 8574980294838821930
+    second: MinerOtter_Walk_1_0
+  - first:
+      213: -3644301079034651662
+    second: MinerOtter_Walk_1_1
+  - first:
+      213: 1204383788036776692
+    second: MinerOtter_Walk_1_2
+  - first:
+      213: -1533036646695839291
+    second: MinerOtter_Walk_1_3
+  - first:
+      213: 8529378165612683506
+    second: MinerOtter_Walk_1_4
+  - first:
+      213: -6314957301770399297
+    second: MinerOtter_Walk_1_5
+  - first:
+      213: 2294670769949639633
+    second: MinerOtter_Walk_1_6
+  - first:
+      213: -8894838596971627770
+    second: MinerOtter_Walk_1_7
+  - first:
+      213: 4453430092978426887
+    second: MinerOtter_Walk_2_0
+  - first:
+      213: -2827557052998823088
+    second: MinerOtter_Walk_2_1
+  - first:
+      213: 413373876074528572
+    second: MinerOtter_Walk_2_2
+  - first:
+      213: -554367248302877891
+    second: MinerOtter_Walk_2_3
+  - first:
+      213: 6407483658537277666
+    second: MinerOtter_Walk_2_4
+  - first:
+      213: -4500299187005114039
+    second: MinerOtter_Walk_2_5
+  - first:
+      213: 9065657087399489900
+    second: MinerOtter_Walk_2_6
+  - first:
+      213: -3493811926571606014
+    second: MinerOtter_Walk_2_7
+  - first:
+      213: -5000272770511139497
+    second: MinerOtter_Walk_3_0
+  - first:
+      213: 1295818732977918633
+    second: MinerOtter_Walk_3_1
+  - first:
+      213: -1814485687257392029
+    second: MinerOtter_Walk_3_2
+  - first:
+      213: 5672428266478958924
+    second: MinerOtter_Walk_3_3
+  - first:
+      213: -3301180937704612882
+    second: MinerOtter_Walk_3_4
+  - first:
+      213: -257385661784429118
+    second: MinerOtter_Walk_3_5
+  - first:
+      213: 5912387238278898980
+    second: MinerOtter_Walk_3_6
+  - first:
+      213: 534643947527970710
+    second: MinerOtter_Walk_3_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 145
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MinerOtter_Walk_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 816
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 488825def199a7c30800000000000000
+      internalID: 4357963951839021188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_0_1
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 816
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 473e21ed1734eac30800000000000000
+      internalID: 4372506444559475572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_0_2
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 816
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12d7399da86ba1fb0800000000000000
+      internalID: -4676224555598775007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_0_3
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 816
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ad3bffd35187a980800000000000000
+      internalID: -8527705172162691676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_0_4
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 816
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d12f49229a8432870800000000000000
+      internalID: 8656842800003084829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_0_5
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 816
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13adee1c4ee57db30800000000000000
+      internalID: 4312019504829749809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_0_6
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 816
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d6194488c6154790800000000000000
+      internalID: -7546600550120745264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_0_7
+      rect:
+        serializedVersion: 2
+        x: 1484
+        y: 816
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4371c87144c09b590800000000000000
+      internalID: -7658076204774451404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 544
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a24a7dd5523700770800000000000000
+      internalID: 8574980294838821930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_1_1
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 544
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fb11991a77dc6dc0800000000000000
+      internalID: -3644301079034651662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_1_2
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 544
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f2eb239ca4d6b010800000000000000
+      internalID: 1204383788036776692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_1_3
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 544
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c9d90eca4f89bae0800000000000000
+      internalID: -1533036646695839291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_1_4
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 544
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f0215440407e5670800000000000000
+      internalID: 8529378165612683506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_1_5
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 544
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb15738cac3cc58a0800000000000000
+      internalID: -6314957301770399297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_1_6
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 544
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d3025758ee48df10800000000000000
+      internalID: 2294670769949639633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_1_7
+      rect:
+        serializedVersion: 2
+        x: 1484
+        y: 544
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60b72154c6f2f8480800000000000000
+      internalID: -8894838596971627770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70493040313cdcd30800000000000000
+      internalID: 4453430092978426887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_2_1
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 272
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 053dad167df72c8d0800000000000000
+      internalID: -2827557052998823088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_2_2
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 272
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3f39d2a9599cb500800000000000000
+      internalID: 413373876074528572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_2_3
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 272
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d33dbc1cced7e48f0800000000000000
+      internalID: -554367248302877891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_2_4
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 272
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e81c3b6074fbe850800000000000000
+      internalID: 6407483658537277666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_2_5
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 272
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 949b497abb9bb81c0800000000000000
+      internalID: -4500299187005114039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_2_6
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 272
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c61f2fdc61fafcd70800000000000000
+      internalID: 9065657087399489900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_2_7
+      rect:
+        serializedVersion: 2
+        x: 1484
+        y: 272
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2002da4509c738fc0800000000000000
+      internalID: -3493811926571606014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75d00a568667b9ab0800000000000000
+      internalID: -5000272770511139497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_3_1
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 0
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a21278a54cabf110800000000000000
+      internalID: 1295818732977918633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_3_2
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 0
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36c1ef881e6a1d6e0800000000000000
+      internalID: -1814485687257392029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_3_3
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 0
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c49fc5d547388be40800000000000000
+      internalID: 5672428266478958924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_3_4
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 0
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeb53d47d69df22d0800000000000000
+      internalID: -3301180937704612882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_3_5
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 0
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cd6f03ba159d6cf0800000000000000
+      internalID: -257385661784429118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_3_6
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 0
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 425aa283ed40d0250800000000000000
+      internalID: 5912387238278898980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MinerOtter_Walk_3_7
+      rect:
+        serializedVersion: 2
+        x: 1484
+        y: 0
+        width: 212
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.033088237}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69f97bd66df6b6700800000000000000
+      internalID: 534643947527970710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MinerOtter_Walk_0: -4978447610980263563
+      MinerOtter_Walk_0_0: 4357963951839021188
+      MinerOtter_Walk_0_1: 4372506444559475572
+      MinerOtter_Walk_0_2: -4676224555598775007
+      MinerOtter_Walk_0_3: -8527705172162691676
+      MinerOtter_Walk_0_4: 8656842800003084829
+      MinerOtter_Walk_0_5: 4312019504829749809
+      MinerOtter_Walk_0_6: -7546600550120745264
+      MinerOtter_Walk_0_7: -7658076204774451404
+      MinerOtter_Walk_1: -8176038233495556515
+      MinerOtter_Walk_10: 183718839095914086
+      MinerOtter_Walk_11: -8199534783347409562
+      MinerOtter_Walk_12: -4915464459011977157
+      MinerOtter_Walk_13: 4113302392258550975
+      MinerOtter_Walk_14: 3800299567140291991
+      MinerOtter_Walk_15: -7431471906459455945
+      MinerOtter_Walk_16: 6627734999156655471
+      MinerOtter_Walk_17: 530775585944970774
+      MinerOtter_Walk_18: -503168877716350739
+      MinerOtter_Walk_19: -851267195245986261
+      MinerOtter_Walk_1_0: 8574980294838821930
+      MinerOtter_Walk_1_1: -3644301079034651662
+      MinerOtter_Walk_1_2: 1204383788036776692
+      MinerOtter_Walk_1_3: -1533036646695839291
+      MinerOtter_Walk_1_4: 8529378165612683506
+      MinerOtter_Walk_1_5: -6314957301770399297
+      MinerOtter_Walk_1_6: 2294670769949639633
+      MinerOtter_Walk_1_7: -8894838596971627770
+      MinerOtter_Walk_2: 4798153723938103628
+      MinerOtter_Walk_20: 8698399796233554785
+      MinerOtter_Walk_21: -1242811564222510191
+      MinerOtter_Walk_22: -5269692581804148624
+      MinerOtter_Walk_23: 4249932362863512369
+      MinerOtter_Walk_24: 5528402525751030094
+      MinerOtter_Walk_25: 4309368080564343289
+      MinerOtter_Walk_26: 3652540266828188466
+      MinerOtter_Walk_27: -8532587931300088488
+      MinerOtter_Walk_28: -4602338254341479295
+      MinerOtter_Walk_29: -7455402377379525965
+      MinerOtter_Walk_2_0: 4453430092978426887
+      MinerOtter_Walk_2_1: -2827557052998823088
+      MinerOtter_Walk_2_2: 413373876074528572
+      MinerOtter_Walk_2_3: -554367248302877891
+      MinerOtter_Walk_2_4: 6407483658537277666
+      MinerOtter_Walk_2_5: -4500299187005114039
+      MinerOtter_Walk_2_6: 9065657087399489900
+      MinerOtter_Walk_2_7: -3493811926571606014
+      MinerOtter_Walk_3: 300101129654073471
+      MinerOtter_Walk_30: 1242933701641728285
+      MinerOtter_Walk_31: 777087986597295392
+      MinerOtter_Walk_3_0: -5000272770511139497
+      MinerOtter_Walk_3_1: 1295818732977918633
+      MinerOtter_Walk_3_2: -1814485687257392029
+      MinerOtter_Walk_3_3: 5672428266478958924
+      MinerOtter_Walk_3_4: -3301180937704612882
+      MinerOtter_Walk_3_5: -257385661784429118
+      MinerOtter_Walk_3_6: 5912387238278898980
+      MinerOtter_Walk_3_7: 534643947527970710
+      MinerOtter_Walk_4: -705381887032415552
+      MinerOtter_Walk_5: -9173609436799185495
+      MinerOtter_Walk_6: 2613327929071595364
+      MinerOtter_Walk_7: 6000481389306028633
+      MinerOtter_Walk_8: -1967024355904724201
+      MinerOtter_Walk_9: 8556554885070093961
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

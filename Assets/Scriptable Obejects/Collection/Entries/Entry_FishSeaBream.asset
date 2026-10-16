@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishSeaBream
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_sea_bream
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 15
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: c02ad657d9b225348a551804a019cb8c, type: 3}
+  _tagline: "\uBD89\uC740 \uBE5B\uC774 \uACE0\uC6B4 \uBC14\uB2E4\uC758 \uADC0\uD55C
+    \uC190\uB2D8."
+  _description: "\uC794\uCE6B\uB0A0\uC774\uBA74 \uD574\uB2EC\uB4E4\uC774 \uAF2D \uCC3E\uB294
+    \uBB3C\uACE0\uAE30\uC608\uC694."
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130 \xB7 \uB09A\uC2EF\uB300 Lv.6"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: f82caea9da3324d47b20e5c924bfaac1, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: e6d37fbe87763ee4e8ec5b93a9b62dab
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1292343893799278294
+    second: Cast_Cocoa_0
+  - first:
+      213: 6104209961077658527
+    second: Cast_Cocoa_1
+  - first:
+      213: -1266698980402869867
+    second: Cast_Cocoa_2
+  - first:
+      213: 6103664029573002522
+    second: Cast_Cocoa_3
+  - first:
+      213: -6951213509874373459
+    second: Cast_Cocoa_4
+  - first:
+      213: -6996688195063870040
+    second: Cast_Cocoa_5
+  - first:
+      213: -739531943845848654
+    second: Cast_Cocoa_6
+  - first:
+      213: 8581893011158801323
+    second: Cast_Cocoa_7
+  - first:
+      213: -3251643314616810788
+    second: Cast_Cocoa_8
+  - first:
+      213: 5541497778240874420
+    second: Cast_Cocoa_9
+  - first:
+      213: -5203598780223215265
+    second: Cast_Cocoa_10
+  - first:
+      213: 3616174290118253836
+    second: Cast_Cocoa_11
+  - first:
+      213: 5915385103735851211
+    second: Cast_Cocoa_12
+  - first:
+      213: -7110635008945834026
+    second: Cast_Cocoa_13
+  - first:
+      213: -5344673746008222745
+    second: Cast_Cocoa_14
+  - first:
+      213: 4607939216513908701
+    second: Cast_Cocoa_15
+  - first:
+      213: 241824166446607630
+    second: Cast_Cocoa_16
+  - first:
+      213: -5103364014408356187
+    second: Cast_Cocoa_17
+  - first:
+      213: 4858176221486497830
+    second: Cast_Cocoa_18
+  - first:
+      213: -7605925063033606292
+    second: Cast_Cocoa_19
+  - first:
+      213: 4064083390876006831
+    second: Cast_Cocoa_20
+  - first:
+      213: 6230696299399530122
+    second: Cast_Cocoa_21
+  - first:
+      213: 1773387937749261576
+    second: Cast_Cocoa_22
+  - first:
+      213: -1325059355270929187
+    second: Cast_Cocoa_23
+  - first:
+      213: -2463525648723373709
+    second: Cast_Cocoa_24
+  - first:
+      213: -4118671366598328417
+    second: Cast_Cocoa_25
+  - first:
+      213: 839916368905597836
+    second: Cast_Cocoa_26
+  - first:
+      213: 5825207312103962473
+    second: Cast_Cocoa_27
+  - first:
+      213: -3138486389989153625
+    second: Cast_Cocoa_28
+  - first:
+      213: -2231971561738806109
+    second: Cast_Cocoa_29
+  - first:
+      213: 8366430979686317487
+    second: Cast_Cocoa_30
+  - first:
+      213: 2159954631021817994
+    second: Cast_Cocoa_31
+  - first:
+      213: 508079681914212666
+    second: Cast_Cocoa_32
+  - first:
+      213: 6659449021185439367
+    second: Cast_Cocoa_33
+  - first:
+      213: 4756482046068761883
+    second: Cast_Cocoa_34
+  - first:
+      213: 5504917883349899554
+    second: Cast_Cocoa_35
+  - first:
+      213: 1758891485744103341
+    second: Cast_Cocoa_36
+  - first:
+      213: 1055026993484960084
+    second: Cast_Cocoa_37
+  - first:
+      213: -4947483734762096850
+    second: Cast_Cocoa_38
+  - first:
+      213: -6749945540345913162
+    second: Cast_Cocoa_39
+  - first:
+      213: -884460929142296657
+    second: Cast_Cocoa_40
+  - first:
+      213: 2375930544456806945
+    second: Cast_Cocoa_41
+  - first:
+      213: 1958456033792619261
+    second: Cast_Cocoa_42
+  - first:
+      213: 7607135560405702819
+    second: Cast_Cocoa_43
+  - first:
+      213: -7197263935465379702
+    second: Cast_Cocoa_44
+  - first:
+      213: -134973434564746225
+    second: Cast_Cocoa_45
+  - first:
+      213: -1710931783859911498
+    second: Cast_Cocoa_46
+  - first:
+      213: -853174680382124601
+    second: Cast_Cocoa_47
+  - first:
+      213: 1486535315641858093
+    second: Cast_Cocoa_48
+  - first:
+      213: 72450569722312621
+    second: Cast_Cocoa_49
+  - first:
+      213: 6629335938124699988
+    second: Cast_Cocoa_50
+  - first:
+      213: 4237225445610999697
+    second: Cast_Cocoa_51
+  - first:
+      213: -6065322479419654483
+    second: Cast_Cocoa_52
+  - first:
+      213: 6639128537614672927
+    second: Cast_Cocoa_53
+  - first:
+      213: 7443024597772786029
+    second: Cast_Cocoa_54
+  - first:
+      213: 949507866745396605
+    second: Cast_Cocoa_55
+  - first:
+      213: 2594832882684436354
+    second: Cast_Cocoa_56
+  - first:
+      213: 8306393212167540938
+    second: Cast_Cocoa_57
+  - first:
+      213: 4596893909309454899
+    second: Cast_Cocoa_58
+  - first:
+      213: 8487107589428083874
+    second: Cast_Cocoa_59
+  - first:
+      213: 3715769906390292226
+    second: Cast_Cocoa_60
+  - first:
+      213: 4306442582981683693
+    second: Cast_Cocoa_61
+  - first:
+      213: -7963286388172308217
+    second: Cast_Cocoa_62
+  - first:
+      213: -7007381432808988044
+    second: Cast_Cocoa_63
+  - first:
+      213: -5846216953313102360
+    second: Cast_Cocoa_64
+  - first:
+      213: -3449546567768232726
+    second: Cast_Cocoa_65
+  - first:
+      213: 3910012518769561276
+    second: Cast_Cocoa_66
+  - first:
+      213: -2358399145352165145
+    second: Cast_Cocoa_67
+  - first:
+      213: 2227305293755798828
+    second: Cast_Cocoa_68
+  - first:
+      213: -4536692636141516204
+    second: Cast_Cocoa_69
+  - first:
+      213: -1934823902368617022
+    second: Cast_Cocoa_Walk_0
+  - first:
+      213: -7898655009872506765
+    second: Cast_Cocoa_Walk_1
+  - first:
+      213: -5648241028918477613
+    second: Cast_Cocoa_Walk_2
+  - first:
+      213: -616686059608625596
+    second: Cast_Cocoa_Walk_3
+  - first:
+      213: 1398182037290872629
+    second: Cast_Cocoa_Walk_4
+  - first:
+      213: 1473711516156564157
+    second: Cast_Cocoa_Walk_5
+  - first:
+      213: -3197617620470303194
+    second: Cast_Cocoa_Walk_6
+  - first:
+      213: 7818158049269827617
+    second: Cast_Cocoa_Walk_7
+  - first:
+      213: 7599877502600166864
+    second: Cast_Cocoa_Walk_Down_0
+  - first:
+      213: -8061285788754589636
+    second: Cast_Cocoa_Walk_Down_1
+  - first:
+      213: -7498548771747854863
+    second: Cast_Cocoa_Walk_Down_2
+  - first:
+      213: -2238990376405367627
+    second: Cast_Cocoa_Walk_Down_3
+  - first:
+      213: -2396456357960418978
+    second: Cast_Cocoa_Walk_Down_4
+  - first:
+      213: 3865621450953065987
+    second: Cast_Cocoa_Walk_Down_5
+  - first:
+      213: -8020553502478327596
+    second: Cast_Cocoa_Walk_Down_6
+  - first:
+      213: 4321015951567547054
+    second: Cast_Cocoa_Walk_Down_7
+  - first:
+      213: -3095514562772563314
+    second: Cast_Cocoa_Walk_Up_0
+  - first:
+      213: 3221160382071783254
+    second: Cast_Cocoa_Walk_Up_1
+  - first:
+      213: -7819002530665128162
+    second: Cast_Cocoa_Walk_Up_2
+  - first:
+      213: -4111295373401216321
+    second: Cast_Cocoa_Walk_Up_3
+  - first:
+      213: 1122095320918965025
+    second: Cast_Cocoa_Walk_Up_4
+  - first:
+      213: 3985322061241870024
+    second: Cast_Cocoa_Walk_Up_5
+  - first:
+      213: 918252754661868123
+    second: Cast_Cocoa_Walk_Up_6
+  - first:
+      213: 8467207248279467220
+    second: Cast_Cocoa_Walk_Up_7
+  - first:
+      213: -3126835015424582576
+    second: Cast_Cocoa_Harvest_0
+  - first:
+      213: 6982526465078193158
+    second: Cast_Cocoa_Harvest_1
+  - first:
+      213: 3754609745166814154
+    second: Cast_Cocoa_Harvest_2
+  - first:
+      213: 811513965664932424
+    second: Cast_Cocoa_Harvest_3
+  - first:
+      213: -9062728460462197039
+    second: Cast_Cocoa_Harvest_4
+  - first:
+      213: -4152152152109600515
+    second: Cast_Cocoa_Harvest_5
+  - first:
+      213: 6500183754171343946
+    second: Cast_Cocoa_Harvest_6
+  - first:
+      213: -5395323635329984649
+    second: Cast_Cocoa_Harvest_7
+  - first:
+      213: 4945198031260317234
+    second: Cast_Cocoa_Eat_0
+  - first:
+      213: 3831474022000939906
+    second: Cast_Cocoa_Eat_1
+  - first:
+      213: 7464734919797882713
+    second: Cast_Cocoa_Eat_2
+  - first:
+      213: 4058654021791356597
+    second: Cast_Cocoa_Eat_3
+  - first:
+      213: 5601051241503992549
+    second: Cast_Cocoa_Eat_4
+  - first:
+      213: 8376603197703044307
+    second: Cast_Cocoa_Eat_5
+  - first:
+      213: 7222237340183363728
+    second: Cast_Cocoa_Eat_6
+  - first:
+      213: -4983600172127026541
+    second: Cast_Cocoa_Eat_7
+  - first:
+      213: -2202143685021938834
+    second: Cast_Cocoa_Net_0
+  - first:
+      213: -3427108870453123850
+    second: Cast_Cocoa_Net_1
+  - first:
+      213: -6592292738485451799
+    second: Cast_Cocoa_Net_2
+  - first:
+      213: 5067579594325546952
+    second: Cast_Cocoa_Net_3
+  - first:
+      213: -5738598070477750743
+    second: Cast_Cocoa_Net_4
+  - first:
+      213: -2555794779349695029
+    second: Cast_Cocoa_Net_5
+  - first:
+      213: -7427809844316810739
+    second: Cast_Cocoa_Net_6
+  - first:
+      213: -6000939378851923293
+    second: Cast_Cocoa_Net_7
+  - first:
+      213: -633930141760626113
+    second: Cast_Cocoa_Squat_0
+  - first:
+      213: 855284515639425318
+    second: Cast_Cocoa_Squat_1
+  - first:
+      213: -7111159088930215893
+    second: Cast_Cocoa_Squat_2
+  - first:
+      213: -6963397306271598320
+    second: Cast_Cocoa_Squat_3
+  - first:
+      213: 2177471574272676073
+    second: Cast_Cocoa_Squat_4
+  - first:
+      213: -3700369395335994120
+    second: Cast_Cocoa_Squat_5
+  - first:
+      213: 2690912709113133250
+    second: Cast_Cocoa_Squat_6
+  - first:
+      213: -6677030610787968108
+    second: Cast_Cocoa_Squat_7
+  - first:
+      213: -6582968388056745019
+    second: Cast_Cocoa_Stretch_0
+  - first:
+      213: 3888757296039247413
+    second: Cast_Cocoa_Stretch_1
+  - first:
+      213: -7709170134900723564
+    second: Cast_Cocoa_Stretch_2
+  - first:
+      213: -4961281139635435014
+    second: Cast_Cocoa_Stretch_3
+  - first:
+      213: 6042871115600728044
+    second: Cast_Cocoa_Stretch_4
+  - first:
+      213: -8794446180839524135
+    second: Cast_Cocoa_Stretch_5
+  - first:
+      213: 3827455173836516309
+    second: Cast_Cocoa_Stretch_6
+  - first:
+      213: 7225937705113621760
+    second: Cast_Cocoa_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cd226479ef1625e0800000000000000
+      internalID: -1934823902368617022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 370903d0e17526290800000000000000
+      internalID: -7898655009872506765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dcf689b5ba6d91b0800000000000000
+      internalID: -5648241028918477613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44ea71fcb471177f0800000000000000
+      internalID: -616686059608625596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53fed00b727576310800000000000000
+      internalID: 1398182037290872629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db21aedd0dca37410800000000000000
+      internalID: 1473711516156564157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 626765447b7cf93d0800000000000000
+      internalID: -3197617620470303194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 128c69cc25daf7c60800000000000000
+      internalID: 7818158049269827617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dd37fe9250387960800000000000000
+      internalID: 7599877502600166864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c38c060294f802090800000000000000
+      internalID: -8061285788754589636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f507010f9dcfe790800000000000000
+      internalID: -7498548771747854863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b407d68d128de0e0800000000000000
+      internalID: -2238990376405367627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e59fa00b3a31ebed0800000000000000
+      internalID: -2396456357960418978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 306003c8a3275a530800000000000000
+      internalID: 3865621450953065987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d0a3ce851541b090800000000000000
+      internalID: -8020553502478327596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaaeafd3d1557fb30800000000000000
+      internalID: 4321015951567547054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8a84e8e7e58a05d0800000000000000
+      internalID: -3095514562772563314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65f33f11d4cd3bc20800000000000000
+      internalID: 3221160382071783254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1f13dd00a25d7390800000000000000
+      internalID: -7819002530665128162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbaa6b5f3aeb1f6c0800000000000000
+      internalID: -4111295373401216321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12bb08fcfbb729f00800000000000000
+      internalID: 1122095320918965025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c669dfac45be4730800000000000000
+      internalID: 3985322061241870024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5205a7e30a4ebc00800000000000000
+      internalID: 918252754661868123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d47f419120918570800000000000000
+      internalID: 8467207248279467220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05c5d52ce104b94d0800000000000000
+      internalID: -3126835015424582576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60cefb133dae6e060800000000000000
+      internalID: 6982526465078193158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acb43e2abad0b1430800000000000000
+      internalID: 3754609745166814154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8421ab5f6a3134b00800000000000000
+      internalID: 811513965664932424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d6f35a4b78ba3280800000000000000
+      internalID: -9062728460462197039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df03220ed979066c0800000000000000
+      internalID: -4152152152109600515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a44e52a5faa453a50800000000000000
+      internalID: 6500183754171343946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77713e34db5ff15b0800000000000000
+      internalID: -5395323635329984649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2367b3d986fd0a440800000000000000
+      internalID: 4945198031260317234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 283d08fa2512c2530800000000000000
+      internalID: 3831474022000939906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95fb1051cd0189760800000000000000
+      internalID: 7464734919797882713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b69513445c335830800000000000000
+      internalID: 4058654021791356597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ea2b92bd6eeabd40800000000000000
+      internalID: 5601051241503992549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dcbd772a3caf3470800000000000000
+      internalID: 8376603197703044307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0900139889a8a3460800000000000000
+      internalID: 7222237340183363728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3920bc53c02b6dab0800000000000000
+      internalID: -4983600172127026541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6bc5e56cf96071e0800000000000000
+      internalID: -2202143685021938834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f42d02d3a67070d0800000000000000
+      internalID: -3427108870453123850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e3003b8ea87384a0800000000000000
+      internalID: -6592292738485451799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c7dac6bac8a35640800000000000000
+      internalID: 5067579594325546952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92e7e6495776c50b0800000000000000
+      internalID: -5738598070477750743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc5401a703ef78cd0800000000000000
+      internalID: -2555794779349695029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d02d8520d4e1be890800000000000000
+      internalID: -7427809844316810739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aab0e4ed6168bca0800000000000000
+      internalID: -6000939378851923293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f32e1ff05e3d337f0800000000000000
+      internalID: -633930141760626113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62974984cb49edb00800000000000000
+      internalID: 855284515639425318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2826033c76105d90800000000000000
+      internalID: -7111159088930215893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 019f4c92b0b0d5f90800000000000000
+      internalID: -6963397306271598320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e0980d2cdee73e10800000000000000
+      internalID: 2177471574272676073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f4654de3a5a5acc0800000000000000
+      internalID: -3700369395335994120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c8b5441ada085520800000000000000
+      internalID: 2690912709113133250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49bd291390c6653a0800000000000000
+      internalID: -6677030610787968108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cb704e012994a4a0800000000000000
+      internalID: -6582968388056745019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53eb0204824a7f530800000000000000
+      internalID: 3888757296039247413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49031347b96830590800000000000000
+      internalID: -7709170134900723564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af94f29e61df52bb0800000000000000
+      internalID: -4961281139635435014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cef89dc53479cd350800000000000000
+      internalID: 6042871115600728044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d8f4c22bc9d3f580800000000000000
+      internalID: -8794446180839524135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dba14ea33add1530800000000000000
+      internalID: 3827455173836516309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Cocoa_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0051662ee00b74460800000000000000
+      internalID: 7225937705113621760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Cocoa_0: -1292343893799278294
+      Cast_Cocoa_1: 6104209961077658527
+      Cast_Cocoa_10: -5203598780223215265
+      Cast_Cocoa_11: 3616174290118253836
+      Cast_Cocoa_12: 5915385103735851211
+      Cast_Cocoa_13: -7110635008945834026
+      Cast_Cocoa_14: -5344673746008222745
+      Cast_Cocoa_15: 4607939216513908701
+      Cast_Cocoa_16: 241824166446607630
+      Cast_Cocoa_17: -5103364014408356187
+      Cast_Cocoa_18: 4858176221486497830
+      Cast_Cocoa_19: -7605925063033606292
+      Cast_Cocoa_2: -1266698980402869867
+      Cast_Cocoa_20: 4064083390876006831
+      Cast_Cocoa_21: 6230696299399530122
+      Cast_Cocoa_22: 1773387937749261576
+      Cast_Cocoa_23: -1325059355270929187
+      Cast_Cocoa_24: -2463525648723373709
+      Cast_Cocoa_25: -4118671366598328417
+      Cast_Cocoa_26: 839916368905597836
+      Cast_Cocoa_27: 5825207312103962473
+      Cast_Cocoa_28: -3138486389989153625
+      Cast_Cocoa_29: -2231971561738806109
+      Cast_Cocoa_3: 6103664029573002522
+      Cast_Cocoa_30: 8366430979686317487
+      Cast_Cocoa_31: 2159954631021817994
+      Cast_Cocoa_32: 508079681914212666
+      Cast_Cocoa_33: 6659449021185439367
+      Cast_Cocoa_34: 4756482046068761883
+      Cast_Cocoa_35: 5504917883349899554
+      Cast_Cocoa_36: 1758891485744103341
+      Cast_Cocoa_37: 1055026993484960084
+      Cast_Cocoa_38: -4947483734762096850
+      Cast_Cocoa_39: -6749945540345913162
+      Cast_Cocoa_4: -6951213509874373459
+      Cast_Cocoa_40: -884460929142296657
+      Cast_Cocoa_41: 2375930544456806945
+      Cast_Cocoa_42: 1958456033792619261
+      Cast_Cocoa_43: 7607135560405702819
+      Cast_Cocoa_44: -7197263935465379702
+      Cast_Cocoa_45: -134973434564746225
+      Cast_Cocoa_46: -1710931783859911498
+      Cast_Cocoa_47: -853174680382124601
+      Cast_Cocoa_48: 1486535315641858093
+      Cast_Cocoa_49: 72450569722312621
+      Cast_Cocoa_5: -6996688195063870040
+      Cast_Cocoa_50: 6629335938124699988
+      Cast_Cocoa_51: 4237225445610999697
+      Cast_Cocoa_52: -6065322479419654483
+      Cast_Cocoa_53: 6639128537614672927
+      Cast_Cocoa_54: 7443024597772786029
+      Cast_Cocoa_55: 949507866745396605
+      Cast_Cocoa_56: 2594832882684436354
+      Cast_Cocoa_57: 8306393212167540938
+      Cast_Cocoa_58: 4596893909309454899
+      Cast_Cocoa_59: 8487107589428083874
+      Cast_Cocoa_6: -739531943845848654
+      Cast_Cocoa_60: 3715769906390292226
+      Cast_Cocoa_61: 4306442582981683693
+      Cast_Cocoa_62: -7963286388172308217
+      Cast_Cocoa_63: -7007381432808988044
+      Cast_Cocoa_64: -5846216953313102360
+      Cast_Cocoa_65: -3449546567768232726
+      Cast_Cocoa_66: 3910012518769561276
+      Cast_Cocoa_67: -2358399145352165145
+      Cast_Cocoa_68: 2227305293755798828
+      Cast_Cocoa_69: -4536692636141516204
+      Cast_Cocoa_7: 8581893011158801323
+      Cast_Cocoa_8: -3251643314616810788
+      Cast_Cocoa_9: 5541497778240874420
+      Cast_Cocoa_Eat_0: 4945198031260317234
+      Cast_Cocoa_Eat_1: 3831474022000939906
+      Cast_Cocoa_Eat_2: 7464734919797882713
+      Cast_Cocoa_Eat_3: 4058654021791356597
+      Cast_Cocoa_Eat_4: 5601051241503992549
+      Cast_Cocoa_Eat_5: 8376603197703044307
+      Cast_Cocoa_Eat_6: 7222237340183363728
+      Cast_Cocoa_Eat_7: -4983600172127026541
+      Cast_Cocoa_Harvest_0: -3126835015424582576
+      Cast_Cocoa_Harvest_1: 6982526465078193158
+      Cast_Cocoa_Harvest_2: 3754609745166814154
+      Cast_Cocoa_Harvest_3: 811513965664932424
+      Cast_Cocoa_Harvest_4: -9062728460462197039
+      Cast_Cocoa_Harvest_5: -4152152152109600515
+      Cast_Cocoa_Harvest_6: 6500183754171343946
+      Cast_Cocoa_Harvest_7: -5395323635329984649
+      Cast_Cocoa_Net_0: -2202143685021938834
+      Cast_Cocoa_Net_1: -3427108870453123850
+      Cast_Cocoa_Net_2: -6592292738485451799
+      Cast_Cocoa_Net_3: 5067579594325546952
+      Cast_Cocoa_Net_4: -5738598070477750743
+      Cast_Cocoa_Net_5: -2555794779349695029
+      Cast_Cocoa_Net_6: -7427809844316810739
+      Cast_Cocoa_Net_7: -6000939378851923293
+      Cast_Cocoa_Squat_0: -633930141760626113
+      Cast_Cocoa_Squat_1: 855284515639425318
+      Cast_Cocoa_Squat_2: -7111159088930215893
+      Cast_Cocoa_Squat_3: -6963397306271598320
+      Cast_Cocoa_Squat_4: 2177471574272676073
+      Cast_Cocoa_Squat_5: -3700369395335994120
+      Cast_Cocoa_Squat_6: 2690912709113133250
+      Cast_Cocoa_Squat_7: -6677030610787968108
+      Cast_Cocoa_Stretch_0: -6582968388056745019
+      Cast_Cocoa_Stretch_1: 3888757296039247413
+      Cast_Cocoa_Stretch_2: -7709170134900723564
+      Cast_Cocoa_Stretch_3: -4961281139635435014
+      Cast_Cocoa_Stretch_4: 6042871115600728044
+      Cast_Cocoa_Stretch_5: -8794446180839524135
+      Cast_Cocoa_Stretch_6: 3827455173836516309
+      Cast_Cocoa_Stretch_7: 7225937705113621760
+      Cast_Cocoa_Walk_0: -1934823902368617022
+      Cast_Cocoa_Walk_1: -7898655009872506765
+      Cast_Cocoa_Walk_2: -5648241028918477613
+      Cast_Cocoa_Walk_3: -616686059608625596
+      Cast_Cocoa_Walk_4: 1398182037290872629
+      Cast_Cocoa_Walk_5: 1473711516156564157
+      Cast_Cocoa_Walk_6: -3197617620470303194
+      Cast_Cocoa_Walk_7: 7818158049269827617
+      Cast_Cocoa_Walk_Down_0: 7599877502600166864
+      Cast_Cocoa_Walk_Down_1: -8061285788754589636
+      Cast_Cocoa_Walk_Down_2: -7498548771747854863
+      Cast_Cocoa_Walk_Down_3: -2238990376405367627
+      Cast_Cocoa_Walk_Down_4: -2396456357960418978
+      Cast_Cocoa_Walk_Down_5: 3865621450953065987
+      Cast_Cocoa_Walk_Down_6: -8020553502478327596
+      Cast_Cocoa_Walk_Down_7: 4321015951567547054
+      Cast_Cocoa_Walk_Up_0: -3095514562772563314
+      Cast_Cocoa_Walk_Up_1: 3221160382071783254
+      Cast_Cocoa_Walk_Up_2: -7819002530665128162
+      Cast_Cocoa_Walk_Up_3: -4111295373401216321
+      Cast_Cocoa_Walk_Up_4: 1122095320918965025
+      Cast_Cocoa_Walk_Up_5: 3985322061241870024
+      Cast_Cocoa_Walk_Up_6: 918252754661868123
+      Cast_Cocoa_Walk_Up_7: 8467207248279467220
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

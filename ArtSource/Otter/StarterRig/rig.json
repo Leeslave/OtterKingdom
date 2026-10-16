@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "view": "front",
+  "units": "pixels, x right, y down, rotation radians",
+  "source": "parts-atlas.png",
+  "dimensions": {
+    "head": {
+      "width": 602,
+      "height": 446,
+      "atlasRect": [
+        63,
+        77,
+        602,
+        446
+      ]
+    },
+    "body": {
+      "width": 441,
+      "height": 402,
+      "atlasRect": [
+        706,
+        150,
+        441,
+        402
+      ]
+    },
+    "armRight": {
+      "width": 203,
+      "height": 305,
+      "atlasRect": [
+        1282,
+        192,
+        203,
+        305
+      ]
+    },
+    "armLeft": {
+      "width": 210,
+      "height": 309,
+      "atlasRect": [
+        158,
+        617,
+        210,
+        309
+      ]
+    },
+    "leg": {
+      "width": 200,
+      "height": 288,
+      "atlasRect": [
+        666,
+        643,
+        200,
+        288
+      ]
+    },
+    "tail": {
+      "width": 300,
+      "height": 170,
+      "atlasRect": [
+        1133,
+        716,
+        300,
+        170
+      ]
+    }
+  },
+  "bones": [
+    {
+      "name": "root",
+      "parent": null,
+      "pos": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "hips",
+      "parent": "root",
+      "pos": [
+        0,
+        -40
+      ]
+    },
+    {
+      "name": "tail",
+      "parent": "hips",
+      "pos": [
+        49,
+        -22
+      ],
+      "part": "tail",
+      "width": 92,
+      "height": 56,
+      "pivot": [
+        0.12,
+        0.55
+      ],
+      "layer": 0
+    },
+    {
+      "name": "legLeft",
+      "parent": "hips",
+      "pos": [
+        -35,
+        -5
+      ],
+      "part": "leg",
+      "width": 53,
+      "height": 67,
+      "pivot": [
+        0.5,
+        0.33
+      ],
+      "layer": 1
+    },
+    {
+      "name": "legRight",
+      "parent": "hips",
+      "pos": [
+        35,
+        -5
+      ],
+      "part": "leg",
+      "width": 53,
+      "height": 67,
+      "pivot": [
+        0.5,
+        0.33
+      ],
+      "mirror": true,
+      "layer": 2
+    },
+    {
+      "name": "body",
+      "parent": "hips",
+      "pos": [
+        0,
+        -43
+      ],
+      "part": "body",
+      "width": 159,
+      "height": 162,
+      "pivot": [
+        0.5,
+        0.65
+      ],
+      "layer": 3
+    },
+    {
+      "name": "armLeft",
+      "parent": "body",
+      "pos": [
+        -66,
+        -54
+      ],
+      "part": "armLeft",
+      "width": 52,
+      "height": 102,
+      "pivot": [
+        0.5,
+        0.16
+      ],
+      "layer": 4
+    },
+    {
+      "name": "armRight",
+      "parent": "body",
+      "pos": [
+        66,
+        -54
+      ],
+      "part": "armRight",
+      "width": 52,
+      "height": 102,
+      "pivot": [
+        0.5,
+        0.16
+      ],
+      "layer": 5
+    },
+    {
+      "name": "head",
+      "parent": "body",
+      "pos": [
+        0,
+        -62
+      ],
+      "part": "head",
+      "width": 287,
+      "height": 215,
+      "pivot": [
+        0.5,
+        0.91
+      ],
+      "layer": 6
+    }
+  ],
+  "slots": [
+    {
+      "name": "hat",
+      "parent": "head",
+      "pos": [
+        0,
+        -166
+      ]
+    },
+    {
+      "name": "shirt",
+      "parent": "body",
+      "pos": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "sleeveLeft",
+      "parent": "armLeft",
+      "pos": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "sleeveRight",
+      "parent": "armRight",
+      "pos": [
+        0,
+        0
+      ]
+    }
+  ],
+  "clips": [
+    "idle",
+    "walk",
+    "wave"
+  ],
+  "notes": [
+    "Rigid cutout prototype, not deformable skinning.",
+    "Face and proportions fixed.",
+    "Front only. No gameplay or Unity scene changes.",
+    "Hat/shirt slots only; no clothing assets yet."
+  ]
+}

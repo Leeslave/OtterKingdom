@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9429ae57387f4f07b8ae7ed3cc8d4823, type: 3}
+  m_Name: Plot_P3House
+  m_EditorClassIdentifier: OtterKingdom::ConstructionPlotDefinition
+  _item: {fileID: 0}
+  _footprint: {x: 6, y: 4}
+  _canRotate: 0
+  _playStyle: 0
+  _playSeconds: {x: 4, y: 7}
+  _maxPlayers: 1
+  _worldSprite: {fileID: 21300000, guid: 5abb75a753e5025458c586827fa2dd27, type: 3}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _furniture: 0
+  _hasSpot: 0
+  _spotKind: 0
+  _spotPoints: []
+  _coziness: 0
+  _construction: {fileID: 11400000, guid: 91d8ef75c793fa44f9c07ebc9047c74f, type: 2}
+  _defaultCell: {x: -10, y: 52}
+  _alternates:
+  - _development: territory_home_ne
+    _cell: {x: -10, y: 52}
+  - _development: territory_home_s
+    _cell: {x: -34, y: 30}
+  - _development: territory_home_nw
+    _cell: {x: -46, y: 63}
+  - _development: territory_home_w
+    _cell: {x: -53, y: 40}
+  _pivotOffset: {x: 0, y: 0.5000038}
+  _worldScale: {x: 1, y: 1}
+  _district: 2

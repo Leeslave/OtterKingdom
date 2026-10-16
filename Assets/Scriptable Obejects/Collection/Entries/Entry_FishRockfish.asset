@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishRockfish
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_rockfish
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 14
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 891170637256f6d44bd9cefe75eab16d, type: 3}
+  _tagline: "\uBC14\uC704 \uD2C8\uC5D0 \uC228\uC5B4 \uC0AC\uB294 \uB4EC\uC9C1\uD55C
+    \uBB3C\uACE0\uAE30."
+  _description: "\uC785\uC774 \uCEE4\uC11C \uBBF8\uB07C\uB97C \uD55C\uC785\uC5D0
+    \uAFC0\uAEBD\uD574\uC694."
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130 \xB7 \uB09A\uC2EF\uB300 Lv.7"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: 02e9a3ca75a20b94b924f580dd39b2b3, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

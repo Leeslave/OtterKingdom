@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uC6B0\uB7ED"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: fish_rockfish
+  _displayName: "\uC6B0\uB7ED"
+  _description: "\uBC14\uC704 \uD2C8\uC5D0 \uC228\uC5B4 \uC0AC\uB294 \uB4EC\uC9C1\uD55C
+    \uBB3C\uACE0\uAE30."
+  _icon: {fileID: 21300000, guid: b1bf7fdb09592dd4888bb70d478eaeb5, type: 3}
+  _category: {fileID: 11400000, guid: 96098a6168fc46144942ab19a916aaa2, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 1
+  _sellPrice: 55
+  _maxStack: 999

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uB3C4\uBBF8"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: fish_sea_bream
+  _displayName: "\uB3C4\uBBF8"
+  _description: "\uBD89\uC740 \uBE5B\uC774 \uACE0\uC6B4 \uBC14\uB2E4\uC758 \uADC0\uD55C
+    \uC190\uB2D8."
+  _icon: {fileID: 21300000, guid: 689c74785e8b34149900fe66cc895e4b, type: 3}
+  _category: {fileID: 11400000, guid: 96098a6168fc46144942ab19a916aaa2, type: 2}
+  _rarity: {fileID: 11400000, guid: 92826ade59cca8b4f9ec100f9c9a27f3, type: 2}
+  _isSellable: 1
+  _sellPrice: 150
+  _maxStack: 999

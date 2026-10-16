@@ -1,0 +1,20 @@
+{
+  "nativeSize": [
+    2116,
+    2070
+  ],
+  "displaySize": [
+    4072,
+    3984
+  ],
+  "generatedTileSize": [
+    1268,
+    1241
+  ],
+  "overlap": [
+    420,
+    412
+  ],
+  "placementFiles": "TL/TR/BL/BR_Placement.png are non-overlapping quadrants of merged native map; Generated files include overlap.",
+  "method": "Four independent image_gen redraws; minimum difference seam stitching. 4072 file is resized, not native 4K."
+}

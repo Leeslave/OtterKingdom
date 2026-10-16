@@ -1,0 +1,2078 @@
+fileFormatVersion: 2
+guid: 5a04edd92ce52384aa1a8ac9908ec372
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6970317174643245881
+    second: Cast_Pumpkin_0
+  - first:
+      213: -7867110102972952983
+    second: Cast_Pumpkin_1
+  - first:
+      213: -3474627332244096926
+    second: Cast_Pumpkin_2
+  - first:
+      213: 8166596595465335249
+    second: Cast_Pumpkin_3
+  - first:
+      213: 2580871451789202030
+    second: Cast_Pumpkin_4
+  - first:
+      213: -4771737996994351428
+    second: Cast_Pumpkin_5
+  - first:
+      213: -3761186428149452981
+    second: Cast_Pumpkin_6
+  - first:
+      213: 5982107700682322133
+    second: Cast_Pumpkin_7
+  - first:
+      213: 5168177511443724773
+    second: Cast_Pumpkin_8
+  - first:
+      213: -2174706821703639745
+    second: Cast_Pumpkin_9
+  - first:
+      213: -842748532643500956
+    second: Cast_Pumpkin_10
+  - first:
+      213: 7894240822682410663
+    second: Cast_Pumpkin_11
+  - first:
+      213: 608264192049796194
+    second: Cast_Pumpkin_12
+  - first:
+      213: 7413017381687294947
+    second: Cast_Pumpkin_13
+  - first:
+      213: 1107464654447911077
+    second: Cast_Pumpkin_14
+  - first:
+      213: 5133294633729063830
+    second: Cast_Pumpkin_15
+  - first:
+      213: 4760337995606048007
+    second: Cast_Pumpkin_16
+  - first:
+      213: 8379736696253729020
+    second: Cast_Pumpkin_17
+  - first:
+      213: -2071664209881826414
+    second: Cast_Pumpkin_18
+  - first:
+      213: 3589595169869910790
+    second: Cast_Pumpkin_19
+  - first:
+      213: -2691020240279692237
+    second: Cast_Pumpkin_20
+  - first:
+      213: 8114780593016081796
+    second: Cast_Pumpkin_21
+  - first:
+      213: 4524376951302948265
+    second: Cast_Pumpkin_22
+  - first:
+      213: -411637244965295135
+    second: Cast_Pumpkin_23
+  - first:
+      213: -56511274991958932
+    second: Cast_Pumpkin_24
+  - first:
+      213: -4490822755550323743
+    second: Cast_Pumpkin_25
+  - first:
+      213: -6951773527370861498
+    second: Cast_Pumpkin_26
+  - first:
+      213: -8511774885082931323
+    second: Cast_Pumpkin_27
+  - first:
+      213: 8962383125052491905
+    second: Cast_Pumpkin_28
+  - first:
+      213: -5051248586590768096
+    second: Cast_Pumpkin_29
+  - first:
+      213: 477531653540521529
+    second: Cast_Pumpkin_30
+  - first:
+      213: 1449710940596628458
+    second: Cast_Pumpkin_31
+  - first:
+      213: 1848293471422087047
+    second: Cast_Pumpkin_32
+  - first:
+      213: -1227733979479110930
+    second: Cast_Pumpkin_33
+  - first:
+      213: -1299755216615223688
+    second: Cast_Pumpkin_34
+  - first:
+      213: -8044108359976142891
+    second: Cast_Pumpkin_35
+  - first:
+      213: 8908185237059169370
+    second: Cast_Pumpkin_36
+  - first:
+      213: -7612112962305851526
+    second: Cast_Pumpkin_37
+  - first:
+      213: 1056778514325806419
+    second: Cast_Pumpkin_38
+  - first:
+      213: 1890532482913738579
+    second: Cast_Pumpkin_39
+  - first:
+      213: 2572973276637468593
+    second: Cast_Pumpkin_40
+  - first:
+      213: -2252297083966402499
+    second: Cast_Pumpkin_41
+  - first:
+      213: 2955295245923711189
+    second: Cast_Pumpkin_42
+  - first:
+      213: 2570505446500646547
+    second: Cast_Pumpkin_43
+  - first:
+      213: -7883952200022508198
+    second: Cast_Pumpkin_44
+  - first:
+      213: 973822958583897552
+    second: Cast_Pumpkin_45
+  - first:
+      213: 3470924200661827469
+    second: Cast_Pumpkin_46
+  - first:
+      213: 2548894991163144492
+    second: Cast_Pumpkin_47
+  - first:
+      213: 1568245195647386222
+    second: Cast_Pumpkin_48
+  - first:
+      213: -4206320129754182572
+    second: Cast_Pumpkin_49
+  - first:
+      213: -3020909603321409213
+    second: Cast_Pumpkin_50
+  - first:
+      213: 532262945832860231
+    second: Cast_Pumpkin_51
+  - first:
+      213: 7347960090208661048
+    second: Cast_Pumpkin_52
+  - first:
+      213: 7428480637923063635
+    second: Cast_Pumpkin_53
+  - first:
+      213: 5716546281198555926
+    second: Cast_Pumpkin_54
+  - first:
+      213: -4825568459622441492
+    second: Cast_Pumpkin_55
+  - first:
+      213: 3171983828051723749
+    second: Cast_Pumpkin_56
+  - first:
+      213: -2160565728028905092
+    second: Cast_Pumpkin_57
+  - first:
+      213: 7612193894286199422
+    second: Cast_Pumpkin_58
+  - first:
+      213: -8568705767648251232
+    second: Cast_Pumpkin_59
+  - first:
+      213: -2499086667721362808
+    second: Cast_Pumpkin_60
+  - first:
+      213: 3809588085777820561
+    second: Cast_Pumpkin_61
+  - first:
+      213: 2786019998881771787
+    second: Cast_Pumpkin_62
+  - first:
+      213: -6010757299976731114
+    second: Cast_Pumpkin_63
+  - first:
+      213: 3580152341990225110
+    second: Cast_Pumpkin_64
+  - first:
+      213: 3226207712679533535
+    second: Cast_Pumpkin_65
+  - first:
+      213: 1158216238238043159
+    second: Cast_Pumpkin_66
+  - first:
+      213: 3471609291128895376
+    second: Cast_Pumpkin_67
+  - first:
+      213: 4414111017835343363
+    second: Cast_Pumpkin_68
+  - first:
+      213: -1967837205869552271
+    second: Cast_Pumpkin_69
+  - first:
+      213: -3513180126472311259
+    second: Cast_Pumpkin_70
+  - first:
+      213: 4070379280525520549
+    second: Cast_Pumpkin_Walk_0
+  - first:
+      213: 4356194854657950066
+    second: Cast_Pumpkin_Walk_1
+  - first:
+      213: 7135994885231378180
+    second: Cast_Pumpkin_Walk_2
+  - first:
+      213: 3974910492057857961
+    second: Cast_Pumpkin_Walk_3
+  - first:
+      213: -4006923742783735820
+    second: Cast_Pumpkin_Walk_4
+  - first:
+      213: -1162224865772281930
+    second: Cast_Pumpkin_Walk_5
+  - first:
+      213: 5933870609788811245
+    second: Cast_Pumpkin_Walk_6
+  - first:
+      213: 2512304241627135751
+    second: Cast_Pumpkin_Walk_7
+  - first:
+      213: 4107207435469159790
+    second: Cast_Pumpkin_Walk_Down_0
+  - first:
+      213: -4700498153987753375
+    second: Cast_Pumpkin_Walk_Down_1
+  - first:
+      213: -4240344139005620676
+    second: Cast_Pumpkin_Walk_Down_2
+  - first:
+      213: -7498017927896705726
+    second: Cast_Pumpkin_Walk_Down_3
+  - first:
+      213: -8169355950903148992
+    second: Cast_Pumpkin_Walk_Down_4
+  - first:
+      213: -7021347768672026011
+    second: Cast_Pumpkin_Walk_Down_5
+  - first:
+      213: -6509895506815564685
+    second: Cast_Pumpkin_Walk_Down_6
+  - first:
+      213: 2542702147417499582
+    second: Cast_Pumpkin_Walk_Down_7
+  - first:
+      213: -5240878916131788057
+    second: Cast_Pumpkin_Walk_Up_0
+  - first:
+      213: 6755630231520251345
+    second: Cast_Pumpkin_Walk_Up_1
+  - first:
+      213: -3180648378458327257
+    second: Cast_Pumpkin_Walk_Up_2
+  - first:
+      213: -6741965387706035491
+    second: Cast_Pumpkin_Walk_Up_3
+  - first:
+      213: 194965781101568245
+    second: Cast_Pumpkin_Walk_Up_4
+  - first:
+      213: -8663218892612314738
+    second: Cast_Pumpkin_Walk_Up_5
+  - first:
+      213: -1464985053301076170
+    second: Cast_Pumpkin_Walk_Up_6
+  - first:
+      213: -1163728605406237062
+    second: Cast_Pumpkin_Walk_Up_7
+  - first:
+      213: -338548296288951299
+    second: Cast_Pumpkin_Harvest_0
+  - first:
+      213: -4025356613503515502
+    second: Cast_Pumpkin_Harvest_1
+  - first:
+      213: 5828455740488321906
+    second: Cast_Pumpkin_Harvest_2
+  - first:
+      213: 4037383756898584981
+    second: Cast_Pumpkin_Harvest_3
+  - first:
+      213: 1950252426270947062
+    second: Cast_Pumpkin_Harvest_4
+  - first:
+      213: -227855576340931501
+    second: Cast_Pumpkin_Harvest_5
+  - first:
+      213: -3941335488369362548
+    second: Cast_Pumpkin_Harvest_6
+  - first:
+      213: -3957468598068202315
+    second: Cast_Pumpkin_Harvest_7
+  - first:
+      213: -8563206870860099166
+    second: Cast_Pumpkin_Eat_0
+  - first:
+      213: 6023797154060224687
+    second: Cast_Pumpkin_Eat_1
+  - first:
+      213: 8939323065665345700
+    second: Cast_Pumpkin_Eat_2
+  - first:
+      213: 5381709292808596612
+    second: Cast_Pumpkin_Eat_3
+  - first:
+      213: -331230717932322380
+    second: Cast_Pumpkin_Eat_4
+  - first:
+      213: 4372995781225365107
+    second: Cast_Pumpkin_Eat_5
+  - first:
+      213: -5085894478373714044
+    second: Cast_Pumpkin_Eat_6
+  - first:
+      213: -8581597351477291711
+    second: Cast_Pumpkin_Eat_7
+  - first:
+      213: -7791185230365342586
+    second: Cast_Pumpkin_Net_0
+  - first:
+      213: -8381169301178997030
+    second: Cast_Pumpkin_Net_1
+  - first:
+      213: -1504791838039668066
+    second: Cast_Pumpkin_Net_2
+  - first:
+      213: 2264696562717076497
+    second: Cast_Pumpkin_Net_3
+  - first:
+      213: 1796672557304083409
+    second: Cast_Pumpkin_Net_4
+  - first:
+      213: -4706338851043968066
+    second: Cast_Pumpkin_Net_5
+  - first:
+      213: 3537114604433726690
+    second: Cast_Pumpkin_Net_6
+  - first:
+      213: -1443661091194725673
+    second: Cast_Pumpkin_Net_7
+  - first:
+      213: -4510885631863896549
+    second: Cast_Pumpkin_Squat_0
+  - first:
+      213: 9178685586964531004
+    second: Cast_Pumpkin_Squat_1
+  - first:
+      213: -5540392927777912384
+    second: Cast_Pumpkin_Squat_2
+  - first:
+      213: -4965316941956374731
+    second: Cast_Pumpkin_Squat_3
+  - first:
+      213: -4051238852021188270
+    second: Cast_Pumpkin_Squat_4
+  - first:
+      213: -8978330731455016455
+    second: Cast_Pumpkin_Squat_5
+  - first:
+      213: -8005434704214721708
+    second: Cast_Pumpkin_Squat_6
+  - first:
+      213: -8996026436814709801
+    second: Cast_Pumpkin_Squat_7
+  - first:
+      213: 6131850621933860212
+    second: Cast_Pumpkin_Stretch_0
+  - first:
+      213: 3680781355704848678
+    second: Cast_Pumpkin_Stretch_1
+  - first:
+      213: 6121738738614321921
+    second: Cast_Pumpkin_Stretch_2
+  - first:
+      213: -4713294742366201262
+    second: Cast_Pumpkin_Stretch_3
+  - first:
+      213: 3723827214770278807
+    second: Cast_Pumpkin_Stretch_4
+  - first:
+      213: 3498648618063950721
+    second: Cast_Pumpkin_Stretch_5
+  - first:
+      213: 8203654103491170877
+    second: Cast_Pumpkin_Stretch_6
+  - first:
+      213: 6838553214021243457
+    second: Cast_Pumpkin_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ae65dcc364ec7830800000000000000
+      internalID: 4070379280525520549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2718544e320547c30800000000000000
+      internalID: 4356194854657950066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40f783d3a85280360800000000000000
+      internalID: 7135994885231378180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9afe4155808b92730800000000000000
+      internalID: 3974910492057857961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f7fb45e51c8468c0800000000000000
+      internalID: -4006923742783735820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bf548e64a2fedfe0800000000000000
+      internalID: -1162224865772281930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de7b79f61e7595250800000000000000
+      internalID: 5933870609788811245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70f74e1a56f7dd220800000000000000
+      internalID: 2512304241627135751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6d7bf1d66bbff830800000000000000
+      internalID: 4107207435469159790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16a3e2055d974ceb0800000000000000
+      internalID: -4700498153987753375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3e092dc8754725c0800000000000000
+      internalID: -4240344139005620676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 245d438bb60b1f790800000000000000
+      internalID: -7498017927896705726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04eb1b6bb0e90ae80800000000000000
+      internalID: -8169355950903148992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56282d3b7692f8e90800000000000000
+      internalID: -7021347768672026011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 374c857078438a5a0800000000000000
+      internalID: -6509895506815564685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb7617a912e794320800000000000000
+      internalID: 2542702147417499582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ea6125a468a447b0800000000000000
+      internalID: -5240878916131788057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dd87a717e1d0cd50800000000000000
+      internalID: 6755630231520251345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 727b19ec6211cd3d0800000000000000
+      internalID: -3180648378458327257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd29dc9433abf62a0800000000000000
+      internalID: -6741965387706035491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f06aed4858a4b200800000000000000
+      internalID: 194965781101568245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e89d36e115016c780800000000000000
+      internalID: -8663218892612314738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63f8bb81bd35babe0800000000000000
+      internalID: -1464985053301076170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7eecc3cffa99dfe0800000000000000
+      internalID: -1163728605406237062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df322644e1c3d4bf0800000000000000
+      internalID: -338548296288951299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2948addbc7f0328c0800000000000000
+      internalID: -4025356613503515502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27b84e09d95d2e050800000000000000
+      internalID: 5828455740488321906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5994fdbc22ba70830800000000000000
+      internalID: 4037383756898584981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f63932bf30b01b10800000000000000
+      internalID: 1950252426270947062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c5b108f8e76dcf0800000000000000
+      internalID: -227855576340931501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c897a1361409d49c0800000000000000
+      internalID: -3941335488369362548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b4b162174f3419c0800000000000000
+      internalID: -3957468598068202315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a1133488b0692980800000000000000
+      internalID: -8563206870860099166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa8c4ce9893d89350800000000000000
+      internalID: 6023797154060224687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a8507537fade0c70800000000000000
+      internalID: 8939323065665345700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48c664a961cafaa40800000000000000
+      internalID: 5381709292808596612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b142feba6b376bf0800000000000000
+      internalID: -331230717932322380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37e38307e7000bc30800000000000000
+      internalID: 4372995781225365107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4870a6b0be54b69b0800000000000000
+      internalID: -5085894478373714044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14553c31daa08e880800000000000000
+      internalID: -8581597351477291711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 684cdccff4620e390800000000000000
+      internalID: -7791185230365342586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad621d80dea10bb80800000000000000
+      internalID: -8381169301178997030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9a0db8cbc7ed1be0800000000000000
+      internalID: -1504791838039668066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11cacc06681dd6f10800000000000000
+      internalID: 2264696562717076497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d37dc3fb201fe810800000000000000
+      internalID: 1796672557304083409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebb77ee00c9bfaeb0800000000000000
+      internalID: -4706338851043968066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec5e170efa561130800000000000000
+      internalID: 3537114604433726690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7da194be2e517fbe0800000000000000
+      internalID: -1443661091194725673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b16c652ea6d1661c0800000000000000
+      internalID: -4510885631863896549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c37c40c19ed316f70800000000000000
+      internalID: 9178685586964531004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c906b78cf19c13b0800000000000000
+      internalID: -5540392927777912384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53f16757c86a71bb0800000000000000
+      internalID: -4965316941956374731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 259040d7abb17c7c0800000000000000
+      internalID: -4051238852021188270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f196abd4cf866380800000000000000
+      internalID: -8978330731455016455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45b72b61d8bf6e090800000000000000
+      internalID: -8005434704214721708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dbd2a36e91b72380800000000000000
+      internalID: -8996026436814709801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 475302817a5b81550800000000000000
+      internalID: 6131850621933860212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6211ba23423c41330800000000000000
+      internalID: 3680781355704848678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 103cadac2f8c4f450800000000000000
+      internalID: 6121738738614321921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25adb876763079eb0800000000000000
+      internalID: -4713294742366201262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79190554f11bda330800000000000000
+      internalID: 3723827214770278807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 183fc99a162bd8030800000000000000
+      internalID: 3498648618063950721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3254ca31fb39d170800000000000000
+      internalID: 8203654103491170877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Pumpkin_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 142975b7aeb67ee50800000000000000
+      internalID: 6838553214021243457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Pumpkin_0: -6970317174643245881
+      Cast_Pumpkin_1: -7867110102972952983
+      Cast_Pumpkin_10: -842748532643500956
+      Cast_Pumpkin_11: 7894240822682410663
+      Cast_Pumpkin_12: 608264192049796194
+      Cast_Pumpkin_13: 7413017381687294947
+      Cast_Pumpkin_14: 1107464654447911077
+      Cast_Pumpkin_15: 5133294633729063830
+      Cast_Pumpkin_16: 4760337995606048007
+      Cast_Pumpkin_17: 8379736696253729020
+      Cast_Pumpkin_18: -2071664209881826414
+      Cast_Pumpkin_19: 3589595169869910790
+      Cast_Pumpkin_2: -3474627332244096926
+      Cast_Pumpkin_20: -2691020240279692237
+      Cast_Pumpkin_21: 8114780593016081796
+      Cast_Pumpkin_22: 4524376951302948265
+      Cast_Pumpkin_23: -411637244965295135
+      Cast_Pumpkin_24: -56511274991958932
+      Cast_Pumpkin_25: -4490822755550323743
+      Cast_Pumpkin_26: -6951773527370861498
+      Cast_Pumpkin_27: -8511774885082931323
+      Cast_Pumpkin_28: 8962383125052491905
+      Cast_Pumpkin_29: -5051248586590768096
+      Cast_Pumpkin_3: 8166596595465335249
+      Cast_Pumpkin_30: 477531653540521529
+      Cast_Pumpkin_31: 1449710940596628458
+      Cast_Pumpkin_32: 1848293471422087047
+      Cast_Pumpkin_33: -1227733979479110930
+      Cast_Pumpkin_34: -1299755216615223688
+      Cast_Pumpkin_35: -8044108359976142891
+      Cast_Pumpkin_36: 8908185237059169370
+      Cast_Pumpkin_37: -7612112962305851526
+      Cast_Pumpkin_38: 1056778514325806419
+      Cast_Pumpkin_39: 1890532482913738579
+      Cast_Pumpkin_4: 2580871451789202030
+      Cast_Pumpkin_40: 2572973276637468593
+      Cast_Pumpkin_41: -2252297083966402499
+      Cast_Pumpkin_42: 2955295245923711189
+      Cast_Pumpkin_43: 2570505446500646547
+      Cast_Pumpkin_44: -7883952200022508198
+      Cast_Pumpkin_45: 973822958583897552
+      Cast_Pumpkin_46: 3470924200661827469
+      Cast_Pumpkin_47: 2548894991163144492
+      Cast_Pumpkin_48: 1568245195647386222
+      Cast_Pumpkin_49: -4206320129754182572
+      Cast_Pumpkin_5: -4771737996994351428
+      Cast_Pumpkin_50: -3020909603321409213
+      Cast_Pumpkin_51: 532262945832860231
+      Cast_Pumpkin_52: 7347960090208661048
+      Cast_Pumpkin_53: 7428480637923063635
+      Cast_Pumpkin_54: 5716546281198555926
+      Cast_Pumpkin_55: -4825568459622441492
+      Cast_Pumpkin_56: 3171983828051723749
+      Cast_Pumpkin_57: -2160565728028905092
+      Cast_Pumpkin_58: 7612193894286199422
+      Cast_Pumpkin_59: -8568705767648251232
+      Cast_Pumpkin_6: -3761186428149452981
+      Cast_Pumpkin_60: -2499086667721362808
+      Cast_Pumpkin_61: 3809588085777820561
+      Cast_Pumpkin_62: 2786019998881771787
+      Cast_Pumpkin_63: -6010757299976731114
+      Cast_Pumpkin_64: 3580152341990225110
+      Cast_Pumpkin_65: 3226207712679533535
+      Cast_Pumpkin_66: 1158216238238043159
+      Cast_Pumpkin_67: 3471609291128895376
+      Cast_Pumpkin_68: 4414111017835343363
+      Cast_Pumpkin_69: -1967837205869552271
+      Cast_Pumpkin_7: 5982107700682322133
+      Cast_Pumpkin_70: -3513180126472311259
+      Cast_Pumpkin_8: 5168177511443724773
+      Cast_Pumpkin_9: -2174706821703639745
+      Cast_Pumpkin_Eat_0: -8563206870860099166
+      Cast_Pumpkin_Eat_1: 6023797154060224687
+      Cast_Pumpkin_Eat_2: 8939323065665345700
+      Cast_Pumpkin_Eat_3: 5381709292808596612
+      Cast_Pumpkin_Eat_4: -331230717932322380
+      Cast_Pumpkin_Eat_5: 4372995781225365107
+      Cast_Pumpkin_Eat_6: -5085894478373714044
+      Cast_Pumpkin_Eat_7: -8581597351477291711
+      Cast_Pumpkin_Harvest_0: -338548296288951299
+      Cast_Pumpkin_Harvest_1: -4025356613503515502
+      Cast_Pumpkin_Harvest_2: 5828455740488321906
+      Cast_Pumpkin_Harvest_3: 4037383756898584981
+      Cast_Pumpkin_Harvest_4: 1950252426270947062
+      Cast_Pumpkin_Harvest_5: -227855576340931501
+      Cast_Pumpkin_Harvest_6: -3941335488369362548
+      Cast_Pumpkin_Harvest_7: -3957468598068202315
+      Cast_Pumpkin_Net_0: -7791185230365342586
+      Cast_Pumpkin_Net_1: -8381169301178997030
+      Cast_Pumpkin_Net_2: -1504791838039668066
+      Cast_Pumpkin_Net_3: 2264696562717076497
+      Cast_Pumpkin_Net_4: 1796672557304083409
+      Cast_Pumpkin_Net_5: -4706338851043968066
+      Cast_Pumpkin_Net_6: 3537114604433726690
+      Cast_Pumpkin_Net_7: -1443661091194725673
+      Cast_Pumpkin_Squat_0: -4510885631863896549
+      Cast_Pumpkin_Squat_1: 9178685586964531004
+      Cast_Pumpkin_Squat_2: -5540392927777912384
+      Cast_Pumpkin_Squat_3: -4965316941956374731
+      Cast_Pumpkin_Squat_4: -4051238852021188270
+      Cast_Pumpkin_Squat_5: -8978330731455016455
+      Cast_Pumpkin_Squat_6: -8005434704214721708
+      Cast_Pumpkin_Squat_7: -8996026436814709801
+      Cast_Pumpkin_Stretch_0: 6131850621933860212
+      Cast_Pumpkin_Stretch_1: 3680781355704848678
+      Cast_Pumpkin_Stretch_2: 6121738738614321921
+      Cast_Pumpkin_Stretch_3: -4713294742366201262
+      Cast_Pumpkin_Stretch_4: 3723827214770278807
+      Cast_Pumpkin_Stretch_5: 3498648618063950721
+      Cast_Pumpkin_Stretch_6: 8203654103491170877
+      Cast_Pumpkin_Stretch_7: 6838553214021243457
+      Cast_Pumpkin_Walk_0: 4070379280525520549
+      Cast_Pumpkin_Walk_1: 4356194854657950066
+      Cast_Pumpkin_Walk_2: 7135994885231378180
+      Cast_Pumpkin_Walk_3: 3974910492057857961
+      Cast_Pumpkin_Walk_4: -4006923742783735820
+      Cast_Pumpkin_Walk_5: -1162224865772281930
+      Cast_Pumpkin_Walk_6: 5933870609788811245
+      Cast_Pumpkin_Walk_7: 2512304241627135751
+      Cast_Pumpkin_Walk_Down_0: 4107207435469159790
+      Cast_Pumpkin_Walk_Down_1: -4700498153987753375
+      Cast_Pumpkin_Walk_Down_2: -4240344139005620676
+      Cast_Pumpkin_Walk_Down_3: -7498017927896705726
+      Cast_Pumpkin_Walk_Down_4: -8169355950903148992
+      Cast_Pumpkin_Walk_Down_5: -7021347768672026011
+      Cast_Pumpkin_Walk_Down_6: -6509895506815564685
+      Cast_Pumpkin_Walk_Down_7: 2542702147417499582
+      Cast_Pumpkin_Walk_Up_0: -5240878916131788057
+      Cast_Pumpkin_Walk_Up_1: 6755630231520251345
+      Cast_Pumpkin_Walk_Up_2: -3180648378458327257
+      Cast_Pumpkin_Walk_Up_3: -6741965387706035491
+      Cast_Pumpkin_Walk_Up_4: 194965781101568245
+      Cast_Pumpkin_Walk_Up_5: -8663218892612314738
+      Cast_Pumpkin_Walk_Up_6: -1464985053301076170
+      Cast_Pumpkin_Walk_Up_7: -1163728605406237062
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

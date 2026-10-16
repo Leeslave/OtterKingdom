@@ -1,0 +1,223 @@
+{
+  "character": "Miner",
+  "source": "ArtSource/Otter/FrontRig/Source/MinerOtter_Front.png",
+  "note": "Front view only. rect = atlas rect with Unity bottom-left origin. pivot = normalized joint position (Unity convention). position = joint relative to the feet centre (Root), px, y up. Parents are listed before children; order = sorting order. swaps = alternative sprites for a bone (Head_Blink for blinking).",
+  "scale": 0.4014,
+  "atlas": {
+    "file": "MinerOtter_FrontRigParts.png",
+    "width": 1024,
+    "height": 412
+  },
+  "bones": [
+    {
+      "name": "Root",
+      "parent": null,
+      "part": null,
+      "position": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Leg_L",
+      "parent": "Root",
+      "part": "Leg_L",
+      "position": [
+        -84.3,
+        114.0
+      ]
+    },
+    {
+      "name": "Leg_R",
+      "parent": "Root",
+      "part": "Leg_R",
+      "position": [
+        84.3,
+        114.0
+      ]
+    },
+    {
+      "name": "Body",
+      "parent": "Root",
+      "part": "Body",
+      "position": [
+        0.0,
+        133.3
+      ]
+    },
+    {
+      "name": "Arm_L",
+      "parent": "Body",
+      "part": "Arm_L",
+      "position": [
+        -130.9,
+        324.3
+      ]
+    },
+    {
+      "name": "Arm_R",
+      "parent": "Body",
+      "part": "Arm_R",
+      "position": [
+        134.1,
+        324.3
+      ]
+    },
+    {
+      "name": "Head",
+      "parent": "Body",
+      "part": "Head",
+      "position": [
+        4.0,
+        361.3
+      ]
+    }
+  ],
+  "parts": [
+    {
+      "name": "Leg_L",
+      "bone": "Leg_L",
+      "parent": "Root",
+      "order": 0,
+      "rect": [
+        244,
+        60,
+        82,
+        85
+      ],
+      "pivot": [
+        2.9689,
+        -4.0834
+      ],
+      "position": [
+        -84.3,
+        114.0
+      ]
+    },
+    {
+      "name": "Leg_R",
+      "bone": "Leg_R",
+      "parent": "Root",
+      "order": 0,
+      "rect": [
+        330,
+        60,
+        83,
+        85
+      ],
+      "pivot": [
+        3.9283,
+        -4.0834
+      ],
+      "position": [
+        84.3,
+        114.0
+      ]
+    },
+    {
+      "name": "Body",
+      "bone": "Body",
+      "parent": "Root",
+      "order": 10,
+      "rect": [
+        770,
+        266,
+        187,
+        142
+      ],
+      "pivot": [
+        1.7955,
+        -2.6748
+      ],
+      "position": [
+        0.0,
+        133.3
+      ]
+    },
+    {
+      "name": "Arm_L",
+      "bone": "Arm_L",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        4,
+        4,
+        148,
+        141
+      ],
+      "pivot": [
+        2.1006,
+        -1.4095
+      ],
+      "position": [
+        -130.9,
+        324.3
+      ]
+    },
+    {
+      "name": "Arm_R",
+      "bone": "Arm_R",
+      "parent": "Body",
+      "order": 20,
+      "rect": [
+        156,
+        27,
+        84,
+        118
+      ],
+      "pivot": [
+        3.8908,
+        -1.8029
+      ],
+      "position": [
+        134.1,
+        324.3
+      ]
+    },
+    {
+      "name": "Head",
+      "bone": "Head",
+      "parent": "Body",
+      "order": 30,
+      "rect": [
+        4,
+        149,
+        379,
+        259
+      ],
+      "pivot": [
+        1.1577,
+        -1.0649
+      ],
+      "position": [
+        4.0,
+        361.3
+      ]
+    },
+    {
+      "name": "Head_Blink",
+      "bone": "Head",
+      "parent": "Body",
+      "order": 30,
+      "rect": [
+        387,
+        149,
+        379,
+        259
+      ],
+      "pivot": [
+        1.1577,
+        -1.0649
+      ],
+      "position": [
+        4.0,
+        361.3
+      ]
+    }
+  ],
+  "swaps": {
+    "Head": {
+      "blink": "Head_Blink"
+    }
+  }
+}

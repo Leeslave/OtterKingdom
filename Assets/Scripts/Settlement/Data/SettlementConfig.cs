@@ -1,0 +1,614 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>왕국 레벨이 되면 열리는 발전 하나 (예: Lv.15에 낚시터 발견 → 선착장 부탁이 나타남)</summary>
+[Serializable]
+public class LevelDevelopment
+{
+    [Min(1)]
+    [SerializeField] private int _level = 1;
+    [SerializeField] private string _development;
+    [Tooltip("플레이 중에 열리면 화면 위쪽에 잠깐 보일 알림 (비우면 없음)")]
+    [SerializeField] private string _notice;
+
+    public int Level => Mathf.Max(1, _level);
+    public string Development => _development;
+    public string Notice => _notice;
+
+    public LevelDevelopment() { }
+
+    public LevelDevelopment(int level, string development, string notice = null)
+    {
+        _level = level;
+        _development = development;
+        _notice = notice;
+    }
+}
+
+/// <summary>구역 용도가 열리는 조건 (구역·이사): 그 용도의 시설이 생겨야 쓸모 있는 구역은 그때 함께 열린다 (예: 상업 = 가게)</summary>
+[Serializable]
+public class DistrictTypeUnlock
+{
+    [SerializeField] private DistrictType _district;
+
+    [Tooltip("이 발전이 열리면 이 용도를 고를 수 있음")]
+    [SerializeField] private string _development;
+
+    [Tooltip("잠겨 있을 때 보일 말 (예: 가게를 지을 수 있게 되면 상업 지역을 정할 수 있어요)")]
+    [SerializeField] private string _lockedHint;
+
+    public DistrictType District => _district;
+    public string Development => _development;
+    public string LockedHint => _lockedHint;
+
+    public DistrictTypeUnlock() { }
+
+    public DistrictTypeUnlock(DistrictType district, string development, string lockedHint)
+    {
+        _district = district;
+        _development = development;
+        _lockedHint = lockedHint;
+    }
+}
+
+/// <summary>구역 보너스 한 줄 (구역·이사): 그 용도의 구역에 맞게 들어선 건물이 주는 왕국 보유 효과. 수치는 임시</summary>
+[Serializable]
+public class DistrictBonusEntry
+{
+    [SerializeField] private DistrictType _district;
+    [SerializeField] private KingdomBonusKind _kind;
+
+    [Tooltip("그 용도의 구역을 정하기만 해도 주는 %")]
+    [Min(0)]
+    [SerializeField] private int _flatPercent;
+
+    [Tooltip("그 용도의 구역에 들어선 맞는 건물 하나마다 더하는 %")]
+    [Min(0)]
+    [SerializeField] private int _perBuildingPercent;
+
+    [Tooltip("최대 % (0 = 제한 없음)")]
+    [Min(0)]
+    [SerializeField] private int _maxPercent;
+
+    public DistrictType District => _district;
+    public KingdomBonusKind Kind => _kind;
+    public int FlatPercent => Mathf.Max(0, _flatPercent);
+    public int PerBuildingPercent => Mathf.Max(0, _perBuildingPercent);
+    public int MaxPercent => Mathf.Max(0, _maxPercent);
+
+    public DistrictBonusEntry() { }
+
+    public DistrictBonusEntry(DistrictType district, KingdomBonusKind kind, int flatPercent, int perBuildingPercent, int maxPercent)
+    {
+        _district = district;
+        _kind = kind;
+        _flatPercent = flatPercent;
+        _perBuildingPercent = perBuildingPercent;
+        _maxPercent = maxPercent;
+    }
+}
+
+/// <summary>
+/// 정착 진행(P0: 빈 광장 → 첫 집 → 건설 해달 → 농경지 개간 → 밭 해금, P1: 개간 지역 · 주민 작업 · 전문 해달 배치,
+/// P2: 게시판 성장 → 관리 해달 → 주민 부탁 · 공동 작업 → 접수소 · 큰 부탁 → 마을회관,
+/// P3: 공동사업(첫 비축 → 광장 확장 → 새 이웃 · 환영 소품 → 첫 마을 모임 → 반복 사업) · 생활 의뢰 · 요정 방문 순서)에 쓰는 데이터 묶음.
+/// </summary>
+[CreateAssetMenu(fileName = "SettlementConfig", menuName = "Game Data/Settlement/Config")]
+public class SettlementConfig : ScriptableObject
+{
+    [Header("재화")]
+    [Tooltip("건설 비용의 골드")]
+    [SerializeField] private Currency _goldCurrency;
+
+    [Header("단계")]
+    [Tooltip("왕국 단계 이름 (0부터). 상단바 아래 칩에 보임")]
+    [SerializeField] private List<string> _stageNames = new List<string>();
+
+    [Header("해달")]
+    [Tooltip("새 게임에 처음 찾아오는 해달")]
+    [SerializeField] private SettlementOtterDefinition _firstOtter;
+
+    [SerializeField] private List<SettlementOtterDefinition> _otters = new List<SettlementOtterDefinition>();
+
+    [Header("게시판")]
+    [SerializeField] private List<BoardRequestDefinition> _requests = new List<BoardRequestDefinition>();
+
+    [SerializeField] private List<GuestbookEntryDefinition> _guestbookEntries = new List<GuestbookEntryDefinition>();
+
+    [Header("개간 지역 · 주민 작업")]
+    [Tooltip("발견 → 직접 개척 → 주민 정비 → 운영으로 가는 지역")]
+    [SerializeField] private List<DevelopableRegionDefinition> _regions = new List<DevelopableRegionDefinition>();
+
+    [Tooltip("주민 해달을 보내는 작업 전부 (지역의 후속 정비 포함. 세이브의 작업 ID를 찾을 때 씀)")]
+    [SerializeField] private List<SettlementTaskDefinition> _tasks = new List<SettlementTaskDefinition>();
+
+    [Header("게시판 성장 · 관리 해달 · 마을회관 (P2)")]
+    [Tooltip("게시판을 보강하면 열리는 발전 (board_upgraded)")]
+    [SerializeField] private string _boardUpgradeDevelopment;
+
+    [Tooltip("게시판을 맡은 해달이 생기면 열리는 발전 (receptionist_assigned). 이때부터 주민 부탁·완료 기록을 나눠 보여 줌")]
+    [SerializeField] private string _boardManagedDevelopment;
+
+    [Tooltip("접수소가 생기면 열리는 발전 (guild_office_built). 이때부터 큰 부탁 묶음을 보여 줌")]
+    [SerializeField] private string _guildDevelopment;
+
+    [Tooltip("마을회관이 생기면 열리는 발전 (town_hall_built). 이때부터 발전 현황 화면을 볼 수 있음")]
+    [SerializeField] private string _townHallDevelopment;
+
+    [Tooltip("게시판을 맡은 해달이 생긴 뒤 한 번에 보이는 주민 부탁 수 (진행 중인 부탁은 이 수와 상관없이 늘 보임)")]
+    [Min(0)]
+    [SerializeField] private int _residentRequestSlots = 2;
+
+    [Tooltip("관리 역할 (게시판 관리 등)")]
+    [SerializeField] private List<ManagementRoleDefinition> _roles = new List<ManagementRoleDefinition>();
+
+    [Tooltip("큰 부탁 묶음 (마을 회의소 마련하기 등)")]
+    [SerializeField] private List<MilestoneGroupDefinition> _milestoneGroups = new List<MilestoneGroupDefinition>();
+
+    [Header("공동사업 · 생활 의뢰 (P3)")]
+    [Tooltip("순서대로 열리는 공동사업 (마지막은 반복 사업)")]
+    [SerializeField] private List<CommunityProjectDefinition> _projects = new List<CommunityProjectDefinition>();
+
+    [Tooltip("공동사업 단계가 쓰는 건설 부탁 (게시판에 보이지 않음. 비용 0 — 재료는 사업 납품으로 냄)")]
+    [SerializeField] private List<BoardRequestDefinition> _projectRequests = new List<BoardRequestDefinition>();
+
+    [Tooltip("생활 의뢰의 틀 (이 순서대로 돌아가며 나옴)")]
+    [SerializeField] private List<LifeRequestTemplate> _lifeRequests = new List<LifeRequestTemplate>();
+
+    [Tooltip("생활 의뢰가 열리는 발전 (마을회관)")]
+    [SerializeField] private string _lifeRequestDevelopment;
+
+    [Tooltip("생활 의뢰가 열리는 플레이어 레벨")]
+    [Min(1)]
+    [SerializeField] private int _lifeRequestLevel = 7;
+
+    [Header("요정 방문 (P3)")]
+    [Tooltip("요정 방문이 예약된 발전 (농부를 밭에 파견하면 열림: 농부 해달의 '배치하면 열리는 발전')")]
+    [SerializeField] private string _fairyInvitedDevelopment;
+
+    [Tooltip("요정이 광장에 실제로 나타난 발전 (요정 NPC·상점의 조건)")]
+    [SerializeField] private string _fairyArrivedDevelopment;
+
+    [Header("영토 확장 (서쪽·북쪽 숲 개간)")]
+    [Tooltip("방향별 단계 (숲 개간 3번 → 마을회관 영토 확장 미션 → 땅이 열림)")]
+    [SerializeField] private List<TerritoryExpansionDefinition> _territories = new List<TerritoryExpansionDefinition>();
+
+    [Tooltip("이 왕국 레벨에 첫 개간 기회가 생기고, 그 뒤 레벨이 오를 때마다 한 번씩 쌓임")]
+    [Min(1)]
+    [SerializeField] private int _territoryStartLevel = 6;
+
+    [Header("레벨로 열리는 발전")]
+    [Tooltip("왕국 레벨이 되면 여는 발전 (부탁·지역의 조건으로 씀). 불러올 때와 레벨이 오를 때 맞춤")]
+    [SerializeField] private List<LevelDevelopment> _levelDevelopments = new List<LevelDevelopment>();
+
+    [Header("옛 세이브")]
+    [Tooltip("정착 진행 전 세이브에 부탁과 별도로 열어 줄 발전 (예: 아직 부탁이 없는 낚시터 fishing_dock)")]
+    [SerializeField] private List<string> _legacyDevelopments = new List<string>();
+
+    [Header("새 게임")]
+    [Tooltip("새 게임 시작 시 가방에 넣어 줄 재료 (첫 집 비용)")]
+    [SerializeField] private List<ItemAmount> _startingItems = new List<ItemAmount>();
+
+    [Tooltip("새 게임 시작 시 주는 골드 (시안 1: 100)")]
+    [SerializeField] private int _startingGold;
+
+    [Header("나뭇가지 줍기")]
+    [Tooltip("광장 나뭇가지를 탭하면 얻는 아이템 (목재)")]
+    [SerializeField] private ItemDefinition _gatherItem;
+
+    [Tooltip("한 번에 얻는 개수")]
+    [SerializeField] private int _gatherAmount = 2;
+
+    [Tooltip("주운 나뭇가지가 다시 생기기까지 (초)")]
+    [SerializeField] private float _gatherCooldownSeconds = 60f;
+
+    [Header("장난감 방문 (P4)")]
+    [Tooltip("장난감 해달이 찾아오는 간격 (분). n번째 방문은 n번째 값, 넘치면 마지막 값")]
+    [SerializeField] private List<float> _toyVisitMinutes = new List<float> { 7f, 12f, 20f, 30f, 45f, 60f };
+
+    [Tooltip("빈 집이 없어 광장에 머무는 장난감 해달이 이만큼이면 다음 방문을 멈춤")]
+    [Min(1)]
+    [SerializeField] private int _maxWaitingVisitors = 2;
+
+    [Tooltip("광장 꾸미기 격자 ID (장난감 방문이 장난감을 세고, 건물을 짓는 격자)")]
+    [SerializeField] private string _plazaBoardId = "plaza";
+
+    [Header("광장 농장 (농장 설계형)")]
+    [Tooltip("흙 단계 · 상자 · 길 · 스프링클러 · 농부 (Docs/농장_설계형_기획.md)")]
+    [SerializeField] private PlazaFarmConfig _farm;
+
+    [Header("구역 · 왕국 질서도 (구역·이사)")]
+    [Tooltip("구역 후보 블록 (중앙 공터 + 용도를 고르는 블록)")]
+    [SerializeField] private List<DistrictBlockDefinition> _districtBlocks = new List<DistrictBlockDefinition>();
+
+    [Tooltip("처음 정하는 구역의 용도 (튜토리얼로 고정, None = 고정 없음)")]
+    [SerializeField] private DistrictType _firstDistrict = DistrictType.Residential;
+
+    [Tooltip("질서도: 구역 건물이 모두 맞는 구역에 있을 때 받는 점수 (비율만큼)")]
+    [Min(0)]
+    [SerializeField] private int _orderMatchWeight = 60;
+
+    [Tooltip("질서도: 용도를 정한 블록 하나마다 받는 점수")]
+    [Min(0)]
+    [SerializeField] private int _orderPerDistrict = 10;
+
+    [Tooltip("이사 지시서가 열리는 질서도")]
+    [Min(0)]
+    [SerializeField] private int _relocationOrder = 10;
+
+    [Tooltip("마을회관을 성으로 올릴 수 있는 질서도")]
+    [Min(0)]
+    [SerializeField] private int _castleOrder = 80;
+
+    [Tooltip("성 준비가 열리는 왕국 레벨 (질서도와 함께). 길드 지부가 갈 상업 지역(짤랑이 입주, Lv.11~12)보다 뒤여야 함")]
+    [Min(1)]
+    [SerializeField] private int _castleLevel = 16;
+
+    [Tooltip("농업 지역이 있어도 밭 자리를 발견(farm_discovered)하는 왕국 레벨. 밭은 Lv.10 (Docs/밭해금_재배치_기획.md)")]
+    [Min(1)]
+    [SerializeField] private int _farmDiscoverLevel = 10;
+
+    [Tooltip("다 지은 구역 건물을 옮기는 데 걸리는 시간 (초, 건설 해달이 들고 옮김). 행정 해달이 생긴 뒤부터")]
+    [Min(0)]
+    [SerializeField] private float _relocationSeconds = 90f;
+
+    [Tooltip("이사 지시서 한 장을 끝냈을 때 건물 하나마다 주는 골드")]
+    [Min(0)]
+    [SerializeField] private int _relocationGoldPerBuilding = 150;
+
+    [Tooltip("이사 지시서 한 장을 끝냈을 때 주는 경험치")]
+    [Min(0)]
+    [SerializeField] private int _relocationExp = 40;
+
+    [Tooltip("구역 보너스 (용도별 왕국 보유 효과)")]
+    [SerializeField] private List<DistrictBonusEntry> _districtBonuses = new List<DistrictBonusEntry>();
+
+    [Tooltip("용도가 열리는 조건 (표에 없는 용도는 처음부터)")]
+    [SerializeField] private List<DistrictTypeUnlock> _districtTypeUnlocks = new List<DistrictTypeUnlock>();
+
+    public IReadOnlyList<DistrictTypeUnlock> DistrictTypeUnlocks => _districtTypeUnlocks;
+
+    public DistrictTypeUnlock FindDistrictTypeUnlock(DistrictType type)
+    {
+        foreach (var unlock in _districtTypeUnlocks)
+        {
+            if (unlock != null && unlock.District == type)
+                return unlock;
+        }
+        return null;
+    }
+
+    /// <summary>테스트·설정 도구용: 용도가 열리는 조건</summary>
+    public void SetupDistrictTypeUnlocks(IEnumerable<DistrictTypeUnlock> unlocks) =>
+        _districtTypeUnlocks = unlocks != null ? new List<DistrictTypeUnlock>(unlocks) : new List<DistrictTypeUnlock>();
+
+    public IReadOnlyList<DistrictBlockDefinition> DistrictBlocks => _districtBlocks;
+    public DistrictType FirstDistrict => _firstDistrict;
+    public int OrderMatchWeight => Mathf.Max(0, _orderMatchWeight);
+    public int OrderPerDistrict => Mathf.Max(0, _orderPerDistrict);
+    public int RelocationOrder => Mathf.Max(0, _relocationOrder);
+    public int CastleOrder => Mathf.Max(0, _castleOrder);
+    public int CastleLevel => Mathf.Max(1, _castleLevel);
+    public int FarmDiscoverLevel => Mathf.Max(1, _farmDiscoverLevel);
+    public float RelocationSeconds => Mathf.Max(0f, _relocationSeconds);
+    public int RelocationGoldPerBuilding => Mathf.Max(0, _relocationGoldPerBuilding);
+    public int RelocationExp => Mathf.Max(0, _relocationExp);
+    public IReadOnlyList<DistrictBonusEntry> DistrictBonuses => _districtBonuses;
+
+    public DistrictBlockDefinition FindDistrictBlock(string blockId)
+    {
+        if (string.IsNullOrEmpty(blockId))
+            return null;
+        foreach (var block in _districtBlocks)
+        {
+            if (block != null && block.BlockId == blockId)
+                return block;
+        }
+        return null;
+    }
+
+    /// <summary>테스트·설정 도구용: 구역 · 질서도</summary>
+    public void SetupDistricts(IEnumerable<DistrictBlockDefinition> blocks, DistrictType firstDistrict, int matchWeight, int perDistrict,
+        int relocationOrder, int castleOrder, IEnumerable<DistrictBonusEntry> bonuses)
+    {
+        _districtBlocks = blocks != null ? new List<DistrictBlockDefinition>(blocks) : new List<DistrictBlockDefinition>();
+        _firstDistrict = firstDistrict;
+        _orderMatchWeight = matchWeight;
+        _orderPerDistrict = perDistrict;
+        _relocationOrder = relocationOrder;
+        _castleOrder = castleOrder;
+        _districtBonuses = bonuses != null ? new List<DistrictBonusEntry>(bonuses) : new List<DistrictBonusEntry>();
+    }
+
+    /// <summary>테스트·설정 도구용: 성 준비 레벨 · 밭 발견 레벨</summary>
+    public void SetupLevelGates(int castleLevel, int farmDiscoverLevel)
+    {
+        _castleLevel = castleLevel;
+        _farmDiscoverLevel = farmDiscoverLevel;
+    }
+
+    public IReadOnlyList<float> ToyVisitMinutes => _toyVisitMinutes;
+    public int MaxWaitingVisitors => Mathf.Max(1, _maxWaitingVisitors);
+    public string PlazaBoardId => _plazaBoardId;
+
+    /// <summary>테스트·설정 도구용: 장난감 방문 수치</summary>
+    public void SetupToyVisits(IEnumerable<float> minutes, int maxWaiting)
+    {
+        _toyVisitMinutes = minutes != null ? new List<float>(minutes) : new List<float>();
+        _maxWaitingVisitors = maxWaiting;
+    }
+
+    public Currency GoldCurrency => _goldCurrency;
+    public SettlementOtterDefinition FirstOtter => _firstOtter;
+    public IReadOnlyList<SettlementOtterDefinition> Otters => _otters;
+    public IReadOnlyList<BoardRequestDefinition> Requests => _requests;
+    public IReadOnlyList<GuestbookEntryDefinition> GuestbookEntries => _guestbookEntries;
+    public IReadOnlyList<DevelopableRegionDefinition> Regions => _regions;
+    public PlazaFarmConfig Farm => _farm;
+    public IReadOnlyList<SettlementTaskDefinition> Tasks => _tasks;
+    public IReadOnlyList<ItemAmount> StartingItems => _startingItems;
+    public int StartingGold => _startingGold;
+    public IReadOnlyList<string> LegacyDevelopments => _legacyDevelopments;
+    public ItemDefinition GatherItem => _gatherItem;
+    public int GatherAmount => _gatherAmount;
+    public float GatherCooldownSeconds => _gatherCooldownSeconds;
+    public int StageCount => _stageNames.Count;
+    public string BoardUpgradeDevelopment => _boardUpgradeDevelopment;
+    public string BoardManagedDevelopment => _boardManagedDevelopment;
+    public string GuildDevelopment => _guildDevelopment;
+    public string TownHallDevelopment => _townHallDevelopment;
+    public int ResidentRequestSlots => Mathf.Max(0, _residentRequestSlots);
+    public IReadOnlyList<ManagementRoleDefinition> Roles => _roles;
+    public IReadOnlyList<MilestoneGroupDefinition> MilestoneGroups => _milestoneGroups;
+    public IReadOnlyList<CommunityProjectDefinition> Projects => _projects;
+    public IReadOnlyList<BoardRequestDefinition> ProjectRequests => _projectRequests;
+    public IReadOnlyList<LifeRequestTemplate> LifeRequests => _lifeRequests;
+    public string LifeRequestDevelopment => _lifeRequestDevelopment;
+    public int LifeRequestLevel => Mathf.Max(1, _lifeRequestLevel);
+    public string FairyInvitedDevelopment => _fairyInvitedDevelopment;
+    public string FairyArrivedDevelopment => _fairyArrivedDevelopment;
+    public IReadOnlyList<TerritoryExpansionDefinition> Territories => _territories;
+    public int TerritoryStartLevel => Mathf.Max(1, _territoryStartLevel);
+    public IReadOnlyList<LevelDevelopment> LevelDevelopments => _levelDevelopments;
+
+    /// <summary>이 발전이 왕국 레벨로 열리는 것이면 그 항목 (아니면 null)</summary>
+    public LevelDevelopment FindLevelDevelopment(string developmentId)
+    {
+        if (string.IsNullOrEmpty(developmentId))
+            return null;
+        foreach (var entry in _levelDevelopments)
+        {
+            if (entry != null && entry.Development == developmentId)
+                return entry;
+        }
+        return null;
+    }
+
+    /// <summary>테스트·설정 도구용: 레벨로 열리는 발전</summary>
+    public void SetupLevelDevelopments(IEnumerable<LevelDevelopment> entries) =>
+        _levelDevelopments = entries != null ? new List<LevelDevelopment>(entries) : new List<LevelDevelopment>();
+
+    /// <summary>테스트·설정 도구용: 영토 확장 데이터</summary>
+    public void SetupTerritory(IEnumerable<TerritoryExpansionDefinition> territories, int startLevel)
+    {
+        _territories = territories != null ? new List<TerritoryExpansionDefinition>(territories) : new List<TerritoryExpansionDefinition>();
+        _territoryStartLevel = startLevel;
+    }
+
+    /// <summary>테스트·설정 도구용: P3 데이터를 한 번에 넣음</summary>
+    public void SetupP3(IEnumerable<CommunityProjectDefinition> projects, IEnumerable<BoardRequestDefinition> projectRequests,
+        IEnumerable<LifeRequestTemplate> lifeRequests, string lifeRequestDevelopment, int lifeRequestLevel,
+        string fairyInvited, string fairyArrived)
+    {
+        _projects = projects != null ? new List<CommunityProjectDefinition>(projects) : new List<CommunityProjectDefinition>();
+        _projectRequests = projectRequests != null ? new List<BoardRequestDefinition>(projectRequests) : new List<BoardRequestDefinition>();
+        _lifeRequests = lifeRequests != null ? new List<LifeRequestTemplate>(lifeRequests) : new List<LifeRequestTemplate>();
+        _lifeRequestDevelopment = lifeRequestDevelopment;
+        _lifeRequestLevel = lifeRequestLevel;
+        _fairyInvitedDevelopment = fairyInvited;
+        _fairyArrivedDevelopment = fairyArrived;
+    }
+
+    public CommunityProjectDefinition FindProject(string projectId)
+    {
+        foreach (var project in _projects)
+        {
+            if (project != null && project.ProjectId == projectId)
+                return project;
+        }
+        return null;
+    }
+
+    public LifeRequestTemplate FindLifeRequest(string templateId)
+    {
+        foreach (var template in _lifeRequests)
+        {
+            if (template != null && template.TemplateId == templateId)
+                return template;
+        }
+        return null;
+    }
+
+    /// <summary>이 해달이 맡는 관리 역할 (없으면 null)</summary>
+    public ManagementRoleDefinition FindRoleFor(SettlementOtterDefinition otter)
+    {
+        if (otter == null)
+            return null;
+        foreach (var role in _roles)
+        {
+            if (role != null && role.Otter == otter)
+                return role;
+        }
+        return null;
+    }
+
+    public ManagementRoleDefinition FindRole(string roleId)
+    {
+        foreach (var role in _roles)
+        {
+            if (role != null && role.RoleId == roleId)
+                return role;
+        }
+        return null;
+    }
+
+    public string StageName(int stage)
+    {
+        if (_stageNames.Count == 0)
+            return string.Empty;
+        return _stageNames[Mathf.Clamp(stage, 0, _stageNames.Count - 1)];
+    }
+
+    public SettlementOtterDefinition FindOtter(string otterId)
+    {
+        foreach (var otter in _otters)
+        {
+            if (otter != null && otter.OtterId == otterId)
+                return otter;
+        }
+        return null;
+    }
+
+    /// <summary>게시판 부탁 또는 공동사업의 건설 부탁 (진행 중인 건설·완료 기록이 둘 다 같은 ID 공간을 씀)</summary>
+    public BoardRequestDefinition FindRequest(string requestId)
+    {
+        foreach (var request in _requests)
+        {
+            if (request != null && request.RequestId == requestId)
+                return request;
+        }
+        foreach (var request in _projectRequests)
+        {
+            if (request != null && request.RequestId == requestId)
+                return request;
+        }
+        return null;
+    }
+
+    public GuestbookEntryDefinition FindEntry(string entryId)
+    {
+        foreach (var entry in _guestbookEntries)
+        {
+            if (entry != null && entry.EntryId == entryId)
+                return entry;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 작업 정의. 생활 의뢰처럼 같은 작업을 여러 번 하는 경우 진행 기록의 ID는 "틀ID#회차"라서 틀 ID로 찾는다
+    /// </summary>
+    public SettlementTaskDefinition FindTask(string taskId)
+    {
+        if (string.IsNullOrEmpty(taskId))
+            return null;
+        string templateId = TaskTemplateId(taskId);
+        foreach (var task in _tasks)
+        {
+            if (task != null && task.TaskId == templateId)
+                return task;
+        }
+        // 영토의 숲 개간 (작업 목록에 넣지 않았어도 찾음)
+        foreach (var territory in _territories)
+        {
+            if (territory == null)
+                continue;
+            foreach (var step in territory.Clearings)
+            {
+                if (step != null && step.Task != null && step.Task.TaskId == templateId)
+                    return step.Task;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>"틀ID#회차" → 틀ID (회차가 없으면 그대로)</summary>
+    public static string TaskTemplateId(string taskId)
+    {
+        int hash = taskId.IndexOf('#');
+        return hash > 0 ? taskId.Substring(0, hash) : taskId;
+    }
+
+    /// <summary>회차가 붙은 작업 기록인지 (생활 의뢰의 주민 작업)</summary>
+    public static bool IsTaskInstance(string taskId) => !string.IsNullOrEmpty(taskId) && taskId.IndexOf('#') > 0;
+
+    /// <summary>이 장소의 개간 지역 (없으면 null)</summary>
+    public DevelopableRegionDefinition FindRegion(ZoneDefinition zone)
+    {
+        if (zone == null)
+            return null;
+        foreach (var region in _regions)
+        {
+            if (region != null && region.Zone == zone)
+                return region;
+        }
+        return null;
+    }
+
+    /// <summary>이 작업으로 끝나는 주민 작업 부탁 (없으면 null)</summary>
+    public BoardRequestDefinition FindRequestByTask(SettlementTaskDefinition task)
+    {
+        if (task == null)
+            return null;
+        foreach (var request in _requests)
+        {
+            if (request != null && request.CompletionTask == task)
+                return request;
+        }
+        return null;
+    }
+
+    /// <summary>이 작업을 후속 정비로 가진 지역 (없으면 null)</summary>
+    public DevelopableRegionDefinition FindRegionOf(SettlementTaskDefinition task)
+    {
+        foreach (var region in _regions)
+        {
+            if (region == null)
+                continue;
+            foreach (var t in region.PreparationTasks)
+            {
+                if (t == task)
+                    return region;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>이 지역에서 일할 전문 해달 (없으면 null)</summary>
+    public SettlementOtterDefinition FindSpecialist(DevelopableRegionDefinition region)
+    {
+        if (region == null)
+            return null;
+        foreach (var otter in _otters)
+        {
+            if (otter != null && otter.WorkRegion == region)
+                return otter;
+        }
+        return null;
+    }
+
+    /// <summary>장소 ID(예: Mine)의 개간 지역 (없으면 null)</summary>
+    public DevelopableRegionDefinition FindRegionByZoneId(string zoneId)
+    {
+        if (string.IsNullOrEmpty(zoneId))
+            return null;
+        foreach (var region in _regions)
+        {
+            if (region != null && region.Zone != null && region.Zone.ZoneId == zoneId)
+                return region;
+        }
+        return null;
+    }
+
+    /// <summary>건설 해달 (없으면 null)</summary>
+    public SettlementOtterDefinition FindBuilder()
+    {
+        foreach (var otter in _otters)
+        {
+            if (otter != null && otter.IsBuilder)
+                return otter;
+        }
+        return null;
+    }
+}

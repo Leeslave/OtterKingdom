@@ -1,0 +1,850 @@
+fileFormatVersion: 2
+guid: bb7c218790f0b0244baa236d82c75ecc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5465953536845523372
+    second: Snack_0
+  - first:
+      213: 8184997388605079672
+    second: Snack_1
+  - first:
+      213: -6596101330617792577
+    second: Snack_2
+  - first:
+      213: 743474216121539028
+    second: Snack_3
+  - first:
+      213: -2746870333876619696
+    second: Snack_4
+  - first:
+      213: -6872669129395324170
+    second: Snack_5
+  - first:
+      213: 6046637634267118660
+    second: Snack_6
+  - first:
+      213: -3295701703955769580
+    second: Snack_7
+  - first:
+      213: 6243008941009634276
+    second: Snack_8
+  - first:
+      213: -2615727429080394802
+    second: Snack_9
+  - first:
+      213: -5862056277265836659
+    second: Snack_10
+  - first:
+      213: -5492726731035038037
+    second: Snack_11
+  - first:
+      213: 2707100307081058128
+    second: Snack_12
+  - first:
+      213: -1855397786168840112
+    second: Snack_13
+  - first:
+      213: 421900335188550961
+    second: Snack_14
+  - first:
+      213: 8036555880692486733
+    second: Snack_15
+  - first:
+      213: -698236453924308727
+    second: Snack_16
+  - first:
+      213: 8381442458391308530
+    second: Snack_17
+  - first:
+      213: -2167173582138245944
+    second: Snack_18
+  - first:
+      213: -305408275863450808
+    second: Snack_19
+  - first:
+      213: -255782299403217675
+    second: Snack_20
+  - first:
+      213: -6730517085022980582
+    second: Snack_21
+  - first:
+      213: -604273264813611118
+    second: Snack_22
+  - first:
+      213: -5972841678452169833
+    second: Snack_23
+  - first:
+      213: 733323009950172221
+    second: Snack_0_0
+  - first:
+      213: 8021381655404426135
+    second: Snack_0_1
+  - first:
+      213: -8082274799666847929
+    second: Snack_0_2
+  - first:
+      213: 6501718241055438549
+    second: Snack_0_3
+  - first:
+      213: -4421617727406842159
+    second: Snack_1_0
+  - first:
+      213: -7013665039113816901
+    second: Snack_1_1
+  - first:
+      213: 6102502283331551922
+    second: Snack_1_2
+  - first:
+      213: 7883904792796224035
+    second: Snack_1_3
+  - first:
+      213: 6446604960901476294
+    second: Snack_2_0
+  - first:
+      213: 983915944646086662
+    second: Snack_2_1
+  - first:
+      213: 4786356091768393197
+    second: Snack_2_2
+  - first:
+      213: -1809277397081817821
+    second: Snack_2_3
+  - first:
+      213: 2329141742778843441
+    second: Snack_3_0
+  - first:
+      213: -1024032367192528037
+    second: Snack_3_1
+  - first:
+      213: -6679151070587116646
+    second: Snack_3_2
+  - first:
+      213: -6621251848784041829
+    second: Snack_3_3
+  - first:
+      213: -4450957242223383325
+    second: Snack_4_0
+  - first:
+      213: -4419657319758564959
+    second: Snack_4_1
+  - first:
+      213: -7357475188010759593
+    second: Snack_4_2
+  - first:
+      213: -1636077404491463163
+    second: Snack_4_3
+  - first:
+      213: -2749025137626144244
+    second: Snack_5_0
+  - first:
+      213: -552909058502219514
+    second: Snack_5_1
+  - first:
+      213: -5601495542994979877
+    second: Snack_5_2
+  - first:
+      213: -4653160964190281945
+    second: Snack_5_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 132
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Snack_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3443b964694d2a00800000000000000
+      internalID: 733323009950172221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_0_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7933732dd1ca15f60800000000000000
+      internalID: 8021381655404426135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_0_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74f14c434edf5df80800000000000000
+      internalID: -8082274799666847929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_0_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d679cbea4eba3a50800000000000000
+      internalID: 6501718241055438549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1de58598a1243a2c0800000000000000
+      internalID: -4421617727406842159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_1_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb47b029ec47aae90800000000000000
+      internalID: -7013665039113816901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_1_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b2ccf68e7170b450800000000000000
+      internalID: 6102502283331551922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_1_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32a5e9963a1496d60800000000000000
+      internalID: 7883904792796224035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cfadcd6e01f67950800000000000000
+      internalID: 6446604960901476294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_2_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6001971b65297ad00800000000000000
+      internalID: 983915944646086662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_2_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dedc16a918d8c6240800000000000000
+      internalID: 4786356091768393197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_2_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32d7bc61bc724e6e0800000000000000
+      internalID: -1809277397081817821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1310ed12316c25020800000000000000
+      internalID: 2329141742778843441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_3_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5bacf2dcf7e9c1f0800000000000000
+      internalID: -1024032367192528037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_3_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a932c7c2d73ee43a0800000000000000
+      internalID: -6679151070587116646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_3_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9824d046869c14a0800000000000000
+      internalID: -6621251848784041829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eca2da68f50b32c0800000000000000
+      internalID: -4450957242223383325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_4_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a1f5d285193aa2c0800000000000000
+      internalID: -4419657319758564959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_4_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75a4ede4c4ff4e990800000000000000
+      internalID: -7357475188010759593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_4_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5064e38d44c7b49e0800000000000000
+      internalID: -1636077404491463163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c02ac29c33089d9d0800000000000000
+      internalID: -2749025137626144244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_5_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60921e6042ca358f0800000000000000
+      internalID: -552909058502219514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_5_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd3b9dc4b7d7342b0800000000000000
+      internalID: -5601495542994979877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snack_5_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72f59bea1c6ac6fb0800000000000000
+      internalID: -4653160964190281945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Snack_0: 5465953536845523372
+      Snack_0_0: 733323009950172221
+      Snack_0_1: 8021381655404426135
+      Snack_0_2: -8082274799666847929
+      Snack_0_3: 6501718241055438549
+      Snack_1: 8184997388605079672
+      Snack_10: -5862056277265836659
+      Snack_11: -5492726731035038037
+      Snack_12: 2707100307081058128
+      Snack_13: -1855397786168840112
+      Snack_14: 421900335188550961
+      Snack_15: 8036555880692486733
+      Snack_16: -698236453924308727
+      Snack_17: 8381442458391308530
+      Snack_18: -2167173582138245944
+      Snack_19: -305408275863450808
+      Snack_1_0: -4421617727406842159
+      Snack_1_1: -7013665039113816901
+      Snack_1_2: 6102502283331551922
+      Snack_1_3: 7883904792796224035
+      Snack_2: -6596101330617792577
+      Snack_20: -255782299403217675
+      Snack_21: -6730517085022980582
+      Snack_22: -604273264813611118
+      Snack_23: -5972841678452169833
+      Snack_2_0: 6446604960901476294
+      Snack_2_1: 983915944646086662
+      Snack_2_2: 4786356091768393197
+      Snack_2_3: -1809277397081817821
+      Snack_3: 743474216121539028
+      Snack_3_0: 2329141742778843441
+      Snack_3_1: -1024032367192528037
+      Snack_3_2: -6679151070587116646
+      Snack_3_3: -6621251848784041829
+      Snack_4: -2746870333876619696
+      Snack_4_0: -4450957242223383325
+      Snack_4_1: -4419657319758564959
+      Snack_4_2: -7357475188010759593
+      Snack_4_3: -1636077404491463163
+      Snack_5: -6872669129395324170
+      Snack_5_0: -2749025137626144244
+      Snack_5_1: -552909058502219514
+      Snack_5_2: -5601495542994979877
+      Snack_5_3: -4653160964190281945
+      Snack_6: 6046637634267118660
+      Snack_7: -3295701703955769580
+      Snack_8: 6243008941009634276
+      Snack_9: -2615727429080394802
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

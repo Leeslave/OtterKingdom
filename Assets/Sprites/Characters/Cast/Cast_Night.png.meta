@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: 1dae460ce752cbf46ab85395b5f1ca29
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8210318191539380208
+    second: Cast_Night_0
+  - first:
+      213: -5648895264419961705
+    second: Cast_Night_1
+  - first:
+      213: -8094958308200936969
+    second: Cast_Night_2
+  - first:
+      213: -5014191490316448053
+    second: Cast_Night_3
+  - first:
+      213: -2519038372902389593
+    second: Cast_Night_4
+  - first:
+      213: 5563255076083215008
+    second: Cast_Night_5
+  - first:
+      213: 6680227444243443749
+    second: Cast_Night_6
+  - first:
+      213: 6917392140071061040
+    second: Cast_Night_7
+  - first:
+      213: 784623729872319662
+    second: Cast_Night_8
+  - first:
+      213: 3070431535956811254
+    second: Cast_Night_9
+  - first:
+      213: 4803319060432255305
+    second: Cast_Night_10
+  - first:
+      213: -8058630059999832850
+    second: Cast_Night_11
+  - first:
+      213: -1645443625430511142
+    second: Cast_Night_12
+  - first:
+      213: -8647771424445382760
+    second: Cast_Night_13
+  - first:
+      213: 2234427121827673431
+    second: Cast_Night_14
+  - first:
+      213: -3423173947113481155
+    second: Cast_Night_15
+  - first:
+      213: 4234665059574755554
+    second: Cast_Night_16
+  - first:
+      213: 2129086976027055475
+    second: Cast_Night_17
+  - first:
+      213: 6542060459903536747
+    second: Cast_Night_18
+  - first:
+      213: 570527919695189670
+    second: Cast_Night_19
+  - first:
+      213: 1106928870494760833
+    second: Cast_Night_20
+  - first:
+      213: 2087108725521518435
+    second: Cast_Night_21
+  - first:
+      213: 5108819765807794452
+    second: Cast_Night_22
+  - first:
+      213: 8786173759280203548
+    second: Cast_Night_23
+  - first:
+      213: 5253817000540742489
+    second: Cast_Night_24
+  - first:
+      213: -7274123647331273005
+    second: Cast_Night_25
+  - first:
+      213: 5440937247350507282
+    second: Cast_Night_26
+  - first:
+      213: -1092485756449074877
+    second: Cast_Night_27
+  - first:
+      213: -4667700630041151055
+    second: Cast_Night_28
+  - first:
+      213: 5483187411632513864
+    second: Cast_Night_29
+  - first:
+      213: 164556722600819064
+    second: Cast_Night_30
+  - first:
+      213: 3343304302101136905
+    second: Cast_Night_31
+  - first:
+      213: 4827374145232080900
+    second: Cast_Night_32
+  - first:
+      213: -5371350954218042239
+    second: Cast_Night_33
+  - first:
+      213: 5888862873403510214
+    second: Cast_Night_34
+  - first:
+      213: -4244756519616853786
+    second: Cast_Night_35
+  - first:
+      213: -6764787618670343357
+    second: Cast_Night_36
+  - first:
+      213: -8554864193566290195
+    second: Cast_Night_37
+  - first:
+      213: 4567126775181336036
+    second: Cast_Night_38
+  - first:
+      213: 8100872817276962436
+    second: Cast_Night_39
+  - first:
+      213: -8430006724161896024
+    second: Cast_Night_40
+  - first:
+      213: -3980388165762897252
+    second: Cast_Night_41
+  - first:
+      213: 3859645626823292385
+    second: Cast_Night_42
+  - first:
+      213: -8237940256358640059
+    second: Cast_Night_43
+  - first:
+      213: 3141017085642815451
+    second: Cast_Night_44
+  - first:
+      213: 1488500384132434870
+    second: Cast_Night_45
+  - first:
+      213: -1740923555127022135
+    second: Cast_Night_46
+  - first:
+      213: 8703238373985264985
+    second: Cast_Night_47
+  - first:
+      213: 6471438742037961432
+    second: Cast_Night_48
+  - first:
+      213: 445501786496727581
+    second: Cast_Night_49
+  - first:
+      213: 662505582893583087
+    second: Cast_Night_50
+  - first:
+      213: -5196043474325478755
+    second: Cast_Night_51
+  - first:
+      213: -1000395209068404306
+    second: Cast_Night_52
+  - first:
+      213: -4454872052277441076
+    second: Cast_Night_53
+  - first:
+      213: 7360006448136625154
+    second: Cast_Night_54
+  - first:
+      213: -4947866106697177347
+    second: Cast_Night_55
+  - first:
+      213: 5974449308175407857
+    second: Cast_Night_56
+  - first:
+      213: 3660620763558219576
+    second: Cast_Night_57
+  - first:
+      213: -4089074283442051878
+    second: Cast_Night_58
+  - first:
+      213: 1695165467780804654
+    second: Cast_Night_59
+  - first:
+      213: -4577153309337079446
+    second: Cast_Night_60
+  - first:
+      213: -236392679680034954
+    second: Cast_Night_61
+  - first:
+      213: 5677794816964924861
+    second: Cast_Night_62
+  - first:
+      213: -7201625848959342976
+    second: Cast_Night_63
+  - first:
+      213: 7618912160191787232
+    second: Cast_Night_64
+  - first:
+      213: 8497893662088158882
+    second: Cast_Night_65
+  - first:
+      213: -7201545822105839831
+    second: Cast_Night_66
+  - first:
+      213: -6482671530421595334
+    second: Cast_Night_67
+  - first:
+      213: 3178339344812271277
+    second: Cast_Night_68
+  - first:
+      213: -4623484537907967848
+    second: Cast_Night_69
+  - first:
+      213: 8130296090550795396
+    second: Cast_Night_Walk_0
+  - first:
+      213: 2351839677963182320
+    second: Cast_Night_Walk_1
+  - first:
+      213: -8408254766026721478
+    second: Cast_Night_Walk_2
+  - first:
+      213: -7058632823764269775
+    second: Cast_Night_Walk_3
+  - first:
+      213: 194308671644450898
+    second: Cast_Night_Walk_4
+  - first:
+      213: 7399146200666693369
+    second: Cast_Night_Walk_5
+  - first:
+      213: -1004956015728110395
+    second: Cast_Night_Walk_6
+  - first:
+      213: -1084033520844659665
+    second: Cast_Night_Walk_7
+  - first:
+      213: -6476815682988930218
+    second: Cast_Night_Walk_Down_0
+  - first:
+      213: 4779854590162313340
+    second: Cast_Night_Walk_Down_1
+  - first:
+      213: 4010785080945866104
+    second: Cast_Night_Walk_Down_2
+  - first:
+      213: 962115679134738707
+    second: Cast_Night_Walk_Down_3
+  - first:
+      213: 2320736034040173790
+    second: Cast_Night_Walk_Down_4
+  - first:
+      213: -7924762885139078781
+    second: Cast_Night_Walk_Down_5
+  - first:
+      213: -4182149051533700452
+    second: Cast_Night_Walk_Down_6
+  - first:
+      213: -383854025963309657
+    second: Cast_Night_Walk_Down_7
+  - first:
+      213: 679242711066114595
+    second: Cast_Night_Walk_Up_0
+  - first:
+      213: -4060268787646035852
+    second: Cast_Night_Walk_Up_1
+  - first:
+      213: 8407970706307817815
+    second: Cast_Night_Walk_Up_2
+  - first:
+      213: -1005203423140977664
+    second: Cast_Night_Walk_Up_3
+  - first:
+      213: 6704370865052693757
+    second: Cast_Night_Walk_Up_4
+  - first:
+      213: 4312304523927723737
+    second: Cast_Night_Walk_Up_5
+  - first:
+      213: -976037072176805095
+    second: Cast_Night_Walk_Up_6
+  - first:
+      213: -5907285546203836852
+    second: Cast_Night_Walk_Up_7
+  - first:
+      213: -5712598783249274458
+    second: Cast_Night_Harvest_0
+  - first:
+      213: 3113885837147584522
+    second: Cast_Night_Harvest_1
+  - first:
+      213: 3319966867574566865
+    second: Cast_Night_Harvest_2
+  - first:
+      213: -272005801120467703
+    second: Cast_Night_Harvest_3
+  - first:
+      213: 1162986121269525718
+    second: Cast_Night_Harvest_4
+  - first:
+      213: -6317432301001362539
+    second: Cast_Night_Harvest_5
+  - first:
+      213: 3637761370430315047
+    second: Cast_Night_Harvest_6
+  - first:
+      213: 3104693365271614978
+    second: Cast_Night_Harvest_7
+  - first:
+      213: -757012339451030652
+    second: Cast_Night_Eat_0
+  - first:
+      213: 1104142468141012095
+    second: Cast_Night_Eat_1
+  - first:
+      213: 5655266953358095935
+    second: Cast_Night_Eat_2
+  - first:
+      213: -2413051454923106255
+    second: Cast_Night_Eat_3
+  - first:
+      213: -7356038717283814540
+    second: Cast_Night_Eat_4
+  - first:
+      213: 7330291701686895041
+    second: Cast_Night_Eat_5
+  - first:
+      213: -3635505980305874108
+    second: Cast_Night_Eat_6
+  - first:
+      213: 5898944630277956807
+    second: Cast_Night_Eat_7
+  - first:
+      213: 73652905804464517
+    second: Cast_Night_Net_0
+  - first:
+      213: 5832769653404519630
+    second: Cast_Night_Net_1
+  - first:
+      213: -5543534437118858709
+    second: Cast_Night_Net_2
+  - first:
+      213: 7409610856400402263
+    second: Cast_Night_Net_3
+  - first:
+      213: 391214853924465764
+    second: Cast_Night_Net_4
+  - first:
+      213: -3764359186378209021
+    second: Cast_Night_Net_5
+  - first:
+      213: -5628655457844086543
+    second: Cast_Night_Net_6
+  - first:
+      213: 2437997929471673903
+    second: Cast_Night_Net_7
+  - first:
+      213: 7274258189180693363
+    second: Cast_Night_Squat_0
+  - first:
+      213: 51928998155319731
+    second: Cast_Night_Squat_1
+  - first:
+      213: -6026217909318067778
+    second: Cast_Night_Squat_2
+  - first:
+      213: 4687074916306686171
+    second: Cast_Night_Squat_3
+  - first:
+      213: 2439161775796154940
+    second: Cast_Night_Squat_4
+  - first:
+      213: -4472133123325374738
+    second: Cast_Night_Squat_5
+  - first:
+      213: 2085137132327580739
+    second: Cast_Night_Squat_6
+  - first:
+      213: 5444683028858490356
+    second: Cast_Night_Squat_7
+  - first:
+      213: -8110046738949528105
+    second: Cast_Night_Stretch_0
+  - first:
+      213: -4086444835836841640
+    second: Cast_Night_Stretch_1
+  - first:
+      213: 6038965180629992857
+    second: Cast_Night_Stretch_2
+  - first:
+      213: 462758219408094502
+    second: Cast_Night_Stretch_3
+  - first:
+      213: -7053198817252469877
+    second: Cast_Night_Stretch_4
+  - first:
+      213: 9136066698700079364
+    second: Cast_Night_Stretch_5
+  - first:
+      213: -1249241422101318958
+    second: Cast_Night_Stretch_6
+  - first:
+      213: -1075886312951226603
+    second: Cast_Night_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Night_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48cf60cd73d94d070800000000000000
+      internalID: 8130296090550795396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f02aadf9b963a020800000000000000
+      internalID: 2351839677963182320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a37fdf1d6d0ef4b80800000000000000
+      internalID: -8408254766026721478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1354e9358d2ba0e90800000000000000
+      internalID: -7058632823764269775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 250452615b252b200800000000000000
+      internalID: 194308671644450898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fe5be3644c0fa660800000000000000
+      internalID: 7399146200666693369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c452a304ddad02f0800000000000000
+      internalID: -1004956015728110395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f242079914db4f0f0800000000000000
+      internalID: -1084033520844659665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65b04c3b37abd16a0800000000000000
+      internalID: -6476815682988930218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7025accc64755240800000000000000
+      internalID: 4779854590162313340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 875f634f7cb29a730800000000000000
+      internalID: 4010785080945866104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 319e8a7dc1f1a5d00800000000000000
+      internalID: 962115679134738707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed4d96e8029e43020800000000000000
+      internalID: 2320736034040173790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 381e516a426950290800000000000000
+      internalID: -7924762885139078781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c92d899789506f5c0800000000000000
+      internalID: -4182149051533700452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a57ad01cc64caaf0800000000000000
+      internalID: -383854025963309657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32a7e5d95a72d6900800000000000000
+      internalID: 679242711066114595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47880c3cc0707a7c0800000000000000
+      internalID: -4060268787646035852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7512e5f5fcc1fa470800000000000000
+      internalID: 8407970706307817815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 004ecacffcccc02f0800000000000000
+      internalID: -1005203423140977664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df4b1fdc7c5ba0d50800000000000000
+      internalID: 6704370865052693757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9de9500fd1268db30800000000000000
+      internalID: 4312304523927723737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91b0a41447b6472f0800000000000000
+      internalID: -976037072176805095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4e88b7081b150ea0800000000000000
+      internalID: -5907285546203836852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a9291c5ca5c8b0b0800000000000000
+      internalID: -5712598783249274458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a083d4abbaeb63b20800000000000000
+      internalID: 3113885837147584522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1df29dfa644e21e20800000000000000
+      internalID: 3319966867574566865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9057e5f3a24a93cf0800000000000000
+      internalID: -272005801120467703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dcbafc27b1c32010800000000000000
+      internalID: 1162986121269525718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5933c3e1bc8f358a0800000000000000
+      internalID: -6317432301001362539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72a132651bceb7230800000000000000
+      internalID: 3637761370430315047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 206d6859a26161b20800000000000000
+      internalID: 3104693365271614978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4831f60c94d8e75f0800000000000000
+      internalID: -757012339451030652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f74d7fa89b3b25f00800000000000000
+      internalID: 1104142468141012095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f363ae8c45b8b7e40800000000000000
+      internalID: 5655266953358095935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13891949c7e138ed0800000000000000
+      internalID: -2413051454923106255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4733746b2c91ae990800000000000000
+      internalID: -7356038717283814540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c18a03177d6ab560800000000000000
+      internalID: 7330291701686895041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4436f0992961c8dc0800000000000000
+      internalID: -3635505980305874108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c46a6523e24dd150800000000000000
+      internalID: 5898944630277956807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58186277deaa50100800000000000000
+      internalID: 73652905804464517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecccadfa81922f050800000000000000
+      internalID: 5832769653404519630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2aa263ecc86113b0800000000000000
+      internalID: -5543534437118858709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 757bf9be0d934d660800000000000000
+      internalID: 7409610856400402263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46c260f36dfdd6500800000000000000
+      internalID: 391214853924465764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 309c2f0b34f42cbc0800000000000000
+      internalID: -3764359186378209021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f8b328deaff2e1b0800000000000000
+      internalID: -5628655457844086543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f260c45233285d120800000000000000
+      internalID: 2437997929471673903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37b679a484b53f460800000000000000
+      internalID: 7274258189180693363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b9f690162d78b000800000000000000
+      internalID: 51928998155319731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb9dfff5db29e5ca0800000000000000
+      internalID: -6026217909318067778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd09a1e9dc5db0140800000000000000
+      internalID: 4687074916306686171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c327a0c36b4a9d120800000000000000
+      internalID: 2439161775796154940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeecee36e9acfe1c0800000000000000
+      internalID: -4472133123325374738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 344bc50ac25efec10800000000000000
+      internalID: 2085137132327580739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd45b91e566f8b40800000000000000
+      internalID: 5444683028858490356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d52915b573537f80800000000000000
+      internalID: -8110046738949528105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85137bd92180a47c0800000000000000
+      internalID: -4086444835836841640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 995476206d6bec350800000000000000
+      internalID: 6038965180629992857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62536b4162c0c6600800000000000000
+      internalID: 462758219408094502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b83167f8b010e1e90800000000000000
+      internalID: -7053198817252469877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4014b4ce144d9ce70800000000000000
+      internalID: 9136066698700079364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d272fc9b8dc9aee0800000000000000
+      internalID: -1249241422101318958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Night_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51f56d1491fa111f0800000000000000
+      internalID: -1075886312951226603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Night_0: -8210318191539380208
+      Cast_Night_1: -5648895264419961705
+      Cast_Night_10: 4803319060432255305
+      Cast_Night_11: -8058630059999832850
+      Cast_Night_12: -1645443625430511142
+      Cast_Night_13: -8647771424445382760
+      Cast_Night_14: 2234427121827673431
+      Cast_Night_15: -3423173947113481155
+      Cast_Night_16: 4234665059574755554
+      Cast_Night_17: 2129086976027055475
+      Cast_Night_18: 6542060459903536747
+      Cast_Night_19: 570527919695189670
+      Cast_Night_2: -8094958308200936969
+      Cast_Night_20: 1106928870494760833
+      Cast_Night_21: 2087108725521518435
+      Cast_Night_22: 5108819765807794452
+      Cast_Night_23: 8786173759280203548
+      Cast_Night_24: 5253817000540742489
+      Cast_Night_25: -7274123647331273005
+      Cast_Night_26: 5440937247350507282
+      Cast_Night_27: -1092485756449074877
+      Cast_Night_28: -4667700630041151055
+      Cast_Night_29: 5483187411632513864
+      Cast_Night_3: -5014191490316448053
+      Cast_Night_30: 164556722600819064
+      Cast_Night_31: 3343304302101136905
+      Cast_Night_32: 4827374145232080900
+      Cast_Night_33: -5371350954218042239
+      Cast_Night_34: 5888862873403510214
+      Cast_Night_35: -4244756519616853786
+      Cast_Night_36: -6764787618670343357
+      Cast_Night_37: -8554864193566290195
+      Cast_Night_38: 4567126775181336036
+      Cast_Night_39: 8100872817276962436
+      Cast_Night_4: -2519038372902389593
+      Cast_Night_40: -8430006724161896024
+      Cast_Night_41: -3980388165762897252
+      Cast_Night_42: 3859645626823292385
+      Cast_Night_43: -8237940256358640059
+      Cast_Night_44: 3141017085642815451
+      Cast_Night_45: 1488500384132434870
+      Cast_Night_46: -1740923555127022135
+      Cast_Night_47: 8703238373985264985
+      Cast_Night_48: 6471438742037961432
+      Cast_Night_49: 445501786496727581
+      Cast_Night_5: 5563255076083215008
+      Cast_Night_50: 662505582893583087
+      Cast_Night_51: -5196043474325478755
+      Cast_Night_52: -1000395209068404306
+      Cast_Night_53: -4454872052277441076
+      Cast_Night_54: 7360006448136625154
+      Cast_Night_55: -4947866106697177347
+      Cast_Night_56: 5974449308175407857
+      Cast_Night_57: 3660620763558219576
+      Cast_Night_58: -4089074283442051878
+      Cast_Night_59: 1695165467780804654
+      Cast_Night_6: 6680227444243443749
+      Cast_Night_60: -4577153309337079446
+      Cast_Night_61: -236392679680034954
+      Cast_Night_62: 5677794816964924861
+      Cast_Night_63: -7201625848959342976
+      Cast_Night_64: 7618912160191787232
+      Cast_Night_65: 8497893662088158882
+      Cast_Night_66: -7201545822105839831
+      Cast_Night_67: -6482671530421595334
+      Cast_Night_68: 3178339344812271277
+      Cast_Night_69: -4623484537907967848
+      Cast_Night_7: 6917392140071061040
+      Cast_Night_8: 784623729872319662
+      Cast_Night_9: 3070431535956811254
+      Cast_Night_Eat_0: -757012339451030652
+      Cast_Night_Eat_1: 1104142468141012095
+      Cast_Night_Eat_2: 5655266953358095935
+      Cast_Night_Eat_3: -2413051454923106255
+      Cast_Night_Eat_4: -7356038717283814540
+      Cast_Night_Eat_5: 7330291701686895041
+      Cast_Night_Eat_6: -3635505980305874108
+      Cast_Night_Eat_7: 5898944630277956807
+      Cast_Night_Harvest_0: -5712598783249274458
+      Cast_Night_Harvest_1: 3113885837147584522
+      Cast_Night_Harvest_2: 3319966867574566865
+      Cast_Night_Harvest_3: -272005801120467703
+      Cast_Night_Harvest_4: 1162986121269525718
+      Cast_Night_Harvest_5: -6317432301001362539
+      Cast_Night_Harvest_6: 3637761370430315047
+      Cast_Night_Harvest_7: 3104693365271614978
+      Cast_Night_Net_0: 73652905804464517
+      Cast_Night_Net_1: 5832769653404519630
+      Cast_Night_Net_2: -5543534437118858709
+      Cast_Night_Net_3: 7409610856400402263
+      Cast_Night_Net_4: 391214853924465764
+      Cast_Night_Net_5: -3764359186378209021
+      Cast_Night_Net_6: -5628655457844086543
+      Cast_Night_Net_7: 2437997929471673903
+      Cast_Night_Squat_0: 7274258189180693363
+      Cast_Night_Squat_1: 51928998155319731
+      Cast_Night_Squat_2: -6026217909318067778
+      Cast_Night_Squat_3: 4687074916306686171
+      Cast_Night_Squat_4: 2439161775796154940
+      Cast_Night_Squat_5: -4472133123325374738
+      Cast_Night_Squat_6: 2085137132327580739
+      Cast_Night_Squat_7: 5444683028858490356
+      Cast_Night_Stretch_0: -8110046738949528105
+      Cast_Night_Stretch_1: -4086444835836841640
+      Cast_Night_Stretch_2: 6038965180629992857
+      Cast_Night_Stretch_3: 462758219408094502
+      Cast_Night_Stretch_4: -7053198817252469877
+      Cast_Night_Stretch_5: 9136066698700079364
+      Cast_Night_Stretch_6: -1249241422101318958
+      Cast_Night_Stretch_7: -1075886312951226603
+      Cast_Night_Walk_0: 8130296090550795396
+      Cast_Night_Walk_1: 2351839677963182320
+      Cast_Night_Walk_2: -8408254766026721478
+      Cast_Night_Walk_3: -7058632823764269775
+      Cast_Night_Walk_4: 194308671644450898
+      Cast_Night_Walk_5: 7399146200666693369
+      Cast_Night_Walk_6: -1004956015728110395
+      Cast_Night_Walk_7: -1084033520844659665
+      Cast_Night_Walk_Down_0: -6476815682988930218
+      Cast_Night_Walk_Down_1: 4779854590162313340
+      Cast_Night_Walk_Down_2: 4010785080945866104
+      Cast_Night_Walk_Down_3: 962115679134738707
+      Cast_Night_Walk_Down_4: 2320736034040173790
+      Cast_Night_Walk_Down_5: -7924762885139078781
+      Cast_Night_Walk_Down_6: -4182149051533700452
+      Cast_Night_Walk_Down_7: -383854025963309657
+      Cast_Night_Walk_Up_0: 679242711066114595
+      Cast_Night_Walk_Up_1: -4060268787646035852
+      Cast_Night_Walk_Up_2: 8407970706307817815
+      Cast_Night_Walk_Up_3: -1005203423140977664
+      Cast_Night_Walk_Up_4: 6704370865052693757
+      Cast_Night_Walk_Up_5: 4312304523927723737
+      Cast_Night_Walk_Up_6: -976037072176805095
+      Cast_Night_Walk_Up_7: -5907285546203836852
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

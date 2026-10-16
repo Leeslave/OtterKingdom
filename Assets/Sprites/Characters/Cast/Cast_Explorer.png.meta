@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: b925a89092cee454794e1ae14716e3b5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6060669082586573162
+    second: Cast_Explorer_0
+  - first:
+      213: 5079402514978040067
+    second: Cast_Explorer_1
+  - first:
+      213: -4394761047629591810
+    second: Cast_Explorer_2
+  - first:
+      213: 8720449080346201706
+    second: Cast_Explorer_3
+  - first:
+      213: -7047451494601151739
+    second: Cast_Explorer_4
+  - first:
+      213: -2353715892406495560
+    second: Cast_Explorer_5
+  - first:
+      213: 8538754757238579091
+    second: Cast_Explorer_6
+  - first:
+      213: 3960555326541963371
+    second: Cast_Explorer_7
+  - first:
+      213: 4476020979034597717
+    second: Cast_Explorer_8
+  - first:
+      213: 5860750464442230620
+    second: Cast_Explorer_9
+  - first:
+      213: -8360797220425265522
+    second: Cast_Explorer_10
+  - first:
+      213: -2121104302372276254
+    second: Cast_Explorer_11
+  - first:
+      213: -6271368985294847468
+    second: Cast_Explorer_12
+  - first:
+      213: -1985553192145907856
+    second: Cast_Explorer_13
+  - first:
+      213: 7402777839235521231
+    second: Cast_Explorer_14
+  - first:
+      213: 4129871066251450020
+    second: Cast_Explorer_15
+  - first:
+      213: -2064703108310596926
+    second: Cast_Explorer_16
+  - first:
+      213: -2389581755191105046
+    second: Cast_Explorer_17
+  - first:
+      213: -908096121767955126
+    second: Cast_Explorer_18
+  - first:
+      213: 1232132422958796459
+    second: Cast_Explorer_19
+  - first:
+      213: 1680556302214243074
+    second: Cast_Explorer_20
+  - first:
+      213: 8394504658345523527
+    second: Cast_Explorer_21
+  - first:
+      213: -2770923188272902410
+    second: Cast_Explorer_22
+  - first:
+      213: 991951741031794536
+    second: Cast_Explorer_23
+  - first:
+      213: 6741095110489387489
+    second: Cast_Explorer_24
+  - first:
+      213: -3097127285001349627
+    second: Cast_Explorer_25
+  - first:
+      213: -5451131969094945150
+    second: Cast_Explorer_26
+  - first:
+      213: 5877874253051379421
+    second: Cast_Explorer_27
+  - first:
+      213: 3572660847835475741
+    second: Cast_Explorer_28
+  - first:
+      213: 7044215935998641727
+    second: Cast_Explorer_29
+  - first:
+      213: 1776915321371561531
+    second: Cast_Explorer_30
+  - first:
+      213: -3184879311758749989
+    second: Cast_Explorer_31
+  - first:
+      213: -6689169147342901155
+    second: Cast_Explorer_32
+  - first:
+      213: 1481103603375116825
+    second: Cast_Explorer_33
+  - first:
+      213: -6132605265476331812
+    second: Cast_Explorer_34
+  - first:
+      213: 1882648826437148711
+    second: Cast_Explorer_35
+  - first:
+      213: 2358946732260887487
+    second: Cast_Explorer_36
+  - first:
+      213: 2972560627669358928
+    second: Cast_Explorer_37
+  - first:
+      213: -6864932019584007681
+    second: Cast_Explorer_38
+  - first:
+      213: 9187090887815371348
+    second: Cast_Explorer_39
+  - first:
+      213: -6468605417685023153
+    second: Cast_Explorer_40
+  - first:
+      213: -6594858747004047446
+    second: Cast_Explorer_41
+  - first:
+      213: -770263505936062277
+    second: Cast_Explorer_42
+  - first:
+      213: 1357844996599102017
+    second: Cast_Explorer_43
+  - first:
+      213: 1073987334021430105
+    second: Cast_Explorer_44
+  - first:
+      213: 6436160044608775730
+    second: Cast_Explorer_45
+  - first:
+      213: -3250511835779630666
+    second: Cast_Explorer_46
+  - first:
+      213: -5879579648293352143
+    second: Cast_Explorer_47
+  - first:
+      213: -6337584658116309684
+    second: Cast_Explorer_48
+  - first:
+      213: -2247660221283688265
+    second: Cast_Explorer_49
+  - first:
+      213: -8354427540749174046
+    second: Cast_Explorer_50
+  - first:
+      213: 8292050980896679217
+    second: Cast_Explorer_51
+  - first:
+      213: 6942602704798518740
+    second: Cast_Explorer_52
+  - first:
+      213: -1897977286046194102
+    second: Cast_Explorer_53
+  - first:
+      213: -5827677169896414588
+    second: Cast_Explorer_54
+  - first:
+      213: -817840768405801185
+    second: Cast_Explorer_55
+  - first:
+      213: -7206266277692497844
+    second: Cast_Explorer_56
+  - first:
+      213: 677186082260703173
+    second: Cast_Explorer_57
+  - first:
+      213: 4155196356801579922
+    second: Cast_Explorer_58
+  - first:
+      213: 3140485226031887695
+    second: Cast_Explorer_59
+  - first:
+      213: 6832894241479597218
+    second: Cast_Explorer_60
+  - first:
+      213: 7814650268801448269
+    second: Cast_Explorer_61
+  - first:
+      213: 6992676976123052130
+    second: Cast_Explorer_62
+  - first:
+      213: -9115579486750314230
+    second: Cast_Explorer_63
+  - first:
+      213: -1418321007676185476
+    second: Cast_Explorer_64
+  - first:
+      213: 1998266321730471147
+    second: Cast_Explorer_65
+  - first:
+      213: 8645009367734957473
+    second: Cast_Explorer_66
+  - first:
+      213: 8388899020017517065
+    second: Cast_Explorer_67
+  - first:
+      213: -4859567877202490779
+    second: Cast_Explorer_68
+  - first:
+      213: -5452571516471535181
+    second: Cast_Explorer_69
+  - first:
+      213: -8882395222878874006
+    second: Cast_Explorer_Walk_0
+  - first:
+      213: 5760417958848690827
+    second: Cast_Explorer_Walk_1
+  - first:
+      213: 6903185798280591820
+    second: Cast_Explorer_Walk_2
+  - first:
+      213: 6771663539973767218
+    second: Cast_Explorer_Walk_3
+  - first:
+      213: -7979638970785972815
+    second: Cast_Explorer_Walk_4
+  - first:
+      213: -795587740532105239
+    second: Cast_Explorer_Walk_5
+  - first:
+      213: -2650024094853082505
+    second: Cast_Explorer_Walk_6
+  - first:
+      213: 5567825627273411628
+    second: Cast_Explorer_Walk_7
+  - first:
+      213: -7121028728708263089
+    second: Cast_Explorer_Walk_Down_0
+  - first:
+      213: 5437211835070006081
+    second: Cast_Explorer_Walk_Down_1
+  - first:
+      213: 2867448565439035060
+    second: Cast_Explorer_Walk_Down_2
+  - first:
+      213: -4116091767816654399
+    second: Cast_Explorer_Walk_Down_3
+  - first:
+      213: 4228791145131058069
+    second: Cast_Explorer_Walk_Down_4
+  - first:
+      213: 1537094636431651711
+    second: Cast_Explorer_Walk_Down_5
+  - first:
+      213: -763401122483809815
+    second: Cast_Explorer_Walk_Down_6
+  - first:
+      213: -3270057008082639147
+    second: Cast_Explorer_Walk_Down_7
+  - first:
+      213: 6223715673961775192
+    second: Cast_Explorer_Walk_Up_0
+  - first:
+      213: 141115554879690538
+    second: Cast_Explorer_Walk_Up_1
+  - first:
+      213: -3451414240724236251
+    second: Cast_Explorer_Walk_Up_2
+  - first:
+      213: 5911812866927925723
+    second: Cast_Explorer_Walk_Up_3
+  - first:
+      213: 5925852704186723320
+    second: Cast_Explorer_Walk_Up_4
+  - first:
+      213: -288263170130698098
+    second: Cast_Explorer_Walk_Up_5
+  - first:
+      213: 3671187677871858752
+    second: Cast_Explorer_Walk_Up_6
+  - first:
+      213: 9017252335261757125
+    second: Cast_Explorer_Walk_Up_7
+  - first:
+      213: 3724640663257322043
+    second: Cast_Explorer_Harvest_0
+  - first:
+      213: 1125726116999339407
+    second: Cast_Explorer_Harvest_1
+  - first:
+      213: -8644571818192120059
+    second: Cast_Explorer_Harvest_2
+  - first:
+      213: -2534628627798719846
+    second: Cast_Explorer_Harvest_3
+  - first:
+      213: 6562929079248478911
+    second: Cast_Explorer_Harvest_4
+  - first:
+      213: 7959123525909603046
+    second: Cast_Explorer_Harvest_5
+  - first:
+      213: 9073814641052903628
+    second: Cast_Explorer_Harvest_6
+  - first:
+      213: -8473073608802831612
+    second: Cast_Explorer_Harvest_7
+  - first:
+      213: -3584668353044016953
+    second: Cast_Explorer_Eat_0
+  - first:
+      213: 2248618869452607000
+    second: Cast_Explorer_Eat_1
+  - first:
+      213: -7095549299744892235
+    second: Cast_Explorer_Eat_2
+  - first:
+      213: 4828116936405152898
+    second: Cast_Explorer_Eat_3
+  - first:
+      213: 5301715466311387951
+    second: Cast_Explorer_Eat_4
+  - first:
+      213: -9174396728239458995
+    second: Cast_Explorer_Eat_5
+  - first:
+      213: -8515699371491754416
+    second: Cast_Explorer_Eat_6
+  - first:
+      213: -9105678263308705941
+    second: Cast_Explorer_Eat_7
+  - first:
+      213: -4160597624914167443
+    second: Cast_Explorer_Net_0
+  - first:
+      213: 3587310729629518848
+    second: Cast_Explorer_Net_1
+  - first:
+      213: 7948722150549952049
+    second: Cast_Explorer_Net_2
+  - first:
+      213: 3840206665160531817
+    second: Cast_Explorer_Net_3
+  - first:
+      213: -4840752510335134175
+    second: Cast_Explorer_Net_4
+  - first:
+      213: 5101894946778787463
+    second: Cast_Explorer_Net_5
+  - first:
+      213: 4522266595225689082
+    second: Cast_Explorer_Net_6
+  - first:
+      213: -3303816232596145019
+    second: Cast_Explorer_Net_7
+  - first:
+      213: 8975461464929306281
+    second: Cast_Explorer_Squat_0
+  - first:
+      213: 8361320485032635836
+    second: Cast_Explorer_Squat_1
+  - first:
+      213: 8172785521208497157
+    second: Cast_Explorer_Squat_2
+  - first:
+      213: 4172169873594083156
+    second: Cast_Explorer_Squat_3
+  - first:
+      213: 3773152345479071782
+    second: Cast_Explorer_Squat_4
+  - first:
+      213: -2121579250739300016
+    second: Cast_Explorer_Squat_5
+  - first:
+      213: 1934597059994735897
+    second: Cast_Explorer_Squat_6
+  - first:
+      213: -1739540073826929898
+    second: Cast_Explorer_Squat_7
+  - first:
+      213: -9056607818408634149
+    second: Cast_Explorer_Stretch_0
+  - first:
+      213: 4312298210334338375
+    second: Cast_Explorer_Stretch_1
+  - first:
+      213: 375005166024441486
+    second: Cast_Explorer_Stretch_2
+  - first:
+      213: 4955987665183854900
+    second: Cast_Explorer_Stretch_3
+  - first:
+      213: -760460362674234973
+    second: Cast_Explorer_Stretch_4
+  - first:
+      213: 2261942156930070546
+    second: Cast_Explorer_Stretch_5
+  - first:
+      213: 8379579874175707916
+    second: Cast_Explorer_Stretch_6
+  - first:
+      213: 164831144271891520
+    second: Cast_Explorer_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a669da11b946bb480800000000000000
+      internalID: -8882395222878874006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8af4f21d9d11ff40800000000000000
+      internalID: 5760417958848690827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc9390da8ea0dcf50800000000000000
+      internalID: 6903185798280591820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 230c99e9c18c9fd50800000000000000
+      internalID: 6771663539973767218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bd307e42a0a24190800000000000000
+      internalID: -7979638970785972815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ef9de94a2185f4f0800000000000000
+      internalID: -795587740532105239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7725e0c4029393bd0800000000000000
+      internalID: -2650024094853082505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2cb2fc88e3e44d40800000000000000
+      internalID: 5567825627273411628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f431efd99160d2d90800000000000000
+      internalID: -7121028728708263089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 143c5ed3b5bd47b40800000000000000
+      internalID: 5437211835070006081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b672b227493bc720800000000000000
+      internalID: 2867448565439035060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c1f06c5854b0e6c0800000000000000
+      internalID: -4116091767816654399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 593aad2342fafaa30800000000000000
+      internalID: 4228791145131058069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f73baae8d6bd45510800000000000000
+      internalID: 1537094636431651711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e1d73949bad765f0800000000000000
+      internalID: -763401122483809815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d625f50a7c6e92d0800000000000000
+      internalID: -3270057008082639147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850c5894e641f5650800000000000000
+      internalID: 6223715673961775192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a27d2e879d755f100800000000000000
+      internalID: 141115554879690538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52848e0d80d1a10d0800000000000000
+      internalID: -3451414240724236251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd992d7fa7afa0250800000000000000
+      internalID: 5911812866927925723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fb665053abdc3250800000000000000
+      internalID: 5925852704186723320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e80288e8c22effbf0800000000000000
+      internalID: -288263170130698098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 044e7530ebda2f230800000000000000
+      internalID: 3671187677871858752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cea6553937b32d70800000000000000
+      internalID: 9017252335261757125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b329d6103f490b330800000000000000
+      internalID: 3724640663257322043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8d102660f16f9f00800000000000000
+      internalID: 1125726116999339407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5075e457bbf480880800000000000000
+      internalID: -8644571818192120059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a92858a21b033dcd0800000000000000
+      internalID: -2534628627798719846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb2efa6c935341b50800000000000000
+      internalID: 6562929079248478911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e2eb457dac747e60800000000000000
+      internalID: 7959123525909603046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc862b5475aaced70800000000000000
+      internalID: 9073814641052903628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 403f19fe178996a80800000000000000
+      internalID: -8473073608802831612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c01a331023b04ec0800000000000000
+      internalID: -3584668353044016953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81e86f4b2f2b43f10800000000000000
+      internalID: 2248618869452607000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ba1f66718b878d90800000000000000
+      internalID: -7095549299744892235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 284f970f5cae00340800000000000000
+      internalID: 4828116936405152898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2b4fad702a739940800000000000000
+      internalID: 5301715466311387951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d45f7c0a8cefda080800000000000000
+      internalID: -9174396728239458995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05e773c2a8822d980800000000000000
+      internalID: -8515699371491754416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6f1d7c0dd122a180800000000000000
+      internalID: -9105678263308705941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6938a101869246c0800000000000000
+      internalID: -4160597624914167443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00cc38a2a10b8c130800000000000000
+      internalID: 3587310729629518848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1361fc98ea88f4e60800000000000000
+      internalID: 7948722150549952049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96f1bfc9d972b4530800000000000000
+      internalID: 3840206665160531817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 126d4ef3d3132dcb0800000000000000
+      internalID: -4840752510335134175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78e2c105c629dc640800000000000000
+      internalID: 5101894946778787463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afbda04228152ce30800000000000000
+      internalID: 4522266595225689082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58cffec04ac7622d0800000000000000
+      internalID: -3303816232596145019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a68158f5ae3f8c70800000000000000
+      internalID: 8975461464929306281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbd21935ea0690470800000000000000
+      internalID: 8361320485032635836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 504961951219b6170800000000000000
+      internalID: 8172785521208497157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 457692a156686e930800000000000000
+      internalID: 4172169873594083156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62846b3311eec5430800000000000000
+      internalID: 3773152345479071782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05938dc79e2ae82e0800000000000000
+      internalID: -2121579250739300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9155080b6c119da10800000000000000
+      internalID: 1934597059994735897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6133df2f489ebd7e0800000000000000
+      internalID: -1739540073826929898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd85ab15c27705280800000000000000
+      internalID: -9056607818408634149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74de780ff5c58db30800000000000000
+      internalID: 4312298210334338375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8eb2dd2639443500800000000000000
+      internalID: 375005166024441486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4315086068437c440800000000000000
+      internalID: 4955987665183854900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a99909445d4275f0800000000000000
+      internalID: -760460362674234973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2183c4e4868046f10800000000000000
+      internalID: 2261942156930070546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0b6147af7f3a4470800000000000000
+      internalID: 8379579874175707916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Explorer_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04c4f3a6d09994200800000000000000
+      internalID: 164831144271891520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Explorer_0: -6060669082586573162
+      Cast_Explorer_1: 5079402514978040067
+      Cast_Explorer_10: -8360797220425265522
+      Cast_Explorer_11: -2121104302372276254
+      Cast_Explorer_12: -6271368985294847468
+      Cast_Explorer_13: -1985553192145907856
+      Cast_Explorer_14: 7402777839235521231
+      Cast_Explorer_15: 4129871066251450020
+      Cast_Explorer_16: -2064703108310596926
+      Cast_Explorer_17: -2389581755191105046
+      Cast_Explorer_18: -908096121767955126
+      Cast_Explorer_19: 1232132422958796459
+      Cast_Explorer_2: -4394761047629591810
+      Cast_Explorer_20: 1680556302214243074
+      Cast_Explorer_21: 8394504658345523527
+      Cast_Explorer_22: -2770923188272902410
+      Cast_Explorer_23: 991951741031794536
+      Cast_Explorer_24: 6741095110489387489
+      Cast_Explorer_25: -3097127285001349627
+      Cast_Explorer_26: -5451131969094945150
+      Cast_Explorer_27: 5877874253051379421
+      Cast_Explorer_28: 3572660847835475741
+      Cast_Explorer_29: 7044215935998641727
+      Cast_Explorer_3: 8720449080346201706
+      Cast_Explorer_30: 1776915321371561531
+      Cast_Explorer_31: -3184879311758749989
+      Cast_Explorer_32: -6689169147342901155
+      Cast_Explorer_33: 1481103603375116825
+      Cast_Explorer_34: -6132605265476331812
+      Cast_Explorer_35: 1882648826437148711
+      Cast_Explorer_36: 2358946732260887487
+      Cast_Explorer_37: 2972560627669358928
+      Cast_Explorer_38: -6864932019584007681
+      Cast_Explorer_39: 9187090887815371348
+      Cast_Explorer_4: -7047451494601151739
+      Cast_Explorer_40: -6468605417685023153
+      Cast_Explorer_41: -6594858747004047446
+      Cast_Explorer_42: -770263505936062277
+      Cast_Explorer_43: 1357844996599102017
+      Cast_Explorer_44: 1073987334021430105
+      Cast_Explorer_45: 6436160044608775730
+      Cast_Explorer_46: -3250511835779630666
+      Cast_Explorer_47: -5879579648293352143
+      Cast_Explorer_48: -6337584658116309684
+      Cast_Explorer_49: -2247660221283688265
+      Cast_Explorer_5: -2353715892406495560
+      Cast_Explorer_50: -8354427540749174046
+      Cast_Explorer_51: 8292050980896679217
+      Cast_Explorer_52: 6942602704798518740
+      Cast_Explorer_53: -1897977286046194102
+      Cast_Explorer_54: -5827677169896414588
+      Cast_Explorer_55: -817840768405801185
+      Cast_Explorer_56: -7206266277692497844
+      Cast_Explorer_57: 677186082260703173
+      Cast_Explorer_58: 4155196356801579922
+      Cast_Explorer_59: 3140485226031887695
+      Cast_Explorer_6: 8538754757238579091
+      Cast_Explorer_60: 6832894241479597218
+      Cast_Explorer_61: 7814650268801448269
+      Cast_Explorer_62: 6992676976123052130
+      Cast_Explorer_63: -9115579486750314230
+      Cast_Explorer_64: -1418321007676185476
+      Cast_Explorer_65: 1998266321730471147
+      Cast_Explorer_66: 8645009367734957473
+      Cast_Explorer_67: 8388899020017517065
+      Cast_Explorer_68: -4859567877202490779
+      Cast_Explorer_69: -5452571516471535181
+      Cast_Explorer_7: 3960555326541963371
+      Cast_Explorer_8: 4476020979034597717
+      Cast_Explorer_9: 5860750464442230620
+      Cast_Explorer_Eat_0: -3584668353044016953
+      Cast_Explorer_Eat_1: 2248618869452607000
+      Cast_Explorer_Eat_2: -7095549299744892235
+      Cast_Explorer_Eat_3: 4828116936405152898
+      Cast_Explorer_Eat_4: 5301715466311387951
+      Cast_Explorer_Eat_5: -9174396728239458995
+      Cast_Explorer_Eat_6: -8515699371491754416
+      Cast_Explorer_Eat_7: -9105678263308705941
+      Cast_Explorer_Harvest_0: 3724640663257322043
+      Cast_Explorer_Harvest_1: 1125726116999339407
+      Cast_Explorer_Harvest_2: -8644571818192120059
+      Cast_Explorer_Harvest_3: -2534628627798719846
+      Cast_Explorer_Harvest_4: 6562929079248478911
+      Cast_Explorer_Harvest_5: 7959123525909603046
+      Cast_Explorer_Harvest_6: 9073814641052903628
+      Cast_Explorer_Harvest_7: -8473073608802831612
+      Cast_Explorer_Net_0: -4160597624914167443
+      Cast_Explorer_Net_1: 3587310729629518848
+      Cast_Explorer_Net_2: 7948722150549952049
+      Cast_Explorer_Net_3: 3840206665160531817
+      Cast_Explorer_Net_4: -4840752510335134175
+      Cast_Explorer_Net_5: 5101894946778787463
+      Cast_Explorer_Net_6: 4522266595225689082
+      Cast_Explorer_Net_7: -3303816232596145019
+      Cast_Explorer_Squat_0: 8975461464929306281
+      Cast_Explorer_Squat_1: 8361320485032635836
+      Cast_Explorer_Squat_2: 8172785521208497157
+      Cast_Explorer_Squat_3: 4172169873594083156
+      Cast_Explorer_Squat_4: 3773152345479071782
+      Cast_Explorer_Squat_5: -2121579250739300016
+      Cast_Explorer_Squat_6: 1934597059994735897
+      Cast_Explorer_Squat_7: -1739540073826929898
+      Cast_Explorer_Stretch_0: -9056607818408634149
+      Cast_Explorer_Stretch_1: 4312298210334338375
+      Cast_Explorer_Stretch_2: 375005166024441486
+      Cast_Explorer_Stretch_3: 4955987665183854900
+      Cast_Explorer_Stretch_4: -760460362674234973
+      Cast_Explorer_Stretch_5: 2261942156930070546
+      Cast_Explorer_Stretch_6: 8379579874175707916
+      Cast_Explorer_Stretch_7: 164831144271891520
+      Cast_Explorer_Walk_0: -8882395222878874006
+      Cast_Explorer_Walk_1: 5760417958848690827
+      Cast_Explorer_Walk_2: 6903185798280591820
+      Cast_Explorer_Walk_3: 6771663539973767218
+      Cast_Explorer_Walk_4: -7979638970785972815
+      Cast_Explorer_Walk_5: -795587740532105239
+      Cast_Explorer_Walk_6: -2650024094853082505
+      Cast_Explorer_Walk_7: 5567825627273411628
+      Cast_Explorer_Walk_Down_0: -7121028728708263089
+      Cast_Explorer_Walk_Down_1: 5437211835070006081
+      Cast_Explorer_Walk_Down_2: 2867448565439035060
+      Cast_Explorer_Walk_Down_3: -4116091767816654399
+      Cast_Explorer_Walk_Down_4: 4228791145131058069
+      Cast_Explorer_Walk_Down_5: 1537094636431651711
+      Cast_Explorer_Walk_Down_6: -763401122483809815
+      Cast_Explorer_Walk_Down_7: -3270057008082639147
+      Cast_Explorer_Walk_Up_0: 6223715673961775192
+      Cast_Explorer_Walk_Up_1: 141115554879690538
+      Cast_Explorer_Walk_Up_2: -3451414240724236251
+      Cast_Explorer_Walk_Up_3: 5911812866927925723
+      Cast_Explorer_Walk_Up_4: 5925852704186723320
+      Cast_Explorer_Walk_Up_5: -288263170130698098
+      Cast_Explorer_Walk_Up_6: 3671187677871858752
+      Cast_Explorer_Walk_Up_7: 9017252335261757125
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

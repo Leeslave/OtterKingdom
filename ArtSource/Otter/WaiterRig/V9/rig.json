@@ -1,0 +1,248 @@
+{
+  "units": "pixels; x right, y down; rotations in radians",
+  "view": "front-right three-quarter",
+  "legSolver": {
+    "type": "rigid straight leg, sole-anchored",
+    "stanceFraction": 0.6,
+    "cycleSeconds": 0.84,
+    "stepHalfWidth": 6,
+    "lift": 6,
+    "width": 60,
+    "height": 76,
+    "nearX": -16,
+    "farX": 31,
+    "swingAngle": 0.025,
+    "rearInset": 0,
+    "frontInset": 0
+  },
+  "bodyRearInset": 0,
+  "bones": [
+    {
+      "name": "hips",
+      "parent": null,
+      "pos": [
+        0,
+        -43
+      ]
+    },
+    {
+      "name": "body",
+      "parent": "hips",
+      "pos": [
+        0,
+        -54
+      ],
+      "part": "body",
+      "width": 170,
+      "pivot": [
+        0.5,
+        0.6
+      ],
+      "layer": 5,
+      "height": 155
+    },
+    {
+      "name": "tail",
+      "parent": "hips",
+      "pos": [
+        -42,
+        -5
+      ],
+      "part": "tail",
+      "width": 100,
+      "pivot": [
+        0.9,
+        0.55
+      ],
+      "layer": 0,
+      "height": 55
+    },
+    {
+      "name": "farArm",
+      "parent": "body",
+      "pos": [
+        68,
+        -51
+      ],
+      "part": "arm",
+      "width": 44,
+      "pivot": [
+        0.55,
+        0.18
+      ],
+      "layer": 1,
+      "height": 70
+    },
+    {
+      "name": "farLeg",
+      "parent": "hips",
+      "pos": [
+        34,
+        0
+      ],
+      "part": "leg",
+      "width": 47,
+      "pivot": [
+        0.45,
+        0.22
+      ],
+      "layer": 3,
+      "height": 72
+    },
+    {
+      "name": "nearLeg",
+      "parent": "hips",
+      "pos": [
+        -26,
+        -4
+      ],
+      "part": "leg",
+      "width": 50,
+      "pivot": [
+        0.45,
+        0.22
+      ],
+      "layer": 4,
+      "height": 76
+    },
+    {
+      "name": "nearArm",
+      "parent": "body",
+      "pos": [
+        -65,
+        -53
+      ],
+      "part": "arm",
+      "width": 55,
+      "pivot": [
+        0.55,
+        0.18
+      ],
+      "layer": 6,
+      "height": 88
+    },
+    {
+      "name": "head",
+      "parent": "body",
+      "pos": [
+        0,
+        -98
+      ],
+      "part": "head",
+      "width": 270,
+      "pivot": [
+        0.5,
+        0.9
+      ],
+      "layer": 7,
+      "height": 225
+    }
+  ],
+  "pelvisWidthScale": 0.72,
+  "approvedSettings": {
+    "version": 1,
+    "adjustments": {
+      "nearArm": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "farArm": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "nearLeg": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "farLeg": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "body": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "head": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      },
+      "tail": {
+        "x": 0,
+        "y": 0,
+        "width": 100,
+        "height": 100,
+        "pawWidth": 100,
+        "pawHeight": 100
+      }
+    }
+  },
+  "parts": {
+    "head": {
+      "left": 29,
+      "top": 76,
+      "width": 519,
+      "height": 397
+    },
+    "bodyBare": {
+      "left": 582,
+      "top": 163,
+      "width": 346,
+      "height": 345
+    },
+    "armBare": {
+      "left": 1026,
+      "top": 206,
+      "width": 160,
+      "height": 281
+    },
+    "solidLeg": {
+      "left": 1278,
+      "top": 231,
+      "width": 168,
+      "height": 276
+    },
+    "bodyWaiter": {
+      "left": 137,
+      "top": 564,
+      "width": 390,
+      "height": 380
+    },
+    "armWaiter": {
+      "left": 626,
+      "top": 622,
+      "width": 173,
+      "height": 298
+    },
+    "tail": {
+      "left": 921,
+      "top": 717,
+      "width": 254,
+      "height": 155
+    }
+  },
+  "source": "Attached waiter/bare character; new three-quarter cutout art"
+}

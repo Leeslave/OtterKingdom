@@ -1,0 +1,23 @@
+{
+  "rig": "MinerRigV1",
+  "front": [
+    {
+      "part": "body",
+      "x": 0,
+      "y": -3,
+      "rotation": 0,
+      "scaleX": 1,
+      "scaleY": 0.93
+    }
+  ],
+  "rear": [
+    {
+      "part": "body",
+      "x": 0,
+      "y": -3,
+      "rotation": 0,
+      "scaleX": 1,
+      "scaleY": 0.93
+    }
+  ]
+}

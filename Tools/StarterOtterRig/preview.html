@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>첫 해달 · 정면 리깅</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f0e7;color:#45362d;font-family:system-ui,'Malgun Gothic',sans-serif}main{max-width:1160px;margin:auto;padding:36px 28px}.eyebrow{font-size:11px;letter-spacing:2px;color:#887867}h1{font-size:30px;margin:12px 0}p{font-size:14px;line-height:1.75;color:#857463}.layout{display:grid;grid-template-columns:1fr 270px;gap:24px;margin-top:28px}.stage{background:#eee5d7;border:1px solid #dfd2bf;border-radius:24px;overflow:hidden}canvas{display:block;width:100%}.caption{border-top:1px solid #dfd2bf;padding:16px 24px;display:flex;justify-content:space-between;font-size:12px;color:#847461}aside{padding:24px;background:#fffdf7;border:1px solid #e6ddce;border-radius:24px}h2{font-size:15px;margin:0 0 18px}.modes{display:flex;flex-wrap:wrap;gap:8px}button{border:0;background:#eee7da;color:#574535;border-radius:10px;padding:11px 13px;cursor:pointer;font:inherit;font-size:13px}button.active{background:#56725d;color:white}button:focus-visible,input:focus-visible{outline:3px solid #d79746;outline-offset:3px}label{display:block;font-size:13px;margin:20px 0}input[type=range]{display:block;width:100%;margin-top:12px;accent-color:#56725d}input[type=checkbox]{accent-color:#56725d}output{float:right;color:#8d7a66}hr{border:0;border-top:1px solid #eee4d6;margin:25px 0}footer{font-size:12px;line-height:1.8;color:#8d7c68;margin-top:20px}.note{font-size:12px}#error{color:#a22} @media(max-width:760px){.layout{grid-template-columns:1fr}main{padding:22px 16px}}
+</style>
+<main><div class="eyebrow">OTTER KINGDOM / STARTER CHARACTER / STUDY 01</div><h1>우리의 첫 해달</h1><p>같은 얼굴, 같은 몸. 기본 몸의 움직임부터 살펴봐요.</p>
+<div class="layout"><section class="stage"><canvas id="stage" width="960" height="740" aria-label="정면 해달 리깅 애니메이션"></canvas><div class="caption"><span id="status">대기 · 정면</span><span>기본 몸 / 착용물 없음</span></div></section>
+<aside><h2>움직임</h2><div class="modes"><button data-mode="idle" class="active">대기</button><button data-mode="walk">제자리 걷기</button><button data-mode="wave">손 흔들기</button><button id="pause">일시정지</button></div><label>속도 <output id="speedLabel">1.00×</output><input id="speed" type="range" min="0.25" max="1.5" step="0.05" value="1"></label><hr><h2>리그 살펴보기</h2><label><input type="checkbox" id="bones"> 관절 표시</label><label><input type="checkbox" id="explode"> 파츠 펼치기</label><label><input type="checkbox" id="slots"> 착용물 기준점</label><label><input type="checkbox" id="small"> 게임 크기로 보기</label><p class="note">정면 파츠 7개를 연결한 첫 리그입니다. 머리·몸·양팔·양다리·꼬리가 각각 움직여요.</p><p id="error" role="alert"></p></aside></div><footer>얼굴과 체형은 고정합니다. 모자·상의·소매용 기준점만 마련했으며 착용물과 털색 변경은 아직 포함하지 않았습니다.<br>정면 동작 확인용 프로토타입입니다. 측면·뒷면, Unity 연결, 실제 이동은 후속 작업입니다.</footer></main>
+<script>
+const RIG=/*RIG_DATA*/, SOURCES=/*IMAGE_DATA*/;
+const canvas=document.getElementById('stage'),ctx=canvas.getContext('2d');
+const state={mode:'idle',time:0,speed:1,paused:false,bones:false,explode:false,slots:false,small:false};
+const imgs={};
+const labels={idle:'대기',walk:'제자리 걷기',wave:'손 흔들기'};
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{state.mode=b.dataset.mode;state.time=0;document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('status').textContent=labels[state.mode]+' · 정면';});
+document.getElementById('pause').onclick=()=>{state.paused=!state.paused;document.getElementById('pause').textContent=state.paused?'재생':'일시정지';};
+document.getElementById('speed').oninput=e=>{state.speed=+e.target.value;document.getElementById('speedLabel').textContent=state.speed.toFixed(2)+'×';};
+for(const k of ['bones','explode','slots','small'])document.getElementById(k).onchange=e=>state[k]=e.target.checked;
+const mul=(a,b)=>[a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];
+const point=(m,p)=>[m[0]*p[0]+m[2]*p[1]+m[4],m[1]*p[0]+m[3]*p[1]+m[5]];
+function matrices(t){
+ const p=t*Math.PI*2/.85,walk=state.mode==='walk',wave=state.mode==='wave',m={};
+ for(const b of RIG.bones){let [x,y]=b.pos,a=0;
+  if(b.name==='hips'){y+=walk?-2.8*(1-Math.cos(p*2)):Math.sin(t*2)*1.3;}
+  if(b.name==='body')a=walk?Math.sin(p)*.022:Math.sin(t*1.7)*.008;
+  if(b.name==='head')a=wave?-.05+Math.sin(t*2)*.018:Math.sin(t*1.6-.3)*.017;
+  if(b.name==='tail')a=Math.sin(t*2.6-.6)*.09;
+  if(b.name==='armLeft')a=walk?Math.sin(p)*.17:Math.sin(t*2)*.025;
+  if(b.name==='armRight')a=wave?-1.75+Math.sin(t*7)*.22:walk?-Math.sin(p)*.17:-Math.sin(t*2)*.025;
+  if(b.name.startsWith('leg')){const q=p+(b.name==='legLeft'?0:Math.PI);if(walk){y-=Math.max(0,Math.sin(q))*8;y+=2.8*(1-Math.cos(p*2));a=Math.sin(q)*.065;}else y-=Math.sin(t*2)*1.3;}
+  if(state.explode){if(b.name==='head')y-=55;if(b.name.startsWith('arm'))x+=x<0?-65:65;if(b.name.startsWith('leg')){x+=x<0?-28:28;y+=40;}if(b.name==='tail')x+=70;}
+  const c=Math.cos(a),s=Math.sin(a),local=[c,s,-s,c,x,y];m[b.name]=b.parent?mul(m[b.parent],local):local;
+ }return m;
+}
+function draw(t){
+ ctx.clearRect(0,0,960,740);ctx.fillStyle='#eee5d7';ctx.fillRect(0,0,960,740);
+ ctx.fillStyle='#b8a58c';ctx.font='12px system-ui';ctx.fillText('FRONT / BASE BODY',32,37);
+ const scale=state.small?.43:1.36,base=state.small?465:590;ctx.save();ctx.translate(480,base);ctx.scale(scale,scale);
+ ctx.fillStyle='rgba(100,75,48,.12)';ctx.beginPath();ctx.ellipse(0,5,94,12,0,0,Math.PI*2);ctx.fill();
+ const m=matrices(t);
+ for(const b of RIG.bones.filter(x=>x.part).sort((a,b)=>a.layer-b.layer)){
+  ctx.save();ctx.transform(...m[b.name]);if(b.mirror)ctx.scale(-1,1);ctx.drawImage(imgs[b.part],-b.width*b.pivot[0],-b.height*b.pivot[1],b.width,b.height);ctx.restore();
+ }
+ if(state.bones){ctx.strokeStyle='#cf596b';ctx.fillStyle='#fff7ee';ctx.lineWidth=1.5/scale;
+  for(const b of RIG.bones){const v=m[b.name];if(b.parent){ctx.beginPath();ctx.moveTo(m[b.parent][4],m[b.parent][5]);ctx.lineTo(v[4],v[5]);ctx.stroke();}ctx.beginPath();ctx.arc(v[4],v[5],3/scale,0,Math.PI*2);ctx.fill();ctx.stroke();}
+ }
+ if(state.slots){ctx.strokeStyle='#3e8491';ctx.fillStyle='#326f7b';ctx.font='11px system-ui';for(const s of RIG.slots){const [x,y]=point(m[s.parent],s.pos);ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.stroke();ctx.fillText(s.name,x+10,y+4);}}
+ ctx.restore();
+}
+window.rigPreview={state,rig:RIG,renderAt(t){state.time=t;draw(t);},matrices};
+Promise.all(Object.entries(SOURCES).map(([k,src])=>new Promise((res,rej)=>{const im=new Image();im.onload=()=>{imgs[k]=im;res();};im.onerror=()=>rej(new Error('파츠 로드 실패: '+k));im.src=src;}))).then(()=>{window.rigReady=true;let prev=performance.now();function frame(now){const dt=Math.min((now-prev)/1000,.05);prev=now;if(!state.paused)state.time+=dt*state.speed;draw(state.time);requestAnimationFrame(frame);}requestAnimationFrame(frame);}).catch(e=>{document.getElementById('error').textContent=e.message;});
+</script></html>

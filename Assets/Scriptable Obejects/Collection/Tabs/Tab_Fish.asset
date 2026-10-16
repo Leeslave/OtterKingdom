@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d371e0870b274b04d9b90e0f596bcb91, type: 3}
+  m_Name: Tab_Fish
+  m_EditorClassIdentifier: OtterKingdom::CollectionTab
+  _tabId: Fish
+  _displayName: "\uC5B4\uB958"
+  _sortOrder: 1
+  _countLabel: "\uC218\uC9D1"
+  _unknownLabel: "\uBBF8\uD68D\uB4DD"
+  _collectedLabel: "\uD68D\uB4DD \uC644\uB8CC"
+  _extraLabel: "\uD68D\uB4DD \uC7A5\uC18C"
+  _unknownIcon: {fileID: 21300000, guid: 595c90a805ca9b94a9570994ca9f6f98, type: 3}
+  _supportsVisits: 0

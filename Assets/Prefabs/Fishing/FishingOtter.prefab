@@ -1,0 +1,293 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &880557957407343575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7679541968718558165}
+  - component: {fileID: 5020575140579245860}
+  - component: {fileID: 951447809531203605}
+  - component: {fileID: 4986031825485348570}
+  - component: {fileID: 1766986843338611921}
+  m_Layer: 0
+  m_Name: FishingOtter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7679541968718558165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880557957407343575}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &5020575140579245860
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880557957407343575}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: -7089174113869790366, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.951724, y: 1.9034482}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+--- !u!114 &951447809531203605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880557957407343575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd7eed2f0751414183ac0f73cfaf813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteFrameAnimator
+  clips:
+  - name: Idle
+    frames:
+    - {fileID: -7089174113869790366, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    fps: 1
+    loop: 1
+  - name: WalkRight
+    frames:
+    - {fileID: 5858112366785257310, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 1180333975664194580, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -3203946523764452859, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -1239912461423921877, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -5809542578185615119, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -776001620733923684, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -1958280534317679483, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -3129027506283899230, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    fps: 10
+    loop: 1
+  - name: WalkLeft
+    frames:
+    - {fileID: -5907734001174577122, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 2152698379838190444, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -4694958831363198856, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 4372199787092979143, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -458944005128679385, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -5150294120775876584, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 2645700501602765806, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 2515966669877135384, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    fps: 10
+    loop: 1
+  - name: WalkDown
+    frames:
+    - {fileID: -5925289528118688799, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -6983230676264323311, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 4885688774078784634, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -5154112963180593714, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -2111922251475780316, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -8895492932955732101, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 5271767168054887379, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -2211450248892735511, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    fps: 10
+    loop: 1
+  - name: WalkUp
+    frames:
+    - {fileID: -191466542615212237, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -5435248915935314602, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 4953031380352852930, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 3176789230835275604, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -5528113867342236446, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: -5727055439443158067, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 2174944743494061573, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    - {fileID: 1943955401920259334, guid: 4aed5401dd028e34a8643f159781fe8b, type: 3}
+    fps: 10
+    loop: 1
+  - name: Cast
+    frames:
+    - {fileID: -7089174113869790366, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    - {fileID: 6691780331395874204, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    - {fileID: 3675132290069560411, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    fps: 5
+    loop: 0
+  - name: Wait
+    frames:
+    - {fileID: 3675132290069560411, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    - {fileID: 1746599595873546715, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    - {fileID: -4984460169455180276, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    - {fileID: 623682436634562518, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    - {fileID: -2805734819780207941, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    - {fileID: -1404570759407628409, guid: a4996c35fb466bb43b107632f7edd386, type: 3}
+    fps: 4
+    loop: 1
+  - name: Bite
+    frames:
+    - {fileID: -4585565400684525527, guid: dc494aca029970742b3ce2662c969700, type: 3}
+    - {fileID: -8729035890663387320, guid: dc494aca029970742b3ce2662c969700, type: 3}
+    - {fileID: -6792078850169472164, guid: dc494aca029970742b3ce2662c969700, type: 3}
+    - {fileID: -7868739965351907550, guid: dc494aca029970742b3ce2662c969700, type: 3}
+    - {fileID: 5661568190896332174, guid: dc494aca029970742b3ce2662c969700, type: 3}
+    - {fileID: 2535713712787882190, guid: dc494aca029970742b3ce2662c969700, type: 3}
+    - {fileID: 885128946048283743, guid: dc494aca029970742b3ce2662c969700, type: 3}
+    - {fileID: 4879055957791068807, guid: dc494aca029970742b3ce2662c969700, type: 3}
+    fps: 8
+    loop: 0
+  - name: Pull
+    frames:
+    - {fileID: 8991808719603905624, guid: aefc6b12f15e7534b90ecb8a465fcd7e, type: 3}
+    - {fileID: -9120926842267336061, guid: aefc6b12f15e7534b90ecb8a465fcd7e, type: 3}
+    - {fileID: 7130603376960072286, guid: aefc6b12f15e7534b90ecb8a465fcd7e, type: 3}
+    - {fileID: 7888089692939091419, guid: aefc6b12f15e7534b90ecb8a465fcd7e, type: 3}
+    - {fileID: -3709775198906463331, guid: aefc6b12f15e7534b90ecb8a465fcd7e, type: 3}
+    - {fileID: -2684523446456790582, guid: aefc6b12f15e7534b90ecb8a465fcd7e, type: 3}
+    - {fileID: 6054888850099808028, guid: aefc6b12f15e7534b90ecb8a465fcd7e, type: 3}
+    - {fileID: -8211773037207268352, guid: aefc6b12f15e7534b90ecb8a465fcd7e, type: 3}
+    fps: 8
+    loop: 0
+  - name: CatchFish
+    frames:
+    - {fileID: -6521302469970385065, guid: d0cb292bc3e564a408bfa0e620008156, type: 3}
+    - {fileID: -8017438386232902502, guid: d0cb292bc3e564a408bfa0e620008156, type: 3}
+    - {fileID: 3171899014539421533, guid: d0cb292bc3e564a408bfa0e620008156, type: 3}
+    - {fileID: -8260487553773409157, guid: d0cb292bc3e564a408bfa0e620008156, type: 3}
+    - {fileID: -827719762511806794, guid: d0cb292bc3e564a408bfa0e620008156, type: 3}
+    - {fileID: 7617772283602501632, guid: d0cb292bc3e564a408bfa0e620008156, type: 3}
+    - {fileID: -1974506421402107260, guid: d0cb292bc3e564a408bfa0e620008156, type: 3}
+    - {fileID: -6934013182251557281, guid: d0cb292bc3e564a408bfa0e620008156, type: 3}
+    fps: 5
+    loop: 0
+  - name: CatchTrash
+    frames:
+    - {fileID: -5184976877898973433, guid: 0371fbfe72ff95c49a0d1518cfed567e, type: 3}
+    - {fileID: -5481782830603819912, guid: 0371fbfe72ff95c49a0d1518cfed567e, type: 3}
+    - {fileID: -630205844567328665, guid: 0371fbfe72ff95c49a0d1518cfed567e, type: 3}
+    - {fileID: -885479301416149946, guid: 0371fbfe72ff95c49a0d1518cfed567e, type: 3}
+    - {fileID: 4040083051079845634, guid: 0371fbfe72ff95c49a0d1518cfed567e, type: 3}
+    - {fileID: 3346961161975256501, guid: 0371fbfe72ff95c49a0d1518cfed567e, type: 3}
+    - {fileID: -5684351683115353895, guid: 0371fbfe72ff95c49a0d1518cfed567e, type: 3}
+    - {fileID: 7801001161411685220, guid: 0371fbfe72ff95c49a0d1518cfed567e, type: 3}
+    fps: 5
+    loop: 0
+  speed: 1
+--- !u!61 &4986031825485348570
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880557957407343575}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.7}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.06521739}
+    oldSize: {x: 2.951724, y: 1.9034482}
+    newSize: {x: 2.951724, y: 1.9034482}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.9, y: 1.4}
+  m_EdgeRadius: 0
+--- !u!114 &1766986843338611921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880557957407343575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c89c24ead88154140894aa6176ba7b38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FishingOtterController
+  walkableArea: {fileID: 0}
+  spot: {fileID: 0}
+  walkSpeed: 1.2
+  idleSeconds: {x: 2, y: 5}
+  wanderDistance: {x: 1, y: 3.5}
+  maxDestinationTries: 10
+  spriteSortingOrder: 2

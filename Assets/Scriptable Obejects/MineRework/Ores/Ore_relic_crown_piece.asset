@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156064bdadfae24d9a3c7f86ebf48c5, type: 3}
+  m_Name: Ore_relic_crown_piece
+  m_EditorClassIdentifier: OtterKingdom::MineOreDefinition
+  _oreId: relic_crown_piece
+  _displayName: "\uC61B \uC655\uAD00 \uC870\uAC01"
+  _description: "\uAE08\uBE5B \uC655\uAD00\uC758 \uD55C \uC870\uAC01. \uC61B\uB0A0\uC5D0\uB3C4
+    \uD574\uB2EC \uC655\uAD6D\uC774 \uC788\uC5C8\uB358 \uAC78\uAE4C\uC694?"
+  _useText: "\uB3C4\uAC10 \xB7 \uC61B \uC655\uAD6D \uC774\uC57C\uAE30"
+  _icon: {fileID: 21300000, guid: 55898c269049b054c96af0934926a0f7, type: 3}
+  _veinSprite: {fileID: 0}
+  _color: {r: 0.97, g: 0.78, b: 0.3, a: 1}
+  _rarity: 5
+  _sellPrice: 0

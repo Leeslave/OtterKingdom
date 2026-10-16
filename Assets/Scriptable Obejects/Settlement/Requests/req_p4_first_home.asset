@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_p4_first_home
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_p4_first_home
+  _order: 30
+  _category: 0
+  _contentVersion: 4
+  _title: "\uB180\uB7EC \uC628 \uCE5C\uAD6C\uC758 \uC9D1"
+  _description: "\uAD11\uC7A5\uC5D0 \uB180\uB7EC \uC624\uB294 \uD574\uB2EC\uB4E4\uC774
+    \uB298\uC5C8\uC5B4\uC694.\n\uBA38\uBB3C \uC218 \uC788\uB294 \uC791\uC740 \uC9D1\uC744
+    \uD558\uB098 \uC9C0\uC5B4 \uC904\uB798\uC694?"
+  _icon: {fileID: 21300000, guid: cdc5e4e4057a059438fddb5ca2478ae2, type: 3}
+  _requester: {fileID: 11400000, guid: b93ad005e0c001b4da2eb2e220f88b21, type: 2}
+  _requiredDevelopment: first_gathering_complete
+  _minResidents: 0
+  _construction: {fileID: 0}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _building: {fileID: 11400000, guid: 778c24d56eda4ca280f37eb40957d768, type: 2}
+  _buildingCount: 1
+  _settleTargets: []
+  _resultDevelopment: p4_first_home
+  _settles: []
+  _arrivals:
+  - _otter: {fileID: 11400000, guid: f512e8597221436c98717a186cbe28c0, type: 2}
+    _state: 0
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: 54e641592cac66644b5dc41fc9346b6c, type: 2}
+  _completionMessage: "\uC791\uC740 \uC9D1\uC774 \uC0DD\uACBC\uC5B4\uC694! \uC7A5\uC0AC\uB97C
+    \uD558\uACE0 \uC2F6\uB2E4\uB294 \uC9E4\uB791\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
+  _kingdomLevel: 11

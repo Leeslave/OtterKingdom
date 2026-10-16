@@ -1,0 +1,2074 @@
+fileFormatVersion: 2
+guid: 18854927f1f3c9b4184f0e54c80d1dc7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6215131454589100111
+    second: Cast_Snow_0
+  - first:
+      213: -7676564695942589613
+    second: Cast_Snow_1
+  - first:
+      213: 8795526733981606800
+    second: Cast_Snow_2
+  - first:
+      213: -859693100988033183
+    second: Cast_Snow_3
+  - first:
+      213: -3784097534879180684
+    second: Cast_Snow_4
+  - first:
+      213: 2147276526754061483
+    second: Cast_Snow_5
+  - first:
+      213: 826799702166618079
+    second: Cast_Snow_6
+  - first:
+      213: 3218591855398492192
+    second: Cast_Snow_7
+  - first:
+      213: 6821717399447840127
+    second: Cast_Snow_8
+  - first:
+      213: -1282333757483973403
+    second: Cast_Snow_9
+  - first:
+      213: 3953458071690149609
+    second: Cast_Snow_10
+  - first:
+      213: 1941562862472325255
+    second: Cast_Snow_11
+  - first:
+      213: -383888901554852762
+    second: Cast_Snow_12
+  - first:
+      213: 8663423871019965578
+    second: Cast_Snow_13
+  - first:
+      213: -3829508610758697367
+    second: Cast_Snow_14
+  - first:
+      213: -3029248932568136153
+    second: Cast_Snow_15
+  - first:
+      213: -5457869612509773162
+    second: Cast_Snow_16
+  - first:
+      213: 3081052100867322283
+    second: Cast_Snow_17
+  - first:
+      213: 1069469284360658216
+    second: Cast_Snow_18
+  - first:
+      213: 5897001251793274004
+    second: Cast_Snow_19
+  - first:
+      213: -7147751827950905411
+    second: Cast_Snow_20
+  - first:
+      213: -8202862239079758521
+    second: Cast_Snow_21
+  - first:
+      213: -5979712560210185140
+    second: Cast_Snow_22
+  - first:
+      213: 2809066090144335865
+    second: Cast_Snow_23
+  - first:
+      213: 2655896579208698107
+    second: Cast_Snow_24
+  - first:
+      213: 1833648386524095838
+    second: Cast_Snow_25
+  - first:
+      213: -8425644079913974164
+    second: Cast_Snow_26
+  - first:
+      213: 5505641609326517443
+    second: Cast_Snow_27
+  - first:
+      213: -872482129204163073
+    second: Cast_Snow_28
+  - first:
+      213: -1863328524652623067
+    second: Cast_Snow_29
+  - first:
+      213: 5664983480445251096
+    second: Cast_Snow_30
+  - first:
+      213: 2745062070610440464
+    second: Cast_Snow_31
+  - first:
+      213: -4785658907363202423
+    second: Cast_Snow_32
+  - first:
+      213: -142258285892584358
+    second: Cast_Snow_33
+  - first:
+      213: -3251544358867297982
+    second: Cast_Snow_34
+  - first:
+      213: 5196058023011420224
+    second: Cast_Snow_35
+  - first:
+      213: -4727122371052228899
+    second: Cast_Snow_36
+  - first:
+      213: 2257827803544104486
+    second: Cast_Snow_37
+  - first:
+      213: -7357278075160200100
+    second: Cast_Snow_38
+  - first:
+      213: -4170764078650571878
+    second: Cast_Snow_39
+  - first:
+      213: -2311967943050708677
+    second: Cast_Snow_40
+  - first:
+      213: 224551217406617069
+    second: Cast_Snow_41
+  - first:
+      213: -7003889977030624257
+    second: Cast_Snow_42
+  - first:
+      213: -327820888648920564
+    second: Cast_Snow_43
+  - first:
+      213: -2840913685233959134
+    second: Cast_Snow_44
+  - first:
+      213: 2735524915346922061
+    second: Cast_Snow_45
+  - first:
+      213: -4654824299294111338
+    second: Cast_Snow_46
+  - first:
+      213: -358972661142773490
+    second: Cast_Snow_47
+  - first:
+      213: -3946303997894114543
+    second: Cast_Snow_48
+  - first:
+      213: -6344529922715124519
+    second: Cast_Snow_49
+  - first:
+      213: 2894250780526570562
+    second: Cast_Snow_50
+  - first:
+      213: -1846052727651344106
+    second: Cast_Snow_51
+  - first:
+      213: -3523588481178584987
+    second: Cast_Snow_52
+  - first:
+      213: -3713080772831898378
+    second: Cast_Snow_53
+  - first:
+      213: 6752909988872585712
+    second: Cast_Snow_54
+  - first:
+      213: -7425356009155987114
+    second: Cast_Snow_55
+  - first:
+      213: -8300966487691747644
+    second: Cast_Snow_56
+  - first:
+      213: -3687593417619795662
+    second: Cast_Snow_57
+  - first:
+      213: 7703360814221834085
+    second: Cast_Snow_58
+  - first:
+      213: -5982896936027901286
+    second: Cast_Snow_59
+  - first:
+      213: 630731530100119856
+    second: Cast_Snow_60
+  - first:
+      213: -7323998175248503293
+    second: Cast_Snow_61
+  - first:
+      213: -6486140744930931547
+    second: Cast_Snow_62
+  - first:
+      213: 2058744027930005764
+    second: Cast_Snow_63
+  - first:
+      213: 4997069151032725293
+    second: Cast_Snow_64
+  - first:
+      213: -6864982314296497423
+    second: Cast_Snow_65
+  - first:
+      213: -8116565952478239521
+    second: Cast_Snow_66
+  - first:
+      213: -8759960337215059626
+    second: Cast_Snow_67
+  - first:
+      213: -5895268110227699508
+    second: Cast_Snow_68
+  - first:
+      213: 608048068047796330
+    second: Cast_Snow_69
+  - first:
+      213: -5685103985950666080
+    second: Cast_Snow_Walk_0
+  - first:
+      213: 5457938681142604206
+    second: Cast_Snow_Walk_1
+  - first:
+      213: 2582705712746403630
+    second: Cast_Snow_Walk_2
+  - first:
+      213: 3397888560249487588
+    second: Cast_Snow_Walk_3
+  - first:
+      213: -1265437609198918307
+    second: Cast_Snow_Walk_4
+  - first:
+      213: 5763663860827785624
+    second: Cast_Snow_Walk_5
+  - first:
+      213: -9201578110479839301
+    second: Cast_Snow_Walk_6
+  - first:
+      213: -3662007373787680906
+    second: Cast_Snow_Walk_7
+  - first:
+      213: 291208962897440669
+    second: Cast_Snow_Walk_Down_0
+  - first:
+      213: -7209805489574008204
+    second: Cast_Snow_Walk_Down_1
+  - first:
+      213: -3802064455437717065
+    second: Cast_Snow_Walk_Down_2
+  - first:
+      213: 5784723851665055530
+    second: Cast_Snow_Walk_Down_3
+  - first:
+      213: -2292517440721689579
+    second: Cast_Snow_Walk_Down_4
+  - first:
+      213: 8839885213617038098
+    second: Cast_Snow_Walk_Down_5
+  - first:
+      213: -1115987396740943442
+    second: Cast_Snow_Walk_Down_6
+  - first:
+      213: -1732169963327830160
+    second: Cast_Snow_Walk_Down_7
+  - first:
+      213: -2184282448185050531
+    second: Cast_Snow_Walk_Up_0
+  - first:
+      213: -5990508426744514799
+    second: Cast_Snow_Walk_Up_1
+  - first:
+      213: 5955317904647959902
+    second: Cast_Snow_Walk_Up_2
+  - first:
+      213: 855327290459657826
+    second: Cast_Snow_Walk_Up_3
+  - first:
+      213: -3991622634860359211
+    second: Cast_Snow_Walk_Up_4
+  - first:
+      213: 4069288469820916248
+    second: Cast_Snow_Walk_Up_5
+  - first:
+      213: 5697872368768631086
+    second: Cast_Snow_Walk_Up_6
+  - first:
+      213: 7022955146377429769
+    second: Cast_Snow_Walk_Up_7
+  - first:
+      213: 8161084386628533318
+    second: Cast_Snow_Harvest_0
+  - first:
+      213: -5840783919183910951
+    second: Cast_Snow_Harvest_1
+  - first:
+      213: 4787580490595464858
+    second: Cast_Snow_Harvest_2
+  - first:
+      213: 1408934165676330101
+    second: Cast_Snow_Harvest_3
+  - first:
+      213: -6437266871998793304
+    second: Cast_Snow_Harvest_4
+  - first:
+      213: -2911174483775913608
+    second: Cast_Snow_Harvest_5
+  - first:
+      213: -3143003023768826951
+    second: Cast_Snow_Harvest_6
+  - first:
+      213: 2538912972403963213
+    second: Cast_Snow_Harvest_7
+  - first:
+      213: 3909432372508049132
+    second: Cast_Snow_Eat_0
+  - first:
+      213: -1315883259932825696
+    second: Cast_Snow_Eat_1
+  - first:
+      213: 5731822136217092216
+    second: Cast_Snow_Eat_2
+  - first:
+      213: -1892085823324652678
+    second: Cast_Snow_Eat_3
+  - first:
+      213: 1198312856549658027
+    second: Cast_Snow_Eat_4
+  - first:
+      213: 5041626367500376308
+    second: Cast_Snow_Eat_5
+  - first:
+      213: -2679297172679306305
+    second: Cast_Snow_Eat_6
+  - first:
+      213: -1901475879466521091
+    second: Cast_Snow_Eat_7
+  - first:
+      213: 7366730288830301262
+    second: Cast_Snow_Net_0
+  - first:
+      213: -6017374877660363284
+    second: Cast_Snow_Net_1
+  - first:
+      213: 5299224249146024750
+    second: Cast_Snow_Net_2
+  - first:
+      213: -8218993301929321096
+    second: Cast_Snow_Net_3
+  - first:
+      213: -5141610174778003242
+    second: Cast_Snow_Net_4
+  - first:
+      213: -7635484182360016181
+    second: Cast_Snow_Net_5
+  - first:
+      213: 577808744444144662
+    second: Cast_Snow_Net_6
+  - first:
+      213: -5573659755164462195
+    second: Cast_Snow_Net_7
+  - first:
+      213: 6226413078624847441
+    second: Cast_Snow_Squat_0
+  - first:
+      213: -7472922926498668280
+    second: Cast_Snow_Squat_1
+  - first:
+      213: 2301896384877913628
+    second: Cast_Snow_Squat_2
+  - first:
+      213: 826463572745245782
+    second: Cast_Snow_Squat_3
+  - first:
+      213: 2551784422105692520
+    second: Cast_Snow_Squat_4
+  - first:
+      213: 3358956192835693864
+    second: Cast_Snow_Squat_5
+  - first:
+      213: -2086011076752790834
+    second: Cast_Snow_Squat_6
+  - first:
+      213: -2606750943710182535
+    second: Cast_Snow_Squat_7
+  - first:
+      213: 2494846775632648661
+    second: Cast_Snow_Stretch_0
+  - first:
+      213: 2376392533490116868
+    second: Cast_Snow_Stretch_1
+  - first:
+      213: 5381853112220226478
+    second: Cast_Snow_Stretch_2
+  - first:
+      213: 6516234386963316987
+    second: Cast_Snow_Stretch_3
+  - first:
+      213: -2085531693057915342
+    second: Cast_Snow_Stretch_4
+  - first:
+      213: -2175409037371448496
+    second: Cast_Snow_Stretch_5
+  - first:
+      213: 3605979884774888119
+    second: Cast_Snow_Stretch_6
+  - first:
+      213: 5144321488502259825
+    second: Cast_Snow_Stretch_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 90
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a2d046bb047a11b0800000000000000
+      internalID: -5685103985950666080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea17e57205e7ebb40800000000000000
+      internalID: 5457938681142604206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e271f97792d97d320800000000000000
+      internalID: 2582705712746403630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e0c80c84a9b72f20800000000000000
+      internalID: 3397888560249487588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d556742f233407ee0800000000000000
+      internalID: -1265437609198918307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1800
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89985658eb5acff40800000000000000
+      internalID: 5763663860827785624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbfc6d7e57d6d4080800000000000000
+      internalID: -9201578110479839301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67f268812bfed2dc0800000000000000
+      internalID: -3662007373787680906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Down_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9f69e442059a0400800000000000000
+      internalID: 291208962897440669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Down_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47aa74e3b10a1fb90800000000000000
+      internalID: -7209805489574008204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Down_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b1fe70a58a5c3bc0800000000000000
+      internalID: -3802064455437717065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Down_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1620
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2f993eb1b7774050800000000000000
+      internalID: 5784723851665055530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Down_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5146560b8875f20e0800000000000000
+      internalID: -2292517440721689579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Down_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2132fdc14c49daa70800000000000000
+      internalID: 8839885213617038098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Down_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea1717b10673380f0800000000000000
+      internalID: -1115987396740943442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Down_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0774e35889816f7e0800000000000000
+      internalID: -1732169963327830160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Up_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5a3fcaafaedfa1e0800000000000000
+      internalID: -2184282448185050531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Up_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1440
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 117b8ef23507ddca0800000000000000
+      internalID: -5990508426744514799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Up_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e55b017e41a85a250800000000000000
+      internalID: 5955317904647959902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Up_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2669b8293abbedb00800000000000000
+      internalID: 855327290459657826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Up_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d15db3bc58ea98c0800000000000000
+      internalID: -3991622634860359211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Up_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 812c444ad44097830800000000000000
+      internalID: 4069288469820916248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Up_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e21c7f31bb8e21f40800000000000000
+      internalID: 5697872368768631086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Walk_Up_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1260
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90304551f7c867160800000000000000
+      internalID: 7022955146377429769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Harvest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64cfaf6a20ff14170800000000000000
+      internalID: 8161084386628533318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Harvest_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d7aa37a8fd51fea0800000000000000
+      internalID: -5840783919183910951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Harvest_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a96788b2717e07240800000000000000
+      internalID: 4787580490595464858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Harvest_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57c8c09a82a8d8310800000000000000
+      internalID: 1408934165676330101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Harvest_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a93f12d2eb3aa6a0800000000000000
+      internalID: -6437266871998793304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Harvest_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1080
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8710b572b3e6997d0800000000000000
+      internalID: -2911174483775913608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Harvest_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bbc748f66fc164d0800000000000000
+      internalID: -3143003023768826951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Harvest_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d45f4cb85e70c3320800000000000000
+      internalID: 2538912972403963213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Eat_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cee31cc9708114630800000000000000
+      internalID: 3909432372508049132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Eat_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a722dd952b0dbde0800000000000000
+      internalID: -1315883259932825696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Eat_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 870c0f84dd58b8f40800000000000000
+      internalID: 5731822136217092216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Eat_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 900
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7b7e28e7f5fdb5e0800000000000000
+      internalID: -1892085823324652678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Eat_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad0d60b13341a010800000000000000
+      internalID: 1198312856549658027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Eat_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f85a15387477f540800000000000000
+      internalID: 5041626367500376308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Eat_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3ddbeba6931dad0800000000000000
+      internalID: -2679297172679306305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Eat_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfdac6713c99c95e0800000000000000
+      internalID: -1901475879466521091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Net_0
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4447d5ca22eb3660800000000000000
+      internalID: 7366730288830301262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Net_1
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 720
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce5c1b02e6dfd7ca0800000000000000
+      internalID: -6017374877660363284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Net_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e232c7bc060aa8940800000000000000
+      internalID: 5299224249146024750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Net_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87d1033532540fd80800000000000000
+      internalID: -8218993301929321096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Net_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d0b2d699c455a8b0800000000000000
+      internalID: -5141610174778003242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Net_5
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bca3156379f490690800000000000000
+      internalID: -7635484182360016181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Net_6
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61c25b0edf9c40800800000000000000
+      internalID: 577808744444144662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Net_7
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 540
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d831882bbf166a2b0800000000000000
+      internalID: -5573659755164462195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Squat_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 156c740c4b9a86650800000000000000
+      internalID: 6226413078624847441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Squat_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 801ac2c0138da4890800000000000000
+      internalID: -7472922926498668280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Squat_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c16676ae09af1ff10800000000000000
+      internalID: 2301896384877913628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Squat_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 654d7499d30387b00800000000000000
+      internalID: 826463572745245782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Squat_4
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8693cf67962c96320800000000000000
+      internalID: 2551784422105692520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Squat_5
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 360
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82de1126cd86d9e20800000000000000
+      internalID: 3358956192835693864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Squat_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecaae945afffc03e0800000000000000
+      internalID: -2086011076752790834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Squat_7
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9738d3ee3d5f2dbd0800000000000000
+      internalID: -2606750943710182535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Stretch_0
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d9dc969ce97f9220800000000000000
+      internalID: 2494846775632648661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Stretch_1
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 409a1952b64aaf020800000000000000
+      internalID: 2376392533490116868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Stretch_2
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea3973b24ee20ba40800000000000000
+      internalID: 5381853112220226478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Stretch_3
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 180
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf0422486a05e6a50800000000000000
+      internalID: 6516234386963316987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Stretch_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 236c67b89f3be03e0800000000000000
+      internalID: -2085531693057915342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Stretch_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 053ec4e91056fc1e0800000000000000
+      internalID: -2175409037371448496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Stretch_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b2163399930b0230800000000000000
+      internalID: 3605979884774888119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cast_Snow_Stretch_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 312
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1700694532d446740800000000000000
+      internalID: 5144321488502259825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cast_Snow_0: 6215131454589100111
+      Cast_Snow_1: -7676564695942589613
+      Cast_Snow_10: 3953458071690149609
+      Cast_Snow_11: 1941562862472325255
+      Cast_Snow_12: -383888901554852762
+      Cast_Snow_13: 8663423871019965578
+      Cast_Snow_14: -3829508610758697367
+      Cast_Snow_15: -3029248932568136153
+      Cast_Snow_16: -5457869612509773162
+      Cast_Snow_17: 3081052100867322283
+      Cast_Snow_18: 1069469284360658216
+      Cast_Snow_19: 5897001251793274004
+      Cast_Snow_2: 8795526733981606800
+      Cast_Snow_20: -7147751827950905411
+      Cast_Snow_21: -8202862239079758521
+      Cast_Snow_22: -5979712560210185140
+      Cast_Snow_23: 2809066090144335865
+      Cast_Snow_24: 2655896579208698107
+      Cast_Snow_25: 1833648386524095838
+      Cast_Snow_26: -8425644079913974164
+      Cast_Snow_27: 5505641609326517443
+      Cast_Snow_28: -872482129204163073
+      Cast_Snow_29: -1863328524652623067
+      Cast_Snow_3: -859693100988033183
+      Cast_Snow_30: 5664983480445251096
+      Cast_Snow_31: 2745062070610440464
+      Cast_Snow_32: -4785658907363202423
+      Cast_Snow_33: -142258285892584358
+      Cast_Snow_34: -3251544358867297982
+      Cast_Snow_35: 5196058023011420224
+      Cast_Snow_36: -4727122371052228899
+      Cast_Snow_37: 2257827803544104486
+      Cast_Snow_38: -7357278075160200100
+      Cast_Snow_39: -4170764078650571878
+      Cast_Snow_4: -3784097534879180684
+      Cast_Snow_40: -2311967943050708677
+      Cast_Snow_41: 224551217406617069
+      Cast_Snow_42: -7003889977030624257
+      Cast_Snow_43: -327820888648920564
+      Cast_Snow_44: -2840913685233959134
+      Cast_Snow_45: 2735524915346922061
+      Cast_Snow_46: -4654824299294111338
+      Cast_Snow_47: -358972661142773490
+      Cast_Snow_48: -3946303997894114543
+      Cast_Snow_49: -6344529922715124519
+      Cast_Snow_5: 2147276526754061483
+      Cast_Snow_50: 2894250780526570562
+      Cast_Snow_51: -1846052727651344106
+      Cast_Snow_52: -3523588481178584987
+      Cast_Snow_53: -3713080772831898378
+      Cast_Snow_54: 6752909988872585712
+      Cast_Snow_55: -7425356009155987114
+      Cast_Snow_56: -8300966487691747644
+      Cast_Snow_57: -3687593417619795662
+      Cast_Snow_58: 7703360814221834085
+      Cast_Snow_59: -5982896936027901286
+      Cast_Snow_6: 826799702166618079
+      Cast_Snow_60: 630731530100119856
+      Cast_Snow_61: -7323998175248503293
+      Cast_Snow_62: -6486140744930931547
+      Cast_Snow_63: 2058744027930005764
+      Cast_Snow_64: 4997069151032725293
+      Cast_Snow_65: -6864982314296497423
+      Cast_Snow_66: -8116565952478239521
+      Cast_Snow_67: -8759960337215059626
+      Cast_Snow_68: -5895268110227699508
+      Cast_Snow_69: 608048068047796330
+      Cast_Snow_7: 3218591855398492192
+      Cast_Snow_8: 6821717399447840127
+      Cast_Snow_9: -1282333757483973403
+      Cast_Snow_Eat_0: 3909432372508049132
+      Cast_Snow_Eat_1: -1315883259932825696
+      Cast_Snow_Eat_2: 5731822136217092216
+      Cast_Snow_Eat_3: -1892085823324652678
+      Cast_Snow_Eat_4: 1198312856549658027
+      Cast_Snow_Eat_5: 5041626367500376308
+      Cast_Snow_Eat_6: -2679297172679306305
+      Cast_Snow_Eat_7: -1901475879466521091
+      Cast_Snow_Harvest_0: 8161084386628533318
+      Cast_Snow_Harvest_1: -5840783919183910951
+      Cast_Snow_Harvest_2: 4787580490595464858
+      Cast_Snow_Harvest_3: 1408934165676330101
+      Cast_Snow_Harvest_4: -6437266871998793304
+      Cast_Snow_Harvest_5: -2911174483775913608
+      Cast_Snow_Harvest_6: -3143003023768826951
+      Cast_Snow_Harvest_7: 2538912972403963213
+      Cast_Snow_Net_0: 7366730288830301262
+      Cast_Snow_Net_1: -6017374877660363284
+      Cast_Snow_Net_2: 5299224249146024750
+      Cast_Snow_Net_3: -8218993301929321096
+      Cast_Snow_Net_4: -5141610174778003242
+      Cast_Snow_Net_5: -7635484182360016181
+      Cast_Snow_Net_6: 577808744444144662
+      Cast_Snow_Net_7: -5573659755164462195
+      Cast_Snow_Squat_0: 6226413078624847441
+      Cast_Snow_Squat_1: -7472922926498668280
+      Cast_Snow_Squat_2: 2301896384877913628
+      Cast_Snow_Squat_3: 826463572745245782
+      Cast_Snow_Squat_4: 2551784422105692520
+      Cast_Snow_Squat_5: 3358956192835693864
+      Cast_Snow_Squat_6: -2086011076752790834
+      Cast_Snow_Squat_7: -2606750943710182535
+      Cast_Snow_Stretch_0: 2494846775632648661
+      Cast_Snow_Stretch_1: 2376392533490116868
+      Cast_Snow_Stretch_2: 5381853112220226478
+      Cast_Snow_Stretch_3: 6516234386963316987
+      Cast_Snow_Stretch_4: -2085531693057915342
+      Cast_Snow_Stretch_5: -2175409037371448496
+      Cast_Snow_Stretch_6: 3605979884774888119
+      Cast_Snow_Stretch_7: 5144321488502259825
+      Cast_Snow_Walk_0: -5685103985950666080
+      Cast_Snow_Walk_1: 5457938681142604206
+      Cast_Snow_Walk_2: 2582705712746403630
+      Cast_Snow_Walk_3: 3397888560249487588
+      Cast_Snow_Walk_4: -1265437609198918307
+      Cast_Snow_Walk_5: 5763663860827785624
+      Cast_Snow_Walk_6: -9201578110479839301
+      Cast_Snow_Walk_7: -3662007373787680906
+      Cast_Snow_Walk_Down_0: 291208962897440669
+      Cast_Snow_Walk_Down_1: -7209805489574008204
+      Cast_Snow_Walk_Down_2: -3802064455437717065
+      Cast_Snow_Walk_Down_3: 5784723851665055530
+      Cast_Snow_Walk_Down_4: -2292517440721689579
+      Cast_Snow_Walk_Down_5: 8839885213617038098
+      Cast_Snow_Walk_Down_6: -1115987396740943442
+      Cast_Snow_Walk_Down_7: -1732169963327830160
+      Cast_Snow_Walk_Up_0: -2184282448185050531
+      Cast_Snow_Walk_Up_1: -5990508426744514799
+      Cast_Snow_Walk_Up_2: 5955317904647959902
+      Cast_Snow_Walk_Up_3: 855327290459657826
+      Cast_Snow_Walk_Up_4: -3991622634860359211
+      Cast_Snow_Walk_Up_5: 4069288469820916248
+      Cast_Snow_Walk_Up_6: 5697872368768631086
+      Cast_Snow_Walk_Up_7: 7022955146377429769
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,7295 @@
+{
+ "comment": "build_territory_art.py가 만듦. 좌표 = 기존 바닥(Plaza_Ground.png) 픽셀, 왼쪽 위 원점·아래로 +y (districts는 꾸미기 격자 세이브 좌표 칸).",
+ "groundPixelsPerUnit": 40,
+ "map": {
+  "sprite": "Plaza_WorldMap",
+  "x0": -3029,
+  "y0": -2122,
+  "x1": 1043,
+  "y1": 1862
+ },
+ "start": {
+  "x0": -1648.0,
+  "y0": -976.0,
+  "x1": -608.0,
+  "y1": -176.0
+ },
+ "sprites": [
+  {
+   "name": "Forest_Oak_0",
+   "width": 378,
+   "height": 423,
+   "pivotX": 0.4404,
+   "pivotY": 0.0047
+  },
+  {
+   "name": "Forest_Oak_1",
+   "width": 378,
+   "height": 423,
+   "pivotX": 0.4404,
+   "pivotY": 0.0047
+  },
+  {
+   "name": "Forest_Pine_0",
+   "width": 280,
+   "height": 434,
+   "pivotX": 0.5,
+   "pivotY": 0.012
+  },
+  {
+   "name": "Forest_Pine_1",
+   "width": 280,
+   "height": 434,
+   "pivotX": 0.5,
+   "pivotY": 0.012
+  },
+  {
+   "name": "Forest_Bush",
+   "width": 307,
+   "height": 280,
+   "pivotX": 0.4962,
+   "pivotY": 0.0107
+  },
+  {
+   "name": "Forest_Stump",
+   "width": 265,
+   "height": 207,
+   "pivotX": 0.5292,
+   "pivotY": 0.0145
+  },
+  {
+   "name": "Territory_Ring",
+   "width": 320,
+   "height": 320,
+   "pivotX": 0.5,
+   "pivotY": 0.5
+  },
+  {
+   "name": "UI_Bubble_Axe",
+   "width": 120,
+   "height": 128,
+   "pivotX": 0.5,
+   "pivotY": 0.0
+  }
+ ],
+ "regions": [
+  {
+   "id": "start",
+   "development": "",
+   "rect": {
+    "x0": -1648.0,
+    "y0": -976.0,
+    "x1": -608.0,
+    "y1": -176.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -1649,
+      -978,
+      -1649,
+      -182,
+      -613,
+      -182,
+      -613,
+      -978
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ne_1",
+   "direction": "NorthEast",
+   "tier": 1,
+   "development": "territory_ne_1",
+   "rect": {
+    "x0": -608.0,
+    "y0": -1136.0,
+    "x1": 112.0,
+    "y1": -496.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -653,
+      -1182,
+      -653,
+      -458,
+      151,
+      -458,
+      151,
+      -1182
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ne_2",
+   "direction": "NorthEast",
+   "tier": 2,
+   "development": "territory_ne_2",
+   "rect": {
+    "x0": 112.0,
+    "y0": -1136.0,
+    "x1": 832.0,
+    "y1": -496.0
+   },
+   "polygons": [
+    {
+     "points": [
+      67,
+      -1182,
+      67,
+      -458,
+      871,
+      -458,
+      871,
+      -1182
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ne_3",
+   "direction": "NorthEast",
+   "tier": 3,
+   "development": "territory_ne_3",
+   "rect": {
+    "x0": -608.0,
+    "y0": -1776.0,
+    "x1": 832.0,
+    "y1": -1136.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -653,
+      -1822,
+      -653,
+      -1098,
+      871,
+      -1098,
+      871,
+      -1822
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s_1",
+   "direction": "South",
+   "tier": 1,
+   "development": "territory_s_1",
+   "rect": {
+    "x0": -1568.0,
+    "y0": -176.0,
+    "x1": -848.0,
+    "y1": 304.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -1613,
+      -222,
+      -1613,
+      342,
+      -809,
+      342,
+      -809,
+      -222
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s_2",
+   "direction": "South",
+   "tier": 2,
+   "development": "territory_s_2",
+   "rect": {
+    "x0": -848.0,
+    "y0": -176.0,
+    "x1": -128.0,
+    "y1": 304.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -893,
+      -222,
+      -893,
+      342,
+      -89,
+      342,
+      -89,
+      -222
+     ]
+    }
+   ]
+  },
+  {
+   "id": "s_3",
+   "direction": "South",
+   "tier": 3,
+   "development": "territory_s_3",
+   "rect": {
+    "x0": -1568.0,
+    "y0": 304.0,
+    "x1": -128.0,
+    "y1": 864.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -1613,
+      258,
+      -1613,
+      902,
+      -89,
+      902,
+      -89,
+      258
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nw_1",
+   "direction": "NorthWest",
+   "tier": 1,
+   "development": "territory_nw_1",
+   "rect": {
+    "x0": -2048.0,
+    "y0": -1536.0,
+    "x1": -1328.0,
+    "y1": -976.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -2093,
+      -1582,
+      -2093,
+      -938,
+      -1289,
+      -938,
+      -1289,
+      -1582
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nw_2",
+   "direction": "NorthWest",
+   "tier": 2,
+   "development": "territory_nw_2",
+   "rect": {
+    "x0": -2768.0,
+    "y0": -1536.0,
+    "x1": -2048.0,
+    "y1": -976.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -2813,
+      -1582,
+      -2813,
+      -938,
+      -2009,
+      -938,
+      -2009,
+      -1582
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nw_3",
+   "direction": "NorthWest",
+   "tier": 3,
+   "development": "territory_nw_3",
+   "rect": {
+    "x0": -2768.0,
+    "y0": -2096.0,
+    "x1": -1328.0,
+    "y1": -1536.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -2813,
+      -2094,
+      -2813,
+      -1498,
+      -1289,
+      -1498,
+      -1289,
+      -2094
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_1",
+   "direction": "West",
+   "tier": 1,
+   "development": "territory_w_1",
+   "rect": {
+    "x0": -2288.0,
+    "y0": -656.0,
+    "x1": -1648.0,
+    "y1": -16.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -2333,
+      -702,
+      -2333,
+      22,
+      -1609,
+      22,
+      -1609,
+      -702
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_2",
+   "direction": "West",
+   "tier": 2,
+   "development": "territory_w_2",
+   "rect": {
+    "x0": -2928.0,
+    "y0": -656.0,
+    "x1": -2288.0,
+    "y1": -16.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -2973,
+      -702,
+      -2973,
+      22,
+      -2249,
+      22,
+      -2249,
+      -702
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_3",
+   "direction": "West",
+   "tier": 3,
+   "development": "territory_w_3",
+   "rect": {
+    "x0": -2928.0,
+    "y0": -16.0,
+    "x1": -1648.0,
+    "y1": 624.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -2973,
+      -62,
+      -2973,
+      662,
+      -1609,
+      662,
+      -1609,
+      -62
+     ]
+    }
+   ]
+  },
+  {
+   "id": "shore",
+   "development": "fishing_found",
+   "rect": {
+    "x0": -8.0,
+    "y0": 24.0,
+    "x1": 1032.0,
+    "y1": 1504.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -53,
+      -22,
+      -53,
+      1362,
+      -21,
+      1338,
+      55,
+      1326,
+      79,
+      1334,
+      99,
+      1354,
+      107,
+      1378,
+      163,
+      1370,
+      187,
+      1378,
+      219,
+      1406,
+      259,
+      1398,
+      295,
+      1378,
+      347,
+      1386,
+      379,
+      1358,
+      451,
+      1346,
+      499,
+      1362,
+      527,
+      1330,
+      571,
+      1306,
+      579,
+      1286,
+      623,
+      1254,
+      651,
+      1218,
+      787,
+      1162,
+      783,
+      1126,
+      815,
+      1090,
+      799,
+      1058,
+      799,
+      1026,
+      819,
+      994,
+      823,
+      934,
+      835,
+      902,
+      879,
+      870,
+      887,
+      846,
+      911,
+      822,
+      935,
+      814,
+      975,
+      814,
+      1007,
+      830,
+      1007,
+      -22
+     ]
+    }
+   ]
+  },
+  {
+   "id": "shore_path_1",
+   "development": "fishing_found",
+   "rect": {
+    "x0": -608.0,
+    "y0": -376.0,
+    "x1": -48.0,
+    "y1": -176.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -653,
+      -422,
+      -653,
+      -138,
+      -9,
+      -138,
+      -9,
+      -422
+     ]
+    }
+   ]
+  },
+  {
+   "id": "shore_path_2",
+   "development": "fishing_found",
+   "rect": {
+    "x0": -128.0,
+    "y0": -376.0,
+    "x1": 72.0,
+    "y1": 104.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -173,
+      -422,
+      -173,
+      142,
+      111,
+      142,
+      111,
+      -422
+     ]
+    }
+   ]
+  }
+ ],
+ "groups": [
+  {
+   "id": "ne_1_1",
+   "development": "territory_ne_1_c1",
+   "stumpsUntil": "territory_ne_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -394.3,
+     "y": -636.4,
+     "scale": 0.661,
+     "flip": true,
+     "tint": 0.886
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -395.7,
+     "y": -763.0,
+     "scale": 0.668,
+     "flip": false,
+     "tint": 0.965
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -440.5,
+     "y": -979.8,
+     "scale": 0.533,
+     "flip": false,
+     "tint": 0.901
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -506.3,
+     "y": -1135.8,
+     "scale": 0.633,
+     "flip": false,
+     "tint": 0.882
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -519.2,
+     "y": -809.7,
+     "scale": 0.652,
+     "flip": false,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -515.9,
+     "y": -677.7,
+     "scale": 0.523,
+     "flip": true,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -540.1,
+     "y": -717.8,
+     "scale": 0.373,
+     "flip": true,
+     "tint": 0.951
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -503.3,
+     "y": -602.6,
+     "scale": 0.418,
+     "flip": false,
+     "tint": 0.988
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -460.9,
+     "y": -722.8,
+     "scale": 0.409,
+     "flip": true,
+     "tint": 0.906
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -394.3,
+     "y": -636.4,
+     "scale": 0.284,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -506.3,
+     "y": -1135.8,
+     "scale": 0.304,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -519.2,
+     "y": -809.7,
+     "scale": 0.271,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_ne_1_1",
+    "x0": -659,
+    "y0": -1187,
+    "x1": -319,
+    "y1": -447
+   }
+  },
+  {
+   "id": "ne_1_2",
+   "development": "territory_ne_1_c2",
+   "stumpsUntil": "territory_ne_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -280.0,
+     "y": -500.8,
+     "scale": 0.593,
+     "flip": true,
+     "tint": 0.909
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -170.1,
+     "y": -750.2,
+     "scale": 0.624,
+     "flip": false,
+     "tint": 0.865
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -290.7,
+     "y": -833.0,
+     "scale": 0.622,
+     "flip": false,
+     "tint": 0.956
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -332.9,
+     "y": -1023.5,
+     "scale": 0.676,
+     "flip": true,
+     "tint": 0.996
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -203.4,
+     "y": -927.3,
+     "scale": 0.655,
+     "flip": true,
+     "tint": 0.983
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -187.3,
+     "y": -1078.5,
+     "scale": 0.661,
+     "flip": false,
+     "tint": 0.947
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -269.9,
+     "y": -672.1,
+     "scale": 0.537,
+     "flip": false,
+     "tint": 0.861
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -170.1,
+     "y": -750.2,
+     "scale": 0.331,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -187.3,
+     "y": -1078.5,
+     "scale": 0.315,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -280.0,
+     "y": -500.8,
+     "scale": 0.331,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_ne_1_2",
+    "x0": -419,
+    "y0": -1187,
+    "x1": -79,
+    "y1": -447
+   }
+  },
+  {
+   "id": "ne_1_3",
+   "development": "territory_ne_1_c3",
+   "stumpsUntil": "territory_ne_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -73.1,
+     "y": -576.8,
+     "scale": 0.615,
+     "flip": true,
+     "tint": 0.875
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 56.8,
+     "y": -506.0,
+     "scale": 0.682,
+     "flip": true,
+     "tint": 0.921
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -86.3,
+     "y": -875.3,
+     "scale": 0.643,
+     "flip": true,
+     "tint": 0.891
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 68.0,
+     "y": -621.7,
+     "scale": 0.602,
+     "flip": true,
+     "tint": 0.86
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -12.2,
+     "y": -718.0,
+     "scale": 0.635,
+     "flip": true,
+     "tint": 0.872
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -19.2,
+     "y": -987.1,
+     "scale": 0.61,
+     "flip": false,
+     "tint": 0.861
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -60.1,
+     "y": -1097.1,
+     "scale": 0.548,
+     "flip": true,
+     "tint": 0.889
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -73.1,
+     "y": -576.8,
+     "scale": 0.287,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -86.3,
+     "y": -875.3,
+     "scale": 0.287,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -60.1,
+     "y": -1097.1,
+     "scale": 0.323,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_ne_1_3",
+    "x0": -179,
+    "y0": -1187,
+    "x1": 161,
+    "y1": -447
+   }
+  },
+  {
+   "id": "ne_2_1",
+   "development": "territory_ne_2_c1",
+   "stumpsUntil": "territory_ne_2",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 189.9,
+     "y": -627.8,
+     "scale": 0.65,
+     "flip": false,
+     "tint": 0.966
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 136.0,
+     "y": -811.2,
+     "scale": 0.73,
+     "flip": true,
+     "tint": 0.877
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 300.5,
+     "y": -833.6,
+     "scale": 0.733,
+     "flip": false,
+     "tint": 0.955
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 407.7,
+     "y": -519.3,
+     "scale": 0.507,
+     "flip": false,
+     "tint": 0.879
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 287.3,
+     "y": -971.4,
+     "scale": 0.663,
+     "flip": true,
+     "tint": 0.961
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 452.6,
+     "y": -955.9,
+     "scale": 0.521,
+     "flip": false,
+     "tint": 0.953
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 350.1,
+     "y": -661.5,
+     "scale": 0.655,
+     "flip": true,
+     "tint": 0.869
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 169.9,
+     "y": -984.5,
+     "scale": 0.581,
+     "flip": true,
+     "tint": 0.928
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 336.3,
+     "y": -1118.4,
+     "scale": 0.538,
+     "flip": true,
+     "tint": 0.95
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 120.0,
+     "y": -1110.2,
+     "scale": 0.541,
+     "flip": false,
+     "tint": 0.992
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 467.0,
+     "y": -1078.3,
+     "scale": 0.587,
+     "flip": false,
+     "tint": 0.887
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": 467.0,
+     "y": -1078.3,
+     "scale": 0.267,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 136.0,
+     "y": -811.2,
+     "scale": 0.284,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 407.7,
+     "y": -519.3,
+     "scale": 0.336,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 287.3,
+     "y": -971.4,
+     "scale": 0.307,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_ne_2_1",
+    "x0": 61,
+    "y0": -1187,
+    "x1": 521,
+    "y1": -447
+   }
+  },
+  {
+   "id": "ne_2_2",
+   "development": "territory_ne_2_c2",
+   "stumpsUntil": "territory_ne_2",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 604.7,
+     "y": -593.8,
+     "scale": 0.666,
+     "flip": false,
+     "tint": 0.969
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 666.2,
+     "y": -693.7,
+     "scale": 0.71,
+     "flip": true,
+     "tint": 0.915
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 482.6,
+     "y": -795.6,
+     "scale": 0.656,
+     "flip": true,
+     "tint": 0.953
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 778.9,
+     "y": -586.4,
+     "scale": 0.633,
+     "flip": false,
+     "tint": 0.991
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 481.4,
+     "y": -651.0,
+     "scale": 0.566,
+     "flip": true,
+     "tint": 0.895
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 723.0,
+     "y": -855.9,
+     "scale": 0.652,
+     "flip": true,
+     "tint": 0.978
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 573.3,
+     "y": -890.9,
+     "scale": 0.551,
+     "flip": false,
+     "tint": 0.86
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 630.1,
+     "y": -1100.7,
+     "scale": 0.577,
+     "flip": false,
+     "tint": 0.932
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 683.0,
+     "y": -974.4,
+     "scale": 0.715,
+     "flip": false,
+     "tint": 0.918
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 813.8,
+     "y": -998.3,
+     "scale": 0.662,
+     "flip": true,
+     "tint": 0.945
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 800.5,
+     "y": -1124.1,
+     "scale": 0.606,
+     "flip": false,
+     "tint": 0.976
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": 630.1,
+     "y": -1100.7,
+     "scale": 0.335,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 482.6,
+     "y": -795.6,
+     "scale": 0.334,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 813.8,
+     "y": -998.3,
+     "scale": 0.296,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 666.2,
+     "y": -693.7,
+     "scale": 0.271,
+     "flip": true,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_ne_2_2",
+    "x0": 421,
+    "y0": -1187,
+    "x1": 881,
+    "y1": -447
+   }
+  },
+  {
+   "id": "ne_3_1",
+   "development": "territory_ne_3_c1",
+   "stumpsUntil": "territory_ne_3",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -536.4,
+     "y": -1367.5,
+     "scale": 0.668,
+     "flip": false,
+     "tint": 0.939
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -311.2,
+     "y": -1224.0,
+     "scale": 0.649,
+     "flip": false,
+     "tint": 0.886
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -130.3,
+     "y": -1211.7,
+     "scale": 0.533,
+     "flip": true,
+     "tint": 0.967
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -170.7,
+     "y": -1350.5,
+     "scale": 0.604,
+     "flip": true,
+     "tint": 0.911
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -445.4,
+     "y": -1258.9,
+     "scale": 0.624,
+     "flip": false,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -34.8,
+     "y": -1336.4,
+     "scale": 0.583,
+     "flip": false,
+     "tint": 0.922
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 105.8,
+     "y": -1250.2,
+     "scale": 0.531,
+     "flip": false,
+     "tint": 0.906
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 292.0,
+     "y": -1314.2,
+     "scale": 0.793,
+     "flip": false,
+     "tint": 0.891
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -285.4,
+     "y": -1393.7,
+     "scale": 0.627,
+     "flip": false,
+     "tint": 0.969
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -409.1,
+     "y": -1411.3,
+     "scale": 0.537,
+     "flip": false,
+     "tint": 0.942
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 91.0,
+     "y": -1382.3,
+     "scale": 0.503,
+     "flip": true,
+     "tint": 0.907
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 473.0,
+     "y": -1265.5,
+     "scale": 0.577,
+     "flip": true,
+     "tint": 0.997
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 580.6,
+     "y": -1343.0,
+     "scale": 0.547,
+     "flip": true,
+     "tint": 0.937
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 354.8,
+     "y": -1418.5,
+     "scale": 0.53,
+     "flip": false,
+     "tint": 0.982
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 783.1,
+     "y": -1284.3,
+     "scale": 0.504,
+     "flip": true,
+     "tint": 0.89
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 219.8,
+     "y": -1194.5,
+     "scale": 0.555,
+     "flip": false,
+     "tint": 0.957
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 659.8,
+     "y": -1227.9,
+     "scale": 0.618,
+     "flip": true,
+     "tint": 0.92
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -445.4,
+     "y": -1258.9,
+     "scale": 0.322,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 105.8,
+     "y": -1250.2,
+     "scale": 0.274,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 783.1,
+     "y": -1284.3,
+     "scale": 0.283,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -285.4,
+     "y": -1393.7,
+     "scale": 0.302,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_ne_3_1",
+    "x0": -659,
+    "y0": -1507,
+    "x1": 881,
+    "y1": -1087
+   }
+  },
+  {
+   "id": "ne_3_2",
+   "development": "territory_ne_3_c2",
+   "stumpsUntil": "territory_ne_3",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -457.5,
+     "y": -1558.3,
+     "scale": 0.62,
+     "flip": true,
+     "tint": 0.882
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -606.9,
+     "y": -1667.6,
+     "scale": 0.599,
+     "flip": true,
+     "tint": 0.86
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -298.0,
+     "y": -1624.1,
+     "scale": 0.802,
+     "flip": true,
+     "tint": 0.922
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -131.6,
+     "y": -1752.0,
+     "scale": 0.537,
+     "flip": true,
+     "tint": 0.921
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -580.2,
+     "y": -1548.0,
+     "scale": 0.758,
+     "flip": true,
+     "tint": 0.927
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -49.7,
+     "y": -1512.4,
+     "scale": 0.552,
+     "flip": true,
+     "tint": 0.936
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -448.7,
+     "y": -1722.8,
+     "scale": 0.632,
+     "flip": false,
+     "tint": 0.874
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -174.7,
+     "y": -1543.8,
+     "scale": 0.655,
+     "flip": true,
+     "tint": 0.98
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 33.7,
+     "y": -1618.4,
+     "scale": 0.635,
+     "flip": false,
+     "tint": 0.991
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 133.3,
+     "y": -1522.8,
+     "scale": 0.685,
+     "flip": false,
+     "tint": 0.908
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 803.6,
+     "y": -1488.8,
+     "scale": 0.614,
+     "flip": false,
+     "tint": 0.99
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -312.8,
+     "y": -1749.3,
+     "scale": 0.58,
+     "flip": true,
+     "tint": 0.924
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 317.3,
+     "y": -1557.2,
+     "scale": 0.701,
+     "flip": false,
+     "tint": 0.921
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 476.2,
+     "y": -1557.0,
+     "scale": 0.669,
+     "flip": false,
+     "tint": 0.956
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 246.3,
+     "y": -1465.5,
+     "scale": 0.672,
+     "flip": false,
+     "tint": 0.935
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 277.7,
+     "y": -1672.1,
+     "scale": 0.662,
+     "flip": true,
+     "tint": 0.867
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -90.2,
+     "y": -1626.2,
+     "scale": 0.567,
+     "flip": false,
+     "tint": 0.895
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 147.3,
+     "y": -1683.2,
+     "scale": 0.808,
+     "flip": false,
+     "tint": 0.949
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 751.3,
+     "y": -1668.1,
+     "scale": 0.514,
+     "flip": true,
+     "tint": 0.881
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 669.1,
+     "y": -1483.2,
+     "scale": 0.609,
+     "flip": false,
+     "tint": 0.947
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 588.5,
+     "y": -1710.9,
+     "scale": 0.776,
+     "flip": true,
+     "tint": 0.868
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 460.4,
+     "y": -1681.7,
+     "scale": 0.81,
+     "flip": true,
+     "tint": 0.923
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 637.8,
+     "y": -1600.6,
+     "scale": 0.744,
+     "flip": true,
+     "tint": 0.883
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": 133.3,
+     "y": -1522.8,
+     "scale": 0.276,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": 588.5,
+     "y": -1710.9,
+     "scale": 0.316,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -448.7,
+     "y": -1722.8,
+     "scale": 0.315,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -90.2,
+     "y": -1626.2,
+     "scale": 0.335,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_ne_3_2",
+    "x0": -659,
+    "y0": -1827,
+    "x1": 881,
+    "y1": -1407
+   }
+  },
+  {
+   "id": "s_1_1",
+   "development": "territory_s_1_c1",
+   "stumpsUntil": "territory_s_1",
+   "trees": [
+    {
+     "sprite": "Forest_Bush",
+     "x": -1411.1,
+     "y": -52.1,
+     "scale": 0.401,
+     "flip": false,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -859.2,
+     "y": -32.7,
+     "scale": 0.312,
+     "flip": false,
+     "tint": 0.949
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_s_1_1",
+    "x0": -1619,
+    "y0": -227,
+    "x1": -799,
+    "y1": 33
+   }
+  },
+  {
+   "id": "s_1_2",
+   "development": "territory_s_1_c2",
+   "stumpsUntil": "territory_s_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1565.3,
+     "y": 109.3,
+     "scale": 0.533,
+     "flip": false,
+     "tint": 0.93
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1113.5,
+     "y": 61.9,
+     "scale": 0.689,
+     "flip": false,
+     "tint": 0.915
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1264.9,
+     "y": 48.4,
+     "scale": 0.642,
+     "flip": false,
+     "tint": 0.882
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -871.8,
+     "y": 133.9,
+     "scale": 0.52,
+     "flip": true,
+     "tint": 0.929
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -990.4,
+     "y": 49.2,
+     "scale": 0.673,
+     "flip": false,
+     "tint": 0.969
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -990.4,
+     "y": 49.2,
+     "scale": 0.301,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1565.3,
+     "y": 109.3,
+     "scale": 0.287,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1264.9,
+     "y": 48.4,
+     "scale": 0.304,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_s_1_2",
+    "x0": -1619,
+    "y0": -67,
+    "x1": -799,
+    "y1": 193
+   }
+  },
+  {
+   "id": "s_1_3",
+   "development": "territory_s_1_c3",
+   "stumpsUntil": "territory_s_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1455.4,
+     "y": 260.5,
+     "scale": 0.61,
+     "flip": false,
+     "tint": 0.93
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1273.6,
+     "y": 272.1,
+     "scale": 0.593,
+     "flip": false,
+     "tint": 0.946
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1091.0,
+     "y": 221.6,
+     "scale": 0.506,
+     "flip": true,
+     "tint": 0.914
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1395.7,
+     "y": 144.7,
+     "scale": 0.82,
+     "flip": true,
+     "tint": 0.87
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1207.5,
+     "y": 157.7,
+     "scale": 0.724,
+     "flip": true,
+     "tint": 0.862
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -979.4,
+     "y": 186.6,
+     "scale": 0.608,
+     "flip": false,
+     "tint": 0.969
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -989.2,
+     "y": 303.4,
+     "scale": 0.554,
+     "flip": false,
+     "tint": 0.95
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -877.1,
+     "y": 268.6,
+     "scale": 0.694,
+     "flip": false,
+     "tint": 0.943
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -1455.4,
+     "y": 260.5,
+     "scale": 0.282,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1207.5,
+     "y": 157.7,
+     "scale": 0.261,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -989.2,
+     "y": 303.4,
+     "scale": 0.321,
+     "flip": true,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_s_1_3",
+    "x0": -1619,
+    "y0": 93,
+    "x1": -799,
+    "y1": 353
+   }
+  },
+  {
+   "id": "s_2_1",
+   "development": "territory_s_2_c1",
+   "stumpsUntil": "territory_s_2",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -759.5,
+     "y": 89.9,
+     "scale": 0.678,
+     "flip": false,
+     "tint": 0.979
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -555.8,
+     "y": 142.4,
+     "scale": 0.637,
+     "flip": true,
+     "tint": 0.99
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -685.2,
+     "y": 194.0,
+     "scale": 0.6,
+     "flip": false,
+     "tint": 0.892
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -643.2,
+     "y": 49.1,
+     "scale": 0.596,
+     "flip": false,
+     "tint": 0.866
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -552.3,
+     "y": 274.0,
+     "scale": 0.549,
+     "flip": true,
+     "tint": 0.988
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -679.3,
+     "y": -78.8,
+     "scale": 0.4,
+     "flip": false,
+     "tint": 0.975
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -623.6,
+     "y": -28.4,
+     "scale": 0.371,
+     "flip": true,
+     "tint": 0.938
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -685.2,
+     "y": 194.0,
+     "scale": 0.293,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -516.1,
+     "y": -77.0,
+     "scale": 0.299,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_s_2_1",
+    "x0": -899,
+    "y0": -227,
+    "x1": -439,
+    "y1": 353
+   }
+  },
+  {
+   "id": "s_2_2",
+   "development": "territory_s_2_c2",
+   "stumpsUntil": "territory_s_2",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -418.9,
+     "y": 241.5,
+     "scale": 0.665,
+     "flip": false,
+     "tint": 0.975
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -243.7,
+     "y": 271.0,
+     "scale": 0.658,
+     "flip": false,
+     "tint": 0.969
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -231.8,
+     "y": 117.8,
+     "scale": 0.552,
+     "flip": false,
+     "tint": 0.87
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -421.1,
+     "y": 85.1,
+     "scale": 0.631,
+     "flip": true,
+     "tint": 0.994
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -480.8,
+     "y": -89.4,
+     "scale": 0.357,
+     "flip": true,
+     "tint": 0.961
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -352.6,
+     "y": -167.1,
+     "scale": 0.303,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -149.4,
+     "y": 199.5,
+     "scale": 0.306,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -418.9,
+     "y": 241.5,
+     "scale": 0.271,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -140.6,
+     "y": -57.2,
+     "scale": 0.262,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_s_2_2",
+    "x0": -539,
+    "y0": -227,
+    "x1": -79,
+    "y1": 353
+   }
+  },
+  {
+   "id": "s_3_1",
+   "development": "territory_s_3_c1",
+   "stumpsUntil": "territory_s_3",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1565.9,
+     "y": 319.3,
+     "scale": 0.653,
+     "flip": false,
+     "tint": 0.936
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1459.0,
+     "y": 530.0,
+     "scale": 0.502,
+     "flip": false,
+     "tint": 0.882
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1407.6,
+     "y": 418.2,
+     "scale": 0.636,
+     "flip": true,
+     "tint": 0.926
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1211.3,
+     "y": 485.9,
+     "scale": 0.635,
+     "flip": false,
+     "tint": 0.932
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1080.6,
+     "y": 388.3,
+     "scale": 0.519,
+     "flip": false,
+     "tint": 0.969
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1118.5,
+     "y": 562.1,
+     "scale": 0.619,
+     "flip": false,
+     "tint": 0.908
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -990.1,
+     "y": 506.2,
+     "scale": 0.63,
+     "flip": true,
+     "tint": 0.905
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1542.6,
+     "y": 435.2,
+     "scale": 0.592,
+     "flip": false,
+     "tint": 0.942
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -783.4,
+     "y": 395.0,
+     "scale": 0.76,
+     "flip": false,
+     "tint": 0.933
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -755.4,
+     "y": 566.3,
+     "scale": 0.668,
+     "flip": true,
+     "tint": 0.98
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -861.8,
+     "y": 499.4,
+     "scale": 0.516,
+     "flip": true,
+     "tint": 0.906
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -693.2,
+     "y": 313.4,
+     "scale": 0.56,
+     "flip": true,
+     "tint": 0.926
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -564.0,
+     "y": 550.9,
+     "scale": 0.649,
+     "flip": false,
+     "tint": 0.993
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -130.9,
+     "y": 488.5,
+     "scale": 0.793,
+     "flip": true,
+     "tint": 0.943
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -569.3,
+     "y": 396.7,
+     "scale": 0.564,
+     "flip": false,
+     "tint": 0.951
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -434.5,
+     "y": 459.0,
+     "scale": 0.542,
+     "flip": false,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -322.1,
+     "y": 425.8,
+     "scale": 0.527,
+     "flip": false,
+     "tint": 0.88
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -143.8,
+     "y": 334.8,
+     "scale": 0.565,
+     "flip": false,
+     "tint": 0.958
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -1459.0,
+     "y": 530.0,
+     "scale": 0.295,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1118.5,
+     "y": 562.1,
+     "scale": 0.281,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -693.2,
+     "y": 313.4,
+     "scale": 0.285,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -143.8,
+     "y": 334.8,
+     "scale": 0.304,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_s_3_1",
+    "x0": -1619,
+    "y0": 253,
+    "x1": -79,
+    "y1": 633
+   }
+  },
+  {
+   "id": "s_3_2",
+   "development": "territory_s_3_c2",
+   "stumpsUntil": "territory_s_3",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1510.4,
+     "y": 835.3,
+     "scale": 0.677,
+     "flip": true,
+     "tint": 0.933
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1376.9,
+     "y": 763.4,
+     "scale": 0.527,
+     "flip": true,
+     "tint": 0.888
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1453.6,
+     "y": 673.8,
+     "scale": 0.676,
+     "flip": false,
+     "tint": 0.979
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1240.8,
+     "y": 834.4,
+     "scale": 0.765,
+     "flip": false,
+     "tint": 0.979
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1068.1,
+     "y": 787.7,
+     "scale": 0.504,
+     "flip": false,
+     "tint": 0.996
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1350.0,
+     "y": 614.3,
+     "scale": 0.659,
+     "flip": false,
+     "tint": 0.993
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1196.0,
+     "y": 670.2,
+     "scale": 0.641,
+     "flip": true,
+     "tint": 0.871
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -814.8,
+     "y": 861.2,
+     "scale": 0.668,
+     "flip": false,
+     "tint": 0.929
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1011.6,
+     "y": 636.6,
+     "scale": 0.665,
+     "flip": false,
+     "tint": 0.929
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -912.9,
+     "y": 714.5,
+     "scale": 0.639,
+     "flip": true,
+     "tint": 0.96
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -782.6,
+     "y": 742.2,
+     "scale": 0.567,
+     "flip": true,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -450.1,
+     "y": 800.0,
+     "scale": 0.642,
+     "flip": false,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -666.1,
+     "y": 764.6,
+     "scale": 0.533,
+     "flip": false,
+     "tint": 0.96
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -505.5,
+     "y": 672.4,
+     "scale": 0.542,
+     "flip": true,
+     "tint": 0.939
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -246.6,
+     "y": 860.2,
+     "scale": 0.679,
+     "flip": false,
+     "tint": 0.891
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -306.0,
+     "y": 732.7,
+     "scale": 0.561,
+     "flip": true,
+     "tint": 0.941
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -196.8,
+     "y": 657.2,
+     "scale": 0.631,
+     "flip": false,
+     "tint": 0.987
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -347.0,
+     "y": 595.5,
+     "scale": 0.774,
+     "flip": true,
+     "tint": 0.974
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -656.9,
+     "y": 629.2,
+     "scale": 0.591,
+     "flip": true,
+     "tint": 0.919
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -306.0,
+     "y": 732.7,
+     "scale": 0.286,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -912.9,
+     "y": 714.5,
+     "scale": 0.262,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -656.9,
+     "y": 629.2,
+     "scale": 0.289,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1196.0,
+     "y": 670.2,
+     "scale": 0.31,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_s_3_2",
+    "x0": -1619,
+    "y0": 533,
+    "x1": -79,
+    "y1": 913
+   }
+  },
+  {
+   "id": "nw_1_1",
+   "development": "territory_nw_1_c1",
+   "stumpsUntil": "territory_nw_1",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1866.4,
+     "y": -1106.2,
+     "scale": 0.787,
+     "flip": false,
+     "tint": 0.95
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1763.5,
+     "y": -1050.6,
+     "scale": 0.616,
+     "flip": true,
+     "tint": 0.986
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1929.3,
+     "y": -982.5,
+     "scale": 0.716,
+     "flip": true,
+     "tint": 0.93
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1516.6,
+     "y": -989.7,
+     "scale": 0.613,
+     "flip": false,
+     "tint": 0.903
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1530.1,
+     "y": -1116.6,
+     "scale": 0.637,
+     "flip": false,
+     "tint": 0.956
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1360.7,
+     "y": -1063.4,
+     "scale": 0.312,
+     "flip": true,
+     "tint": 0.986
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1501.8,
+     "y": -1040.3,
+     "scale": 0.36,
+     "flip": false,
+     "tint": 0.919
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1737.2,
+     "y": -1014.7,
+     "scale": 0.324,
+     "flip": true,
+     "tint": 0.916
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1431.0,
+     "y": -1002.8,
+     "scale": 0.333,
+     "flip": true,
+     "tint": 0.92
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1578.6,
+     "y": -1093.7,
+     "scale": 0.374,
+     "flip": false,
+     "tint": 0.914
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1714.5,
+     "y": -1107.3,
+     "scale": 0.343,
+     "flip": false,
+     "tint": 0.959
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1567.5,
+     "y": -981.8,
+     "scale": 0.345,
+     "flip": true,
+     "tint": 0.991
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1796.8,
+     "y": -1107.3,
+     "scale": 0.35,
+     "flip": false,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1654.4,
+     "y": -977.6,
+     "scale": 0.302,
+     "flip": true,
+     "tint": 0.903
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -1929.3,
+     "y": -982.5,
+     "scale": 0.27,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1530.1,
+     "y": -1116.6,
+     "scale": 0.264,
+     "flip": true,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_nw_1_1",
+    "x0": -2099,
+    "y0": -1212,
+    "x1": -1279,
+    "y1": -927
+   }
+  },
+  {
+   "id": "nw_1_2",
+   "development": "territory_nw_1_c2",
+   "stumpsUntil": "territory_nw_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1955.5,
+     "y": -1189.5,
+     "scale": 0.611,
+     "flip": true,
+     "tint": 0.952
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1883.2,
+     "y": -1309.8,
+     "scale": 0.749,
+     "flip": false,
+     "tint": 0.957
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1782.3,
+     "y": -1223.9,
+     "scale": 0.508,
+     "flip": true,
+     "tint": 0.965
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1654.8,
+     "y": -1164.9,
+     "scale": 0.535,
+     "flip": false,
+     "tint": 0.963
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1529.0,
+     "y": -1329.1,
+     "scale": 0.633,
+     "flip": true,
+     "tint": 0.939
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1426.5,
+     "y": -1258.6,
+     "scale": 0.628,
+     "flip": true,
+     "tint": 0.946
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -1654.8,
+     "y": -1164.9,
+     "scale": 0.275,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1883.2,
+     "y": -1309.8,
+     "scale": 0.338,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1529.0,
+     "y": -1329.1,
+     "scale": 0.308,
+     "flip": true,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_nw_1_2",
+    "x0": -2099,
+    "y0": -1397,
+    "x1": -1279,
+    "y1": -1112
+   }
+  },
+  {
+   "id": "nw_1_3",
+   "development": "territory_nw_1_c3",
+   "stumpsUntil": "territory_nw_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1926.1,
+     "y": -1421.9,
+     "scale": 0.55,
+     "flip": false,
+     "tint": 0.894
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1707.4,
+     "y": -1364.3,
+     "scale": 0.663,
+     "flip": true,
+     "tint": 0.98
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1569.7,
+     "y": -1481.7,
+     "scale": 0.559,
+     "flip": true,
+     "tint": 0.924
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1365.6,
+     "y": -1387.3,
+     "scale": 0.587,
+     "flip": false,
+     "tint": 0.959
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1379.3,
+     "y": -1529.2,
+     "scale": 0.665,
+     "flip": false,
+     "tint": 0.861
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1807.0,
+     "y": -1455.0,
+     "scale": 0.743,
+     "flip": false,
+     "tint": 0.976
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -1926.1,
+     "y": -1421.9,
+     "scale": 0.281,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1379.3,
+     "y": -1529.2,
+     "scale": 0.287,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1707.4,
+     "y": -1364.3,
+     "scale": 0.298,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_nw_1_3",
+    "x0": -2099,
+    "y0": -1587,
+    "x1": -1279,
+    "y1": -1297
+   }
+  },
+  {
+   "id": "nw_2_1",
+   "development": "territory_nw_2_c1",
+   "stumpsUntil": "territory_nw_2",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2239.2,
+     "y": -980.1,
+     "scale": 0.537,
+     "flip": false,
+     "tint": 0.941
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2279.9,
+     "y": -1104.7,
+     "scale": 0.782,
+     "flip": false,
+     "tint": 0.997
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2061.9,
+     "y": -1023.5,
+     "scale": 0.617,
+     "flip": false,
+     "tint": 0.941
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2249.6,
+     "y": -1336.6,
+     "scale": 0.582,
+     "flip": false,
+     "tint": 0.917
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2182.8,
+     "y": -1202.5,
+     "scale": 0.574,
+     "flip": true,
+     "tint": 0.885
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2059.2,
+     "y": -1254.9,
+     "scale": 0.614,
+     "flip": true,
+     "tint": 0.963
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2138.9,
+     "y": -1393.0,
+     "scale": 0.636,
+     "flip": true,
+     "tint": 0.96
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2322.5,
+     "y": -1454.6,
+     "scale": 0.712,
+     "flip": false,
+     "tint": 0.862
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2095.3,
+     "y": -1520.6,
+     "scale": 0.817,
+     "flip": false,
+     "tint": 0.888
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -2061.9,
+     "y": -1023.5,
+     "scale": 0.284,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2249.6,
+     "y": -1336.6,
+     "scale": 0.328,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2059.2,
+     "y": -1254.9,
+     "scale": 0.279,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2095.3,
+     "y": -1520.6,
+     "scale": 0.304,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_nw_2_1",
+    "x0": -2459,
+    "y0": -1587,
+    "x1": -1999,
+    "y1": -927
+   }
+  },
+  {
+   "id": "nw_2_2",
+   "development": "territory_nw_2_c2",
+   "stumpsUntil": "territory_nw_2",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2746.9,
+     "y": -1098.1,
+     "scale": 0.598,
+     "flip": true,
+     "tint": 0.883
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2478.8,
+     "y": -1010.4,
+     "scale": 0.79,
+     "flip": true,
+     "tint": 0.891
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2470.6,
+     "y": -1147.8,
+     "scale": 0.627,
+     "flip": false,
+     "tint": 0.956
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2595.9,
+     "y": -1109.1,
+     "scale": 0.553,
+     "flip": true,
+     "tint": 0.979
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2746.8,
+     "y": -1243.7,
+     "scale": 0.583,
+     "flip": true,
+     "tint": 0.895
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2438.9,
+     "y": -1270.3,
+     "scale": 0.702,
+     "flip": true,
+     "tint": 0.86
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2717.4,
+     "y": -1461.3,
+     "scale": 0.52,
+     "flip": false,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2562.8,
+     "y": -1274.3,
+     "scale": 0.636,
+     "flip": false,
+     "tint": 0.922
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2660.4,
+     "y": -1347.4,
+     "scale": 0.536,
+     "flip": false,
+     "tint": 0.944
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2424.0,
+     "y": -1392.6,
+     "scale": 0.666,
+     "flip": true,
+     "tint": 0.997
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2530.7,
+     "y": -1487.8,
+     "scale": 0.581,
+     "flip": false,
+     "tint": 0.966
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -2746.8,
+     "y": -1243.7,
+     "scale": 0.321,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2717.4,
+     "y": -1461.3,
+     "scale": 0.282,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2470.6,
+     "y": -1147.8,
+     "scale": 0.29,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2424.0,
+     "y": -1392.6,
+     "scale": 0.338,
+     "flip": true,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_nw_2_2",
+    "x0": -2819,
+    "y0": -1587,
+    "x1": -2359,
+    "y1": -927
+   }
+  },
+  {
+   "id": "nw_3_1",
+   "development": "territory_nw_3_c1",
+   "stumpsUntil": "territory_nw_3",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2664.8,
+     "y": -1579.2,
+     "scale": 0.812,
+     "flip": true,
+     "tint": 0.887
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2368.0,
+     "y": -1630.3,
+     "scale": 0.682,
+     "flip": false,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2198.1,
+     "y": -1576.4,
+     "scale": 0.814,
+     "flip": true,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1848.6,
+     "y": -1576.9,
+     "scale": 0.68,
+     "flip": true,
+     "tint": 0.959
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1695.3,
+     "y": -1721.1,
+     "scale": 0.528,
+     "flip": true,
+     "tint": 0.954
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2720.2,
+     "y": -1689.0,
+     "scale": 0.61,
+     "flip": false,
+     "tint": 0.998
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2573.3,
+     "y": -1661.5,
+     "scale": 0.641,
+     "flip": false,
+     "tint": 0.887
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1978.7,
+     "y": -1547.6,
+     "scale": 0.67,
+     "flip": true,
+     "tint": 0.87
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1851.0,
+     "y": -1727.1,
+     "scale": 0.63,
+     "flip": true,
+     "tint": 0.917
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1983.8,
+     "y": -1675.6,
+     "scale": 0.561,
+     "flip": false,
+     "tint": 0.937
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2528.9,
+     "y": -1810.5,
+     "scale": 0.781,
+     "flip": false,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2218.4,
+     "y": -1713.0,
+     "scale": 0.574,
+     "flip": false,
+     "tint": 0.948
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2093.1,
+     "y": -1734.3,
+     "scale": 0.772,
+     "flip": true,
+     "tint": 0.943
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1701.6,
+     "y": -1540.6,
+     "scale": 0.519,
+     "flip": true,
+     "tint": 0.946
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2451.4,
+     "y": -1722.1,
+     "scale": 0.595,
+     "flip": false,
+     "tint": 0.984
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1525.8,
+     "y": -1787.9,
+     "scale": 0.662,
+     "flip": true,
+     "tint": 0.92
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1559.2,
+     "y": -1665.8,
+     "scale": 0.593,
+     "flip": false,
+     "tint": 0.906
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1348.3,
+     "y": -1654.6,
+     "scale": 0.649,
+     "flip": false,
+     "tint": 0.972
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2330.3,
+     "y": -1749.7,
+     "scale": 0.675,
+     "flip": true,
+     "tint": 0.889
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -2664.8,
+     "y": -1579.2,
+     "scale": 0.323,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1525.8,
+     "y": -1787.9,
+     "scale": 0.334,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2330.3,
+     "y": -1749.7,
+     "scale": 0.282,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1978.7,
+     "y": -1547.6,
+     "scale": 0.322,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_nw_3_1",
+    "x0": -2819,
+    "y0": -1867,
+    "x1": -1279,
+    "y1": -1487
+   }
+  },
+  {
+   "id": "nw_3_2",
+   "development": "territory_nw_3_c2",
+   "stumpsUntil": "territory_nw_3",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2689.4,
+     "y": -1862.7,
+     "scale": 0.534,
+     "flip": true,
+     "tint": 0.896
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2345.8,
+     "y": -1866.1,
+     "scale": 0.73,
+     "flip": false,
+     "tint": 0.962
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2203.0,
+     "y": -1916.0,
+     "scale": 0.596,
+     "flip": true,
+     "tint": 0.989
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2004.3,
+     "y": -1817.1,
+     "scale": 0.579,
+     "flip": false,
+     "tint": 0.864
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1886.6,
+     "y": -1862.1,
+     "scale": 0.62,
+     "flip": true,
+     "tint": 0.89
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2691.7,
+     "y": -2090.9,
+     "scale": 0.617,
+     "flip": true,
+     "tint": 0.99
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2074.4,
+     "y": -1947.7,
+     "scale": 0.682,
+     "flip": true,
+     "tint": 0.883
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1769.0,
+     "y": -1887.4,
+     "scale": 0.504,
+     "flip": true,
+     "tint": 0.862
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2513.3,
+     "y": -1978.8,
+     "scale": 0.634,
+     "flip": true,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2312.6,
+     "y": -2015.8,
+     "scale": 0.623,
+     "flip": false,
+     "tint": 0.944
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1944.8,
+     "y": -2034.2,
+     "scale": 0.502,
+     "flip": true,
+     "tint": 0.913
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1741.2,
+     "y": -2013.4,
+     "scale": 0.526,
+     "flip": false,
+     "tint": 0.88
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2095.0,
+     "y": -2063.9,
+     "scale": 0.803,
+     "flip": false,
+     "tint": 0.893
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1578.2,
+     "y": -1993.9,
+     "scale": 0.616,
+     "flip": false,
+     "tint": 0.893
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2644.6,
+     "y": -1979.7,
+     "scale": 0.751,
+     "flip": false,
+     "tint": 0.918
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1444.8,
+     "y": -1981.1,
+     "scale": 0.625,
+     "flip": true,
+     "tint": 0.985
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1397.5,
+     "y": -1865.8,
+     "scale": 0.681,
+     "flip": false,
+     "tint": 0.885
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1662.8,
+     "y": -1835.1,
+     "scale": 0.669,
+     "flip": true,
+     "tint": 0.995
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2412.3,
+     "y": -2076.3,
+     "scale": 0.674,
+     "flip": false,
+     "tint": 0.897
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -2691.7,
+     "y": -2090.9,
+     "scale": 0.315,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2513.3,
+     "y": -1978.8,
+     "scale": 0.334,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2689.4,
+     "y": -1862.7,
+     "scale": 0.319,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2203.0,
+     "y": -1916.0,
+     "scale": 0.263,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_nw_3_2",
+    "x0": -2819,
+    "y0": -2122,
+    "x1": -1279,
+    "y1": -1767
+   }
+  },
+  {
+   "id": "w_1_1",
+   "development": "territory_w_1_c1",
+   "stumpsUntil": "territory_w_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1786.1,
+     "y": -38.8,
+     "scale": 0.528,
+     "flip": true,
+     "tint": 0.975
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1736.8,
+     "y": -231.0,
+     "scale": 0.502,
+     "flip": true,
+     "tint": 0.921
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1795.7,
+     "y": -442.3,
+     "scale": 0.741,
+     "flip": true,
+     "tint": 0.979
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1857.6,
+     "y": -568.7,
+     "scale": 0.674,
+     "flip": true,
+     "tint": 0.976
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1744.2,
+     "y": -645.8,
+     "scale": 0.658,
+     "flip": true,
+     "tint": 0.993
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1722.6,
+     "y": -479.5,
+     "scale": 0.342,
+     "flip": true,
+     "tint": 0.918
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1693.9,
+     "y": -390.3,
+     "scale": 0.315,
+     "flip": true,
+     "tint": 0.949
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1794.2,
+     "y": -325.4,
+     "scale": 0.368,
+     "flip": false,
+     "tint": 0.975
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1788.9,
+     "y": -411.0,
+     "scale": 0.364,
+     "flip": false,
+     "tint": 0.953
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1711.9,
+     "y": -187.4,
+     "scale": 0.319,
+     "flip": true,
+     "tint": 0.988
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1792.9,
+     "y": -84.7,
+     "scale": 0.337,
+     "flip": true,
+     "tint": 0.971
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1730.0,
+     "y": -29.2,
+     "scale": 0.368,
+     "flip": true,
+     "tint": 0.958
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1702.5,
+     "y": -106.5,
+     "scale": 0.367,
+     "flip": true,
+     "tint": 0.965
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -1857.6,
+     "y": -568.7,
+     "scale": 0.321,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1786.1,
+     "y": -38.8,
+     "scale": 0.283,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_w_1_1",
+    "x0": -1909,
+    "y0": -707,
+    "x1": -1599,
+    "y1": 33
+   }
+  },
+  {
+   "id": "w_1_2",
+   "development": "territory_w_1_c2",
+   "stumpsUntil": "territory_w_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1888.1,
+     "y": -218.0,
+     "scale": 0.652,
+     "flip": true,
+     "tint": 0.993
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1876.2,
+     "y": -339.9,
+     "scale": 0.608,
+     "flip": false,
+     "tint": 0.988
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1973.9,
+     "y": -429.3,
+     "scale": 0.593,
+     "flip": true,
+     "tint": 0.929
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1985.4,
+     "y": -654.2,
+     "scale": 0.579,
+     "flip": true,
+     "tint": 0.86
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2020.1,
+     "y": -536.3,
+     "scale": 0.583,
+     "flip": true,
+     "tint": 0.999
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -1876.2,
+     "y": -339.9,
+     "scale": 0.314,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2020.1,
+     "y": -536.3,
+     "scale": 0.265,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_w_1_2",
+    "x0": -2124,
+    "y0": -707,
+    "x1": -1809,
+    "y1": 33
+   }
+  },
+  {
+   "id": "w_1_3",
+   "development": "territory_w_1_c3",
+   "stumpsUntil": "territory_w_1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2202.8,
+     "y": -104.7,
+     "scale": 0.578,
+     "flip": false,
+     "tint": 0.948
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2081.2,
+     "y": -100.9,
+     "scale": 0.677,
+     "flip": true,
+     "tint": 0.961
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2246.6,
+     "y": -598.0,
+     "scale": 0.622,
+     "flip": true,
+     "tint": 0.9
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2236.4,
+     "y": -337.2,
+     "scale": 0.742,
+     "flip": true,
+     "tint": 0.951
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2077.2,
+     "y": -297.3,
+     "scale": 0.628,
+     "flip": true,
+     "tint": 0.977
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2179.8,
+     "y": -442.1,
+     "scale": 0.661,
+     "flip": true,
+     "tint": 0.88
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2169.3,
+     "y": -225.4,
+     "scale": 0.519,
+     "flip": false,
+     "tint": 0.896
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -2077.2,
+     "y": -297.3,
+     "scale": 0.328,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2202.8,
+     "y": -104.7,
+     "scale": 0.273,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2246.6,
+     "y": -598.0,
+     "scale": 0.295,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_w_1_3",
+    "x0": -2339,
+    "y0": -707,
+    "x1": -2024,
+    "y1": 33
+   }
+  },
+  {
+   "id": "w_2_1",
+   "development": "territory_w_2_c1",
+   "stumpsUntil": "territory_w_2",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2491.2,
+     "y": -62.2,
+     "scale": 0.603,
+     "flip": true,
+     "tint": 0.986
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2338.6,
+     "y": -95.5,
+     "scale": 0.616,
+     "flip": false,
+     "tint": 0.955
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2509.8,
+     "y": -245.3,
+     "scale": 0.554,
+     "flip": true,
+     "tint": 0.9
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2368.4,
+     "y": -419.4,
+     "scale": 0.641,
+     "flip": true,
+     "tint": 0.97
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2493.9,
+     "y": -452.6,
+     "scale": 0.627,
+     "flip": true,
+     "tint": 0.921
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2354.2,
+     "y": -259.8,
+     "scale": 0.657,
+     "flip": true,
+     "tint": 0.971
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2562.4,
+     "y": -625.1,
+     "scale": 0.648,
+     "flip": true,
+     "tint": 0.886
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2417.6,
+     "y": -612.3,
+     "scale": 0.641,
+     "flip": false,
+     "tint": 0.981
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -2509.8,
+     "y": -245.3,
+     "scale": 0.261,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2368.4,
+     "y": -419.4,
+     "scale": 0.298,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2338.6,
+     "y": -95.5,
+     "scale": 0.339,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2562.4,
+     "y": -625.1,
+     "scale": 0.296,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_w_2_1",
+    "x0": -2659,
+    "y0": -707,
+    "x1": -2239,
+    "y1": 33
+   }
+  },
+  {
+   "id": "w_2_2",
+   "development": "territory_w_2_c2",
+   "stumpsUntil": "territory_w_2",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2759.3,
+     "y": -135.0,
+     "scale": 0.662,
+     "flip": false,
+     "tint": 0.994
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2903.3,
+     "y": -260.0,
+     "scale": 0.617,
+     "flip": false,
+     "tint": 0.869
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2815.1,
+     "y": -31.2,
+     "scale": 0.597,
+     "flip": true,
+     "tint": 0.93
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2656.8,
+     "y": -197.3,
+     "scale": 0.664,
+     "flip": false,
+     "tint": 0.909
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2777.5,
+     "y": -312.1,
+     "scale": 0.658,
+     "flip": true,
+     "tint": 0.88
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2910.1,
+     "y": -450.1,
+     "scale": 0.55,
+     "flip": false,
+     "tint": 0.948
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2638.6,
+     "y": -330.3,
+     "scale": 0.508,
+     "flip": true,
+     "tint": 0.937
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2676.9,
+     "y": -446.3,
+     "scale": 0.526,
+     "flip": true,
+     "tint": 0.993
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2694.6,
+     "y": -605.5,
+     "scale": 0.594,
+     "flip": true,
+     "tint": 0.951
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2918.8,
+     "y": -648.8,
+     "scale": 0.732,
+     "flip": true,
+     "tint": 0.863
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2812.3,
+     "y": -543.1,
+     "scale": 0.704,
+     "flip": false,
+     "tint": 0.905
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -2903.3,
+     "y": -260.0,
+     "scale": 0.333,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2656.8,
+     "y": -197.3,
+     "scale": 0.327,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2918.8,
+     "y": -648.8,
+     "scale": 0.29,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2815.1,
+     "y": -31.2,
+     "scale": 0.275,
+     "flip": false,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_w_2_2",
+    "x0": -2979,
+    "y0": -707,
+    "x1": -2559,
+    "y1": 33
+   }
+  },
+  {
+   "id": "w_3_1",
+   "development": "territory_w_3_c1",
+   "stumpsUntil": "territory_w_3",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2572.6,
+     "y": 263.4,
+     "scale": 0.633,
+     "flip": true,
+     "tint": 0.968
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2712.4,
+     "y": 201.3,
+     "scale": 0.664,
+     "flip": true,
+     "tint": 0.951
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2604.0,
+     "y": 132.4,
+     "scale": 0.642,
+     "flip": true,
+     "tint": 0.882
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2385.3,
+     "y": 224.5,
+     "scale": 0.554,
+     "flip": true,
+     "tint": 0.952
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2168.4,
+     "y": 302.1,
+     "scale": 0.718,
+     "flip": true,
+     "tint": 0.987
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2834.0,
+     "y": 241.1,
+     "scale": 0.635,
+     "flip": true,
+     "tint": 0.861
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2622.1,
+     "y": 9.7,
+     "scale": 0.511,
+     "flip": true,
+     "tint": 0.869
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2221.9,
+     "y": 66.5,
+     "scale": 0.65,
+     "flip": true,
+     "tint": 0.949
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2049.7,
+     "y": 171.3,
+     "scale": 0.63,
+     "flip": true,
+     "tint": 0.994
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2769.5,
+     "y": 93.0,
+     "scale": 0.67,
+     "flip": true,
+     "tint": 0.882
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2508.4,
+     "y": 53.3,
+     "scale": 0.813,
+     "flip": false,
+     "tint": 0.946
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2170.1,
+     "y": 179.9,
+     "scale": 0.665,
+     "flip": false,
+     "tint": 0.993
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2088.4,
+     "y": 45.9,
+     "scale": 0.628,
+     "flip": false,
+     "tint": 0.893
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1868.7,
+     "y": 250.3,
+     "scale": 0.68,
+     "flip": false,
+     "tint": 0.972
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2375.5,
+     "y": 17.6,
+     "scale": 0.623,
+     "flip": false,
+     "tint": 0.961
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1743.2,
+     "y": 179.3,
+     "scale": 0.673,
+     "flip": true,
+     "tint": 0.999
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1868.2,
+     "y": 93.6,
+     "scale": 0.675,
+     "flip": false,
+     "tint": 0.957
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1696.2,
+     "y": 287.6,
+     "scale": 0.513,
+     "flip": true,
+     "tint": 0.935
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1944.3,
+     "y": -11.1,
+     "scale": 0.77,
+     "flip": true,
+     "tint": 0.893
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1672.0,
+     "y": 55.4,
+     "scale": 0.64,
+     "flip": true,
+     "tint": 0.966
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -2375.5,
+     "y": 17.6,
+     "scale": 0.328,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2170.1,
+     "y": 179.9,
+     "scale": 0.302,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2622.1,
+     "y": 9.7,
+     "scale": 0.307,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1944.3,
+     "y": -11.1,
+     "scale": 0.29,
+     "flip": true,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_w_3_1",
+    "x0": -2979,
+    "y0": -67,
+    "x1": -1599,
+    "y1": 353
+   }
+  },
+  {
+   "id": "w_3_2",
+   "development": "territory_w_3_c2",
+   "stumpsUntil": "territory_w_3",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2522.2,
+     "y": 525.9,
+     "scale": 0.58,
+     "flip": false,
+     "tint": 0.929
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2597.2,
+     "y": 386.3,
+     "scale": 0.747,
+     "flip": true,
+     "tint": 0.943
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2354.5,
+     "y": 547.5,
+     "scale": 0.757,
+     "flip": false,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2696.1,
+     "y": 470.3,
+     "scale": 0.765,
+     "flip": false,
+     "tint": 0.956
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2445.3,
+     "y": 388.5,
+     "scale": 0.575,
+     "flip": true,
+     "tint": 0.869
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2669.0,
+     "y": 597.0,
+     "scale": 0.662,
+     "flip": false,
+     "tint": 0.957
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2315.4,
+     "y": 343.0,
+     "scale": 0.61,
+     "flip": true,
+     "tint": 0.99
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2903.1,
+     "y": 562.0,
+     "scale": 0.625,
+     "flip": false,
+     "tint": 0.933
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2734.9,
+     "y": 315.5,
+     "scale": 0.578,
+     "flip": true,
+     "tint": 0.936
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2906.6,
+     "y": 435.0,
+     "scale": 0.63,
+     "flip": true,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2139.1,
+     "y": 478.4,
+     "scale": 0.587,
+     "flip": false,
+     "tint": 0.971
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1976.2,
+     "y": 546.3,
+     "scale": 0.57,
+     "flip": false,
+     "tint": 0.868
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2260.8,
+     "y": 460.8,
+     "scale": 0.689,
+     "flip": true,
+     "tint": 0.939
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2030.8,
+     "y": 351.1,
+     "scale": 0.63,
+     "flip": false,
+     "tint": 0.984
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1878.5,
+     "y": 391.0,
+     "scale": 0.731,
+     "flip": true,
+     "tint": 0.919
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1745.3,
+     "y": 592.5,
+     "scale": 0.769,
+     "flip": false,
+     "tint": 0.951
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1847.3,
+     "y": 524.5,
+     "scale": 0.528,
+     "flip": false,
+     "tint": 0.947
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1762.1,
+     "y": 384.6,
+     "scale": 0.66,
+     "flip": true,
+     "tint": 0.863
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1658.4,
+     "y": 495.5,
+     "scale": 0.582,
+     "flip": true,
+     "tint": 0.933
+    }
+   ],
+   "stumps": [
+    {
+     "sprite": "Forest_Stump",
+     "x": -1745.3,
+     "y": 592.5,
+     "scale": 0.277,
+     "flip": true,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2354.5,
+     "y": 547.5,
+     "scale": 0.288,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -2669.0,
+     "y": 597.0,
+     "scale": 0.338,
+     "flip": false,
+     "tint": 1.0
+    },
+    {
+     "sprite": "Forest_Stump",
+     "x": -1762.1,
+     "y": 384.6,
+     "scale": 0.318,
+     "flip": true,
+     "tint": 1.0
+    }
+   ],
+   "shade": {
+    "sprite": "Shade_w_3_2",
+    "x0": -2979,
+    "y0": 253,
+    "x1": -1599,
+    "y1": 673
+   }
+  },
+  {
+   "id": "wild_0_2",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2311.5,
+     "y": 879.1,
+     "scale": 0.668,
+     "flip": false,
+     "tint": 0.947
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2534.6,
+     "y": 913.0,
+     "scale": 0.588,
+     "flip": false,
+     "tint": 0.887
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2159.3,
+     "y": 833.9,
+     "scale": 0.603,
+     "flip": false,
+     "tint": 0.868
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2432.6,
+     "y": 718.0,
+     "scale": 0.789,
+     "flip": true,
+     "tint": 0.971
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2636.9,
+     "y": 738.4,
+     "scale": 0.523,
+     "flip": true,
+     "tint": 0.89
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2721.9,
+     "y": 855.0,
+     "scale": 0.515,
+     "flip": false,
+     "tint": 0.908
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2305.3,
+     "y": 695.3,
+     "scale": 0.55,
+     "flip": false,
+     "tint": 0.882
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2558.2,
+     "y": 652.8,
+     "scale": 0.653,
+     "flip": false,
+     "tint": 0.939
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2944.3,
+     "y": 908.4,
+     "scale": 0.555,
+     "flip": true,
+     "tint": 0.971
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2973.8,
+     "y": 787.3,
+     "scale": 0.603,
+     "flip": true,
+     "tint": 0.959
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2855.5,
+     "y": 726.0,
+     "scale": 0.666,
+     "flip": true,
+     "tint": 0.911
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2056.7,
+     "y": 760.1,
+     "scale": 0.741,
+     "flip": false,
+     "tint": 0.918
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2152.7,
+     "y": 685.2,
+     "scale": 0.64,
+     "flip": false,
+     "tint": 0.956
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2955.4,
+     "y": 276.6,
+     "scale": 0.522,
+     "flip": false,
+     "tint": 0.903
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2070.3,
+     "y": 938.9,
+     "scale": 0.64,
+     "flip": true,
+     "tint": 0.863
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2421.8,
+     "y": 834.6,
+     "scale": 0.745,
+     "flip": true,
+     "tint": 0.91
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2955.6,
+     "y": 124.8,
+     "scale": 0.623,
+     "flip": false,
+     "tint": 0.973
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -3013.2,
+     "y": 669.1,
+     "scale": 0.749,
+     "flip": false,
+     "tint": 0.977
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2531.8,
+     "y": 796.8,
+     "scale": 0.517,
+     "flip": true,
+     "tint": 0.992
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_0_2",
+    "x0": -3029,
+    "y0": -122,
+    "x1": -1954,
+    "y1": 998
+   }
+  },
+  {
+   "id": "wild_0_3",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2332.6,
+     "y": 1015.6,
+     "scale": 0.794,
+     "flip": false,
+     "tint": 0.982
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2624.0,
+     "y": 1021.8,
+     "scale": 0.547,
+     "flip": true,
+     "tint": 0.993
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2189.0,
+     "y": 984.1,
+     "scale": 0.67,
+     "flip": true,
+     "tint": 0.887
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2464.1,
+     "y": 1089.9,
+     "scale": 0.55,
+     "flip": false,
+     "tint": 0.929
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2194.5,
+     "y": 1173.2,
+     "scale": 0.597,
+     "flip": true,
+     "tint": 0.878
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2798.5,
+     "y": 976.9,
+     "scale": 0.566,
+     "flip": true,
+     "tint": 0.889
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2093.9,
+     "y": 1085.4,
+     "scale": 0.767,
+     "flip": false,
+     "tint": 0.895
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_0_3",
+    "x0": -3029,
+    "y0": 898,
+    "x1": -1954,
+    "y1": 1343
+   }
+  },
+  {
+   "id": "wild_1_3",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1980.3,
+     "y": 1017.0,
+     "scale": 0.511,
+     "flip": true,
+     "tint": 0.888
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1784.8,
+     "y": 1123.8,
+     "scale": 0.591,
+     "flip": true,
+     "tint": 0.974
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1919.8,
+     "y": 1134.0,
+     "scale": 0.621,
+     "flip": true,
+     "tint": 0.961
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1703.5,
+     "y": 1025.9,
+     "scale": 0.529,
+     "flip": false,
+     "tint": 0.946
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1580.3,
+     "y": 1141.9,
+     "scale": 0.765,
+     "flip": true,
+     "tint": 0.903
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1501.5,
+     "y": 1005.1,
+     "scale": 0.534,
+     "flip": false,
+     "tint": 0.885
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1375.3,
+     "y": 1106.4,
+     "scale": 0.596,
+     "flip": true,
+     "tint": 0.965
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1231.6,
+     "y": 969.9,
+     "scale": 0.515,
+     "flip": false,
+     "tint": 0.896
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1154.9,
+     "y": 1126.7,
+     "scale": 0.733,
+     "flip": false,
+     "tint": 0.913
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1087.8,
+     "y": 1225.8,
+     "scale": 0.647,
+     "flip": true,
+     "tint": 0.949
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1111.5,
+     "y": 1013.0,
+     "scale": 0.658,
+     "flip": true,
+     "tint": 0.862
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1205.6,
+     "y": 1260.1,
+     "scale": 0.691,
+     "flip": false,
+     "tint": 0.92
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1027.2,
+     "y": 1102.6,
+     "scale": 0.645,
+     "flip": true,
+     "tint": 0.982
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -997.5,
+     "y": 1320.0,
+     "scale": 0.527,
+     "flip": true,
+     "tint": 0.957
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_1_3",
+    "x0": -2054,
+    "y0": 898,
+    "x1": -929,
+    "y1": 1428
+   }
+  },
+  {
+   "id": "wild_1_2",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1878.3,
+     "y": 931.3,
+     "scale": 0.581,
+     "flip": true,
+     "tint": 0.954
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1950.5,
+     "y": 684.3,
+     "scale": 0.58,
+     "flip": false,
+     "tint": 0.91
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1849.3,
+     "y": 789.4,
+     "scale": 0.708,
+     "flip": false,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1666.6,
+     "y": 877.8,
+     "scale": 0.813,
+     "flip": false,
+     "tint": 0.887
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1655.2,
+     "y": 696.6,
+     "scale": 0.675,
+     "flip": true,
+     "tint": 0.991
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1362.3,
+     "y": 929.5,
+     "scale": 0.795,
+     "flip": true,
+     "tint": 0.885
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1572.1,
+     "y": 590.3,
+     "scale": 0.727,
+     "flip": true,
+     "tint": 0.878
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1625.0,
+     "y": -31.3,
+     "scale": 0.303,
+     "flip": false,
+     "tint": 0.961
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_1_2",
+    "x0": -2054,
+    "y0": -122,
+    "x1": -929,
+    "y1": 998
+   }
+  },
+  {
+   "id": "wild_0_1",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2972.2,
+     "y": -92.6,
+     "scale": 0.625,
+     "flip": true,
+     "tint": 0.884
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2997.0,
+     "y": -335.8,
+     "scale": 0.68,
+     "flip": true,
+     "tint": 0.891
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2797.0,
+     "y": -698.4,
+     "scale": 0.667,
+     "flip": false,
+     "tint": 0.866
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -3003.5,
+     "y": -767.1,
+     "scale": 0.577,
+     "flip": true,
+     "tint": 0.966
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2674.4,
+     "y": -801.4,
+     "scale": 0.615,
+     "flip": false,
+     "tint": 0.94
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2983.4,
+     "y": -546.0,
+     "scale": 0.529,
+     "flip": true,
+     "tint": 0.993
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2519.3,
+     "y": -737.6,
+     "scale": 0.524,
+     "flip": true,
+     "tint": 0.883
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2598.7,
+     "y": -971.3,
+     "scale": 0.631,
+     "flip": false,
+     "tint": 0.924
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2513.2,
+     "y": -861.5,
+     "scale": 0.544,
+     "flip": false,
+     "tint": 0.874
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2292.5,
+     "y": -728.6,
+     "scale": 0.533,
+     "flip": true,
+     "tint": 0.914
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2986.2,
+     "y": -893.3,
+     "scale": 0.762,
+     "flip": true,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2877.1,
+     "y": -824.2,
+     "scale": 0.526,
+     "flip": true,
+     "tint": 0.917
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2131.2,
+     "y": -807.0,
+     "scale": 0.662,
+     "flip": true,
+     "tint": 0.886
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2105.2,
+     "y": -657.9,
+     "scale": 0.546,
+     "flip": true,
+     "tint": 0.983
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2782.7,
+     "y": -930.3,
+     "scale": 0.565,
+     "flip": false,
+     "tint": 0.931
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2349.9,
+     "y": -942.3,
+     "scale": 0.533,
+     "flip": true,
+     "tint": 0.894
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2389.1,
+     "y": -798.1,
+     "scale": 0.622,
+     "flip": true,
+     "tint": 0.926
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2034.3,
+     "y": -908.2,
+     "scale": 0.508,
+     "flip": true,
+     "tint": 0.997
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2247.2,
+     "y": -859.4,
+     "scale": 0.647,
+     "flip": true,
+     "tint": 0.996
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2893.6,
+     "y": -1038.4,
+     "scale": 0.513,
+     "flip": true,
+     "tint": 0.9
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -3016.6,
+     "y": -1057.8,
+     "scale": 0.811,
+     "flip": true,
+     "tint": 0.954
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_0_1",
+    "x0": -3029,
+    "y0": -1147,
+    "x1": -1954,
+    "y1": -22
+   }
+  },
+  {
+   "id": "wild_2_2",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -905.0,
+     "y": 936.6,
+     "scale": 0.529,
+     "flip": true,
+     "tint": 0.943
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -655.8,
+     "y": 907.0,
+     "scale": 0.735,
+     "flip": false,
+     "tint": 0.874
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -500.0,
+     "y": 923.4,
+     "scale": 0.626,
+     "flip": false,
+     "tint": 0.91
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -367.8,
+     "y": 913.4,
+     "scale": 0.677,
+     "flip": false,
+     "tint": 0.908
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -94.8,
+     "y": 901.2,
+     "scale": 0.642,
+     "flip": true,
+     "tint": 0.937
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -115.3,
+     "y": 784.8,
+     "scale": 0.68,
+     "flip": true,
+     "tint": 0.916
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_2_2",
+    "x0": -1029,
+    "y0": 53,
+    "x1": 41,
+    "y1": 998
+   }
+  },
+  {
+   "id": "wild_2_3",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -909.4,
+     "y": 1058.7,
+     "scale": 0.645,
+     "flip": true,
+     "tint": 0.999
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -951.6,
+     "y": 1207.7,
+     "scale": 0.659,
+     "flip": true,
+     "tint": 0.994
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -805.9,
+     "y": 1192.4,
+     "scale": 0.803,
+     "flip": false,
+     "tint": 0.989
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -765.0,
+     "y": 1009.0,
+     "scale": 0.668,
+     "flip": false,
+     "tint": 0.965
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -761.1,
+     "y": 1322.3,
+     "scale": 0.591,
+     "flip": true,
+     "tint": 0.988
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -881.7,
+     "y": 1333.4,
+     "scale": 0.68,
+     "flip": false,
+     "tint": 0.923
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -643.3,
+     "y": 1091.7,
+     "scale": 0.607,
+     "flip": false,
+     "tint": 0.951
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -562.7,
+     "y": 1188.0,
+     "scale": 0.678,
+     "flip": true,
+     "tint": 0.888
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -468.4,
+     "y": 1039.2,
+     "scale": 0.766,
+     "flip": false,
+     "tint": 0.989
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -636.7,
+     "y": 1326.8,
+     "scale": 0.786,
+     "flip": false,
+     "tint": 0.955
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -335.2,
+     "y": 1132.7,
+     "scale": 0.59,
+     "flip": false,
+     "tint": 0.912
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -224.0,
+     "y": 1006.5,
+     "scale": 0.779,
+     "flip": true,
+     "tint": 0.996
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -437.6,
+     "y": 1264.2,
+     "scale": 0.583,
+     "flip": false,
+     "tint": 0.955
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -228.0,
+     "y": 1248.8,
+     "scale": 0.814,
+     "flip": true,
+     "tint": 0.9
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -124.5,
+     "y": 1107.7,
+     "scale": 0.688,
+     "flip": false,
+     "tint": 0.923
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -374.8,
+     "y": 1395.0,
+     "scale": 0.597,
+     "flip": true,
+     "tint": 0.884
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -513.8,
+     "y": 1366.0,
+     "scale": 0.542,
+     "flip": false,
+     "tint": 0.939
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -229.5,
+     "y": 1392.2,
+     "scale": 0.623,
+     "flip": true,
+     "tint": 0.963
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -94.9,
+     "y": 1308.4,
+     "scale": 0.595,
+     "flip": false,
+     "tint": 0.97
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_2_3",
+    "x0": -1029,
+    "y0": 898,
+    "x1": 41,
+    "y1": 1533
+   }
+  },
+  {
+   "id": "wild_1_1",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1962.9,
+     "y": -775.0,
+     "scale": 0.607,
+     "flip": false,
+     "tint": 0.877
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1758.3,
+     "y": -774.3,
+     "scale": 0.816,
+     "flip": false,
+     "tint": 0.884
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1833.8,
+     "y": -903.1,
+     "scale": 0.505,
+     "flip": true,
+     "tint": 0.989
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1678.1,
+     "y": -960.3,
+     "scale": 0.636,
+     "flip": true,
+     "tint": 0.909
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1861.0,
+     "y": -712.2,
+     "scale": 0.664,
+     "flip": true,
+     "tint": 0.914
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1310.3,
+     "y": -1095.6,
+     "scale": 0.653,
+     "flip": true,
+     "tint": 0.903
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1166.0,
+     "y": -1085.7,
+     "scale": 0.643,
+     "flip": true,
+     "tint": 0.996
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1012.7,
+     "y": -1014.5,
+     "scale": 0.602,
+     "flip": false,
+     "tint": 0.981
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1019.0,
+     "y": -1035.9,
+     "scale": 0.369,
+     "flip": true,
+     "tint": 0.992
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1172.8,
+     "y": -1097.4,
+     "scale": 0.402,
+     "flip": false,
+     "tint": 0.923
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1282.3,
+     "y": -1041.0,
+     "scale": 0.346,
+     "flip": true,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1191.1,
+     "y": -1011.1,
+     "scale": 0.305,
+     "flip": true,
+     "tint": 0.98
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1692.4,
+     "y": -908.4,
+     "scale": 0.302,
+     "flip": false,
+     "tint": 0.908
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1776.2,
+     "y": -852.3,
+     "scale": 0.392,
+     "flip": false,
+     "tint": 0.974
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1696.0,
+     "y": -830.6,
+     "scale": 0.351,
+     "flip": false,
+     "tint": 0.945
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -1784.9,
+     "y": -669.7,
+     "scale": 0.359,
+     "flip": true,
+     "tint": 0.996
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_1_1",
+    "x0": -2054,
+    "y0": -1147,
+    "x1": -929,
+    "y1": -22
+   }
+  },
+  {
+   "id": "wild_0_0",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2900.2,
+     "y": -1207.9,
+     "scale": 0.735,
+     "flip": false,
+     "tint": 0.924
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2936.1,
+     "y": -1333.9,
+     "scale": 0.624,
+     "flip": true,
+     "tint": 0.978
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2849.5,
+     "y": -1478.3,
+     "scale": 0.814,
+     "flip": false,
+     "tint": 0.955
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -3017.9,
+     "y": -1518.5,
+     "scale": 0.5,
+     "flip": false,
+     "tint": 0.87
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -3001.3,
+     "y": -1685.5,
+     "scale": 0.649,
+     "flip": false,
+     "tint": 0.936
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2844.5,
+     "y": -1662.8,
+     "scale": 0.794,
+     "flip": true,
+     "tint": 0.89
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2810.1,
+     "y": -1366.9,
+     "scale": 0.66,
+     "flip": false,
+     "tint": 0.988
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2801.2,
+     "y": -1823.8,
+     "scale": 0.67,
+     "flip": false,
+     "tint": 0.974
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -2799.6,
+     "y": -2014.4,
+     "scale": 0.623,
+     "flip": true,
+     "tint": 0.892
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -2961.3,
+     "y": -1859.6,
+     "scale": 0.672,
+     "flip": true,
+     "tint": 0.93
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -2905.9,
+     "y": -2094.8,
+     "scale": 0.818,
+     "flip": true,
+     "tint": 0.915
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -3008.9,
+     "y": -2034.7,
+     "scale": 0.67,
+     "flip": true,
+     "tint": 0.987
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2544.9,
+     "y": -2103.7,
+     "scale": 0.529,
+     "flip": true,
+     "tint": 0.907
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -2909.9,
+     "y": -1968.4,
+     "scale": 0.5,
+     "flip": false,
+     "tint": 0.968
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_0_0",
+    "x0": -3029,
+    "y0": -2122,
+    "x1": -1954,
+    "y1": -1047
+   }
+  },
+  {
+   "id": "wild_2_1",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -171.9,
+     "y": -458.1,
+     "scale": 0.648,
+     "flip": false,
+     "tint": 0.934
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -446.0,
+     "y": -484.0,
+     "scale": 0.609,
+     "flip": false,
+     "tint": 0.998
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -268.1,
+     "y": -359.3,
+     "scale": 0.673,
+     "flip": true,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -816.6,
+     "y": -1006.5,
+     "scale": 0.668,
+     "flip": true,
+     "tint": 0.981
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -614.8,
+     "y": -1063.3,
+     "scale": 0.635,
+     "flip": false,
+     "tint": 0.916
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -859.7,
+     "y": -1046.5,
+     "scale": 0.366,
+     "flip": false,
+     "tint": 0.942
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -935.6,
+     "y": -1017.7,
+     "scale": 0.382,
+     "flip": true,
+     "tint": 0.994
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -802.8,
+     "y": -993.2,
+     "scale": 0.372,
+     "flip": true,
+     "tint": 0.934
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -670.2,
+     "y": -992.5,
+     "scale": 0.373,
+     "flip": true,
+     "tint": 0.901
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -790.5,
+     "y": -1080.4,
+     "scale": 0.313,
+     "flip": false,
+     "tint": 0.962
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -480.2,
+     "y": -462.3,
+     "scale": 0.417,
+     "flip": true,
+     "tint": 0.974
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_2_1",
+    "x0": -1029,
+    "y0": -1147,
+    "x1": 91,
+    "y1": -327
+   }
+  },
+  {
+   "id": "wild_3_2",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 184.4,
+     "y": -60.2,
+     "scale": 0.782,
+     "flip": false,
+     "tint": 0.931
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 419.0,
+     "y": -71.9,
+     "scale": 0.61,
+     "flip": false,
+     "tint": 0.918
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 321.6,
+     "y": 1.0,
+     "scale": 0.624,
+     "flip": false,
+     "tint": 0.923
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 546.1,
+     "y": -23.6,
+     "scale": 0.661,
+     "flip": true,
+     "tint": 0.991
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 680.5,
+     "y": -18.7,
+     "scale": 0.76,
+     "flip": true,
+     "tint": 0.986
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 833.2,
+     "y": -23.6,
+     "scale": 0.508,
+     "flip": false,
+     "tint": 0.991
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 942.2,
+     "y": 22.0,
+     "scale": 0.597,
+     "flip": true,
+     "tint": 0.872
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_3_2",
+    "x0": 21,
+    "y0": -122,
+    "x1": 1041,
+    "y1": 953
+   }
+  },
+  {
+   "id": "wild_3_1",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 328.9,
+     "y": -215.0,
+     "scale": 0.788,
+     "flip": false,
+     "tint": 0.928
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 309.6,
+     "y": -352.1,
+     "scale": 0.63,
+     "flip": false,
+     "tint": 0.98
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 479.0,
+     "y": -412.0,
+     "scale": 0.763,
+     "flip": true,
+     "tint": 0.929
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 149.9,
+     "y": -251.8,
+     "scale": 0.706,
+     "flip": false,
+     "tint": 0.974
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 586.6,
+     "y": -304.5,
+     "scale": 0.689,
+     "flip": false,
+     "tint": 0.98
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 552.5,
+     "y": -168.7,
+     "scale": 0.58,
+     "flip": true,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 129.0,
+     "y": -386.4,
+     "scale": 0.751,
+     "flip": true,
+     "tint": 0.907
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 449.4,
+     "y": -271.8,
+     "scale": 0.739,
+     "flip": false,
+     "tint": 0.94
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 275.0,
+     "y": -491.0,
+     "scale": 0.63,
+     "flip": true,
+     "tint": 0.893
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 656.1,
+     "y": -488.7,
+     "scale": 0.656,
+     "flip": true,
+     "tint": 0.997
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 778.4,
+     "y": -453.8,
+     "scale": 0.502,
+     "flip": false,
+     "tint": 0.944
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 677.7,
+     "y": -159.7,
+     "scale": 0.507,
+     "flip": false,
+     "tint": 0.958
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 746.6,
+     "y": -314.5,
+     "scale": 0.521,
+     "flip": false,
+     "tint": 0.99
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 944.5,
+     "y": -284.4,
+     "scale": 0.659,
+     "flip": false,
+     "tint": 0.956
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 856.4,
+     "y": -174.4,
+     "scale": 0.586,
+     "flip": true,
+     "tint": 0.87
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 967.1,
+     "y": -523.3,
+     "scale": 0.76,
+     "flip": true,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 837.8,
+     "y": -826.8,
+     "scale": 0.674,
+     "flip": false,
+     "tint": 0.965
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 1009.1,
+     "y": -178.8,
+     "scale": 0.638,
+     "flip": false,
+     "tint": 0.89
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 865.4,
+     "y": -373.2,
+     "scale": 0.679,
+     "flip": false,
+     "tint": 0.868
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 1015.9,
+     "y": -390.6,
+     "scale": 0.61,
+     "flip": false,
+     "tint": 0.98
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 967.2,
+     "y": -683.3,
+     "scale": 0.779,
+     "flip": true,
+     "tint": 0.985
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 1028.6,
+     "y": -874.6,
+     "scale": 0.575,
+     "flip": true,
+     "tint": 0.869
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 955.7,
+     "y": -1033.2,
+     "scale": 0.661,
+     "flip": true,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 836.7,
+     "y": -697.0,
+     "scale": 0.622,
+     "flip": true,
+     "tint": 0.891
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 912.9,
+     "y": -916.5,
+     "scale": 0.621,
+     "flip": true,
+     "tint": 0.877
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_3_1",
+    "x0": -9,
+    "y0": -1147,
+    "x1": 1041,
+    "y1": -22
+   }
+  },
+  {
+   "id": "wild_1_0",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -1316.8,
+     "y": -1993.5,
+     "scale": 0.685,
+     "flip": false,
+     "tint": 0.916
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1225.4,
+     "y": -1749.8,
+     "scale": 0.624,
+     "flip": true,
+     "tint": 0.959
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1126.7,
+     "y": -1628.8,
+     "scale": 0.633,
+     "flip": false,
+     "tint": 0.994
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1278.0,
+     "y": -1468.2,
+     "scale": 0.568,
+     "flip": true,
+     "tint": 0.895
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1238.6,
+     "y": -1591.1,
+     "scale": 0.627,
+     "flip": false,
+     "tint": 0.951
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1152.9,
+     "y": -1931.6,
+     "scale": 0.618,
+     "flip": false,
+     "tint": 0.936
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1028.8,
+     "y": -1500.4,
+     "scale": 0.631,
+     "flip": false,
+     "tint": 0.969
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1264.6,
+     "y": -1315.4,
+     "scale": 0.515,
+     "flip": false,
+     "tint": 0.967
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1159.8,
+     "y": -1378.0,
+     "scale": 0.552,
+     "flip": false,
+     "tint": 0.948
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1142.9,
+     "y": -1202.8,
+     "scale": 0.539,
+     "flip": true,
+     "tint": 0.881
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1104.8,
+     "y": -1746.9,
+     "scale": 0.503,
+     "flip": true,
+     "tint": 0.869
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1000.8,
+     "y": -1133.4,
+     "scale": 0.769,
+     "flip": false,
+     "tint": 0.926
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1038.4,
+     "y": -1369.0,
+     "scale": 0.536,
+     "flip": false,
+     "tint": 0.865
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1281.1,
+     "y": -1867.2,
+     "scale": 0.633,
+     "flip": true,
+     "tint": 0.904
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -1013.1,
+     "y": -1914.6,
+     "scale": 0.788,
+     "flip": false,
+     "tint": 0.875
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1068.7,
+     "y": -2107.9,
+     "scale": 0.525,
+     "flip": false,
+     "tint": 0.923
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -1439.3,
+     "y": -2107.9,
+     "scale": 0.586,
+     "flip": true,
+     "tint": 0.887
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -1200.9,
+     "y": -2103.7,
+     "scale": 0.672,
+     "flip": false,
+     "tint": 0.903
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_1_0",
+    "x0": -2054,
+    "y0": -2122,
+    "x1": -929,
+    "y1": -1047
+   }
+  },
+  {
+   "id": "wild_2_0",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -980.6,
+     "y": -1629.3,
+     "scale": 0.524,
+     "flip": true,
+     "tint": 0.861
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -927.1,
+     "y": -1777.7,
+     "scale": 0.74,
+     "flip": false,
+     "tint": 0.885
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -950.6,
+     "y": -1247.7,
+     "scale": 0.51,
+     "flip": false,
+     "tint": 0.885
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -861.7,
+     "y": -1133.4,
+     "scale": 0.618,
+     "flip": false,
+     "tint": 0.974
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -724.7,
+     "y": -1873.3,
+     "scale": 0.648,
+     "flip": false,
+     "tint": 0.915
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -864.0,
+     "y": -1619.1,
+     "scale": 0.642,
+     "flip": true,
+     "tint": 0.911
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -706.6,
+     "y": -1305.2,
+     "scale": 0.709,
+     "flip": false,
+     "tint": 0.975
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -884.6,
+     "y": -1411.9,
+     "scale": 0.682,
+     "flip": true,
+     "tint": 0.909
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -623.6,
+     "y": -1217.9,
+     "scale": 0.624,
+     "flip": false,
+     "tint": 0.863
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -711.6,
+     "y": -1542.6,
+     "scale": 0.507,
+     "flip": false,
+     "tint": 0.95
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -745.0,
+     "y": -1164.7,
+     "scale": 0.753,
+     "flip": true,
+     "tint": 0.901
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -844.2,
+     "y": -1961.8,
+     "scale": 0.613,
+     "flip": false,
+     "tint": 0.876
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -630.1,
+     "y": -1441.5,
+     "scale": 0.563,
+     "flip": true,
+     "tint": 0.926
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -969.2,
+     "y": -2040.3,
+     "scale": 0.567,
+     "flip": false,
+     "tint": 0.909
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -594.6,
+     "y": -1876.3,
+     "scale": 0.538,
+     "flip": true,
+     "tint": 0.926
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -833.4,
+     "y": -1306.2,
+     "scale": 0.669,
+     "flip": false,
+     "tint": 0.891
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -747.9,
+     "y": -1674.3,
+     "scale": 0.574,
+     "flip": false,
+     "tint": 0.87
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -858.8,
+     "y": -2093.2,
+     "scale": 0.553,
+     "flip": true,
+     "tint": 0.863
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -657.4,
+     "y": -2074.8,
+     "scale": 0.591,
+     "flip": true,
+     "tint": 0.973
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -516.0,
+     "y": -2097.8,
+     "scale": 0.793,
+     "flip": false,
+     "tint": 0.874
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -318.9,
+     "y": -1880.4,
+     "scale": 0.532,
+     "flip": true,
+     "tint": 0.896
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -439.9,
+     "y": -1924.8,
+     "scale": 0.616,
+     "flip": false,
+     "tint": 0.868
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -366.2,
+     "y": -2046.3,
+     "scale": 0.593,
+     "flip": true,
+     "tint": 0.975
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -761.8,
+     "y": -1435.2,
+     "scale": 0.525,
+     "flip": true,
+     "tint": 0.922
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -195.0,
+     "y": -2033.7,
+     "scale": 0.714,
+     "flip": true,
+     "tint": 0.935
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -177.3,
+     "y": -1918.0,
+     "scale": 0.74,
+     "flip": true,
+     "tint": 0.865
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 39.6,
+     "y": -1831.1,
+     "scale": 0.547,
+     "flip": true,
+     "tint": 0.955
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -77.6,
+     "y": -1985.8,
+     "scale": 0.619,
+     "flip": false,
+     "tint": 0.977
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -53.8,
+     "y": -2110.4,
+     "scale": 0.503,
+     "flip": true,
+     "tint": 0.894
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_2_0",
+    "x0": -1029,
+    "y0": -2122,
+    "x1": 91,
+    "y1": -1047
+   }
+  },
+  {
+   "id": "wild_3_0",
+   "development": "",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 57.1,
+     "y": -1980.9,
+     "scale": 0.772,
+     "flip": true,
+     "tint": 0.954
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 853.9,
+     "y": -1381.9,
+     "scale": 0.662,
+     "flip": false,
+     "tint": 0.938
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 965.1,
+     "y": -1177.8,
+     "scale": 0.696,
+     "flip": false,
+     "tint": 0.871
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 972.0,
+     "y": -1506.4,
+     "scale": 0.714,
+     "flip": false,
+     "tint": 0.869
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 975.0,
+     "y": -1669.1,
+     "scale": 0.662,
+     "flip": true,
+     "tint": 0.991
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 166.4,
+     "y": -1858.1,
+     "scale": 0.593,
+     "flip": false,
+     "tint": 0.976
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 969.4,
+     "y": -1308.9,
+     "scale": 0.808,
+     "flip": true,
+     "tint": 0.949
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 227.5,
+     "y": -2039.8,
+     "scale": 0.507,
+     "flip": true,
+     "tint": 0.938
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 382.9,
+     "y": -2039.6,
+     "scale": 0.517,
+     "flip": false,
+     "tint": 0.927
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 672.0,
+     "y": -1884.3,
+     "scale": 0.504,
+     "flip": false,
+     "tint": 0.906
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 297.1,
+     "y": -1853.6,
+     "scale": 0.667,
+     "flip": true,
+     "tint": 0.968
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 487.9,
+     "y": -1924.8,
+     "scale": 0.558,
+     "flip": false,
+     "tint": 0.975
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 859.2,
+     "y": -1597.3,
+     "scale": 0.662,
+     "flip": false,
+     "tint": 0.983
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 831.7,
+     "y": -1811.8,
+     "scale": 0.764,
+     "flip": true,
+     "tint": 0.935
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 389.5,
+     "y": -1781.7,
+     "scale": 0.599,
+     "flip": true,
+     "tint": 0.895
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 958.1,
+     "y": -1806.5,
+     "scale": 0.728,
+     "flip": true,
+     "tint": 0.88
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 969.2,
+     "y": -1932.8,
+     "scale": 0.51,
+     "flip": true,
+     "tint": 0.919
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 851.1,
+     "y": -2054.3,
+     "scale": 0.58,
+     "flip": false,
+     "tint": 0.946
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": 737.3,
+     "y": -1996.4,
+     "scale": 0.603,
+     "flip": true,
+     "tint": 0.888
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": 1021.0,
+     "y": -2056.4,
+     "scale": 0.713,
+     "flip": false,
+     "tint": 0.958
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 589.6,
+     "y": -1983.7,
+     "scale": 0.586,
+     "flip": false,
+     "tint": 0.877
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 632.3,
+     "y": -2105.6,
+     "scale": 0.509,
+     "flip": false,
+     "tint": 0.94
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 502.0,
+     "y": -2064.7,
+     "scale": 0.635,
+     "flip": false,
+     "tint": 0.922
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 547.4,
+     "y": -1823.5,
+     "scale": 0.683,
+     "flip": true,
+     "tint": 0.96
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_wild_3_0",
+    "x0": -9,
+    "y0": -2122,
+    "x1": 1041,
+    "y1": -1047
+   }
+  },
+  {
+   "id": "shore_path_1",
+   "development": "fishing_found",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -190.1,
+     "y": -269.6,
+     "scale": 0.591,
+     "flip": true,
+     "tint": 0.979
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -397.5,
+     "y": -308.6,
+     "scale": 0.742,
+     "flip": false,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -514.7,
+     "y": -310.1,
+     "scale": 0.533,
+     "flip": true,
+     "tint": 0.862
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -99.5,
+     "y": -345.3,
+     "scale": 0.656,
+     "flip": false,
+     "tint": 0.885
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -568.4,
+     "y": -347.6,
+     "scale": 0.303,
+     "flip": true,
+     "tint": 0.925
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_shore_path_1",
+    "x0": -659,
+    "y0": -427,
+    "x1": -79,
+    "y1": -127
+   }
+  },
+  {
+   "id": "shore_path_2",
+   "development": "fishing_found",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -103.0,
+     "y": 92.6,
+     "scale": 0.714,
+     "flip": true,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 22.4,
+     "y": -76.1,
+     "scale": 0.658,
+     "flip": false,
+     "tint": 0.866
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -46.7,
+     "y": -172.0,
+     "scale": 0.628,
+     "flip": true,
+     "tint": 0.967
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 19.6,
+     "y": -344.0,
+     "scale": 0.792,
+     "flip": true,
+     "tint": 0.905
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_shore_path_2",
+    "x0": -179,
+    "y0": -427,
+    "x1": 121,
+    "y1": 153
+   }
+  },
+  {
+   "id": "shore_path_over_s_2_1",
+   "development": "fishing_found",
+   "stumpsUntil": "",
+   "alsoDevelopment": "territory_s_2_c1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -516.1,
+     "y": -77.0,
+     "scale": 0.536,
+     "flip": true,
+     "tint": 0.877
+    }
+   ],
+   "stumps": []
+  },
+  {
+   "id": "shore_path_over_s_2_2",
+   "development": "fishing_found",
+   "stumpsUntil": "",
+   "alsoDevelopment": "territory_s_2_c2",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -149.4,
+     "y": 199.5,
+     "scale": 0.657,
+     "flip": true,
+     "tint": 0.969
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -370.6,
+     "y": -25.7,
+     "scale": 0.573,
+     "flip": true,
+     "tint": 0.901
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -352.6,
+     "y": -167.1,
+     "scale": 0.659,
+     "flip": false,
+     "tint": 0.87
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -255.7,
+     "y": -73.7,
+     "scale": 0.544,
+     "flip": true,
+     "tint": 0.935
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -140.6,
+     "y": -57.2,
+     "scale": 0.708,
+     "flip": false,
+     "tint": 0.927
+    }
+   ],
+   "stumps": []
+  }
+ ],
+ "sites": [
+  {
+   "direction": "NorthEast",
+   "tier": 1,
+   "x": -698,
+   "y": -816,
+   "stands": [
+    16,
+    48,
+    16,
+    -48
+   ],
+   "look": [
+    280,
+    0
+   ]
+  },
+  {
+   "direction": "NorthEast",
+   "tier": 2,
+   "x": 22,
+   "y": -816,
+   "stands": [
+    16,
+    48,
+    16,
+    -48
+   ],
+   "look": [
+    280,
+    0
+   ]
+  },
+  {
+   "direction": "NorthEast",
+   "tier": 3,
+   "x": 202,
+   "y": -1046,
+   "stands": [
+    43,
+    -26,
+    -50,
+    -5
+   ],
+   "look": [
+    -60,
+    -273
+   ]
+  },
+  {
+   "direction": "South",
+   "tier": 1,
+   "x": -1208,
+   "y": -266,
+   "stands": [
+    -48,
+    16,
+    48,
+    16
+   ],
+   "look": [
+    0,
+    280
+   ]
+  },
+  {
+   "direction": "South",
+   "tier": 2,
+   "x": -938,
+   "y": 64,
+   "stands": [
+    16,
+    48,
+    16,
+    -48
+   ],
+   "look": [
+    280,
+    0
+   ]
+  },
+  {
+   "direction": "South",
+   "tier": 3,
+   "x": -758,
+   "y": 214,
+   "stands": [
+    -50,
+    4,
+    43,
+    27
+   ],
+   "look": [
+    -66,
+    272
+   ]
+  },
+  {
+   "direction": "NorthWest",
+   "tier": 1,
+   "x": -1558,
+   "y": -886,
+   "stands": [
+    40,
+    -31,
+    -51,
+    1
+   ],
+   "look": [
+    -93,
+    -264
+   ]
+  },
+  {
+   "direction": "NorthWest",
+   "tier": 2,
+   "x": -1958,
+   "y": -1256,
+   "stands": [
+    -16,
+    -48,
+    -16,
+    48
+   ],
+   "look": [
+    -280,
+    0
+   ]
+  },
+  {
+   "direction": "NorthWest",
+   "tier": 3,
+   "x": -2138,
+   "y": -1446,
+   "stands": [
+    50,
+    -4,
+    -43,
+    -27
+   ],
+   "look": [
+    66,
+    -272
+   ]
+  },
+  {
+   "direction": "West",
+   "tier": 1,
+   "x": -1558,
+   "y": -336,
+   "stands": [
+    -16,
+    -48,
+    -16,
+    48
+   ],
+   "look": [
+    -280,
+    0
+   ]
+  },
+  {
+   "direction": "West",
+   "tier": 2,
+   "x": -2198,
+   "y": -336,
+   "stands": [
+    -16,
+    -48,
+    -16,
+    48
+   ],
+   "look": [
+    -280,
+    0
+   ]
+  },
+  {
+   "direction": "West",
+   "tier": 3,
+   "x": -2378,
+   "y": -106,
+   "stands": [
+    -43,
+    26,
+    50,
+    5
+   ],
+   "look": [
+    60,
+    273
+   ]
+  }
+ ],
+ "homes": {
+  "list": [
+   {
+    "direction": "NorthEast",
+    "development": "territory_home_ne",
+    "x": -248,
+    "y": -756
+   },
+   {
+    "direction": "South",
+    "development": "territory_home_s",
+    "x": -1208,
+    "y": 124
+   },
+   {
+    "direction": "NorthWest",
+    "development": "territory_home_nw",
+    "x": -1688,
+    "y": -1196
+   },
+   {
+    "direction": "West",
+    "development": "territory_home_w",
+    "x": -1968,
+    "y": -276
+   }
+  ],
+  "potOffset": [
+   -100,
+   28
+  ],
+  "lineOffset": [
+   115,
+   45
+  ]
+ },
+ "districts": [
+  {
+   "block": "district_center",
+   "stages": [
+    {
+     "development": "",
+     "x": -42,
+     "y": 38,
+     "w": 26,
+     "h": 20
+    }
+   ],
+   "slots": []
+  },
+  {
+   "block": "district_northeast",
+   "direction": "NorthEast",
+   "stages": [
+    {
+     "development": "territory_ne_1",
+     "x": -16,
+     "y": 46,
+     "w": 18,
+     "h": 16
+    },
+    {
+     "development": "territory_ne_2",
+     "x": 2,
+     "y": 46,
+     "w": 18,
+     "h": 16
+    },
+    {
+     "development": "territory_ne_3",
+     "x": -16,
+     "y": 62,
+     "w": 36,
+     "h": 16
+    }
+   ],
+   "slots": [
+    {
+     "x": -15,
+     "y": 57,
+     "w": 8,
+     "h": 5,
+     "stage": 0
+    },
+    {
+     "x": -6,
+     "y": 57,
+     "w": 8,
+     "h": 5,
+     "stage": 0
+    },
+    {
+     "x": -4,
+     "y": 53,
+     "w": 4,
+     "h": 3,
+     "stage": 0
+    },
+    {
+     "x": -9,
+     "y": 49,
+     "w": 4,
+     "h": 3,
+     "stage": 0
+    },
+    {
+     "x": 3,
+     "y": 55,
+     "w": 8,
+     "h": 5,
+     "stage": 1
+    },
+    {
+     "x": 7,
+     "y": 49,
+     "w": 4,
+     "h": 3,
+     "stage": 1
+    },
+    {
+     "x": 12,
+     "y": 49,
+     "w": 8,
+     "h": 5,
+     "stage": 1
+    },
+    {
+     "x": -4,
+     "y": 74,
+     "w": 4,
+     "h": 3,
+     "stage": 2
+    },
+    {
+     "x": -10,
+     "y": 68,
+     "w": 8,
+     "h": 5,
+     "stage": 2
+    },
+    {
+     "x": 8,
+     "y": 68,
+     "w": 8,
+     "h": 5,
+     "stage": 2
+    },
+    {
+     "x": 7,
+     "y": 64,
+     "w": 4,
+     "h": 3,
+     "stage": 2
+    }
+   ]
+  },
+  {
+   "block": "district_south",
+   "direction": "South",
+   "stages": [
+    {
+     "development": "territory_s_1",
+     "x": -40,
+     "y": 26,
+     "w": 18,
+     "h": 12
+    },
+    {
+     "development": "territory_s_2",
+     "x": -22,
+     "y": 26,
+     "w": 18,
+     "h": 12
+    },
+    {
+     "development": "territory_s_3",
+     "x": -40,
+     "y": 12,
+     "w": 36,
+     "h": 14
+    }
+   ],
+   "slots": [
+    {
+     "x": -32,
+     "y": 35,
+     "w": 4,
+     "h": 3,
+     "stage": 0
+    },
+    {
+     "x": -30,
+     "y": 30,
+     "w": 4,
+     "h": 3,
+     "stage": 0
+    },
+    {
+     "x": -40,
+     "y": 26,
+     "w": 8,
+     "h": 5,
+     "stage": 0
+    },
+    {
+     "x": -22,
+     "y": 32,
+     "w": 8,
+     "h": 5,
+     "stage": 1
+    },
+    {
+     "x": -9,
+     "y": 29,
+     "w": 4,
+     "h": 3,
+     "stage": 1
+    },
+    {
+     "x": -22,
+     "y": 26,
+     "w": 8,
+     "h": 5,
+     "stage": 1
+    },
+    {
+     "x": -33,
+     "y": 17,
+     "w": 8,
+     "h": 5,
+     "stage": 2
+    },
+    {
+     "x": -15,
+     "y": 17,
+     "w": 8,
+     "h": 5,
+     "stage": 2
+    },
+    {
+     "x": -27,
+     "y": 13,
+     "w": 4,
+     "h": 3,
+     "stage": 2
+    },
+    {
+     "x": -18,
+     "y": 12,
+     "w": 4,
+     "h": 3,
+     "stage": 2
+    }
+   ]
+  },
+  {
+   "block": "district_northwest",
+   "direction": "NorthWest",
+   "stages": [
+    {
+     "development": "territory_nw_1",
+     "x": -52,
+     "y": 58,
+     "w": 18,
+     "h": 14
+    },
+    {
+     "development": "territory_nw_2",
+     "x": -70,
+     "y": 58,
+     "w": 18,
+     "h": 14
+    },
+    {
+     "development": "territory_nw_3",
+     "x": -70,
+     "y": 72,
+     "w": 36,
+     "h": 14
+    }
+   ],
+   "slots": [
+    {
+     "x": -42,
+     "y": 69,
+     "w": 4,
+     "h": 3,
+     "stage": 0
+    },
+    {
+     "x": -51,
+     "y": 67,
+     "w": 8,
+     "h": 5,
+     "stage": 0
+    },
+    {
+     "x": -52,
+     "y": 61,
+     "w": 4,
+     "h": 3,
+     "stage": 0
+    },
+    {
+     "x": -42,
+     "y": 61,
+     "w": 8,
+     "h": 5,
+     "stage": 0
+    },
+    {
+     "x": -70,
+     "y": 67,
+     "w": 8,
+     "h": 5,
+     "stage": 1
+    },
+    {
+     "x": -61,
+     "y": 64,
+     "w": 4,
+     "h": 3,
+     "stage": 1
+    },
+    {
+     "x": -70,
+     "y": 61,
+     "w": 8,
+     "h": 5,
+     "stage": 1
+    },
+    {
+     "x": -44,
+     "y": 79,
+     "w": 4,
+     "h": 3,
+     "stage": 2
+    },
+    {
+     "x": -65,
+     "y": 77,
+     "w": 8,
+     "h": 5,
+     "stage": 2
+    },
+    {
+     "x": -56,
+     "y": 77,
+     "w": 8,
+     "h": 5,
+     "stage": 2
+    },
+    {
+     "x": -47,
+     "y": 75,
+     "w": 4,
+     "h": 3,
+     "stage": 2
+    }
+   ]
+  },
+  {
+   "block": "district_west",
+   "direction": "West",
+   "stages": [
+    {
+     "development": "territory_w_1",
+     "x": -58,
+     "y": 34,
+     "w": 16,
+     "h": 16
+    },
+    {
+     "development": "territory_w_2",
+     "x": -74,
+     "y": 34,
+     "w": 16,
+     "h": 16
+    },
+    {
+     "development": "territory_w_3",
+     "x": -74,
+     "y": 18,
+     "w": 32,
+     "h": 16
+    }
+   ],
+   "slots": [
+    {
+     "x": -52,
+     "y": 43,
+     "w": 8,
+     "h": 5,
+     "stage": 0
+    },
+    {
+     "x": -57,
+     "y": 39,
+     "w": 4,
+     "h": 3,
+     "stage": 0
+    },
+    {
+     "x": -52,
+     "y": 37,
+     "w": 8,
+     "h": 5,
+     "stage": 0
+    },
+    {
+     "x": -57,
+     "y": 35,
+     "w": 4,
+     "h": 3,
+     "stage": 0
+    },
+    {
+     "x": -71,
+     "y": 40,
+     "w": 8,
+     "h": 5,
+     "stage": 1
+    },
+    {
+     "x": -62,
+     "y": 36,
+     "w": 4,
+     "h": 3,
+     "stage": 1
+    },
+    {
+     "x": -71,
+     "y": 34,
+     "w": 8,
+     "h": 5,
+     "stage": 1
+    },
+    {
+     "x": -55,
+     "y": 25,
+     "w": 8,
+     "h": 5,
+     "stage": 2
+    },
+    {
+     "x": -69,
+     "y": 23,
+     "w": 4,
+     "h": 3,
+     "stage": 2
+    },
+    {
+     "x": -63,
+     "y": 21,
+     "w": 4,
+     "h": 3,
+     "stage": 2
+    },
+    {
+     "x": -55,
+     "y": 19,
+     "w": 8,
+     "h": 5,
+     "stage": 2
+    }
+   ]
+  }
+ ],
+ "tiers": [
+  {
+   "direction": "NorthEast",
+   "key": "ne",
+   "tier": 1,
+   "clearings": 3
+  },
+  {
+   "direction": "NorthEast",
+   "key": "ne",
+   "tier": 2,
+   "clearings": 2
+  },
+  {
+   "direction": "NorthEast",
+   "key": "ne",
+   "tier": 3,
+   "clearings": 2
+  },
+  {
+   "direction": "South",
+   "key": "s",
+   "tier": 1,
+   "clearings": 3
+  },
+  {
+   "direction": "South",
+   "key": "s",
+   "tier": 2,
+   "clearings": 2
+  },
+  {
+   "direction": "South",
+   "key": "s",
+   "tier": 3,
+   "clearings": 2
+  },
+  {
+   "direction": "NorthWest",
+   "key": "nw",
+   "tier": 1,
+   "clearings": 3
+  },
+  {
+   "direction": "NorthWest",
+   "key": "nw",
+   "tier": 2,
+   "clearings": 2
+  },
+  {
+   "direction": "NorthWest",
+   "key": "nw",
+   "tier": 3,
+   "clearings": 2
+  },
+  {
+   "direction": "West",
+   "key": "w",
+   "tier": 1,
+   "clearings": 3
+  },
+  {
+   "direction": "West",
+   "key": "w",
+   "tier": 2,
+   "clearings": 2
+  },
+  {
+   "direction": "West",
+   "key": "w",
+   "tier": 3,
+   "clearings": 2
+  }
+ ]
+}

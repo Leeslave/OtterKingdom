@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_prepare_common_space
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_prepare_common_space
+  _order: 9
+  _category: 0
+  _contentVersion: 2
+  _title: "\uB2E4 \uAC19\uC774 \uC274 \uC790\uB9AC\uB97C \uC815\uB9AC\uD574\uC694"
+  _description: "\uAD11\uC7A5 \uD55C\uCABD\uC5D0 \uD769\uC5B4\uC9C4 \uD1B5\uB098\uBB34\uC640
+    \uB3CC\uC744 \uCE58\uC6B0\uACE0\n\uB2E4 \uAC19\uC774 \uC274 \uC790\uB9AC\uB97C
+    \uB9CC\uB4E4\uC5B4\uC694."
+  _icon: {fileID: 21300000, guid: 905b8032a3522264ca70d939796cf7f7, type: 3}
+  _requester: {fileID: 11400000, guid: b0187b75dfd9a104b8c3725c8a4f5e91, type: 2}
+  _requiredDevelopment: receptionist_assigned
+  _minResidents: 0
+  _construction: {fileID: 0}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 11400000, guid: f8efba697e6a02c4683f56bd5a509afa, type: 2}
+  _settles: []
+  _arrivals: []
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: a622011ea55652c479a5ed0815da0c34, type: 2}
+  _completionMessage: "\uB2E4 \uAC19\uC774 \uC274 \uC790\uB9AC\uAC00 \uC0DD\uACBC\uC5B4\uC694!\n\uAD11\uC7A5\uC774
+    \uD55C\uACB0 \uC544\uB291\uD574\uC84C\uC5B4\uC694."
+  _kingdomLevel: 0

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_fishing_dock
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_fishing_dock
+  _order: 12
+  _category: 0
+  _contentVersion: 0
+  _title: "\uBC14\uB2E4\uB85C \uB098\uAC00\uB294 \uC120\uCC29\uC7A5"
+  _description: "\uBABD\uC2E4\uC774\uAC00 \uBC14\uB2F7\uAC00\uC5D0\uC11C \uB0A1\uC740
+    \uC120\uCC29\uC7A5\uC744 \uCC3E\uC558\uC5B4\uC694.\n\uAC74\uC124 \uD574\uB2EC\uACFC
+    \uD568\uAED8 \uACE0\uCE58\uBA74 \uB09A\uC2DC\uD130\uC5D0 \uAC08 \uC218 \uC788\uC5B4\uC694."
+  _icon: {fileID: 21300000, guid: a8ece6dd5881a0a4c974e0e854a9eb7a, type: 3}
+  _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
+  _requiredDevelopment: fishing_found
+  _minResidents: 0
+  _construction: {fileID: 11400000, guid: bd003324d929bd447a03bf803d4fa02f, type: 2}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _settles: []
+  _arrivals:
+  - _otter: {fileID: 11400000, guid: bcd9a0547c2a0104b8e28dcc3158fe61, type: 2}
+    _state: 3
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: bad0db393e76753408a12ce5c51b9058, type: 2}
+  _completionMessage: "\uC120\uCC29\uC7A5\uC744 \uB2E4 \uACE0\uCCE4\uC5B4\uC694!\n\uC18C\uC2DD\uC744
+    \uB4E3\uACE0 \uB09A\uC2DC\uAFBC \uD574\uB2EC\uC774 \uAD11\uC7A5\uC5D0 \uCC3E\uC544\uC654\uC5B4\uC694."
+  _kingdomLevel: 0

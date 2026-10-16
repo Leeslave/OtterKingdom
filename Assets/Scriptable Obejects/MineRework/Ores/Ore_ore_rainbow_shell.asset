@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156064bdadfae24d9a3c7f86ebf48c5, type: 3}
+  m_Name: Ore_ore_rainbow_shell
+  m_EditorClassIdentifier: OtterKingdom::MineOreDefinition
+  _oreId: ore_rainbow_shell
+  _displayName: "\uBB34\uC9C0\uAC1C \uC870\uAC1C\uC11D"
+  _description: "\uC77C\uACF1 \uBE5B\uAE54\uC774 \uBE59\uAE00\uBE59\uAE00 \uB3C4\uB294
+    \uC804\uC124\uC758 \uC870\uAC1C\uC11D. \uC694\uC815\uC774 \uBB34\uCC99 \uAC16\uACE0
+    \uC2F6\uC5B4 \uD574\uC694."
+  _useText: "\uC694\uC815\uACFC \uBC14\uAFB8\uAE30 (\uC870\uAC1C \xB7 \uBF51\uAE30\uAD8C)"
+  _icon: {fileID: 21300000, guid: 548875bdb53c6064d92781c078de6d77, type: 3}
+  _veinSprite: {fileID: 21300000, guid: 4ee60637c40261c46ad336ec75cce6ae, type: 3}
+  _color: {r: 1, g: 0.8, b: 0.95, a: 1}
+  _rarity: 4
+  _sellPrice: 0

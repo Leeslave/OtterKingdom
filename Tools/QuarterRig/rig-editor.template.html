@@ -1,0 +1,1488 @@
+<title>해달 리그 작업대</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a workbench - the live stage on the left, the part being adjusted on the right; stacks on phones. */
+:root {
+  --bg: #e9ede3;
+  --surface: #f9faf5;
+  --stage: #dfe6d5;
+  --ink: #2c241b;
+  --muted: #6b675b;
+  --line: #d3d9c8;
+  --accent: #56703f;       /* the overalls' sage */
+  --accent-ink: #ffffff;
+  --accent-soft: #dfe8d2;
+  --fur: #c06e4f;          /* selected part / changed values */
+  --grid: rgba(70, 90, 50, .13);
+  --shadow: rgba(50, 60, 35, .22);
+  --font-display: "Jua", "IBM Plex Sans KR", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans KR", system-ui, -apple-system, "Malgun Gothic", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "Consolas", monospace;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #191c16; --surface: #22261e; --stage: #283023; --ink: #ece7dc; --muted: #a49f92; --line: #353b2e;
+    --accent: #a3bd83; --accent-ink: #172010; --accent-soft: #2f3a26; --fur: #e79c7d;
+    --grid: rgba(190, 210, 160, .10); --shadow: rgba(0, 0, 0, .35); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #191c16; --surface: #22261e; --stage: #283023; --ink: #ece7dc; --muted: #a49f92; --line: #353b2e;
+  --accent: #a3bd83; --accent-ink: #172010; --accent-soft: #2f3a26; --fur: #e79c7d;
+  --grid: rgba(190, 210, 160, .10); --shadow: rgba(0, 0, 0, .35); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 18px 32px; display: grid; gap: 16px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: 28px; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+header p { margin: 0; color: var(--muted); }
+.bench { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+@media (max-width: 860px) { .bench { grid-template-columns: minmax(0, 1fr); } }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-bottom: 10px; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; }
+.seg button { border: 0; background: transparent; color: var(--ink); font: inherit; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.seg button:disabled { opacity: .4; cursor: not-allowed; }
+.seg button:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--fur); outline-offset: 2px; }
+.seg .arrow { font-family: var(--font-data); margin-right: 3px; }
+
+.stage { position: relative; background: var(--stage); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.stage canvas { display: block; width: 100%; height: 470px; touch-action: none; cursor: crosshair; }
+.stage canvas.grab { cursor: grab; }
+.stage canvas.grabbing { cursor: grabbing; }
+.stage-label { position: absolute; left: 14px; top: 10px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); pointer-events: none; }
+.stage-note { position: absolute; right: 14px; top: 10px; font-size: 12px; color: var(--muted); pointer-events: none; text-align: right; }
+.stage-bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding: 10px 14px; border-top: 1px solid var(--line); background: var(--surface); }
+.stage-bar label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+.stage-bar output { font-family: var(--font-data); font-variant-numeric: tabular-nums; color: var(--ink); min-width: 3.4em; }
+.stage-bar input[type="range"] { width: 110px; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 14px; }
+.panel h2 { font-family: var(--font-display); font-weight: 400; font-size: 20px; margin: 0; }
+.panel .hint { margin: 0; color: var(--muted); font-size: 13px; }
+.view-tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); margin-left: 6px; vertical-align: 2px; }
+.parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.parts button { display: flex; justify-content: space-between; align-items: center; gap: 6px; text-align: left; border: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; padding: 7px 10px; border-radius: 10px; cursor: pointer; }
+.parts button[aria-pressed="true"] { border-color: var(--fur); box-shadow: inset 0 0 0 1px var(--fur); }
+.parts .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fur); flex: none; }
+.parts .dot[hidden] { display: none !important; }
+
+.field { display: grid; grid-template-columns: 74px minmax(0, 1fr) 64px 18px; gap: 8px; align-items: center; }
+.field label { color: var(--muted); font-size: 13px; }
+.field input[type="number"] { width: 100%; font: inherit; font-family: var(--font-data); font-variant-numeric: tabular-nums; padding: 4px 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); text-align: right; }
+.field input[type="number"].changed { border-color: var(--fur); color: var(--fur); }
+.field .unit { color: var(--muted); font-size: 12px; }
+input[type="range"] { accent-color: var(--accent); width: 100%; }
+
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; padding: 7px 12px; border-radius: 10px; cursor: pointer; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:disabled { opacity: .5; cursor: default; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+.unity p { margin: 0; color: var(--muted); font-size: 13px; }
+.path { font-family: var(--font-data); font-size: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; overflow-x: auto; white-space: nowrap; user-select: all; }
+textarea { width: 100%; min-height: 92px; font-family: var(--font-data); font-size: 12px; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px; resize: vertical; }
+.status { min-height: 1.5em; font-size: 13px; color: var(--accent); margin: 0; }
+.status.error { color: var(--fur); }
+.confirm { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; }
+.custom { display: grid; gap: 12px; }
+.custom[hidden] { display: none; }
+.pick { display: grid; gap: 6px; }
+.pick-label { color: var(--muted); font-size: 13px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+.chips button[aria-pressed="true"] { border-color: var(--fur); box-shadow: inset 0 0 0 1px var(--fur); }
+.chips .sw { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, .25); flex: none; }
+@media (prefers-reduced-motion: reduce) { .seg button { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>해달 리그 작업대</h1>
+    <p>Unity의 QuarterRigView와 같은 코드로 움직이는 미리보기예요. 부위를 고치고 Unity로 보내요.</p>
+  </header>
+
+  <div class="bench">
+    <section aria-label="미리보기">
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="해달" id="rigs"></div>
+        <div class="seg" role="group" aria-label="방향" id="dirs">
+          <button type="button" data-dir="NW"><span class="arrow">↖</span>북서</button>
+          <button type="button" data-dir="NE"><span class="arrow">↗</span>북동</button>
+          <button type="button" data-dir="SW"><span class="arrow">↙</span>남서</button>
+          <button type="button" data-dir="SE" aria-pressed="true"><span class="arrow">↘</span>남동</button>
+        </div>
+        <div class="seg" role="group" aria-label="동작" id="motions">
+          <button type="button" data-motion="idle" aria-pressed="true">서 있기</button>
+          <button type="button" data-motion="walk">걷기</button>
+          <button type="button" data-motion="harvest">작물 뽑기</button>
+          <button type="button" data-motion="sit">앉아서 졸기</button>
+          <button type="button" data-motion="kick">공 차기</button>
+          <button type="button" data-motion="puzzle">퍼즐 만지기</button>
+          <button type="button" data-motion="fish" id="motion-fish">낚시</button>
+          <button type="button" data-motion="build" id="motion-build">건축</button>
+          <button type="button" data-motion="mine" id="motion-mine">광질</button>
+        </div>
+      </div>
+      <div class="stage">
+        <canvas id="stage" width="900" height="470" aria-label="리그 미리보기. 부위를 눌러 고르고 끌어서 옮길 수 있어요."></canvas>
+        <div class="stage-label" id="stageLabel">LIVE RIG · 앞모습</div>
+        <div class="stage-note" id="stageNote">부위를 눌러 고르고, 끌어서 옮겨요</div>
+        <div class="stage-bar">
+          <button type="button" class="btn" id="play" aria-pressed="false">일시정지</button>
+          <label for="speed">속도 <input id="speed" type="range" min="0.1" max="2" step="0.05" value="1"> <output id="speedOut">1.00×</output></label>
+          <label for="zoom">확대 <input id="zoom" type="range" min="0.6" max="2.6" step="0.05" value="1.4"> <output id="zoomOut">1.40×</output></label>
+          <label for="joints"><input id="joints" type="checkbox"> 관절 보기</label>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel" aria-label="부위 조절">
+      <div>
+        <h2>부위 조절 <span class="view-tag" id="viewTag">앞모습</span></h2>
+        <p class="hint">앞모습(남동·남서)과 뒷모습(북동·북서)은 그림이 달라서 따로 저장돼요. 왼쪽 방향은 오른쪽을 뒤집은 거라 같이 바뀌어요.</p>
+      </div>
+      <div class="parts" id="parts" role="group" aria-label="부위"></div>
+      <div class="fields" id="fields" style="display:grid; gap:10px;">
+        <div class="field"><label for="f-x">좌우 위치</label><input id="r-x" type="range" min="-60" max="60" step="0.5" aria-label="좌우 위치"><input id="f-x" type="number" step="0.5"><span class="unit">px</span></div>
+        <div class="field"><label for="f-y">상하 위치</label><input id="r-y" type="range" min="-60" max="60" step="0.5" aria-label="상하 위치"><input id="f-y" type="number" step="0.5"><span class="unit">px</span></div>
+        <div class="field"><label for="f-rotation">회전</label><input id="r-rotation" type="range" min="-45" max="45" step="0.5" aria-label="회전"><input id="f-rotation" type="number" step="0.5"><span class="unit">°</span></div>
+        <div class="field"><label for="f-scaleX">가로 크기</label><input id="r-scaleX" type="range" min="50" max="150" step="1" aria-label="가로 크기"><input id="f-scaleX" type="number" step="1"><span class="unit">%</span></div>
+        <div class="field"><label for="f-scaleY">세로 크기</label><input id="r-scaleY" type="range" min="50" max="150" step="1" aria-label="세로 크기"><input id="f-scaleY" type="number" step="1"><span class="unit">%</span></div>
+      </div>
+      <p class="hint">위치는 리그 픽셀(해달 키 약 330px)이고 상하는 +가 아래예요. 회전은 +가 시계 방향. 위치·회전은 붙어 있는 부위(머리, 팔 등)도 같이 움직이고, 크기는 그 부위 그림만 바뀌어요.</p>
+      <div class="row">
+        <button type="button" class="btn" id="resetPart">이 부위 되돌리기</button>
+        <button type="button" class="btn" id="resetAll">전부 되돌리기</button>
+      </div>
+      <div class="confirm" id="confirmAll" hidden>
+        <span>이 해달의 앞·뒤 모든 부위를 처음 값으로 돌릴까요?</span>
+        <button type="button" class="btn primary" id="confirmYes">되돌리기</button>
+        <button type="button" class="btn" id="confirmNo">취소</button>
+      </div>
+      <section class="custom" id="custom" aria-label="꾸미기" hidden>
+        <hr>
+        <div>
+          <h2>꾸미기</h2>
+          <p class="hint">털 색·표정·털 갈기·모자·액세서리를 골라 입혀 봐요. 표정은 앞모습에만 보이고, 앉아서 졸 때는 눈을 감아요.</p>
+        </div>
+        <div class="pick"><span class="pick-label" id="l-presets">조합 예시</span><div class="chips" id="presets" role="group" aria-labelledby="l-presets"></div></div>
+        <div class="pick"><span class="pick-label" id="l-furs">털 색</span><div class="chips" id="furs" role="group" aria-labelledby="l-furs"></div></div>
+        <div class="pick"><span class="pick-label" id="l-faces">표정</span><div class="chips" id="faces" role="group" aria-labelledby="l-faces"></div></div>
+        <div class="pick"><span class="pick-label" id="l-manes">털 갈기</span><div class="chips" id="manes" role="group" aria-labelledby="l-manes"></div></div>
+        <div class="pick"><span class="pick-label" id="l-hats">모자</span><div class="chips" id="hats" role="group" aria-labelledby="l-hats"></div></div>
+        <div class="pick"><span class="pick-label" id="l-accs">액세서리 (여러 개)</span><div class="chips" id="accs" role="group" aria-labelledby="l-accs"></div></div>
+        <div class="row"><button type="button" class="btn" id="resetLook">꾸미기 처음으로</button></div>
+      </section>
+      <hr>
+      <div class="unity" style="display:grid; gap:8px;">
+        <h2>Unity로 보내기</h2>
+        <p>아래 파일로 저장하면 다음에 Unity가 리그를 만들 때(Play, 씬 다시 열기) 적용돼요.</p>
+        <div class="path" id="unityPath"></div>
+        <div class="row">
+          <button type="button" class="btn primary" id="save">tuning.json 저장</button>
+          <button type="button" class="btn" id="copy">JSON 복사</button>
+          <button type="button" class="btn" id="load">불러오기</button>
+          <input type="file" id="file" accept=".json,application/json" hidden>
+        </div>
+        <p class="status" id="status" role="status"></p>
+        <label for="json" class="hint">지금 설정 (바뀐 부위만)</label>
+        <textarea id="json" readonly></textarea>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+const DATA = /*RIG_DATA*/null;
+// false in the published copy (build_rig_editor.py --body): that viewer can't save files.
+const CAN_SAVE_FILES = true;
+
+// ---- Constants: a port of QuarterRigView.cs - keep the two in sync. ----
+// The rig being edited (one per QuarterRigView prefab, see build_rig_editor.py).
+let RK = Object.keys(DATA.rigs)[0], RIG, LEGS, SPR, CHARACTER_SCALE;
+function useRig(key) {
+  RK = key;
+  const r = DATA.rigs[key];
+  RIG = r.rig; LEGS = RIG.legSolver; CHARACTER_SCALE = r.scale;
+  SPR = Object.assign({}, DATA.shared, r.sprites);
+}
+useRig(RK);
+const FAR_LEG_REST_Y = 4, WALK_BLEND_SECONDS = .12, HELD_CROP_HEIGHT = 95;
+const HARVEST_KEYS = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [.32, 36, .06, .10, -.35, .30, .18, 0, 9, 0],
+  [.52, 28, -.07, .02, -.20, .18, .08, 0, 9, 0],
+  [.70, 36, .06, .10, -.35, .30, .18, 0, 9, 0],
+  [.90, 26, -.10, -.02, -.16, .14, .06, 0, 9, 0],
+  [1.06, 38, .05, .12, -.40, .34, .20, 0, 10, 0],
+  [1.26, -10, -.07, -.10, -1.80, -.60, -.12, -.04, 2, 1.2],
+  [1.42, 0, -.03, -.06, -1.62, -.45, -.06, 0, 0, 1],
+  [1.78, 0, -.02, -.05, -1.66, -.40, -.04, 0, 0, 1],
+  [2.06, 3, .04, .03, 1.0, .10, .03, .12, 0, 0],
+  [2.24, 0, 0, 0, 0, 0, -.03, -.07, 0, 0],
+  [2.40, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+].map(([t, hips, body, head, near, far, tail, pack, spread, crop]) => ({ t, hips, body, head, near, far, tail, pack, spread, crop, kick: 0, fiddle: 0 }));
+const HARVEST_STASH_TIME = 1.95, HELD_CROP_ORDER_SHOWN = 9, HELD_CROP_ORDER_STASHED = 1;
+const SIT_HIPS_DROP = 30, SIT_NEAR_HIP = [-31.4, 23.9], SIT_FAR_HIP = [17.2, 26.3], SIT_NEAR_ANGLE = 75.5, SIT_FAR_ANGLE = 80.5;
+const SIT_LEG_LENGTH = 72, SIT_LEG_FORESHORTEN = .95, SIT_BLEND_SECONDS = .25;
+const NOD_SECONDS = 3.4, NOD_SINK_END = .72, NOD_JERK_END = .78, BLINK_FROM = .74, BLINK_TO = .86;
+const Z_EVERY = .95, Z_LIFE = 1.7, Z_START = [.85, 2.55], Z_RISE = [.45, 1.0], Z_ORDER = 10;
+// Keepy-uppy (looped): one kick per two bounces of the toy, landing on the second.
+const KICK_KEYS = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [.27, 4, -.02, 0, .22, -.15, .05, 0, 0, 0, -18],
+  [.455, -7, -.07, -.06, .55, -.45, .16, -.05, 0, 0, 58],
+  [.62, -2, -.03, -.03, .30, -.25, .08, 0, 0, 0, 28],
+  [.909, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+].map(([t, hips, body, head, near, far, tail, pack, spread, crop, kick]) => ({ t, hips, body, head, near, far, tail, pack, spread, crop, kick, fiddle: 0 }));
+const KICK_HIP_HEIGHT = 64;
+// Puzzle beside the feet: squat into reach, then loop from PUZZLE_LOOP_FROM.
+const PUZZLE_KEYS = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [.30, 24, .06, .12, -.70, -.50, .10, 0, 6, 0, 0, 1],
+  [1.20, 22, .04, .02, -.65, -.45, .14, 0, 6, 0, 0, 1],
+  [1.90, 24, .07, .14, -.72, -.52, .10, 0, 6, 0, 0, 1],
+  [2.15, 6, -.04, -.10, -1.50, -.90, -.10, -.03, 3, 0, 0, 0],
+  [2.45, 10, -.02, -.06, -1.30, -.80, -.04, 0, 3, 0, 0, 0],
+  [2.90, 24, .06, .12, -.70, -.50, .10, 0, 6, 0, 0, 1],
+].map(([t, hips, body, head, near, far, tail, pack, spread, crop, kick, fiddle]) => ({ t, hips, body, head, near, far, tail, pack, spread, crop, kick, fiddle }));
+const PUZZLE_LOOP_FROM = .30;
+const FIDDLE = { perSecond: 3, near: .12, far: .09, head: .035 };
+// The puzzle as the plaza shows it: a 1x1 cell at 85% fill, wiggling 10 degrees 3 times a second.
+const PUZZLE = { degrees: 10, perSecond: 3 };
+// The ball as the plaza shows it: a 1x1 cell at 85% fill, bouncing 0.35 cells 2.2 times a second;
+// the otter stands 0.35 units off its side, a little behind it (cell rect bottom 0.3 below the feet).
+const BALL = { size: .85, gap: .35, below: .3, bounce: .35, perSecond: 2.2 };
+// Fishing (QuarterRigView.FishKeys): cast, then loop from FISH_LOOP_FROM. Only rigs with rod.png.
+const FISH_KEYS = [
+  [0, 0, 0, 0, -.6, .3, 0, -1.40, 1, 0, 0],
+  [.30, 2, -.05, -.04, -1.35, .50, -.05, -2.10, 1, 0, 0],
+  [.55, -2, .06, .04, -.75, .80, .10, -.25, 1, 0, 0],
+  [.85, 0, 0, 0, -.95, .75, 0, -.36, 1, 1, 0],
+  [2.60, 0, 0, 0, -.95, .75, 0, -.36, 1, 1, 0],
+  [2.85, 0, .04, .07, -.86, .78, .04, -.16, 1, 1, 1],
+  [3.05, 0, .03, .06, -.90, .76, .02, -.20, 1, 1, .7],
+  [3.35, -3, -.07, -.06, -1.30, .55, -.10, -1.00, 1, 1, 0],
+  [3.80, 0, 0, 0, -.95, .75, 0, -.36, 1, 1, 0],
+].map(([t, hips, body, head, near, far, tail, rod, hold, line, bite]) => ({ t, hips, body, head, near, far, tail, rod, hold, line, bite }));
+const FISH_LOOP_FROM = .85;
+// The rod goes over the body but under the paw and head (5.9: just below the near arm's 6); line on top.
+const ROD = { length: 200, grip: 15, thickness: 12, waterY: -8, line: 1.6, float: 11, ripple: 30, front: 5.9, rear: 1, lineOrder: 9 };
+// Building (QuarterRigView.BuildKeys): crouch at the log, two blows, a look; loops from BUILD_LOOP_FROM.
+// Only rigs with hammer.png (the mechanic).
+const BUILD_KEYS = [
+  [0, 0, 0, 0, -.3, 0, 0, 0],
+  [.40, 34, .08, .10, -2.4, -.35, .12, 0],
+  [.56, 40, .15, .15, -1.05, -.45, .16, 0],
+  [.60, 42, .16, .16, -.90, -.45, .16, 1],
+  [.82, 37, .11, .12, -1.3, -.40, .12, 0],
+  [1.00, 36, .08, .10, -2.4, -.35, .12, 0],
+  [1.16, 40, .15, .15, -1.05, -.45, .16, 0],
+  [1.20, 42, .16, .16, -.90, -.45, .16, 1],
+  [1.42, 37, .11, .12, -1.3, -.40, .12, 0],
+  [1.90, 24, -.02, -.06, -1.5, -.25, .05, 0],
+  [2.30, 34, .08, .10, -2.4, -.35, .12, 0],
+].map(([t, hips, body, head, near, far, tail, hit]) => ({ t, hips, body, head, near, far, tail, spread: 4, hammer: 1, hit }));
+const BUILD_LOOP_FROM = .40;
+// The sledgehammer (QuarterRigView.SledgeKeys): rigs with sledge.png instead (the 작업반장).
+const SLEDGE_KEYS = [
+  [0, 0, 0, 0, -.3, -.2, 0, 0],
+  [.50, 10, -.06, -.10, -1.2, -.9, .06, 0],
+  [1.10, 4, -.14, -.18, -3.7, -3.4, -.08, 0],
+  [1.30, 2, -.16, -.20, -3.9, -3.6, -.10, 0],
+  [1.46, 14, .16, .12, -1.45, -1.2, .16, 0],
+  [1.50, 20, .22, .18, -1.20, -1.0, .22, 1],
+  [1.62, 26, .18, .12, -1.15, -.95, .16, .6],
+  [1.95, 22, .14, .10, -1.25, -1.05, .14, 0],
+  [2.40, 10, -.06, -.10, -1.2, -.9, .06, 0],
+].map(([t, hips, body, head, near, far, tail, hit]) => ({ t, hips, body, head, near, far, tail, spread: 8, hammer: 1, hit }));
+const SLEDGE_LOOP_FROM = .50;
+// Mining (QuarterRigView.MineKeys): rigs with rock_0.png (the 광부); the pickaxe is part of the arm.
+// stone: the rock's stage, held (not blended) until the next key.
+const MINE_KEYS = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0.06, 0],
+  [0.5, 10, -0.06, -0.1, 1.67, 85.9, 10.7, 1, 0.06, 0],
+  [1.1, 4, -0.14, -0.18, -0.83, -1.8, -61.9, 1, -0.08, 0],
+  [1.3, 2, -0.16, -0.2, -1.03, -11.3, -54.6, 1, -0.1, 0],
+  [1.46, 14, 0.16, 0.12, 1.42, 89.6, -3.8, 1, 0.16, 0],
+  [1.5, 20, 0.22, 0.18, 1.67, 85.9, 10.7, 1, 0.22, 1, 1],
+  [1.62, 26, 0.18, 0.12, 1.72, 84.8, 13.5, 1, 0.16, 1, 0.6],
+  [1.95, 22, 0.14, 0.1, 1.62, 86.9, 7.9, 1, 0.14, 1],
+  [2.4, 10, -0.06, -0.1, 1.67, 85.9, 10.7, 1, 0.06, 1],
+  [3, 4, -0.14, -0.18, -0.83, -1.8, -61.9, 1, -0.08, 1],
+  [3.2, 2, -0.16, -0.2, -1.03, -11.3, -54.6, 1, -0.1, 1],
+  [3.36, 14, 0.16, 0.12, 1.42, 89.6, -3.8, 1, 0.16, 1],
+  [3.4, 20, 0.22, 0.18, 1.67, 85.9, 10.7, 1, 0.22, 2, 1],
+  [3.52, 26, 0.18, 0.12, 1.72, 84.8, 13.5, 1, 0.16, 2, 0.6],
+  [3.85, 22, 0.14, 0.1, 1.62, 86.9, 7.9, 1, 0.14, 2],
+  [4.3, 10, -0.06, -0.1, 1.67, 85.9, 10.7, 1, 0.06, 2],
+  [4.9, 4, -0.14, -0.18, -0.83, -1.8, -61.9, 1, -0.08, 2],
+  [5.1, 2, -0.16, -0.2, -1.03, -11.3, -54.6, 1, -0.1, 2],
+  [5.26, 14, 0.16, 0.12, 1.42, 89.6, -3.8, 1, 0.16, 2],
+  [5.3, 20, 0.22, 0.18, 1.67, 85.9, 10.7, 1, 0.22, 3, 1],
+  [5.42, 26, 0.18, 0.12, 1.72, 84.8, 13.5, 1, 0.16, 3, 0.6],
+  [5.75, 22, 0.14, 0.1, 1.62, 86.9, 7.9, 1, 0.14, 3],
+  [6.3, 0, -0.04, -0.1, 0, 0, 0, 0, 0.06, 3],
+  [6.7, 10, -0.06, -0.1, 1.67, 85.9, 10.7, 1, 0.06, 0],
+].map(([t, hips, body, head, near, nearX, nearY, grip, tail, stone, hit]) => ({ t, hips, body, head, near, nearX, nearY, grip, tail, stone, hit: hit || 0, spread: 8 }));
+const MINE_LOOP_FROM = .50;
+const ROCK = { x: 115, y: 10, height: 52, top: -36, order: 5.5, chipSize: 14, chipFlight: 34 };
+const ROCK_STAGES = ["rock_0", "rock_1", "rock_2", "rock_rubble"];
+const SLEDGE = { headReach: 117, logX: 97, logY: -29, logHeight: 36, chipFlight: 52 };
+const HAMMER = { logX: 22, logY: -26, logHeight: 34, headReach: 46, bend: 0, chipSize: 22, chipFlight: 30,
+  front: 7, rear: 1, logFront: 5, logRear: -1, chipOrder: 9 };
+// nearX / nearY: the near arm's joint moved (rig px); grip: the far arm turns to grab the handle at GRIP_ON_HANDLE.
+const NO_ACTION = { hips: 0, body: 0, head: 0, near: 0, far: 0, tail: 0, pack: 0, spread: 0, crop: 0, kick: 0, fiddle: 0, rod: 0, hold: 0, line: 0, bite: 0, hammer: 0, hit: 0, stone: -1, nearX: 0, nearY: 0, grip: 0 };
+const GRIP_ON_HANDLE = [5, -30];
+for (const keys of [HARVEST_KEYS, KICK_KEYS, PUZZLE_KEYS, FISH_KEYS, BUILD_KEYS, SLEDGE_KEYS, MINE_KEYS])
+  for (const key of keys) for (const field in NO_ACTION) if (key[field] === undefined) key[field] = NO_ACTION[field];
+
+const PART_NAMES = { body: "몸통", head: "머리", nearArm: "가까운 팔", farArm: "먼 팔", nearLeg: "가까운 다리", farLeg: "먼 다리", tail: "꼬리", backpack: "가방" };
+const PART_ORDER = ["head", "body", "nearArm", "farArm", "nearLeg", "farLeg", "tail", "backpack"];
+const DEFAULT_TUNING = { x: 0, y: 0, rotation: 0, scaleX: 1, scaleY: 1 };
+
+// ---- Images ----
+const images = {};
+function image(key) { return images[RK + ":" + key] || images["shared:" + key]; }
+function loadImage(key, src) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      // Alpha mask for picking parts with the pointer.
+      const c = document.createElement("canvas");
+      c.width = img.width; c.height = img.height;
+      const g = c.getContext("2d");
+      g.drawImage(img, 0, 0);
+      let alpha = null;
+      try { alpha = g.getImageData(0, 0, img.width, img.height).data; } catch (e) { alpha = null; }
+      images[key] = { img, alpha };
+      resolve();
+    };
+    img.onerror = () => resolve();
+    img.src = src;
+  });
+}
+
+// ---- State ----
+const state = {
+  dir: "SE", motion: "idle", playing: true, speed: 1, zoom: 1.4, joints: false,
+  view: "front", part: "head",
+  tuning: {},
+};
+for (const rk of Object.keys(DATA.rigs)) state.tuning[rk] = { front: {}, rear: {} };
+const anim = { clock: 0, phase: 0, walkBlend: 0, action: null, actionTime: 0, harvestWait: .4, sitBlend: 0, nodTime: 0, zTimer: Z_EVERY * .5, zs: [], ground: 0 };
+
+function tuningOf(view, part) { return Object.assign({}, DEFAULT_TUNING, state.tuning[RK][view][part] || {}); }
+function isChanged(t) { return t.x !== 0 || t.y !== 0 || t.rotation !== 0 || t.scaleX !== 1 || t.scaleY !== 1; }
+function setTuning(view, part, t) {
+  if (isChanged(t)) state.tuning[RK][view][part] = t; else delete state.tuning[RK][view][part];
+  persist();
+}
+
+function loadTuningJson(obj) {
+  const next = { front: {}, rear: {} };
+  for (const view of ["front", "rear"]) {
+    for (const entry of (obj && obj[view]) || []) {
+      if (!entry || !PART_NAMES[entry.part]) continue;
+      const t = {
+        x: num(entry.x, 0), y: num(entry.y, 0), rotation: num(entry.rotation, 0),
+        scaleX: num(entry.scaleX, 1), scaleY: num(entry.scaleY, 1),
+      };
+      if (isChanged(t)) next[view][entry.part] = t;
+    }
+  }
+  state.tuning[RK] = next;
+}
+function num(v, fallback) { const n = Number(v); return Number.isFinite(n) ? n : fallback; }
+function round(v, step) { return Math.round(v / step) * step; }
+function tuningJson() {
+  const out = { rig: RK, front: [], rear: [] };
+  for (const view of ["front", "rear"]) {
+    for (const part of PART_ORDER) {
+      const t = state.tuning[RK][view][part];
+      if (!t) continue;
+      out[view].push({ part, x: +t.x.toFixed(2), y: +t.y.toFixed(2), rotation: +t.rotation.toFixed(2), scaleX: +t.scaleX.toFixed(3), scaleY: +t.scaleY.toFixed(3) });
+    }
+  }
+  return JSON.stringify(out, null, 2);
+}
+
+// v2: the sit legs from the first tuning were folded into the sit pose, so older saves would apply twice.
+const STORE_KEY = "otter-rig-tuning-v2";
+function storeKey() { return RK === "QuarterRigV14" ? STORE_KEY : STORE_KEY + ":" + RK; }
+function persist() {
+  try { localStorage.setItem(storeKey(), tuningJson()); } catch (e) { /* storage unavailable */ }
+}
+// Each rig starts from what this browser kept, else from its tuning.json in Unity.
+function restore() {
+  const notes = [];
+  const current = RK;
+  for (const rk of Object.keys(DATA.rigs)) {
+    useRig(rk);
+    let saved = null;
+    try { saved = localStorage.getItem(storeKey()); } catch (e) { saved = null; }
+    if (saved) { try { loadTuningJson(JSON.parse(saved)); notes.push(`${DATA.rigs[rk].label}: 브라우저에 남은 작업`); continue; } catch (e) { /* fall through */ } }
+    if (DATA.rigs[rk].tuning) { loadTuningJson(DATA.rigs[rk].tuning); notes.push(`${DATA.rigs[rk].label}: Unity의 tuning.json`); }
+  }
+  useRig(current);
+  return notes.length ? notes.join(", ") + "을 불러왔어요." : "";
+}
+
+// ---- Pose (port of QuarterRigView.ApplyPose) ----
+const smooth = u => u * u * (3 - 2 * u);
+const lerp = (a, b, t) => a + (b - a) * t;
+const clamp01 = v => Math.min(1, Math.max(0, v));
+const repeat = (v, n) => v - Math.floor(v / n) * n;
+
+function sample(keys, t) {
+  let i = 1;
+  while (i < keys.length - 1 && keys[i].t < t) i++;
+  const k0 = keys[i - 1], k1 = keys[i];
+  const u = smooth(clamp01((t - k0.t) / Math.max(k1.t - k0.t, .0001)));
+  const out = {};
+  for (const k of Object.keys(NO_ACTION)) out[k] = lerp(k0[k], k1[k], u);
+  out.stone = u >= 1 ? k1.stone : k0.stone;
+  return out;
+}
+function droop(nod) {
+  if (nod < NOD_SINK_END) return smooth(nod / NOD_SINK_END);
+  if (nod < NOD_JERK_END) return lerp(1, -.25, smooth((nod - NOD_SINK_END) / (NOD_JERK_END - NOD_SINK_END)));
+  return lerp(-.25, 0, smooth((nod - NOD_JERK_END) / (1 - NOD_JERK_END)));
+}
+const isLeg = name => name.endsWith("Leg");
+
+function facing() {
+  const forcedFront = ["harvest", "sit", "build", "mine"].includes(state.motion);
+  return { rear: !forcedFront && (state.dir === "NW" || state.dir === "NE"), left: state.dir === "NW" || state.dir === "SW" };
+}
+
+// Local transforms in rig px, y down; rotation in radians, + = clockwise on screen.
+function poseView(rear) {
+  const bones = rear ? RIG.rearBones : RIG.bones;
+  const view = rear ? "rear" : "front";
+  const w = anim.walkBlend, p = anim.phase * Math.PI * 2;
+  const a = anim.action ? sample(anim.action, anim.actionTime) : NO_ACTION;
+  const sb = smooth(anim.sitBlend);
+  const nod = repeat(anim.nodTime / NOD_SECONDS, 1);
+  const dr = sb * droop(nod);
+  const poses = {};
+  for (const b of bones) {
+    const t = tuningOf(view, b.name);
+    if (isLeg(b.name)) { poses[b.name] = poseLeg(b.name === "nearLeg", w, a.spread, sb, t, b.name === "nearLeg" ? a.kick : 0); continue; }
+    let x = b.pos[0], y = b.pos[1], angle = 0;
+    switch (b.name) {
+      case "hips": y += 8 - 3.8 * w * (1 - Math.cos(2 * p)); break;
+      case "body": y += (1 - w) * Math.sin(anim.clock * 3) * .6; angle = -.04 * Math.sin(p) * w; break;
+      case "head": angle = .024 * Math.sin(p - .4) * w; break;
+      case "nearArm": angle = .38 * Math.sin(p - .15) * w; break;
+      case "farArm":
+        angle = -.38 * Math.sin(p - .15) * w;
+        if (rear) { y += 1.2 * Math.sin(p - .15) * w; angle = -.18 - .10 * Math.sin(p - .15) * w; }
+        break;
+      case "tail": angle = .13 * Math.sin(p - .8) * w + (1 - w) * .025 * Math.sin(anim.clock * 2); break;
+      case "backpack": angle = .045 * Math.sin(p - .6) * w; break;
+    }
+    switch (b.name) {
+      case "hips": y += a.hips; break;
+      case "body": angle += a.body; break;
+      case "head": angle += a.head; break;
+      case "nearArm": angle += a.near + a.fiddle * FIDDLE.near * Math.sin(anim.clock * FIDDLE.perSecond * Math.PI * 2); x += a.nearX; y += a.nearY; break;
+      case "farArm": angle += a.far + a.fiddle * FIDDLE.far * Math.sin(anim.clock * FIDDLE.perSecond * Math.PI * 2 + 1.3); break;
+      case "tail": angle += a.tail; break;
+      case "backpack": angle += a.pack; break;
+    }
+    if (b.name === "head") angle += a.fiddle * FIDDLE.head * Math.sin(anim.clock * 1.3) + a.line * .025 * Math.sin(anim.clock * 1.5);
+    switch (b.name) {
+      case "hips": y += SIT_HIPS_DROP * sb; break;
+      case "body": y += sb * Math.sin(anim.clock * 1.7) * 1.4; angle += .035 * dr; break;
+      case "head": y += 10 * dr; angle += .28 * dr; break;
+      case "nearArm": angle += -.4 * sb; break;
+      case "farArm": angle += .18 * sb; break;
+      case "tail": angle += .22 * sb; break;
+    }
+    x += t.x; y += t.y; angle += t.rotation * Math.PI / 180;
+    poses[b.name] = { x, y, rot: angle, jsy: 1 };
+  }
+  return { poses, a, sb, nod };
+}
+
+function poseLeg(near, w, spread, sit, t, kick) {
+  const q = repeat(anim.phase + (near ? 0 : .5), 1);
+  const stance = q < LEGS.stanceFraction;
+  const u = stance ? q / LEGS.stanceFraction : (q - LEGS.stanceFraction) / (1 - LEGS.stanceFraction);
+  const ease = smooth(u);
+  const travel = LEGS.stepHalfWidth * w * (stance ? 1 - 2 * u : -1 + 2 * ease);
+  const lift = stance ? 0 : LEGS.lift * w * Math.pow(Math.sin(Math.PI * u), 1.3);
+  const stand = [(near ? LEGS.nearX - spread : LEGS.farX + spread) + travel, (near ? 0 : FAR_LEG_REST_Y) + lift];
+  const swing = (stance ? 0 : -LEGS.swingAngle * w * Math.sin(2 * Math.PI * u)) * 180 / Math.PI;
+  const degrees = near ? SIT_NEAR_ANGLE : SIT_FAR_ANGLE;
+  const length = SIT_LEG_LENGTH * SIT_LEG_FORESHORTEN;
+  const hip = near ? SIT_NEAR_HIP : SIT_FAR_HIP;
+  const seated = [hip[0] + Math.sin(degrees * Math.PI / 180) * length, hip[1] - Math.cos(degrees * Math.PI / 180) * length];
+  // Unity: y up, rotation counter-clockwise; converted to the canvas here.
+  let ux = lerp(stand[0], seated[0], sit) + t.x, uy = lerp(stand[1], seated[1], sit) - t.y;
+  let uz = lerp(swing, degrees, sit) - t.rotation;
+  if (kick) {
+    // Swing about the hip: the sole moves forward and up, the leg turned to keep pointing at the hip.
+    const hipY = uy + KICK_HIP_HEIGHT;
+    ux += Math.sin(kick * Math.PI / 180) * KICK_HIP_HEIGHT;
+    uy = hipY - Math.cos(kick * Math.PI / 180) * KICK_HIP_HEIGHT;
+    uz += kick;
+  }
+  return { x: ux, y: -uy, rot: -uz * Math.PI / 180, jsy: lerp(1, SIT_LEG_FORESHORTEN, sit) };
+}
+
+// ---- Update (port of QuarterRigView.Update) ----
+function step(dt) {
+  const walking = state.motion === "walk";
+  anim.walkBlend = moveTowards(anim.walkBlend, walking ? 1 : 0, dt / WALK_BLEND_SECONDS);
+  anim.clock += dt;
+  if (walking) { anim.phase += dt / LEGS.cycleSeconds; anim.ground += dt * 1.1; }
+  if (state.motion === "harvest") {
+    if (anim.action) {
+      anim.actionTime += dt;
+      if (anim.actionTime >= anim.action[anim.action.length - 1].t) { anim.action = null; anim.harvestWait = .8; }
+    } else if ((anim.harvestWait -= dt) <= 0) { anim.action = HARVEST_KEYS; anim.actionTime = 0; }
+  } else if (["kick", "puzzle", "fish", "build", "mine"].includes(state.motion)) {
+    const heavy = !SPR.hammer && SPR.sledge;
+    const keys = { kick: KICK_KEYS, puzzle: PUZZLE_KEYS, fish: FISH_KEYS, build: heavy ? SLEDGE_KEYS : BUILD_KEYS, mine: MINE_KEYS }[state.motion];
+    const from = { kick: 0, puzzle: PUZZLE_LOOP_FROM, fish: FISH_LOOP_FROM, build: heavy ? SLEDGE_LOOP_FROM : BUILD_LOOP_FROM, mine: MINE_LOOP_FROM }[state.motion];
+    if (anim.action !== keys) { anim.action = keys; anim.actionTime = 0; anim.ballTime = 0; }
+    anim.actionTime += dt;
+    anim.ballTime += dt;
+    const length = keys[keys.length - 1].t;
+    if (anim.actionTime >= length) anim.actionTime = from + (anim.actionTime - length);
+  } else { anim.action = null; anim.harvestWait = .4; }
+  const sitting = state.motion === "sit";
+  if (sitting && anim.sitBlend === 0) { anim.nodTime = 0; anim.zTimer = Z_EVERY * .5; }
+  anim.sitBlend = moveTowards(anim.sitBlend, sitting ? 1 : 0, dt / SIT_BLEND_SECONDS);
+  if (sitting) anim.nodTime += dt;
+  const nod = repeat(anim.nodTime / NOD_SECONDS, 1);
+  if (sitting && anim.sitBlend >= 1 && nod > .1 && nod < NOD_SINK_END) {
+    anim.zTimer -= dt;
+    if (anim.zTimer <= 0) { anim.zTimer = Z_EVERY; anim.zs.push({ age: 0 }); }
+  }
+  for (const z of anim.zs) z.age += dt;
+  anim.zs = anim.zs.filter(z => z.age < Z_LIFE);
+}
+function moveTowards(v, target, maxDelta) { return Math.abs(target - v) <= maxDelta ? target : v + Math.sign(target - v) * maxDelta; }
+
+// ---- Drawing ----
+const canvas = document.getElementById("stage");
+const ctx = canvas.getContext("2d");
+let drawn = [];   // last frame's parts, topmost last: { part, matrix, image, rect }
+let layout = null;
+
+function cssColor(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = Math.round(rect.width * dpr);
+  canvas.height = Math.round(rect.height * dpr);
+}
+
+function render() {
+  const dpr = canvas.width / canvas.getBoundingClientRect().width || 1;
+  const W = canvas.width, H = canvas.height;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const f = facing();
+  const view = f.rear ? "rear" : "front";
+  const sitting = state.motion === "sit";
+  // Screen px per world unit; the bench scene pulls back so the whole bench fits.
+  const unit = 150 * state.zoom * dpr * (sitting ? .62 : 1);
+  const groundY = H * (sitting ? .92 : .80);
+  const feet = { x: W * .5, y: sitting ? groundY - DATA.bench.seat[1] * unit : groundY };
+
+  drawGround(W, H, groundY, unit, dpr);
+  if (sitting) drawBench(feet, unit, f.left);
+  else drawShadow(feet, unit);
+  // The ball sits a little in front (lower), so it draws over the otter: drawn after it, below.
+
+  // Visual space: rig px, y down, mirrored when facing left.
+  const s = unit * CHARACTER_SCALE / 100;
+  const visual = new DOMMatrix().translate(feet.x, feet.y).scale(f.left ? -s : s, s);
+  layout = { visual, unit, dpr };
+
+  const bones = f.rear ? RIG.rearBones : RIG.bones;
+  const { poses, a, sb, nod } = poseView(f.rear);
+  const world = {};
+  const items = [];
+  for (const b of bones) {
+    const ps = poses[b.name];
+    const parent = isLeg(b.name) || !b.parent ? new DOMMatrix() : world[b.parent];
+    const m = parent.translate(ps.x, ps.y).rotate(ps.rot * 180 / Math.PI).scale(1, ps.jsy);
+    world[b.name] = m;
+    if (b.name === "hips" || (b.name === "backpack" && isCustom() && !state.look.acc.backpack)) continue;
+    const t = tuningOf(view, b.name);
+    let key = (f.rear ? "rear-" : "front-") + b.name;
+    const dozing = state.motion === "sit" && sb > .5 && (nod < BLINK_FROM || nod >= BLINK_TO);
+    if (b.name === "head" && isCustom()) key = customHeadKey(f.rear, dozing);
+    else if (!f.rear && b.name === "head" && dozing && SPR["front-head-sleep"]) key = "front-head-sleep";
+    items.push({ order: b.layer, part: b.name, key, matrix: m.scale(t.scaleX, t.scaleY), seq: items.length });
+  }
+  if (isCustom() && CUSTOM) pushCustom(items, world, f, view, sb, nod, bones);
+  // Two-handed (QuarterRigView.GripWithFarPaw): the far arm turns to point at the handle below the near paw.
+  if (a.grip > 0 && world.farArm && world.nearArm) {
+    const farBone = bones.find(b => b.name === "farArm"), ps = poses.farArm;
+    const parent = world[farBone.parent];
+    const target = parent.inverse().transformPoint(world.nearArm.transformPoint(new DOMPoint(GRIP_ON_HANDLE[0], GRIP_ON_HANDLE[1])));
+    const aim = Math.atan2(-(target.x - ps.x), target.y - ps.y);
+    let d = aim - ps.rot; d = Math.atan2(Math.sin(d), Math.cos(d));
+    world.farArm = parent.translate(ps.x, ps.y).rotate((ps.rot + d * a.grip) * 180 / Math.PI).scale(1, ps.jsy);
+    const t = tuningOf(view, "farArm"), item = items.find(it => it.part === "farArm");
+    if (item) {
+      item.matrix = world.farArm.scale(t.scaleX, t.scaleY);
+      // Holding the handle the far paw is in front of the body: just under the near arm.
+      if (a.grip > .5) item.order = bones.find(b => b.name === "nearArm").layer + .05;
+    }
+  }
+  // Held crop (front only)
+  if (!f.rear && a.crop > .01 && SPR.crop) {
+    const armSprite = SPR["front-nearArm"];
+    const armScale = tuningOf("front", "nearArm").scaleY;
+    const hand = world.nearArm.transformPoint(new DOMPoint(0, armSprite.pivot[1] * armSprite.h / 2 * .85 * armScale));
+    const height = HELD_CROP_HEIGHT * a.crop;
+    const crop = SPR.crop;
+    const scale = height / (crop.h / 2);
+    const m = new DOMMatrix().translate(hand.x, hand.y + height * .42).rotate(-6 * Math.sin(anim.clock * 9)).scale(scale, scale);
+    items.push({ order: anim.actionTime >= HARVEST_STASH_TIME ? HELD_CROP_ORDER_STASHED : HELD_CROP_ORDER_SHOWN, part: null, key: "crop", matrix: m, seq: items.length, centred: true });
+  }
+  // Rod in the near paw, line down to the water with its float, ripple (QuarterRigView.PoseRod).
+  if (a.hold > .5 && SPR.rod) {
+    const armSprite = SPR[(f.rear ? "rear-" : "front-") + "nearArm"];
+    const reach = armSprite.pivot[1] * armSprite.h / 2 * .82 * tuningOf(view, "nearArm").scaleY;
+    const hand = world.nearArm.transformPoint(new DOMPoint(0, reach));
+    const tilt = a.rod + a.line * .015 * Math.sin(anim.clock * 2);
+    const along = [Math.cos(tilt), Math.sin(tilt)];
+    const rw = SPR.rod.w / 2, rh = SPR.rod.h / 2;
+    const butt = [hand.x - along[0] * ROD.grip, hand.y - along[1] * ROD.grip];
+    const m = new DOMMatrix().translate(butt[0], butt[1]).rotate(tilt * 180 / Math.PI).scale(ROD.length / rw, ROD.thickness / rh);
+    items.push({ order: f.rear ? ROD.rear : ROD.front, part: null, key: "rod", matrix: m, seq: items.length, rect: [0, -rh / 2, rw, rh] });
+    if (a.line > .02) {
+      const tip = [hand.x + along[0] * (ROD.length - ROD.grip), hand.y + along[1] * (ROD.length - ROD.grip)];
+      const bob = (1 - a.bite) * 2 * Math.sin(anim.clock * 2.4) - a.bite * 7;
+      const water = [tip[0], -ROD.waterY];
+      const end = [lerp(tip[0], water[0], a.line), lerp(tip[1], water[1] - bob, a.line)];
+      items.push({ order: ROD.lineOrder, seq: items.length, paint() {
+        ctx.strokeStyle = "#654b36"; ctx.lineWidth = ROD.line; ctx.beginPath(); ctx.moveTo(tip[0], tip[1]); ctx.lineTo(end[0], end[1]); ctx.stroke();
+        const r = ROD.float / 2;
+        ctx.fillStyle = "#fbf8f2"; ctx.beginPath(); ctx.arc(end[0], end[1], r, 0, Math.PI); ctx.fill();
+        ctx.fillStyle = "#e04a3c"; ctx.beginPath(); ctx.arc(end[0], end[1], r, Math.PI, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = "#3a2516"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(end[0], end[1], r, 0, Math.PI * 2); ctx.stroke();
+      } });
+      items.push({ order: -1, seq: items.length, paint() {
+        const k = (1 + a.bite * .7 + .08 * Math.sin(anim.clock * 2.4)) * ROD.ripple / 2;
+        ctx.globalAlpha = a.line; ctx.strokeStyle = "#82b8c5"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.ellipse(water[0], water[1], k, k / 3, 0, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1;
+      } });
+    }
+  }
+  // Hammer in the near paw, the log in front, chips off each blow (QuarterRigView.PoseHammer).
+  const tool = SPR.hammer ? "hammer" : SPR.sledge ? "sledge" : null, heavy = tool === "sledge";
+  if (a.hammer > .5 && tool) {
+    const armSprite = SPR[(f.rear ? "rear-" : "front-") + "nearArm"];
+    const reach = armSprite.pivot[1] * armSprite.h / 2 * .82 * tuningOf(view, "nearArm").scaleY;
+    const hand = world.nearArm.transformPoint(new DOMPoint(0, reach));
+    const tip = world.nearArm.transformPoint(new DOMPoint(0, reach + 10));
+    const down = Math.atan2(tip.y - hand.y, tip.x - hand.x) * 180 / Math.PI;
+    const turn = down - HAMMER.bend + 90;   // sprite up (head) along the forearm, bent forward
+    // The sledge goes under the paws and behind the head (heaved up, it is over the shoulder).
+    items.push({ order: f.rear ? HAMMER.rear : heavy ? ROD.front : HAMMER.front, part: null, key: tool, seq: items.length,
+                 matrix: new DOMMatrix().translate(hand.x, hand.y).rotate(turn) });
+    if (SPR.log) {
+      const k = (heavy ? SLEDGE.logHeight : HAMMER.logHeight) / (SPR.log.h / 2);
+      items.push({ order: f.rear ? HAMMER.logRear : HAMMER.logFront, part: null, key: "log", seq: items.length,
+                   matrix: new DOMMatrix().translate(heavy ? SLEDGE.logX : HAMMER.logX, heavy ? SLEDGE.logY : HAMMER.logY).scale(k, k) });
+    }
+    if (a.hit > .02 && SPR.chip) {
+      const r = turn * Math.PI / 180;
+      const reachTo = heavy ? SLEDGE.headReach : HAMMER.headReach, flight = heavy ? SLEDGE.chipFlight : HAMMER.chipFlight;
+      const head = [hand.x + Math.sin(r) * reachTo, hand.y - Math.cos(r) * reachTo];
+      const t = 1 - a.hit, k = HAMMER.chipSize / (SPR.chip.h / 2);
+      for (const side of [-1, 1]) {
+        const x = head[0] + side * flight * t, y = head[1] - flight * (1.6 * t - 1.2 * t * t);
+        items.push({ order: HAMMER.chipOrder, part: null, key: "chip", seq: items.length, alpha: Math.min(1, a.hit * 1.5),
+                     matrix: new DOMMatrix().translate(x, y).rotate(side * 240 * t).scale(k, k) });
+      }
+    }
+  }
+  // The rock in front at its stage, stone chips off each blow (QuarterRigView.PoseRock).
+  if (a.stone >= 0 && SPR.rock_0) {
+    const key = ROCK_STAGES[Math.max(0, Math.min(3, Math.round(a.stone)))];
+    const k = ROCK.height / (SPR.rock_0.h / 2);   // sized by the whole rock, so the rubble keeps its scale
+    items.push({ order: ROCK.order, part: null, key: SPR[key] ? key : "rock_0", seq: items.length,
+                 matrix: new DOMMatrix().translate(ROCK.x, ROCK.y).scale(k, k) });
+    const chipKey = "stone_chip";
+    if (a.hit > .02 && SPR[chipKey]) {
+      const t = 1 - a.hit, c = ROCK.chipSize / (SPR[chipKey].h / 2);
+      for (const side of [-1, 0, 1]) {
+        const x = ROCK.x - 6 + side * ROCK.chipFlight * t;
+        const y = ROCK.top - (ROCK.chipFlight * (1.7 - .4 * Math.abs(side)) * t - ROCK.chipFlight * 1.3 * t * t);
+        items.push({ order: HAMMER.chipOrder, part: null, key: chipKey, seq: items.length, alpha: Math.min(1, a.hit * 1.5),
+                     matrix: new DOMMatrix().translate(x, y).rotate((side + .5) * 300 * t).scale(c, c) });
+      }
+    }
+  }
+  // Zzz
+  for (const z of anim.zs) {
+    const t = z.age / Z_LIFE;
+    const ux = Z_START[0] + Z_RISE[0] * t + .12 * Math.sin(t * 7), uy = Z_START[1] + Z_RISE[1] * t;
+    const scale = lerp(.7, 1.15, t);
+    let m = new DOMMatrix().translate(ux * 100, -uy * 100).rotate(-12 * Math.sin(t * 5)).scale(scale, scale);
+    if (f.left) m = m.scale(-1, 1);
+    const alpha = clamp01(t * 6) * (1 - smooth(clamp01((t - .55) / .45)));
+    items.push({ order: Z_ORDER, part: null, key: "fx-z", matrix: m, seq: items.length, alpha });
+  }
+
+  items.sort((p, q) => p.order - q.order || p.seq - q.seq);
+  drawn = [];
+  for (const it of items) {
+    if (it.paint) { ctx.setTransform(it.in ? visual.multiply(it.in) : visual); it.paint(); continue; }
+    const sprite = SPR[it.key], picture = image(it.key);
+    if (!sprite || !picture) continue;
+    const w = sprite.w / 2, h = sprite.h / 2;
+    const rect = it.rect || (it.centred ? [-w / 2, -h / 2, w, h] : [-sprite.pivot[0] * w, -(1 - sprite.pivot[1]) * h, w, h]);
+    const m = visual.multiply(it.matrix);
+    ctx.setTransform(m);
+    ctx.globalAlpha = it.alpha === undefined ? 1 : it.alpha;
+    ctx.drawImage(picture.img, rect[0], rect[1], rect[2], rect[3]);
+    ctx.globalAlpha = 1;
+    if (it.part) drawn.push({ part: it.part, matrix: m, key: it.key, rect });
+  }
+  if (state.motion === "kick") drawBall(feet, unit, f.left);
+  if (state.motion === "puzzle") drawPuzzle(feet, unit, f.left);
+  drawSelection(world, visual, bones, view);
+}
+
+function drawPuzzle(feet, unit, left) {
+  const picture = image("puzzle"), sprite = SPR.puzzle;
+  if (!picture || !sprite) return;
+  const size = BALL.size * unit;
+  const cx = feet.x + (left ? -1 : 1) * (BALL.gap + .5) * unit;
+  const bottom = feet.y + BALL.below * unit;
+  const turn = Math.sin((anim.ballTime || 0) * PUZZLE.perSecond * Math.PI * 2) * PUZZLE.degrees;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = cssColor("--shadow");
+  ctx.beginPath(); ctx.ellipse(cx, bottom, size * .4, size * .1, 0, 0, Math.PI * 2); ctx.fill();
+  const h = size, w = size * sprite.w / sprite.h;
+  // Wiggles about its bottom centre, like the placed toy's body.
+  ctx.translate(cx, bottom);
+  ctx.rotate(-turn * Math.PI / 180);
+  ctx.drawImage(picture.img, -w / 2, -h, w, h);
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+}
+
+function drawBall(feet, unit, left) {
+  const picture = image("ball"), sprite = SPR.ball;
+  if (!picture || !sprite) return;
+  const size = BALL.size * unit;
+  const cx = feet.x + (left ? -1 : 1) * (BALL.gap + .5) * unit;
+  const bottom = feet.y + BALL.below * unit;
+  const hop = Math.abs(Math.sin((anim.ballTime || 0) * BALL.perSecond * Math.PI)) * BALL.bounce * unit;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = cssColor("--shadow");
+  ctx.beginPath(); ctx.ellipse(cx, bottom, size * .38 * (1 - hop / unit * .6), size * .1, 0, 0, Math.PI * 2); ctx.fill();
+  const h = size, w = size * sprite.w / sprite.h;
+  ctx.drawImage(picture.img, cx - w / 2, bottom - hop - h, w, h);
+}
+
+function drawGround(W, H, groundY, unit, dpr) {
+  // A diamond floor grid in the plaza's quarter view; it slides back under the otter while walking.
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, groundY - H * .42, W, H);
+  ctx.clip();
+  ctx.strokeStyle = cssColor("--grid");
+  ctx.lineWidth = dpr;
+  const d = .45 * unit;
+  const dir = { SE: [1, .5], NE: [1, -.5], SW: [-1, .5], NW: [-1, -.5] }[state.dir];
+  const len = Math.hypot(dir[0], dir[1]);
+  const off = state.motion === "walk" ? anim.ground * unit : 0;
+  const sx = -dir[0] / len * off, sy = -dir[1] / len * off;
+  const cx = W / 2;
+  for (const slope of [.5, -.5]) {
+    const shift = repeat(sy - slope * sx, d);
+    for (let j = -60; j <= 60; j++) {
+      const k = j * d + shift;
+      ctx.beginPath();
+      ctx.moveTo(0, groundY + slope * (0 - cx) + k);
+      ctx.lineTo(W, groundY + slope * (W - cx) + k);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+function drawShadow(feet, unit) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const width = 2.7 * CHARACTER_SCALE * .55 * unit;
+  ctx.fillStyle = cssColor("--shadow");
+  ctx.beginPath();
+  ctx.ellipse(feet.x, feet.y, width / 2, width * .15, 0, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawBench(feet, unit, left) {
+  const b = DATA.bench, picture = image("bench");
+  if (!picture) return;
+  // The bench stands so its seat point is at the otter's feet.
+  const ox = feet.x - b.seat[0] * unit, oy = feet.y + b.seat[1] * unit;
+  const w = b.w / b.ppu * unit, h = b.h / b.ppu * unit;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = cssColor("--shadow");
+  ctx.beginPath(); ctx.ellipse(ox + w * .2, oy, w * .42, w * .09, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.drawImage(picture.img, ox - b.pivot[0] * w, oy - (1 - b.pivot[1]) * h, w, h);
+}
+
+function drawSelection(world, visual, bones, view) {
+  const sel = drawn.filter(d => d.part === state.part);
+  ctx.lineWidth = 1.5;
+  for (const d of sel) {
+    ctx.setTransform(d.matrix);
+    const inv = 1 / Math.hypot(d.matrix.a, d.matrix.b);
+    ctx.lineWidth = 2 * inv * (layout ? layout.dpr : 1);
+    ctx.setLineDash([6 * inv, 4 * inv]);
+    ctx.strokeStyle = cssColor("--fur");
+    ctx.strokeRect(d.rect[0], d.rect[1], d.rect[2], d.rect[3]);
+    ctx.setLineDash([]);
+  }
+  if (!state.joints && !sel.length) return;
+  for (const b of bones) {
+    if (b.name === "hips" || !(state.joints || b.name === state.part)) continue;
+    const p = visual.transformPoint(world[b.name].transformPoint(new DOMPoint(0, 0)));
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = b.name === state.part ? cssColor("--fur") : cssColor("--accent");
+    ctx.beginPath(); ctx.arc(p.x, p.y, (b.name === state.part ? 5 : 3.5) * layout.dpr, 0, Math.PI * 2); ctx.fill();
+  }
+}
+
+// ---- Customising: the 꾸미기 otter ----
+// Cut from the user's reference pictures (Tools/CustomOtter): untouched it is the 기본형 picture.
+// Head fur = a head cut from that fur's picture; expression = that head with eyes, nose and mouth
+// painted out ("-blank") under the expression sheet's face ("face-<id>"). The fur is tinted here, and
+// hats and accessories drawn, in the part's local rig px (x right, y down, origin at the joint;
+// CUSTOM: the head's crown and half width, the fur colour, the head fur list).
+const CUSTOM_RIG = "CustomOtter";
+const CUSTOM = DATA.rigs[CUSTOM_RIG] ? DATA.rigs[CUSTOM_RIG].custom : null;
+const isCustom = () => RK === CUSTOM_RIG;
+const INK = "#320a00", INK_W = 4.5, EYE_INK = "#2a0904";
+const FURS = [
+  ["base", "연한 갈색", CUSTOM ? CUSTOM.fur : [198, 140, 111]], ["sky", "하늘색", [150, 196, 228]], ["blue", "파란색", [78, 106, 186]],
+  ["white", "하얀색", [246, 244, 238]], ["cream", "크림 흰색", [246, 226, 194]], ["red", "붉은 갈색", [200, 96, 58]],
+  ["gold", "노란색(골든)", [240, 186, 76]], ["grey", "회색", [158, 156, 160]], ["dark", "짙은 갈색", [116, 74, 52]],
+];
+const FACES = [["basic", "기본"], ["smile", "웃음(눈 감음)"], ["excited", "신남(입 벌림)"], ["surprised", "놀람"], ["wink", "윙크"],
+  ["angry", "화남(삐짐)"], ["sleepy", "졸림"], ["sweat", "땀(당황)"], ["love", "하트(좋아함)"]];
+const MANES = CUSTOM ? CUSTOM.manes : [["basic", "기본형"]];
+const HAT_NAMES = [["none", "없음"], ["straw", "기본 모자"], ["toque", "요리사 모자"], ["cap", "야구 모자"], ["hardhat", "안전모"],
+  ["bandana", "두건"], ["safari", "탐험 모자"], ["wizard", "마법사 모자"], ["knight", "기사 투구"], ["beret", "베레모"],
+  ["nightcap", "수면 모자"], ["jester", "광대 모자"]];
+const ACCS = [["backpack", "가방"], ["scarf", "스카프"], ["leaf", "잎 장식"], ["flower", "꽃 장식"]];
+// Untouched: the 기본형 picture as drawn.
+const DEFAULT_LOOK = { fur: "base", face: "basic", mane: "basic", hat: "none", acc: {} };
+// The reference sheet's combinations.
+const PRESETS = [
+  ["기본형", { fur: "base", face: "basic", mane: "basic", hat: "straw", acc: { backpack: true } }],
+  ["요리사", { fur: "cream", face: "smile", mane: "round", hat: "toque", acc: {} }],
+  ["야구", { fur: "dark", face: "wink", mane: "swept", hat: "cap", acc: {} }],
+  ["모험가", { fur: "grey", face: "excited", mane: "messy", hat: "bandana", acc: { backpack: true, scarf: true } }],
+];
+const LOOK_KEY = "otter-look-v2";
+state.look = lookFrom(DEFAULT_LOOK);
+
+function lookFrom(obj) {
+  const pick = (list, v, fallback) => list.some(e => e[0] === v) ? v : fallback;
+  const o = obj || {};
+  const acc = {};
+  for (const [id] of ACCS) acc[id] = !!(o.acc && o.acc[id]);
+  return { fur: pick(FURS, o.fur, "base"), face: pick(FACES, o.face, "basic"), mane: pick(MANES, o.mane, "basic"),
+           hat: pick(HAT_NAMES, o.hat, "none"), acc };
+}
+function persistLook() { try { localStorage.setItem(LOOK_KEY, JSON.stringify(state.look)); } catch (e) { /* storage unavailable */ } }
+function restoreLook() {
+  try { const saved = localStorage.getItem(LOOK_KEY); if (saved) state.look = lookFrom(JSON.parse(saved)); } catch (e) { /* keep default */ }
+}
+function customJson() {
+  return JSON.stringify({ rig: CUSTOM_RIG, look: state.look, tuning: JSON.parse(tuningJson()) }, null, 2);
+}
+
+// Fur tint: each sprite's tint weight (0..1, how much of the pixel is fur or paw) mixes in the chosen
+// colour with the pixel's shading (its brightness relative to the picture's fur).
+const lum = (r, g, b) => r * .3 + g * .59 + b * .11;
+const FUR_LUM = CUSTOM ? CUSTOM.furLum : lum(198, 140, 111);
+const tintSource = {};
+function furRgb(id) { return (FURS.find(f => f[0] === id) || FURS[0])[2]; }
+function furCss(k) { const c = furRgb(state.look.fur).map(v => Math.round(v * (k || 1))); return `rgb(${c.join(",")})`; }
+
+function applyFur() {
+  if (!CUSTOM) return;
+  const target = furRgb(state.look.fur);
+  for (const [key, sprite] of Object.entries(DATA.rigs[CUSTOM_RIG].sprites)) {
+    const entry = images[CUSTOM_RIG + ":" + key], weight = images[CUSTOM_RIG + ":" + key + ":tint"];
+    if (!sprite.tint || !entry || !weight || !weight.alpha) continue;
+    let src = tintSource[key];
+    if (!src) {
+      const c = document.createElement("canvas");
+      c.width = entry.img.width; c.height = entry.img.height;
+      const g = c.getContext("2d");
+      g.drawImage(entry.img, 0, 0);
+      let data;
+      try { data = g.getImageData(0, 0, c.width, c.height); } catch (e) { continue; }
+      src = tintSource[key] = { data, weight: weight.alpha, canvas: c };
+    }
+    const out = new ImageData(new Uint8ClampedArray(src.data.data), src.data.width, src.data.height);
+    if (state.look.fur !== "base") {
+      const d = out.data, wt = src.weight;
+      for (let i = 0; i < d.length; i += 4) {
+        const w = wt[i] / 255;
+        if (!w) continue;
+        const k = lum(d[i], d[i + 1], d[i + 2]) / FUR_LUM;
+        d[i] += (target[0] * k - d[i]) * w; d[i + 1] += (target[1] * k - d[i + 1]) * w; d[i + 2] += (target[2] * k - d[i + 2]) * w;
+      }
+    }
+    src.canvas.getContext("2d").putImageData(out, 0, 0);
+    entry.img = src.canvas;
+  }
+}
+
+// Drawing helpers (rig px; the outline matches the parts' line art).
+function pen(width, colour) { ctx.strokeStyle = colour || INK; ctx.lineWidth = width; ctx.lineCap = "round"; ctx.lineJoin = "round"; }
+function shape(fill, draw, width) {
+  ctx.fillStyle = fill; pen(width === undefined ? INK_W : width);
+  ctx.beginPath(); draw(); ctx.fill(); if (width !== 0) ctx.stroke();
+}
+function line(colour, width, draw) { pen(width, colour); ctx.beginPath(); draw(); ctx.stroke(); }
+function dot(colour, x, y, r) { ctx.fillStyle = colour; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); }
+function star(x, y, r) {
+  for (let i = 0; i < 10; i++) {
+    const a = -Math.PI / 2 + i * Math.PI / 5, k = i % 2 ? r * .45 : r;
+    ctx[i ? "lineTo" : "moveTo"](x + Math.cos(a) * k, y + Math.sin(a) * k);
+  }
+  ctx.closePath();
+}
+function heart(x, y, s) {
+  ctx.moveTo(x, y + s * .9);
+  ctx.bezierCurveTo(x - s * 1.3, y, x - s * .7, y - s * .9, x, y - s * .3);
+  ctx.bezierCurveTo(x + s * .7, y - s * .9, x + s * 1.3, y, x, y + s * .9);
+  ctx.closePath();
+}
+
+// ---- Head fur and expressions (heads and faces are sprites cut from the pictures) ----
+function customHeadKey(rear, dozing) {
+  const mane = state.look.mane;
+  if (rear) return "rear-head-" + mane;
+  return "front-head-" + mane + (dozing || state.look.face !== "basic" ? "-blank" : "");
+}
+
+// ---- Hats ----
+// "top" / "band": where a leaf (on top) and a flower (on the side) go, below the crown in rig px.
+const HAT_PINS = { none: [0, 26], straw: [-55, 26], toque: [-100, 22], cap: [-14, 34], hardhat: [-24, 30], bandana: [-10, 30],
+  safari: [-32, 36], wizard: [-6, 36], knight: [-40, 44], beret: [-12, 20], nightcap: [-20, 32], jester: [-14, 28] };
+// The cast's hats (costumes.js) were drawn for the farmer's hatless head, 42 px below the waiter's
+// head; they are moved and scaled from that head (crown, half width) onto this one.
+const CAST_HAT_DROP = 42, FARMER_CROWN = [3, -131], FARMER_HALF = 107.5;
+const HATS = {
+  straw(h, rear) {
+    ctx.rotate(rear ? .05 : -.05);
+    const y = 46;
+    shape("#f2b33d", () => ctx.ellipse(0, y, h * 1.3, 26, 0, 0, Math.PI * 2));
+    shape("#f6c04e", () => { ctx.moveTo(-h * .74, y + 2); ctx.bezierCurveTo(-h * .8, -30, h * .8, -30, h * .74, y + 2); ctx.quadraticCurveTo(0, y + 14, -h * .74, y + 2); });
+    shape("#8a4a2c", () => { ctx.moveTo(-h * .76, y - 14); ctx.quadraticCurveTo(0, y - 2, h * .76, y - 14); ctx.lineTo(h * .74, y + 2); ctx.quadraticCurveTo(0, y + 14, -h * .74, y + 2); ctx.closePath(); }, 3.5);
+    shape("#f2b33d", () => { ctx.ellipse(0, y, h * 1.3, 26, 0, 0, Math.PI); ctx.ellipse(0, y + 2, h * .74, 12, 0, Math.PI, 0, true); ctx.closePath(); });
+  },
+  cap(h, rear) {
+    const visor = () => shape("#2c2e33", () => { ctx.moveTo(h * .3, 46); ctx.quadraticCurveTo(h * 1.2, 30, h * 1.34, 56); ctx.quadraticCurveTo(h * .9, 72, h * .3, 58); ctx.closePath(); });
+    if (rear) visor();
+    shape("#3b3e45", () => { ctx.moveTo(-h * .86, 50); ctx.bezierCurveTo(-h * .92, -26, h * .92, -26, h * .86, 50); ctx.quadraticCurveTo(0, 60, -h * .86, 50); });
+    line("rgba(255,255,255,.22)", 3, () => { ctx.moveTo(0, -8); ctx.quadraticCurveTo(h * .25, 20, h * .3, 54); ctx.moveTo(0, -8); ctx.quadraticCurveTo(-h * .3, 20, -h * .36, 54); });
+    shape("#4a4d55", () => ctx.arc(0, -9, 6, 0, Math.PI * 2), 3);
+    if (!rear) visor();
+  },
+  hardhat(h, rear) {
+    shape("#f3c330", () => { ctx.moveTo(-h * .9, 48); ctx.bezierCurveTo(-h * .94, -34, h * .94, -34, h * .9, 48); ctx.closePath(); });
+    shape("#f8d457", () => ctx.roundRect(-10, -16, 20, 62, 8), 3.5);
+    shape("#e2ac1f", () => ctx.roundRect(-h * 1.02, 40, h * 2.04, 18, 9));
+    if (!rear) { shape("#8f969c", () => ctx.arc(h * .44, 18, 17, 0, Math.PI * 2)); shape("#fff3b0", () => ctx.arc(h * .44, 18, 10, 0, Math.PI * 2), 3); }
+  },
+  bandana(h, rear) {
+    shape("#d8443b", () => { ctx.moveTo(-h * .94, 54); ctx.bezierCurveTo(-h, -28, h, -28, h * .94, 54); ctx.quadraticCurveTo(0, 34, -h * .94, 54); });
+    for (const [x, y] of [[-40, 10], [10, -2], [50, 20], [-10, 32], [-62, 38], [34, 42], [-30, -8]]) dot("#fbefe5", x, y, 5);
+    const kx = rear ? 0 : -h * .92, ky = rear ? 44 : 46;
+    shape("#d8443b", () => { ctx.moveTo(kx, ky); ctx.lineTo(kx - 30, ky + 26); ctx.lineTo(kx - 8, ky + 30); ctx.closePath(); }, 3.5);
+    shape("#d8443b", () => { ctx.moveTo(kx, ky); ctx.lineTo(kx - 4, ky + 42); ctx.lineTo(kx + 14, ky + 32); ctx.closePath(); }, 3.5);
+    shape("#c23a32", () => ctx.arc(kx, ky, 9, 0, Math.PI * 2), 3.5);
+  },
+  wizard(h, rear) {
+    if (rear) ctx.scale(-1, 1);
+    const y = 42;
+    shape("#5b3fb3", () => ctx.ellipse(0, y, h * 1.28, 24, 0, 0, Math.PI * 2));
+    shape("#6a4cc4", () => {
+      ctx.moveTo(-h * .66, y); ctx.bezierCurveTo(-h * .5, -40, -h * .2, -110, -h * .62, -150);
+      ctx.bezierCurveTo(-h * .02, -124, h * .36, -40, h * .66, y); ctx.quadraticCurveTo(0, y + 10, -h * .66, y);
+    });
+    shape("#f2c230", () => { ctx.moveTo(-h * .64, y - 12); ctx.quadraticCurveTo(0, y - 2, h * .64, y - 12); ctx.lineTo(h * .66, y); ctx.quadraticCurveTo(0, y + 10, -h * .66, y); ctx.closePath(); }, 3.5);
+    shape("#f6d55a", () => star(h * .16, -16, 16), 3);
+    shape("#5b3fb3", () => { ctx.ellipse(0, y, h * 1.28, 24, 0, 0, Math.PI); ctx.ellipse(0, y + 2, h * .66, 10, 0, Math.PI, 0, true); ctx.closePath(); });
+  },
+  knight(h, rear) {
+    shape("#d8443b", () => { ctx.moveTo(4, -12); ctx.bezierCurveTo(-30, -74, -104, -66, -128, -22); ctx.bezierCurveTo(-92, -44, -42, -36, 8, 0); ctx.closePath(); });
+    shape("#aab0b7", () => { ctx.moveTo(-h, 102); ctx.bezierCurveTo(-h * 1.1, -36, h * 1.1, -36, h, 102); ctx.quadraticCurveTo(0, 116, -h, 102); });
+    line("rgba(255,255,255,.4)", 6, () => { ctx.moveTo(-h * .6, 24); ctx.quadraticCurveTo(-h * .34, -4, -h * .04, -8); });
+    shape("#9aa1a8", () => ctx.roundRect(-9, -18, 18, 64, 8), 3.5);
+    if (!rear) {
+      shape("#8f969e", () => ctx.roundRect(-h * .12, 64, h * 1.06, 46, 12));
+      for (const y of [76, 88, 100]) line(INK, 3.5, () => { ctx.moveTo(-h * .02, y); ctx.lineTo(h * .84, y); });
+    }
+    for (const x of [-.82, -.5]) dot(INK, h * x, 96, 3.5);
+  },
+};
+function drawHat(hat, rear) {
+  const G = CUSTOM[rear ? "rear" : "front"];
+  ctx.save();
+  if (CAST_HATS[hat]) {
+    const k = G.half / FARMER_HALF;
+    ctx.translate(G.crown[0], G.crown[1]); ctx.scale(k, k); ctx.translate(-FARMER_CROWN[0], -FARMER_CROWN[1] + CAST_HAT_DROP);
+    CAST_HATS[hat](rear);
+  }
+  else if (HATS[hat]) { ctx.translate(G.crown[0], G.crown[1]); HATS[hat](G.half, rear); }
+  ctx.restore();
+}
+// The cast's hats, as costumes.js draws them on the farmer head (head space, before the drop).
+const CAST_HATS = {
+  toque() {
+    ctx.save(); ctx.translate(2, -146); ctx.rotate(.04); ctx.scale(.86, .86);
+    shape("#fdfbf6", () => {
+      ctx.moveTo(-62, 4); ctx.bezierCurveTo(-112, -6, -104, -86, -54, -78); ctx.bezierCurveTo(-48, -128, 22, -132, 30, -92);
+      ctx.bezierCurveTo(70, -116, 120, -70, 70, 4); ctx.closePath();
+    });
+    line("#e6e0d2", 5, () => { ctx.moveTo(-30, -60); ctx.quadraticCurveTo(-26, -30, -32, -6); ctx.moveTo(22, -70); ctx.quadraticCurveTo(28, -36, 24, -6); });
+    shape("#fdfbf6", () => ctx.roundRect(-72, -12, 148, 36, 14));
+    ctx.restore();
+  },
+  safari() {
+    ctx.save(); ctx.translate(2, -138); ctx.rotate(-.06);
+    shape("#e9b23a", () => ctx.ellipse(4, 14, 148, 40, 0, 0, Math.PI * 2));
+    shape("#f2be43", () => { ctx.moveTo(-96, 12); ctx.bezierCurveTo(-100, -78, 104, -84, 100, 6); ctx.quadraticCurveTo(0, 30, -96, 12); });
+    shape("#7a4526", () => { ctx.moveTo(-97, -6); ctx.quadraticCurveTo(0, 18, 99, -12); ctx.lineTo(100, 6); ctx.quadraticCurveTo(0, 32, -96, 12); ctx.closePath(); });
+    ctx.restore();
+  },
+  beret(rear) {
+    ctx.save(); ctx.translate(rear ? 10 : -14, -150); ctx.rotate(rear ? .16 : -.2);
+    shape("#2b2622", () => ctx.ellipse(0, 0, 92, 34, 0, 0, Math.PI * 2));
+    shape("#2b2622", () => { ctx.moveTo(-6, -30); ctx.quadraticCurveTo(2, -50, 12, -32); });
+    line("rgba(255,255,255,.16)", 6, () => ctx.ellipse(-16, -8, 58, 15, 0, Math.PI * 1.1, Math.PI * 1.6));
+    ctx.restore();
+  },
+  nightcap() {
+    ctx.save(); ctx.translate(-6, -144); ctx.rotate(-.1); ctx.scale(.9, .9);
+    shape("#6f9de0", () => {
+      ctx.moveTo(-96, 10); ctx.bezierCurveTo(-90, -70, 30, -96, 92, -44); ctx.bezierCurveTo(124, -20, 138, 24, 132, 78);
+      ctx.quadraticCurveTo(116, 34, 98, 8); ctx.closePath();
+    });
+    line("rgba(255,255,255,.28)", 6, () => { ctx.moveTo(-40, -40); ctx.quadraticCurveTo(30, -70, 88, -38); });
+    shape("#f6f3ec", () => ctx.roundRect(-104, -4, 210, 32, 16));
+    shape("#f6f3ec", () => ctx.arc(132, 88, 20, 0, Math.PI * 2));
+    ctx.restore();
+  },
+  jester(rear) {
+    ctx.save(); ctx.translate(0, -146); ctx.scale(rear ? -1 : 1, 1);
+    const bell = (x, y) => shape("#5d97cf", () => ctx.arc(x, y, 15, 0, Math.PI * 2), 4);
+    shape("#90ba54", () => { ctx.moveTo(-88, 2); ctx.bezierCurveTo(-110, -60, -120, -92, -112, -112); ctx.bezierCurveTo(-82, -82, -46, -50, -18, -6); ctx.closePath(); });
+    shape("#db4e48", () => { ctx.moveTo(-34, 0); ctx.bezierCurveTo(-40, -70, -10, -112, 24, -122); ctx.bezierCurveTo(40, -90, 48, -50, 40, -4); ctx.closePath(); });
+    shape("#db4e48", () => { ctx.moveTo(10, 0); ctx.bezierCurveTo(30, -76, 100, -96, 150, -58); ctx.bezierCurveTo(160, -48, 164, -30, 160, -16); ctx.bezierCurveTo(130, -44, 100, -40, 86, -2); ctx.closePath(); });
+    line("rgba(255,255,255,.25)", 6, () => { ctx.moveTo(-2, -60); ctx.quadraticCurveTo(10, -96, 22, -108); ctx.moveTo(50, -40); ctx.quadraticCurveTo(90, -70, 130, -60); });
+    bell(-112, -112); bell(24, -124); bell(160, -14);
+    shape("#ecc85c", () => ctx.roundRect(-98, -14, 196, 30, 14));
+    for (const x of [-60, -20, 20, 60]) shape("#db4e48", () => ctx.arc(x, 1, 5, 0, Math.PI * 2), 3);
+    ctx.restore();
+  },
+};
+
+// ---- Accessories ----
+function drawHeadDeco(rear) {
+  const G = CUSTOM[rear ? "rear" : "front"], [top, band] = HAT_PINS[state.look.hat] || HAT_PINS.none;
+  const cx = G.crown[0], cy = G.crown[1];
+  if (state.look.acc.leaf) {
+    const x = cx - 6, y = cy + top + 4;
+    line("#4f7d34", 4, () => { ctx.moveTo(x, y); ctx.quadraticCurveTo(x - 2, y - 10, x + 2, y - 18); });
+    shape("#74b04c", () => ctx.ellipse(x - 10, y - 20, 11, 6, -.5, 0, Math.PI * 2), 3);
+    shape("#86c25a", () => ctx.ellipse(x + 13, y - 23, 12, 6.5, .45, 0, Math.PI * 2), 3);
+  }
+  if (state.look.acc.flower) {
+    const x = cx + (rear ? -1 : 1) * G.half * .62, y = cy + band;
+    for (let i = 0; i < 5; i++) {
+      const a = -Math.PI / 2 + i * Math.PI * 2 / 5;
+      shape("#fffdf6", () => ctx.arc(x + Math.cos(a) * 9, y + Math.sin(a) * 9, 7.5, 0, Math.PI * 2), 2.6);
+    }
+    shape("#f2c230", () => ctx.arc(x, y, 6, 0, Math.PI * 2), 2.6);
+  }
+}
+// A neckerchief under the chin (body space; the head, drawn over it, hides the knot).
+function drawScarf(rear, headPos) {
+  const x = headPos[0] + 4, y = headPos[1] + 14;
+  if (rear) {
+    shape("#d8443b", () => { ctx.moveTo(x - 50, y - 4); ctx.quadraticCurveTo(x, y + 12, x + 50, y - 4); ctx.lineTo(x, y + 46); ctx.closePath(); });
+  } else {
+    shape("#d8443b", () => {
+      ctx.moveTo(x - 54, y - 2); ctx.quadraticCurveTo(x, y + 18, x + 52, y - 4); ctx.lineTo(x + 46, y + 10);
+      ctx.quadraticCurveTo(x + 22, y + 32, x + 4, y + 50); ctx.quadraticCurveTo(x - 22, y + 28, x - 54, y + 12); ctx.closePath();
+    });
+  }
+  for (const [dx, dy] of [[-24, 10], [8, 18], [28, 8], [2, 34]]) dot("#fbefe5", x + dx, y + dy, 3.6);
+}
+
+// Items for the render list: drawn in the part's space (it.in) at its layer, just above the part.
+function pushCustom(items, world, f, view, sb, nod, bones) {
+  const look = state.look;
+  const bone = name => bones.find(b => b.name === name);
+  const scaled = name => { const t = tuningOf(view, name); return world[name].scale(t.scaleX, t.scaleY); };
+  const head = scaled("head"), H = bone("head").layer;
+  const dozing = state.motion === "sit" && sb > .5 && (nod < BLINK_FROM || nod >= BLINK_TO);
+  const face = dozing ? "sleepy" : look.face;
+  if (!f.rear && face !== "basic") items.push({ order: H + .1, part: null, key: "face-" + face, matrix: head, seq: items.length });
+  if (look.hat !== "none") items.push({ order: H + .3, seq: items.length, in: head, paint: () => drawHat(look.hat, f.rear) });
+  if (look.acc.leaf || look.acc.flower) items.push({ order: H + .4, seq: items.length, in: head, paint: () => drawHeadDeco(f.rear) });
+  if (look.acc.scarf) items.push({ order: bone("body").layer + .5, seq: items.length, in: world.body, paint: () => drawScarf(f.rear, bone("head").pos) });
+}
+
+// ---- 꾸미기 panel ----
+function chips(id, list, current, onPick, swatches) {
+  const el = document.getElementById(id);
+  if (!el.childElementCount) {
+    for (const [value, label, rgb] of list) {
+      const b = document.createElement("button");
+      b.type = "button"; b.dataset.value = value;
+      b.innerHTML = (swatches ? `<span class="sw" style="background:rgb(${rgb.join(",")})"></span>` : "") + `<span>${label}</span>`;
+      b.addEventListener("click", () => { onPick(value); persistLook(); syncFields(); });
+      el.appendChild(b);
+    }
+  }
+  for (const b of el.children) b.setAttribute("aria-pressed", current(b.dataset.value) ? "true" : "false");
+}
+function syncCustom() {
+  document.getElementById("custom").hidden = !isCustom();
+  if (!CUSTOM) return;
+  const look = state.look;
+  chips("presets", PRESETS.map(([name]) => [name, name]), name => {
+    const p = PRESETS.find(e => e[0] === name)[1];
+    return lookFrom(p).fur === look.fur && p.face === look.face && p.mane === look.mane && p.hat === look.hat;
+  }, name => { state.look = lookFrom(PRESETS.find(e => e[0] === name)[1]); applyFur(); });
+  chips("furs", FURS, v => v === look.fur, v => { look.fur = v; applyFur(); }, true);
+  chips("faces", FACES, v => v === look.face, v => { look.face = v; });
+  chips("manes", MANES, v => v === look.mane, v => { look.mane = v; });
+  chips("hats", HAT_NAMES, v => v === look.hat, v => { look.hat = v; });
+  chips("accs", ACCS, v => look.acc[v], v => { look.acc[v] = !look.acc[v]; });
+}
+document.getElementById("resetLook").addEventListener("click", () => {
+  state.look = lookFrom(DEFAULT_LOOK); applyFur(); persistLook(); syncFields();
+  status("꾸미기를 처음으로 돌렸어요.");
+});
+
+// ---- Picking and dragging ----
+function hitTest(px, py) {
+  for (let i = drawn.length - 1; i >= 0; i--) {
+    const d = drawn[i];
+    const local = d.matrix.inverse().transformPoint(new DOMPoint(px, py));
+    const [x, y, w, h] = d.rect;
+    if (local.x < x || local.y < y || local.x > x + w || local.y > y + h) continue;
+    const picture = image(d.key);
+    if (!picture || !picture.alpha) return d.part;
+    const ix = Math.floor((local.x - x) / w * picture.img.width), iy = Math.floor((local.y - y) / h * picture.img.height);
+    if (picture.alpha[(iy * picture.img.width + ix) * 4 + 3] > 40) return d.part;
+  }
+  return null;
+}
+
+let drag = null;
+canvas.addEventListener("pointerdown", e => {
+  const dpr = canvas.width / canvas.getBoundingClientRect().width;
+  const r = canvas.getBoundingClientRect();
+  const px = (e.clientX - r.left) * dpr, py = (e.clientY - r.top) * dpr;
+  const part = hitTest(px, py);
+  if (!part) return;
+  selectPart(part);
+  const f = facing();
+  drag = { px, py, part, view: f.rear ? "rear" : "front", start: tuningOf(f.rear ? "rear" : "front", part) };
+  canvas.setPointerCapture(e.pointerId);
+  canvas.classList.add("grabbing");
+});
+canvas.addEventListener("pointermove", e => {
+  const dpr = canvas.width / canvas.getBoundingClientRect().width;
+  const r = canvas.getBoundingClientRect();
+  const px = (e.clientX - r.left) * dpr, py = (e.clientY - r.top) * dpr;
+  if (!drag) { canvas.classList.toggle("grab", !!hitTest(px, py)); return; }
+  // Screen delta -> the part's parent space (rig px, y down), where the offset applies.
+  const f = facing();
+  const s = layout.unit * CHARACTER_SCALE / 100;
+  let dx = (px - drag.px) / s * (f.left ? -1 : 1), dy = (py - drag.py) / s;
+  const bone = (f.rear ? RIG.rearBones : RIG.bones).find(b => b.name === drag.part);
+  if (!isLeg(bone.name) && bone.parent) {
+    const parentAngle = parentRotation(bone, f.rear);
+    const c = Math.cos(-parentAngle), si = Math.sin(-parentAngle);
+    [dx, dy] = [dx * c - dy * si, dx * si + dy * c];
+  }
+  const t = Object.assign({}, drag.start, { x: round(drag.start.x + dx, .5), y: round(drag.start.y + dy, .5) });
+  setTuning(drag.view, drag.part, t);
+  syncFields();
+});
+function endDrag() { drag = null; canvas.classList.remove("grabbing"); }
+canvas.addEventListener("pointerup", endDrag);
+canvas.addEventListener("pointercancel", endDrag);
+
+function parentRotation(bone, rear) {
+  const { poses } = poseView(rear);
+  const bones = rear ? RIG.rearBones : RIG.bones;
+  let angle = 0, b = bones.find(x => x.name === bone.parent);
+  while (b) { angle += poses[b.name].rot; b = b.parent ? bones.find(x => x.name === b.parent) : null; }
+  return angle;
+}
+
+// ---- Panel ----
+const partsEl = document.getElementById("parts");
+const FIELDS = [
+  { key: "x", toUi: v => v, fromUi: v => v },
+  { key: "y", toUi: v => v, fromUi: v => v },
+  { key: "rotation", toUi: v => v, fromUi: v => v },
+  { key: "scaleX", toUi: v => Math.round(v * 100), fromUi: v => v / 100 },
+  { key: "scaleY", toUi: v => Math.round(v * 100), fromUi: v => v / 100 },
+];
+
+function buildRigButtons() {
+  const el = document.getElementById("rigs");
+  for (const [rk, r] of Object.entries(DATA.rigs)) {
+    const b = document.createElement("button");
+    b.type = "button"; b.dataset.rig = rk; b.textContent = r.label;
+    b.addEventListener("click", () => { useRig(rk); buildParts(); syncFields(); });
+    el.appendChild(b);
+  }
+}
+
+function buildParts() {
+  partsEl.innerHTML = "";
+  const has = new Set(RIG.bones.map(b => b.name));
+  if (!has.has(state.part)) state.part = "head";
+  for (const part of PART_ORDER.filter(p => has.has(p))) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.dataset.part = part;
+    btn.id = "part-" + part;
+    btn.innerHTML = `<span>${PART_NAMES[part]}</span><span class="dot" title="바뀜"></span>`;
+    btn.addEventListener("click", () => selectPart(part));
+    partsEl.appendChild(btn);
+  }
+}
+function selectPart(part) { state.part = part; syncFields(); }
+
+function syncFields() {
+  const f = facing();
+  state.view = f.rear ? "rear" : "front";
+  const t = tuningOf(state.view, state.part);
+  for (const field of FIELDS) {
+    const value = field.toUi(t[field.key]);
+    const range = document.getElementById("r-" + field.key), box = document.getElementById("f-" + field.key);
+    range.value = value;
+    if (document.activeElement !== box) box.value = +(+value).toFixed(2);
+    box.classList.toggle("changed", t[field.key] !== DEFAULT_TUNING[field.key]);
+  }
+  for (const btn of partsEl.querySelectorAll("button")) {
+    btn.setAttribute("aria-pressed", btn.dataset.part === state.part ? "true" : "false");
+    btn.querySelector(".dot").hidden = !state.tuning[RK][state.view][btn.dataset.part];
+  }
+  const label = f.rear ? "뒷모습" : "앞모습";
+  document.getElementById("viewTag").textContent = label;
+  document.getElementById("stageLabel").textContent = `LIVE RIG · ${label}${f.left ? " (뒤집음)" : ""}`;
+  const note = state.motion === "harvest" || state.motion === "sit" ? "이 동작은 늘 앞모습이에요"
+    : state.motion === "kick" ? "광장에서 축구공과 놀 때의 동작이에요"
+    : state.motion === "puzzle" ? "광장에서 퍼즐과 놀 때의 동작이에요"
+    : state.motion === "fish" ? "뱃사람만 하는 낚시예요 (낚싯대가 있는 해달만)"
+    : state.motion === "build" ? (SPR.sledge ? "작업반장은 오함마로 내리쳐요" : "야구 해달은 망치로 두드려요")
+    : state.motion === "mine" ? "광부만 하는 광질이에요 (곡괭이로 바위를 깨요)"
+    : isCustom() ? "오른쪽 꾸미기에서 털 색·표정·모자를 골라요" : "부위를 눌러 고르고, 끌어서 옮겨요";
+  document.getElementById("stageNote").textContent = note;
+  document.getElementById("json").value = exportJson();
+  syncCustom();
+  // Fishing needs a rod: only rigs that have one (the sailor) get the button.
+  const fishButton = document.getElementById("motion-fish");
+  fishButton.disabled = !SPR.rod;
+  fishButton.title = SPR.rod ? "" : "낚싯대가 있는 해달(뱃사람)만 낚시를 해요";
+  if (!SPR.rod && state.motion === "fish") { state.motion = "idle"; pressGroup("motions", "motion", "idle"); }
+  // Building needs a hammer: only the mechanic.
+  const buildButton = document.getElementById("motion-build");
+  const canBuild = !!(SPR.hammer || SPR.sledge);
+  buildButton.disabled = !canBuild;
+  buildButton.title = canBuild ? "" : "망치를 가진 해달(야구 해달, 작업반장)만 건축을 해요";
+  if (!canBuild && state.motion === "build") { state.motion = "idle"; pressGroup("motions", "motion", "idle"); }
+  // Mining needs a rock to break: only the miner.
+  const mineButton = document.getElementById("motion-mine");
+  mineButton.disabled = !SPR.rock_0;
+  mineButton.title = SPR.rock_0 ? "" : "곡괭이를 든 해달(광부)만 광질을 해요";
+  if (!SPR.rock_0 && state.motion === "mine") { state.motion = "idle"; pressGroup("motions", "motion", "idle"); }
+  document.getElementById("unityPath").textContent = isCustom() ? "꾸미기 해달은 아직 Unity에 없어요. 꾸미기 JSON을 저장해 두세요." : `Assets/Resources/${RK}/tuning.json`;
+  document.getElementById("save").textContent = isCustom() ? "꾸미기 JSON 저장" : "tuning.json 저장";
+  for (const b of document.querySelectorAll("#rigs button")) b.setAttribute("aria-pressed", b.dataset.rig === RK ? "true" : "false");
+}
+
+for (const field of FIELDS) {
+  const range = document.getElementById("r-" + field.key), box = document.getElementById("f-" + field.key);
+  const apply = raw => {
+    const v = Number(raw);
+    if (!Number.isFinite(v)) return;
+    const t = tuningOf(state.view, state.part);
+    t[field.key] = field.fromUi(v);
+    setTuning(state.view, state.part, t);
+    syncFields();
+  };
+  range.addEventListener("input", () => apply(range.value));
+  box.addEventListener("change", () => apply(box.value));
+}
+
+document.getElementById("resetPart").addEventListener("click", () => {
+  setTuning(state.view, state.part, Object.assign({}, DEFAULT_TUNING));
+  syncFields();
+  status(`${PART_NAMES[state.part]}를 처음 값으로 되돌렸어요.`);
+});
+document.getElementById("resetAll").addEventListener("click", () => { document.getElementById("confirmAll").hidden = false; });
+document.getElementById("confirmNo").addEventListener("click", () => { document.getElementById("confirmAll").hidden = true; });
+document.getElementById("confirmYes").addEventListener("click", () => {
+  state.tuning[RK] = { front: {}, rear: {} };
+  persist();
+  document.getElementById("confirmAll").hidden = true;
+  syncFields();
+  status(`${DATA.rigs[RK].label}의 모든 부위를 처음 값으로 되돌렸어요.`);
+});
+
+// The 꾸미기 otter exports its look with its tuning; the others their tuning.json.
+function exportJson() { return isCustom() ? customJson() : tuningJson(); }
+function exportName() { return isCustom() ? "otter-look.json" : "tuning.json"; }
+
+function status(text, error) {
+  const el = document.getElementById("status");
+  el.textContent = text;
+  el.classList.toggle("error", !!error);
+}
+
+document.getElementById("save").addEventListener("click", async () => {
+  const text = exportJson();
+  if (window.showSaveFilePicker) {
+    try {
+      const handle = await window.showSaveFilePicker({ suggestedName: exportName(), types: [{ description: "JSON", accept: { "application/json": [".json"] } }] });
+      const writable = await handle.createWritable();
+      await writable.write(text);
+      await writable.close();
+      status(`저장했어요: ${handle.name}. Unity에서 Play를 누르면 적용돼요.`);
+      return;
+    } catch (e) {
+      if (e && e.name === "AbortError") { status("저장을 취소했어요."); return; }
+    }
+  }
+  try {
+    const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url; link.download = exportName();
+    document.body.appendChild(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    status("tuning.json을 내려받았어요. 위 경로로 옮겨 주세요. (안 받아졌다면 JSON 복사를 써 주세요)");
+  } catch (e) {
+    status("이 화면에서는 파일을 저장할 수 없어요. JSON 복사로 붙여 넣어 주세요.", true);
+  }
+});
+document.getElementById("copy").addEventListener("click", () => {
+  const text = exportJson();
+  const box = document.getElementById("json");
+  navigator.clipboard.writeText(text).then(
+    () => status(isCustom() ? "꾸미기 JSON을 복사했어요." : "JSON을 복사했어요. tuning.json에 붙여 넣으면 돼요."),
+    () => { box.focus(); box.select(); status("복사가 막혀 있어요. 선택된 글을 Ctrl+C로 복사해 주세요.", true); });
+});
+document.getElementById("load").addEventListener("click", () => document.getElementById("file").click());
+document.getElementById("file").addEventListener("change", e => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const obj = JSON.parse(reader.result);
+      if (obj && obj.look) {
+        if (!isCustom()) { useRig(CUSTOM_RIG); buildParts(); }
+        state.look = lookFrom(obj.look); applyFur(); persistLook();
+        loadTuningJson(obj.tuning);
+      } else loadTuningJson(obj);
+      persist();
+      syncFields();
+      status(`불러왔어요: ${file.name}`);
+    } catch (err) {
+      status("JSON을 읽지 못했어요. 이 작업대나 Unity의 tuning.json 형식인지 확인해 주세요.", true);
+    }
+    e.target.value = "";
+  };
+  reader.readAsText(file);
+});
+
+// ---- Toolbar ----
+function pressGroup(group, attr, value) {
+  for (const b of document.querySelectorAll(`#${group} button`)) b.setAttribute("aria-pressed", b.dataset[attr] === value ? "true" : "false");
+}
+document.getElementById("dirs").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  state.dir = b.dataset.dir; pressGroup("dirs", "dir", state.dir); syncFields();
+});
+document.getElementById("motions").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  state.motion = b.dataset.motion; pressGroup("motions", "motion", state.motion); syncFields();
+});
+const playBtn = document.getElementById("play");
+playBtn.addEventListener("click", () => {
+  state.playing = !state.playing;
+  playBtn.textContent = state.playing ? "일시정지" : "재생";
+  playBtn.setAttribute("aria-pressed", state.playing ? "false" : "true");
+});
+const speedEl = document.getElementById("speed"), zoomEl = document.getElementById("zoom");
+speedEl.addEventListener("input", () => { state.speed = +speedEl.value; document.getElementById("speedOut").textContent = state.speed.toFixed(2) + "×"; });
+zoomEl.addEventListener("input", () => { state.zoom = +zoomEl.value; document.getElementById("zoomOut").textContent = state.zoom.toFixed(2) + "×"; });
+document.getElementById("joints").addEventListener("change", e => { state.joints = e.target.checked; });
+
+// ---- Loop ----
+let last = performance.now();
+function frame(now) {
+  const dt = Math.min(.05, (now - last) / 1000);
+  last = now;
+  if (state.playing) step(dt * state.speed);
+  render();
+  requestAnimationFrame(frame);
+}
+
+(async function start() {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    state.playing = false; playBtn.textContent = "재생"; playBtn.setAttribute("aria-pressed", "true");
+  }
+  await Promise.all([
+    ...Object.entries(DATA.rigs).flatMap(([rk, r]) => Object.entries(r.sprites).map(([k, s]) => loadImage(rk + ":" + k, s.src))),
+    ...Object.entries(DATA.rigs).flatMap(([rk, r]) => Object.entries(r.sprites).filter(([, s]) => s.tint).map(([k, s]) => loadImage(rk + ":" + k + ":tint", s.tint))),
+    ...Object.entries(DATA.shared).map(([k, s]) => loadImage("shared:" + k, s.src)),
+    loadImage("shared:bench", DATA.bench.src),
+  ]);
+  if (!CAN_SAVE_FILES) {
+    document.getElementById("save").hidden = true;
+    document.getElementById("copy").classList.add("primary");
+    document.querySelector(".unity p").textContent = "이 페이지에서는 파일을 저장할 수 없어요. JSON 복사 후 아래 경로에 tuning.json으로 붙여 넣으면 다음에 Unity가 리그를 만들 때 적용돼요.";
+  }
+  buildRigButtons();
+  restoreLook();
+  applyFur();
+  const restored = restore();
+  buildParts();
+  syncFields();
+  if (restored) status(restored);
+  resize();
+  window.addEventListener("resize", resize);
+  requestAnimationFrame(frame);
+})();
+</script>

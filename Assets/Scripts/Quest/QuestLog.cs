@@ -1,0 +1,244 @@
+﻿using System;
+using System.Collections.Generic;
+
+public enum QuestStatus
+{
+    InProgress, // 진행 중
+    Claimable,  // 목표 달성, 보상 받기 전
+    Claimed,    // 보상까지 받음
+}
+
+/// <summary>퀘스트 하나의 진행 기록 (세이브와 같은 단위)</summary>
+public readonly struct QuestRecord
+{
+    public readonly int Progress;
+    public readonly bool Claimed;
+    /// <summary>보상을 받은 순간의 왕국 레벨 (0 = 모름: 안 받았거나 이 값이 생기기 전 세이브)</summary>
+    public readonly int ClaimedLevel;
+
+    public QuestRecord(int progress, bool claimed, int claimedLevel = 0)
+    {
+        Progress = progress;
+        Claimed = claimed;
+        ClaimedLevel = claimed ? claimedLevel : 0;
+    }
+}
+
+/// <summary>
+/// 퀘스트 진행 모델 (순수 C#). 퀘스트 ID별 진행 수치와 보상 수령 여부만 가진다. UI, 재화, 세이브 형식을 모른다.
+/// </summary>
+public class QuestLog
+{
+    /// <summary>진행 수치가 오르거나 보상을 받았을 때 (여러 개가 한꺼번에 바뀌면 null — 일일 초기화)</summary>
+    public event Action<QuestDefinition> OnChanged;
+
+    // 세이브와 같은 ID 기준. DB에서 지워진 퀘스트의 기록도 그대로 보관해 다음 저장 때 잃지 않음
+    private readonly Dictionary<string, QuestRecord> _records = new Dictionary<string, QuestRecord>();
+
+    public IReadOnlyDictionary<string, QuestRecord> Records => _records;
+
+    /// <summary>일일 퀘스트를 마지막으로 초기화한 날 (0 = 아직 없음). 날이 바뀌면 QuestManager가 초기화한다</summary>
+    public int DailyDay { get; private set; }
+
+    /// <summary>레벨별 메인 체인을 이 기록에 맞췄는지 (메인 체인이 생기기 전 세이브는 false → QuestManager가 한 번 맞춤)</summary>
+    public bool MainChainReady => MainChainVersion > 0;
+
+    /// <summary>
+    /// 메인 체인을 맞춘 표의 판 (0 = 옛 세이브, 1 = 레벨별 메인, 2 = 밭을 Lv.10으로 옮긴 표).
+    /// 판이 오르면 QuestManager가 지나온 레벨의 새 메인을 한 번 넘긴다
+    /// </summary>
+    public int MainChainVersion { get; private set; }
+
+    public void MarkMainChainReady(int version = 1) => MainChainVersion = System.Math.Max(MainChainVersion, version);
+
+    // 가 본 장소 (씬 이름). 장소 가 보기 퀘스트가 열리기 전에 다녀왔어도 기록으로 세려고 남김
+    private readonly HashSet<string> _visitedZones = new HashSet<string>();
+
+    public IReadOnlyCollection<string> VisitedZones => _visitedZones;
+
+    /// <returns>처음 가 본 장소면 true</returns>
+    public bool MarkVisited(string sceneName) => !string.IsNullOrEmpty(sceneName) && _visitedZones.Add(sceneName);
+
+    public bool HasVisited(string sceneName) => !string.IsNullOrEmpty(sceneName) && _visitedZones.Contains(sceneName);
+
+    // 넘친 진행: 목표를 넘겨 센 만큼(보상을 받기 전에 더 한 것도) 같은 종류의 다음 퀘스트로 넘김.
+    // 키 = QuestProgressRules.CarryKey (메인 · 도전의 이벤트로 세는 목표만). 예: 업그레이드 2회인데 3번 하면 다음 업그레이드 퀘스트가 1부터
+    private readonly Dictionary<string, int> _carry = new Dictionary<string, int>();
+
+    public IReadOnlyDictionary<string, int> Carry => _carry;
+
+    /// <returns>진행 수치 (목표를 넘지 않음)</returns>
+    public int GetProgress(QuestDefinition quest)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+
+        return Math.Min(GetRecord(quest).Progress, quest.Goal);
+    }
+
+    public QuestStatus GetStatus(QuestDefinition quest)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+
+        var record = GetRecord(quest);
+        if (record.Claimed)
+            return QuestStatus.Claimed;
+
+        return record.Progress >= quest.Goal ? QuestStatus.Claimable : QuestStatus.InProgress;
+    }
+
+    /// <summary>진행 수치를 올린다. 목표에서 멈추고, 이미 달성했거나 보상을 받은 퀘스트는 그대로.</summary>
+    /// <returns>수치가 바뀌었으면 true</returns>
+    public bool AddProgress(QuestDefinition quest, int amount)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+        if (amount < 0)
+            throw new ArgumentOutOfRangeException(nameof(amount), "진행 수치는 줄일 수 없습니다.");
+
+        if (amount == 0)
+            return false;
+        var status = GetStatus(quest);
+        string carryKey = QuestProgressRules.CarryKey(quest);
+        // 다 채우고 아직 안 받은 퀘스트에 더 들어온 것은 다음 퀘스트 몫
+        if (status == QuestStatus.Claimable && carryKey != null)
+            AddCarry(carryKey, amount);
+        if (status != QuestStatus.InProgress)
+            return false;
+
+        var record = GetRecord(quest);
+        long total = (long)record.Progress + amount;
+        int progress = (int)Math.Min(total, quest.Goal);
+        if (total > progress && carryKey != null)
+            AddCarry(carryKey, (int)Math.Min(total - progress, int.MaxValue));
+        _records[quest.QuestId] = new QuestRecord(progress, false);
+        OnChanged?.Invoke(quest);
+        return true;
+    }
+
+    /// <summary>
+    /// 처음 열린(기록이 없는) 퀘스트에 같은 종류의 넘친 진행을 넣는다. 다 쓰지 못한 것은 그다음 퀘스트 몫으로 남는다.
+    /// QuestManager가 퀘스트가 열릴 때(보상 받기 · 레벨업 · 불러오기) 부른다
+    /// </summary>
+    /// <returns>진행이 바뀌었으면 true</returns>
+    public bool TakeCarry(QuestDefinition quest)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+        string key = QuestProgressRules.CarryKey(quest);
+        if (key == null || _records.ContainsKey(quest.QuestId) || !_carry.TryGetValue(key, out int carry) || carry <= 0)
+            return false;
+
+        int used = Math.Min(carry, quest.Goal);
+        if (carry - used > 0)
+            _carry[key] = carry - used;
+        else
+            _carry.Remove(key);
+        _records[quest.QuestId] = new QuestRecord(used, false);
+        OnChanged?.Invoke(quest);
+        return true;
+    }
+
+    /// <summary>세이브 복원용</summary>
+    public void LoadCarry(string key, int amount)
+    {
+        if (!string.IsNullOrEmpty(key) && amount > 0)
+            _carry[key] = amount;
+    }
+
+    private void AddCarry(string key, int amount)
+    {
+        _carry.TryGetValue(key, out int carry);
+        _carry[key] = (int)Math.Min((long)carry + amount, int.MaxValue);
+    }
+
+    /// <summary>
+    /// 저장된 기록으로 다시 센 값으로 진행을 맞춘다 (만난 해달, 다 지은 건물). 같은 기록을 두 번 세지 않도록 더하지 않고,
+    /// 줄이지도 않으며, 이미 달성했거나 받은 퀘스트는 그대로.
+    /// </summary>
+    /// <returns>수치가 바뀌었으면 true</returns>
+    public bool SetProgressAtLeast(QuestDefinition quest, int value)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+        if (GetStatus(quest) != QuestStatus.InProgress)
+            return false;
+
+        var record = GetRecord(quest);
+        int progress = Math.Min(Math.Max(0, value), quest.Goal);
+        if (progress <= record.Progress)
+            return false;
+        _records[quest.QuestId] = new QuestRecord(progress, false);
+        OnChanged?.Invoke(quest);
+        return true;
+    }
+
+    /// <summary>보상 받음으로 표시. 목표를 달성했고 아직 받지 않았을 때만.</summary>
+    /// <param name="level">받는 순간의 왕국 레벨 (목록에서 "이번 레벨에 받은 퀘스트"를 가려내는 데 씀)</param>
+    /// <returns>받음으로 바뀌었으면 true (보상 지급은 호출한 쪽이 한다)</returns>
+    public bool TryClaim(QuestDefinition quest, int level = 0)
+    {
+        if (GetStatus(quest) != QuestStatus.Claimable)
+            return false;
+
+        _records[quest.QuestId] = new QuestRecord(GetProgress(quest), true, Math.Max(0, level));
+        OnChanged?.Invoke(quest);
+        return true;
+    }
+
+    /// <returns>보상을 받은 순간의 왕국 레벨 (0 = 안 받았거나 모름)</returns>
+    public int GetClaimedLevel(QuestDefinition quest)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+
+        return GetRecord(quest).ClaimedLevel;
+    }
+
+    /// <summary>세이브 복원용. 알림 없이 기록을 넣는다.</summary>
+    public void LoadRecord(string questId, int progress, bool claimed, int claimedLevel = 0)
+    {
+        if (string.IsNullOrEmpty(questId))
+            throw new ArgumentException("questId가 비어 있습니다.", nameof(questId));
+
+        _records[questId] = new QuestRecord(Math.Max(0, progress), claimed, Math.Max(0, claimedLevel));
+    }
+
+    /// <summary>이 퀘스트들의 진행·수령 기록을 지운다 (일일 초기화). 알림은 한 번만</summary>
+    public void Reset(IEnumerable<QuestDefinition> quests, int day)
+    {
+        if (quests == null)
+            throw new ArgumentNullException(nameof(quests));
+
+        foreach (var quest in quests)
+        {
+            if (quest != null)
+                _records.Remove(quest.QuestId);
+        }
+        DailyDay = day;
+        OnChanged?.Invoke(null);
+    }
+
+    /// <summary>세이브 복원용</summary>
+    public void LoadDailyDay(int day) => DailyDay = Math.Max(0, day);
+
+    public int Count(IEnumerable<QuestDefinition> quests, QuestStatus status)
+    {
+        if (quests == null)
+            throw new ArgumentNullException(nameof(quests));
+
+        int count = 0;
+        foreach (var quest in quests)
+        {
+            if (quest != null && GetStatus(quest) == status)
+                count++;
+        }
+        return count;
+    }
+
+    private QuestRecord GetRecord(QuestDefinition quest)
+    {
+        return _records.TryGetValue(quest.QuestId, out var record) ? record : default;
+    }
+}

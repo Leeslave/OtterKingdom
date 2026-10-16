@@ -1,0 +1,54 @@
+// Code-drawn fitting samples and user PNG layers. No changes to source body art.
+const outfitKey='otter-starter-outfit-v1';
+const outfitDefaults=()=>({hat:{mode:'off',color:'#859e78',x:0,y:0,width:100,height:100,rotation:0,png:null},top:{mode:'off',color:'#7f9b88',x:0,y:0,width:100,height:100,rotation:0,png:null},bottom:{mode:'off',color:'#6b859e',x:0,y:0,width:100,height:100,rotation:0,png:null}});
+let outfit=outfitDefaults(),outfitImages={};
+const clothes=document.createElement('section');clothes.id='wardrobe';
+clothes.innerHTML=`<h2>옷 입혀보기</h2><p class="note">간단한 샘플을 입히거나 투명 PNG를 넣어보세요. 착용물은 몸의 움직임을 따라가요.</p><label for="outfitPart">착용 부위</label><select id="outfitPart"><option value="hat">모자</option><option value="top">상의 · 조끼</option><option value="bottom">하의</option></select><label for="outfitMode">종류</label><select id="outfitMode"><option value="off">벗기</option><option value="sample">기본 샘플</option><option value="custom">내 PNG</option></select><label>샘플 색상 <input id="outfitColor" type="color" value="#859e78"></label><div class="buttons"><button id="uploadOutfit">투명 PNG 넣기</button><button id="clearOutfit">이 부위 초기화</button></div><input id="outfitFile" type="file" accept="image/png" hidden><div id="outfitFields"></div><p id="outfitGuide" class="note"></p><div class="buttons"><button id="sampleAll">샘플 모두 입기</button><button id="offAll">모두 벗기</button><button id="exportOutfit">몸·의상 저장</button><button id="importOutfit">몸·의상 불러오기</button></div><input id="outfitJson" type="file" accept=".json,application/json" hidden><p id="outfitMessage" class="note" role="status">샘플은 착용 위치 확인용입니다.</p><hr>`;
+document.querySelector('aside').prepend(clothes);
+const clothesStyle=document.createElement('style');clothesStyle.textContent=`#wardrobe select{width:100%;padding:9px;border:1px solid #d4dccc;border-radius:8px;background:#fffef9;color:inherit;font:inherit}#wardrobe label{margin:12px 0 6px}#wardrobe .buttons{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}#wardrobe button{font-size:12px;padding:9px}#wardrobe input[type=color]{vertical-align:middle;width:46px;height:28px;border:0}#wardrobe input[type=number]{width:70px;padding:5px;border:1px solid #d4dccc;border-radius:6px}#wardrobe .outfit-value{display:flex;gap:8px;align-items:center}#wardrobe input[type=range]{flex:1;min-width:30px;width:0;margin:0}aside{max-height:calc(100vh - 36px);overflow-y:auto;position:sticky;top:18px}@media(max-width:760px){aside{max-height:none;position:static}}`;document.head.append(clothesStyle);
+const outfitMsg=t=>document.getElementById('outfitMessage').textContent=t;
+const outfitSpecs={x:['좌우 위치',-150,150,'px'],y:['상하 위치',-150,150,'px'],width:['가로 크기',25,220,'%'],height:['세로 크기',25,220,'%'],rotation:['기울기',-90,90,'°']};
+function saveOutfit(){try{localStorage.setItem(outfitKey,JSON.stringify(outfit));outfitMsg('의상 설정을 이 브라우저에 저장했어요.');}catch{outfitMsg('이미지가 커서 자동 저장하지 못했어요. 몸·의상 저장으로 파일을 받아주세요.');}render(clock);}
+function outfitUI(){const k=document.getElementById('outfitPart').value,o=outfit[k];document.getElementById('outfitMode').value=o.mode;document.getElementById('outfitColor').value=o.color;
+ document.getElementById('outfitFields').innerHTML=Object.entries(outfitSpecs).map(([f,[label,min,max,unit]])=>`<label for="outfit-${f}">${label}</label><div class="outfit-value"><input id="outfit-${f}" data-outfit="${f}" type="range" min="${min}" max="${max}" value="${o[f]}"><input aria-label="의상 ${label}" data-outfit-number="${f}" type="number" min="${min}" max="${max}" value="${o[f]}"><span>${unit}</span></div>`).join('');
+ document.querySelectorAll('#outfitFields input').forEach(el=>el.oninput=()=>{if(el.value==='')return;const f=el.dataset.outfit||el.dataset.outfitNumber,n=Number(el.value),[,min,max]=outfitSpecs[f];if(!Number.isFinite(n))return;o[f]=Math.max(min,Math.min(max,n));document.querySelector(`[data-outfit="${f}"]`).value=o[f];document.querySelector(`[data-outfit-number="${f}"]`).value=o[f];saveOutfit();});
+ document.getElementById('outfitGuide').textContent=k==='hat'?'모자는 오른쪽 ¾뷰 PNG를 넣어주세요. 머리를 따라 움직여요.':k==='top'?'상의 PNG는 소매 없는 몸통 그림으로 넣어주세요. 양팔은 별도로 움직입니다.': '하의 PNG는 한쪽 바짓단을 그린 이미지입니다. 양쪽 다리에 같은 그림이 적용되고, 허리는 샘플 색으로 연결돼요. 발끝은 드러나게 그려주세요.';
+}
+function costumeTransform(o,x,y){ctx.translate(x+o.x,y+o.y);ctx.rotate(o.rotation*Math.PI/180);ctx.scale(o.width/100,o.height/100);}
+function ink(fill){ctx.fillStyle=fill;ctx.strokeStyle='#472010';ctx.lineWidth=3.5;ctx.lineJoin='round';ctx.lineCap='round';}
+function finish(){ctx.fill();ctx.stroke();}
+window.drawWardrobePart=function(b,h){
+ if(b.name==='head'){
+  const o=outfit.hat;if(o.mode==='off')return;ctx.save();costumeTransform(o,0,-h*.73);
+  if(o.mode==='custom'&&outfitImages.hat){const im=outfitImages.hat;ctx.drawImage(im,-b.width*.55,-b.width*.32,b.width*1.1,b.width*1.1*im.height/im.width);}
+  else if(o.mode==='sample'){ink(o.color);ctx.beginPath();ctx.ellipse(2,7,b.width*.49,22,-.08,0,Math.PI*2);finish();ctx.beginPath();ctx.moveTo(-b.width*.34,0);ctx.bezierCurveTo(-b.width*.36,-60,b.width*.22,-70,b.width*.30,-10);ctx.quadraticCurveTo(5,17,-b.width*.34,0);finish();ctx.strokeStyle='#e9d9af';ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(-b.width*.31,-7);ctx.quadraticCurveTo(0,13,b.width*.29,-17);ctx.stroke();}ctx.restore();
+ }
+ if(b.name==='body'){
+  const w=b.width;
+  if(outfit.bottom.mode!=='off'){const o=outfit.bottom;ctx.save();ink(o.color);ctx.beginPath();ctx.moveTo(-w*.43,h*.14);ctx.quadraticCurveTo(0,h*.27,w*.42,h*.12);ctx.lineTo(w*.40,h*.29);ctx.quadraticCurveTo(0,h*.39,-w*.38,h*.28);ctx.closePath();finish();ctx.restore();}
+  const o=outfit.top;if(o.mode==='off')return;ctx.save();costumeTransform(o,0,-h*.14);
+  if(o.mode==='custom'&&outfitImages.top){const im=outfitImages.top;ctx.drawImage(im,-w*.5,-h*.45,w,w*im.height/im.width);}
+  else if(o.mode==='sample'){
+   ink(o.color);ctx.beginPath();ctx.moveTo(-w*.23,-h*.49);ctx.lineTo(-w*.05,-h*.27);ctx.lineTo(w*.14,-h*.50);ctx.quadraticCurveTo(w*.32,-h*.41,w*.42,-h*.07);ctx.lineTo(w*.42,h*.32);ctx.quadraticCurveTo(w*.20,h*.41,-w*.02,h*.33);ctx.lineTo(-w*.04,-h*.21);ctx.lineTo(-w*.12,h*.33);ctx.quadraticCurveTo(-w*.34,h*.4,-w*.45,h*.22);ctx.lineTo(-w*.40,-h*.11);ctx.quadraticCurveTo(-w*.36,-h*.35,-w*.23,-h*.49);ctx.closePath();finish();ctx.fillStyle='#eed8a0';for(const y of [-.12,.05,.22]){ctx.beginPath();ctx.arc(w*.06,h*y,3,0,Math.PI*2);ctx.fill();}
+  }ctx.restore();
+ }
+};
+window.drawWardrobeLeg=function(near,w,h){const o=outfit.bottom;if(o.mode==='off')return;ctx.save();costumeTransform(o,0,0);
+ if(o.mode==='custom'&&outfitImages.bottom){const im=outfitImages.bottom;ctx.drawImage(im,-w*.55,-h,w,w*im.height/im.width);}
+ else if(o.mode==='sample'){ink(o.color);ctx.beginPath();ctx.roundRect(-w*.53,-h+1,w*.91,h*.77,Math.min(w*.25,16));finish();ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-w*.36,-h*.29);ctx.lineTo(w*.22,-h*.29);ctx.stroke();}ctx.restore();};
+function loadImage(src){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{if(im.width>4096||im.height>4096)reject(Error('PNG는 가로·세로 4096px 이하로 넣어주세요.'));else resolve(im);};im.onerror=()=>reject(Error('PNG를 읽지 못했어요.'));im.src=src;});}
+async function validateOutfit(data){const clean=outfitDefaults(),images={};for(const k of Object.keys(clean)){const o=data?.[k];if(!o||!['off','sample','custom'].includes(o.mode)||!/^#[0-9a-f]{6}$/i.test(o.color))throw Error('의상 설정 형식이 올바르지 않아요.');for(const [f,[,min,max]]of Object.entries(outfitSpecs))if(typeof o[f]!=='number'||!Number.isFinite(o[f])||o[f]<min||o[f]>max)throw Error('의상 설정값 범위를 확인해 주세요.');if(o.png!==null){if(typeof o.png!=='string'||!o.png.startsWith('data:image/png;base64,')||o.png.length>4500000)throw Error('PNG 데이터가 올바르지 않아요.');images[k]=await loadImage(o.png);}if(o.mode==='custom'&&!images[k])throw Error('직접 넣은 PNG가 누락됐어요.');clean[k]={mode:o.mode,color:o.color,x:o.x,y:o.y,width:o.width,height:o.height,rotation:o.rotation,png:o.png};}return{clean,images};}
+document.getElementById('outfitPart').onchange=outfitUI;
+document.getElementById('outfitMode').onchange=e=>{const k=document.getElementById('outfitPart').value;if(e.target.value==='custom'&&!outfitImages[k]){e.target.value=outfit[k].mode;outfitMsg('먼저 투명 PNG를 넣어주세요.');return;}outfit[k].mode=e.target.value;saveOutfit();};
+document.getElementById('outfitColor').oninput=e=>{outfit[document.getElementById('outfitPart').value].color=e.target.value;saveOutfit();};
+document.getElementById('uploadOutfit').onclick=()=>document.getElementById('outfitFile').click();
+document.getElementById('outfitFile').onchange=async e=>{const k=document.getElementById('outfitPart').value;try{const f=e.target.files[0];if(!f)return;if(f.type!=='image/png'||f.size>3000000)throw Error('3MB 이하의 PNG 파일을 넣어주세요.');const src=await new Promise((r,j)=>{const reader=new FileReader();reader.onload=()=>r(reader.result);reader.onerror=j;reader.readAsDataURL(f);});const im=await loadImage(src);outfitImages[k]=im;outfit[k].png=src;outfit[k].mode='custom';outfitUI();saveOutfit();}catch(err){outfitMsg(err.message);}finally{e.target.value='';}};
+document.getElementById('clearOutfit').onclick=()=>{const k=document.getElementById('outfitPart').value;outfit[k]=outfitDefaults()[k];delete outfitImages[k];outfitUI();saveOutfit();};
+document.getElementById('sampleAll').onclick=()=>{Object.values(outfit).forEach(o=>o.mode='sample');outfitUI();saveOutfit();};
+document.getElementById('offAll').onclick=()=>{Object.values(outfit).forEach(o=>o.mode='off');outfitUI();saveOutfit();};
+document.getElementById('exportOutfit').onclick=()=>{const data={version:2,adjustments:rigTuning.values,outfit},url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='starter-otter-outfit.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);outfitMsg('몸 설정과 PNG를 포함한 의상 파일을 저장했어요.');};
+document.getElementById('importOutfit').onclick=()=>document.getElementById('outfitJson').click();
+document.getElementById('outfitJson').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;if(f.size>14000000)throw Error('설정 파일이 너무 커요.');const data=JSON.parse(await f.text());if(data.version!==2)throw Error('몸·의상 저장으로 만든 파일을 선택해 주세요.');const body=validateTuning({version:1,adjustments:data.adjustments}),{clean,images}=await validateOutfit(data.outfit);outfit=clean;outfitImages=images;rigTuning.apply({version:1,adjustments:body});outfitUI();saveOutfit();}catch(err){outfitMsg(err.message);}finally{e.target.value='';}};
+window.wardrobe={get values(){return structuredClone(outfit);},get images(){return outfitImages;}};
+window.rigReady.then(async()=>{try{const saved=localStorage.getItem(outfitKey);if(saved){const {clean,images}=await validateOutfit(JSON.parse(saved));outfit=clean;outfitImages=images;}}catch{outfitMsg('이전 의상 저장값을 읽지 못했어요. 다시 불러와 주세요.');}outfitUI();render(clock);});
+

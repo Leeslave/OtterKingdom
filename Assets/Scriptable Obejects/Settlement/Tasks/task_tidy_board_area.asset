@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8640e1dbaeb55f45b9085eea5f1c4ed, type: 3}
+  m_Name: task_tidy_board_area
+  m_EditorClassIdentifier: OtterKingdom::SettlementTaskDefinition
+  _taskId: task_tidy_board_area
+  _title: "\uAC8C\uC2DC\uD310 \uC8FC\uBCC0 \uC815\uB9AC"
+  _description: "\uAC8C\uC2DC\uD310 \uC55E \uB099\uC5FD\uACFC \uC794\uB3CC\uC744\n\uC4F8\uC5B4
+    \uBAA8\uC544\uC694."
+  _completionMessage: "\uAC8C\uC2DC\uD310 \uC8FC\uBCC0 \uC815\uB9AC\uAC00 \uB05D\uB0AC\uC5B4\uC694!"
+  _requiredWorkers: 1
+  _durationSeconds: 20
+  _requiredGold: 50
+  _requiredItems: []
+  _requiredDevelopment: receptionist_assigned
+  _resultDevelopment: board_area_tidy

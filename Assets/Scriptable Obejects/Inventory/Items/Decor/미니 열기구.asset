@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uBBF8\uB2C8 \uC5F4\uAE30\uAD6C"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: toy_hotairballoon
+  _displayName: "\uBBF8\uB2C8 \uC5F4\uAE30\uAD6C"
+  _description: "\uC791\uC9C0\uB9CC \uC9C4\uC9DC\uCC98\uB7FC \uB465\uC2E4 \uB5A0\uC624\uB974\uB294
+    \uC5F4\uAE30\uAD6C\uC608\uC694."
+  _icon: {fileID: 21300000, guid: de63ae534aa333f4f8c486776844761c, type: 3}
+  _category: {fileID: 11400000, guid: b17fe1ae81840fe4d9794a3ea8059425, type: 2}
+  _rarity: {fileID: 11400000, guid: cf858aa73976e7b42bcbd25a6ee9e9ed, type: 2}
+  _isSellable: 0
+  _sellPrice: 0
+  _maxStack: 99

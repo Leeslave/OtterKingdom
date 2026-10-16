@@ -1,0 +1,850 @@
+fileFormatVersion: 2
+guid: 8f47523f5e746264c918cf05c38ac5d7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4555804773859131208
+    second: Painter_0
+  - first:
+      213: 8178571611366148142
+    second: Painter_1
+  - first:
+      213: 8801397967474449533
+    second: Painter_2
+  - first:
+      213: 5064910650258570768
+    second: Painter_3
+  - first:
+      213: -1681402946602084011
+    second: Painter_4
+  - first:
+      213: -3552521559557018872
+    second: Painter_5
+  - first:
+      213: 3164226018235770157
+    second: Painter_6
+  - first:
+      213: 4300065496153209031
+    second: Painter_7
+  - first:
+      213: 7728475776833436084
+    second: Painter_8
+  - first:
+      213: 3193270751163785176
+    second: Painter_9
+  - first:
+      213: -8028245925937872459
+    second: Painter_10
+  - first:
+      213: -6414596866259642777
+    second: Painter_11
+  - first:
+      213: 2896695435042865788
+    second: Painter_12
+  - first:
+      213: 3224027472955313772
+    second: Painter_13
+  - first:
+      213: 1511674602518570990
+    second: Painter_14
+  - first:
+      213: 6590544337431642808
+    second: Painter_15
+  - first:
+      213: -4548034437432922755
+    second: Painter_16
+  - first:
+      213: -1231659254725614894
+    second: Painter_17
+  - first:
+      213: 4491743012446283154
+    second: Painter_18
+  - first:
+      213: -5411056621467740499
+    second: Painter_19
+  - first:
+      213: 1480125273141693582
+    second: Painter_20
+  - first:
+      213: -5272406087800451165
+    second: Painter_21
+  - first:
+      213: -2933715559715179628
+    second: Painter_22
+  - first:
+      213: 4097945584038438083
+    second: Painter_23
+  - first:
+      213: -927157407815463538
+    second: Painter_0_0
+  - first:
+      213: -7916170200408765993
+    second: Painter_0_1
+  - first:
+      213: 8550230091946639812
+    second: Painter_0_2
+  - first:
+      213: 3653960019394295464
+    second: Painter_0_3
+  - first:
+      213: -9130102285237999592
+    second: Painter_1_0
+  - first:
+      213: -3808891892025817536
+    second: Painter_1_1
+  - first:
+      213: 7160777108154266101
+    second: Painter_1_2
+  - first:
+      213: -7019700633786186085
+    second: Painter_1_3
+  - first:
+      213: -2326194496464294525
+    second: Painter_2_0
+  - first:
+      213: -782018992159198524
+    second: Painter_2_1
+  - first:
+      213: 5154353397502584199
+    second: Painter_2_2
+  - first:
+      213: 8187644679444903439
+    second: Painter_2_3
+  - first:
+      213: 376880466114387620
+    second: Painter_3_0
+  - first:
+      213: 1990563455500402443
+    second: Painter_3_1
+  - first:
+      213: 8326020642183165203
+    second: Painter_3_2
+  - first:
+      213: 7312725717696901208
+    second: Painter_3_3
+  - first:
+      213: 3606805324124955684
+    second: Painter_4_0
+  - first:
+      213: 6988634261082378516
+    second: Painter_4_1
+  - first:
+      213: 1708337360886211934
+    second: Painter_4_2
+  - first:
+      213: -2250877863138316879
+    second: Painter_4_3
+  - first:
+      213: 130788379474108000
+    second: Painter_5_0
+  - first:
+      213: -8800445578130517095
+    second: Painter_5_1
+  - first:
+      213: -8256458241311538204
+    second: Painter_5_2
+  - first:
+      213: -3299566143864533282
+    second: Painter_5_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 132
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Painter_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8d8948ff331223f0800000000000000
+      internalID: -927157407815463538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_0_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d94a17f42d142290800000000000000
+      internalID: -7916170200408765993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_0_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c1c552b7f488a670800000000000000
+      internalID: 8550230091946639812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_0_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1300
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a6f973374975b230800000000000000
+      internalID: 3653960019394295464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 818286d485c5b4180800000000000000
+      internalID: -9130102285237999592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_1_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0468feb2109142bc0800000000000000
+      internalID: -3808891892025817536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_1_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f1b84727d0306360800000000000000
+      internalID: 7160777108154266101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_1_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1040
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b96079d2773059e90800000000000000
+      internalID: -7019700633786186085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38de6cf1e62b7bfd0800000000000000
+      internalID: -2326194496464294525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_2_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c2fdb4bed5b525f0800000000000000
+      internalID: -782018992159198524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_2_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78528f82b11f78740800000000000000
+      internalID: 5154353397502584199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_2_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 780
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f063e69b47b50a170800000000000000
+      internalID: 8187644679444903439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ae188189c2fa3500800000000000000
+      internalID: 376880466114387620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_3_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0fb9f39ae6ef9b10800000000000000
+      internalID: 1990563455500402443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_3_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 315b5e139a7fb8370800000000000000
+      internalID: 8326020642183165203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_3_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 520
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850ff27bb450c7560800000000000000
+      internalID: 7312725717696901208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424a4762552fd0230800000000000000
+      internalID: 3606805324124955684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_4_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41190f445dd9cf060800000000000000
+      internalID: 6988634261082378516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_4_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e55a62057cb35b710800000000000000
+      internalID: 1708337360886211934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_4_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 260
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bda9d6528643c0e0800000000000000
+      internalID: -2250877863138316879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_5_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06e9d439657a0d100800000000000000
+      internalID: 130788379474108000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_5_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9939f5a9f598ed580800000000000000
+      internalID: -8800445578130517095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_5_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e387cf59fa2b6d80800000000000000
+      internalID: -8256458241311538204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Painter_5_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 240
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ede8c02f2169532d0800000000000000
+      internalID: -3299566143864533282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Painter_0: -4555804773859131208
+      Painter_0_0: -927157407815463538
+      Painter_0_1: -7916170200408765993
+      Painter_0_2: 8550230091946639812
+      Painter_0_3: 3653960019394295464
+      Painter_1: 8178571611366148142
+      Painter_10: -8028245925937872459
+      Painter_11: -6414596866259642777
+      Painter_12: 2896695435042865788
+      Painter_13: 3224027472955313772
+      Painter_14: 1511674602518570990
+      Painter_15: 6590544337431642808
+      Painter_16: -4548034437432922755
+      Painter_17: -1231659254725614894
+      Painter_18: 4491743012446283154
+      Painter_19: -5411056621467740499
+      Painter_1_0: -9130102285237999592
+      Painter_1_1: -3808891892025817536
+      Painter_1_2: 7160777108154266101
+      Painter_1_3: -7019700633786186085
+      Painter_2: 8801397967474449533
+      Painter_20: 1480125273141693582
+      Painter_21: -5272406087800451165
+      Painter_22: -2933715559715179628
+      Painter_23: 4097945584038438083
+      Painter_2_0: -2326194496464294525
+      Painter_2_1: -782018992159198524
+      Painter_2_2: 5154353397502584199
+      Painter_2_3: 8187644679444903439
+      Painter_3: 5064910650258570768
+      Painter_3_0: 376880466114387620
+      Painter_3_1: 1990563455500402443
+      Painter_3_2: 8326020642183165203
+      Painter_3_3: 7312725717696901208
+      Painter_4: -1681402946602084011
+      Painter_4_0: 3606805324124955684
+      Painter_4_1: 6988634261082378516
+      Painter_4_2: 1708337360886211934
+      Painter_4_3: -2250877863138316879
+      Painter_5: -3552521559557018872
+      Painter_5_0: 130788379474108000
+      Painter_5_1: -8800445578130517095
+      Painter_5_2: -8256458241311538204
+      Painter_5_3: -3299566143864533282
+      Painter_6: 3164226018235770157
+      Painter_7: 4300065496153209031
+      Painter_8: 7728475776833436084
+      Painter_9: 3193270751163785176
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

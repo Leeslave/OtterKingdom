@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uCC38\uCE58"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: fish_tuna
+  _displayName: "\uCC38\uCE58"
+  _description: "\uB113\uC740 \uBC14\uB2E4\uB97C \uB204\uBE44\uB294 \uD798\uC13C
+    \uBB3C\uACE0\uAE30."
+  _icon: {fileID: 21300000, guid: 3fd9d1df9b7fc644e95cf3876f9ef1ed, type: 3}
+  _category: {fileID: 11400000, guid: 96098a6168fc46144942ab19a916aaa2, type: 2}
+  _rarity: {fileID: 11400000, guid: cf858aa73976e7b42bcbd25a6ee9e9ed, type: 2}
+  _isSellable: 1
+  _sellPrice: 800
+  _maxStack: 999

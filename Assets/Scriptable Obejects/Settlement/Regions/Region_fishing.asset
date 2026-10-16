@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef15bfab32cc644386caedb7ebca2df, type: 3}
+  m_Name: Region_fishing
+  m_EditorClassIdentifier: OtterKingdom::DevelopableRegionDefinition
+  _regionId: region_fishing
+  _displayName: "\uB09A\uC2DC\uD130"
+  _zone: {fileID: 11400000, guid: 02478c3dfb2fa614394ea40078cbd3bc, type: 2}
+  _discoverDevelopment: fishing_found
+  _playerClearDevelopment: 
+  _operationalDevelopment: fishing_dock
+  _productionDevelopment: fishing_working
+  _preparationTasks: []
+  _decorBoard: {fileID: 0}
+  _decorRegion: {fileID: 0}

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42c7bdefaaa133478cf1a9462c52e6a, type: 3}
+  m_Name: req_p4_workshop
+  m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
+  _requestId: req_p4_workshop
+  _order: 34
+  _category: 0
+  _contentVersion: 4
+  _title: "\uB098\uBB34\uAC00 \uBAA8\uC790\uB77C\uC694"
+  _description: "\uC9D1\uC744 \uC9D3\uB2E4 \uBCF4\uB2C8 \uBAA9\uC7AC\uAC00 \uB298
+    \uBAA8\uC790\uB77C\uC694.\n\uBAA9\uACF5\uC18C\uAC00 \uC788\uC73C\uBA74 \uC232\uC5D0\uC11C
+    \uB098\uBB34\uB97C \uB354 \uC798 \uB2E4\uB4EC\uC744 \uC218 \uC788\uC5B4\uC694."
+  _icon: {fileID: 21300000, guid: 4cb5d6f547c8af04ebb46f78e0745d6f, type: 3}
+  _requester: {fileID: 11400000, guid: a381a5f436d54189960988fc991d7215, type: 2}
+  _requiredDevelopment: p4_lumber_settled
+  _minResidents: 0
+  _construction: {fileID: 0}
+  _clearZone: {fileID: 0}
+  _assignSpecialist: {fileID: 0}
+  _assignRole: {fileID: 0}
+  _completionTask: {fileID: 0}
+  _building: {fileID: 11400000, guid: 4e15b5eb7cd015b44ab19f7b39aad7d3, type: 2}
+  _buildingCount: 1
+  _settleTargets: []
+  _resultDevelopment: p4_workshop_built
+  _settles: []
+  _arrivals:
+  - _otter: {fileID: 11400000, guid: 82f6229b64b54a9fb0a98688d677f6c7, type: 2}
+    _state: 0
+  _stageOnComplete: -1
+  _completionEntry: {fileID: 11400000, guid: 6bc7202617482a1478066568514651c9, type: 2}
+  _completionMessage: "\uBAA9\uACF5\uC18C\uAC00 \uC0DD\uACBC\uC5B4\uC694! \uC232\uC744
+    \uAC1C\uAC04\uD558\uBA74 \uBAA9\uC7AC\uB97C \uB354 \uC5BB\uC5B4\uC694. (\uAC1C\uAC04
+    \uBAA9\uC7AC +20%)"
+  _kingdomLevel: 13
