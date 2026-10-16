@@ -17,6 +17,15 @@ public static class DevClockMenu
     static DevClockMenu()
     {
         GameClock.DevOffset = TimeSpan.FromSeconds(EditorPrefs.GetFloat(PrefKey, 0f));
+        EditorApplication.playModeStateChanged -= KeepOffset;
+        EditorApplication.playModeStateChanged += KeepOffset;
+    }
+
+    // 게임 속도(DevGameSpeed)로 앞당겨진 시계를 플레이를 끌 때 남김 (다음 플레이에서 세이브 시각이 거꾸로 가지 않게)
+    private static void KeepOffset(PlayModeStateChange change)
+    {
+        if (change == PlayModeStateChange.ExitingPlayMode)
+            EditorPrefs.SetFloat(PrefKey, (float)GameClock.DevOffset.TotalSeconds);
     }
 
     [MenuItem(Root + "+1 Hour")]

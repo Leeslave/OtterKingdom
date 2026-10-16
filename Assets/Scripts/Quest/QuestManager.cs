@@ -274,6 +274,13 @@ public class QuestManager : MonoBehaviour
         if (Log == null)
             return;
 
+        // 넘친 진행: 앞 퀘스트에서 목표를 넘겨 센 것(보상 받기 전에 더 한 것 포함)을 새로 열린 같은 종류 퀘스트에
+        foreach (var quest in _database.Quests)
+        {
+            if (quest != null && IsAvailable(quest))
+                Log.TakeCarry(quest);
+        }
+
         // 장소 가 보기: 퀘스트가 열렸을 때 이미 그 장소에 있거나, 전에 가 본 적이 있으면 바로
         string scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         Log.MarkVisited(scene);

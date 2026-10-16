@@ -185,6 +185,76 @@ public class QuestTests
 
     #endregion
 
+    [Test]
+    public void Carry_ExtraBeforeClaim_GoesToNextQuestOfSameKind()
+    {
+        // 업그레이드 2회인데 받기 전에 3번 함 → 다음 업그레이드 퀘스트가 1/5부터
+        var first = CreateQuest("up_a", QuestGoalType.Upgrade, 2);
+        var next = CreateQuest("up_b", QuestGoalType.Upgrade, 5);
+        var harvest = CreateQuest("h", QuestGoalType.Harvest, 5);
+
+        _log.AddProgress(first, 1);
+        _log.AddProgress(first, 1);
+        _log.AddProgress(first, 1); // 다 채우고 아직 안 받음
+        Assert.AreEqual(QuestStatus.Claimable, _log.GetStatus(first));
+        _log.TryClaim(first);
+
+        Assert.IsFalse(_log.TakeCarry(harvest), "다른 종류에는 넘기지 않습니다.");
+        Assert.IsTrue(_log.TakeCarry(next));
+        Assert.AreEqual(1, _log.GetProgress(next));
+        Assert.IsFalse(_log.TakeCarry(next), "한 번만 넣습니다.");
+        Assert.AreEqual(1, _log.GetProgress(next));
+    }
+
+    [Test]
+    public void Carry_OverflowInOneAdd_LeftoverStaysForLaterQuest()
+    {
+        var first = CreateQuest("a", QuestGoalType.Harvest, 3);
+        var second = CreateQuest("b", QuestGoalType.Harvest, 2);
+        var third = CreateQuest("c", QuestGoalType.Harvest, 10);
+
+        _log.AddProgress(first, 8); // 5 넘침
+        _log.TakeCarry(second);
+        _log.TakeCarry(third);
+
+        Assert.AreEqual(3, _log.GetProgress(first));
+        Assert.AreEqual(2, _log.GetProgress(second), "넘친 것으로 바로 채움");
+        Assert.AreEqual(3, _log.GetProgress(third), "남은 것은 그다음 퀘스트로");
+    }
+
+    [Test]
+    public void Carry_StartedQuest_DoesNotTakeAgain_AndDailyNeverCarries()
+    {
+        var first = CreateQuest("a", QuestGoalType.Harvest, 1);
+        var started = CreateQuest("b", QuestGoalType.Harvest, 5);
+        _log.AddProgress(started, 1);
+        _log.AddProgress(first, 3);
+
+        Assert.IsFalse(_log.TakeCarry(started), "이미 진행 중인 퀘스트는 두 번 세지 않게 받지 않습니다.");
+
+        var daily = CreateQuest("d", QuestGoalType.Harvest, 1);
+        var so = new SerializedObject(daily);
+        so.FindProperty("_kind").enumValueIndex = (int)QuestKind.Daily;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        Assert.IsNull(QuestProgressRules.CarryKey(daily));
+    }
+
+    [Test]
+    public void Carry_SurvivesSave()
+    {
+        var first = CreateQuest("a", QuestGoalType.Upgrade, 1);
+        var next = CreateQuest("b", QuestGoalType.Upgrade, 4);
+        _log.AddProgress(first, 3);
+
+        var saved = new System.Collections.Generic.List<QuestSaveEntry>();
+        QuestSaveConverter.Write(_log, saved);
+        var loaded = new QuestLog();
+        QuestSaveConverter.Read(saved, loaded);
+
+        Assert.IsTrue(loaded.TakeCarry(next));
+        Assert.AreEqual(2, loaded.GetProgress(next));
+    }
+
     #region 진행 규칙
 
     [Test]
