@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156064bdadfae24d9a3c7f86ebf48c5, type: 3}
+  m_Name: Ore_ore_wave_iron
+  m_EditorClassIdentifier: OtterKingdom::MineOreDefinition
+  _oreId: ore_wave_iron
+  _displayName: "\uBB3C\uACB0 \uCCA0"
+  _description: "\uD30C\uB3C4 \uBB34\uB2AC\uAC00 \uD750\uB974\uB294 \uB2E8\uB2E8\uD55C
+    \uCCA0. \uBC14\uB2F7\uBC14\uB78C\uC5D0\uB3C4 \uB179\uC2AC\uC9C0 \uC54A\uC544\uC694."
+  _useText: "\uBB3C\uACB0 \uCCA0 \uACE1\uAD2D\uC774 \xB7 \uB9C8\uC744 \uAE38\uB4DC
+    \xB7 \uC120\uCC29\uC7A5"
+  _icon: {fileID: 21300000, guid: d87bb08583a85d8459c0fdac4d35b287, type: 3}
+  _veinSprite: {fileID: 21300000, guid: cd6af7690e98a5b4a84fc814fc54f8b0, type: 3}
+  _color: {r: 0.5, g: 0.58, b: 0.69, a: 1}
+  _rarity: 1
+  _sellPrice: 12

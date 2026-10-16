@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156064bdadfae24d9a3c7f86ebf48c5, type: 3}
+  m_Name: Ore_relic_paw_fossil
+  m_EditorClassIdentifier: OtterKingdom::MineOreDefinition
+  _oreId: relic_paw_fossil
+  _displayName: "\uC61B \uD574\uB2EC \uBC1C\uC790\uAD6D"
+  _description: "\uB3CC\uC5D0 \uCC0D\uD78C \uC791\uC740 \uBC1C\uC790\uAD6D. \uC6B0\uB9AC\uBCF4\uB2E4
+    \uBA3C\uC800 \uC774 \uAD74\uC744 \uD310 \uD574\uB2EC\uC774 \uC788\uC5C8\uB098
+    \uBD10\uC694!"
+  _useText: "\uB3C4\uAC10 \xB7 \uC61B \uC655\uAD6D \uC774\uC57C\uAE30"
+  _icon: {fileID: 21300000, guid: 753113a1b59feeb47915f8b201448113, type: 3}
+  _veinSprite: {fileID: 0}
+  _color: {r: 0.8, g: 0.74, b: 0.68, a: 1}
+  _rarity: 5
+  _sellPrice: 0
