@@ -237,6 +237,26 @@ public class SettlementConfig : ScriptableObject
     [Min(0)]
     [SerializeField] private int _castleOrder = 80;
 
+    [Tooltip("성 준비가 열리는 왕국 레벨 (질서도와 함께). 길드 지부가 갈 상업 지역(짤랑이 입주, Lv.11~12)보다 뒤여야 함")]
+    [Min(1)]
+    [SerializeField] private int _castleLevel = 16;
+
+    [Tooltip("농업 지역이 있어도 밭 자리를 발견(farm_discovered)하는 왕국 레벨. 밭은 Lv.10 (Docs/밭해금_재배치_기획.md)")]
+    [Min(1)]
+    [SerializeField] private int _farmDiscoverLevel = 10;
+
+    [Tooltip("다 지은 구역 건물을 옮기는 데 걸리는 시간 (초, 건설 해달이 들고 옮김). 행정 해달이 생긴 뒤부터")]
+    [Min(0)]
+    [SerializeField] private float _relocationSeconds = 90f;
+
+    [Tooltip("이사 지시서 한 장을 끝냈을 때 건물 하나마다 주는 골드")]
+    [Min(0)]
+    [SerializeField] private int _relocationGoldPerBuilding = 150;
+
+    [Tooltip("이사 지시서 한 장을 끝냈을 때 주는 경험치")]
+    [Min(0)]
+    [SerializeField] private int _relocationExp = 40;
+
     [Tooltip("구역 보너스 (용도별 왕국 보유 효과)")]
     [SerializeField] private List<DistrictBonusEntry> _districtBonuses = new List<DistrictBonusEntry>();
 
@@ -265,6 +285,11 @@ public class SettlementConfig : ScriptableObject
     public int OrderPerDistrict => Mathf.Max(0, _orderPerDistrict);
     public int RelocationOrder => Mathf.Max(0, _relocationOrder);
     public int CastleOrder => Mathf.Max(0, _castleOrder);
+    public int CastleLevel => Mathf.Max(1, _castleLevel);
+    public int FarmDiscoverLevel => Mathf.Max(1, _farmDiscoverLevel);
+    public float RelocationSeconds => Mathf.Max(0f, _relocationSeconds);
+    public int RelocationGoldPerBuilding => Mathf.Max(0, _relocationGoldPerBuilding);
+    public int RelocationExp => Mathf.Max(0, _relocationExp);
     public IReadOnlyList<DistrictBonusEntry> DistrictBonuses => _districtBonuses;
 
     public DistrictBlockDefinition FindDistrictBlock(string blockId)
@@ -290,6 +315,13 @@ public class SettlementConfig : ScriptableObject
         _relocationOrder = relocationOrder;
         _castleOrder = castleOrder;
         _districtBonuses = bonuses != null ? new List<DistrictBonusEntry>(bonuses) : new List<DistrictBonusEntry>();
+    }
+
+    /// <summary>테스트·설정 도구용: 성 준비 레벨 · 밭 발견 레벨</summary>
+    public void SetupLevelGates(int castleLevel, int farmDiscoverLevel)
+    {
+        _castleLevel = castleLevel;
+        _farmDiscoverLevel = farmDiscoverLevel;
     }
 
     public IReadOnlyList<float> ToyVisitMinutes => _toyVisitMinutes;

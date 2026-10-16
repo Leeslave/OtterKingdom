@@ -57,12 +57,17 @@ public static class DistrictGuideRules
         }
     }
 
-    public static string OrderGoal(SettlementConfig config, int score)
+    public static string OrderGoal(SettlementConfig config, int score) => OrderGoal(config, score, int.MaxValue);
+
+    /// <summary>질서도 다음 목표 문구. 질서도는 닿았어도 성 레벨(CastleLevel) 전이면 그 레벨을 알려 줌</summary>
+    public static string OrderGoal(SettlementConfig config, int score, int playerLevel)
     {
         if (score < config.RelocationOrder)
             return $"구역을 정하면 +{config.OrderPerDistrict} · 이사 지시서 기준까지 {config.RelocationOrder - score}";
         if (score < config.CastleOrder)
             return $"이사 지시서 기준 달성 · 성 기준까지 {config.CastleOrder - score}";
+        if (playerLevel < config.CastleLevel)
+            return $"성 질서도 기준을 달성했어요! 성은 왕국 Lv.{config.CastleLevel}부터 세울 수 있어요";
         return "성으로 발전할 질서도 기준을 달성했어요!";
     }
 

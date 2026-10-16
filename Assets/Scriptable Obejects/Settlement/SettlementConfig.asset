@@ -19,6 +19,7 @@ MonoBehaviour:
   - "\uC791\uC740 \uC815\uCC29\uC9C0"
   - "\uC790\uAE09 \uC2DC\uC791"
   - "\uC791\uC740 \uB9C8\uC744"
+  - "\uD574\uB2EC \uC655\uAD6D"
   _firstOtter: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   _otters:
   - {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
@@ -75,6 +76,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01dcaaf60ed93a44ba7ed8cb8a2a3e03, type: 2}
   - {fileID: 11400000, guid: 3b0f13b73d405c54ca58eb868710bff4, type: 2}
   - {fileID: 11400000, guid: 0c38adddff9f07842bc604e02c708710, type: 2}
+  - {fileID: 11400000, guid: d0906915e945c4447ab9320fbd1b7880, type: 2}
+  - {fileID: 11400000, guid: 81ac4b83da51c424cb6d0a603e309100, type: 2}
   _guestbookEntries:
   - {fileID: 11400000, guid: 33c4ddbf79f82ec4295cddd2da782dfe, type: 2}
   - {fileID: 11400000, guid: 26cb5157adbe284468d965b7886dcf4c, type: 2}
@@ -253,6 +256,11 @@ MonoBehaviour:
   _orderPerDistrict: 10
   _relocationOrder: 10
   _castleOrder: 80
+  _castleLevel: 16
+  _farmDiscoverLevel: 10
+  _relocationSeconds: 90
+  _relocationGoldPerBuilding: 150
+  _relocationExp: 40
   _districtBonuses:
   - _district: 2
     _kind: 6
@@ -285,7 +293,3 @@ MonoBehaviour:
     _lockedHint: "\uB098\uBB34 \uD558\uB294 \uD574\uB2EC\uC774 \uB9C8\uC744\uC5D0
       \uC0B4\uAC8C \uB418\uBA74 \uC0DD\uC0B0 \uC9C0\uC5ED\uC744 \uC815\uD560 \uC218
       \uC788\uC5B4\uC694"
-  - _district: 5
-    _development: farmland
-    _lockedHint: "\uBC2D\uC744 \uC77C\uAD6C\uBA74 \uB18D\uC5C5 \uC9C0\uC5ED\uC744
-      \uC815\uD560 \uC218 \uC788\uC5B4\uC694"

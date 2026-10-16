@@ -717,7 +717,7 @@ public partial class SettlementManager
             return TaskStartResult.NotEnoughItems;
         PayCost(task.RequiredGold, task.RequiredItems);
         long now = NowTicks;
-        Settlement.StartTask(record.TaskInstanceId(task), new[] { worker.OtterId }, now, now + TimeSpan.FromSeconds(DevTimers.Duration(task.DurationSeconds)).Ticks);
+        Settlement.StartTask(record.TaskInstanceId(task), new[] { worker.OtterId }, now, now + TimeSpan.FromSeconds(DevTimers.Duration(KingdomBonus.Faster(KingdomBonusKind.ProductionSpeed, task.DurationSeconds))).Ticks);
         OnTaskStarted?.Invoke(task);
         SaveRequested?.Invoke();
         return TaskStartResult.Started;

@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv7_town_hall
   _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uAE38\uB4DC"
   _description: "\uB9C8\uC744 \uAE38\uB4DC\uB85C \uB113\uD788\uAE30"
-  _sortOrder: 23
+  _sortOrder: 22
   _kind: 0
   _requiredLevel: 7
   _prerequisite: {fileID: 11400000, guid: 38305daeedb0cd94697d1669d95f13d0, type: 2}
@@ -30,5 +30,5 @@ MonoBehaviour:
   _target: req_upgrade_town_hall
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 300
-  _expReward: 120
+  _expReward: 80
   _expPercentOfLevel: 0

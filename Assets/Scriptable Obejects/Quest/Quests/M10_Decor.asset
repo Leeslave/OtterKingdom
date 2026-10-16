@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv10_decor
   _title: "\uAD11\uC7A5 \uB180\uC774\uD130"
   _description: "\uC7A5\uB09C\uAC10 2\uAC1C \uB193\uAE30"
-  _sortOrder: 37
+  _sortOrder: 11
   _kind: 0
-  _requiredLevel: 10
-  _prerequisite: {fileID: 11400000, guid: a80be4d7ca80fd0409c45d88dbf1697a, type: 2}
+  _requiredLevel: 4
+  _prerequisite: {fileID: 11400000, guid: db3ad58d179c9e84fb80e86c4fe41143, type: 2}
   _icon: {fileID: 21300000, guid: 1cf2ec16d79070c48ad013c636676d65, type: 3}
   _goalType: 5
   _goal: 2
@@ -30,5 +30,5 @@ MonoBehaviour:
   _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 300
-  _expReward: 200
+  _expReward: 80
   _expPercentOfLevel: 0

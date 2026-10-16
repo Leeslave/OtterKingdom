@@ -306,6 +306,9 @@ public class DecorBoardView : MonoBehaviour
         return _walkableArea.CountRegions(withArea, MinRegionCells) > before;
     }
 
+    /// <summary>놓인 물건의 모습 (없으면 null)</summary>
+    public PlacedDecorView FindView(int instanceId) => _views.TryGetValue(instanceId, out var view) ? view : null;
+
     /// <summary>꾸미기 모드에서 들어 올린 물건을 잠시 숨김 (미리보기가 대신 보임). 숨긴 물건은 놀이·장애물에서 빠진다</summary>
     public void SetHidden(int instanceId, bool hidden)
     {

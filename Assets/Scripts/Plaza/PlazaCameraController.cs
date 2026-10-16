@@ -195,6 +195,26 @@ public class PlazaCameraController : MonoBehaviour
         if (cam != null) ApplyZoomAndClamp();
     }
 
+    private float? zoomBeforeOverview;
+
+    /// Zooms all the way out (e.g. while choosing a district, whose land is
+    /// bigger than the screen). false goes back to the zoom the player had.
+    public void SetOverview(bool on)
+    {
+        if (on == zoomBeforeOverview.HasValue) return;
+        if (on)
+        {
+            zoomBeforeOverview = zoomSize;
+            zoomSize = maxOrthographicSize; // clamped by the map in ApplyZoomAndClamp
+        }
+        else
+        {
+            zoomSize = zoomBeforeOverview.Value;
+            zoomBeforeOverview = null;
+        }
+        if (cam != null) ApplyZoomAndClamp();
+    }
+
     /// Glides the view to centre on a world point (clamped into the map like
     /// any drag). A touch or drag by the player cancels it.
     public void PanTo(Vector2 worldPoint)

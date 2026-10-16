@@ -144,9 +144,11 @@ public static partial class SettlementSetup
         if (wood == null || stone == null || carrot == null)
             Debug.LogError("[SettlementSetup] 목재·돌·당근 아이템을 찾지 못했습니다.");
 
-        // 요정: 농부를 밭에 파견하면 방문 예약
+        // 요정: 광부를 광산에 배치하면 방문 예약 (밭이 Lv.10으로 가며 농부 대신. 옛 세이브는 SettlementManager.DistrictMilestones가 초대)
+        if (otters.TryGetValue("otter_miner", out var miner))
+            SetString(miner, "_assignDevelopment", FairyInvitedDevelopment);
         if (otters.TryGetValue("otter_farmer", out var farmer))
-            SetString(farmer, "_assignDevelopment", FairyInvitedDevelopment);
+            SetString(farmer, "_assignDevelopment", "");
 
         // 방명록
         var entries = new Dictionary<string, GuestbookEntryDefinition>();

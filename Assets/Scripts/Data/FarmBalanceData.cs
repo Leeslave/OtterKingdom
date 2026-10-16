@@ -41,11 +41,12 @@ public class FarmBalanceData : ScriptableObject
              "(plot 2 left to right, then plot 3): kingdom level and gold for each (growth curve: one furrow at a time). Placeholder numbers.")]
     public FurrowUnlock[] furrowUnlocks =
     {
-        new FurrowUnlock(5, 300),
-        new FurrowUnlock(6, 600),
-        new FurrowUnlock(8, 1000),
-        new FurrowUnlock(9, 1600),
-        new FurrowUnlock(11, 2500),
+        // 밭은 Lv.10 농업 지역에서 열림 (구역·이사 5막) → 고랑은 Lv.11~13에 둘씩
+        new FurrowUnlock(11, 300),
+        new FurrowUnlock(11, 600),
+        new FurrowUnlock(12, 1000),
+        new FurrowUnlock(12, 1600),
+        new FurrowUnlock(13, 2500),
         new FurrowUnlock(13, 4000),
     };
 

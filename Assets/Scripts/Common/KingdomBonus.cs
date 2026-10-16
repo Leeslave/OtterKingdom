@@ -10,8 +10,8 @@ public enum KingdomBonusKind
     FishYield = 4,    // 낚은 물고기 +% (어업 작업소)
     BuildSpeed = 5,   // 공사 시간 −% (건설소)
     VisitSpeed = 6,   // 장난감 해달 방문 간격 −% (기록관 · 주거 구역)
-    ProductionSpeed = 7, // 생산 속도 +% (생산 구역. 쓰는 곳은 구역·이사 5단계에서 붙임)
-    GrowSpeed = 8,       // 밭 자라는 시간 −% (농업 구역. 쓰는 곳은 구역·이사 5단계에서 붙임)
+    ProductionSpeed = 7, // 생산 속도 +% (생산 구역): 주민 작업이 그만큼 빨리 끝남
+    GrowSpeed = 8,       // 밭 자라는 시간 −% (농업 구역): 새로 심는 작물부터
 }
 
 /// <summary>
@@ -44,6 +44,13 @@ public static class KingdomBonus
     {
         int percent = Math.Min(90, Percent(kind));
         return percent <= 0 ? seconds : seconds * (100 - percent) / 100f;
+    }
+
+    /// <summary>속도를 효과만큼 올림 (+p% 빠르게 = 시간 ÷ (1 + p/100))</summary>
+    public static float Faster(KingdomBonusKind kind, float seconds)
+    {
+        int percent = Percent(kind);
+        return percent <= 0 ? seconds : seconds * 100f / (100 + percent);
     }
 
     /// <summary>얻는 개수에 효과를 더함: 정수 부분은 늘 더하고, 남는 소수는 그 확률로 1개 (평균이 정확히 +%)</summary>

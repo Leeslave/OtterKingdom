@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv12_upgrade
   _title: "\uC7A5\uC778\uC758 \uC190\uAE38"
   _description: "\uC0DD\uC0B0 \uC5C5\uADF8\uB808\uC774\uB4DC 2\uD68C"
-  _sortOrder: 44
+  _sortOrder: 48
   _kind: 0
   _requiredLevel: 12
-  _prerequisite: {fileID: 11400000, guid: 37d3a5fb218cc4c408a6a3c05d13c9a8, type: 2}
+  _prerequisite: {fileID: 11400000, guid: 55b8ff6290996e649879a6a7688c238e, type: 2}
   _icon: {fileID: 21300000, guid: e6eaba03fc7b28941b5311f5097cbf65, type: 3}
   _goalType: 3
   _goal: 2

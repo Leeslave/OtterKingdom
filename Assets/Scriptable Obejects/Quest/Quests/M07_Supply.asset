@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv7_supply
   _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBE44\uCD95"
   _description: "\uACF5\uB3D9\uC0AC\uC5C5: \uBE44\uCD95 \uC0C1\uC790 \uB9CC\uB4E4\uAE30"
-  _sortOrder: 24
+  _sortOrder: 23
   _kind: 0
   _requiredLevel: 7
   _prerequisite: {fileID: 11400000, guid: 26dc3618ae52fcf42b6fccbdf6ee0154, type: 2}

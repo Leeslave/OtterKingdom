@@ -41,6 +41,7 @@ public class TownHallPresenter : MonoBehaviour
         _hall.OnCodexClicked += HandleCodex;
         _hall.OnTerritoryClicked += HandleTerritory;
         _hall.OnDistrictClicked += HandleDistrict;
+        _hall.OnRelocationClicked += HandleRelocation;
     }
 
     // SettlementManager가 같은 오브젝트에 붙어 있어 깨어나는 순서가 같을 수 있으므로 Start에서 연결
@@ -63,6 +64,7 @@ public class TownHallPresenter : MonoBehaviour
         _hall.OnCodexClicked -= HandleCodex;
         _hall.OnTerritoryClicked -= HandleTerritory;
         _hall.OnDistrictClicked -= HandleDistrict;
+        _hall.OnRelocationClicked -= HandleRelocation;
         if (_manager != null)
         {
             _manager.OnMilestoneRequested -= OpenMilestone;
@@ -151,8 +153,8 @@ public class TownHallPresenter : MonoBehaviour
                 mainDone++;
         }
 
-        _hall.Show($"{settlement.Stage + 1:00} · {_manager.StageName}", $"마을 발전 {mainDone} / {mainTotal}",
-            _manager.GetLaborSummary(), WorkText(), CompletedText());
+        _hall.Show($"{settlement.Stage + 1:00} · {_manager.StageName}", mainDone, mainTotal,
+            _manager.GetLaborSummary(), WorkText(), CompletedNames());
 
         _hallTarget = _manager.CurrentRequest;
         _hallProject = _hallTarget == null ? _manager.ActiveProject : null;
@@ -172,7 +174,8 @@ public class TownHallPresenter : MonoBehaviour
         var order = _manager.DistrictOrder;
         int pending = _manager.PendingDistrictBlocks().Count;
         _hall.ShowDistrict(_manager.IsAdministrator, order != null ? order.Score : 0,
-            DistrictGuideRules.OrderGoal(config, order != null ? order.Score : 0), pending);
+            DistrictGuideRules.OrderGoal(config, order != null ? order.Score : 0, _manager.PlayerLevel), pending);
+        _hall.ShowRelocation(RelocationLine());
     }
 
     // 레벨을 묶은 부탁이 아직 게시판에 없고(앞 발전 전) 숲 개간으로 이어갈 수 있을 때: 먼 레벨 잠금(선착장 Lv.15) 대신 그 부탁과 개간을 알림.
@@ -212,6 +215,25 @@ public class TownHallPresenter : MonoBehaviour
             return;
         }
         _hall.ShowTerritory("숲 개간", _manager.TerritoryChanceText(), false);
+    }
+
+    // 이사 지시서 한 줄: "이사 지시서 #1 · 건물 2채를 주거 지역으로 (0/2) · 보상 골드 300" (없으면 null)
+    private string RelocationLine()
+    {
+        var relocation = _manager.RelocationOrder;
+        if (relocation == null || !_manager.IsAdministrator)
+            return null;
+        int done = _manager.RelocationDoneCount();
+        int moving = _manager.Settlement.RelocationMoves.Count;
+        string state = moving > 0 ? $" · 이사 중 {moving}채" : "";
+        return $"이사 지시서 #{relocation.Serial} · {Districts.DisplayName(relocation.Type)}으로 {done}/{relocation.InstanceIds.Count}{state}\n보상 골드 {RelocationRules.RewardGold(_manager.Config, relocation)} · 경험치 {_manager.Config.RelocationExp}";
+    }
+
+    private void HandleRelocation()
+    {
+        _hall.Hide();
+        if (!RelocationModePresenter.Open() && GameManager.Instance != null)
+            GameManager.Instance.ShowAlert("광장에서 이사할 수 있어요.");
     }
 
     private void HandleDistrict()
@@ -267,8 +289,8 @@ public class TownHallPresenter : MonoBehaviour
         return string.Join(", ", names);
     }
 
-    // 완료한 발전: 끝낸 부탁을 순서대로 (건물은 건물 이름)
-    private string CompletedText()
+    // 완료한 발전: 끝낸 부탁을 순서대로 (건물은 건물 이름) — 화면은 칩 하나씩
+    private List<string> CompletedNames()
     {
         var names = new List<string>();
         foreach (var request in SettlementBoardRules.SortRequests(_manager.Config))
@@ -289,7 +311,7 @@ public class TownHallPresenter : MonoBehaviour
             if (territory != null && territory.Mission != null && TerritoryRules.IsExpanded(territory, _manager.Settlement))
                 names.Add(territory.Mission.Title);
         }
-        return names.Count > 0 ? string.Join(" · ", names) : "아직 완료한 발전이 없어요.";
+        return names;
     }
 
     // 공동사업 한 줄: 주민 대사 + 지금 할 일 (레벨이 모자라면 필요한 레벨)
@@ -360,7 +382,8 @@ public class TownHallPresenter : MonoBehaviour
         var config = _manager.Config;
         var text = new StringBuilder("0123456789:/ ,.!?()·\"명단계완료진행중다음아직가보기지금하고있어요모든마쳤어요마을회관길드게시판에서눌러발전현황볼수열리기를기다리고")
             .Append(AllDoneMessage).Append("다음 발전을 준비하고 있어요진행 중인 일이 끝나면 새 부탁이 열려요.지금 진행 중인 일이 없어요.아직 완료한 발전이 없어요.가는 중")
-            .Append("끝내면 다음 레벨(Lv.)로 올라가요.먼저 숲을 개간해 땅을 넓혀요. (아래 영토 확장)");
+            .Append("끝내면 다음 레벨(Lv.)로 올라가요.먼저 숲을 개간해 땅을 넓혀요. (아래 영토 확장)")
+            .Append("주민 현황정착 주민보낼 수 있음작업 중왕국 질서도이사 지시서이사하기구역 정하기영토 확장숲 개간완료한 발전개");
         foreach (var request in config.Requests)
         {
             if (request == null)

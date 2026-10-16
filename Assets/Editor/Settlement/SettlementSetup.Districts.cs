@@ -30,7 +30,6 @@ public static partial class SettlementSetup
     {
         new DistrictTypeUnlock(DistrictType.Commercial, "p4_trader_settled", "장사하는 해달이 마을에 살게 되면 상업 지역을 정할 수 있어요"),
         new DistrictTypeUnlock(DistrictType.Production, "p4_lumber_settled", "나무 하는 해달이 마을에 살게 되면 생산 지역을 정할 수 있어요"),
-        new DistrictTypeUnlock(DistrictType.Agricultural, "farmland", "밭을 일구면 농업 지역을 정할 수 있어요"),
     };
 
     // 건물 · 부탁 건물 자리가 들어갈 구역 (에셋 이름). 표에 없으면 None = 어디에 놓아도 됨 (가로등 · 식탁 · 비축 상자 · 환영 소품)

@@ -50,8 +50,8 @@ public static class GlobalUISetup
     // 정착 진행으로 열리는 장소: ID → (필요 발전, 잠겨 있을 때 문구). 광장은 처음부터. 광산은 발전 + 왕국 레벨(ZoneLevels)
     private static readonly Dictionary<string, (string development, string lockedText)> ZoneLocks = new Dictionary<string, (string, string)>
     {
-        // 새 이웃의 집을 지으면 농경지 발견 → 개간되지 않은 밭에 가서 직접 치우고 주민과 개간 (개척 기획)
-        { "Farm", (SettlementSetup.FarmDiscoverDevelopment, "새 이웃의 집을 지으면 열려요") },
+        // 농업 지역을 정하면 밭 자리 발견 → 개간되지 않은 밭에 가서 직접 치우고 주민과 개간 (구역·이사 5막, Lv.10)
+        { "Farm", (SettlementSetup.FarmDiscoverDevelopment, "농업 지역을 정하면 열려요") },
         // 왕국 Lv.15에 낡은 선착장 발견 → 게시판에서 고치면 열림
         { "Fishing", (SettlementSetup.FishingDevelopment, "선착장을 고치면 열려요") },
         { "Mine", ("chair", "개간되지 않은 구역") }, // 의자를 만들면 동굴 발견 → 길을 열면 채굴 (개척 기획)

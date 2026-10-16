@@ -95,6 +95,44 @@ public class ConstructionPlotAnchor : MonoBehaviour
         return true;
     }
 
+    // 이사 중 잠시 끈 그림 (켜져 있던 것만 되돌림)
+    private readonly List<SpriteRenderer> _hiddenRenderers = new List<SpriteRenderer>();
+
+    /// <summary>지금 보이는 묶음 그림 (말풍선·글자 빼고)</summary>
+    public IEnumerable<SpriteRenderer> VisibleRenderers()
+    {
+        foreach (var (target, _) in _parts)
+        {
+            if (target == null || !target.gameObject.activeInHierarchy)
+                continue;
+            foreach (var renderer in target.GetComponentsInChildren<SpriteRenderer>())
+            {
+                if (renderer.enabled && renderer.sprite != null && renderer.sortingOrder < OverlayOrderFrom)
+                    yield return renderer;
+            }
+        }
+    }
+
+    /// <summary>구역 이사 중 건설 해달이 건물을 이고 가는 동안 새 자리의 묶음을 숨김 (SettlementPlazaView)</summary>
+    public void SetHidden(bool hidden)
+    {
+        if (hidden)
+        {
+            if (_hiddenRenderers.Count > 0)
+                return;
+            _hiddenRenderers.AddRange(VisibleRenderers());
+            foreach (var renderer in _hiddenRenderers)
+                renderer.enabled = false;
+            return;
+        }
+        foreach (var renderer in _hiddenRenderers)
+        {
+            if (renderer != null)
+                renderer.enabled = true;
+        }
+        _hiddenRenderers.Clear();
+    }
+
     /// <summary>놓인 자리에 다시 맞춤 (영토 묶음이 부모를 옮긴 뒤 — SettlementPlazaView)</summary>
     public static bool ReapplyAll()
     {

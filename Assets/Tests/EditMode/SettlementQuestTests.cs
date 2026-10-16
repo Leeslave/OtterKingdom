@@ -55,5 +55,7 @@ public class SettlementQuestTests
         Assert.IsNull(SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.MeetOtter)), "새 해달 만나기는 언제든");
         Object.DestroyImmediate(_quest);
         Assert.IsNull(SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.CompleteConstruction)), "건설은 언제든");
+        Object.DestroyImmediate(_quest);
+        Assert.IsNull(SettlementQuestGate.RequiredDevelopment(Quest(QuestGoalType.CollectionRegister)), "도감은 해달을 만나도 채워져 밭(Lv.10) 전에도");
     }
 }

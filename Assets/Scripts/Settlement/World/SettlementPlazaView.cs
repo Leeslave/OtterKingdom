@@ -92,6 +92,9 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     private SettlementManager _manager;
     private SceneNavigator _navigator;
     private bool _builderInitialized;
+    // 막 이사를 시작한 건물의 옛 자리 (건설 해달이 들러 건물을 이고 감). 씬을 다시 열면 없음 → 새 자리에서 바로 일함
+    private readonly Dictionary<int, RectInt> _carryFrom = new Dictionary<int, RectInt>();
+    private readonly List<int> _staleCarry = new List<int>();
 
     /// <summary>방문 대기 줄 (확인용)</summary>
     public IReadOnlyList<string> VisitQueue => _visitQueue;
@@ -129,6 +132,8 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         _manager.OnConstructionStarted += HandleConstructionStarted;
         _manager.OnRequestCompleted += HandleRequestCompleted;
         _manager.OnRoleAssigned += HandleRoleAssigned;
+        _manager.OnRelocationStarted += HandleRelocationStarted;
+        _manager.OnRelocationChanged += HandleRelocationChanged;
     }
 
     // 공사 과정 (집이 올라오고, 치울 것이 하나씩 사라짐)
@@ -179,6 +184,8 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             _manager.OnConstructionStarted -= HandleConstructionStarted;
             _manager.OnRequestCompleted -= HandleRequestCompleted;
             _manager.OnRoleAssigned -= HandleRoleAssigned;
+            _manager.OnRelocationStarted -= HandleRelocationStarted;
+            _manager.OnRelocationChanged -= HandleRelocationChanged;
         }
     }
 
@@ -658,7 +665,126 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
 
         if (!_builderInitialized)
             return;
-        _builder.SetWorkSite(jobSite != null && byBuilder ? jobSite : null);
+        if (jobSite != null && byBuilder)
+            _builder.SetWorkSite(jobSite);
+        else if (TryGetRelocationWork(out int movingId, out Vector2 relocationStand, out Vector2 relocationLook))
+        {
+            // 공사가 없으면 이사하는 건물 앞에서 일함 (구역·이사). 막 시작한 이사면 먼저 옛 자리에서 건물을 이고 옴
+            if (!(_carryFrom.TryGetValue(movingId, out var fromArea) && TryStartCarry(movingId, fromArea, relocationStand, relocationLook)))
+                _builder.SetWork(movingId, relocationStand, relocationLook);
+        }
+        else
+            _builder.SetWorkSite(null);
+    }
+
+    private void HandleRelocationStarted(int instanceId, RectInt fromArea)
+    {
+        _carryFrom[instanceId] = fromArea;
+        UpdateConstruction();
+    }
+
+    private void HandleRelocationChanged()
+    {
+        // 끝난 이사의 옛 자리는 지움 (건설 해달이 다른 공사로 바빠 못 들른 것)
+        _staleCarry.Clear();
+        foreach (var id in _carryFrom.Keys)
+        {
+            if (!_manager.Settlement.IsRelocating(id))
+                _staleCarry.Add(id);
+        }
+        foreach (var id in _staleCarry)
+            _carryFrom.Remove(id);
+        if (_builderInitialized)
+            UpdateConstruction();
+    }
+
+    // 옛 자리에 건물 그림을 남겨 두고(건설 해달이 들러 들고 감), 새 자리의 건물은 해달이 내려놓을 때까지 숨김
+    private bool TryStartCarry(int instanceId, RectInt fromArea, Vector2 stand, Vector2 look)
+    {
+        _carryFrom.Remove(instanceId);
+        var board = DecorBoardView.Active;
+        var view = board != null ? board.FindView(instanceId) : null;
+        if (view == null)
+            return false;
+        // 게시판 부탁 건물(건설 자리)은 씬의 건물 묶음이 그림을 그림
+        string plotId = view is PlacedPlotView ? view.Placed.Decor.SaveId : null;
+        var anchor = ConstructionPlotAnchor.Find(plotId);
+        var body = LargestSprite(anchor != null ? anchor.VisibleRenderers() : view.GetComponentsInChildren<SpriteRenderer>());
+        if (body == null)
+            return false;
+
+        var from = board.AreaWorldRect(fromArea);
+        var ghost = new GameObject($"CarryGhost_{instanceId}").AddComponent<SpriteRenderer>();
+        ghost.sprite = body.sprite;
+        ghost.flipX = body.flipX;
+        ghost.sortingLayerID = body.sortingLayerID;
+        ghost.sortingOrder = PlazaDepth.SortingOrderFor(from.yMin);
+        ghost.transform.SetPositionAndRotation(body.transform.position + (Vector3)(from.min - view.WorldRect.min), body.transform.rotation);
+        ghost.transform.localScale = body.transform.lossyScale;
+        SetCarryHidden(instanceId, plotId, true);
+
+        var pickup = new Vector2(from.center.x + from.width * 0.25f, from.yMin - 0.5f);
+        _builder.SetCarryWork(instanceId, pickup, stand, look, body.sprite,
+            () =>
+            {
+                if (ghost != null)
+                    Destroy(ghost.gameObject);
+            },
+            () => SetCarryHidden(instanceId, plotId, false));
+        return true;
+    }
+
+    private static void SetCarryHidden(int instanceId, string plotId, bool hidden)
+    {
+        var anchor = ConstructionPlotAnchor.Find(plotId);
+        var board = DecorBoardView.Active;
+        if (anchor != null)
+            anchor.SetHidden(hidden);
+        else if (board != null)
+            board.SetHidden(instanceId, hidden);
+    }
+
+    // 건물 모습에서 가장 큰 그림 (공사 막대 · 요정 같은 작은 것 말고 건물 본체)
+    private static SpriteRenderer LargestSprite(IEnumerable<SpriteRenderer> renderers)
+    {
+        SpriteRenderer best = null;
+        float bestArea = 0f;
+        foreach (var renderer in renderers)
+        {
+            if (renderer.sprite == null || !renderer.enabled)
+                continue;
+            var size = renderer.bounds.size;
+            if (size.x * size.y > bestArea)
+            {
+                bestArea = size.x * size.y;
+                best = renderer;
+            }
+        }
+        return best;
+    }
+
+    // 옮기는 중인 건물 하나 (먼저 시작한 것): 건물 앞 가운데에 서서 건물을 봄
+    private bool TryGetRelocationWork(out int instanceId, out Vector2 stand, out Vector2 look)
+    {
+        instanceId = 0;
+        stand = look = default;
+        var board = DecorBoardView.Active;
+        var plaza = _manager.PlazaBoard;
+        if (board == null || plaza == null || board.Board != plaza)
+            return false;
+        var layout = DecorManager.Instance.GetLayout(plaza);
+        long earliest = long.MaxValue;
+        foreach (var move in _manager.Settlement.RelocationMoves)
+        {
+            if (move.StartUtcTicks >= earliest || !layout.TryGet(move.InstanceId, out var placed))
+                continue;
+            earliest = move.StartUtcTicks;
+            instanceId = move.InstanceId;
+            var rect = board.AreaWorldRect(placed.Area);
+            stand = new Vector2(rect.center.x + rect.width * 0.25f, rect.yMin - 0.5f);
+            look = rect.center;
+        }
+        return instanceId != 0;
     }
 
     // 광장 주민 작업에서 이 해달이 설 자리 (보낸 순서대로). 생활 의뢰처럼 같은 작업 틀을 회차마다 하는 경우도 그 해달의 작업으로 찾음
