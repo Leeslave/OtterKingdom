@@ -26739,17 +26739,38 @@ Transform:
   - {fileID: 880015002}
   - {fileID: 880015012}
   - {fileID: 880015022}
-  - {fileID: 880015092}
+  - {fileID: 880038002}
+  - {fileID: 880039002}
+  - {fileID: 880040002}
+  - {fileID: 880041002}
+  - {fileID: 880042002}
+  - {fileID: 880043002}
+  - {fileID: 880044002}
+  - {fileID: 880045002}
+  - {fileID: 880046002}
+  - {fileID: 880047002}
   - {fileID: 880015082}
-  - {fileID: 880015032}
   - {fileID: 880015042}
   - {fileID: 880017002}
   - {fileID: 880018002}
+  - {fileID: 880037002}
+  - {fileID: 880036002}
+  - {fileID: 880035002}
+  - {fileID: 880034002}
+  - {fileID: 880033002}
+  - {fileID: 880032002}
+  - {fileID: 880031002}
+  - {fileID: 880030002}
+  - {fileID: 880029002}
+  - {fileID: 880028002}
+  - {fileID: 880027002}
+  - {fileID: 880026002}
+  - {fileID: 880025002}
+  - {fileID: 880024002}
+  - {fileID: 880022002}
   - {fileID: 880021002}
   - {fileID: 880020002}
   - {fileID: 880019002}
-  - {fileID: 880015052}
-  - {fileID: 880015072}
   m_Father: {fileID: 191430252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &608721933
@@ -89823,68 +89844,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: e2f898d440644568a342397df9596461, type: 3}
   m_PrefabInstance: {fileID: 880015021}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &880015031
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 607886186}
-    m_Modifications:
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630001, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-      propertyPath: m_Name
-      value: PlazaOtter_PainterRigged
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
---- !u!4 &880015032 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 65f72903d9514864af0c1e6dee2e41a4, type: 3}
-  m_PrefabInstance: {fileID: 880015031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &880015041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89947,130 +89906,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 53337f21095f48478edfd82a9bac1489, type: 3}
   m_PrefabInstance: {fileID: 880015041}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &880015051
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 607886186}
-    m_Modifications:
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630001, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-      propertyPath: m_Name
-      value: PlazaOtter_ExplorerRigged
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
---- !u!4 &880015052 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 74ce0a08ed1047a684c034388abb3d97, type: 3}
-  m_PrefabInstance: {fileID: 880015051}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &880015071
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 607886186}
-    m_Modifications:
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630001, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-      propertyPath: m_Name
-      value: PlazaOtter_SleepyRigged
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
---- !u!4 &880015072 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 6953900bbccd4d5aa8139c0a1e7df76c, type: 3}
-  m_PrefabInstance: {fileID: 880015071}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &880015081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90132,68 +89967,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 7e6c0b1cc0ba4e71af08dcbac271726b, type: 3}
   m_PrefabInstance: {fileID: 880015081}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &880015091
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 607886186}
-    m_Modifications:
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310524418817630001, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-      propertyPath: m_Name
-      value: PlazaOtter_ClownRigged
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 48d823918e704aaa86b89277679654e6, type: 3}
---- !u!4 &880015092 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 48d823918e704aaa86b89277679654e6, type: 3}
-  m_PrefabInstance: {fileID: 880015091}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &880017001
 PrefabInstance:
@@ -90504,6 +90277,1556 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 6248b168a8f54be19c870f4d9e1ea91c, type: 3}
   m_PrefabInstance: {fileID: 880021001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880022001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_PhotographerRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+--- !u!4 &880022002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: a393415d51884df1ba81633c659d4c9f, type: 3}
+  m_PrefabInstance: {fileID: 880022001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880024001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_MerchantRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+--- !u!4 &880024002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 725b505b292a428c830a3302bc05851e, type: 3}
+  m_PrefabInstance: {fileID: 880024001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880025001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_BardRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+--- !u!4 &880025002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: fbab68b928044dfdbdc521ada9f7b9a0, type: 3}
+  m_PrefabInstance: {fileID: 880025001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880026001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_DiverRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+--- !u!4 &880026002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 46d6209a67c543a0b9097d5a15c68796, type: 3}
+  m_PrefabInstance: {fileID: 880026001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880027001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_CleanerRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+--- !u!4 &880027002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: da9aa96398ef4bc795e99c4111700097, type: 3}
+  m_PrefabInstance: {fileID: 880027001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880028001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_ShyRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+--- !u!4 &880028002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 5a64e93865764a87b1886031854fe757, type: 3}
+  m_PrefabInstance: {fileID: 880028001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880029001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_PlayfulRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+--- !u!4 &880029002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 4f9b78c37c1c45c98d4fe25a20267670, type: 3}
+  m_PrefabInstance: {fileID: 880029001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880030001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_LaidbackRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+--- !u!4 &880030002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+  m_PrefabInstance: {fileID: 880030001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880031001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_NeatRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+--- !u!4 &880031002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 2a1b03740b2040c3b5f1d34623bd1e2f, type: 3}
+  m_PrefabInstance: {fileID: 880031001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880032001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_FluffyRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+--- !u!4 &880032002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 76b994efac974f5a8d50e7647958ba6a, type: 3}
+  m_PrefabInstance: {fileID: 880032001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880033001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_FashionRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+--- !u!4 &880033002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: a921ca1141444aec847fc5bc766afb8f, type: 3}
+  m_PrefabInstance: {fileID: 880033001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880034001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_SleepyRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+--- !u!4 &880034002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+  m_PrefabInstance: {fileID: 880034001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880035001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_WalkerRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+--- !u!4 &880035002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
+  m_PrefabInstance: {fileID: 880035001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880036001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_QuietRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+--- !u!4 &880036002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
+  m_PrefabInstance: {fileID: 880036001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880037001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_LivelyRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+--- !u!4 &880037002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: c801e6f7a7514c478bb0bf39c2294fcf, type: 3}
+  m_PrefabInstance: {fileID: 880037001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880038001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_FlowerRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+--- !u!4 &880038002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+  m_PrefabInstance: {fileID: 880038001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880039001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_StripeRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+--- !u!4 &880039002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
+  m_PrefabInstance: {fileID: 880039001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880040001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_HoodieRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+--- !u!4 &880040002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
+  m_PrefabInstance: {fileID: 880040001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880041001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_KnitRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+--- !u!4 &880041002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 3fc5da6d62e644829e8a8db20d52330b, type: 3}
+  m_PrefabInstance: {fileID: 880041001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880042001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_OverallsRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+--- !u!4 &880042002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: d0f36dbca1fa40c7bbb81dce39f71df1, type: 3}
+  m_PrefabInstance: {fileID: 880042001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880043001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_PlaidRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+--- !u!4 &880043002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
+  m_PrefabInstance: {fileID: 880043001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880044001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_BearPajamaRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+--- !u!4 &880044002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
+  m_PrefabInstance: {fileID: 880044001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880045001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_BeanieRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+--- !u!4 &880045002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+  m_PrefabInstance: {fileID: 880045001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880046001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_ScholarRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+--- !u!4 &880046002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 35d54292465a4b9fbdabee1a62e1b4db, type: 3}
+  m_PrefabInstance: {fileID: 880046001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &880047001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607886186}
+    m_Modifications:
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310524418817630001, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+      propertyPath: m_Name
+      value: PlazaOtter_VarsityRigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+--- !u!4 &880047002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7310524418817630002, guid: 8b0d36ece008431699295b5a4e150d8e, type: 3}
+  m_PrefabInstance: {fileID: 880047001}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -127,6 +127,9 @@ textarea { width: 100%; min-height: 92px; font-family: var(--font-data); font-si
           <button type="button" data-motion="fish" id="motion-fish">낚시</button>
           <button type="button" data-motion="build" id="motion-build">건축</button>
           <button type="button" data-motion="mine" id="motion-mine">광질</button>
+          <button type="button" data-motion="photo" id="motion-photo">사진 찍기</button>
+          <button type="button" data-motion="ring" id="motion-ring">호객</button>
+          <button type="button" data-motion="sweep" id="motion-sweep">비질</button>
         </div>
       </div>
       <div class="stage">
@@ -332,15 +335,59 @@ const MINE_KEYS = [
   [6.7, 10, -0.06, -0.1, 1.67, 85.9, 10.7, 1, 0.06, 0],
 ].map(([t, hips, body, head, near, nearX, nearY, grip, tail, stone, hit]) => ({ t, hips, body, head, near, nearX, nearY, grip, tail, stone, hit: hit || 0, spread: 8 }));
 const MINE_LOOP_FROM = .50;
+const PHOTO_UP = { near: -.9, far: -.75 }, PHOTO_LOOK = .45;
+const PHOTO_KEYS = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [.45, 12, .08, -.14, .15, .10, 0, 0, 0, 0],
+  [.85, 12, .08, .12, .15, .10, 0, 0, 0, 0],
+  [1.15, 14, .12, .04, "up", "up", .35, 0, 1, 0],
+  [1.45, 14, .12, .04, "up", "up", .35, 0, 1, 0],
+  [1.50, 13, .07, .02, "up", "up", 0, 1, 1, 0],
+  [1.62, 14, .11, .04, "up", "up", 0, 0, 1, 0],
+  [1.72, 13, .07, .02, "up", "up", 0, 1, 1, 0],
+  [1.84, 14, .11, .04, "up", "up", 0, 0, 1, 0],
+  [1.94, 13, .07, .02, "up", "up", 0, 1, 1, 0],
+  [2.10, 14, .11, .04, "up", "up", 0, 0, 1, 0],
+  [2.40, 4, .06, .20, "look", .05, 0, 0, 0, 0],
+  [2.85, -8, -.04, -.08, "look", -.10, 0, 0, 0, 1],
+  [3.10, 0, 0, -.04, "look", 0, 0, 0, 0, .6],
+  [3.40, 0, 0, 0, .15, .10, 0, 0, 0, 0],
+  [3.80, 12, .08, -.14, .15, .10, 0, 0, 0, 0],
+].map(([t, hips, body, head, near, far, fiddle, flash, up, sparkle]) => ({ t, hips, body, head, fiddle, flash, up, sparkle, spread: 4,
+  near: near === "up" ? PHOTO_UP.near : near === "look" ? PHOTO_LOOK : near, far: far === "up" ? PHOTO_UP.far : far }));
+const PHOTO_LOOP_FROM = .45;
+const PHOTO = { lens: [79, 36], sparkle: [70, -190], flash: 110, glow: 190, sparkleSize: 40, order: 11 };
+// Ringing the bell (QuarterRigView.RingKeys): rigs with front-head-smile.png (the 행상인).
+const RING_KEYS = [
+  [0, 0, 0, 0, 0, 0, 0],
+  [.30, 2, -.03, .06, -.30, 1, 1],
+  [1.40, 2, -.05, -.05, -.45, 1, 1],
+  [2.50, 2, -.03, .06, -.30, 1, 1],
+].map(([t, hips, body, head, near, ring, smile]) => ({ t, hips, body, head, near, ring, smile }));
+const RING_LOOP_FROM = .30;
+const RING = { raise: .8, shake: .28, rate: 4.5, beckon: .25, bob: 2.5 };
+// Sweeping (QuarterRigView.SweepKeys): rigs with sweep_dust.png (the 청소부); the broom is part of the far arm.
+const SWEEP_KEYS = [
+  [0, 0, 0, 0, 0, 0, 0],
+  [.35, 6, .05, .10, .15, -.50, 0],
+  [.62, 8, -.04, .14, -.10, .42, 1],
+  [.70, 7, -.03, .13, -.08, .38, .85],
+  [.97, 6, .05, .10, .15, -.50, 0],
+  [1.24, 8, -.04, .16, -.10, .42, 1],
+  [1.32, 7, -.03, .15, -.08, .38, .85],
+  [1.59, 6, .05, .10, .15, -.50, 0],
+].map(([t, hips, body, head, near, far, dust]) => ({ t, hips, body, head, near, far, dust, spread: 6 }));
+const SWEEP_LOOP_FROM = .35;
+const SWEEP = { tip: [32, 118], size: 50, drift: 30 };
 const ROCK = { x: 115, y: 10, height: 52, top: -36, order: 5.5, chipSize: 14, chipFlight: 34 };
 const ROCK_STAGES = ["rock_0", "rock_1", "rock_2", "rock_rubble"];
 const SLEDGE = { headReach: 117, logX: 97, logY: -29, logHeight: 36, chipFlight: 52 };
 const HAMMER = { logX: 22, logY: -26, logHeight: 34, headReach: 46, bend: 0, chipSize: 22, chipFlight: 30,
   front: 7, rear: 1, logFront: 5, logRear: -1, chipOrder: 9 };
 // nearX / nearY: the near arm's joint moved (rig px); grip: the far arm turns to grab the handle at GRIP_ON_HANDLE.
-const NO_ACTION = { hips: 0, body: 0, head: 0, near: 0, far: 0, tail: 0, pack: 0, spread: 0, crop: 0, kick: 0, fiddle: 0, rod: 0, hold: 0, line: 0, bite: 0, hammer: 0, hit: 0, stone: -1, nearX: 0, nearY: 0, grip: 0 };
+const NO_ACTION = { hips: 0, body: 0, head: 0, near: 0, far: 0, tail: 0, pack: 0, spread: 0, crop: 0, kick: 0, fiddle: 0, rod: 0, hold: 0, line: 0, bite: 0, hammer: 0, hit: 0, stone: -1, nearX: 0, nearY: 0, grip: 0, flash: 0, up: 0, sparkle: 0, ring: 0, smile: 0, dust: 0 };
 const GRIP_ON_HANDLE = [5, -30];
-for (const keys of [HARVEST_KEYS, KICK_KEYS, PUZZLE_KEYS, FISH_KEYS, BUILD_KEYS, SLEDGE_KEYS, MINE_KEYS])
+for (const keys of [HARVEST_KEYS, KICK_KEYS, PUZZLE_KEYS, FISH_KEYS, BUILD_KEYS, SLEDGE_KEYS, MINE_KEYS, PHOTO_KEYS, RING_KEYS, SWEEP_KEYS])
   for (const key of keys) for (const field in NO_ACTION) if (key[field] === undefined) key[field] = NO_ACTION[field];
 
 const PART_NAMES = { body: "몸통", head: "머리", nearArm: "가까운 팔", farArm: "먼 팔", nearLeg: "가까운 다리", farLeg: "먼 다리", tail: "꼬리", backpack: "가방" };
@@ -448,6 +495,7 @@ function sample(keys, t) {
   const out = {};
   for (const k of Object.keys(NO_ACTION)) out[k] = lerp(k0[k], k1[k], u);
   out.stone = u >= 1 ? k1.stone : k0.stone;
+  out.up = u >= 1 ? k1.up : k0.up;
   return out;
 }
 function droop(nod) {
@@ -458,7 +506,7 @@ function droop(nod) {
 const isLeg = name => name.endsWith("Leg");
 
 function facing() {
-  const forcedFront = ["harvest", "sit", "build", "mine"].includes(state.motion);
+  const forcedFront = ["harvest", "sit", "build", "mine", "photo", "ring", "sweep"].includes(state.motion);
   return { rear: !forcedFront && (state.dir === "NW" || state.dir === "NE"), left: state.dir === "NW" || state.dir === "SW" };
 }
 
@@ -470,11 +518,13 @@ function poseView(rear) {
   const a = anim.action ? sample(anim.action, anim.actionTime) : NO_ACTION;
   const sb = smooth(anim.sitBlend);
   const nod = repeat(anim.nodTime / NOD_SECONDS, 1);
-  const dr = sb * droop(nod);
+  // A rig with fx-note.png (the 음악가) plays its guitar when it sits instead of dozing (QuarterRigView.PlaysSeated).
+  const play = SPR["fx-note"] ? sb : 0;
+  const dr = play ? 0 : sb * droop(nod);
   const poses = {};
   for (const b of bones) {
     const t = tuningOf(view, b.name);
-    if (isLeg(b.name)) { poses[b.name] = poseLeg(b.name === "nearLeg", w, a.spread, sb, t, b.name === "nearLeg" ? a.kick : 0); continue; }
+    if (isLeg(b.name)) { poses[b.name] = poseLeg(b.name === "nearLeg", w, a.spread, sb, t, b.name === "nearLeg" ? a.kick : 0, SPR["fx-note"] ? sb : 0); continue; }
     let x = b.pos[0], y = b.pos[1], angle = 0;
     switch (b.name) {
       case "hips": y += 8 - 3.8 * w * (1 - Math.cos(2 * p)); break;
@@ -492,19 +542,29 @@ function poseView(rear) {
       case "hips": y += a.hips; break;
       case "body": angle += a.body; break;
       case "head": angle += a.head; break;
-      case "nearArm": angle += a.near + a.fiddle * FIDDLE.near * Math.sin(anim.clock * FIDDLE.perSecond * Math.PI * 2); x += a.nearX; y += a.nearY; break;
-      case "farArm": angle += a.far + a.fiddle * FIDDLE.far * Math.sin(anim.clock * FIDDLE.perSecond * Math.PI * 2 + 1.3); break;
+      case "nearArm": angle += a.near + a.fiddle * FIDDLE.near * Math.sin(anim.clock * FIDDLE.perSecond * Math.PI * 2); x += a.nearX; y += a.nearY;
+        angle += a.ring * RING.beckon * Math.sin(anim.clock * RING.rate * .5 * Math.PI * 2); break;
+      case "farArm": angle += a.far + a.fiddle * FIDDLE.far * Math.sin(anim.clock * FIDDLE.perSecond * Math.PI * 2 + 1.3);
+        angle += a.ring * (-RING.raise + RING.shake * Math.sin(anim.clock * RING.rate * Math.PI * 2)); break;
       case "tail": angle += a.tail; break;
       case "backpack": angle += a.pack; break;
     }
+    if (b.name === "hips") y -= a.ring * RING.bob * Math.abs(Math.sin(anim.clock * RING.rate * .5 * Math.PI * 2));
     if (b.name === "head") angle += a.fiddle * FIDDLE.head * Math.sin(anim.clock * 1.3) + a.line * .025 * Math.sin(anim.clock * 1.5);
     switch (b.name) {
       case "hips": y += SIT_HIPS_DROP * sb; break;
       case "body": y += sb * Math.sin(anim.clock * 1.7) * 1.4; angle += .035 * dr; break;
       case "head": y += 10 * dr; angle += .28 * dr; break;
-      case "nearArm": angle += -.4 * sb; break;
-      case "farArm": angle += .18 * sb; break;
+      case "nearArm": angle += -.4 * sb * (1 - play); break;
+      case "farArm": angle += .18 * sb * (1 - play); break;
       case "tail": angle += .22 * sb; break;
+    }
+    // Playing: swaying to the tune, strumming (the guitar arm), the tail keeping time.
+    if (play) switch (b.name) {
+      case "body": angle += play * PLAY.body * Math.sin(anim.clock * PLAY.sway * Math.PI * 2); break;
+      case "head": angle += play * (PLAY.headTilt + PLAY.head * Math.sin(anim.clock * PLAY.sway * Math.PI * 2 - .6)); break;
+      case "nearArm": angle += play * PLAY.strum * Math.sin(anim.clock * PLAY.strumRate * Math.PI * 2); break;
+      case "tail": angle += play * .1 * Math.sin(anim.clock * PLAY.sway * 2 * Math.PI * 2); break;
     }
     x += t.x; y += t.y; angle += t.rotation * Math.PI / 180;
     poses[b.name] = { x, y, rot: angle, jsy: 1 };
@@ -512,7 +572,10 @@ function poseView(rear) {
   return { poses, a, sb, nod };
 }
 
-function poseLeg(near, w, spread, sit, t, kick) {
+// Sitting and playing (rigs with fx-note.png, the 음악가): the near leg crossed over the far one.
+const CROSS = { hip: [4, 40], angle: 120, farAngle: 70 };
+const PLAY = { sway: .6, body: .03, head: .07, headTilt: .08, strum: .07, strumRate: 2.2, every: .8, start: [.55, 1.45] };
+function poseLeg(near, w, spread, sit, t, kick, cross) {
   const q = repeat(anim.phase + (near ? 0 : .5), 1);
   const stance = q < LEGS.stanceFraction;
   const u = stance ? q / LEGS.stanceFraction : (q - LEGS.stanceFraction) / (1 - LEGS.stanceFraction);
@@ -521,9 +584,10 @@ function poseLeg(near, w, spread, sit, t, kick) {
   const lift = stance ? 0 : LEGS.lift * w * Math.pow(Math.sin(Math.PI * u), 1.3);
   const stand = [(near ? LEGS.nearX - spread : LEGS.farX + spread) + travel, (near ? 0 : FAR_LEG_REST_Y) + lift];
   const swing = (stance ? 0 : -LEGS.swingAngle * w * Math.sin(2 * Math.PI * u)) * 180 / Math.PI;
-  const degrees = near ? SIT_NEAR_ANGLE : SIT_FAR_ANGLE;
+  const c = cross || 0;
+  const degrees = near ? lerp(SIT_NEAR_ANGLE, CROSS.angle, c) : lerp(SIT_FAR_ANGLE, CROSS.farAngle, c);
   const length = SIT_LEG_LENGTH * SIT_LEG_FORESHORTEN;
-  const hip = near ? SIT_NEAR_HIP : SIT_FAR_HIP;
+  const hip = near ? [lerp(SIT_NEAR_HIP[0], CROSS.hip[0], c), lerp(SIT_NEAR_HIP[1], CROSS.hip[1], c)] : SIT_FAR_HIP;
   const seated = [hip[0] + Math.sin(degrees * Math.PI / 180) * length, hip[1] - Math.cos(degrees * Math.PI / 180) * length];
   // Unity: y up, rotation counter-clockwise; converted to the canvas here.
   let ux = lerp(stand[0], seated[0], sit) + t.x, uy = lerp(stand[1], seated[1], sit) - t.y;
@@ -549,10 +613,10 @@ function step(dt) {
       anim.actionTime += dt;
       if (anim.actionTime >= anim.action[anim.action.length - 1].t) { anim.action = null; anim.harvestWait = .8; }
     } else if ((anim.harvestWait -= dt) <= 0) { anim.action = HARVEST_KEYS; anim.actionTime = 0; }
-  } else if (["kick", "puzzle", "fish", "build", "mine"].includes(state.motion)) {
+  } else if (["kick", "puzzle", "fish", "build", "mine", "photo", "ring", "sweep"].includes(state.motion)) {
     const heavy = !SPR.hammer && SPR.sledge;
-    const keys = { kick: KICK_KEYS, puzzle: PUZZLE_KEYS, fish: FISH_KEYS, build: heavy ? SLEDGE_KEYS : BUILD_KEYS, mine: MINE_KEYS }[state.motion];
-    const from = { kick: 0, puzzle: PUZZLE_LOOP_FROM, fish: FISH_LOOP_FROM, build: heavy ? SLEDGE_LOOP_FROM : BUILD_LOOP_FROM, mine: MINE_LOOP_FROM }[state.motion];
+    const keys = { kick: KICK_KEYS, puzzle: PUZZLE_KEYS, fish: FISH_KEYS, build: heavy ? SLEDGE_KEYS : BUILD_KEYS, mine: MINE_KEYS, photo: PHOTO_KEYS, ring: RING_KEYS, sweep: SWEEP_KEYS }[state.motion];
+    const from = { kick: 0, puzzle: PUZZLE_LOOP_FROM, fish: FISH_LOOP_FROM, build: heavy ? SLEDGE_LOOP_FROM : BUILD_LOOP_FROM, mine: MINE_LOOP_FROM, photo: PHOTO_LOOP_FROM, ring: RING_LOOP_FROM, sweep: SWEEP_LOOP_FROM }[state.motion];
     if (anim.action !== keys) { anim.action = keys; anim.actionTime = 0; anim.ballTime = 0; }
     anim.actionTime += dt;
     anim.ballTime += dt;
@@ -564,9 +628,10 @@ function step(dt) {
   anim.sitBlend = moveTowards(anim.sitBlend, sitting ? 1 : 0, dt / SIT_BLEND_SECONDS);
   if (sitting) anim.nodTime += dt;
   const nod = repeat(anim.nodTime / NOD_SECONDS, 1);
-  if (sitting && anim.sitBlend >= 1 && nod > .1 && nod < NOD_SINK_END) {
+  const playing = !!SPR["fx-note"];
+  if (sitting && anim.sitBlend >= 1 && (playing || (nod > .1 && nod < NOD_SINK_END))) {
     anim.zTimer -= dt;
-    if (anim.zTimer <= 0) { anim.zTimer = Z_EVERY; anim.zs.push({ age: 0 }); }
+    if (anim.zTimer <= 0) { anim.zTimer = playing ? PLAY.every : Z_EVERY; anim.zs.push({ age: 0 }); }
   }
   for (const z of anim.zs) z.age += dt;
   anim.zs = anim.zs.filter(z => z.age < Z_LIFE);
@@ -623,9 +688,11 @@ function render() {
     if (b.name === "hips" || (b.name === "backpack" && isCustom() && !state.look.acc.backpack)) continue;
     const t = tuningOf(view, b.name);
     let key = (f.rear ? "rear-" : "front-") + b.name;
-    const dozing = state.motion === "sit" && sb > .5 && (nod < BLINK_FROM || nod >= BLINK_TO);
+    // Playing, the eyes stay softly closed (no startled blink).
+    const dozing = state.motion === "sit" && sb > .5 && (SPR["fx-note"] || nod < BLINK_FROM || nod >= BLINK_TO);
     if (b.name === "head" && isCustom()) key = customHeadKey(f.rear, dozing);
     else if (!f.rear && b.name === "head" && dozing && SPR["front-head-sleep"]) key = "front-head-sleep";
+    else if (!f.rear && b.name === "head" && a.smile > .5 && SPR["front-head-smile"]) key = "front-head-smile";
     items.push({ order: b.layer, part: b.name, key, matrix: m.scale(t.scaleX, t.scaleY), seq: items.length });
   }
   if (isCustom() && CUSTOM) pushCustom(items, world, f, view, sb, nod, bones);
@@ -714,6 +781,36 @@ function render() {
       }
     }
   }
+  // Photo (QuarterRigView.PoseFlash): near arm over the head while the camera is up, flash at the lens,
+  // sparkle over the head.
+  if (SPR.flash_star) {
+    const nearItem = items.find(it => it.part === "nearArm");
+    if (nearItem && a.up > .5) nearItem.order = bones.find(b => b.name === "head").layer + .5;
+    if (a.flash > .02) {
+      const lens = world.nearArm.transformPoint(new DOMPoint(PHOTO.lens[0], PHOTO.lens[1]));
+      if (SPR.flash_glow) {
+        const g = PHOTO.glow * a.flash / (SPR.flash_glow.h / 2);
+        items.push({ order: PHOTO.order, part: null, key: "flash_glow", seq: items.length, alpha: a.flash, matrix: new DOMMatrix().translate(lens.x, lens.y).scale(g, g) });
+      }
+      const k = PHOTO.flash * (.6 + .6 * a.flash) / (SPR.flash_star.h / 2);
+      items.push({ order: PHOTO.order, part: null, key: "flash_star", seq: items.length, alpha: a.flash, matrix: new DOMMatrix().translate(lens.x, lens.y).rotate(-20 * a.flash).scale(k, k) });
+    }
+    if (a.sparkle > .02 && SPR.sparkle) {
+      const p = world.head.transformPoint(new DOMPoint(PHOTO.sparkle[0], PHOTO.sparkle[1]));
+      const k = PHOTO.sparkleSize * (.5 + .5 * a.sparkle) / (SPR.sparkle.h / 2);
+      items.push({ order: PHOTO.order, part: null, key: "sparkle", seq: items.length, alpha: Math.min(1, a.sparkle * 1.5), matrix: new DOMMatrix().translate(p.x, p.y).rotate(-30 * (1 - a.sparkle)).scale(k, k) });
+    }
+  }
+  // Dust from the broom's tip (QuarterRigView.PoseDust).
+  if (a.dust > .02 && SPR.sweep_dust && world.farArm) {
+    const tip = world.farArm.transformPoint(new DOMPoint(SWEEP.tip[0], SWEEP.tip[1]));
+    const ty = Math.min(tip.y, 0), t = 1 - a.dust;
+    [-.6, 1].forEach((side, i) => {
+      const x = tip.x + side * SWEEP.drift * (.3 + t), y = ty - SWEEP.drift * (.2 + t) * (i === 0 ? .7 : 1);
+      const k = SWEEP.size * (.6 + .8 * t) * (i === 0 ? .8 : 1) / (SPR.sweep_dust.h / 2);
+      items.push({ order: PHOTO.order, part: null, key: "sweep_dust", seq: items.length, alpha: Math.min(1, a.dust * 1.3), matrix: new DOMMatrix().translate(x, y).scale(k, k) });
+    });
+  }
   // The rock in front at its stage, stone chips off each blow (QuarterRigView.PoseRock).
   if (a.stone >= 0 && SPR.rock_0) {
     const key = ROCK_STAGES[Math.max(0, Math.min(3, Math.round(a.stone)))];
@@ -731,15 +828,16 @@ function render() {
       }
     }
   }
-  // Zzz
+  // Zzz (or notes while playing, rising from the guitar)
+  const noteKey = SPR["fx-note"] ? "fx-note" : "fx-z", zStart = SPR["fx-note"] ? PLAY.start : Z_START;
   for (const z of anim.zs) {
     const t = z.age / Z_LIFE;
-    const ux = Z_START[0] + Z_RISE[0] * t + .12 * Math.sin(t * 7), uy = Z_START[1] + Z_RISE[1] * t;
+    const ux = zStart[0] + Z_RISE[0] * t + .12 * Math.sin(t * 7), uy = zStart[1] + Z_RISE[1] * t;
     const scale = lerp(.7, 1.15, t);
     let m = new DOMMatrix().translate(ux * 100, -uy * 100).rotate(-12 * Math.sin(t * 5)).scale(scale, scale);
     if (f.left) m = m.scale(-1, 1);
     const alpha = clamp01(t * 6) * (1 - smooth(clamp01((t - .55) / .45)));
-    items.push({ order: Z_ORDER, part: null, key: "fx-z", matrix: m, seq: items.length, alpha });
+    items.push({ order: Z_ORDER, part: null, key: noteKey, matrix: m, seq: items.length, alpha });
   }
 
   items.sort((p, q) => p.order - q.order || p.seq - q.seq);
@@ -1306,6 +1404,9 @@ function syncFields() {
     : state.motion === "fish" ? "뱃사람만 하는 낚시예요 (낚싯대가 있는 해달만)"
     : state.motion === "build" ? (SPR.sledge ? "작업반장은 오함마로 내리쳐요" : "야구 해달은 망치로 두드려요")
     : state.motion === "mine" ? "광부만 하는 광질이에요 (곡괭이로 바위를 깨요)"
+    : state.motion === "photo" ? "사진가만 하는 사진 찍기예요 (주간너굴 기자처럼 몰래 찰칵)"
+    : state.motion === "ring" ? "행상인만 하는 호객이에요 (제자리에서 종을 흔들며 눈웃음)"
+    : state.motion === "sweep" ? "청소부만 하는 비질이에요 (제자리에서 빗자루로 쓱쓱)"
     : isCustom() ? "오른쪽 꾸미기에서 털 색·표정·모자를 골라요" : "부위를 눌러 고르고, 끌어서 옮겨요";
   document.getElementById("stageNote").textContent = note;
   document.getElementById("json").value = exportJson();
@@ -1326,6 +1427,21 @@ function syncFields() {
   mineButton.disabled = !SPR.rock_0;
   mineButton.title = SPR.rock_0 ? "" : "곡괭이를 든 해달(광부)만 광질을 해요";
   if (!SPR.rock_0 && state.motion === "mine") { state.motion = "idle"; pressGroup("motions", "motion", "idle"); }
+  // Photos need a flash: only the photographer.
+  const photoButton = document.getElementById("motion-photo");
+  photoButton.disabled = !SPR.flash_star;
+  photoButton.title = SPR.flash_star ? "" : "카메라를 든 해달(사진가)만 사진을 찍어요";
+  if (!SPR.flash_star && state.motion === "photo") { state.motion = "idle"; pressGroup("motions", "motion", "idle"); }
+  // Ringing needs the smiling head: only the merchant.
+  const ringButton = document.getElementById("motion-ring");
+  ringButton.disabled = !SPR["front-head-smile"];
+  ringButton.title = SPR["front-head-smile"] ? "" : "종을 든 해달(행상인)만 호객을 해요";
+  if (!SPR["front-head-smile"] && state.motion === "ring") { state.motion = "idle"; pressGroup("motions", "motion", "idle"); }
+  // Sweeping needs the dust: only the cleaner.
+  const sweepButton = document.getElementById("motion-sweep");
+  sweepButton.disabled = !SPR.sweep_dust;
+  sweepButton.title = SPR.sweep_dust ? "" : "빗자루를 든 해달(청소부)만 비질을 해요";
+  if (!SPR.sweep_dust && state.motion === "sweep") { state.motion = "idle"; pressGroup("motions", "motion", "idle"); }
   document.getElementById("unityPath").textContent = isCustom() ? "꾸미기 해달은 아직 Unity에 없어요. 꾸미기 JSON을 저장해 두세요." : `Assets/Resources/${RK}/tuning.json`;
   document.getElementById("save").textContent = isCustom() ? "꾸미기 JSON 저장" : "tuning.json 저장";
   for (const b of document.querySelectorAll("#rigs button")) b.setAttribute("aria-pressed", b.dataset.rig === RK ? "true" : "false");
