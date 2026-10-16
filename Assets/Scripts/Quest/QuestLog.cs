@@ -61,6 +61,12 @@ public class QuestLog
 
     public bool HasVisited(string sceneName) => !string.IsNullOrEmpty(sceneName) && _visitedZones.Contains(sceneName);
 
+    // 넘친 진행: 목표를 넘겨 센 만큼(보상을 받기 전에 더 한 것도) 같은 종류의 다음 퀘스트로 넘김.
+    // 키 = QuestProgressRules.CarryKey (메인 · 도전의 이벤트로 세는 목표만). 예: 업그레이드 2회인데 3번 하면 다음 업그레이드 퀘스트가 1부터
+    private readonly Dictionary<string, int> _carry = new Dictionary<string, int>();
+
+    public IReadOnlyDictionary<string, int> Carry => _carry;
+
     /// <returns>진행 수치 (목표를 넘지 않음)</returns>
     public int GetProgress(QuestDefinition quest)
     {
@@ -91,14 +97,60 @@ public class QuestLog
         if (amount < 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "진행 수치는 줄일 수 없습니다.");
 
-        if (amount == 0 || GetStatus(quest) != QuestStatus.InProgress)
+        if (amount == 0)
+            return false;
+        var status = GetStatus(quest);
+        string carryKey = QuestProgressRules.CarryKey(quest);
+        // 다 채우고 아직 안 받은 퀘스트에 더 들어온 것은 다음 퀘스트 몫
+        if (status == QuestStatus.Claimable && carryKey != null)
+            AddCarry(carryKey, amount);
+        if (status != QuestStatus.InProgress)
             return false;
 
         var record = GetRecord(quest);
-        int progress = (int)Math.Min((long)record.Progress + amount, quest.Goal);
+        long total = (long)record.Progress + amount;
+        int progress = (int)Math.Min(total, quest.Goal);
+        if (total > progress && carryKey != null)
+            AddCarry(carryKey, (int)Math.Min(total - progress, int.MaxValue));
         _records[quest.QuestId] = new QuestRecord(progress, false);
         OnChanged?.Invoke(quest);
         return true;
+    }
+
+    /// <summary>
+    /// 처음 열린(기록이 없는) 퀘스트에 같은 종류의 넘친 진행을 넣는다. 다 쓰지 못한 것은 그다음 퀘스트 몫으로 남는다.
+    /// QuestManager가 퀘스트가 열릴 때(보상 받기 · 레벨업 · 불러오기) 부른다
+    /// </summary>
+    /// <returns>진행이 바뀌었으면 true</returns>
+    public bool TakeCarry(QuestDefinition quest)
+    {
+        if (quest == null)
+            throw new ArgumentNullException(nameof(quest));
+        string key = QuestProgressRules.CarryKey(quest);
+        if (key == null || _records.ContainsKey(quest.QuestId) || !_carry.TryGetValue(key, out int carry) || carry <= 0)
+            return false;
+
+        int used = Math.Min(carry, quest.Goal);
+        if (carry - used > 0)
+            _carry[key] = carry - used;
+        else
+            _carry.Remove(key);
+        _records[quest.QuestId] = new QuestRecord(used, false);
+        OnChanged?.Invoke(quest);
+        return true;
+    }
+
+    /// <summary>세이브 복원용</summary>
+    public void LoadCarry(string key, int amount)
+    {
+        if (!string.IsNullOrEmpty(key) && amount > 0)
+            _carry[key] = amount;
+    }
+
+    private void AddCarry(string key, int amount)
+    {
+        _carry.TryGetValue(key, out int carry);
+        _carry[key] = (int)Math.Min((long)carry + amount, int.MaxValue);
     }
 
     /// <summary>

@@ -114,6 +114,12 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     [Tooltip("이 건물이 있어야 할 구역 (구역·이사). None이면 어디에 놓아도 됨")]
     [SerializeField] private DistrictType _district;
 
+    [Header("농장")]
+    [Tooltip("광장 농장 부품이면 그 쓰임 (밭 칸 · 상자 · 길 · 스프링클러). Docs/농장_설계형_기획.md")]
+    [SerializeField] private FarmPartKind _farmPart;
+    [Tooltip("공사 없이 바로 놓임 (길처럼 많이 까는 것). 다른 공사와 상관없이 놓을 수 있음")]
+    [SerializeField] private bool _instant;
+
     [Header("그림")]
     [Tooltip("완성 그림의 가로가 차지한 칸 가로의 몇 배인지 (지붕 처마가 칸보다 조금 넓어도 됨)")]
     [Range(0.5f, 1.5f)]
@@ -139,6 +145,9 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     public IReadOnlyList<BuildingBonus> Bonuses => _bonuses;
     public bool HostsFairyShop => _hostsFairyShop;
     public DistrictType District => _district;
+    public FarmPartKind FarmPart => _farmPart;
+    public bool IsFarmPart => _farmPart != FarmPartKind.None;
+    public bool Instant => _instant;
 
     /// <summary>테스트·설정 도구용: 구역</summary>
     public void SetupDistrict(DistrictType district) => _district = district;

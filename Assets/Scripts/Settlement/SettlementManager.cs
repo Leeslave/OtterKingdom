@@ -191,6 +191,7 @@ public partial class SettlementManager : MonoBehaviour
         TickToyVisits();
         TickRelocation();
         FinishDueBuildings();
+        TickFarm(Time.deltaTime);
         CompleteRecordRequests();
         if (Settlement.Job == null)
             return;

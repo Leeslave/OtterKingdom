@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64100330cd6b4064896c5645fbc385d0, type: 3}
+  m_Name: Pickaxe_2
+  m_EditorClassIdentifier: OtterKingdom::MinePickaxeDefinition
+  _displayName: "\uBB3C\uACB0 \uCCA0 \uACE1\uAD2D\uC774"
+  _description: "\uD30C\uB3C4\uCC98\uB7FC \uB2E8\uB2E8\uD55C \uCCA0 \uB0A0"
+  _icon: {fileID: 21300000, guid: 49cc3961b8bd6934ba59609ba6566461, type: 3}
+  _recipe:
+  - _ore: {fileID: 11400000, guid: c8c972aaac2a18546b91845178d6ffe1, type: 2}
+    _amount: 15
+  - _ore: {fileID: 11400000, guid: b954f3024ada15e4a9d1ccc48c973da8, type: 2}
+    _amount: 10
+  _goldCost: 500
+  _power: 3
+  _minerSpeedBonus: 0.2
+  _rareBonus: 0.02
+  _sharpenCosts: f4010000e8030000

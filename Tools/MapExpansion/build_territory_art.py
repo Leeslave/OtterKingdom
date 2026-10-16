@@ -399,6 +399,9 @@ START = (-42, 38, 26, 20)
 # 바닷가 (옛 시작 광장, 선착장 · 낚시터 쪽): 낚시터를 찾으면 열림 (Lv.15)
 SHORE = (-1, -4, 26, 37)
 SHORE_DEVELOPMENT = "fishing_found"
+# 바닷가 길: 공터 남동쪽 모서리에서 지도의 모래길을 따라 바닷가까지 (ㄱ자, 남쪽 블록 · 북동 블록 사이 숲).
+# 바닷가와 같이 열림 → 그 숲이 사라지고 걸어서 선착장까지 감. 그루터기 없음
+SHORE_PATH = [(-16, 38, 14, 5), (-4, 31, 5, 12)]
 
 # 방향 = 구역 블록 하나. 단계 = 블록이 커지는 단계 (그 단계의 숲을 개간하고 영토 확장 미션을 끝내면 열림)
 # 단계: (칸 영역, 숲 개간 수). 1단계가 공터에 가장 가깝다
@@ -564,7 +567,7 @@ def build_forest(sea, patch_list):
 
     # 개간한 조각에 남는 그루터기 (그 단계가 열리기 전까지)
     for g in groups.values():
-        if not g["development"]:
+        if not g["development"] or not g["stumpsUntil"]:
             continue
         cands = [(t["x"], t["y"]) for t in g["trees"] if t["sprite"] != "Forest_Bush"]
         rng.shuffle(cands)
@@ -836,6 +839,8 @@ def main():
         for k, p in enumerate(patches(rect, clearings, prev), start=1):
             patch_list.append({"id": f"{d['key']}_{t}_{k}", "rect": p, "development": f"{expansion_id(d['key'], t)}_c{k}",
                                "expansion": expansion_id(d["key"], t)})
+    for k, rect in enumerate(SHORE_PATH, start=1):
+        patch_list.append({"id": f"shore_path_{k}", "rect": cell_rect_px(rect), "development": SHORE_DEVELOPMENT, "expansion": ""})
 
     # 걷기 영역: 공터(늘) · 단계(넓히면) · 바닷가(낚시터를 찾으면)
     regions = [{"id": "start", "development": "", "rect": px_rect_json(cell_rect_px(START)),
@@ -845,13 +850,19 @@ def main():
                         "rect": px_rect_json(cell_rect_px(rect)), "polygons": region_polygons(walk, cell_rect_px(rect), CELL_OVERLAP)})
     regions.append({"id": "shore", "development": SHORE_DEVELOPMENT, "rect": px_rect_json(cell_rect_px(SHORE)),
                     "polygons": region_polygons(walk, cell_rect_px(SHORE), CELL_OVERLAP)})
+    for k, rect in enumerate(SHORE_PATH, start=1):
+        regions.append({"id": f"shore_path_{k}", "development": SHORE_DEVELOPMENT, "rect": px_rect_json(cell_rect_px(rect)),
+                        "polygons": region_polygons(walk, cell_rect_px(rect), CELL_OVERLAP)})
 
     # 옛 그늘 그림은 지움 (묶음 이름이 바뀜)
     for name in os.listdir(OUT_DIR):
-        if name.startswith("Shade_") and (name.endswith(".png") or name.endswith(".png.meta")):
+        if name.startswith("Shade_") and name.endswith(".png"):
             os.remove(os.path.join(OUT_DIR, name))
     groups = build_forest(sea, patch_list)
     build_shades(sea, groups, patch_list)
+    for name in os.listdir(OUT_DIR):
+        if name.startswith("Shade_") and name.endswith(".png.meta") and not os.path.exists(os.path.join(OUT_DIR, name[:-5])):
+            os.remove(os.path.join(OUT_DIR, name))
     for g in groups:
         g.pop("rect", None)
     sites = build_sites(walk)

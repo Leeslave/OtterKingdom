@@ -136,6 +136,26 @@ public static class QuestProgressRules
         return openedFurrows >= needed ? 1 : 0;
     }
 
+    /// <summary>
+    /// 넘친 진행을 나눠 쓰는 종류 (QuestLog.TakeCarry). 메인 · 도전의 이벤트로 세는 목표(수확 · 판매 · 업그레이드 · 광석 …)만,
+    /// 종류 · 목표 · 대상 · 아이템 · 분류 · 도감 탭이 같으면 같은 몫. 기록으로 다시 세는 목표 · 일일은 null (넘기지 않음)
+    /// </summary>
+    public static string CarryKey(QuestDefinition quest)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        if (quest.Kind == QuestKind.Daily || quest.CountsFromRecords)
+            return null;
+        switch (quest.GoalType)
+        {
+            case QuestGoalType.VisitZone:
+            case QuestGoalType.UnlockFurrow:
+            case QuestGoalType.CompleteDaily:
+                return null;
+        }
+        return $"{quest.Kind}|{quest.GoalType}|{quest.Target}|{(quest.Item != null ? quest.Item.name : "")}|" +
+               $"{(quest.ItemFilter != null ? quest.ItemFilter.name : "")}|{quest.CollectionTab}";
+    }
+
     /// <summary>업그레이드 목표의 대상이 이 값이면 곡괭이 레벨로 다시 센다 (FromPickaxeLevel)</summary>
     public const string PickaxeTarget = "pickaxe";
 

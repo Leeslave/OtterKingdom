@@ -496,6 +496,54 @@
      ]
     }
    ]
+  },
+  {
+   "id": "shore_path_1",
+   "development": "fishing_found",
+   "rect": {
+    "x0": -608.0,
+    "y0": -376.0,
+    "x1": -48.0,
+    "y1": -176.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -653,
+      -422,
+      -653,
+      -138,
+      -9,
+      -138,
+      -9,
+      -422
+     ]
+    }
+   ]
+  },
+  {
+   "id": "shore_path_2",
+   "development": "fishing_found",
+   "rect": {
+    "x0": -128.0,
+    "y0": -376.0,
+    "x1": 72.0,
+    "y1": 104.0
+   },
+   "polygons": [
+    {
+     "points": [
+      -173,
+      -422,
+      -173,
+      142,
+      111,
+      142,
+      111,
+      -422
+     ]
+    }
+   ]
   }
  ],
  "groups": [
@@ -1736,14 +1784,6 @@
      "tint": 0.892
     },
     {
-     "sprite": "Forest_Oak_0",
-     "x": -516.1,
-     "y": -77.0,
-     "scale": 0.536,
-     "flip": true,
-     "tint": 0.877
-    },
-    {
      "sprite": "Forest_Oak_1",
      "x": -643.2,
      "y": 49.1,
@@ -1838,46 +1878,6 @@
      "scale": 0.631,
      "flip": true,
      "tint": 0.994
-    },
-    {
-     "sprite": "Forest_Pine_0",
-     "x": -149.4,
-     "y": 199.5,
-     "scale": 0.657,
-     "flip": true,
-     "tint": 0.969
-    },
-    {
-     "sprite": "Forest_Oak_0",
-     "x": -370.6,
-     "y": -25.7,
-     "scale": 0.573,
-     "flip": true,
-     "tint": 0.901
-    },
-    {
-     "sprite": "Forest_Oak_0",
-     "x": -352.6,
-     "y": -167.1,
-     "scale": 0.659,
-     "flip": false,
-     "tint": 0.87
-    },
-    {
-     "sprite": "Forest_Oak_1",
-     "x": -255.7,
-     "y": -73.7,
-     "scale": 0.544,
-     "flip": true,
-     "tint": 0.935
-    },
-    {
-     "sprite": "Forest_Pine_1",
-     "x": -140.6,
-     "y": -57.2,
-     "scale": 0.708,
-     "flip": false,
-     "tint": 0.927
     },
     {
      "sprite": "Forest_Bush",
@@ -4937,22 +4937,14 @@
      "scale": 0.68,
      "flip": true,
      "tint": 0.916
-    },
-    {
-     "sprite": "Forest_Pine_1",
-     "x": -103.0,
-     "y": 92.6,
-     "scale": 0.714,
-     "flip": true,
-     "tint": 0.925
     }
    ],
    "stumps": [],
    "shade": {
     "sprite": "Shade_wild_2_2",
     "x0": -1029,
-    "y0": -122,
-    "x1": 91,
+    "y0": 53,
+    "x1": 41,
     "y1": 998
    }
   },
@@ -5399,52 +5391,12 @@
    "stumpsUntil": "",
    "trees": [
     {
-     "sprite": "Forest_Oak_0",
-     "x": -190.1,
-     "y": -269.6,
-     "scale": 0.591,
-     "flip": true,
-     "tint": 0.979
-    },
-    {
-     "sprite": "Forest_Oak_0",
-     "x": 22.4,
-     "y": -76.1,
-     "scale": 0.658,
-     "flip": false,
-     "tint": 0.866
-    },
-    {
-     "sprite": "Forest_Oak_1",
-     "x": -46.7,
-     "y": -172.0,
-     "scale": 0.628,
-     "flip": true,
-     "tint": 0.967
-    },
-    {
      "sprite": "Forest_Pine_1",
      "x": -171.9,
      "y": -458.1,
      "scale": 0.648,
      "flip": false,
      "tint": 0.934
-    },
-    {
-     "sprite": "Forest_Pine_1",
-     "x": 19.6,
-     "y": -344.0,
-     "scale": 0.792,
-     "flip": true,
-     "tint": 0.905
-    },
-    {
-     "sprite": "Forest_Pine_0",
-     "x": -397.5,
-     "y": -308.6,
-     "scale": 0.742,
-     "flip": false,
-     "tint": 0.964
     },
     {
      "sprite": "Forest_Oak_0",
@@ -5456,27 +5408,11 @@
     },
     {
      "sprite": "Forest_Oak_0",
-     "x": -514.7,
-     "y": -310.1,
-     "scale": 0.533,
-     "flip": true,
-     "tint": 0.862
-    },
-    {
-     "sprite": "Forest_Oak_0",
      "x": -268.1,
      "y": -359.3,
      "scale": 0.673,
      "flip": true,
      "tint": 0.964
-    },
-    {
-     "sprite": "Forest_Oak_1",
-     "x": -99.5,
-     "y": -345.3,
-     "scale": 0.656,
-     "flip": false,
-     "tint": 0.885
     },
     {
      "sprite": "Forest_Pine_0",
@@ -5541,14 +5477,6 @@
      "scale": 0.417,
      "flip": true,
      "tint": 0.974
-    },
-    {
-     "sprite": "Forest_Bush",
-     "x": -568.4,
-     "y": -347.6,
-     "scale": 0.303,
-     "flip": true,
-     "tint": 0.925
     }
    ],
    "stumps": [],
@@ -5557,7 +5485,7 @@
     "x0": -1029,
     "y0": -1147,
     "x1": 91,
-    "y1": -22
+    "y1": -327
    }
   },
   {
@@ -5625,10 +5553,10 @@
    "stumps": [],
    "shade": {
     "sprite": "Shade_wild_3_2",
-    "x0": -9,
+    "x0": 21,
     "y0": -122,
     "x1": 1041,
-    "y1": 938
+    "y1": 953
    }
   },
   {
@@ -6458,6 +6386,174 @@
     "x1": 1041,
     "y1": -1047
    }
+  },
+  {
+   "id": "shore_path_1",
+   "development": "fishing_found",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -190.1,
+     "y": -269.6,
+     "scale": 0.591,
+     "flip": true,
+     "tint": 0.979
+    },
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -397.5,
+     "y": -308.6,
+     "scale": 0.742,
+     "flip": false,
+     "tint": 0.964
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -514.7,
+     "y": -310.1,
+     "scale": 0.533,
+     "flip": true,
+     "tint": 0.862
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -99.5,
+     "y": -345.3,
+     "scale": 0.656,
+     "flip": false,
+     "tint": 0.885
+    },
+    {
+     "sprite": "Forest_Bush",
+     "x": -568.4,
+     "y": -347.6,
+     "scale": 0.303,
+     "flip": true,
+     "tint": 0.925
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_shore_path_1",
+    "x0": -659,
+    "y0": -427,
+    "x1": -79,
+    "y1": -127
+   }
+  },
+  {
+   "id": "shore_path_2",
+   "development": "fishing_found",
+   "stumpsUntil": "",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -103.0,
+     "y": 92.6,
+     "scale": 0.714,
+     "flip": true,
+     "tint": 0.925
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": 22.4,
+     "y": -76.1,
+     "scale": 0.658,
+     "flip": false,
+     "tint": 0.866
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -46.7,
+     "y": -172.0,
+     "scale": 0.628,
+     "flip": true,
+     "tint": 0.967
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": 19.6,
+     "y": -344.0,
+     "scale": 0.792,
+     "flip": true,
+     "tint": 0.905
+    }
+   ],
+   "stumps": [],
+   "shade": {
+    "sprite": "Shade_shore_path_2",
+    "x0": -179,
+    "y0": -427,
+    "x1": 121,
+    "y1": 153
+   }
+  },
+  {
+   "id": "shore_path_over_s_2_1",
+   "development": "fishing_found",
+   "stumpsUntil": "",
+   "alsoDevelopment": "territory_s_2_c1",
+   "trees": [
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -516.1,
+     "y": -77.0,
+     "scale": 0.536,
+     "flip": true,
+     "tint": 0.877
+    }
+   ],
+   "stumps": []
+  },
+  {
+   "id": "shore_path_over_s_2_2",
+   "development": "fishing_found",
+   "stumpsUntil": "",
+   "alsoDevelopment": "territory_s_2_c2",
+   "trees": [
+    {
+     "sprite": "Forest_Pine_0",
+     "x": -149.4,
+     "y": 199.5,
+     "scale": 0.657,
+     "flip": true,
+     "tint": 0.969
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -370.6,
+     "y": -25.7,
+     "scale": 0.573,
+     "flip": true,
+     "tint": 0.901
+    },
+    {
+     "sprite": "Forest_Oak_0",
+     "x": -352.6,
+     "y": -167.1,
+     "scale": 0.659,
+     "flip": false,
+     "tint": 0.87
+    },
+    {
+     "sprite": "Forest_Oak_1",
+     "x": -255.7,
+     "y": -73.7,
+     "scale": 0.544,
+     "flip": true,
+     "tint": 0.935
+    },
+    {
+     "sprite": "Forest_Pine_1",
+     "x": -140.6,
+     "y": -57.2,
+     "scale": 0.708,
+     "flip": false,
+     "tint": 0.927
+    }
+   ],
+   "stumps": []
   }
  ],
  "sites": [

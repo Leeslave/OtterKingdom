@@ -245,6 +245,7 @@ MonoBehaviour:
   - 60
   _maxWaitingVisitors: 2
   _plazaBoardId: plaza
+  _farm: {fileID: 11400000, guid: 1e4b9c90ab050bc4888d30445fc093b7, type: 2}
   _districtBlocks:
   - {fileID: 11400000, guid: 29f2e3cc187893048a182f95bd2f1f0f, type: 2}
   - {fileID: 11400000, guid: 9aa9d93942f359941af3d503feda586c, type: 2}

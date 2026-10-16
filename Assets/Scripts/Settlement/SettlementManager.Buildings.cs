@@ -31,12 +31,26 @@ public partial class SettlementManager
     public BuildingRecord BuildingRecordOf(int instanceId) => Settlement.FindBuilding(instanceId);
 
     /// <summary>지금 지을 수 있는지 (안 되면 첫 이유)</summary>
-    public BuildingBlock CheckBuilding(BuildingDefinition building) =>
-        BuildingRules.CheckStart(_config, Settlement, building, PlayerLevel, HasBuilder, GoldBalance, ItemCount);
+    public BuildingBlock CheckBuilding(BuildingDefinition building)
+    {
+        var block = CheckBuildingUnlocked(building);
+        return block != BuildingBlock.None ? block
+            : BuildingRules.CheckStart(_config, Settlement, building, PlayerLevel, HasBuilder, GoldBalance, ItemCount);
+    }
 
-    /// <summary>이 건물이 열렸는지 (비용·공사 자리와 상관없이)</summary>
-    public BuildingBlock CheckBuildingUnlocked(BuildingDefinition building) =>
-        BuildingRules.CheckUnlocked(_config, Settlement, building, PlayerLevel);
+    /// <summary>이 건물이 열렸는지 (비용·공사 자리와 상관없이). 밭 칸은 레벨마다 지을 수 있는 수까지</summary>
+    public BuildingBlock CheckBuildingUnlocked(BuildingDefinition building)
+    {
+        var block = BuildingRules.CheckUnlocked(_config, Settlement, building, PlayerLevel);
+        if (block != BuildingBlock.None)
+            return block;
+        if (building.FarmPart == FarmPartKind.Field && FarmFieldsLeft <= 0)
+            return BuildingBlock.MaxCount;
+        var unlock = FarmPartUnlock(building);
+        if (unlock != null && !HasBuilt(unlock.RequiredBuilding))
+            return BuildingBlock.Development;
+        return block;
+    }
 
     public int BuildingGoldCost(BuildingDefinition building) => BuildingRules.GoldCost(Settlement, building);
 
@@ -62,10 +76,15 @@ public partial class SettlementManager
             case BuildingBlock.Level:
                 return $"왕국 Lv.{building.RequiredLevel}부터 지을 수 있어요";
             case BuildingBlock.Development:
+                var unlock = FarmPartUnlock(building);
+                if (unlock != null)
+                    return $"{EulReul(unlock.Label)} 지으면 놓을 수 있어요";
                 return "마을이 더 발전하면 지을 수 있어요";
             case BuildingBlock.Traits:
                 return $"특성 해달이 모자라요 ({TraitNeedText(building)})";
             case BuildingBlock.MaxCount:
+                if (building.FarmPart == FarmPartKind.Field)
+                    return "왕국 레벨이 오르면 밭 칸을 더 지을 수 있어요";
                 return "더 지을 수 없어요";
             case BuildingBlock.Busy:
                 return "다른 건물을 짓는 중이에요";
@@ -130,10 +149,13 @@ public partial class SettlementManager
             return BuildingBlock.None;
         PayCost(gold, items);
 
-        BuildingRules.Start(Settlement, building, placed.InstanceId, NowTicks,
-            DevTimers.Duration(KingdomBonus.Shorten(KingdomBonusKind.BuildSpeed, building.BuildSeconds)));
+        double seconds = building.Instant ? 0 : DevTimers.Duration(KingdomBonus.Shorten(KingdomBonusKind.BuildSpeed, BuildSecondsOf(building)));
+        BuildingRules.Start(Settlement, building, placed.InstanceId, NowTicks, seconds);
         var record = Settlement.FindBuilding(placed.InstanceId);
         OnBuildingStarted?.Invoke(record);
+        // 바로 놓이는 것(길)은 공사 없이 지금 완성
+        if (building.Instant)
+            FinishDueBuildings(false);
         SaveRequested?.Invoke();
         return BuildingBlock.None;
     }

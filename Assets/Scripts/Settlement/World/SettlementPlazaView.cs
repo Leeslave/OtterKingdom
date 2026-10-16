@@ -414,11 +414,22 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     // (광장 현장의 주민 작업은 광장에서 일하므로 여기 있음)
     private bool IsAway(SettlementOtterDefinition otter)
     {
+        // 광장 농장이 열리면 농부는 광장 밭에서 일함 (PlazaFarmView가 움직임)
+        if (IsFarmWorker(otter.OtterId))
+            return false;
         if (otter.IsSpecialist && !_manager.IsVisitingPlaza(otter))
             return true;
         return _manager.Settlement.GetWorkState(otter.OtterId) == ResidentWorkState.Working
             && _manager.PlazaTaskOf(otter.OtterId) == null;
     }
+
+    /// <summary>광장 밭에서 일하는 농부 (농장이 열리고 농부를 배치한 뒤)</summary>
+    public bool IsFarmWorker(string otterId) =>
+        _manager != null && _manager.FarmOpen && _manager.HasFarmWorker && _manager.FarmConfig.FarmerOtterId == otterId;
+
+    /// <summary>광장에 나온 해달의 걷기 (없으면 null) — 광장 농장의 농부</summary>
+    public OtterWanderAgent FindAgent(string otterId) =>
+        _spawned.TryGetValue(otterId, out var agent) && agent != null ? agent : null;
 
     private bool IsAway(string otterId)
     {
@@ -640,6 +651,9 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         foreach (var pair in _spawned)
         {
             if (pair.Value == null)
+                continue;
+            // 광장 농부는 PlazaFarmView가 일을 줌
+            if (IsFarmWorker(pair.Key))
                 continue;
             bool working = pair.Key == workerId;
             var otter = _manager.Config.FindOtter(pair.Key);
