@@ -214,6 +214,10 @@ public class SettlementConfig : ScriptableObject
     [Tooltip("광장 꾸미기 격자 ID (장난감 방문이 장난감을 세고, 건물을 짓는 격자)")]
     [SerializeField] private string _plazaBoardId = "plaza";
 
+    [Header("광장 농장 (농장 설계형)")]
+    [Tooltip("흙 단계 · 상자 · 길 · 스프링클러 · 농부 (Docs/농장_설계형_기획.md)")]
+    [SerializeField] private PlazaFarmConfig _farm;
+
     [Header("구역 · 왕국 질서도 (구역·이사)")]
     [Tooltip("구역 후보 블록 (중앙 공터 + 용도를 고르는 블록)")]
     [SerializeField] private List<DistrictBlockDefinition> _districtBlocks = new List<DistrictBlockDefinition>();
@@ -341,6 +345,7 @@ public class SettlementConfig : ScriptableObject
     public IReadOnlyList<BoardRequestDefinition> Requests => _requests;
     public IReadOnlyList<GuestbookEntryDefinition> GuestbookEntries => _guestbookEntries;
     public IReadOnlyList<DevelopableRegionDefinition> Regions => _regions;
+    public PlazaFarmConfig Farm => _farm;
     public IReadOnlyList<SettlementTaskDefinition> Tasks => _tasks;
     public IReadOnlyList<ItemAmount> StartingItems => _startingItems;
     public int StartingGold => _startingGold;

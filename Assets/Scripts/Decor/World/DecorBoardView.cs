@@ -330,7 +330,9 @@ public class DecorBoardView : MonoBehaviour
         foreach (var view in _views.Values)
         {
             // 건설 자리의 건물은 씬의 발자국이 해달 길을 막음
-            if (view.gameObject.activeSelf && !(view is PlacedPlotView))
+            // 광장 농장의 길은 걸어 다니는 곳 (장애물 아님)
+            bool walkable = view.Placed.Decor is BuildingDefinition building && building.FarmPart == FarmPartKind.Path;
+            if (view.gameObject.activeSelf && !(view is PlacedPlotView) && !walkable)
                 _obstacles.Add(view.WorldRect);
         }
         _walkableArea.SetObstacles(_obstacles);
