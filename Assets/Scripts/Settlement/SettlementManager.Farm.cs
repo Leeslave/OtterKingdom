@@ -229,14 +229,35 @@ public partial class SettlementManager
     // 농업 지역이 생겨 밭을 발견하면 바로 밭 칸을 지을 수 있게 (밭 개간 부탁도 이것으로 끝남)
     private void OpenPlazaFarm()
     {
-        if (FarmConfig == null || !IsLoaded || HasDevelopment(FarmlandDevelopment))
+        if (FarmConfig == null || !IsLoaded)
             return;
+        if (HasDevelopment(FarmlandDevelopment))
+        {
+            CompletePlazaFarmOpening();
+            return;
+        }
         if (!HasDevelopment(FarmDiscoverDevelopment) || !DistrictRules.HasDistrict(_config, Settlement, DistrictType.Agricultural))
             return;
         Settlement.UnlockDevelopment(FarmPathDevelopment);
         Settlement.UnlockDevelopment(FarmlandDevelopment);
+        CompletePlazaFarmOpening();
         GameNotices.Post(new GameNotice("농업 지역에 밭을 지을 수 있어요! (꾸미기 → 밭 칸)"));
         SaveRequested?.Invoke();
+    }
+
+    // 광장 농장은 옛 밭 씬의 개간 완료 이벤트가 없으므로 여기서 부탁과 농부 도착까지 마친다.
+    // 이미 열린 저장도 첫 틱에 보완하고, 완료된 부탁은 다시 처리하지 않는다.
+    private void CompletePlazaFarmOpening()
+    {
+        if (Settlement.IsCompleted("req_farmland")) return;
+        foreach (var request in _config.Requests)
+        {
+            if (request != null && request.RequestId == "req_farmland")
+            {
+                Complete(request);
+                return;
+            }
+        }
     }
 
     #region 심기

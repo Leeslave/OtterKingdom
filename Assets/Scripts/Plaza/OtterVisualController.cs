@@ -147,9 +147,7 @@ public class OtterVisualController : MonoBehaviour
             rigView.SetWalking(walking, agent.CurrentWalkSpeed);
             rigView.SetSitting(agent.IsSeated);
             var loop = ToyLoop(agent.PlayToy);
-            var work = rigView.CanFish ? QuarterRigView.Loop.Fish : rigView.CanBuild ? QuarterRigView.Loop.Build
-                : rigView.CanMine ? QuarterRigView.Loop.Mine : rigView.CanPhoto ? QuarterRigView.Loop.Photo
-                : rigView.CanRing ? QuarterRigView.Loop.Ring : rigView.CanSweep ? QuarterRigView.Loop.Sweep : QuarterRigView.Loop.None;
+            var work = rigView.WorkLoop;
             // Just stopped: now and then stay a while and work.
             var state = agent.CurrentState;
             if (state != lastState)

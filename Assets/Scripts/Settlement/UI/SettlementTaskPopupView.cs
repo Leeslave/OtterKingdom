@@ -73,6 +73,7 @@ public class SettlementTaskPopupView : MonoBehaviour
 
     public bool IsOpen => _animator.IsOpen;
     public SettlementTaskDefinition Task { get; private set; }
+    public RectTransform StartButton => _startButton.transform as RectTransform;
 
     /// <summary>[작업 시작]을 눌렀을 때 (끝난 모습의 [확인]은 여기서 바로 닫음)</summary>
     public event Action OnStartClicked;

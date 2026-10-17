@@ -270,7 +270,10 @@ public partial class GameManager : MonoBehaviour
         // specialist placed here starts working right away.
         else StartSpecialistWork();
         if (CurrentZoneId == ZoneTutorials.Plaza)
+        {
             StartCoroutine(PlayDistrictGuideWhenReady());
+            StartCoroutine(PlayTerritoryGuideWhenReady());
+        }
         if (CurrentZoneId == ZoneTutorials.Plaza && !save.tutorialsDone.Contains(ZoneTutorials.FairyShop))
             StartCoroutine(PlayFairyShopTutorialWhenReady());
         if (CurrentZoneId == ZoneTutorials.Farm && !save.tutorialsDone.Contains(ZoneTutorials.FarmOffline))

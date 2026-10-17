@@ -67781,6 +67781,7 @@ MonoBehaviour:
   _carriedWidth: 1.6
   _carriedHeight: 1.45
   _mirrorLeftWalk: 1
+  _rigPrefab: {fileID: 7310524418817630013, guid: 606d602c3fc145e78a57693a3aae8b67, type: 3}
 --- !u!114 &1471201382
 MonoBehaviour:
   m_ObjectHideFlags: 0

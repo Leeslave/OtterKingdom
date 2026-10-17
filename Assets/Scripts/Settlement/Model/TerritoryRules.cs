@@ -31,6 +31,42 @@ public static class TerritoryRules
 {
     /// <summary>어느 방향이든 처음으로 땅을 넓힘 (새 이웃 맞이하기가 여기서 열림)</summary>
     public const string FirstDevelopment = "territory_first";
+    public const string TutorialReady = "territory_tutorial_ready";
+    public const string TutorialDone = "territory_tutorial_done";
+    public const string TutorialExpansion = "territory_ne_1";
+
+    public static bool IsTutorial(TerritoryExpansionDefinition territory, Settlement settlement) =>
+        territory != null && territory.ExpansionId == TutorialExpansion && settlement.HasDevelopment(TutorialReady);
+
+    // 이미 개간을 시작한 저장은 기존 진행·사용 기회를 그대로 유지한다.
+    public static bool UnlockTutorial(SettlementConfig config, Settlement settlement)
+    {
+        if (settlement.HasDevelopment(TutorialReady) || !settlement.IsCompleted("req_upgrade_board")
+            || settlement.HasDevelopment(FirstDevelopment) || UsedChances(config, settlement) != 0)
+            return false;
+        foreach (var territory in config.Territories)
+            if (territory != null && territory.ExpansionId == TutorialExpansion && !IsExpanded(territory, settlement))
+                return Unlock(settlement, TutorialReady);
+        return false;
+    }
+
+    /// <summary>첫 개간 한 번으로 오른쪽 땅을 연다. 생략한 숲 조각도 함께 걷어 내며 반복 호출은 무효.</summary>
+    public static TerritoryExpansionDefinition CompleteTutorial(SettlementConfig config, Settlement settlement)
+    {
+        if (!settlement.HasDevelopment(TutorialReady) || settlement.HasDevelopment(TutorialDone)) return null;
+        foreach (var territory in config.Territories)
+        {
+            if (!IsTutorial(territory, settlement) || territory.Clearings.Count == 0 || !IsClearingDone(territory, 0, settlement)) continue;
+            settlement.UnlockDevelopment(TutorialDone);
+            for (int i = 0; i < territory.Clearings.Count; i++)
+                settlement.UnlockDevelopment(territory.ClearingDevelopment(i + 1));
+            settlement.UnlockDevelopment(territory.ClearedDevelopment);
+            settlement.UnlockDevelopment(territory.ExpandedDevelopment);
+            Sync(config, settlement);
+            return territory;
+        }
+        return null;
+    }
 
     /// <summary>처음 넓힌 방향을 고를 때 여러 방향이 한꺼번에 열린 세이브(옮긴 세이브)에서 앞에 두는 순서</summary>
     private static readonly TerritoryDirection[] HomePreference =
@@ -195,7 +231,7 @@ public static class TerritoryRules
         int used = 0;
         foreach (var territory in config.Territories)
         {
-            if (territory == null)
+            if (territory == null || IsTutorial(territory, settlement))
                 continue;
             for (int i = 0; i < territory.Clearings.Count; i++)
             {
@@ -243,6 +279,8 @@ public static class TerritoryRules
             return TerritoryBlock.Mission;
         if (Working(config, settlement, out _) != null)
             return TerritoryBlock.OtherClearing;
+        if (IsTutorial(current, settlement) && !settlement.HasDevelopment(TutorialDone))
+            return TerritoryBlock.None;
         return AvailableChances(config, settlement, playerLevel) > 0 ? TerritoryBlock.None : TerritoryBlock.NoChance;
     }
 

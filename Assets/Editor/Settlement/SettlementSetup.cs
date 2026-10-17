@@ -279,6 +279,7 @@ public static partial class SettlementSetup
                 lines.GetArrayElementAtIndex(i).stringValue = talk.lines[i];
             so.FindProperty("_introLine").stringValue = talk.intro;
             so.FindProperty("_introDevelopment").stringValue = talk.introDevelopment;
+            RiggedLookSetup.ApplyTo(so, o.id);
             so.ApplyModifiedPropertiesWithoutUndo();
             otters[o.id] = otter;
         }
