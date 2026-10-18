@@ -176,6 +176,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e8b40d5334f5f7429ee6c64bf31ddb2, type: 2}
   - {fileID: 11400000, guid: 35f1a9968f672ef418e1365b90532ca2, type: 2}
   - {fileID: 11400000, guid: 10b3408e97da7e440a0430031a514cc6, type: 2}
+  - {fileID: 11400000, guid: 83e366f8129943e4fa5bf2fdf29e3115, type: 2}
+  - {fileID: 11400000, guid: 23785f48e9f3f6e49b1df186c93a6f79, type: 2}
+  - {fileID: 11400000, guid: abfd9530bceedfc4f9b48efd882d9ce5, type: 2}
   _boardUpgradeDevelopment: board_upgraded
   _boardManagedDevelopment: receptionist_assigned
   _guildDevelopment: guild_office_built
@@ -218,7 +221,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba97b37e8832aad4da74eba9e5a96ec4, type: 2}
   - {fileID: 11400000, guid: 3257f79b4bdb79a41816f14fe3967d05, type: 2}
   - {fileID: 11400000, guid: c62a0a9e8bcd986409c791e7bbfd63b2, type: 2}
-  _territoryStartLevel: 6
+  - {fileID: 11400000, guid: f7e280ff7eae99247a7771123cf41f5e, type: 2}
+  _territoryStartLevel: 7
   _levelDevelopments:
   - _level: 15
     _development: fishing_found
@@ -252,6 +256,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 750bac1e3e6026346a52db59a077422e, type: 2}
   - {fileID: 11400000, guid: 3a6dc8d257dc3e74aa85b1504540c816, type: 2}
   - {fileID: 11400000, guid: c43499e0e918c0f4b8932fef7909c255, type: 2}
+  - {fileID: 11400000, guid: 33f75cfc753bb3e40b800a52eb86996b, type: 2}
   _firstDistrict: 2
   _orderMatchWeight: 60
   _orderPerDistrict: 10

@@ -34,14 +34,16 @@ public static class TerritoryRules
     public const string TutorialReady = "territory_tutorial_ready";
     public const string TutorialDone = "territory_tutorial_done";
     public const string TutorialExpansion = "territory_ne_1";
+    /// <summary>첫 개간(오른쪽 숲 한 번 = 땅이 열림, 기회를 쓰지 않음)이 열리는 왕국 레벨. 일반 개간 기회는 그 뒤 SettlementConfig.TerritoryStartLevel부터</summary>
+    public const int TutorialLevel = 6;
 
     public static bool IsTutorial(TerritoryExpansionDefinition territory, Settlement settlement) =>
         territory != null && territory.ExpansionId == TutorialExpansion && settlement.HasDevelopment(TutorialReady);
 
-    // 이미 개간을 시작한 저장은 기존 진행·사용 기회를 그대로 유지한다.
-    public static bool UnlockTutorial(SettlementConfig config, Settlement settlement)
+    // 왕국 Lv.6 + 게시판 보강(마을회관) 뒤에 열린다. 이미 개간을 시작한 저장은 기존 진행·사용 기회를 그대로 유지한다.
+    public static bool UnlockTutorial(SettlementConfig config, Settlement settlement, int playerLevel)
     {
-        if (settlement.HasDevelopment(TutorialReady) || !settlement.IsCompleted("req_upgrade_board")
+        if (playerLevel < TutorialLevel || settlement.HasDevelopment(TutorialReady) || !settlement.IsCompleted("req_upgrade_board")
             || settlement.HasDevelopment(FirstDevelopment) || UsedChances(config, settlement) != 0)
             return false;
         foreach (var territory in config.Territories)
@@ -71,7 +73,8 @@ public static class TerritoryRules
     /// <summary>처음 넓힌 방향을 고를 때 여러 방향이 한꺼번에 열린 세이브(옮긴 세이브)에서 앞에 두는 순서</summary>
     private static readonly TerritoryDirection[] HomePreference =
     {
-        TerritoryDirection.NorthEast, TerritoryDirection.South, TerritoryDirection.West, TerritoryDirection.NorthWest, TerritoryDirection.North,
+        TerritoryDirection.NorthEast, TerritoryDirection.South, TerritoryDirection.West, TerritoryDirection.NorthWest, TerritoryDirection.East,
+        TerritoryDirection.North,
     };
 
     /// <summary>방향의 짧은 이름 (발전 ID에 씀: territory_ne_1 등)</summary>
@@ -83,6 +86,7 @@ public static class TerritoryRules
             case TerritoryDirection.South: return "s";
             case TerritoryDirection.NorthWest: return "nw";
             case TerritoryDirection.West: return "w";
+            case TerritoryDirection.East: return "e";
             default: return "north";
         }
     }
