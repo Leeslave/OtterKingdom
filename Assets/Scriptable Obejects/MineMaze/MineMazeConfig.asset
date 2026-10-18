@@ -47,3 +47,10 @@ MonoBehaviour:
     _chance: 0.25
   _mapOtterRuns: 2
   _mapOtterEarlyCells: 40
+  _additionalFloors:
+  - {fileID: 11400000, guid: d0ede65cc88827a4abb8223e3728c94e, type: 2}
+  - {fileID: 11400000, guid: 08139bcfbe4006a48814dd7ce03b2110, type: 2}
+  _testKingdomLevel: 13
+  _gateKingdomLevel: 9
+  _gatePickaxeTier: 1
+  _gateHits: 30

@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv9_furrow
   _title: "\uACE0\uB791 \uB137\uC9F8 \uCE78"
   _description: "\uBC2D\uC758 \uACE0\uB791 \uD55C \uCE78 \uB354 \uC5F4\uAE30"
-  _sortOrder: 46
+  _sortOrder: 48
   _kind: 0
   _requiredLevel: 12
   _prerequisite: {fileID: 11400000, guid: 3e3b55f8e6de10e4db3e912d1b206a7c, type: 2}

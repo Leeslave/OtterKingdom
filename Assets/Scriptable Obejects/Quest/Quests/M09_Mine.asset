@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv9_mine
   _title: "\uAD11\uC0B0\uC758 \uB2E8\uACE8"
   _description: "\uAD11\uC0B0\uC5D0\uC11C \uAD11\uC11D 150\uAC1C \uCE90\uAE30"
-  _sortOrder: 31
+  _sortOrder: 33
   _kind: 0
   _requiredLevel: 9
   _prerequisite: {fileID: 11400000, guid: 6ada23f221d7e6b44958c422c06c8bcd, type: 2}

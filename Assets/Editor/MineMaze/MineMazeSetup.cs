@@ -11,7 +11,7 @@ using UnityEngine;
 /// 메뉴: Tools/Mine Maze/Build Test Scene · 배치: -executeMethod MineMazeSetup.Build
 /// 광산 개편 데이터가 없으면 먼저 Tools/Mine Rework/Build Test Scene
 /// </summary>
-public static class MineMazeSetup
+public static partial class MineMazeSetup
 {
     private const string ArtFolder = "Assets/Art/MineMaze";
     private const string DataFolder = "Assets/Scriptable Obejects/MineMaze";
@@ -146,8 +146,13 @@ public static class MineMazeSetup
             element.FindPropertyRelative("_chance").floatValue = row.chance;
         }
         so.FindProperty("_mapOtterRuns").intValue = 2;
+        so.FindProperty("_testKingdomLevel").intValue = 13;
+        so.FindProperty("_gateKingdomLevel").intValue = 9;
+        so.FindProperty("_gatePickaxeTier").intValue = 1;
+        so.FindProperty("_gateHits").intValue = 30;
         so.FindProperty("_mapOtterEarlyCells").intValue = 40;
         so.ApplyModifiedPropertiesWithoutUndo();
+        ConfigureAdditionalFloors(config, rework);
 
         var art = Asset<MineMazeArt>($"{DataFolder}/MineMazeArt.asset");
         var aso = new SerializedObject(art);

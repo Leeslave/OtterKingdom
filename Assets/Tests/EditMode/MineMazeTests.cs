@@ -6,7 +6,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 /// <summary>광산 미로 규칙 (MineMazeModel · MazeMap): 지도 읽기 · 앞뒤좌우 가기 · 길을 막는 돌 · 1분 뒤 다시 생김(뚫은 길은 지나감) · 상자 · 나가기 · 지도 해달 · 저장</summary>
-public class MineMazeTests
+public partial class MineMazeTests
 {
     private static readonly DateTime T0 = new DateTime(2026, 10, 18, 9, 0, 0, DateTimeKind.Utc);
 

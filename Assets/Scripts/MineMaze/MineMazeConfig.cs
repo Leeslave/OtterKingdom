@@ -66,6 +66,18 @@ public class MineMazeConfig : ScriptableObject
     [SerializeField] private int _mapOtterEarlyCells = 40;
 
     public MineReworkConfig Rework => _rework;
+    [Tooltip("1층 설정에서만 지정: 지하 2층부터 순서대로")]
+    [SerializeField] private List<MineMazeConfig> _additionalFloors = new List<MineMazeConfig>();
+    public IReadOnlyList<MineMazeConfig> AdditionalFloors => _additionalFloors;
+    [Header("성장 순환 테스트")]
+    [SerializeField, Min(1)] private int _testKingdomLevel = 9;
+    [SerializeField, Min(1)] private int _gateKingdomLevel = 9;
+    [SerializeField, Min(0)] private int _gatePickaxeTier = 1;
+    [SerializeField, Min(1)] private int _gateHits = 30;
+    public int TestKingdomLevel => Mathf.Max(1, _testKingdomLevel);
+    public int GateKingdomLevel => Mathf.Max(1, _gateKingdomLevel);
+    public int GatePickaxeTier => Mathf.Clamp(_gatePickaxeTier, 0, Rework.Pickaxes.Count - 1);
+    public int GateHits => Mathf.Max(1, _gateHits);
     public MineLayerDefinition Layer => _layer;
     public string FloorName => _floorName;
     public IReadOnlyList<string> MapRows => _map;

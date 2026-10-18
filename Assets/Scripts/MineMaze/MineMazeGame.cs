@@ -63,6 +63,7 @@ public class MineMazeGame : MonoBehaviour
     private bool _busy;
     private bool _resetting;
     private float _breakingUntil;
+    private DateTime? _pausedUtc;
 
     public MineMazeModel Model => _model;
     /// <summary>한 칸 가는 중 (버튼 · 탭을 안 받음)</summary>
@@ -82,7 +83,15 @@ public class MineMazeGame : MonoBehaviour
         if (shader != null)
             _flashMaterial = new Material(shader);
 
-        _model = new MineMazeModel(_config, Load(), new System.Random(Environment.TickCount), DateTime.UtcNow);
+        var loaded = Load();
+        _model = new MineMazeModel(_config, loaded, new System.Random(Environment.TickCount), DateTime.UtcNow);
+        if (InGame)
+        {
+            _model.UseKingdomLevel(ProfileManager.Instance.Level);
+            HideGameBars(true);
+        }
+        if (loaded.savedUtcTicks > 0 && loaded.savedUtcTicks <= DateTime.UtcNow.Ticks)
+            _model.AdvanceMiner((DateTime.UtcNow - new DateTime(loaded.savedUtcTicks, DateTimeKind.Utc)).TotalSeconds, true);
         PrepareGlyphs();
         _fx.Setup(_art, _camera, RuntimeUIKit.Style.TitleFont);
 
@@ -125,19 +134,33 @@ public class MineMazeGame : MonoBehaviour
     {
         if (_model == null || _resetting)
             return;
-        File.WriteAllText(SavePath, JsonUtility.ToJson(_model.ToSave()));
+        var saved = _model.ToSave();
+        saved.savedUtcTicks = (_pausedUtc ?? DateTime.UtcNow).Ticks;
+        File.WriteAllText(SavePath, JsonUtility.ToJson(saved));
         _saveTimer = 0f;
     }
 
     private void OnApplicationPause(bool paused)
     {
         if (paused)
+        {
+            if (_pausedUtc == null) _pausedUtc = DateTime.UtcNow;
             Save();
+        }
+        else if (_pausedUtc.HasValue)
+        {
+            _model.AdvanceMiner((DateTime.UtcNow - _pausedUtc.Value).TotalSeconds, true);
+            _pausedUtc = null;
+            Save();
+        }
     }
 
     private void OnApplicationQuit() => Save();
 
     private void OnDisable() => Save();
+
+    private void OnDestroy() => HideGameBars(false);
+
 
     // 처음 보는 한글을 폰트에 미리 (도중에 추가되면 에디터가 멈춤)
     private void PrepareGlyphs()
@@ -163,6 +186,64 @@ public class MineMazeGame : MonoBehaviour
         texture.SetPixels(pixels);
         texture.Apply();
         return Sprite.Create(texture, new Rect(0, 0, 4, 4), new Vector2(0.5f, 0.5f), 4f);
+    }
+
+    #endregion
+
+    #region 본 게임 연결 (광산 카트로 들어왔을 때)
+
+    private readonly List<GameObject> _hiddenBars = new List<GameObject>();
+
+    /// <summary>본 게임에서 광산 카트로 들어옴 (전역 UI · 프로필이 있음). 씬만 따로 열면 테스트 씬</summary>
+    public bool InGame => GlobalUIRoot.Instance != null && ProfileManager.Instance != null && MineMazeLinkConfig.Instance != null;
+
+    // 미로 화면이 위 · 아래를 다 쓰므로 전역 상단바 · 네비게이션 바를 잠시 숨김 (화면 어두워짐 · 알림 · 팝업은 그대로)
+    private void HideGameBars(bool hide)
+    {
+        if (!hide)
+        {
+            foreach (var bar in _hiddenBars)
+            {
+                if (bar != null)
+                    bar.SetActive(true);
+            }
+            _hiddenBars.Clear();
+            return;
+        }
+        var root = GlobalUIRoot.Instance;
+        if (root == null)
+            return;
+        // 상단바 · 네비게이션 바 · 정착 칩 · 안내 띠 · 뽑기 버튼은 모두 전역 UI의 HudSafeArea 아래 (GlobalUISetup)
+        foreach (var nav in root.GetComponentsInChildren<NavBarView>(true))
+        {
+            var hud = nav.transform;
+            while (hud != null && hud.name != HudGroupName)
+                hud = hud.parent;
+            HideBar(hud != null ? hud.gameObject : nav.gameObject);
+        }
+        foreach (var top in root.GetComponentsInChildren<TopBarView>(true))
+            HideBar(top.gameObject);
+    }
+
+    private const string HudGroupName = "HudSafeArea";
+
+    private void HideBar(GameObject bar)
+    {
+        if (!bar.activeSelf || _hiddenBars.Contains(bar))
+            return;
+        bar.SetActive(false);
+        _hiddenBars.Add(bar);
+    }
+
+    /// <summary>광산으로 돌아감 (본 게임에서만)</summary>
+    public void ReturnToMine()
+    {
+        var link = MineMazeLinkConfig.Instance;
+        var navigator = FindAnyObjectByType<SceneNavigator>();
+        if (link == null || link.MineZone == null || navigator == null)
+            return;
+        Save();
+        navigator.TryGo(link.MineZone);
     }
 
     #endregion
@@ -247,6 +328,15 @@ public class MineMazeGame : MonoBehaviour
         Save();
     }
 
+    public void SelectFloor(int floor)
+    {
+        if (_busy || !_model.SelectFloor(floor, DateTime.UtcNow)) return;
+        _breakingUntil = 0;
+        _hud.RebuildFloor();
+        ShowView();
+        Save();
+    }
+
     public void Go(MazeTurn turn)
     {
         if (_busy || !_model.Inside)
@@ -323,7 +413,37 @@ public class MineMazeGame : MonoBehaviour
     }
 
     /// <summary>계단: 아래층은 아직 (테스트 씬은 지하 1층만)</summary>
-    public void Descend() => _hud.ShowToast("지하 2층은 아직 준비 중이에요");
+    public void Descend()
+    {
+        if (_busy || !_model.Inside || !_model.OnStairs) return;
+        _hud.ShowGate();
+    }
+
+    public bool CraftPickaxe()
+    {
+        if (!_model.TryCraft(out string reason)) { _hud.ShowToast(reason); return false; }
+        _sfx.Play(MineSfx.Kind.Discover);
+        _hud.ShowToast($"{_model.Pickaxe.DisplayName} 완성!");
+        Save();
+        return true;
+    }
+
+    public void SellOre(MineOreDefinition ore)
+    {
+        if (_model.Sell(ore, 1)) Save();
+    }
+
+    public void HitGate()
+    {
+        if (!_model.HitGate(out string reason)) { _hud.ShowToast(reason); return; }
+        _sfx.Play(MineSfx.Kind.Tap);
+        if (_model.FloorCleared)
+        {
+            _sfx.Play(MineSfx.Kind.Discover);
+            _hud.Flash(new Color(.8f, .9f, 1, .5f));
+        }
+        Save();
+    }
 
     #endregion
 
@@ -518,7 +638,9 @@ public class MineMazeGame : MonoBehaviour
 
     private void Update()
     {
+        if (_pausedUtc.HasValue) return;
         float dt = Time.deltaTime;
+        _model.AdvanceMiner(Time.unscaledDeltaTime);
         if (!Mathf.Approximately(_aspect, _camera.aspect))
             FitCamera();
         _model.Tick(DateTime.UtcNow);

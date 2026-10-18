@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// 위: 층 이름 · 나가기 · 이 층 광석 띠 · 탐험 시간. 갱도 아래: 앞 칸 안내, 지도(지도 해달), 앞 · 뒤 · 왼쪽 · 오른쪽 버튼.
 /// 창: 갱도 입구(들어가기) · 탐험 결과(나가기) · 테스트. 광석은 띠로 날아와 숫자가 오른다.
 /// </summary>
-public class MineMazeHud : MonoBehaviour
+public partial class MineMazeHud : MonoBehaviour
 {
     private static readonly Color Cocoa = new Color32(0x4B, 0x2E, 0x22, 0xFF);
     private static readonly Color Cream = new Color32(0xFF, 0xF8, 0xEC, 0xFF);
@@ -40,6 +40,8 @@ public class MineMazeHud : MonoBehaviour
 
     // 위
     private TextMeshProUGUI _floorName;
+    private TextMeshProUGUI _floorTag;
+    private TextMeshProUGUI _floorTitleNumber;
     private TextMeshProUGUI _runTime;
     private TextMeshProUGUI _pickaxe;
     private RectTransform _strip;
@@ -122,7 +124,10 @@ public class MineMazeHud : MonoBehaviour
         BuildTop();
         BuildBelow();
         BuildNotices();
-        BuildTestButton();
+        // 테스트 창(저장 지우기 등)은 테스트 씬 · 개발 빌드에서만
+        if (!_game.InGame || Debug.isDebugBuild)
+            BuildTestButton();
+        BuildWorkshopButton();
         _flash = NewImage(_root, "Flash", null, new Color(1f, 1f, 1f, 0f));
         RuntimeUIKit.Stretch(_flash.rectTransform);
         _flash.raycastTarget = false;
@@ -226,6 +231,7 @@ public class MineMazeHud : MonoBehaviour
         var tag = NewImage(floor.transform, "Tag", _art.RibbonLav, Color.white);
         Place(tag.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(18f, 6f), new Vector2(200f, 60f));
         var floorTag = NewText(tag.transform, _model.Config.FloorName, 30, true, Color.white, TextAlignmentOptions.Center, 0.15f);
+        _floorTag = floorTag;
         Fill(floorTag.rectTransform, 0f, 2f);
         _floorName = NewText(floor.transform, _model.Layer.DisplayName, 40, true, Cocoa, TextAlignmentOptions.Left);
         Place(_floorName.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(234f, 8f), new Vector2(350f, 56f));
@@ -442,6 +448,7 @@ public class MineMazeHud : MonoBehaviour
         var ribbon = NewImage(_title, "Ribbon", _art.RibbonLav, Color.white);
         Place(ribbon.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(300f, 84f));
         var number = NewText(ribbon.transform, _model.Config.FloorName, 42, true, Color.white, TextAlignmentOptions.Center, 0.18f);
+        _floorTitleNumber = number;
         Fill(number.rectTransform, 0f, 4f);
         _titleText = NewText(_title, _model.Layer.DisplayName, 92, true, Color.white, TextAlignmentOptions.Center, 0.22f);
         Place(_titleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -90f), new Vector2(900f, 120f));
@@ -707,6 +714,7 @@ public class MineMazeHud : MonoBehaviour
         if (_sheet != null)
             Destroy(_sheet.gameObject);
         _sheet = null;
+        _progressRefresh = null;
     }
 
     private static TextMeshProUGUI Line(RectTransform panel, string text, float size, bool title, Color color)
@@ -732,13 +740,33 @@ public class MineMazeHud : MonoBehaviour
             : $"지도 해달은 아직 없어요 (앞으로 {Mathf.Max(0, _model.Config.MapOtterRuns - _model.Runs)}번 다녀오면 와요)";
         Line(panel, $"다녀온 횟수 {_model.Runs}번\n{otter}\n{_model.Pickaxe.DisplayName} · 힘 {_model.Pickaxe.Power}", 30, true, Cocoa);
         RuntimeUIKit.CreateSpace(panel, 10f);
+        Line(panel, _game.InGame ? $"갱도 골드 {_model.Gold} · 왕국 Lv.{_model.KingdomLevel}"
+            : $"골드 {_model.Gold} · 테스트 왕국 Lv.{_model.KingdomLevel}", 28, true, Cocoa);
+        RuntimeUIKit.CreateButton(panel, "곡괭이 작업대 · 광석 판매", ShowWorkshop);
+        if (_model.FloorCount > 1)
+            RuntimeUIKit.CreateButton(panel, "열린 층 선택", ShowFloorSelection);
+        else if (_model.FloorCleared)
+            RuntimeUIKit.CreateButton(panel, "지하 2층 입구 · 자동 채굴", ShowNextEntrance);
         RuntimeUIKit.CreateButton(panel, "들어가기", () =>
         {
             _sfx.Play(MineSfx.Kind.Tap);
             CloseSheet();
             _game.Enter();
         }, RuntimeUIKit.ButtonKind.Primary);
-        Line(panel, "테스트 씬: 본 게임 세이브와 따로 돌아요", 24, false, new Color(0.45f, 0.38f, 0.33f));
+        if (_game.InGame)
+        {
+            RuntimeUIKit.CreateButton(panel, "광산으로 돌아가기", () =>
+            {
+                _sfx.Play(MineSfx.Kind.Tap);
+                CloseSheet();
+                _game.ReturnToMine();
+            }, RuntimeUIKit.ButtonKind.Secondary);
+            Line(panel, "갱도의 광석 · 골드 · 곡괭이는 아직 갱도 안에서만 써요", 24, false, new Color(0.45f, 0.38f, 0.33f));
+        }
+        else
+        {
+            Line(panel, "테스트 씬: 본 게임 세이브와 따로 돌아요", 24, false, new Color(0.45f, 0.38f, 0.33f));
+        }
     }
 
     /// <summary>나가기 결과 (본 게임에서는 이 시간만큼 마을을 오프라인으로 정산해 기존 보고 화면을 띄움)</summary>
@@ -775,11 +803,21 @@ public class MineMazeHud : MonoBehaviour
             _sfx.Play(MineSfx.Kind.Discover);
         }
         RuntimeUIKit.CreateSpace(panel, 4f);
-        Line(panel, "본 게임에서는 탐험하는 동안 마을이 오프라인으로 돌아가고, 나오면 오프라인 보고 화면이 떠요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
-        RuntimeUIKit.CreateButton(panel, "확인", () =>
+        Line(panel, _game.InGame ? "갱도에서 캔 광석은 갱도 작업대에 쌓여요. 깡깡이의 갱도 자동 채굴도 작업대 쪽으로 들어가요."
+            : "본 게임 연결 전 테스트예요. 자동 채굴 광석은 작업대 가방에 쌓이며, 탐험 중에도 같은 속도로 생산해요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
+        // 본 게임: 나가기 = 바로 밖(광산)으로. 테스트 씬: 갱도 입구 창으로
+        RuntimeUIKit.CreateButton(panel, _game.InGame ? "광산으로" : "확인", () =>
         {
             _sfx.Play(MineSfx.Kind.Tap);
-            ShowEntrance();
+            if (_game.InGame)
+            {
+                CloseSheet();
+                _game.ReturnToMine();
+            }
+            else
+            {
+                ShowEntrance();
+            }
         }, RuntimeUIKit.ButtonKind.Primary);
     }
 
@@ -831,6 +869,7 @@ public class MineMazeHud : MonoBehaviour
 
     private void Update()
     {
+        _progressRefresh?.Invoke();
         float dt = Time.unscaledDeltaTime;
         // 캔버스 크기가 처음 정해지거나 바뀌면 다시 맞춤
         if (_root.rect.size != _laidOutFor)
@@ -918,5 +957,5 @@ public class MineMazeHud : MonoBehaviour
 /// <summary>광산 미로 화면에 쓰는 한글 (폰트에 미리 넣음)</summary>
 public static class MazeGlyphs
 {
-    public const string Ui = "!%()+,./01267:?·×▼가간갈개갱거것게견계고곡골과광괭구국군굴그기긴길까께나남내냥녀누눌는니다단닫달던데도돌동된두뒀뒤든들듦디따때떠뚫라래러려렸로른를리림마막만맥먼면명못물미밑바밖반발밟번벽보본봐부분브비산상새생서석세수순숴쉈스습시쓰씬아안앞어억언없었에여연열예옛오온와왔왕왼요우워위으은을음의이인읽임입있자장저적제준중줘지직짝쪽찾채처쳐쳤초층치카칸캐캔콤쾅타탐터테톡트편품프하한함해험혀혔화확횟효흔힌힘";
+    public const string Ui = "!%()+,./0123467:?·×▼가간갈갔같개갱거건것게겨견결겹경계고곡골과광괭구국군굴귀규그글금기긴길김깊까깡께끝나남내냥넓녀녔누눌는니닙닛다단닫달대더던데도돌동돼된두둘뒀뒤드든들듦디따때뚫라래량러려력렸로료률르른를름리린림마막만맛매맥먼며면명모못물미밑바밖반발밟방배번벽보본볼봐부분브비빛산상새생서석선설성세셀소속손수순숨숴쉈쉬스습시쌓써쓰씬아안앞야양어억언얼업없었에여연열예옛오온올옴와완왔왕왼요용우운워원위유으은을음의이인읽임입있자작잠장재저적전점정제졌족준중줘지직짐짝째쪽착찾채처첫체쳐쳤초최층치칙친침카칸캐캔콤쾅크큼타탐택터테톡트파판편품픽필하한할함해했험혀현혔화확환횟효후흔희힌힘";
 }

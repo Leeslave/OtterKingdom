@@ -47,12 +47,12 @@ public class MazeRunResult
 /// 밟은 칸 기록 · 지도 해달(지도 없이 몇 번 다녀오면 옴). 화면은 모른다 (MineMazeGame이 결과를 보고 그림).
 /// Docs/광산_미로탐험과_왕도성장_기획.md 4.4~4.7
 /// </summary>
-public class MineMazeModel
+public partial class MineMazeModel
 {
-    private readonly MineMazeConfig _config;
+    private MineMazeConfig _config;
     private readonly MineReworkConfig _rework;
     private readonly Random _rng;
-    private readonly MazeMap _map;
+    private MazeMap _map;
     private readonly Dictionary<Vector2Int, MazeRock> _rocks = new Dictionary<Vector2Int, MazeRock>();
     private readonly HashSet<Vector2Int> _openedChests = new HashSet<Vector2Int>();
     private readonly HashSet<Vector2Int> _visited = new HashSet<Vector2Int>();
@@ -85,10 +85,13 @@ public class MineMazeModel
         _rng = rng ?? throw new ArgumentNullException(nameof(rng));
         if (save == null)
             throw new ArgumentNullException(nameof(save));
-        _map = MazeMap.Parse(config.MapRows);
+        InitializeFloors(config, save);
+        _map = MazeMap.Parse(_config.MapRows);
         foreach (var cell in _map.Rocks)
             _rocks[cell] = new MazeRock { Cell = cell };
         Load(save);
+        LoadProgress(save);
+        RestoreFloorState(utcNow);
         Tick(utcNow);
         Position = _map.Start;
         Facing = _map.StartFacing;
@@ -458,6 +461,10 @@ public class MineMazeModel
             if (!string.IsNullOrEmpty(id))
                 _discovered.Add(id);
         }
+    }
+
+    private void LoadFloor(MazeFloorSave save)
+    {
         foreach (var key in save.visited)
         {
             if (TryCell(key, out var cell) && !_map.IsWall(cell))
@@ -518,6 +525,7 @@ public class MineMazeModel
             mapOtter = MapOtter,
             rocksBroken = RocksBroken,
         };
+        SaveProgress(save);
         foreach (var ore in _rework.Ores)
         {
             int n = Count(ore);
@@ -544,6 +552,9 @@ public class MineMazeModel
                 respawnUtcTicks = rock.Present ? 0 : rock.RespawnUtc.Ticks,
             });
         }
+        save.currentFloor = CurrentFloor;
+        _floorStates[CurrentFloor] = MazeFloorSave.From(save, CurrentFloor);
+        save.floors.AddRange(_floorStates.Values);
         return save;
     }
 

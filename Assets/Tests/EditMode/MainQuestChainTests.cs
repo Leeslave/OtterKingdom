@@ -43,6 +43,25 @@ public class MainQuestChainTests
         return item;
     }
 
+    // Lv.5가 한꺼번에 열리지 않게: 게시판 보강 → 또박이 배치 → 첫 구역 → … → 광산 연락(오래된 갱도). 실제 퀘스트 에셋의 체인
+    [Test]
+    public void Level5Chain_BoardOtterBeforeMineCall()
+    {
+        const string folder = "Assets/Scriptable Obejects/Quest/Quests/";
+        var clerk = AssetDatabase.LoadAssetAtPath<QuestDefinition>(folder + "M06_Clerk.asset");
+        var found = AssetDatabase.LoadAssetAtPath<QuestDefinition>(folder + "M05_MazeFound.asset");
+        var board = AssetDatabase.LoadAssetAtPath<QuestDefinition>(folder + "M05_Board.asset");
+        Assert.IsNotNull(clerk);
+        Assert.IsNotNull(found);
+        Assert.AreEqual(board, clerk.Prerequisite, "게시판 보강 바로 다음이 또박이 배치");
+        Assert.AreEqual(5, clerk.RequiredLevel);
+        Assert.AreEqual(MineMazeRules.BoardOtterRequest, clerk.Target);
+        bool clerkFirst = false;
+        for (var q = found.Prerequisite; q != null && q.RequiredLevel >= 5; q = q.Prerequisite)
+            clerkFirst |= q == clerk;
+        Assert.IsTrue(clerkFirst, "오래된 갱도 찾기보다 또박이 배치가 먼저");
+    }
+
     [Test]
     public void PaidTransactions_CountBagNotFurrow()
     {

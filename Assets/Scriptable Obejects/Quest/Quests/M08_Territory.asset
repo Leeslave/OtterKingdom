@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv8_territory
   _title: "\uC601\uD1A0 \uB113\uD788\uAE30"
   _description: "\uC232\uC744 \uAC1C\uAC04\uD574 \uCCAB \uC601\uD1A0 \uC5F4\uAE30"
-  _sortOrder: 25
+  _sortOrder: 27
   _kind: 0
   _requiredLevel: 8
   _prerequisite: {fileID: 11400000, guid: 2214c334a866ed744957998e575c699a, type: 2}
