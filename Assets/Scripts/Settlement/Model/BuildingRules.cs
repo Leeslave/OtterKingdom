@@ -65,9 +65,10 @@ public static class BuildingRules
         var unlocked = CheckUnlocked(config, settlement, building, level);
         if (unlocked != BuildingBlock.None)
             return unlocked;
-        if (settlement.ActiveBuildingCount >= BaseSlots)
+        // 바로 놓이는 것(길)은 공사 자리 · 건설 해달이 필요 없음
+        if (!building.Instant && settlement.ActiveBuildingCount >= BaseSlots)
             return BuildingBlock.Busy;
-        if (!hasBuilder)
+        if (!building.Instant && !hasBuilder)
             return BuildingBlock.NoBuilder;
         if (gold < GoldCost(settlement, building))
             return BuildingBlock.Gold;

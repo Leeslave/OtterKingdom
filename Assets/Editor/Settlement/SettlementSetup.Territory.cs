@@ -54,10 +54,11 @@ public static partial class SettlementSetup
 
     [System.Serializable] private class TerritoryPolygon { public float[] points; }
 
-    // 숲 묶음: development가 열리면 사라짐 (비면 늘 남는 숲), 그루터기는 그 뒤 stumpsUntil이 열리기 전까지
+    // 숲 묶음: development가 열리면 사라짐 (비면 늘 남는 숲), 그루터기는 그 뒤 stumpsUntil이 열리기 전까지.
+    // alsoDevelopment가 있으면 그것이 열려도 사라짐 (바닷가 길에 걸친 개간 조각 나무: 바닷가 · 그 조각 개간 중 먼저 오는 쪽)
     [System.Serializable] private class ForestGroup
     {
-        public string id, development, stumpsUntil;
+        public string id, development, stumpsUntil, alsoDevelopment;
         public ForestItem[] trees;
         public ForestItem[] stumps;
         public ForestShade shade;
@@ -105,6 +106,28 @@ public static partial class SettlementSetup
 
     /// <summary>영토 확장 단계 ID (= 그 땅이 열린 발전, 구역 블록 단계의 발전)</summary>
     internal static string TerritoryId(TerritoryDirection direction, int tier) => $"territory_{TerritoryRules.DirectionKey(direction)}_{tier}";
+
+    /// <summary>
+    /// 광장의 영토(지도 · 숲 · 땅별 걷기 영역 · 개간 자리 · 카메라 범위)만 territory_layout.json대로 다시 만듦.
+    /// 다른 광장 소품은 건드리지 않음 (바닷가 길처럼 배치만 바뀌었을 때: python Tools/MapExpansion/add_shore_path.py 뒤에)
+    /// </summary>
+    [MenuItem("Tools/Settlement/Rebuild Plaza Territory")]
+    public static void RebuildPlazaTerritory()
+    {
+        if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            return;
+        ImportTerritoryArt(LoadTerritoryLayout());
+        var scene = EditorSceneManager.OpenScene(PlazaScenePath, OpenSceneMode.Single);
+        var plazaRoot = GameObject.Find("PlazaRoot").transform;
+        var root = plazaRoot.Find(RootName);
+        var background = plazaRoot.Find("Background").GetComponent<SpriteRenderer>();
+        var bounds = GroundBounds(background);
+        Vector3 ToWorld(Vector2 px) => new Vector3(bounds.min.x + px.x / GroundPixelsPerUnit, bounds.max.y - px.y / GroundPixelsPerUnit, 0f);
+        BuildTerritory(root, root.GetComponent<SettlementPlazaView>(), background, ToWorld);
+        EditorSceneManager.MarkSceneDirty(scene);
+        EditorSceneManager.SaveScene(scene);
+        Debug.Log("[SettlementSetup] 광장 영토 다시 만듦");
+    }
 
     [MenuItem("Tools/Settlement/Apply Map Expansion")]
     public static void ApplyMapExpansion()
@@ -331,8 +354,15 @@ public static partial class SettlementSetup
                 shade.sortingLayerID = background.sortingLayerID;
                 shade.sortingOrder = PlazaDepth.BackgroundOrder + 5;
             }
+            var treeParent = node;
+            if (!string.IsNullOrEmpty(group.alsoDevelopment))
+            {
+                treeParent = new GameObject($"Until_{group.alsoDevelopment}").transform;
+                treeParent.SetParent(node, false);
+                AddGate(treeParent.gameObject, group.alsoDevelopment, false);
+            }
             foreach (var item in group.trees)
-                ForestSprite(node, item, W(item.x, item.y), background);
+                ForestSprite(treeParent, item, W(item.x, item.y), background);
 
             if (string.IsNullOrEmpty(group.development) || group.stumps == null || group.stumps.Length == 0)
                 continue;

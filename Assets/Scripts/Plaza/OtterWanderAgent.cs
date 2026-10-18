@@ -526,7 +526,10 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     }
 
     // Speed of the current walk (faster on the way to a task). Visuals match the walk clip to it.
-    public float CurrentWalkSpeed => walkingToTask ? WalkSpeed * TaskWalkSpeedMultiplier : WalkSpeed;
+    public float CurrentWalkSpeed => walkingToTask ? WalkSpeed * (TaskSpeed != null ? TaskSpeed(Position) : TaskWalkSpeedMultiplier) : WalkSpeed;
+
+    // 일하러 갈 때 속도 배수를 자리마다 정함 (광장 농부: 길 위에서 빨리). 비우면 늘 TaskWalkSpeedMultiplier
+    public System.Func<Vector2, float> TaskSpeed { get; set; }
 
     private void EnterIdle(float duration)
     {

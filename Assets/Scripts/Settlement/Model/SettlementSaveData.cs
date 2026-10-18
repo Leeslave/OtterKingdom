@@ -188,4 +188,6 @@ public class SettlementSaveData
     public List<DistrictSaveData> districts = new List<DistrictSaveData>();
     // 이사 지시서 · 옮기는 중인 건물 (구역·이사 4단계. 옛 세이브는 없음 = 지시서 없음)
     public RelocationSaveData relocation = new RelocationSaveData();
+    // 광장 농장: 밭 칸 · 수확 상자 (농장 설계형. 옛 세이브는 없음 → 밭 씬에서 한 번 옮김)
+    public PlazaFarmSaveData farm = new PlazaFarmSaveData();
 }

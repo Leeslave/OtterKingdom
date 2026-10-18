@@ -129,13 +129,28 @@ public class GatheringDirector : MonoBehaviour
             if (otter == null || otter.PlazaPrefab == null || otter.IsBuilder
                 || !settlement.TryGetResidentState(otterId, out var state) || state != ResidentState.Resident)
                 continue;
-            var source = otter.PlazaPrefab.GetComponentInChildren<SpriteRenderer>(true);
-            if (source == null)
+            var rigSource = otter.PlazaPrefab.GetComponentInChildren<QuarterRigView>(true);
+            var source = rigSource == null ? otter.PlazaPrefab.GetComponentInChildren<SpriteRenderer>(true) : null;
+            if (rigSource == null && source == null)
                 continue;
 
             var seat = _seats[_spawned.Count];
             var guest = new GameObject($"Guest_{otterId}");
             guest.transform.position = seat.position;
+            _spawned.Add(guest);
+            _guestNames.Add(otter.DisplayName);
+            if (rigSource != null)
+            {
+                // 리그 해달: 리그 모습만 복사해 식탁을 바라보고 서 있음
+                var rig = Instantiate(rigSource, guest.transform);
+                rig.name = "Visual";
+                rig.transform.localPosition = rigSource.transform.localPosition;
+                rig.transform.localScale = rigSource.transform.lossyScale;
+                rig.SortingOrder = PlazaDepth.SortingOrderFor(seat.position.y);
+                if (_table != null)
+                    rig.Face(new Vector2(_table.position.x - seat.position.x, 0f));
+                continue;
+            }
             var visual = new GameObject("Visual");
             visual.transform.SetParent(guest.transform, false);
             visual.transform.localPosition = source.transform.localPosition;
@@ -145,8 +160,6 @@ public class GatheringDirector : MonoBehaviour
             renderer.sortingOrder = PlazaDepth.SortingOrderFor(seat.position.y);
             // 식탁을 바라봄
             renderer.flipX = _table != null && _table.position.x < seat.position.x;
-            _spawned.Add(guest);
-            _guestNames.Add(otter.DisplayName);
         }
     }
 

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13fb01c9847e05d43ade12aede4f399d, type: 3}
+  m_Name: Layer_1
+  m_EditorClassIdentifier: OtterKingdom::MineLayerDefinition
+  _displayName: "\uC870\uC57D\uB3CC \uAD74"
+  _subtitle: "\uC791\uC740 \uD574\uB2EC\uB3C4 \uCE98 \uC218 \uC788\uB294 \uC595\uC740
+    \uAD74"
+  _requiredPickaxeTier: 0
+  _rockHp: 4
+  _veins:
+  - _ore: {fileID: 11400000, guid: e2c75dbf793efd748a6fc086c079d7ce, type: 2}
+    _weight: 50
+  - _ore: {fileID: 11400000, guid: b954f3024ada15e4a9d1ccc48c973da8, type: 2}
+    _weight: 50
+  _rareDrops:
+  - _ore: {fileID: 11400000, guid: c8c972aaac2a18546b91845178d6ffe1, type: 2}
+    _weight: 1
+  _rareChance: 0.04
+  _relic: {fileID: 11400000, guid: d22e86ba12946e3469bf0abaf581e205, type: 2}
+  _relicChance: 0.02
+  _background: {fileID: 21300000, guid: 37579246caec4e2abf00f090bce84bc1, type: 3}
+  _backgroundTint: {r: 1, g: 1, b: 1, a: 1}
+  _rockTint: {r: 1, g: 1, b: 1, a: 1}
+  _moteColor: {r: 1, g: 0.95, b: 0.8, a: 0.7}
+  _darkness: 0.12

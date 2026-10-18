@@ -250,7 +250,8 @@ public partial class GameManager : MonoBehaviour
         {
             // App closed: growth only (offline production has its own rules).
             // Scene load: the farmer kept working, like anywhere else.
-            if (pendingElapsedIsLaunch) farmService.Grow(pendingOfflineElapsedSec);
+            if (PlazaFarmOpen) { }
+            else if (pendingElapsedIsLaunch) farmService.Grow(pendingOfflineElapsedSec);
             else farmService.Tick(pendingOfflineElapsedSec);
             pendingOfflineElapsedSec = 0f;
             farmChanged = false;
@@ -269,7 +270,10 @@ public partial class GameManager : MonoBehaviour
         // specialist placed here starts working right away.
         else StartSpecialistWork();
         if (CurrentZoneId == ZoneTutorials.Plaza)
+        {
             StartCoroutine(PlayDistrictGuideWhenReady());
+            StartCoroutine(PlayTerritoryGuideWhenReady());
+        }
         if (CurrentZoneId == ZoneTutorials.Plaza && !save.tutorialsDone.Contains(ZoneTutorials.FairyShop))
             StartCoroutine(PlayFairyShopTutorialWhenReady());
         if (CurrentZoneId == ZoneTutorials.Farm && !save.tutorialsDone.Contains(ZoneTutorials.FarmOffline))
@@ -287,9 +291,12 @@ public partial class GameManager : MonoBehaviour
         });
     }
 
+    // 광장 농장(농장 설계형)이 열리면 옛 밭(밭 씬)은 멈춤 — 밭은 SettlementManager.Farm이 돌림 (Docs/농장_설계형_기획.md)
+    private static bool PlazaFarmOpen => SettlementManager.Instance != null && SettlementManager.Instance.FarmOpen;
+
     private void Update()
     {
-        farmService.Tick(Time.deltaTime);
+        if (!PlazaFarmOpen) farmService.Tick(Time.deltaTime);
         TickMining(Time.deltaTime);
 
         autoSaveTimer += Time.deltaTime;
@@ -407,7 +414,7 @@ public partial class GameManager : MonoBehaviour
         // In the background the app is away like when it's closed: crops grow,
         // the online farmer doesn't harvest (offline production covers it).
         // Both count for at most 8 hours.
-        farmService.Grow((float)OfflineProductionService.Credited(away));
+        if (!PlazaFarmOpen) farmService.Grow((float)OfflineProductionService.Credited(away));
         RunOfflineProduction(away);
     }
 
@@ -684,7 +691,7 @@ public partial class GameManager : MonoBehaviour
 
         // 전문 해달(농부·광부·낚시꾼)이 일하기 전에는 그 장소의 오프라인 생산도 없음
         var report = offlineProduction.Run(save, absenceSec, new OfflineBag(this),
-            CanProduceIn(FarmZoneId), CanProduceIn(MineZoneId), CanProduceIn(FishingZoneId));
+            CanProduceIn(FarmZoneId) && !PlazaFarmOpen, CanProduceIn(MineZoneId), CanProduceIn(FishingZoneId));
         var settlement = SettlementManager.Instance;
         if (settlement != null)
         {

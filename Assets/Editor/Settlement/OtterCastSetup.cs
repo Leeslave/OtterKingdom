@@ -110,6 +110,12 @@ public static class OtterCastSetup
     /// <summary>다른 설정 메뉴가 해달을 다시 채울 때 부름: 모습이 정해진 해달이면 광장 모습 · 얼굴을 덮어씀 (아직 안 만들었으면 그대로)</summary>
     internal static void ApplyTo(SerializedObject otterSo, string otterId)
     {
+        ApplyCast(otterSo, otterId);
+        RiggedLookSetup.ApplyTo(otterSo, otterId); // 광장은 리그 해달만 (캐스트 그림은 얼굴에만)
+    }
+
+    private static void ApplyCast(SerializedObject otterSo, string otterId)
+    {
         var prefab = Prefab(otterId);
         var portrait = Portrait(otterId);
         if (prefab == null || portrait == null)

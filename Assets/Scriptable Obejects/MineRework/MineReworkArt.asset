@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0401ccda157484478b316db70f06452, type: 3}
+  m_Name: MineReworkArt
+  m_EditorClassIdentifier: OtterKingdom::MineReworkArt
+  _rockStages:
+  - {fileID: 21300000, guid: 35522ceed4b39a04b829f24d10ce7823, type: 3}
+  - {fileID: 21300000, guid: cff2cbbf85c19874dbd16543017afc67, type: 3}
+  - {fileID: 21300000, guid: de8af37361bed5847aefa9fc92a9bb6d, type: 3}
+  _rubble: {fileID: 21300000, guid: 9c649a9061b62ec41b3524156dedf975, type: 3}
+  _chip: {fileID: 21300000, guid: 1389d3a0c20344fb88dd9a5aea3713f5, type: 3}
+  _glow: {fileID: 21300000, guid: 84a31e25ccdc258428ffb77fe42035db, type: 3}
+  _spark: {fileID: 21300000, guid: 132f9c7ff92f98f4a8c7694a61225f78, type: 3}
+  _ring: {fileID: 21300000, guid: 98e9a02eb6ee1f94fb2111106358055f, type: 3}
+  _mote: {fileID: 21300000, guid: 56c60df20357f8c488dce34b31edc0e7, type: 3}
+  _vignette: {fileID: 21300000, guid: 7da1f0325aa40b846b7623f52e53b977, type: 3}
+  _rays: {fileID: 257141198600766726, guid: 803f25b3b11d9174cae709cd3280b400, type: 3}
+  _roundCream: {fileID: 21300000, guid: 79bffadeaed098c4895947aed65438bb, type: 3}
+  _roundFeatured: {fileID: 21300000, guid: ef01e7ddb64dd354fad94ddd1398c80d, type: 3}
+  _roundPeach: {fileID: 21300000, guid: 223c60b119f69dc46b76bbd07fe6647b, type: 3}
+  _chipNormal: {fileID: 21300000, guid: 8d5e81308400e4f4d89db1dc5399e544, type: 3}
+  _badge: {fileID: 21300000, guid: ce77a0613dbe2b64a8c0c6fb2a583265, type: 3}
+  _boxInset: {fileID: 21300000, guid: de19d46b361ba734b96e17a80db7bd33, type: 3}
+  _barFill: {fileID: 21300000, guid: 3c66bd11cfaf48f46b1acb833e58c4d0, type: 3}
+  _ribbonPeach: {fileID: 21300000, guid: d025815ccf952d64980018423e9355f5, type: 3}
+  _ribbonLav: {fileID: 21300000, guid: 71b783705057f724483bd3ac4aa7fe99, type: 3}
+  _tagCommon: {fileID: 21300000, guid: 18842b22fe34a7142b6ab0ee2d6cd635, type: 3}
+  _tagRare: {fileID: 21300000, guid: d211afe5c8ab8bb49a522936cec62ca6, type: 3}
+  _tagEpic: {fileID: 21300000, guid: 8161a1aa924866249ae7391731af8bfc, type: 3}
+  _paper: {fileID: 21300000, guid: afaaf176f7331a442876ef91cdbeaaa4, type: 3}
+  _gold: {fileID: 21300000, guid: 50d17c0c5e1496846a61da22ead35d0d, type: 3}
+  _iconWorkbench: {fileID: 21300000, guid: 270a2072e2073934ebe3b433d0c60f22, type: 3}
+  _iconLayers: {fileID: 21300000, guid: e6eaba03fc7b28941b5311f5097cbf65, type: 3}
+  _iconCollection: {fileID: 21300000, guid: 83712413ee09b904e90ef98f8b2ec085, type: 3}

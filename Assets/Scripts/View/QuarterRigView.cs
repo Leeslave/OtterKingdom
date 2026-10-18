@@ -446,6 +446,9 @@ public sealed class QuarterRigView : MonoBehaviour
     public bool CanRing => smileHead != null;
     // Only an otter with a dust puff (sweep_dust.png in its folder - the 청소부) sweeps.
     public bool CanSweep => dustPuffs[0] != null;
+    // This otter's own work (fishing, building, ...), Loop.None for an otter without one.
+    public Loop WorkLoop => CanFish ? Loop.Fish : CanBuild ? Loop.Build : CanMine ? Loop.Mine : CanPhoto ? Loop.Photo
+        : CanRing ? Loop.Ring : CanSweep ? Loop.Sweep : Loop.None;
     public bool IsSitting => sitting;
 
     public int SortingOrder

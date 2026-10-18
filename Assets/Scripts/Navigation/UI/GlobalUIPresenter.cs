@@ -182,7 +182,12 @@ public class GlobalUIPresenter : MonoBehaviour
         }
 
         _navBar.SetTravelSelected(true);
-        _travelPopup.Show(ZoneLookup.Sorted(_root.Zones), _navigator.CurrentZone);
+        // 밭은 광장 농업 지역으로 옮겨 와 이동 지도에서 뺌 (Docs/농장_설계형_기획.md)
+        var zones = new System.Collections.Generic.List<ZoneDefinition>(ZoneLookup.Sorted(_root.Zones));
+        var settlement = SettlementManager.Instance;
+        if (settlement != null && settlement.FarmConfig != null)
+            zones.RemoveAll(z => z != null && z.ZoneId == GameManager.FarmZoneId);
+        _travelPopup.Show(zones, _navigator.CurrentZone);
     }
 
     private void HandleTravelHidden()

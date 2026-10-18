@@ -60,6 +60,16 @@ public class DistrictTestWindow : EditorWindow
         if (GUILayout.Button("성 재료 넉넉히 받기 (골드 · 목재 · 돌)"))
             GiveCastleMaterials(manager);
         DevTimers.Fast = EditorGUILayout.Toggle($"빠른 타이머 ({DevTimers.FastSeconds}초, 새로 시작하는 공사부터)", DevTimers.Fast);
+        using (new EditorGUILayout.HorizontalScope())
+        {
+            EditorGUILayout.LabelField($"게임 속도 x{DevGameSpeed.Speed:0}", GUILayout.Width(110));
+            foreach (float speed in new[] { 1f, 2f, 5f, 10f, 30f })
+            {
+                bool on = Mathf.Approximately(DevGameSpeed.Speed, speed);
+                if (GUILayout.Toggle(on, $"x{speed:0}", "Button") && !on)
+                    DevGameSpeedMenu.Set(speed);
+            }
+        }
         if (GUILayout.Button("성 되돌리기 (다시 시험)"))
         {
             manager.Settlement.DevForget(CastleRules.Built, CastleRules.RequestId);

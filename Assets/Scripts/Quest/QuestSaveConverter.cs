@@ -33,6 +33,8 @@ public static class QuestSaveConverter
     public const string MainChainId = "__main_chain";
     // 가 본 장소 하나에 한 줄 ("__visited:Mine"). 장소 가 보기 퀘스트를 기록으로 셈
     public const string VisitedPrefix = "__visited:";
+    // 다음 퀘스트로 넘길 진행 하나에 한 줄 ("__carry:" + 종류 키). progress = 남은 양
+    public const string CarryPrefix = "__carry:";
 
     /// <summary>기록이 있는 퀘스트만 ID 순으로 쓴다 (DB에 없는 ID도 보관해 둔 그대로 씀)</summary>
     public static void Write(QuestLog log, List<QuestSaveEntry> result)
@@ -59,6 +61,11 @@ public static class QuestSaveConverter
         zones.Sort(string.CompareOrdinal);
         foreach (var zone in zones)
             result.Add(new QuestSaveEntry(VisitedPrefix + zone, 1, false));
+
+        var carryKeys = new List<string>(log.Carry.Keys);
+        carryKeys.Sort(string.CompareOrdinal);
+        foreach (var key in carryKeys)
+            result.Add(new QuestSaveEntry(CarryPrefix + key, log.Carry[key], false));
     }
 
     /// <summary>저장된 기록을 넣는다. 비었거나 잘못된 줄은 건너뛴다.</summary>
@@ -86,6 +93,11 @@ public static class QuestSaveConverter
             if (line.questId.StartsWith(VisitedPrefix, StringComparison.Ordinal))
             {
                 log.MarkVisited(line.questId.Substring(VisitedPrefix.Length));
+                continue;
+            }
+            if (line.questId.StartsWith(CarryPrefix, StringComparison.Ordinal))
+            {
+                log.LoadCarry(line.questId.Substring(CarryPrefix.Length), line.progress);
                 continue;
             }
 

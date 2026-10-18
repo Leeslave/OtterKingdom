@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156064bdadfae24d9a3c7f86ebf48c5, type: 3}
+  m_Name: Ore_relic_shell_fossil
+  m_EditorClassIdentifier: OtterKingdom::MineOreDefinition
+  _oreId: relic_shell_fossil
+  _displayName: "\uC870\uAC1C \uD654\uC11D"
+  _description: "\uC544\uC8FC \uBA3C \uC61B\uB0A0 \uBC14\uB2E4\uC600\uB358 \uC774
+    \uB545\uC758 \uD754\uC801. \uC774 \uAD74\uB3C4 \uD55C\uB54C\uB294 \uBC14\uB2F7\uC18D\uC774\uC5C8\uB300\uC694."
+  _useText: "\uB3C4\uAC10 \xB7 \uC61B \uC655\uAD6D \uC774\uC57C\uAE30"
+  _icon: {fileID: 21300000, guid: be37abb8cb353794e9456c9eff9897b4, type: 3}
+  _veinSprite: {fileID: 0}
+  _color: {r: 0.84, g: 0.78, b: 0.7, a: 1}
+  _rarity: 5
+  _sellPrice: 0
