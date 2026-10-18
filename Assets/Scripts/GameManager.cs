@@ -1181,7 +1181,8 @@ public partial class GameManager : MonoBehaviour
     // furrows ahead of the main quest chain can't block it.
     private void ReportOpenedFurrows()
     {
-        if (QuestManager.Instance != null)
+        // 광장 농장이 열리면 밭 칸 수는 SettlementManager.Farm이 알림
+        if (QuestManager.Instance != null && !PlazaFarmOpen)
             QuestManager.Instance.SetOpenedFurrows(farmService.OpenSlotCount - PlotSaveData.SlotCount);
     }
 

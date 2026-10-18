@@ -28,7 +28,7 @@ public static class QuestSetup
 
     // 아이콘: "item:경로" (아이템 아이콘), "gold" (골드 아이콘), "place:파일", "otter:파일", "npc:파일", "nav:파일", "settle:파일"
     // 필터: 분류 이름(Crops 등) / "otter"(도감 해달 탭) / "only:아이템 경로"(그 아이템만 — 수확·상점 구매) / "build:건설ID,건설ID"(그 건물만) / "builder"(건설 해달 참여 공사만)
-    // 대상: 정착 단계 = 끝낸 부탁 ID 또는 열린 발전 ID / 장소 가 보기 = 씬 이름 / 고랑 열기 = 몇 번째 고랑인지 (밭 1을 뺀 순번, 1부터)
+    // 대상: 정착 단계 = 끝낸 부탁 ID 또는 열린 발전 ID / 장소 가 보기 = 씬 이름 / 밭 칸 짓기 = 처음 밭 칸 3개를 넘긴 몇 번째 칸인지 (1부터)
     //
     // 메인: 레벨마다 몇 개를 하나씩 순서대로 (모두 한 줄로 이어짐 — 앞 단계 보상을 받으면 다음). 한 레벨의 메인 경험치 합 = 그 레벨의 필요 경험치.
     //   정착 단계 중 스스로 경험치를 주는 것(공동사업·영토 미션)이나 레벨을 바로 올리는 부탁(의자·광산 길)은 경험치 0, 나머지가 채운다.
@@ -90,23 +90,23 @@ public static class QuestSetup
         ("M10_Sales", "main_lv10_sales", "마을의 살림꾼", "판매로 10,000골드 벌기", QuestGoalType.EarnFromSales, 10000, "", 500, "gold", QuestKind.Main, 10, "M10_Gathering", 400, 0f, ""),
         // Lv.11 → 12 고랑 넓히기 (2,100)
         ("M05_Seed", "main_lv5_seed", "요정과 첫 거래", "요정 상점에서 감자 모종 사기", QuestGoalType.ShopPurchase, 1, "only:Farming/감자 모종", 50, "npc:Fairy", QuestKind.Main, 11, "M10_Sales", 150, 0f, ""),
-        ("M05_Furrow", "main_lv5_furrow", "고랑 넓히기", "밭의 고랑 한 칸 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 11, "M05_Seed", 150, 0f, "1"),
-        ("M06_Furrow", "main_lv6_furrow", "고랑 하나 더", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 11, "M05_Furrow", 150, 0f, "2"),
+        ("M05_Furrow", "main_lv5_furrow", "밭 넓히기", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 11, "M05_Seed", 150, 0f, "1"),
+        ("M06_Furrow", "main_lv6_furrow", "밭 칸 하나 더", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 11, "M05_Furrow", 150, 0f, "2"),
         ("M05_Harvest", "main_lv5_harvest", "부지런한 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 100, "item:Farming/감자", QuestKind.Main, 11, "M06_Furrow", 400, 0f, ""),
         ("M06_Potato", "main_lv6_potato", "감자 농사", "감자 20개 수확하기", QuestGoalType.Harvest, 20, "only:Farming/감자", 100, "item:Farming/감자", QuestKind.Main, 11, "M05_Harvest", 350, 0f, ""),
         ("M11_Mine", "main_lv11_mine", "광산 깊이", "광산에서 광석 200개 캐기", QuestGoalType.Mine, 200, "Ore", 800, "item:Mining/다이아몬드", QuestKind.Main, 11, "M06_Potato", 900, 0f, ""),
         // Lv.12 → 13 달콤한 밭 (2,600)
-        ("M08_Furrow", "main_lv8_furrow", "고랑 셋째 칸", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 12, "M11_Mine", 200, 0f, "3"),
+        ("M08_Furrow", "main_lv8_furrow", "여섯째 밭 칸", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 12, "M11_Mine", 200, 0f, "3"),
         ("M08_SweetPotato", "main_lv8_sweet_potato", "달콤한 고구마", "고구마 30개 수확하기", QuestGoalType.Harvest, 30, "only:Farming/고구마", 200, "item:Farming/고구마", QuestKind.Main, 12, "M08_Furrow", 300, 0f, ""),
-        ("M09_Furrow", "main_lv9_furrow", "고랑 넷째 칸", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 12, "M08_SweetPotato", 200, 0f, "4"),
+        ("M09_Furrow", "main_lv9_furrow", "일곱째 밭 칸", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 12, "M08_SweetPotato", 200, 0f, "4"),
         ("M09_Harvest", "main_lv9_harvest", "대풍년", "작물 300개 수확하기", QuestGoalType.Harvest, 300, "Crops", 300, "item:Farming/당근", QuestKind.Main, 12, "M09_Furrow", 400, 0f, ""),
         ("M12_Upgrade", "main_lv12_upgrade", "장인의 손길", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 800, "place:ICON_Place_Mine", QuestKind.Main, 12, "M09_Harvest", 500, 0f, ""),
         ("M12_Sales", "main_lv12_sales", "큰손 해달", "판매로 30,000골드 벌기", QuestGoalType.EarnFromSales, 30000, "", 1500, "gold", QuestKind.Main, 12, "M12_Upgrade", 1000, 0f, ""),
         // Lv.13 → 14 넓어진 밭 (3,200)
         ("M11_StrawberrySeed", "main_lv11_strawberry_seed", "새빨간 딸기", "요정 상점에서 딸기 모종 사기", QuestGoalType.ShopPurchase, 1, "only:Farming/딸기 모종", 200, "npc:Fairy", QuestKind.Main, 13, "M12_Sales", 200, 0f, ""),
-        ("M11_Furrow", "main_lv11_furrow", "고랑 다섯째 칸", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 13, "M11_StrawberrySeed", 200, 0f, "5"),
+        ("M11_Furrow", "main_lv11_furrow", "여덟째 밭 칸", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 13, "M11_StrawberrySeed", 200, 0f, "5"),
         ("M11_Strawberry", "main_lv11_strawberry", "딸기 농사", "딸기 100개 수확하기", QuestGoalType.Harvest, 100, "only:Farming/딸기", 800, "item:Farming/딸기", QuestKind.Main, 13, "M11_Furrow", 600, 0f, ""),
-        ("M13_Furrow", "main_lv13_furrow", "마지막 고랑", "밭의 고랑 한 칸 더 열기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 13, "M11_Strawberry", 200, 0f, "6"),
+        ("M13_Furrow", "main_lv13_furrow", "아홉째 밭 칸", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 13, "M11_Strawberry", 200, 0f, "6"),
         ("M13_Decor", "main_lv13_decor", "해달 놀이공원", "장난감 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 800, "item:Decor/퍼즐", QuestKind.Main, 13, "M13_Furrow", 300, 0f, ""),
         ("M13_Mine", "main_lv13_mine", "광맥을 찾아서", "광산에서 광석 400개 캐기", QuestGoalType.Mine, 400, "Ore", 1500, "item:Mining/다이아몬드", QuestKind.Main, 13, "M13_Decor", 700, 0f, ""),
         ("M13_Sales", "main_lv13_sales", "해달 재벌", "판매로 50,000골드 벌기", QuestGoalType.EarnFromSales, 50000, "", 2000, "gold", QuestKind.Main, 13, "M13_Mine", 1000, 0f, ""),

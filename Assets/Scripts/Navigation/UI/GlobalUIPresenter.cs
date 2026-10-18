@@ -182,10 +182,11 @@ public class GlobalUIPresenter : MonoBehaviour
         }
 
         _navBar.SetTravelSelected(true);
-        // 밭은 광장 농업 지역으로 옮겨 와 이동 지도에서 뺌 (Docs/농장_설계형_기획.md)
+        // 밭은 광장 농업 지역으로 옮겨 와 이동 지도에서 뺌 (Docs/농장_설계형_기획.md).
+        // 농업 지역을 아직 안 정한 옛 세이브는 광장 농장이 열릴 때까지 밭 씬을 그대로 씀
         var zones = new System.Collections.Generic.List<ZoneDefinition>(ZoneLookup.Sorted(_root.Zones));
         var settlement = SettlementManager.Instance;
-        if (settlement != null && settlement.FarmConfig != null)
+        if (settlement != null && settlement.FarmOpen)
             zones.RemoveAll(z => z != null && z.ZoneId == GameManager.FarmZoneId);
         _travelPopup.Show(zones, _navigator.CurrentZone);
     }
