@@ -60287,7 +60287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe64d5ea325afd740b1437c0f3d9fcde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: OtterKingdom::DevelopmentGate
-  _developmentId: house_1
+  _developmentId: lamp_built
   _showWhenUnlocked: 1
   _focusOnUnlock: 0
   _supersededBy: 

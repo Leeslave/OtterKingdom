@@ -415,13 +415,22 @@ public static partial class SettlementSetup
         return true;
     }
 
-    // 가로등 묶음 기준: 늘 켜진 빈 오브젝트를 가로등 발밑에
+    // 가로등 묶음 기준: 늘 켜진 빈 오브젝트를 가로등 발밑에.
+    // 가로등은 가로등 부탁(lamp_built)으로 켜짐 — 첫 집(house_1)으로 켜지던 옛 씬은 여기서 바로잡음 (Setup Plaza를 다시 돌리지 않아도)
     private static void EnsureLampSite(Transform plazaRoot)
     {
         var root = plazaRoot.Find(RootName);
         var lamp = plazaRoot.Find("Props/Lamp_01");
         if (lamp == null)
             return;
+        var gate = lamp.GetComponent<DevelopmentGate>();
+        if (gate != null && gate.DevelopmentId != LampDevelopment)
+        {
+            var gateSo = new SerializedObject(gate);
+            gateSo.FindProperty("_developmentId").stringValue = LampDevelopment;
+            gateSo.ApplyModifiedPropertiesWithoutUndo();
+            Debug.Log($"[SettlementSetup] 가로등 발전 조건을 {LampDevelopment}(으)로 맞췄습니다.");
+        }
         var site = root.Find(LampSiteName);
         if (site == null)
         {
