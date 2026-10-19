@@ -534,7 +534,8 @@ public partial class MineMazeHud : MonoBehaviour
         }
 
         _actionClick = null;
-        if (_model.OnStairs)
+        // 아래층 길이 뚫린 뒤에만 내려가기 (막혀 있으면 앞의 큰 돌을 직접 침)
+        if (_model.OnStairs && !_game.GateAhead)
         {
             _actionLabel.text = "내려\n가기";
             _actionClick = _game.Descend;
@@ -546,6 +547,10 @@ public partial class MineMazeHud : MonoBehaviour
 
     private string PromptText()
     {
+        if (_model.OnStairs && _game.GateAhead)
+            return _model.CanHitGate(out string reason)
+                ? $"큰 돌이 아래층 길을 막고 있어요! 톡톡 쳐서 뚫어요 ({_model.GateDamage}/{_model.Config.GateHits})"
+                : $"큰 돌이 아래층 길을 막고 있어요 · {reason}";
         if (_model.OnStairs)
             return "아래층으로 내려가는 계단이에요";
         var rock = _model.RockAhead;
