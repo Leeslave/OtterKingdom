@@ -50,6 +50,11 @@ using UnityEngine.Rendering;
 //            the pickaxe in both paws from behind, over the top and down onto it three times - each blow cracks it a stage
 //            (rock_1, rock_2) with stone chips flying (stone_chip), the third
 //            breaks it to rubble (rock_rubble) - straighten up, and a new rock.
+// A rig can have any number of these (the 주인공 has them all). One whose tool is
+// not drawn into its own arm gets an arm holding it for that action:
+// front-<arm>-<tag>.png (tag mine, photo, ring, sweep, or play for the guitar
+// when seated - Tools/HeroRig/tool_arms.py) is shown instead of the arm while it
+// runs.
 //
 // SetSitting(true) settles onto a seat whose surface is this transform (a
 // chair or bench spot): bottom on the seat, legs stretched out in front, and
@@ -413,6 +418,11 @@ public sealed class QuarterRigView : MonoBehaviour
     private float sitBlend, nodTime, zTimer;
     private SpriteRenderer frontHead;
     private Sprite smileHead, noteSprite;
+    // Arms holding a tool, by "<arm>-<tag>" (front view), and the front arms as drawn.
+    private static readonly string[] ToolTags = { "mine", "photo", "ring", "sweep", "play" };
+    private readonly Dictionary<string, Sprite> toolArms = new Dictionary<string, Sprite>();
+    private Sprite nearArmSprite, farArmSprite;
+    private readonly List<Loop> workLoops = new List<Loop>();
     // Sits down to play its guitar instead of dozing (fx-note.png in its folder - the 음악가).
     public bool PlaysSeated => noteSprite != null;
     private Sprite awakeHead, sleepHead, zSprite, rodSprite, hammerSprite;
@@ -446,9 +456,11 @@ public sealed class QuarterRigView : MonoBehaviour
     public bool CanRing => smileHead != null;
     // Only an otter with a dust puff (sweep_dust.png in its folder - the 청소부) sweeps.
     public bool CanSweep => dustPuffs[0] != null;
-    // This otter's own work (fishing, building, ...), Loop.None for an otter without one.
-    public Loop WorkLoop => CanFish ? Loop.Fish : CanBuild ? Loop.Build : CanMine ? Loop.Mine : CanPhoto ? Loop.Photo
-        : CanRing ? Loop.Ring : CanSweep ? Loop.Sweep : Loop.None;
+    // This otter's own work (fishing, building, ...), Loop.None for an otter without one; with several, the first.
+    public Loop WorkLoop => workLoops.Count > 0 ? workLoops[0] : Loop.None;
+    // Every work it can do, and one of them at random (the 주인공 does them all).
+    public IReadOnlyList<Loop> WorkLoops => workLoops;
+    public Loop RandomWorkLoop => workLoops.Count > 0 ? workLoops[UnityEngine.Random.Range(0, workLoops.Count)] : Loop.None;
     public bool IsSitting => sitting;
 
     public int SortingOrder
@@ -566,6 +578,21 @@ public sealed class QuarterRigView : MonoBehaviour
         if (star != null) BuildFlash(star);
         var rock0 = Resources.Load<Sprite>(resourceFolder + "/rock_0");
         if (rock0 != null) BuildRock(rock0);
+        foreach (var tag in ToolTags)
+            foreach (var arm in new[] { "nearArm", "farArm" })
+            {
+                var held = Resources.Load<Sprite>($"{resourceFolder}/front-{arm}-{tag}");
+                if (held != null) toolArms[$"{arm}-{tag}"] = held;
+            }
+        nearArmSprite = front.nearArm != null ? front.nearArm.sprite : null;
+        farArmSprite = front.farArm != null ? front.farArm.sprite : null;
+        workLoops.Clear();
+        if (CanFish) workLoops.Add(Loop.Fish);
+        if (CanBuild) workLoops.Add(Loop.Build);
+        if (CanMine) workLoops.Add(Loop.Mine);
+        if (CanPhoto) workLoops.Add(Loop.Photo);
+        if (CanRing) workLoops.Add(Loop.Ring);
+        if (CanSweep) workLoops.Add(Loop.Sweep);
         ApplyPose();
     }
 
@@ -582,6 +609,8 @@ public sealed class QuarterRigView : MonoBehaviour
         flashStar = flashGlow = sparkle = null;
         for (int i = 0; i < dustPuffs.Length; i++) dustPuffs[i] = null;
         rockStages = null;
+        toolArms.Clear();
+        workLoops.Clear();
         for (int i = 0; i < stoneChips.Length; i++) stoneChips[i] = null;
         chips[0] = chips[1] = null;
         foreach (var made in madeForFishing) if (made != null) { if (Application.isPlaying) Destroy(made); else DestroyImmediate(made); }
@@ -938,6 +967,7 @@ public sealed class QuarterRigView : MonoBehaviour
         float nod = Mathf.Repeat(nodTime / NodSeconds, 1f);
         float play = PlaysSeated ? sb : 0f;
         float droop = play > 0f ? 0f : sb * Droop(nod);
+        if (toolArms.Count > 0) HoldTool(play > .5f);
         if (frontHead != null)
             frontHead.sprite = sitting && sleepHead != null && sb > .5f && (PlaysSeated || nod < BlinkFrom || nod >= BlinkTo) ? sleepHead
                 : smileHead != null && a.smile > .5f ? smileHead : awakeHead;
@@ -1020,6 +1050,23 @@ public sealed class QuarterRigView : MonoBehaviour
         if (rock != null) PoseRock(action != null ? a : new Key(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
         if (flashStar != null) PoseFlash(v, action != null ? a : new Key(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
         if (dustPuffs[0] != null) PoseDust(v, action != null ? a : new Key(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
+    }
+
+    // The arm holding this action's tool (front-<arm>-<tag>.png) in place of the arm as drawn, while it runs.
+    private void HoldTool(bool playing)
+    {
+        var loop = CurrentLoop;
+        string tag = loop == Loop.Mine ? "mine" : loop == Loop.Photo ? "photo" : loop == Loop.Ring ? "ring"
+            : loop == Loop.Sweep ? "sweep" : playing ? "play" : null;
+        ShowArm(front.nearArm, nearArmSprite, tag == null ? null : "nearArm-" + tag);
+        ShowArm(front.farArm, farArmSprite, tag == null ? null : "farArm-" + tag);
+    }
+
+    private void ShowArm(SpriteRenderer arm, Sprite drawn, string key)
+    {
+        if (arm == null) return;
+        var sprite = key != null && toolArms.TryGetValue(key, out var held) ? held : drawn;
+        if (arm.sprite != sprite) arm.sprite = sprite;
     }
 
     // Two-handed: turn the far arm (about its shoulder) to point at the handle below the near paw.

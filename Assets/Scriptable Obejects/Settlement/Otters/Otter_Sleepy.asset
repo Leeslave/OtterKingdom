@@ -15,7 +15,7 @@ MonoBehaviour:
   _otterId: otter_sleepy
   _displayName: "\uAFB8\uBC85\uC774"
   _portrait: {fileID: 21300000, guid: 500d1033b5622254abc1d583c590d016, type: 3}
-  _plazaPrefab: {fileID: 7310524418817630001, guid: a5851302777a4c59a41e521d73a64f7d, type: 3}
+  _plazaPrefab: {fileID: 7310524418817630001, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 1
   _toyVisitor: 0

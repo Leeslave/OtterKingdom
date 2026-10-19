@@ -357,6 +357,8 @@ const PHOTO_KEYS = [
   near: near === "up" ? PHOTO_UP.near : near === "look" ? PHOTO_LOOK : near, far: far === "up" ? PHOTO_UP.far : far }));
 const PHOTO_LOOP_FROM = .45;
 const PHOTO = { lens: [79, 36], sparkle: [70, -190], flash: 110, glow: 190, sparkleSize: 40, order: 11 };
+// Actions whose tool a rig may hold in a swapped-in arm (front-<arm>-<tag>.png, the 주인공).
+const TOOL_TAGS = { mine: "mine", photo: "photo", ring: "ring", sweep: "sweep" };
 // Ringing the bell (QuarterRigView.RingKeys): rigs with front-head-smile.png (the 행상인).
 const RING_KEYS = [
   [0, 0, 0, 0, 0, 0, 0],
@@ -693,6 +695,11 @@ function render() {
     if (b.name === "head" && isCustom()) key = customHeadKey(f.rear, dozing);
     else if (!f.rear && b.name === "head" && dozing && SPR["front-head-sleep"]) key = "front-head-sleep";
     else if (!f.rear && b.name === "head" && a.smile > .5 && SPR["front-head-smile"]) key = "front-head-smile";
+    // An arm holding this action's tool (QuarterRigView.HoldTool): front-<arm>-<tag>.png while it runs.
+    else if (!f.rear && (b.name === "nearArm" || b.name === "farArm")) {
+      const tag = TOOL_TAGS[state.motion] || (state.motion === "sit" && SPR["fx-note"] && sb > .5 ? "play" : null);
+      if (tag && SPR[`front-${b.name}-${tag}`]) key = `front-${b.name}-${tag}`;
+    }
     items.push({ order: b.layer, part: b.name, key, matrix: m.scale(t.scaleX, t.scaleY), seq: items.length });
   }
   if (isCustom() && CUSTOM) pushCustom(items, world, f, view, sb, nod, bones);
