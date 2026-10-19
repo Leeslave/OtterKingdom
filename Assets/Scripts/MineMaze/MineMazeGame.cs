@@ -297,8 +297,11 @@ public class MineMazeGame : MonoBehaviour
         _wall.enabled = ahead == MazeAhead.Wall;
 
         var rock = _model.RockAhead;
-        _rock.gameObject.SetActive(rock != null);
-        if (rock != null)
+        bool gate = GateAhead;
+        _rock.gameObject.SetActive(rock != null || gate);
+        if (gate)
+            _rock.Show(GateRock(), RockColor);
+        else if (rock != null)
             _rock.Show(rock.ToRock(), RockColor);
         _chest.enabled = ahead == MazeAhead.Chest || ahead == MazeAhead.OpenedChest;
         _chest.sprite = ahead == MazeAhead.Chest ? _mazeArt.ChestClosed : _mazeArt.ChestOpen;
@@ -412,11 +415,82 @@ public class MineMazeGame : MonoBehaviour
         Save();
     }
 
-    /// <summary>계단: 아래층은 아직 (테스트 씬은 지하 1층만)</summary>
+    /// <summary>계단: 아래층 길이 아직 막혔으면 앞의 큰 돌을 치라고 알림, 뚫렸으면 다음 층 입구</summary>
     public void Descend()
     {
         if (_busy || !_model.Inside || !_model.OnStairs) return;
+        if (GateAhead)
+        {
+            _rock.Wiggle();
+            _hud.ShowToast(_model.CanHitGate(out string reason) ? "앞의 큰 돌을 톡톡 쳐서 길을 뚫어요" : reason);
+            return;
+        }
         _hud.ShowGate();
+    }
+
+    // 계단 위에서 아래층 길을 막은 큰 돌 (돌파 횟수 = 돌 체력). 3층 끝 · 이미 뚫린 층은 없음
+    public bool GateAhead => _model.Inside && _model.OnStairs && !_model.FloorCleared && !_model.AtContentEnd;
+
+    private MineRock GateRock() => new MineRock { Vein = null, Hp = Math.Max(1, _model.GateRemaining), MaxHp = _model.Config.GateHits };
+
+    // 큰 돌 치기: 길 막은 돌과 같은 손맛 (곡괭이 · 파편 · 흔들림 · 소리). 친 만큼 저장, 다 부수면 다음 층 입구
+    private void HitGateRock()
+    {
+        if (!_model.CanHitGate(out string reason))
+        {
+            _rock.Wiggle();
+            _hud.ShowToast(reason);
+            return;
+        }
+        int before = _model.GateDamage;
+        if (!_model.HitGate(out reason))
+            return;
+        bool crit = _model.GateDamage - before >= 2;
+        _idle = 0f;
+        var tint = RockColor;
+        var center = _rock.Center;
+        var chipColor = tint * new Color(0.75f, 0.82f, 0.86f);
+        _fx.Swing(center + Vector2.up * 0.5f, _model.Pickaxe.Icon, 1.8f);
+        _fx.Chips(center + Vector2.up * 0.25f, chipColor, crit ? 9 : 5, crit ? 1.5f : 1.15f);
+        if (crit)
+        {
+            _sfx.Play(MineSfx.Kind.Crit);
+            _fx.Sparks(center, new Color(1f, 0.85f, 0.4f), 10, 1.5f, 0.7f);
+            _fx.Text(center + Vector2.up * 1.6f, "쾅!", new Color(1f, 0.6f, 0.3f), 9f, 0.6f, 0.8f);
+            _fx.Shake(0.12f);
+        }
+        else
+        {
+            _sfx.Play(MineSfx.Kind.Hit, 1f, 1f, 0.02f);
+            _fx.Shake(0.03f);
+        }
+        if (!_model.FloorCleared)
+        {
+            _rock.PlayHit(GateRock(), crit);
+            _hud.RefreshPrompt();
+            Save();
+            return;
+        }
+
+        _breakingUntil = Time.time + 0.5f;
+        _rock.PlayBreak();
+        _sfx.Play(MineSfx.Kind.Break);
+        _sfx.Play(MineSfx.Kind.Discover);
+        _fx.Chips(center, chipColor, 16, 1.8f);
+        _fx.Glow(center, new Color(0.85f, 0.95f, 1f, 0.6f), 5f, 0.3f);
+        _fx.Ring(center, new Color(1f, 1f, 1f, 0.8f), 4f, 0.35f);
+        _fx.Shake(0.3f);
+        _hud.Flash(new Color(.8f, .9f, 1, .5f));
+        _hud.ShowToast("아래층 길이 뚫렸어요!");
+        Save();
+        StartCoroutine(GateOpenedLater());
+    }
+
+    private IEnumerator GateOpenedLater()
+    {
+        yield return new WaitForSeconds(0.7f);
+        ShowView();
+        _hud.ShowNextEntrance();
     }
 
     public bool CraftPickaxe()
@@ -675,6 +749,11 @@ public class MineMazeGame : MonoBehaviour
 
     private void HandleTap(Vector2 world)
     {
+        if (GateAhead && _rock.gameObject.activeSelf && _rock.Present && (_rock.Contains(world) || Vector2.Distance(world, _rock.Center) < _viewWidth * 0.2f))
+        {
+            HitGateRock();
+            return;
+        }
         if (_rock.gameObject.activeSelf && _rock.Present && (_rock.Contains(world) || Vector2.Distance(world, _rock.Center) < _viewWidth * 0.2f))
         {
             HitRock();
