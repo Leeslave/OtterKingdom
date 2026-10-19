@@ -177,10 +177,11 @@ public static partial class SettlementSetup
             // 밭은 Lv.10 농업 지역에서 (구역·이사 5막 · Docs/밭해금_재배치_기획.md)
             2, "gb_neighbor_settle", "새 이웃의 집 완성!\n물감이가 이웃이 됐어요.", 0, "", ""),
         // 밭 (Lv.10): 농업 지역을 정하면(farm_discovered) 열림. 순서는 성 뒤
-        ("req_farmland", 15, "먹거리를 길러요", "몽실이가 찾은 땅을 밭으로 만들어요.\n밭에 가서 잡목과 바위를 치우고\n주민과 함께 농경지를 개간해요.", "ICON_Clearing",
+        // 밭은 광장 농업 지역으로 옮겨 옴: 농업 지역이 생겨 밭을 발견하면 바로 끝남 (SettlementManager.OpenPlazaFarm)
+        ("req_farmland", 15, "먹거리를 길러요", "몽실이가 찾은 땅을 밭으로 만들어요.\n농업 지역에 밭 칸을 지어 농사를 지어요.", "ICON_Clearing",
             "otter_first", FarmDiscoverDevelopment, 3, "con_farmland", new string[0],
             new[] { ("otter_farmer", ResidentState.SpecialNpc) },
-            3, "gb_farmland", "농경지 개간이 끝났어요!\n소식을 듣고 농부 해달이 광장에 찾아왔어요.", 0, FarmZonePath, ""),
+            3, "gb_farmland", "농업 지역에 밭 자리가 생겼어요!\n소식을 듣고 농부 해달이 광장에 찾아왔어요.", 0, FarmZonePath, ""),
         ("req_assign_farmer", 16,"농사를 지을 해달이 필요해요", "광장으로 돌아가 새로 찾아온 농부 해달 새싹이를 만나 보세요.\n밭에 배치하면 농사를 시작해요.", "ICON_Otter_Farmer",
             "otter_farmer", FarmOperationalDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],

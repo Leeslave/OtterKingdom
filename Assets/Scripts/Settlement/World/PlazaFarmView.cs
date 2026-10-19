@@ -14,6 +14,8 @@ public class PlazaFarmView : MonoBehaviour
     private const int PlantsPerField = 6;
     private const float RefreshSeconds = 0.25f;
     private const float FieldWorkSpeed = 1.2f;
+    // 이만큼 걸어도 못 닿으면(길이 막힘) 닿은 셈 치고 일함 — 농장이 멈추지 않게
+    private const float StuckSeconds = 30f;
 
     private static PlazaFarmView _instance;
 
@@ -84,6 +86,7 @@ public class PlazaFarmView : MonoBehaviour
 
     private void OnDestroy()
     {
+        DropCarry();
         if (_manager != null)
         {
             _manager.OnCrateCollected -= HandleCollected;
@@ -312,7 +315,19 @@ public class PlazaFarmView : MonoBehaviour
             Destroy(v.Root.gameObject);
         _fields.Clear();
         _crates.Clear();
+        DropCarry();
         _worker = null;
+    }
+
+    // 들고 있던 작물은 버리지 않음 (광장을 떠남 · 농장이 닫힘): 상자에, 자리가 없으면 가방으로
+    private void DropCarry()
+    {
+        if (_carryAmount > 0 && _manager != null)
+            _manager.StoreFarmCarry(_carryId, _carryAmount);
+        _carryAmount = 0;
+        if (_carried != null)
+            _carried.enabled = false;
+        _phase = WorkPhase.Idle;
     }
 
     #endregion
@@ -432,14 +447,19 @@ public class PlazaFarmView : MonoBehaviour
     private int _targetField;
     private int _targetCrate;
     private float _phaseTimer;
+    private float _walkSince;
     private string _carryId;
     private int _carryAmount;
+
+    // 일하러 간 곳에 닿음 (오래 걸려도 못 닿으면 닿은 셈)
+    private bool Arrived => _worker.IsOnTask || Time.time - _walkSince > StuckSeconds;
 
     private void UpdateWorker(float dt)
     {
         var agent = _manager.HasFarmWorker ? _plaza.FindAgent(_manager.FarmConfig.FarmerOtterId) : null;
         if (agent != _worker)
         {
+            DropCarry();
             _worker = agent;
             _workerRig = agent != null ? agent.GetComponentInChildren<QuarterRigView>() : null;
             _phase = WorkPhase.Idle;
@@ -455,6 +475,7 @@ public class PlazaFarmView : MonoBehaviour
         }
         if (_worker == null)
             return;
+        _manager.MarkFarmWorkerDriven();
 
         _phaseTimer -= dt;
         switch (_phase)
@@ -466,6 +487,7 @@ public class PlazaFarmView : MonoBehaviour
                 if (TryPickField(out _targetField, out var stand, out var look) && FreeCrate(out _))
                 {
                     _phase = WorkPhase.ToField;
+                    _walkSince = Time.time;
                     _worker.AssignTask(stand, look);
                 }
                 else
@@ -480,7 +502,7 @@ public class PlazaFarmView : MonoBehaviour
                     _phase = WorkPhase.Idle;
                     break;
                 }
-                if (_worker.IsOnTask)
+                if (Arrived)
                 {
                     _phase = WorkPhase.Harvesting;
                     _phaseTimer = _manager.FarmConfig.HarvestSeconds;
@@ -508,7 +530,7 @@ public class PlazaFarmView : MonoBehaviour
                 break;
 
             case WorkPhase.ToCrate:
-                if (_worker.IsOnTask)
+                if (Arrived)
                 {
                     int put = _manager.DepositToCrate(_targetCrate, _carryId, _carryAmount);
                     _carryAmount -= put;
@@ -545,6 +567,7 @@ public class PlazaFarmView : MonoBehaviour
         if (FreeCrate(out _targetCrate) && TryStandOf(_targetCrate, out var stand, out var look))
         {
             _phase = WorkPhase.ToCrate;
+            _walkSince = Time.time;
             _worker.AssignTask(stand, look);
         }
         else

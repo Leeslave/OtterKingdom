@@ -275,6 +275,9 @@ public partial class SettlementManager : MonoBehaviour
     {
         if (zone == null)
             throw new ArgumentNullException(nameof(zone));
+        // 밭은 광장 농업 지역으로 옮겨 옴: 광장 농장이 열리면 옛 밭 씬은 닫힘 (이동 지도 · "밭이 열렸어요" 안내 · 가 보기)
+        if (zone.ZoneId == GameManager.FarmZoneId && FarmOpen)
+            return false;
         return Settlement.HasDevelopment(zone.RequiredDevelopment);
     }
 
