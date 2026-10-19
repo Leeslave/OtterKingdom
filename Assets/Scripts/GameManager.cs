@@ -298,6 +298,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (!PlazaFarmOpen) farmService.Tick(Time.deltaTime);
         TickMining(Time.deltaTime);
+        TickMineMazeDiscovery(Time.deltaTime);
 
         autoSaveTimer += Time.deltaTime;
         if (farmChanged || autoSaveTimer >= autoSaveIntervalSec)

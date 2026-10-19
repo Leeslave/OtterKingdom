@@ -57,17 +57,23 @@ public static class QuestSetup
         ("M10_Decor", "main_lv10_decor", "광장 놀이터", "장난감 2개 놓기", QuestGoalType.PlaceDecor, 2, "", 300, "item:Decor/축구공", QuestKind.Main, 4, "M04_Fairy", 80, 0f, ""),
         ("M04_Mine", "main_lv4_mine", "광석 모으기", "광산에서 광석 20개 캐기", QuestGoalType.Mine, 20, "Ore", 80, "item:Mining/돌", QuestKind.Main, 4, "M10_Decor", 80, 0f, ""),
         ("M04_Sales", "main_lv4_sales", "첫 장사", "판매로 300골드 벌기", QuestGoalType.EarnFromSales, 300, "", 50, "gold", QuestKind.Main, 4, "M04_Mine", 100, 0f, ""),
-        // Lv.5 → 6 부탁이 많아졌어요 (450)
+        // Lv.5 → 6 부탁이 많아졌어요 (450): 곡괭이 강화 · 마을회관 → 게시판 해달(또박이) 배치 → (행정 해달 승격 · 첫 구역) →
+        // 채굴 뒤 광산에서 연락: 깡깡이가 오래된 갱도를 찾음 → 들어가 보기 (광산 미로, Docs/광산_미로탐험과_왕도성장_기획.md 17장).
+        // 한꺼번에 열리지 않게 갱도는 또박이 배치 뒤에만 찾음 (MineMazeRules). 첫 개간은 Lv.6 (TerritoryRules.TutorialLevel)
         // 곡괭이 강화: 대상 "pickaxe" = 곡괭이 레벨로 다시 셈 (곡괭이 강화는 4번이 끝이라, 미리 다 올려도 막히지 않게)
         ("M10_Upgrade", "main_lv10_upgrade", "더 좋은 도구", "광산 곡괭이 강화하기", QuestGoalType.Upgrade, 1, "", 300, "place:ICON_Place_Mine", QuestKind.Main, 5, "M04_Sales", 100, 0f, QuestProgressRules.PickaxeTarget),
         ("M05_Board", "main_lv5_board", "부탁이 많아졌어요", "게시판을 마을회관으로 넓히기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_GuildOffice", QuestKind.Main, 5, "M10_Upgrade", 120, 0f, "req_upgrade_board"),
-        ("M05_Mine", "main_lv5_mine", "부지런한 광부", "광산에서 광석 60개 캐기", QuestGoalType.Mine, 60, "Ore", 150, "item:Mining/다이아몬드", QuestKind.Main, 5, "M05_Board", 230, 0f, ""),
-        // Lv.6 → 7 함께 일하는 마을 (600): 또박이를 배치하면 바로 행정 해달 승격 → 첫 구역(중앙 = 주거) 튜토리얼이 나와서 첫 구역도 여기
-        ("M06_Clerk", "main_lv6_clerk", "게시판을 맡아 줄 친구", "또박이에게 게시판 맡기기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Cast_Sailor", QuestKind.Main, 6, "M05_Mine", 80, 0f, "req_assign_receptionist"),
-        ("M07_District", "main_lv7_district", "왕국의 첫 구역", "또박이와 첫 구역 정하기", QuestGoalType.Milestone, 1, "", 150, "settle:ICON_TownHall", QuestKind.Main, 6, "M06_Clerk", 60, 0f, "district_first"),
-        ("M06_Common", "main_lv6_common", "다 같이 쉴 자리", "광장에 쉴 자리 정리하기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_CommonSpace", QuestKind.Main, 6, "M07_District", 100, 0f, "req_prepare_common_space"),
-        ("M06_Shop", "main_lv6_shop", "요정 상점 단골", "요정 상점에서 물건 사기", QuestGoalType.ShopPurchase, 1, "", 100, "npc:Fairy", QuestKind.Main, 6, "M06_Common", 170, 0f, ""),
-        ("M06_Guild", "main_lv6_guild", "큰 부탁도 함께", "길드 접수 창구 만들기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_GuildOffice", QuestKind.Main, 6, "M06_Shop", 190, 0f, "req_build_guild_office"),
+        // 또박이를 배치하면 바로 행정 해달 승격 → 첫 구역(중앙 = 주거) 튜토리얼이 나와서 첫 구역도 여기
+        ("M06_Clerk", "main_lv6_clerk", "게시판을 맡아 줄 친구", "또박이에게 게시판 맡기기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Cast_Sailor", QuestKind.Main, 5, "M05_Board", 30, 0f, "req_assign_receptionist"),
+        ("M07_District", "main_lv7_district", "왕국의 첫 구역", "또박이와 첫 구역 정하기", QuestGoalType.Milestone, 1, "", 150, "settle:ICON_TownHall", QuestKind.Main, 5, "M06_Clerk", 30, 0f, "district_first"),
+        ("M05_Mine", "main_lv5_mine", "부지런한 광부", "광산에서 광석 60개 캐기", QuestGoalType.Mine, 60, "Ore", 150, "item:Mining/다이아몬드", QuestKind.Main, 5, "M07_District", 70, 0f, ""),
+        // 오래된 갱도: 왕국 Lv.5 + 곡괭이 강화 + 또박이 배치 + 채굴 중이면 깡깡이가 찾음 (발전 mine_maze_found, 기록으로 다시 셈) → 광산 카트로 미로 장소에 들어가 보기
+        ("M05_MazeFound", "main_lv5_maze_found", "오래된 갱도", "채굴하는 깡깡이가 오래된 갱도 찾기", QuestGoalType.Milestone, 1, "", 100, "place:ICON_Place_Mine", QuestKind.Main, 5, "M05_Mine", 40, 0f, MineMazeRules.FoundDevelopment),
+        ("M05_MazeEnter", "main_lv5_maze_enter", "갱도 속으로", "광산 카트를 눌러 오래된 갱도에 들어가 보기", QuestGoalType.VisitZone, 1, "", 100, "place:ICON_Place_Mine", QuestKind.Main, 5, "M05_MazeFound", 60, 0f, MineMazeRules.SceneName),
+        // Lv.6 → 7 함께 일하는 마을 (600): 첫 개간(오른쪽 숲 한 번이면 땅이 열림)도 이 레벨에 열림
+        ("M06_Common", "main_lv6_common", "다 같이 쉴 자리", "광장에 쉴 자리 정리하기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_CommonSpace", QuestKind.Main, 6, "M05_MazeEnter", 160, 0f, "req_prepare_common_space"),
+        ("M06_Shop", "main_lv6_shop", "요정 상점 단골", "요정 상점에서 물건 사기", QuestGoalType.ShopPurchase, 1, "", 100, "npc:Fairy", QuestKind.Main, 6, "M06_Common", 210, 0f, ""),
+        ("M06_Guild", "main_lv6_guild", "큰 부탁도 함께", "길드 접수 창구 만들기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_GuildOffice", QuestKind.Main, 6, "M06_Shop", 230, 0f, "req_build_guild_office"),
         // Lv.7 → 8 우리 마을의 길드 (240 + 첫 비축 560)
         ("M07_TownHall", "main_lv7_town_hall", "우리 마을의 길드", "마을 길드로 넓히기", QuestGoalType.Milestone, 1, "", 300, "settle:ICON_TownHall", QuestKind.Main, 7, "M06_Guild", 80, 0f, "req_upgrade_town_hall"),
         ("M07_Supply", "main_lv7_supply", "우리 마을의 첫 비축", "공동사업: 비축 상자 만들기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_TownHall", QuestKind.Main, 7, "M07_TownHall", 0, 0f, "supply_ready"),

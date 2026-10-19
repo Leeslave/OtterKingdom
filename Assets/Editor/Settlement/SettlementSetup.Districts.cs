@@ -23,6 +23,8 @@ public static partial class SettlementSetup
         ("district_south", "남쪽 바닷길", DistrictType.None, DistrictType.Commercial),
         ("district_northwest", "북서쪽 숲", DistrictType.None, DistrictType.Production),
         ("district_west", "서쪽 들판", DistrictType.None, DistrictType.Agricultural),
+        // 공터 동쪽 (바닷가 길이 지나가 부지 칸 1개, 1단계만): 예시 용도 없음 — 무엇으로 정해도 됨
+        ("district_east", "동쪽 오솔길", DistrictType.None, DistrictType.None),
     };
 
     // 용도가 열리는 시설 (그 시설이 생겨야 쓸모 있는 구역은 그때 함께 열림). 주거는 처음부터. 수치 · 조건은 임시

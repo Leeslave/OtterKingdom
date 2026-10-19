@@ -11,13 +11,21 @@ using UnityEngine.SceneManagement;
 //      MiningDataSetup,
 //   1. slices the MinerOtter sheets (re-packed by
 //      Tools/SpriteRepack/repack_miner_otter.py) and creates/updates the
-//      MinerOtter prefab with its SpriteFrameAnimator clips,
+//      MinerOtter prefab with its SpriteFrameAnimator clips and the cutout
+//      rig child that is actually drawn (QuarterRigView, Resources/MinerRigV1 -
+//      the same look as the plaza miner; the old sheet sprite is switched off),
 //   2. builds and saves Assets/Scenes/Mine.unity: the GameManager prefab,
 //      CurrencyManager, InventoryManager, GlobalUI, background, the dashed
 //      oval at the mine mouth (with the tunnel point the otter fades into),
-//      the mining bubble (the mining clip plays inside it), the walkable sand
+//      the mining bubble (inside it the rig's pickaxe blow plays as sprite
+//      frames, MinerRig_Mine.png from MinerRigFrameRender), the walkable sand
 //      polygon, the otter and a camera — and adds the scene to Build Settings.
 // Run via: OtterKingdom > Tools > Setup Mine Scene
+//
+// The scene also holds what later setups add (SettlementSetup.PlaceMine:
+// clearing, depth sort, work site), so for a new miner look use
+// OtterKingdom > Tools > Apply Miner Rig Look instead: it updates the prefab
+// and only the bubble's otter in the existing scene.
 //
 // Safe to re-run: the prefab is updated in place (keeps its GUID). The scene
 // is rebuilt after a confirmation — hand edits to it (polygon, positions) are
@@ -43,11 +51,19 @@ public static class MineSceneSetup
     private const float OtterPixelsPerUnit = 145f;
     private const string WalkSheet = "MinerOtter_Walk";
     private const string MineSheet = "MinerOtter_Mine";
-    private static readonly (string name, int rows, int cellW, int cellH, int baselineFromTop)[] Sheets =
+    // The rig's pickaxe blow for the bubble: drawn by MinerRigFrameRender (cell and baseline from its log).
+    private const string BubbleSheet = "MinerRig_Mine";
+    private static readonly (string name, int rows, int cellW, int cellH, int baselineFromTop, float ppu)[] Sheets =
     {
-        (WalkSheet, 4, 212, 272, 263), // right / left / front (down) / back (up)
-        (MineSheet, 1, 308, 276, 265), // raise -> strike -> recover
+        (WalkSheet, 4, 212, 272, 263, OtterPixelsPerUnit), // right / left / front (down) / back (up)
+        (MineSheet, 1, 308, 276, 265, OtterPixelsPerUnit), // raise -> strike -> recover
+        (BubbleSheet, 1, 388, 321, 307, MinerRigFrameRender.PixelsPerUnit), // ready -> lift -> overhead -> BANG -> recover
     };
+
+    // The miner as drawn: the plaza miner's cutout rig, sized as the plaza sizes it against the old
+    // sheet there (0.44 for the sheet at 1.1x -> 0.40 for the sheet at 1x, as here).
+    public const float MineRigScale = 0.40f;
+    private const string RigChildName = "Rig";
 
     // Idle has no sheet of its own: the first mining frame is a calm side
     // view facing right, like the fishing otter's Cast 0.
@@ -59,7 +75,10 @@ public static class MineSceneSetup
         (MinerOtterController.ClipWalkDown, WalkSheet, 2, 0, 7, 10f),
         (MinerOtterController.ClipWalkUp, WalkSheet, 3, 0, 7, 10f),
     };
-    private const float MineClipFps = 8f;
+    // Bubble clip: the rendered poses in this order at BubbleClipFps, so the wind-up takes its time
+    // and the blow is quick (QuarterRigView's Mine timing, one blow ~1.6 s).
+    private static readonly int[] BubbleFrameOrder = { 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 6, 6, 6, 7, 7, 7, 7 };
+    private const float BubbleClipFps = 12f;
 
     // Same camera/background scale as the fishing scene: 1024x1536 at PPU 96
     // is 16 units tall = ortho size 8.
@@ -101,8 +120,9 @@ public static class MineSceneSetup
     private static readonly Vector2 BubbleTailTipSrcPx = new Vector2(1226f, 433f);
     private const float BubbleBodyWidthPx = 1100f;
     private const float BubbleBodyWidth = 2.4f; // world units
-    // The mining otter inside, relative to its normal size (~1.3 units tall).
-    private const float BubbleOtterScale = 0.85f;
+    // The mining otter's cell (pickaxe and rock included) fits this box inside the bubble body, world units.
+    private const float BubbleOtterMaxHeight = 1.6f;
+    private const float BubbleOtterMaxWidth = 2.1f;
 
     private const int EntranceSortingOrder = 1;
     private const int BubbleSortingOrder = 3;
@@ -116,24 +136,19 @@ public static class MineSceneSetup
             Debug.LogError("[MineSceneSetup] Stop Play mode first.");
             return;
         }
-        if (File.Exists(ScenePath) &&
+        if (File.Exists(ScenePath) && !Application.isBatchMode &&
             !EditorUtility.DisplayDialog("Setup Mine Scene",
                 $"{ScenePath} 이(가) 이미 있습니다. 씬을 다시 만들까요?\n(MinerOtter 프리팹은 갱신됩니다)",
                 "다시 만들기", "취소"))
         {
             return;
         }
-        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+        if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
         if (!MiningDataSetup.Run()) return;
 
-        var frames = new Dictionary<string, List<List<Sprite>>>();
-        foreach (var sheet in Sheets)
-        {
-            var sliced = SliceSheet(sheet.name, sheet.rows, sheet.cellW, sheet.cellH, sheet.baselineFromTop);
-            if (sliced == null) return;
-            frames[sheet.name] = sliced;
-        }
+        var frames = SliceAll();
+        if (frames == null) return;
 
         GameObject otterPrefab = BuildOrUpdateOtterPrefab(frames);
 
@@ -149,15 +164,60 @@ public static class MineSceneSetup
             return;
         }
 
-        BuildScene(background, bubble, bubblePpu, slotEmpty, otterPrefab, frames[MineSheet][0]);
+        BuildScene(background, bubble, bubblePpu, slotEmpty, otterPrefab, frames[BubbleSheet][0]);
         RegisterBuildScene();
         AssetDatabase.SaveAssets();
     }
 
+    // New miner look without rebuilding the scene (keeps what other setups added to it): the prefab
+    // (rig child) and the bubble's otter in Mine.unity. Re-run after MinerRigFrameRender.
+    [MenuItem("OtterKingdom/Tools/Apply Miner Rig Look")]
+    public static void ApplyRigLook()
+    {
+        if (Application.isPlaying)
+        {
+            Debug.LogError("[MineSceneSetup] Stop Play mode first.");
+            return;
+        }
+        if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+
+        var frames = SliceAll();
+        if (frames == null) return;
+        BuildOrUpdateOtterPrefab(frames);
+
+        var scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+        var emote = Object.FindAnyObjectByType<MineEmoteView>(FindObjectsInactive.Include);
+        var otterRenderer = emote != null
+            ? new SerializedObject(emote).FindProperty("otterRenderer").objectReferenceValue as SpriteRenderer
+            : null;
+        if (otterRenderer == null)
+        {
+            Debug.LogError($"[MineSceneSetup] {ScenePath} has no MineEmoteView with its otter - run Setup Mine Scene.");
+            return;
+        }
+        ApplyBubbleOtter(otterRenderer.gameObject, frames[BubbleSheet][0]);
+        EditorSceneManager.MarkSceneDirty(scene);
+        EditorSceneManager.SaveScene(scene);
+        AssetDatabase.SaveAssets();
+        Debug.Log("[MineSceneSetup] Miner rig look applied (MinerOtter prefab + mining bubble).");
+    }
+
     // --- Assets ------------------------------------------------------------
 
+    private static Dictionary<string, List<List<Sprite>>> SliceAll()
+    {
+        var frames = new Dictionary<string, List<List<Sprite>>>();
+        foreach (var sheet in Sheets)
+        {
+            var sliced = SliceSheet(sheet.name, sheet.rows, sheet.cellW, sheet.cellH, sheet.baselineFromTop, sheet.ppu);
+            if (sliced == null) return null;
+            frames[sheet.name] = sliced;
+        }
+        return frames;
+    }
+
     // Returns [row][col] sprites, named "{sheet}_{row}_{col}".
-    private static List<List<Sprite>> SliceSheet(string sheetName, int rows, int cellW, int cellH, int baselineFromTop)
+    private static List<List<Sprite>> SliceSheet(string sheetName, int rows, int cellW, int cellH, int baselineFromTop, float ppu)
     {
         string path = $"{SpriteDir}/{sheetName}.png";
         AssetDatabase.ImportAsset(path);
@@ -170,7 +230,7 @@ public static class MineSceneSetup
 
         importer.textureType = TextureImporterType.Sprite;
         importer.spriteImportMode = SpriteImportMode.Multiple;
-        importer.spritePixelsPerUnit = OtterPixelsPerUnit;
+        importer.spritePixelsPerUnit = ppu;
         importer.mipmapEnabled = false;
         importer.alphaIsTransparency = true;
         importer.filterMode = FilterMode.Bilinear;
@@ -182,7 +242,7 @@ public static class MineSceneSetup
         if (texW != cellW * Cols || texH != cellH * rows)
         {
             Debug.LogError($"[MineSceneSetup] {path} is {texW}x{texH}, expected " +
-                           $"{cellW * Cols}x{cellH * rows}. Re-run repack_miner_otter.py and update Sheets.");
+                           $"{cellW * Cols}x{cellH * rows}. Re-run repack_miner_otter.py / MinerRigFrameRender and update Sheets.");
             return null;
         }
 
@@ -277,7 +337,25 @@ public static class MineSceneSetup
         }
         animSo.ApplyModifiedPropertiesWithoutUndo();
 
-        GetOrAdd<MinerOtterController>(root);
+        // What is drawn: the plaza miner's rig (the controller switches the sprite off)
+        var rigTransform = root.transform.Find(RigChildName);
+        if (rigTransform == null)
+        {
+            rigTransform = new GameObject(RigChildName).transform;
+            rigTransform.SetParent(root.transform, false);
+        }
+        rigTransform.localPosition = Vector3.zero;
+        rigTransform.localScale = Vector3.one;
+        var rig = GetOrAdd<QuarterRigView>(rigTransform.gameObject);
+        var rigSo = new SerializedObject(rig);
+        rigSo.FindProperty("resourceFolder").stringValue = MinerRigFrameRender.RigFolder;
+        rigSo.FindProperty("characterScale").floatValue = MineRigScale;
+        rigSo.ApplyModifiedPropertiesWithoutUndo();
+
+        var controller = GetOrAdd<MinerOtterController>(root);
+        var controllerSo = new SerializedObject(controller);
+        controllerSo.FindProperty("rigView").objectReferenceValue = rig;
+        controllerSo.ApplyModifiedPropertiesWithoutUndo();
 
         GameObject saved = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
         if (exists) PrefabUtility.UnloadPrefabContents(root);
@@ -299,7 +377,7 @@ public static class MineSceneSetup
     // --- Scene -------------------------------------------------------------
 
     private static void BuildScene(Sprite background, Sprite bubble, float bubblePpu, Sprite slotEmpty,
-        GameObject otterPrefab, List<Sprite> mineFrames)
+        GameObject otterPrefab, List<Sprite> bubbleFrames)
     {
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
@@ -384,20 +462,10 @@ public static class MineSceneSetup
         bubbleRenderer.sortingOrder = BubbleSortingOrder;
         var bubbleCollider = bubbleGo.AddComponent<BoxCollider2D>();
 
-        var (_, _, _, mineCellH, mineBaseline) = Sheets.First(s => s.name == MineSheet);
         var bubbleOtterGo = CreateChild("MiningOtter", emoteGo.transform);
-        float feetBelowCentre = (mineBaseline - mineCellH * 0.5f) / OtterPixelsPerUnit * BubbleOtterScale;
-        bubbleOtterGo.transform.localPosition = new Vector3(0f, -feetBelowCentre, 0f);
-        bubbleOtterGo.transform.localScale = new Vector3(BubbleOtterScale, BubbleOtterScale, 1f);
-        var bubbleOtterRenderer = bubbleOtterGo.AddComponent<SpriteRenderer>();
-        bubbleOtterRenderer.sprite = mineFrames[0];
-        bubbleOtterRenderer.sortingOrder = BubbleOtterSortingOrder;
-        var bubbleOtterAnimator = bubbleOtterGo.AddComponent<SpriteFrameAnimator>();
-        var bubbleAnimSo = new SerializedObject(bubbleOtterAnimator);
-        var bubbleClips = bubbleAnimSo.FindProperty("clips");
-        bubbleClips.arraySize = 1;
-        WriteClip(bubbleClips.GetArrayElementAtIndex(0), MineEmoteView.ClipMine, MineClipFps, mineFrames);
-        bubbleAnimSo.ApplyModifiedPropertiesWithoutUndo();
+        ApplyBubbleOtter(bubbleOtterGo, bubbleFrames);
+        var bubbleOtterRenderer = bubbleOtterGo.GetComponent<SpriteRenderer>();
+        var bubbleOtterAnimator = bubbleOtterGo.GetComponent<SpriteFrameAnimator>();
 
         var emote = emoteGo.AddComponent<MineEmoteView>();
         var emoteSo = new SerializedObject(emote);
@@ -446,6 +514,27 @@ public static class MineSceneSetup
         EditorSceneManager.SaveScene(scene, ScenePath);
         Selection.activeGameObject = sandGo;
         Debug.Log($"[MineSceneSetup] Built {ScenePath}. Press Play and tap the dashed oval at the mine entrance.");
+    }
+
+    // The otter inside the bubble (a child of the emote, whose origin is the bubble body's centre):
+    // the rendered rig poses as a sprite clip, the cell centred in the body and scaled to fit.
+    private static void ApplyBubbleOtter(GameObject bubbleOtterGo, List<Sprite> poses)
+    {
+        var (_, _, cellW, cellH, baseline, ppu) = Sheets.First(s => s.name == BubbleSheet);
+        float scale = Mathf.Min(BubbleOtterMaxHeight / (cellH / ppu), BubbleOtterMaxWidth / (cellW / ppu));
+        float feetBelowCentre = (baseline - cellH * 0.5f) / ppu * scale;
+        bubbleOtterGo.transform.localPosition = new Vector3(0f, -feetBelowCentre, 0f);
+        bubbleOtterGo.transform.localScale = new Vector3(scale, scale, 1f);
+
+        var renderer = GetOrAdd<SpriteRenderer>(bubbleOtterGo);
+        renderer.sprite = poses[0];
+        renderer.sortingOrder = BubbleOtterSortingOrder;
+        var animator = GetOrAdd<SpriteFrameAnimator>(bubbleOtterGo);
+        var animSo = new SerializedObject(animator);
+        var clips = animSo.FindProperty("clips");
+        clips.arraySize = 1;
+        WriteClip(clips.GetArrayElementAtIndex(0), MineEmoteView.ClipMine, BubbleClipFps, BubbleFrameOrder.Select(i => poses[i]).ToList());
+        animSo.ApplyModifiedPropertiesWithoutUndo();
     }
 
     // The navigator can only load scenes that are in Build Settings.

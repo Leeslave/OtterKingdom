@@ -230,16 +230,26 @@ public class TerritoryTests
     #endregion
 
     [Test]
-    public void BoardUpgrade_GrantsOnlyRightSideTutorialBeforeLevelSix()
+    public void Tutorial_OpensAtLevelSixAfterBoardUpgrade()
     {
         var village = Village();
-        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village));
+        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village, 6), "게시판 보강 전");
         village.CompleteRequest("req_upgrade_board", "board_upgraded");
-        Assert.IsTrue(TerritoryRules.UnlockTutorial(_config, village));
-        Assert.AreEqual(TerritoryBlock.None, TerritoryRules.GetBlock(_config, village, 5, TerritoryDirection.NorthEast));
-        Assert.AreEqual(TerritoryBlock.NoChance, TerritoryRules.GetBlock(_config, village, 5, TerritoryDirection.South));
-        Assert.IsFalse(TerritoryRules.CanStart(_ne1.Clearings[1].Task, _config, village, 5));
+        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village, 5), "Lv.5에는 아직 (게시판 해달 · 광산과 겹치지 않게)");
+        Assert.AreEqual(TerritoryBlock.NoChance, TerritoryRules.GetBlock(_config, village, 5, TerritoryDirection.NorthEast));
+        Assert.IsTrue(TerritoryRules.UnlockTutorial(_config, village, 6));
+        Assert.AreEqual(TerritoryBlock.None, TerritoryRules.GetBlock(_config, village, 6, TerritoryDirection.NorthEast));
+        Assert.IsFalse(TerritoryRules.CanStart(_ne1.Clearings[1].Task, _config, village, 6), "첫 개간은 오른쪽 숲 첫 칸 한 번");
         Assert.IsNull(TerritoryRules.CompleteTutorial(_config, village), "실제 작업을 끝내야 확장");
+    }
+
+    [Test]
+    public void RealConfig_RegularChancesStartTheLevelAfterFirstClearing()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
+        Assert.AreEqual(TerritoryRules.TutorialLevel + 1, config.TerritoryStartLevel, "Lv.6 첫 개간(무료) → Lv.7부터 개간 기회 (한 땅 3번)");
+        Assert.AreEqual(0, TerritoryRules.EarnedChances(config, 6));
+        Assert.AreEqual(1, TerritoryRules.EarnedChances(config, 7));
     }
 
     [Test]
@@ -247,7 +257,7 @@ public class TerritoryTests
     {
         var village = Village();
         village.CompleteRequest("req_upgrade_board", "board_upgraded");
-        TerritoryRules.UnlockTutorial(_config, village);
+        TerritoryRules.UnlockTutorial(_config, village, 6);
         var task = _ne1.Clearings[0].Task;
         village.StartTask(task.TaskId, new[] { _first.OtterId }, 10, 20);
         Assert.AreEqual(1, TerritoryRules.AvailableChances(_config, village, 6), "튜토리얼은 일반 기회를 쓰지 않음");
@@ -273,9 +283,9 @@ public class TerritoryTests
         village.CompleteRequest("req_upgrade_board", "board_upgraded");
         var task = _ne1.Clearings[0].Task;
         village.StartTask(task.TaskId, new[] { _first.OtterId }, 10, 20);
-        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village));
+        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village, 6));
         village.FinishTask(task.TaskId, task.ResultDevelopment);
-        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village));
+        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village, 6));
         Assert.IsNull(TerritoryRules.CompleteTutorial(_config, village));
         Assert.AreEqual(1, TerritoryRules.UsedChances(_config, village));
     }
@@ -283,7 +293,7 @@ public class TerritoryTests
     [Test]
     public void TutorialManager_CompletesWithoutDeliveryAndDoesNotRewardTwice()
     {
-        var profile = Profile(5);
+        var profile = Profile(6);
         var village = Village();
         village.CompleteRequest("req_upgrade_board", "board_upgraded");
         var manager = Manager(Saved(village));

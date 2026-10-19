@@ -91,6 +91,8 @@ public partial class SettlementManager
             return $"{task.Title} 중이에요.";
         if (Settlement.HasDevelopment(TerritoryRules.TutorialReady) && !Settlement.HasDevelopment(TerritoryRules.TutorialDone))
             return "오른쪽 숲에서 첫 개간을 배워 봐요! 이번에는 한 번만 개간하면 땅이 넓어져요.";
+        if (PlayerLevel < TerritoryRules.TutorialLevel && !Settlement.HasDevelopment(TerritoryRules.FirstDevelopment))
+            return $"Lv.{TerritoryRules.TutorialLevel}이 되면 오른쪽 숲에서 첫 개간을 할 수 있어요.";
         if (PlayerLevel < _config.TerritoryStartLevel)
             return $"Lv.{_config.TerritoryStartLevel}부터 공터 둘레의 숲을 개간할 수 있어요.";
         return chances > 0
@@ -105,7 +107,7 @@ public partial class SettlementManager
         if (territory == null)
             return null;
         if (TerritoryRules.IsTutorial(territory, Settlement))
-            return "첫 개간 완료! 오른쪽 땅이 넓어졌어요.\n이제 Lv.6부터 레벨마다 개간 기회를 얻어요.";
+            return $"첫 개간 완료! 오른쪽 땅이 넓어졌어요.\n이제 Lv.{_config.TerritoryStartLevel}부터 레벨마다 개간 기회를 얻어요.";
         int total = territory.Clearings.Count;
         var text = new StringBuilder();
         text.Append(index + 1 >= total
@@ -159,7 +161,7 @@ public partial class SettlementManager
     // 다 낸 영토 확장 미션을 끝내고 (결과 발전 = 땅) 칸 발전을 맞춘다. 불러올 때(silent)는 알림 없이
     private void UpdateTerritory(bool silent)
     {
-        if (TerritoryRules.UnlockTutorial(_config, Settlement))
+        if (TerritoryRules.UnlockTutorial(_config, Settlement, PlayerLevel))
             SaveRequested?.Invoke();
         var tutorial = TerritoryRules.CompleteTutorial(_config, Settlement);
         if (tutorial != null)

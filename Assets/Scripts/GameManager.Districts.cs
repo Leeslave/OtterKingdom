@@ -40,7 +40,7 @@ public partial class GameManager
                 bool finished = false, skipped = false;
                 TutorialOverlay.Play(new List<TutorialStep>
                 {
-                    TutorialStep.AtWorld("오른쪽 땅을 넓혀 봐요", "게시판을 넓혔으니 마을도 넓혀 볼까요?\n오른쪽 숲에 해달을 보내 개간할 수 있어요.", site),
+                    TutorialStep.AtWorld("오른쪽 땅을 넓혀 봐요", $"Lv.{TerritoryRules.TutorialLevel}이 되었으니 마을도 넓혀 볼까요?\n오른쪽 숲에 해달을 보내 개간할 수 있어요.", site),
                     TutorialStep.Info("첫 개간은 한 번만", "해달을 고르고 [작업 시작]을 눌러 주세요.\n이번에는 개간 한 번이 끝나면\n추가 납품 없이 바로 땅이 넓어져요!"),
                     TutorialStep.TryIt("숲의 개간 표시 누르기", "강조된 표시를 눌러 해달을 보내 봐요!", () => TutorialTargets.World(site), site),
                 }, wasSkipped => { finished = true; skipped = wasSkipped; });
@@ -66,7 +66,7 @@ public partial class GameManager
         bool acknowledged = false;
         TutorialOverlay.Play(new List<TutorialStep>
         {
-            TutorialStep.Info("마을이 넓어졌어요!", "오른쪽 땅을 사용할 수 있게 되었어요.\n다음부터는 Lv.6부터 레벨마다 개간 기회가 생겨요.\n각 땅의 개간을 모두 마치고 확장 미션을 완료해 주세요."),
+            TutorialStep.Info("마을이 넓어졌어요!", $"오른쪽 땅을 사용할 수 있게 되었어요.\n다음부터는 Lv.{manager.Config.TerritoryStartLevel}부터 레벨마다 개간 기회가 생겨요.\n각 땅의 개간을 3번 모두 마치고 확장 미션을 완료해 주세요."),
         }, () => acknowledged = true);
         while (!acknowledged) yield return null;
         save.tutorialsDone.Add(doneId);

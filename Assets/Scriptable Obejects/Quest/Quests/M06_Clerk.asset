@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv6_clerk
   _title: "\uAC8C\uC2DC\uD310\uC744 \uB9E1\uC544 \uC904 \uCE5C\uAD6C"
   _description: "\uB610\uBC15\uC774\uC5D0\uAC8C \uAC8C\uC2DC\uD310 \uB9E1\uAE30\uAE30"
-  _sortOrder: 17
+  _sortOrder: 16
   _kind: 0
-  _requiredLevel: 6
-  _prerequisite: {fileID: 11400000, guid: 41ae7d99da366cb408096e3ccf01899b, type: 2}
+  _requiredLevel: 5
+  _prerequisite: {fileID: 11400000, guid: 61c487863a5681d43801de451210f019, type: 2}
   _icon: {fileID: 21300000, guid: 0dcb8c437bd23e643bdc03913e927f05, type: 3}
   _goalType: 11
   _goal: 1
@@ -30,5 +30,5 @@ MonoBehaviour:
   _target: req_assign_receptionist
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 50
-  _expReward: 80
+  _expReward: 30
   _expPercentOfLevel: 0
