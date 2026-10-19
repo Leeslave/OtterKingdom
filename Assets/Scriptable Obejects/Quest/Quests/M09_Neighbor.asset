@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv9_neighbor
   _title: "\uC0C8 \uC774\uC6C3 \uB9DE\uC774\uD558\uAE30"
   _description: "\uACF5\uB3D9\uC0AC\uC5C5: \uC0C8 \uC774\uC6C3\uC758 \uC9D1"
-  _sortOrder: 28
+  _sortOrder: 30
   _kind: 0
   _requiredLevel: 9
   _prerequisite: {fileID: 11400000, guid: cf581af9be7b0d440ba9d6d5e5c82a1d, type: 2}

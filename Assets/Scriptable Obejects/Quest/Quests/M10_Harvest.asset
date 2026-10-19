@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv10_harvest
   _title: "\uBC2D\uC758 \uC8FC\uC778"
   _description: "\uC791\uBB3C 500\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 57
+  _sortOrder: 59
   _kind: 2
   _requiredLevel: 10
   _prerequisite: {fileID: 0}

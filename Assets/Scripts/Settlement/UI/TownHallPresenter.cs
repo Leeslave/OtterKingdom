@@ -209,7 +209,9 @@ public class TownHallPresenter : MonoBehaviour
             return;
         }
         bool anyLeft = _manager.AnyTerritoryLeft;
-        if (!anyLeft || _manager.Config.Territories.Count == 0 || _manager.PlayerLevel < _manager.Config.TerritoryStartLevel)
+        // 첫 개간(Lv.6)부터 보임. 일반 개간 기회는 TerritoryStartLevel(Lv.7)부터
+        if (!anyLeft || _manager.Config.Territories.Count == 0
+            || _manager.PlayerLevel < Mathf.Min(TerritoryRules.TutorialLevel, _manager.Config.TerritoryStartLevel))
         {
             _hall.HideTerritory();
             return;

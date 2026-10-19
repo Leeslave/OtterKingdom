@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv14_upgrade
   _title: "\uC644\uBCBD\uD55C \uC124\uBE44"
   _description: "\uC0DD\uC0B0 \uC5C5\uADF8\uB808\uC774\uB4DC 2\uD68C"
-  _sortOrder: 59
+  _sortOrder: 61
   _kind: 0
   _requiredLevel: 14
   _prerequisite: {fileID: 11400000, guid: 7978f77974931f148a9441aa403d6ff8, type: 2}

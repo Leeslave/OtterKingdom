@@ -230,6 +230,90 @@ public class TerritoryTests
     #endregion
 
     [Test]
+    public void Tutorial_OpensAtLevelSixAfterBoardUpgrade()
+    {
+        var village = Village();
+        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village, 6), "게시판 보강 전");
+        village.CompleteRequest("req_upgrade_board", "board_upgraded");
+        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village, 5), "Lv.5에는 아직 (게시판 해달 · 광산과 겹치지 않게)");
+        Assert.AreEqual(TerritoryBlock.NoChance, TerritoryRules.GetBlock(_config, village, 5, TerritoryDirection.NorthEast));
+        Assert.IsTrue(TerritoryRules.UnlockTutorial(_config, village, 6));
+        Assert.AreEqual(TerritoryBlock.None, TerritoryRules.GetBlock(_config, village, 6, TerritoryDirection.NorthEast));
+        Assert.IsFalse(TerritoryRules.CanStart(_ne1.Clearings[1].Task, _config, village, 6), "첫 개간은 오른쪽 숲 첫 칸 한 번");
+        Assert.IsNull(TerritoryRules.CompleteTutorial(_config, village), "실제 작업을 끝내야 확장");
+    }
+
+    [Test]
+    public void RealConfig_RegularChancesStartTheLevelAfterFirstClearing()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
+        Assert.AreEqual(TerritoryRules.TutorialLevel + 1, config.TerritoryStartLevel, "Lv.6 첫 개간(무료) → Lv.7부터 개간 기회 (한 땅 3번)");
+        Assert.AreEqual(0, TerritoryRules.EarnedChances(config, 6));
+        Assert.AreEqual(1, TerritoryRules.EarnedChances(config, 7));
+    }
+
+    [Test]
+    public void FirstClearing_ExpandsAndKeepsRegularChancesAcrossSave()
+    {
+        var village = Village();
+        village.CompleteRequest("req_upgrade_board", "board_upgraded");
+        TerritoryRules.UnlockTutorial(_config, village, 6);
+        var task = _ne1.Clearings[0].Task;
+        village.StartTask(task.TaskId, new[] { _first.OtterId }, 10, 20);
+        Assert.AreEqual(1, TerritoryRules.AvailableChances(_config, village, 6), "튜토리얼은 일반 기회를 쓰지 않음");
+        Assert.AreEqual(TerritoryBlock.OtherClearing, TerritoryRules.GetBlock(_config, village, 6, TerritoryDirection.South));
+        village.FinishTask(task.TaskId, task.ResultDevelopment);
+        Assert.AreEqual(_ne1, TerritoryRules.CompleteTutorial(_config, village));
+        Assert.AreEqual(TerritoryStage.Expanded, TerritoryRules.GetStage(_ne1, _config, village));
+        Assert.IsTrue(village.HasDevelopment(TerritoryRules.FirstDevelopment));
+        Assert.IsTrue(village.HasDevelopment(TerritoryRules.HomeDevelopment(TerritoryDirection.NorthEast)));
+        Assert.AreEqual(3, TerritoryRules.ClearingsDone(_ne1, village), "생략한 숲도 모두 제거");
+        Assert.IsNull(TerritoryRules.CompleteTutorial(_config, village), "완료는 한 번만");
+        var loaded = Manager(Saved(village)).Settlement;
+        Assert.AreEqual(1, TerritoryRules.AvailableChances(_config, loaded, 6));
+        Assert.AreEqual(2, TerritoryRules.AvailableChances(_config, loaded, 7));
+        Assert.AreEqual(3, _s1.Clearings.Count, "다른 땅의 개간 단계 유지");
+        Assert.AreEqual(TerritoryBlock.None, TerritoryRules.GetBlock(_config, loaded, 6, TerritoryDirection.South));
+    }
+
+    [Test]
+    public void ExistingClearingProgress_DoesNotBecomeFreeTutorial()
+    {
+        var village = Village();
+        village.CompleteRequest("req_upgrade_board", "board_upgraded");
+        var task = _ne1.Clearings[0].Task;
+        village.StartTask(task.TaskId, new[] { _first.OtterId }, 10, 20);
+        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village, 6));
+        village.FinishTask(task.TaskId, task.ResultDevelopment);
+        Assert.IsFalse(TerritoryRules.UnlockTutorial(_config, village, 6));
+        Assert.IsNull(TerritoryRules.CompleteTutorial(_config, village));
+        Assert.AreEqual(1, TerritoryRules.UsedChances(_config, village));
+    }
+
+    [Test]
+    public void TutorialManager_CompletesWithoutDeliveryAndDoesNotRewardTwice()
+    {
+        var profile = Profile(6);
+        var village = Village();
+        village.CompleteRequest("req_upgrade_board", "board_upgraded");
+        var manager = Manager(Saved(village));
+        int expansions = 0;
+        manager.OnTerritoryExpanded += _ => expansions++;
+        Assert.AreEqual(TaskStartResult.Started, Start(manager, _ne1));
+        manager.DevFinishTasks();
+        Assert.IsTrue(TerritoryRules.IsExpanded(_ne1, manager.Settlement));
+        Assert.AreEqual(1, expansions);
+        var after = Saved(manager.Settlement);
+        int level = profile.Level;
+        int exp = profile.Progress.Exp;
+        manager.LoadFromSave(after);
+        manager.DevFinishTasks();
+        Assert.AreEqual(level, profile.Level);
+        Assert.AreEqual(exp, profile.Progress.Exp);
+        Assert.AreEqual(1, expansions);
+    }
+
+    [Test]
     public void ChanceStartsAtLevel6AndAccumulates()
     {
         var profile = Profile(5);

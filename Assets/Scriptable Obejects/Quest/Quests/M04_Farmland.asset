@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv4_farmland
   _title: "\uBA39\uAC70\uB9AC\uB97C \uAE38\uB7EC\uC694"
   _description: "\uBC2D\uC744 \uAC1C\uAC04\uD558\uAE30"
-  _sortOrder: 33
+  _sortOrder: 35
   _kind: 0
   _requiredLevel: 10
   _prerequisite: {fileID: 11400000, guid: 4673a85fa61d8a1449ca67dd8106fb9e, type: 2}

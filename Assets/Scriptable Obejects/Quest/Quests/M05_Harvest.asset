@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv5_harvest
   _title: "\uBD80\uC9C0\uB7F0\uD55C \uB18D\uBD80"
   _description: "\uC791\uBB3C 60\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 41
+  _sortOrder: 43
   _kind: 0
   _requiredLevel: 11
   _prerequisite: {fileID: 11400000, guid: 36380a671190e0646bf5e49af73fc060, type: 2}

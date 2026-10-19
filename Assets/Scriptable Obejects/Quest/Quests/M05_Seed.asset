@@ -16,7 +16,7 @@ MonoBehaviour:
   _title: "\uC694\uC815\uACFC \uCCAB \uAC70\uB798"
   _description: "\uC694\uC815 \uC0C1\uC810\uC5D0\uC11C \uAC10\uC790 \uBAA8\uC885
     \uC0AC\uAE30"
-  _sortOrder: 38
+  _sortOrder: 40
   _kind: 0
   _requiredLevel: 11
   _prerequisite: {fileID: 11400000, guid: 19ffc794cf45a3b4e95ff4a92a39c098, type: 2}
