@@ -162,7 +162,7 @@ public class TreeShakeView : MonoBehaviour, IDecorBlocker
             return;
         float left = (float)manager.GatherRemaining(_pointId).TotalSeconds;
         float done = 1f - Mathf.Clamp01(left / _restSeconds);
-        _timer.sprite = _timerSprites[Mathf.Min(_timerSprites.Length - 1, (int)(done * _timerSprites.Length))];
+        _timer.sprite = _timerSprites[RegrowClock.Frame(done, _timerSprites.Length)];
     }
 
     private Vector3 TextPoint
