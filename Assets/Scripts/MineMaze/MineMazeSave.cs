@@ -27,6 +27,9 @@ public class MineMazeSave
     // 연 상자 ("x,y")
     public List<string> openedChests = new List<string>();
     public int rocksBroken;
+
+    // JsonUtility는 null 필드를 빈 저장으로 써서, 본 세이브의 mineMaze는 광산에 안 갔어도 null이 아님
+    public bool IsEmpty => savedUtcTicks <= 0;
 }
 
 [Serializable]

@@ -525,6 +525,17 @@ public partial class MineMazeTests
     }
 
     [Test]
+    public void MainSaveWithoutMineVisit_IsEmptySoStandaloneSaveMigrates()
+    {
+        var restored = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(new SaveData()));
+        Assert.IsTrue(restored.mineMaze == null || restored.mineMaze.IsEmpty);
+        var visited = OreStock(3).ToSave();
+        visited.savedUtcTicks = T0.Ticks;
+        restored = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(new SaveData { mineMaze = visited }));
+        Assert.IsFalse(restored.mineMaze.IsEmpty);
+    }
+
+    [Test]
     public void InventoryTransfer_FullBagDoesNotConsumeOre()
     {
         var model = OreStock(10);
