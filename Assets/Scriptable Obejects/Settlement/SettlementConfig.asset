@@ -22,6 +22,7 @@ MonoBehaviour:
   - "\uD574\uB2EC \uC655\uAD6D"
   _firstOtter: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   _otters:
+  - {fileID: 11400000, guid: 6972da82a455451a908dc0857f0e5135, type: 2}
   - {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   - {fileID: 11400000, guid: b0187b75dfd9a104b8c3725c8a4f5e91, type: 2}
   - {fileID: 11400000, guid: 8ff3e80563dfd8a4cbf590e6056ddc02, type: 2}

@@ -61,13 +61,14 @@ public partial class MineMazeModel
     {
         // During a run only the stairs may lead forward. Floor selection otherwise belongs to the entrance.
         if (floor < 0 || floor > UnlockedFloor || floor >= FloorCount) return false;
+        if (floor >= 3 && !_fishingAccess) return false;
         if (Inside && !(OnStairs && FloorCleared && floor == CurrentFloor + 1)) return false;
         ToSave(); // Snapshot current floor before replacing its local state.
         CurrentFloor = floor;
         _config = FloorConfig(floor);
         _map = MazeMap.Parse(_config.MapRows);
         RestoreFloorState(now);
-        if (Inside) Visit(Position);
+        if (Inside) { Community.Discover(CurrentFloor, _fishingAccess); Visit(Position); }
         // Caller rebuilds map UI before invoking its refresh (different floor dimensions).
         return true;
     }

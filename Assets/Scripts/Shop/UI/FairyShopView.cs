@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -94,7 +94,7 @@ public class FairyShopView : MonoBehaviour
         foreach (var tab in _tabs)
             tab.SetSelected(tab.Category == category);
 
-        var shown = _products.FindAll(p => category == null || category.Contains(p.Item));
+        var shown = _products.FindAll(p => p.DevelopmentUnlocked && (category == null || category.Contains(p.Item)));
         while (_cards.Count < shown.Count)
         {
             var card = Instantiate(_cardPrefab, _cardParent);

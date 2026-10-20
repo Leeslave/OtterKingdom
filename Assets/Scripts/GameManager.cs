@@ -475,6 +475,7 @@ public partial class GameManager : MonoBehaviour
         save.inventory ??= new List<ItemStack>();
         RenameLegacyItemIds(save.inventory);
         manager.LoadFromSave(save.inventory, save.inventoryCapacity);
+        manager.MineMazeState = save.mineMaze;
 
         return MoveLegacySeedsToBag() | GrantStarterSeeds();
     }
@@ -790,6 +791,7 @@ public partial class GameManager : MonoBehaviour
         WriteCurrenciesToSave();
         InventoryManager.Instance.WriteToSave(save.inventory);
         save.inventoryCapacity = Bag.Capacity;
+        save.mineMaze = InventoryManager.Instance.MineMazeState;
         LoadGlobalProgressOnce();
         if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(save.collection);
         if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);

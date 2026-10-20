@@ -77,6 +77,8 @@ public class MineMazeConfig : ScriptableObject
     public int TestKingdomLevel => Mathf.Max(1, _testKingdomLevel);
     public int GateKingdomLevel => Mathf.Max(1, _gateKingdomLevel);
     public int GatePickaxeTier => Mathf.Clamp(_gatePickaxeTier, 0, Rework.Pickaxes.Count - 1);
+    [SerializeField] private bool _gasSource;
+    public bool GasSource => _gasSource;
     public int GateHits => Mathf.Max(1, _gateHits);
     public MineLayerDefinition Layer => _layer;
     public string FloorName => _floorName;

@@ -114,6 +114,22 @@ public partial class MineMazeModel
     public int VisitedCount => _visited.Count;
     public IEnumerable<MazeRock> Rocks => _rocks.Values;
 
+    /// <summary>Only remove ore that actually fits in the player's bag.</summary>
+    public int TransferToInventory(MineOreDefinition ore, ItemDefinition item, Inventory bag, int amount)
+    {
+        if (ore == null || item == null || bag == null || amount <= 0 || item.ItemId != ore.OreId)
+            return 0;
+        int requested = Math.Min(amount, Count(ore));
+        if (requested <= 0) return 0;
+        int moved = bag.Add(item, requested, ItemChangeReason.Mining);
+        if (moved > 0)
+        {
+            _counts[ore] -= moved;
+            Changed?.Invoke();
+        }
+        return moved;
+    }
+
     public int Count(MineOreDefinition ore) => ore != null && _counts.TryGetValue(ore, out int n) ? n : 0;
 
     public bool IsDiscovered(MineOreDefinition ore) => ore != null && _discovered.Contains(ore.OreId);
@@ -181,6 +197,7 @@ public partial class MineMazeModel
     /// <summary>층 입구에서 시작 (나갔다 오면 늘 입구)</summary>
     public void Enter(DateTime utcNow)
     {
+        Community.Discover(CurrentFloor, _fishingAccess);
         Inside = true;
         Position = _map.Start;
         Facing = _map.StartFacing;

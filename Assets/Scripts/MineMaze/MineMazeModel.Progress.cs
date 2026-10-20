@@ -5,6 +5,10 @@ using UnityEngine;
 // One complete progression loop, isolated from the main game's economy.
 public partial class MineMazeModel
 {
+    public MineCommunityState Community { get; private set; }
+    private bool _fishingAccess = true; // standalone test scenes
+    public void UseFishingAccess(bool open) => _fishingAccess = open;
+    public bool IsSourceFloor => _config.GasSource;
     public int Gold { get; private set; }
     public int KingdomLevel { get; private set; }
     public int GateDamage { get; private set; }
@@ -27,6 +31,7 @@ public partial class MineMazeModel
 
     private void LoadProgress(MineMazeSave save)
     {
+        Community = save.community ?? new MineCommunityState();
         Gold = save.progressionVersion > 0 ? Math.Max(0, save.gold) : Math.Max(0, _rework.StartGold);
         KingdomLevel = save.progressionVersion > 0 ? Math.Max(1, save.kingdomLevel) : _config.TestKingdomLevel;
         if (FloorCount > 1 && save.progressionVersion < 2)
@@ -40,6 +45,7 @@ public partial class MineMazeModel
 
     private void SaveProgress(MineMazeSave save)
     {
+        save.community = Community;
         save.progressionVersion = 2;
         save.gold = Gold;
         save.kingdomLevel = KingdomLevel;
@@ -104,7 +110,11 @@ public partial class MineMazeModel
         reason = "계단 위에서 아래층의 돌을 확인해요";
         if (!Inside || !OnStairs) return false;
         reason = "3층 탐험은 여기까지예요. 더 깊은 갱도는 아직 닫혀 있어요";
-        if (AtContentEnd) return false;
+        if (AtContentEnd && !IsSourceFloor) return false;
+        reason = "선착장을 수리하고 낚시터를 개방하면 심층을 탐험할 수 있어요";
+        if (CurrentFloor >= 2 && !_fishingAccess) return false;
+        reason = "마을 게시판에서 약초 부탁을 마치고 임시 진료를 시작해 주세요";
+        if (IsSourceFloor && (!Community.started || !Community.treated)) return false;
         reason = "이미 열린 길이에요";
         if (FloorCleared) return false;
         reason = $"왕국 Lv.{_config.GateKingdomLevel} · {_rework.Pickaxes[_config.GatePickaxeTier].DisplayName} 필요";
@@ -120,6 +130,7 @@ public partial class MineMazeModel
         if (GateRemaining == 0)
         {
             FloorCleared = true;
+            if (IsSourceFloor) Community.RemoveSource();
             _minerProgress = 0;
         }
         Changed?.Invoke();
@@ -143,7 +154,7 @@ public partial class MineMazeModel
         {
             if (!IsFloorCleared(floor)) continue;
             foreach (var drop in FloorConfig(floor).Layer.Veins)
-                if (drop != null && drop.Ore != null && drop.Weight > 0 && drop.Ore.Rarity <= MineOreRarity.Uncommon)
+                if (drop != null && drop.Ore != null && drop.Weight > 0 && drop.Ore.Rarity != MineOreRarity.Relic)
                     drops.Add(drop);
         }
         if (drops.Count == 0) return 0;

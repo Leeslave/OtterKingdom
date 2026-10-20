@@ -22,6 +22,7 @@ MonoBehaviour:
   - _label: "\uAC00\uAD6C"
     _category: {fileID: 11400000, guid: b037e0480d1f96748a9b866df5f0d3e3, type: 2}
   _products:
+  - {fileID: 11400000, guid: 6356232a473245d4a4f6221696191825, type: 2}
   - {fileID: 11400000, guid: d766e9baf84a40e4f83ba5bcc42f9393, type: 2}
   - {fileID: 11400000, guid: f69eab7d742b2d24e91408889b742c76, type: 2}
   - {fileID: 11400000, guid: 777553148a483e843bdb291c8b8062ba, type: 2}

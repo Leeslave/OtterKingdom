@@ -761,7 +761,7 @@ public partial class MineMazeHud : MonoBehaviour
                 CloseSheet();
                 _game.ReturnToMine();
             }, RuntimeUIKit.ButtonKind.Secondary);
-            Line(panel, "갱도의 광석 · 골드 · 곡괭이는 아직 갱도 안에서만 써요", 24, false, new Color(0.45f, 0.38f, 0.33f));
+            Line(panel, "광석은 작업대에서 가방으로 옮길 수 있어요. 골드 · 곡괭이는 갱도 전용이에요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
         }
         else
         {

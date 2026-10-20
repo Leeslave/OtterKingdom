@@ -50,6 +50,8 @@ MonoBehaviour:
   _additionalFloors:
   - {fileID: 11400000, guid: d0ede65cc88827a4abb8223e3728c94e, type: 2}
   - {fileID: 11400000, guid: 08139bcfbe4006a48814dd7ce03b2110, type: 2}
+  - {fileID: 11400000, guid: 14caf8ecd66d492183f23d2922cb8bd5, type: 2}
+  - {fileID: 11400000, guid: 6733ce9b0d964d29bde7c86ff46341cb, type: 2}
   _testKingdomLevel: 13
   _gateKingdomLevel: 9
   _gatePickaxeTier: 1

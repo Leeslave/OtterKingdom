@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -169,6 +169,7 @@ public partial class SettlementManager : MonoBehaviour
     {
         if (!IsLoaded)
             return;
+        TickMineCommunity();
         FinishDueTasks();
         // 레벨이 오르면 다음 사업·생활 의뢰가 열릴 수 있음
         int level = PlayerLevel;

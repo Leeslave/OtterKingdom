@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-/// <summary>광산 미로 테스트 씬의 저장 (본 게임 세이브와 따로, persistentDataPath/mine_maze_test.json)</summary>
+/// <summary>광산 미로 저장. 본 게임에서는 SaveData에, 독립 테스트에서는 mine_maze_test.json에 저장.</summary>
 [Serializable]
 public class MineMazeSave
 {
+    public MineCommunityState community = new MineCommunityState();
     public int progressionVersion;
     public int gold;
     public int kingdomLevel;

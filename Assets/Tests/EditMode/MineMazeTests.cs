@@ -486,4 +486,77 @@ public partial class MineMazeTests
     }
 
     #endregion
+
+    private ItemDefinition BagOre(string id, int max = 999)
+    {
+        var item = Track(ScriptableObject.CreateInstance<ItemDefinition>());
+        var so = new SerializedObject(item);
+        so.FindProperty("_itemId").stringValue = id;
+        so.FindProperty("_maxStack").intValue = max;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return item;
+    }
+
+    private MineMazeModel OreStock(int count)
+    {
+        var save = new MineMazeSave();
+        save.ores.Add(new MineOreCountSave { id = _stone.OreId, count = count });
+        return Model(save: save);
+    }
+
+    [Test]
+    public void InventoryTransfer_PartialStackLeavesRemainderAndSurvivesReload()
+    {
+        var model = OreStock(10);
+        var item = BagOre(_stone.OreId, 5);
+        var bag = new Inventory(1, 1);
+        bag.Add(item, 3, ItemChangeReason.Mining);
+        Assert.AreEqual(2, model.TransferToInventory(_stone, item, bag, int.MaxValue));
+        Assert.AreEqual(5, bag.GetCount(item));
+        Assert.AreEqual(8, model.Count(_stone));
+        var save = new SaveData { mineMaze = model.ToSave() };
+        InventorySaveConverter.Write(bag, null, save.inventory);
+        var restored = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(save));
+        Assert.AreEqual(8, Model(save: restored.mineMaze).Count(_stone));
+        Assert.AreEqual(1, restored.inventory.Count);
+        Assert.AreEqual(item.ItemId, restored.inventory[0].itemId);
+        Assert.AreEqual(5, restored.inventory[0].quantity);
+        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 1));
+    }
+
+    [Test]
+    public void InventoryTransfer_FullBagDoesNotConsumeOre()
+    {
+        var model = OreStock(10);
+        var bag = new Inventory(1, 1);
+        bag.Add(BagOre("other"), 1, ItemChangeReason.Mining);
+        Assert.AreEqual(0, model.TransferToInventory(_stone, BagOre(_stone.OreId), bag, 10));
+        Assert.AreEqual(10, model.Count(_stone));
+    }
+
+    [Test]
+    public void InventoryTransfer_EmptyStockAndMismatchedItemDoNothing()
+    {
+        var model = OreStock(0);
+        var bag = new Inventory(1, 1);
+        var item = BagOre(_stone.OreId);
+        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 10));
+        model = OreStock(4);
+        Assert.AreEqual(0, model.TransferToInventory(_stone, BagOre("other"), bag, 4));
+        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, -1));
+        Assert.AreEqual(4, model.Count(_stone));
+        Assert.AreEqual(0, bag.GetCount(item));
+    }
+
+    [Test]
+    public void InventoryTransfer_CannotCollectTheSameStockTwice()
+    {
+        var model = OreStock(4);
+        var item = BagOre(_stone.OreId);
+        var bag = new Inventory(1, 1);
+        Assert.AreEqual(4, model.TransferToInventory(_stone, item, bag, 20));
+        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 20));
+        Assert.AreEqual(4, bag.GetCount(item));
+        Assert.AreEqual(0, model.Count(_stone));
+    }
 }
