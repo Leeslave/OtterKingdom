@@ -24,6 +24,8 @@ public static partial class SettlementSetup
     private const string TerritoryRootName = "Territory";
     // 일반 개간 기회가 생기기 시작하는 레벨. Lv.6은 첫 개간(TerritoryRules.TutorialLevel, 한 번에 땅이 열림)
     private const int TerritoryStartLevel = 7;
+    // Lv.12까지는 레벨마다 개간 기회 2번 (한 땅 3번이라 초반 땅이 좁았음)
+    private const int TerritoryBonusChanceUntilLevel = 12;
 
 #pragma warning disable 0649 // JsonUtility가 채움
     [System.Serializable] private class TerritoryLayout
@@ -268,6 +270,7 @@ public static partial class SettlementSetup
         }
         SetList(configSo.FindProperty("_territories"), territories);
         configSo.FindProperty("_territoryStartLevel").intValue = TerritoryStartLevel;
+        configSo.FindProperty("_territoryBonusChanceUntilLevel").intValue = TerritoryBonusChanceUntilLevel;
         return territories;
     }
 

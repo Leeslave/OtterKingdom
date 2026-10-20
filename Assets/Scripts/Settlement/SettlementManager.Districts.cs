@@ -51,7 +51,7 @@ public partial class SettlementManager
         _districtOrderFrame = -1;
         // 밭은 Lv.10부터: 그 전에 농업 지역을 정하면 언제 밭이 생기는지 알려 줌 (DistrictMilestones가 그 레벨에 발견)
         if (type == DistrictType.Agricultural && !Settlement.HasDevelopment(FarmDiscoveredDevelopment) && PlayerLevel < _config.FarmDiscoverLevel)
-            GameNotices.Post(new GameNotice($"몽실이: 왕국 Lv.{_config.FarmDiscoverLevel}이 되면 농업 지역 너머에서 밭 자리를 찾아볼게요!"));
+            GameNotices.Post(new GameNotice($"해달이: 왕국 Lv.{_config.FarmDiscoverLevel}이 되면 농업 지역 너머에서 밭 자리를 찾아볼게요!"));
         OnDistrictDesignated?.Invoke(block);
         SaveRequested?.Invoke();
         return reason;

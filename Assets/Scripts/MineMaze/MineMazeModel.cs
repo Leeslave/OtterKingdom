@@ -19,8 +19,8 @@ public class MazeRock
     public bool Shiny { get; internal set; }
     /// <summary>다시 생기는 시각 (있으면 의미 없음)</summary>
     public DateTime RespawnUtc { get; internal set; }
-    /// <summary>길을 막음 (있고, 아직 한 번도 안 뚫음)</summary>
-    public bool Blocking => Present && !Opened;
+    /// <summary>길을 막음 (있으면 늘. 다시 생긴 돌도 다시 부숴야 지나감)</summary>
+    public bool Blocking => Present;
 
     /// <summary>MineReworkGame 바위 그림에 넘기는 모양</summary>
     public MineRock ToRock() => new MineRock { Vein = Vein, Hp = Present ? Hp : 0, MaxHp = MaxHp, Shiny = Shiny };
@@ -39,11 +39,16 @@ public class MazeRunResult
     public int NewCells;
     /// <summary>이번에 지도 해달이 옴</summary>
     public bool MapOtterArrived;
+    /// <summary>이 층의 돌을 모두 한 번씩 부숴 다녀온 횟수에 들어감</summary>
+    public bool RunCounted;
+    /// <summary>이 층의 돌 수 · 이번에 한 번이라도 부순 돌 수</summary>
+    public int FloorRocks;
+    public int RocksCleared;
 }
 
 /// <summary>
 /// 광산 미로 규칙 (순수 C#): 앞 · 뒤 · 왼쪽 · 오른쪽 한 칸씩 가기, 길을 막는 돌 치기(광산 개편 규칙: 콤보 · 치명타 · 반짝 · 희귀 · 화석),
-/// 부순 돌은 정해진 시간 뒤 같은 자리에 다시 생기지만 한 번 뚫은 자리는 지나갈 수 있음, 보물 상자(한 번), 나가기(층 입구로),
+/// 부순 돌은 정해진 시간 뒤 같은 자리에 다시 생겨 다시 길을 막음, 보물 상자(한 번), 나가기(층 입구로),
 /// 밟은 칸 기록 · 지도 해달(지도 없이 몇 번 다녀오면 옴). 화면은 모른다 (MineMazeGame이 결과를 보고 그림).
 /// Docs/광산_미로탐험과_왕도성장_기획.md 4.4~4.7
 /// </summary>
@@ -68,6 +73,8 @@ public partial class MineMazeModel
     private int _runRocks;
     private int _runChests;
     private int _runNewCells;
+    // 이번 탐험에서 한 번이라도 부순 이 층의 돌 (모두 부숴야 다녀온 횟수 1번)
+    private readonly HashSet<Vector2Int> _runBroken = new HashSet<Vector2Int>();
 
     /// <summary>광석 · 곡괭이가 바뀜</summary>
     public event Action Changed;
@@ -112,25 +119,92 @@ public partial class MineMazeModel
     public bool MapOtter { get; private set; }
     public int RocksBroken { get; private set; }
     public int VisitedCount => _visited.Count;
+    /// <summary>이 층의 돌 수 (다녀온 횟수 1번 = 이 돌을 모두 한 번씩 부수고 나오기)</summary>
+    public int FloorRockCount => _map.Rocks.Count;
+    /// <summary>이번 탐험에서 한 번이라도 부순 이 층의 돌 수</summary>
+    public int RunRocksCleared => _runBroken.Count;
+    public bool RunCleared => _runBroken.Count >= FloorRockCount;
+    /// <summary>갱도에서 나온 뒤 다시 들어갈 수 있는 시각 (설정의 다시 들어가기 대기)</summary>
+    public DateTime NextEnterUtc { get; private set; } = DateTime.MinValue;
+    // 기기 시계를 되돌리면 남은 시간이 대기 시간보다 길어짐 → 그때는 막지 않음 (오래 갇히지 않게)
+    public bool CanEnterAt(DateTime utcNow) => Inside || utcNow >= NextEnterUtc
+        || (NextEnterUtc - utcNow).TotalSeconds > _config.ReenterCooldownSeconds;
+    public TimeSpan EnterWait(DateTime utcNow) => CanEnterAt(utcNow) ? TimeSpan.Zero : NextEnterUtc - utcNow;
     public IEnumerable<MazeRock> Rocks => _rocks.Values;
 
-    /// <summary>Only remove ore that actually fits in the player's bag.</summary>
-    public int TransferToInventory(MineOreDefinition ore, ItemDefinition item, Inventory bag, int amount)
+    /// <summary>쓸 수 있는 광석 (가방 + 가방이 가득 차 기다리는 것)</summary>
+    public int Count(MineOreDefinition ore) => StoredCount(ore) + (_bag != null && ore != null ? _bag.Count(ore) : 0);
+
+    /// <summary>
+    /// 가방 밖에 있는 광석. 테스트 씬은 여기가 작업대 보관함. 본 게임은 가방이 하나뿐이라
+    /// 가방이 가득 찼을 때 · 옛 세이브의 것만 잠깐 남았다가 자리가 나면 가방으로 들어감 (FlushToBag)
+    /// </summary>
+    public int StoredCount(MineOreDefinition ore) => ore != null && _counts.TryGetValue(ore, out int n) ? n : 0;
+
+    private IMineOreBag _bag;
+
+    /// <summary>본 게임: 광석은 가방 하나에 (없으면 = 테스트 씬, 작업대 보관함). 예전 작업대 광석도 가방으로 옮김</summary>
+    public void UseBag(IMineOreBag bag)
     {
-        if (ore == null || item == null || bag == null || amount <= 0 || item.ItemId != ore.OreId)
-            return 0;
-        int requested = Math.Min(amount, Count(ore));
-        if (requested <= 0) return 0;
-        int moved = bag.Add(item, requested, ItemChangeReason.Mining);
-        if (moved > 0)
+        _bag = bag;
+        FlushToBag();
+        Changed?.Invoke();
+    }
+
+    /// <summary>가방 밖에서 기다리는 광석 수 (본 게임: 가방이 가득 찼을 때)</summary>
+    public int WaitingForBag
+    {
+        get
         {
-            _counts[ore] -= moved;
-            Changed?.Invoke();
+            if (_bag == null)
+                return 0;
+            int n = 0;
+            foreach (var count in _counts.Values)
+                n += Math.Max(0, count);
+            return n;
         }
+    }
+
+    /// <summary>가방 밖의 광석을 가방에 자리가 있는 만큼 넣음</summary>
+    /// <returns>넣은 수</returns>
+    public int FlushToBag()
+    {
+        if (_bag == null)
+            return 0;
+        int moved = 0;
+        foreach (var ore in new List<MineOreDefinition>(_counts.Keys))
+        {
+            int n = StoredCount(ore);
+            if (n <= 0)
+                continue;
+            int added = _bag.Add(ore, n);
+            if (added <= 0)
+                continue;
+            _counts[ore] -= added;
+            moved += added;
+        }
+        if (moved > 0)
+            Changed?.Invoke();
         return moved;
     }
 
-    public int Count(MineOreDefinition ore) => ore != null && _counts.TryGetValue(ore, out int n) ? n : 0;
+    // 가방에 먼저, 못 들어간 것은 자리가 날 때까지 밖에서 기다림
+    private void Put(MineOreDefinition ore, int amount)
+    {
+        int bagged = _bag != null ? _bag.Add(ore, amount) : 0;
+        if (amount > bagged)
+            _counts[ore] = StoredCount(ore) + amount - bagged;
+    }
+
+    // 작업대 것을 먼저 쓰고 모자라면 가방에서 (부르기 전에 Count로 모자라지 않은지 확인)
+    private void Take(MineOreDefinition ore, int amount)
+    {
+        int stored = Math.Min(amount, StoredCount(ore));
+        if (stored > 0)
+            _counts[ore] -= stored;
+        if (amount > stored && _bag != null)
+            _bag.Remove(ore, amount - stored);
+    }
 
     public bool IsDiscovered(MineOreDefinition ore) => ore != null && _discovered.Contains(ore.OreId);
 
@@ -194,9 +268,12 @@ public partial class MineMazeModel
 
     #region 들어가기 · 나가기
 
-    /// <summary>층 입구에서 시작 (나갔다 오면 늘 입구)</summary>
-    public void Enter(DateTime utcNow)
+    /// <summary>층 입구에서 시작 (나갔다 오면 늘 입구). 나온 지 얼마 안 됐으면 들어가지 않음 (NextEnterUtc)</summary>
+    /// <returns>들어갔으면 true</returns>
+    public bool Enter(DateTime utcNow)
     {
+        if (!CanEnterAt(utcNow))
+            return false;
         Community.Discover(CurrentFloor, _fishingAccess);
         Inside = true;
         Position = _map.Start;
@@ -207,9 +284,11 @@ public partial class MineMazeModel
         _runOrder.Clear();
         _runNew.Clear();
         _runRocks = _runChests = _runNewCells = 0;
+        _runBroken.Clear();
         Visit(Position);
         Tick(utcNow);
         Changed?.Invoke();
+        return true;
     }
 
     /// <summary>나가기 (어디서든 바로). 지도 해달이 올 차례면 옴</summary>
@@ -221,6 +300,8 @@ public partial class MineMazeModel
             RocksBroken = _runRocks,
             ChestsOpened = _runChests,
             NewCells = _runNewCells,
+            FloorRocks = FloorRockCount,
+            RocksCleared = RunRocksCleared,
         };
         foreach (var ore in _runOrder)
             result.Gains.Add(new MineGain(ore, _runGains[ore], MineGainSource.Rock, _runNew.Contains(ore)));
@@ -228,8 +309,12 @@ public partial class MineMazeModel
             return result;
 
         Inside = false;
-        Runs++;
-        if (!MapOtter && (Runs >= _config.MapOtterRuns || (Runs == 1 && _visited.Count >= _config.MapOtterEarlyCells)))
+        NextEnterUtc = utcNow.AddSeconds(_config.ReenterCooldownSeconds);
+        // 들락날락만으로는 채우지 못하게: 이 층의 돌을 모두 한 번씩 부숴야 다녀온 횟수 1번
+        result.RunCounted = RunCleared;
+        if (result.RunCounted)
+            Runs++;
+        if (!MapOtter && result.RunCounted && (Runs >= _config.MapOtterRuns || (Runs == 1 && _visited.Count >= _config.MapOtterEarlyCells)))
         {
             MapOtter = true;
             result.MapOtterArrived = true;
@@ -283,7 +368,7 @@ public partial class MineMazeModel
 
     #region 돌 치기
 
-    /// <summary>앞 돌을 한 번 친다 (time = 지금 시각, 콤보). 깨면 광석 · 한 번 뚫은 자리로 남음</summary>
+    /// <summary>앞 돌을 한 번 친다 (time = 지금 시각, 콤보). 깨면 광석 · 다시 생길 때까지 지나갈 수 있음</summary>
     /// <returns>앞에 돌이 없으면 null</returns>
     public MineHit HitAhead(float time, DateTime utcNow)
     {
@@ -304,6 +389,7 @@ public partial class MineMazeModel
         RollBreak(rock, hit);
         rock.Present = false;
         rock.Opened = true;
+        _runBroken.Add(rock.Cell);
         rock.RespawnUtc = utcNow.AddSeconds(_config.RockRespawnSeconds);
         RocksBroken++;
         _runRocks++;
@@ -448,7 +534,7 @@ public partial class MineMazeModel
 
     private MineGain AddOre(MineOreDefinition ore, int amount)
     {
-        _counts[ore] = Count(ore) + amount;
+        Put(ore, amount);
         bool isNew = _discovered.Add(ore.OreId);
         if (!_runGains.TryGetValue(ore, out int n))
             _runOrder.Add(ore);
@@ -466,6 +552,7 @@ public partial class MineMazeModel
         PickaxeTier = Mathf.Clamp(save.pickaxeTier, 0, _rework.Pickaxes.Count - 1);
         Runs = Mathf.Max(0, save.runs);
         MapOtter = save.mapOtter;
+        NextEnterUtc = save.nextEnterUtcTicks > 0 ? new DateTime(save.nextEnterUtcTicks, DateTimeKind.Utc) : DateTime.MinValue;
         RocksBroken = Mathf.Max(0, save.rocksBroken);
         foreach (var entry in save.ores)
         {
@@ -540,12 +627,13 @@ public partial class MineMazeModel
             pickaxeTier = PickaxeTier,
             runs = Runs,
             mapOtter = MapOtter,
+            nextEnterUtcTicks = NextEnterUtc > DateTime.MinValue ? NextEnterUtc.Ticks : 0,
             rocksBroken = RocksBroken,
         };
         SaveProgress(save);
         foreach (var ore in _rework.Ores)
         {
-            int n = Count(ore);
+            int n = StoredCount(ore);
             if (ore != null && n > 0)
                 save.ores.Add(new MineOreCountSave { id = ore.OreId, count = n });
         }

@@ -95,9 +95,14 @@ public partial class SettlementManager
             return $"Lv.{TerritoryRules.TutorialLevel}이 되면 오른쪽 숲에서 첫 개간을 할 수 있어요.";
         if (PlayerLevel < _config.TerritoryStartLevel)
             return $"Lv.{_config.TerritoryStartLevel}부터 공터 둘레의 숲을 개간할 수 있어요.";
-        return chances > 0
+        // 시작한 땅은 다 마칠 때까지 그 방향만 (TerritoryRules.Started)
+        var started = TerritoryRules.Started(_config, Settlement);
+        string progress = started != null
+            ? $"{started.DisplayName} 개간 {TerritoryRules.ClearingsDone(started, Settlement)}/{started.Clearings.Count} · 이 땅을 다 마치면 다른 방향도 개간할 수 있어요.\n"
+            : "";
+        return progress + (chances > 0
             ? $"개간 기회 {chances}번 · 공터 가장자리의 점선 원을 눌러 해달을 보내요."
-            : "레벨이 오르면 개간 기회가 생겨요.";
+            : "레벨이 오르면 개간 기회가 생겨요.");
     }
 
     /// <summary>개간이 끝났을 때 작업 화면이 띄울 말 (영토 개간이 아니면 null)</summary>
@@ -116,7 +121,7 @@ public partial class SettlementManager
         if (_clearingRewardText.TryGetValue(task.TaskId, out string reward) && !string.IsNullOrEmpty(reward))
             text.Append('\n').Append(reward);
         if (index + 1 >= total)
-            text.Append("\n마을 길드에서 영토 확장 미션을 할 수 있어요.");
+            text.Append("\n마을회관에서 영토 확장 미션을 할 수 있어요.");
         return text.ToString();
     }
 

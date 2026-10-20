@@ -45,3 +45,4 @@ MonoBehaviour:
   _pivotOffset: {x: 0, y: 0.5000038}
   _worldScale: {x: 1, y: 1}
   _district: 2
+  _keepsDoorstepClear: 1

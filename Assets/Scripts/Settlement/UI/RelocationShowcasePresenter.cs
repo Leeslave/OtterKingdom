@@ -7,6 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 정리 전 · 후 비교 컷 (구역·이사 기획안 4막): 첫 이사 지시서가 나올 때 광장(중앙 공터)을 사진으로 남겨 두고,
 /// 옮길 건물이 하나도 남지 않으면(지시서를 하나 이상 끝냄) 같은 구도로 한 장 더 찍어 두 장을 폴라로이드처럼 나란히 보여 준다. 한 번만.
+/// 눈에 띄게 나아졌을 때만 (ShouldCompare: 구역 밖 건물이 충분히 줄었고, 두 사진이 실제로 다름). 아니면 다음 지시서 뒤에 다시 봄
 /// 사진은 세이브 폴더의 PNG (relocation_before.png). 기록은 발전으로 (relocation_before_taken · relocation_showcase_done)
 /// 광장에서만 찍고 보여 준다 (다른 장소에 있으면 광장에 왔을 때). 코드로 만든 화면, 스스로 만들어짐
 /// </summary>
@@ -15,6 +16,12 @@ public class RelocationShowcasePresenter : MonoBehaviour
     public const string BeforeTakenDevelopment = "relocation_before_taken";
     public const string ShowcaseDoneDevelopment = "relocation_showcase_done";
     private const string BeforeFile = "relocation_before.png";
+    // 정리 전 사진을 찍을 때 구역 밖에 있던 건물 수
+    private const string BeforeCountFile = "relocation_before.txt";
+    // 이만큼 줄면 (또는 모두 맞는 구역에 가면) 비교 컷
+    private const int MinImprovement = 3;
+    // 사진에서 이만큼(비율) 넘게 바뀌어야 "다른 사진"
+    private const float MinChangedPixels = 0.02f;
     private const string PlazaScene = "Plaza";
     private const int SortingOrder = 120;
     private const float CheckSeconds = 1f;
@@ -31,6 +38,8 @@ public class RelocationShowcasePresenter : MonoBehaviour
     private float _timer;
     private Texture2D _beforeTexture;
     private Texture2D _afterTexture;
+    // 비교했는데 차이가 작았던 때의 끝낸 지시서 수 (다음 지시서를 끝내기 전에는 다시 찍지 않음)
+    private int _skippedAtOrders = -1;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
@@ -52,6 +61,7 @@ public class RelocationShowcasePresenter : MonoBehaviour
     }
 
     private static string BeforePath => Path.Combine(Application.persistentDataPath, BeforeFile);
+    private static string BeforeCountPath => Path.Combine(Application.persistentDataPath, BeforeCountFile);
 
     private void Build(Transform canvas)
     {
@@ -130,6 +140,7 @@ public class RelocationShowcasePresenter : MonoBehaviour
                 if (photo != null)
                 {
                     File.WriteAllBytes(BeforePath, photo.EncodeToPNG());
+                    File.WriteAllText(BeforeCountPath, manager.MisplacedBuildingCount().ToString());
                     Destroy(photo);
                     settlement.UnlockDevelopment(BeforeTakenDevelopment);
                 }
@@ -143,13 +154,68 @@ public class RelocationShowcasePresenter : MonoBehaviour
             || DecorModePresenter.IsActive || RelocationModePresenter.IsOpen
             || (GameManager.Instance != null && GameManager.Instance.IsModalOpen))
             return;
-        Show(manager);
+        if (settlement.RelocationOrdersDone == _skippedAtOrders
+            || !ShouldCompare(LoadBeforeCount(), manager.MisplacedBuildingCount(), settlement.RelocationOrdersDone))
+            return;
+        var before = LoadBefore();
+        var after = Capture(manager);
+        if (before == null || after == null || ChangedFraction(before, after) < MinChangedPixels)
+        {
+            // 사진으로는 거의 같음: 다음 지시서를 끝낸 뒤 다시
+            _skippedAtOrders = settlement.RelocationOrdersDone;
+            if (before != null) Destroy(before);
+            if (after != null) Destroy(after);
+            return;
+        }
+        Show(manager, before, after);
     }
 
-    private void Show(SettlementManager manager)
+    /// <summary>
+    /// 비교 컷을 보여 줄 만큼 나아졌는지: 정리 전에 구역 밖이던 건물이 MinImprovement개 넘게 줄었거나 모두 맞는 구역에 감.
+    /// 정리 전 수를 모르는 옛 세이브(-1)는 모두 맞는 구역에 가거나 지시서를 2번 넘게 끝내면
+    /// </summary>
+    public static bool ShouldCompare(int misplacedBefore, int misplacedNow, int ordersDone)
     {
-        _beforeTexture = LoadBefore();
-        _afterTexture = Capture(manager);
+        if (misplacedBefore < 0)
+            return misplacedNow == 0 || ordersDone >= 2;
+        if (misplacedBefore == 0)
+            return false;
+        return misplacedNow == 0 || misplacedBefore - misplacedNow >= MinImprovement;
+    }
+
+    // 두 사진에서 눈에 띄게 다른 픽셀의 비율 (4칸마다 하나씩 봄)
+    private static float ChangedFraction(Texture2D a, Texture2D b)
+    {
+        if (a.width != b.width || a.height != b.height)
+            return 1f;
+        var pa = a.GetPixels32();
+        var pb = b.GetPixels32();
+        int changed = 0, seen = 0;
+        for (int i = 0; i < pa.Length; i += 4)
+        {
+            seen++;
+            int d = Mathf.Abs(pa[i].r - pb[i].r) + Mathf.Abs(pa[i].g - pb[i].g) + Mathf.Abs(pa[i].b - pb[i].b);
+            if (d > 60) changed++;
+        }
+        return seen > 0 ? (float)changed / seen : 0f;
+    }
+
+    private static int LoadBeforeCount()
+    {
+        try
+        {
+            return File.Exists(BeforeCountPath) && int.TryParse(File.ReadAllText(BeforeCountPath), out int n) ? n : -1;
+        }
+        catch (IOException)
+        {
+            return -1;
+        }
+    }
+
+    private void Show(SettlementManager manager, Texture2D before, Texture2D after)
+    {
+        _beforeTexture = before;
+        _afterTexture = after;
         _before.texture = _beforeTexture;
         _after.texture = _afterTexture;
         var order = manager.DistrictOrder;

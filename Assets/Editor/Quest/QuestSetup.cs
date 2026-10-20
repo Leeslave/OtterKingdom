@@ -73,9 +73,10 @@ public static class QuestSetup
         // Lv.6 → 7 함께 일하는 마을 (600): 첫 개간(오른쪽 숲 한 번이면 땅이 열림)도 이 레벨에 열림
         ("M06_Common", "main_lv6_common", "다 같이 쉴 자리", "광장에 쉴 자리 정리하기", QuestGoalType.Milestone, 1, "", 50, "settle:ICON_CommonSpace", QuestKind.Main, 6, "M05_MazeEnter", 160, 0f, "req_prepare_common_space"),
         ("M06_Shop", "main_lv6_shop", "요정 상점 단골", "요정 상점에서 물건 사기", QuestGoalType.ShopPurchase, 1, "", 100, "npc:Fairy", QuestKind.Main, 6, "M06_Common", 210, 0f, ""),
-        ("M06_Guild", "main_lv6_guild", "큰 부탁도 함께", "길드 접수 창구 만들기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_GuildOffice", QuestKind.Main, 6, "M06_Shop", 230, 0f, "req_build_guild_office"),
-        // Lv.7 → 8 우리 마을의 길드 (240 + 첫 비축 560)
-        ("M07_TownHall", "main_lv7_town_hall", "우리 마을의 길드", "마을 길드로 넓히기", QuestGoalType.Milestone, 1, "", 300, "settle:ICON_TownHall", QuestKind.Main, 7, "M06_Guild", 80, 0f, "req_upgrade_town_hall"),
+        // 접수 창구는 마을회관에 합쳐 빠지고(기획 14장), 그 자리는 갱도 탐험. 세이브 키 때문에 에셋 · ID는 예전 이름 그대로
+        ("M06_Guild", "main_lv6_guild", "길을 막은 돌", "오래된 갱도에서 돌 부수기", QuestGoalType.Milestone, 1, "", 200, "place:ICON_Place_Mine", QuestKind.Main, 6, "M06_Shop", 230, 0f, MineMazeRules.FirstRockDevelopment),
+        // Lv.7 → 8 갱도 한 바퀴 (80 + 첫 비축 560). 마을 길드는 가스 사건 뒤 (req_upgrade_town_hall ← mine_hospital)
+        ("M07_TownHall", "main_lv7_town_hall", "갱도 한 바퀴", "지하 1층 돌을 모두 부수고 나오기", QuestGoalType.Milestone, 1, "", 300, "place:ICON_Place_Mine", QuestKind.Main, 7, "M06_Guild", 80, 0f, MineMazeRules.FirstTripDevelopment),
         ("M07_Supply", "main_lv7_supply", "우리 마을의 첫 비축", "공동사업: 비축 상자 만들기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_TownHall", QuestKind.Main, 7, "M07_TownHall", 0, 0f, "supply_ready"),
         ("M07_Mine", "main_lv7_mine", "광석 모으기", "광산에서 광석 50개 캐기", QuestGoalType.Mine, 50, "Ore", 200, "item:Mining/다이아몬드", QuestKind.Main, 7, "M07_Supply", 160, 0f, ""),
         // Lv.8 → 9 영토 넓히기 (450 + 영토 미션 600)

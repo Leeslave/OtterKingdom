@@ -19,3 +19,4 @@ MonoBehaviour:
   _backgroundPixels: {x: 1024, y: 1536}
   _backgroundPixelsPerUnit: 96
   _glow: {fileID: 21300000, guid: 84a31e25ccdc258428ffb77fe42035db, type: 3}
+  _gold: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}

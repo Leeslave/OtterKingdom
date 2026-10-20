@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-/// <summary>광산 미로 규칙 (MineMazeModel · MazeMap): 지도 읽기 · 앞뒤좌우 가기 · 길을 막는 돌 · 1분 뒤 다시 생김(뚫은 길은 지나감) · 상자 · 나가기 · 지도 해달 · 저장</summary>
+/// <summary>광산 미로 규칙 (MineMazeModel · MazeMap): 지도 읽기 · 앞뒤좌우 가기 · 길을 막는 돌 · 1분 뒤 다시 생김(다시 길을 막음) · 상자 · 나가기 · 지도 해달 · 저장</summary>
 public partial class MineMazeTests
 {
     private static readonly DateTime T0 = new DateTime(2026, 10, 18, 9, 0, 0, DateTimeKind.Utc);
@@ -109,7 +109,7 @@ public partial class MineMazeTests
         return config;
     }
 
-    private MineMazeConfig Config(string[] map, int otterRuns = 2, int earlyCells = 99)
+    private MineMazeConfig Config(string[] map, int otterRuns = 2, int earlyCells = 99, float reenterSeconds = 0f)
     {
         var config = Track(ScriptableObject.CreateInstance<MineMazeConfig>());
         var so = new SerializedObject(config);
@@ -128,6 +128,7 @@ public partial class MineMazeTests
         loot.GetArrayElementAtIndex(0).FindPropertyRelative("_chance").floatValue = 1f;
         so.FindProperty("_mapOtterRuns").intValue = otterRuns;
         so.FindProperty("_mapOtterEarlyCells").intValue = earlyCells;
+        so.FindProperty("_reenterCooldownSeconds").floatValue = reenterSeconds;
         so.ApplyModifiedPropertiesWithoutUndo();
         return config;
     }
@@ -318,11 +319,11 @@ public partial class MineMazeTests
         var rock = model.RockAhead;
         Assert.IsNotNull(rock);
         Assert.IsTrue(rock.Opened);
-        Assert.IsFalse(rock.Blocking);
+        Assert.IsTrue(rock.Blocking);
         Assert.AreEqual(MazeAhead.Rock, model.Look(MazeTurn.Forward));
-        // 지나갈 수 있음
-        Assert.AreEqual(MazeMove.Moved, model.Go(MazeTurn.Forward));
-        Assert.AreEqual(cell, model.Position);
+        // 다시 생긴 돌도 길을 막음
+        Assert.AreEqual(MazeMove.Blocked, model.Go(MazeTurn.Forward));
+        Assert.AreNotEqual(cell, model.Position);
     }
 
     [Test]
@@ -395,23 +396,69 @@ public partial class MineMazeTests
         model.Enter(T0.AddSeconds(200));
         Assert.AreEqual(new Vector2Int(1, 3), model.Position);
         Assert.AreEqual(MazeDir.East, model.Facing);
-        // 뚫은 길은 그대로 (돌이 다시 생겼어도 지나감)
+        // 다시 생긴 돌이 다시 길을 막음
         model.Go(MazeTurn.Forward);
-        Assert.AreEqual(MazeMove.Moved, model.Go(MazeTurn.Forward));
+        Assert.AreEqual(MazeMove.Blocked, model.Go(MazeTurn.Forward));
+    }
+
+    // 입구에서 앞으로 한 칸 가서 그 층의 하나뿐인 돌(3,3)을 부수고 나옴 (돌이 다시 생긴 뒤에 들어가도록 2분씩)
+    private static MazeRunResult ClearingRun(MineMazeModel model, DateTime start)
+    {
+        Assert.IsTrue(model.Enter(start));
+        model.Go(MazeTurn.Forward);
+        Assert.IsTrue(BreakAhead(model, start).Broken);
+        return model.Exit(start.AddSeconds(10));
     }
 
     [Test]
     public void MapOtter_ArrivesAfterTwoRuns()
     {
         var model = Model();
-        model.Enter(T0);
-        Assert.IsFalse(model.Exit(T0).MapOtterArrived);
+        Assert.IsFalse(ClearingRun(model, T0).MapOtterArrived);
         Assert.IsFalse(model.MapOtter);
-        model.Enter(T0);
-        Assert.IsTrue(model.Exit(T0).MapOtterArrived);
+        Assert.IsTrue(ClearingRun(model, T0.AddMinutes(2)).MapOtterArrived);
         Assert.IsTrue(model.MapOtter);
-        model.Enter(T0);
-        Assert.IsFalse(model.Exit(T0).MapOtterArrived);
+        Assert.IsFalse(ClearingRun(model, T0.AddMinutes(4)).MapOtterArrived);
+    }
+
+    [Test]
+    public void Runs_CountOnlyWhenEveryRockOnTheFloorWasBroken()
+    {
+        var model = Model();
+        Assert.AreEqual(1, model.FloorRockCount);
+        for (int i = 0; i < 3; i++)
+        {
+            model.Enter(T0.AddMinutes(i));
+            var result = model.Exit(T0.AddMinutes(i).AddSeconds(5));
+            Assert.IsFalse(result.RunCounted, "들락날락만으로는 다녀온 횟수가 늘지 않음");
+            Assert.AreEqual(0, result.RocksCleared);
+        }
+        Assert.AreEqual(0, model.Runs);
+        Assert.IsFalse(model.MapOtter);
+
+        var cleared = ClearingRun(model, T0.AddMinutes(10));
+        Assert.IsTrue(cleared.RunCounted);
+        Assert.AreEqual(1, cleared.RocksCleared);
+        Assert.AreEqual(1, model.Runs);
+    }
+
+    [Test]
+    public void Enter_WaitsAfterLeaving_AndTheWaitSurvivesSave()
+    {
+        var config = Config(SmallMap, reenterSeconds: 180f);
+        var model = Model(config);
+        Assert.IsTrue(model.Enter(T0));
+        model.Exit(T0.AddSeconds(30));
+        Assert.IsFalse(model.Enter(T0.AddSeconds(60)));
+        Assert.IsFalse(model.Inside);
+        Assert.AreEqual(150, model.EnterWait(T0.AddSeconds(60)).TotalSeconds, 0.01);
+
+        var loaded = Model(config, JsonUtility.FromJson<MineMazeSave>(JsonUtility.ToJson(model.ToSave())));
+        Assert.IsFalse(loaded.Enter(T0.AddSeconds(209)));
+        Assert.IsTrue(loaded.Enter(T0.AddSeconds(210)));
+
+        // 시계를 되돌려도 대기 시간보다 오래 막히지 않음
+        Assert.IsTrue(model.Enter(T0.AddHours(-1)));
     }
 
     [Test]
@@ -419,8 +466,9 @@ public partial class MineMazeTests
     {
         var model = Model(Config(SmallMap, 2, 3));
         model.Enter(T0);
-        model.Go(MazeTurn.Left);    // (1,2)
-        model.Go(MazeTurn.Forward); // (1,1)
+        model.Go(MazeTurn.Forward);  // (2,3)
+        BreakAhead(model, T0);
+        model.Go(MazeTurn.Forward);  // (3,3) 부순 돌 자리
         Assert.IsTrue(model.Exit(T0).MapOtterArrived);
     }
 
@@ -452,21 +500,24 @@ public partial class MineMazeTests
         model.Go(MazeTurn.Forward);
         model.OpenChestAhead();
         model.Exit(T0.AddSeconds(10));
-        model.Enter(T0.AddSeconds(10));
-        model.Exit(T0.AddSeconds(20));
+        // 두 번째도 돌을 부숴야 다녀온 횟수에 들어감 (1분 지나 다시 생긴 돌)
+        model.Enter(T0.AddSeconds(60));
+        model.Go(MazeTurn.Forward);
+        BreakAhead(model, T0.AddSeconds(60));
+        model.Exit(T0.AddSeconds(70));
         var json = JsonUtility.ToJson(model.ToSave());
 
-        var loaded = new MineMazeModel(config, JsonUtility.FromJson<MineMazeSave>(json), new System.Random(1), T0.AddSeconds(30));
+        var loaded = new MineMazeModel(config, JsonUtility.FromJson<MineMazeSave>(json), new System.Random(1), T0.AddSeconds(80));
         Assert.AreEqual(2, loaded.Runs);
         Assert.IsTrue(loaded.MapOtter);
-        Assert.AreEqual(2, loaded.Count(_copper));
+        Assert.AreEqual(4, loaded.Count(_copper));
         Assert.AreEqual(3, loaded.Count(_iron));
         Assert.IsTrue(loaded.IsChestOpened(new Vector2Int(5, 3)));
         Assert.IsTrue(loaded.IsVisited(new Vector2Int(4, 3)));
         var rock = loaded.RockAt(new Vector2Int(3, 3));
         Assert.IsTrue(rock.Opened);
         Assert.IsFalse(rock.Present, "아직 1분이 안 됨");
-        loaded.Tick(T0.AddSeconds(60));
+        loaded.Tick(T0.AddSeconds(120));
         Assert.IsTrue(rock.Present);
     }
 
@@ -482,7 +533,95 @@ public partial class MineMazeTests
         var loaded = new MineMazeModel(config, JsonUtility.FromJson<MineMazeSave>(json), new System.Random(1), T0.AddHours(3));
         var rock = loaded.RockAt(new Vector2Int(3, 3));
         Assert.IsTrue(rock.Present);
-        Assert.IsFalse(rock.Blocking);
+        Assert.IsTrue(rock.Blocking, "다시 생긴 돌도 길을 막음");
+    }
+
+    #endregion
+
+    #region 가방 (본 게임)
+
+    // 광석마다 room개까지 들어가는 가방
+    private sealed class FakeBag : IMineOreBag
+    {
+        public readonly Dictionary<MineOreDefinition, int> Items = new Dictionary<MineOreDefinition, int>();
+        private readonly int _room;
+        public FakeBag(int room) => _room = room;
+        public int Count(MineOreDefinition ore) => Items.TryGetValue(ore, out int n) ? n : 0;
+        public int Add(MineOreDefinition ore, int amount)
+        {
+            int added = Math.Min(amount, _room - Count(ore));
+            if (added > 0) Items[ore] = Count(ore) + added;
+            return Math.Max(0, added);
+        }
+        public int Remove(MineOreDefinition ore, int amount)
+        {
+            int removed = Math.Min(amount, Count(ore));
+            Items[ore] = Count(ore) - removed;
+            return removed;
+        }
+    }
+
+    [Test]
+    public void Bag_MinedOreGoesToBag_AndOverflowStaysInWorkshop()
+    {
+        var model = Model();
+        var bag = new FakeBag(1);
+        model.UseBag(bag);
+        model.Enter(T0);
+        model.Go(MazeTurn.Forward);
+        BreakAhead(model, T0);
+        Assert.AreEqual(1, bag.Count(_copper), "가방에 들어갈 만큼");
+        Assert.AreEqual(1, model.StoredCount(_copper), "나머지는 작업대");
+        Assert.AreEqual(2, model.Count(_copper));
+        var save = model.ToSave();
+        Assert.AreEqual(1, save.ores.Find(o => o.id == _copper.OreId).count, "가방 몫은 광산 세이브에 두 번 쓰지 않음");
+    }
+
+    private sealed class FakeWallet : IMineWallet
+    {
+        public int Balance { get; set; }
+        public bool TrySpend(int amount)
+        {
+            if (Balance < amount) return false;
+            Balance -= amount;
+            return true;
+        }
+        public void Earn(int amount) => Balance += amount;
+    }
+
+    [Test]
+    public void Wallet_UsesRealGold_AndMovesOldMineGoldOnce()
+    {
+        var model = Model(save: Stock(4, gold: 30));
+        var wallet = new FakeWallet { Balance = 1000 };
+        model.UseWallet(wallet);
+        Assert.AreEqual(1030, wallet.Balance, "예전 갱도 골드를 진짜 골드로");
+        Assert.AreEqual(1030, model.Gold);
+        Assert.AreEqual(0, model.ToSave().gold);
+
+        var price = new SerializedObject(_copper);
+        price.FindProperty("_sellPrice").intValue = 5;
+        price.ApplyModifiedPropertiesWithoutUndo();
+        Assert.IsTrue(model.Sell(_copper, 2));
+        Assert.AreEqual(1040, wallet.Balance);
+    }
+
+    [Test]
+    public void Bag_SpendingUsesWorkshopFirstThenBag()
+    {
+        var save = new MineMazeSave();
+        save.ores.Add(new MineOreCountSave { id = _copper.OreId, count = 1 });
+        var model = Model(save: save);
+        var bag = new FakeBag(99);
+        bag.Add(_copper, 3);
+        model.UseBag(bag);
+        Assert.AreEqual(4, model.Count(_copper));
+        var price = new SerializedObject(_copper);
+        price.FindProperty("_sellPrice").intValue = 5;
+        price.ApplyModifiedPropertiesWithoutUndo();
+        Assert.IsTrue(model.Sell(_copper, 2));
+        Assert.AreEqual(0, model.StoredCount(_copper));
+        Assert.AreEqual(2, bag.Count(_copper));
     }
 
     #endregion
@@ -505,23 +644,20 @@ public partial class MineMazeTests
     }
 
     [Test]
-    public void InventoryTransfer_PartialStackLeavesRemainderAndSurvivesReload()
+    public void Bag_OldWorkshopStockMovesIntoBag_AndWaitsWhenFull()
     {
         var model = OreStock(10);
-        var item = BagOre(_stone.OreId, 5);
-        var bag = new Inventory(1, 1);
-        bag.Add(item, 3, ItemChangeReason.Mining);
-        Assert.AreEqual(2, model.TransferToInventory(_stone, item, bag, int.MaxValue));
-        Assert.AreEqual(5, bag.GetCount(item));
-        Assert.AreEqual(8, model.Count(_stone));
-        var save = new SaveData { mineMaze = model.ToSave() };
-        InventorySaveConverter.Write(bag, null, save.inventory);
-        var restored = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(save));
-        Assert.AreEqual(8, Model(save: restored.mineMaze).Count(_stone));
-        Assert.AreEqual(1, restored.inventory.Count);
-        Assert.AreEqual(item.ItemId, restored.inventory[0].itemId);
-        Assert.AreEqual(5, restored.inventory[0].quantity);
-        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 1));
+        var bag = new FakeBag(6);
+        model.UseBag(bag);
+        Assert.AreEqual(6, bag.Count(_stone), "가방에 들어갈 만큼 바로");
+        Assert.AreEqual(4, model.WaitingForBag);
+        Assert.AreEqual(10, model.Count(_stone));
+        bag.Remove(_stone, 6); // 가방에서 팔아 자리가 남
+        Assert.AreEqual(4, model.FlushToBag());
+        Assert.AreEqual(0, model.WaitingForBag);
+        Assert.AreEqual(0, model.FlushToBag(), "같은 광석을 두 번 넣지 않음");
+        Assert.AreEqual(4, bag.Count(_stone));
+        Assert.AreEqual(0, model.ToSave().ores.Count);
     }
 
     [Test]
@@ -533,41 +669,5 @@ public partial class MineMazeTests
         visited.savedUtcTicks = T0.Ticks;
         restored = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(new SaveData { mineMaze = visited }));
         Assert.IsFalse(restored.mineMaze.IsEmpty);
-    }
-
-    [Test]
-    public void InventoryTransfer_FullBagDoesNotConsumeOre()
-    {
-        var model = OreStock(10);
-        var bag = new Inventory(1, 1);
-        bag.Add(BagOre("other"), 1, ItemChangeReason.Mining);
-        Assert.AreEqual(0, model.TransferToInventory(_stone, BagOre(_stone.OreId), bag, 10));
-        Assert.AreEqual(10, model.Count(_stone));
-    }
-
-    [Test]
-    public void InventoryTransfer_EmptyStockAndMismatchedItemDoNothing()
-    {
-        var model = OreStock(0);
-        var bag = new Inventory(1, 1);
-        var item = BagOre(_stone.OreId);
-        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 10));
-        model = OreStock(4);
-        Assert.AreEqual(0, model.TransferToInventory(_stone, BagOre("other"), bag, 4));
-        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, -1));
-        Assert.AreEqual(4, model.Count(_stone));
-        Assert.AreEqual(0, bag.GetCount(item));
-    }
-
-    [Test]
-    public void InventoryTransfer_CannotCollectTheSameStockTwice()
-    {
-        var model = OreStock(4);
-        var item = BagOre(_stone.OreId);
-        var bag = new Inventory(1, 1);
-        Assert.AreEqual(4, model.TransferToInventory(_stone, item, bag, 20));
-        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 20));
-        Assert.AreEqual(4, bag.GetCount(item));
-        Assert.AreEqual(0, model.Count(_stone));
     }
 }

@@ -5,11 +5,13 @@ public partial class SettlementManager
     public MineCommunityState MineCommunity => InventoryManager.Instance?.MineMazeState?.community;
     public float MineHealthMultiplier => MineCommunity?.ProductionMultiplier ?? 1f;
     public bool HasMineCommunityStory => MineCommunity != null && MineCommunity.started;
+    /// <summary>마을 길드: 마을회관을 넓힘 (예전에 따로 지은 bld_mine_guild도 셈)</summary>
+    public bool IsVillageGuildBuilt => HasDevelopment(CastleRules.GuildBuilt) || HasBuilt(MineCommunityState.GuildId);
     public string MineCommunityTitle => MineCommunity == null || !MineCommunity.concernAccepted ? "또박이의 걱정"
         : !MineCommunity.treated ? "주민들을 위한 약초"
         : !MineCommunity.sourceRemoved ? "깊은 갱도의 원인"
         : !HasBuilt(MineCommunityState.HospitalId) ? "마을에 남을 병원"
-        : !HasBuilt(MineCommunityState.GuildId) ? "함께 세우는 마을 길드"
+        : !IsVillageGuildBuilt ? "함께 세우는 마을 길드"
         : !MineCommunity.exported ? "요정 나라에 보내는 답례" : "다시 평온해진 마을";
     public string MineCommunityStatus => !HasMineCommunityStory ? ""
         : MineCommunity.sourceRemoved ? "주민들이 회복했어요. 농장 성장 속도가 정상으로 돌아왔어요."
@@ -37,9 +39,9 @@ public partial class SettlementManager
             SaveRequested?.Invoke();
             OnChanged?.Invoke();
         }
-        if (HasBuilt(MineCommunityState.HospitalId) && !HasDevelopment("mine_hospital"))
+        if (HasBuilt(MineCommunityState.HospitalId) && !HasDevelopment(MineCommunityState.HospitalDevelopment))
         {
-            Settlement.UnlockDevelopment("mine_hospital");
+            Settlement.UnlockDevelopment(MineCommunityState.HospitalDevelopment);
             SaveRequested?.Invoke();
             OnChanged?.Invoke();
         }
@@ -95,7 +97,7 @@ public partial class SettlementManager
 
     public bool CompleteMineExport()
     {
-        if (MineCommunity == null || !MineCommunity.Export(HasBuilt(MineCommunityState.HospitalId), HasBuilt(MineCommunityState.GuildId)))
+        if (MineCommunity == null || !MineCommunity.Export(HasBuilt(MineCommunityState.HospitalId), IsVillageGuildBuilt))
             return false;
         // Sealed fragments are a unique story delivery, not another gas-producing resource.
         Settlement.UnlockDevelopment("mine_fairy_trade");

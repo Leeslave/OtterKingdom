@@ -17,7 +17,7 @@ MonoBehaviour:
   _category: 0
   _contentVersion: 0
   _title: "\uBA39\uAC70\uB9AC\uB97C \uAE38\uB7EC\uC694"
-  _description: "\uBABD\uC2E4\uC774\uAC00 \uCC3E\uC740 \uB545\uC744 \uBC2D\uC73C\uB85C \uB9CC\uB4E4\uC5B4\uC694.\n\uB18D\uC5C5 \uC9C0\uC5ED\uC5D0 \uBC2D \uCE78\uC744 \uC9C0\uC5B4 \uB18D\uC0AC\uB97C \uC9C0\uC5B4\uC694."
+  _description: "\uD574\uB2EC\uC774\uAC00 \uCC3E\uC740 \uB545\uC744 \uBC2D\uC73C\uB85C \uB9CC\uB4E4\uC5B4\uC694.\n\uB18D\uC5C5 \uC9C0\uC5ED\uC5D0 \uBC2D \uCE78\uC744 \uC9C0\uC5B4 \uB18D\uC0AC\uB97C \uC9C0\uC5B4\uC694."
   _icon: {fileID: 21300000, guid: d385ccec0040cad4ab1f52dd7d5acedd, type: 3}
   _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   _requiredDevelopment: farm_discovered

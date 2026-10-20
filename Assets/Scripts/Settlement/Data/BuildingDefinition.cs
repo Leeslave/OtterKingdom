@@ -129,6 +129,9 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     public override string DisplayName => string.IsNullOrEmpty(_buildingName) ? name : _buildingName;
     public override string SaveId => _buildingId;
     public override bool IsBuilding => true;
+    // 농장 부품(밭 · 상자 · 길 · 스프링클러)은 문이 없고, 길은 문 앞에 깔 수 있음
+    public override bool KeepsDoorstepClear => _farmPart == FarmPartKind.None;
+    public override bool AllowedOnDoorstep => _farmPart == FarmPartKind.Path;
     public string Description => _description;
     public Sprite Icon => _icon != null ? _icon : WorldSprite;
     public BuildingKind Kind => _kind;

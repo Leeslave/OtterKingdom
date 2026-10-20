@@ -13,15 +13,11 @@ MonoBehaviour:
   m_Name: Group_town_council
   m_EditorClassIdentifier: OtterKingdom::MilestoneGroupDefinition
   _groupId: group_town_council
-  _title: "\uB9C8\uC744 \uAE38\uB4DC \uC138\uC6B0\uAE30"
-  _description: "\uAC8C\uC2DC\uD310\uC744 \uB9C8\uC744\uD68C\uAD00\uC73C\uB85C, \uB9C8\uC744\uD68C\uAD00\uC744
-    \uB9C8\uC744 \uAE38\uB4DC\uB85C.\n\uB9C8\uC744\uC774 \uD568\uAED8 \uC774\uB8E8\uB294
-    \uD070 \uBD80\uD0C1\uC774\uC5D0\uC694."
+  _title: "\uD568\uAED8 \uAFB8\uB9AC\uB294 \uB9C8\uC744\uD68C\uAD00"
+  _description: "\uAC8C\uC2DC\uD310\uC744 \uB9C8\uC744\uD68C\uAD00\uC73C\uB85C \uB113\uD788\uACE0, \uB610\uBC15\uC774\uC640 \uD568\uAED8 \uAFB8\uB824\uC694.\n\uB9C8\uC744\uC774 \uD568\uAED8 \uC774\uB8E8\uB294 \uD070 \uBD80\uD0C1\uC774\uC5D0\uC694."
   _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
-  _visibleDevelopment: guild_office_built
+  _visibleDevelopment: receptionist_assigned
   _steps:
   - {fileID: 11400000, guid: cff15f546a1e1994e850708b35632ed6, type: 2}
   - {fileID: 11400000, guid: 5b35dd1ccbe30bf48afbf6e7e59baabe, type: 2}
   - {fileID: 11400000, guid: 4b0c5e3237c4cd44781f8b663b77d1fd, type: 2}
-  - {fileID: 11400000, guid: c472e21e218891c46b9dd0cd9e751c05, type: 2}
-  - {fileID: 11400000, guid: c6f96170303a4bd4982c3aaf48e304fd, type: 2}

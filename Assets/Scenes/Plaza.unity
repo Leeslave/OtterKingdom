@@ -13109,10 +13109,6 @@ MonoBehaviour:
   _gatherPoint: {fileID: 1966488469}
   _gatherClearSize: {x: 3.5, y: 2.5}
   _arrivalPoint: {fileID: 456018890}
-  _crowdLevel: 3
-  _earlyOtterIds:
-  - otter_first
-  - otter_miner
   _gateRoots:
   - {fileID: 1264929017}
   - {fileID: 309491930}

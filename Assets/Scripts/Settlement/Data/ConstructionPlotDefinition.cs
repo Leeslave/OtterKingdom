@@ -52,11 +52,15 @@ public class ConstructionPlotDefinition : DecorDefinition, IDistrictBuilding
     [Tooltip("이 건물이 있어야 할 구역 (구역·이사, 예: 집 = 주거). None이면 어디에 놓아도 됨")]
     [SerializeField] private DistrictType _district;
 
+    [Tooltip("문 앞 한 줄을 비워 둠 (집). 의자 · 식탁 같은 소품은 끔")]
+    [SerializeField] private bool _keepsDoorstepClear;
+
     public ConstructionDefinition Construction => _construction;
     public string ConstructionId => _construction != null ? _construction.ConstructionId : null;
     public override string SaveId => ConstructionId;
     public override string DisplayName => _construction != null ? _construction.DisplayName : name;
     public override bool IsBuilding => true;
+    public override bool KeepsDoorstepClear => _keepsDoorstepClear;
     public Vector2Int DefaultCell => _defaultCell;
     public Vector2 PivotOffset => _pivotOffset;
     public Vector2 WorldScale => _worldScale;
@@ -64,6 +68,9 @@ public class ConstructionPlotDefinition : DecorDefinition, IDistrictBuilding
 
     /// <summary>테스트·설정 도구용: 구역</summary>
     public void SetupDistrict(DistrictType district) => _district = district;
+
+    /// <summary>설정 도구용: 문 앞 한 줄을 비워 두는 집인지</summary>
+    public void SetupDoorstep(bool keepClear) => _keepsDoorstepClear = keepClear;
 
     /// <summary>씬의 원래 자리 칸 (세이브 좌표). 다른 기본 칸의 발전이 열려 있으면 그 칸</summary>
     public Vector2Int DefaultCellFor(Func<string, bool> hasDevelopment)

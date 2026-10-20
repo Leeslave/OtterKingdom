@@ -172,10 +172,16 @@ public class GatheringDirector : MonoBehaviour
         }
     }
 
+    // 지금 말하는 해달의 말풍선 (한 번에 하나: 옆자리 해달 말풍선과 겹치지 않게 앞 말풍선은 닫음)
+    private GameObject _speech;
+
     private void Speak(int index, string line)
     {
         var guest = _spawned[index].transform;
+        if (_speech != null)
+            Destroy(_speech);
         var bubble = new GameObject("Speech");
+        _speech = bubble;
         bubble.transform.SetParent(guest, false);
         bubble.transform.localPosition = new Vector3(0f, 1.9f, 0f);
         var renderer = bubble.AddComponent<SpriteRenderer>();
