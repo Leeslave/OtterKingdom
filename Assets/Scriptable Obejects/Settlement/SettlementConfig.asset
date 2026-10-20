@@ -227,7 +227,7 @@ MonoBehaviour:
   _levelDevelopments:
   - _level: 15
     _development: fishing_found
-    _notice: "\uC655\uAD6D Lv.15! \uBABD\uC2E4\uC774\uAC00 \uBC14\uB2F7\uAC00\uC5D0\uC11C
+    _notice: "\uC655\uAD6D Lv.15! \uD574\uB2EC\uC774\uAC00 \uBC14\uB2F7\uAC00\uC5D0\uC11C
       \uB0A1\uC740 \uC120\uCC29\uC7A5\uC744 \uCC3E\uC558\uC5B4\uC694.\n\uAC8C\uC2DC\uD310\uC5D0\uC11C
       \uC120\uCC29\uC7A5\uC744 \uACE0\uCCD0 \uC918\uC694."
   _legacyDevelopments:

@@ -52,7 +52,7 @@ public class MineMazeConfig : ScriptableObject
     [SerializeField] private List<string> _map = new List<string>();
 
     [Header("돌")]
-    [Tooltip("부순 돌이 같은 자리에 다시 생기는 시간 (초). 한 번 뚫은 자리는 다시 생겨도 지나갈 수 있음")]
+    [Tooltip("부순 돌이 같은 자리에 다시 생기는 시간 (초). 다시 생긴 돌도 길을 막음")]
     [SerializeField] private float _rockRespawnSeconds = 60f;
 
     [Header("보물 상자")]
@@ -60,10 +60,14 @@ public class MineMazeConfig : ScriptableObject
     [SerializeField] private List<MazeLoot> _chestLoot = new List<MazeLoot>();
 
     [Header("지도 해달")]
-    [Tooltip("지도 없이 이만큼 나갔다 오면 지도 해달이 옴")]
+    [Tooltip("지도 없이 이만큼 다녀오면 지도 해달이 옴 (그 층의 돌을 모두 한 번씩 부수고 나와야 1번)")]
     [SerializeField] private int _mapOtterRuns = 2;
     [Tooltip("첫 탐험에서 이만큼 칸을 돌아다녔으면 첫 번째로 나올 때 바로 옴")]
     [SerializeField] private int _mapOtterEarlyCells = 40;
+
+    [Header("다시 들어가기")]
+    [Tooltip("갱도에서 나온 뒤 다시 들어갈 수 있을 때까지 (초). 들락날락으로 다녀온 횟수를 채우지 못하게")]
+    [SerializeField, Min(0f)] private float _reenterCooldownSeconds = 180f;
 
     public MineReworkConfig Rework => _rework;
     [Tooltip("1층 설정에서만 지정: 지하 2층부터 순서대로")]
@@ -87,4 +91,5 @@ public class MineMazeConfig : ScriptableObject
     public IReadOnlyList<MazeLoot> ChestLoot => _chestLoot;
     public int MapOtterRuns => Mathf.Max(1, _mapOtterRuns);
     public int MapOtterEarlyCells => Mathf.Max(1, _mapOtterEarlyCells);
+    public float ReenterCooldownSeconds => Mathf.Max(0f, _reenterCooldownSeconds);
 }

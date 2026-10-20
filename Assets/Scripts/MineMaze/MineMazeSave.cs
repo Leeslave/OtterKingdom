@@ -21,6 +21,8 @@ public class MineMazeSave
     // 나갔다 온 횟수 (지도 해달)
     public int runs;
     public bool mapOtter;
+    // 다시 들어갈 수 있는 시각 (0 = 바로)
+    public long nextEnterUtcTicks;
     // 밟아 본 칸 ("x,y")
     public List<string> visited = new List<string>();
     public List<MazeRockSave> rocks = new List<MazeRockSave>();

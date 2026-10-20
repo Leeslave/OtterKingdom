@@ -367,6 +367,7 @@ public partial class GameManager : MonoBehaviour
         SettlementManager.SaveRequested += SaveNow;
         DecorManager.SaveRequested += SaveNow;
         GachaManager.SaveRequested += SaveNow;
+        ProfileManager.SaveRequested += SaveNow;
         FairyShopPresenter.Opened += HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan += HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted += HandleBuildStarted;
@@ -380,6 +381,7 @@ public partial class GameManager : MonoBehaviour
         SettlementManager.SaveRequested -= SaveNow;
         DecorManager.SaveRequested -= SaveNow;
         GachaManager.SaveRequested -= SaveNow;
+        ProfileManager.SaveRequested -= SaveNow;
         FairyShopPresenter.Opened -= HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan -= HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted -= HandleBuildStarted;

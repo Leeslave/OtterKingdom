@@ -552,9 +552,10 @@ public partial class MineMazeHud : MonoBehaviour
         switch (_model.Look(MazeTurn.Forward))
         {
             case MazeAhead.Rock:
-                if (rock != null && rock.Blocking)
-                    return rock.Shiny ? "반짝 광맥이 길을 막고 있어요! 톡톡 쳐서 부숴요" : "돌이 길을 막고 있어요! 톡톡 쳐서 부숴요";
-                return "다시 생긴 돌이에요. 캐거나 그냥 지나갈 수 있어요";
+                if (rock != null && rock.Shiny)
+                    return "반짝 광맥이 길을 막고 있어요! 톡톡 쳐서 부숴요";
+                return rock != null && rock.Opened ? "돌이 다시 생겨 길을 막았어요! 톡톡 쳐서 부숴요"
+                    : "돌이 길을 막고 있어요! 톡톡 쳐서 부숴요";
             case MazeAhead.Chest:
                 return "보물 상자예요! 눌러서 열어요";
             case MazeAhead.OpenedChest:
@@ -582,7 +583,7 @@ public partial class MineMazeHud : MonoBehaviour
         if (!has)
         {
             int left = Mathf.Max(0, _model.Config.MapOtterRuns - _model.Runs);
-            _mapEmptyText.text = $"지도가 없어요\n지도 해달이 오면 지나온 길을\n그려 줘요 (앞으로 {left}번 다녀오면)";
+            _mapEmptyText.text = $"지도가 없어요\n지도 해달이 오면 지나온 길을\n그려 줘요 (앞으로 {left}번 다녀오면)\n돌 {_model.FloorRockCount}개를 모두 부수고 나와야 1번";
             return;
         }
 
@@ -739,6 +740,8 @@ public partial class MineMazeHud : MonoBehaviour
         string otter = _model.MapOtter ? "지도 해달과 함께 가요 (지도를 그려 줘요)"
             : $"지도 해달은 아직 없어요 (앞으로 {Mathf.Max(0, _model.Config.MapOtterRuns - _model.Runs)}번 다녀오면 와요)";
         Line(panel, $"다녀온 횟수 {_model.Runs}번\n{otter}\n{_model.Pickaxe.DisplayName} · 힘 {_model.Pickaxe.Power}", 30, true, Cocoa);
+        if (!_model.MapOtter)
+            Line(panel, $"이 층의 돌 {_model.FloorRockCount}개를 한 번씩 모두 부수고 나와야 다녀온 횟수 1번이에요", 26, false, RuntimeUIKit.Style.BodyColor);
         RuntimeUIKit.CreateSpace(panel, 10f);
         Line(panel, _game.InGame ? $"갱도 골드 {_model.Gold} · 왕국 Lv.{_model.KingdomLevel}"
             : $"골드 {_model.Gold} · 테스트 왕국 Lv.{_model.KingdomLevel}", 28, true, Cocoa);
@@ -747,12 +750,21 @@ public partial class MineMazeHud : MonoBehaviour
             RuntimeUIKit.CreateButton(panel, "열린 층 선택", ShowFloorSelection);
         else if (_model.FloorCleared)
             RuntimeUIKit.CreateButton(panel, "지하 2층 입구 · 자동 채굴", ShowNextEntrance);
-        RuntimeUIKit.CreateButton(panel, "들어가기", () =>
+        var enter = RuntimeUIKit.CreateButton(panel, "들어가기", () =>
         {
             _sfx.Play(MineSfx.Kind.Tap);
             CloseSheet();
             _game.Enter();
         }, RuntimeUIKit.ButtonKind.Primary);
+        // 나온 지 얼마 안 됐으면 남은 시간을 보여 주고 막음
+        _progressRefresh = () =>
+        {
+            var wait = _model.EnterWait(DateTime.UtcNow);
+            bool open = wait <= TimeSpan.Zero;
+            enter.interactable = open;
+            RuntimeUIKit.SetButtonLabel(enter, open ? "들어가기" : $"{MineMazeGame.WaitText(wait)} 뒤 들어가기");
+        };
+        _progressRefresh();
         if (_game.InGame)
         {
             RuntimeUIKit.CreateButton(panel, "광산으로 돌아가기", () =>
@@ -761,7 +773,7 @@ public partial class MineMazeHud : MonoBehaviour
                 CloseSheet();
                 _game.ReturnToMine();
             }, RuntimeUIKit.ButtonKind.Secondary);
-            Line(panel, "광석은 작업대에서 가방으로 옮길 수 있어요. 골드 · 곡괭이는 갱도 전용이에요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
+            Line(panel, "캔 광석 · 돌은 바로 가방에 들어가요 (가득 차면 작업대에). 골드 · 곡괭이는 갱도 전용이에요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
         }
         else
         {
@@ -793,6 +805,11 @@ public partial class MineMazeHud : MonoBehaviour
             Line(panel, "이번에는 캔 것이 없어요", 30, false, RuntimeUIKit.Style.BodyColor);
         }
         Line(panel, $"부순 돌 {result.RocksBroken} · 연 상자 {result.ChestsOpened} · 새로 밟은 칸 {result.NewCells}", 28, false, RuntimeUIKit.Style.BodyColor);
+        if (!_model.MapOtter || result.MapOtterArrived)
+            Line(panel, result.RunCounted ? $"이 층의 돌 {result.FloorRocks}개를 모두 부쉈어요! 다녀온 횟수 +1"
+                : $"이 층의 돌 {result.FloorRocks}개 중 {result.RocksCleared}개를 부쉈어요. 모두 부숴야 다녀온 횟수에 들어가요",
+                26, true, result.RunCounted ? Good : Cocoa);
+        Line(panel, $"갱도는 {MineMazeGame.WaitText(TimeSpan.FromSeconds(_model.Config.ReenterCooldownSeconds))} 뒤에 다시 들어갈 수 있어요", 24, false, RuntimeUIKit.Style.BodyColor);
         if (result.MapOtterArrived)
         {
             RuntimeUIKit.CreateSpace(panel, 4f);
@@ -803,7 +820,7 @@ public partial class MineMazeHud : MonoBehaviour
             _sfx.Play(MineSfx.Kind.Discover);
         }
         RuntimeUIKit.CreateSpace(panel, 4f);
-        Line(panel, _game.InGame ? "갱도에서 캔 광석은 갱도 작업대에 쌓여요. 깡깡이의 갱도 자동 채굴도 작업대 쪽으로 들어가요."
+        Line(panel, _game.InGame ? "캔 광석 · 돌은 가방에 들어갔어요 (가득 차면 작업대에). 깡깡이의 갱도 자동 채굴은 작업대에 쌓여요."
             : "본 게임 연결 전 테스트예요. 자동 채굴 광석은 작업대 가방에 쌓이며, 탐험 중에도 같은 속도로 생산해요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
         // 본 게임: 나가기 = 바로 밖(광산)으로. 테스트 씬: 갱도 입구 창으로
         RuntimeUIKit.CreateButton(panel, _game.InGame ? "광산으로" : "확인", () =>
@@ -883,7 +900,7 @@ public partial class MineMazeHud : MonoBehaviour
             double run = _model.RunSeconds(now);
             double next = _model.NextRespawnIn(now);
             string respawn = next >= 0 ? $"   ·   다음 돌 {Mathf.CeilToInt((float)next)}초" : "";
-            _runTime.text = $"탐험 {(int)(run / 60)}:{(int)(run % 60):00}{respawn}";
+            _runTime.text = $"탐험 {(int)(run / 60)}:{(int)(run % 60):00}   ·   부순 돌 {_model.RunRocksCleared}/{_model.FloorRockCount}{respawn}";
         }
         else
         {
@@ -957,5 +974,8 @@ public partial class MineMazeHud : MonoBehaviour
 /// <summary>광산 미로 화면에 쓰는 한글 (폰트에 미리 넣음)</summary>
 public static class MazeGlyphs
 {
+    // 다녀온 횟수(돌 모두 부수기) · 다시 들어가기 대기 · 가방으로 들어감 안내
+    public const string Trips = "갱도가 아직 위험해요 뒤에 다시 들어갈 수 있어요 분초 이 층의 돌 개를 한 번씩 모두 부수고 나와야 다녀온 횟수 번이에요 "
+        + "부쉈어요 중 부숴야 들어가요 캔 광석 돌은 바로 가방에 들어갔어요 가득 차면 작업대에 골드 곡괭이는 전용 깡깡이의 자동 채굴은 쌓여요 1번";
     public const string Ui = "!%()+,./0123467:?·×▼가간갈갔같개갱거건것게겨견결겹경계고곡골과광괭구국군굴귀규그글금기긴길김깊까깡께끝나남내냥넓녀녔누눌는니닙닛다단닫달대더던데도돌동돼된두둘뒀뒤드든들듦디따때뚫라래량러려력렸로료률르른를름리린림마막만맛매맥먼며면명모못물미밑바밖반발밟방배번벽보본볼봐부분브비빛산상새생서석선설성세셀소속손수순숨숴쉈쉬스습시쌓써쓰씬아안앞야양어억언얼업없었에여연열예옛오온올옴와완왔왕왼요용우운워원위유으은을음의이인읽임입있자작잠장재저적전점정제졌족준중줘지직짐짝째쪽착찾채처첫체쳐쳤초최층치칙친침카칸캐캔콤쾅크큼타탐택터테톡트파판편품픽필하한할함해했험혀현혔화확환횟효후흔희힌힘";
 }

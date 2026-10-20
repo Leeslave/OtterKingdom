@@ -34,18 +34,18 @@ public static partial class SettlementSetup
     // 왕국 단계 이름 (상단바 아래 칩). 4 = 마을회관을 지으면 (P2)
     private static readonly string[] StageNames = { "빈터", "첫 정착", "작은 정착지", "자급 시작", "작은 마을" };
 
-    // 낚시터: 왕국 Lv.15에 몽실이가 낡은 선착장을 발견(fishing_found) → 선착장 고치기(건설 해달) → 낚시꾼 해달 방문 → 광장에서 배치
+    // 낚시터: 왕국 Lv.15에 해달이가 낡은 선착장을 발견(fishing_found) → 선착장 고치기(건설 해달) → 낚시꾼 해달 방문 → 광장에서 배치
     // fishing_dock은 정착 진행 전 옛 세이브에도 따로 열어 줌 (그때부터 쓰던 낚시터를 잠그지 않게)
     internal const string FishingDevelopment = "fishing_dock";
     internal const string FishingFoundDevelopment = "fishing_found";
     internal const int FishingLevel = 15;
-    private const string FishingFoundNotice = "왕국 Lv.15! 몽실이가 바닷가에서 낡은 선착장을 찾았어요.\n게시판에서 선착장을 고쳐 줘요.";
+    private const string FishingFoundNotice = "왕국 Lv.15! 해달이가 바닷가에서 낡은 선착장을 찾았어요.\n게시판에서 선착장을 고쳐 줘요.";
 
     // (에셋, ID, 이름, 얼굴 아이콘(Art/Settlement 또는 Art/Otter), 광장 프리팹, 건설 해달, 처음 왔을 때 방명록)
     // 광부·농부: 광장 그림은 광산·밭에서 쓰는 그림 그대로 (광부 = SpecialistOtterSetup이 만드는 PlazaOtter_Miner, 농부 = 농부 모습의 PlazaOtter)
     private static readonly (string asset, string id, string name, string portrait, string prefab, bool builder, string arrival)[] Otters =
     {
-        ("Otter_First", "otter_first", "몽실", "ICON_Otter_Cast_Explorer", "PlazaOtter_Cast_Explorer", false, "gb_first_arrival"),
+        ("Otter_First", "otter_first", "해달이", "ICON_Otter_Cast_Explorer", "PlazaOtter_Cast_Explorer", false, "gb_first_arrival"),
         ("Otter_Painter", "otter_painter", "물감이", "ICON_Otter_Cast_Berry", "PlazaOtter_Cast_Berry", false, "gb_painter_arrival"),
         ("Otter_Sleepy", "otter_sleepy", "꾸벅이", "ICON_Otter_Cast_Night", "PlazaOtter_Cast_Night", false, "gb_sleepy_arrival"),
         ("Otter_Builder", "otter_builder", "뚝딱이", "ICON_Otter_Cast_Sunny", null, true, "gb_builder_arrival"),
@@ -118,9 +118,9 @@ public static partial class SettlementSetup
         float seconds, bool builder, string label, string hint, string result)[] Constructions =
     {
         ("con_house_1", "작은 집", "ICON_House_Blue", ConstructionTarget.House, 0, 8, 5, 10f, false,
-            "작은 집 짓는 중", "다 지으면 몽실이가 정착해요", "house_1"),
+            "작은 집 짓는 중", "다 지으면 해달이가 정착해요", "house_1"),
         ("con_chair", "의자", "ICON_Chair", ConstructionTarget.House, 50, 6, 0, 8f, false,
-            "의자 만드는 중", "다 만들면 몽실이가 쉴 수 있어요", "chair"),
+            "의자 만드는 중", "다 만들면 해달이가 쉴 수 있어요", "chair"),
         ("con_mine_path", "광산 길 열기", "ICON_MinePath", ConstructionTarget.Clearing, 0, 0, 0, 0f, false,
             "", "", "mine_cleared"),
         ("con_house_2", "새 이웃의 집", "ICON_House_Red", ConstructionTarget.House, 150, 18, 8, 30f, true,
@@ -155,15 +155,15 @@ public static partial class SettlementSetup
         string requires, int residents, string construction, string[] settles, (string otter, ResidentState state)[] arrivals,
         int stage, string entry, string message, int level, string zone, string assign)[] Requests =
     {
-        ("req_first_house", 0, "첫 번째 집 만들기", "몽실이가 머물 작은 집이 필요해요.\n목재와 돌로 지어 줘요.", "ICON_House_Blue",
+        ("req_first_house", 0, "첫 번째 집 만들기", "해달이가 머물 작은 집이 필요해요.\n목재와 돌로 지어 줘요.", "ICON_House_Blue",
             "otter_first", "", 0, "con_house_1", new[] { "otter_first" },
             new[] { ("otter_sleepy", ResidentState.Visitor) },
             1, "gb_first_settle", "첫 주민이 정착했어요!", 0, "", ""),
-        ("req_chair", 1, "쉬어 갈 의자", "몽실이가 쉬어 갈 의자를 갖고 싶대요.\n의자를 만들어 마음에 드는 곳에 놓아 줘요.", "ICON_Chair",
+        ("req_chair", 1, "쉬어 갈 의자", "해달이가 쉬어 갈 의자를 갖고 싶대요.\n의자를 만들어 마음에 드는 곳에 놓아 줘요.", "ICON_Chair",
             "otter_first", "house_1", 0, "con_chair", new string[0],
             new (string, ResidentState)[0],
-            -1, "gb_chair", "의자 완성! 몽실이가 숲 너머에서\n동굴을 발견했어요.", 2, "", ""),
-        ("req_mine_path", 2, "광산 길 열기", "몽실이가 찾은 동굴은 광산이었어요!\n길을 막은 나무와 돌을 치워 줘요.", "ICON_MinePath",
+            -1, "gb_chair", "의자 완성! 해달이가 숲 너머에서\n동굴을 발견했어요.", 2, "", ""),
+        ("req_mine_path", 2, "광산 길 열기", "해달이가 찾은 동굴은 광산이었어요!\n길을 막은 나무와 돌을 치워 줘요.", "ICON_MinePath",
             "otter_first", "chair", 0, "con_mine_path", new string[0],
             new[] { ("otter_miner", ResidentState.SpecialNpc) },
             -1, "gb_mine_open", "광산 정비가 끝났어요!\n소식을 듣고 광부 해달이 광장에 찾아왔어요.", 3, MineZonePath, ""),
@@ -178,7 +178,7 @@ public static partial class SettlementSetup
             2, "gb_neighbor_settle", "새 이웃의 집 완성!\n물감이가 이웃이 됐어요.", 0, "", ""),
         // 밭 (Lv.10): 농업 지역을 정하면(farm_discovered) 열림. 순서는 성 뒤
         // 밭은 광장 농업 지역으로 옮겨 옴: 농업 지역이 생겨 밭을 발견하면 바로 끝남 (SettlementManager.OpenPlazaFarm)
-        ("req_farmland", 15, "먹거리를 길러요", "몽실이가 찾은 땅을 밭으로 만들어요.\n농업 지역에 밭 칸을 지어 농사를 지어요.", "ICON_Clearing",
+        ("req_farmland", 15, "먹거리를 길러요", "해달이가 찾은 땅을 밭으로 만들어요.\n농업 지역에 밭 칸을 지어 농사를 지어요.", "ICON_Clearing",
             "otter_first", FarmDiscoverDevelopment, 3, "con_farmland", new string[0],
             new[] { ("otter_farmer", ResidentState.SpecialNpc) },
             3, "gb_farmland", "농업 지역에 밭 자리가 생겼어요!\n소식을 듣고 농부 해달이 광장에 찾아왔어요.", 0, FarmZonePath, ""),
@@ -209,9 +209,9 @@ public static partial class SettlementSetup
             "otter_first", GuildDevelopment, 0, "con_town_hall", new string[0],
             new (string, ResidentState)[0],
             4, "gb_town_hall", "마을 길드가 완성됐어요!\n게시판에서 마을 발전 현황을 볼 수 있어요.", 0, "", ""),
-        // 낚시터 (Lv.15): 레벨이 되면 몽실이가 선착장을 발견(SettlementConfig 레벨 발전) → 고치면 낚시꾼 첨벙이 방문 → 배치
+        // 낚시터 (Lv.15): 레벨이 되면 해달이가 선착장을 발견(SettlementConfig 레벨 발전) → 고치면 낚시꾼 첨벙이 방문 → 배치
         // 콘텐츠 버전 0: 정착 진행 전 옛 세이브는 낚시터를 이미 쓰고 있었으므로 두 부탁 모두 끝낸 것으로 옮김
-        ("req_fishing_dock", 12, "바다로 나가는 선착장", "몽실이가 바닷가에서 낡은 선착장을 찾았어요.\n건설 해달과 함께 고치면 낚시터에 갈 수 있어요.", "ICON_FishingDock",
+        ("req_fishing_dock", 12, "바다로 나가는 선착장", "해달이가 바닷가에서 낡은 선착장을 찾았어요.\n건설 해달과 함께 고치면 낚시터에 갈 수 있어요.", "ICON_FishingDock",
             "otter_first", FishingFoundDevelopment, 0, "con_fishing_dock", new string[0],
             new[] { ("otter_fisher", ResidentState.SpecialNpc) },
             -1, "gb_fishing_dock", "선착장을 다 고쳤어요!\n소식을 듣고 낚시꾼 해달이 광장에 찾아왔어요.", 0, "", ""),

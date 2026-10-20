@@ -37,6 +37,8 @@ public class BackButtonHandler : MonoBehaviour
 
         var health = FindAnyObjectByType<MineCommunitySheet>();
         if (health != null && health.IsOpen) { health.Close(); return; }
+        var portrait = FindAnyObjectByType<ProfilePortraitPicker>();
+        if (portrait != null && portrait.IsOpen) { portrait.Close(); return; }
         var gameUI = FindAnyObjectByType<GameUI>();
         if (gameUI != null && gameUI.CloseTopModal())
             return;

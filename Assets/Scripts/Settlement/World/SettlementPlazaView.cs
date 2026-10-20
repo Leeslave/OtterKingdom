@@ -48,11 +48,6 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     [SerializeField] private Vector2 _gatherClearSize = new Vector2(3.5f, 2.5f);
     [Tooltip("새로 찾아온 해달이 나타나는 곳 (광장 가장자리 길)")]
     [SerializeField] private Transform _arrivalPoint;
-    [Tooltip("이 왕국 레벨 전에는 아래 해달만 광장에 나옴 (다른 주민은 이 레벨부터 찾아옴)")]
-    [Min(1)]
-    [SerializeField] private int _crowdLevel = 3;
-    [Tooltip("왕국 레벨이 낮아도 광장에 나오는 해달 (첫 해달, 광부)")]
-    [SerializeField] private List<string> _earlyOtterIds = new List<string> { "otter_first", "otter_miner" };
 
     [Header("발전")]
     [Tooltip("이 아래의 DevelopmentGate를 모두 다룸 (꺼져 있어도 찾음)")]
@@ -212,20 +207,20 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
 
     private void HandleLoaded() => ApplyAll(true);
 
-    // 왕국 레벨이 오르면 기다리던 주민이 찾아옴 (_crowdLevel)
+    // 왕국 레벨이 오르면 레벨로 열린 부탁의 해달이 찾아올 수 있음
     private void HandleLevelUp(int level)
     {
         if (_manager != null && _manager.IsLoaded)
             SyncOtters(false);
     }
 
-    /// <summary>지금 왕국 레벨에 광장에 나와도 되는 해달인지 (낮은 레벨에는 첫 해달·광부만)</summary>
+    /// <summary>지금 광장에 나와도 되는 해달인지 (또박이가 오기 전에는 처음 네 해달만, EarlyOtterRules)</summary>
     private bool CanAppearYet(SettlementOtterDefinition otter) =>
-        IsImmediateWorker(otter) || GameManager.KingdomLevel >= _crowdLevel || _earlyOtterIds.Contains(otter.OtterId);
+        EarlyOtterRules.CanAppear(otter.OtterId, _manager.Settlement);
 
-    // 생산 해금으로 도착한 필수 해달은 일반 방문객 소개 대기에서 제외한다.
+    // 광산 배치로 함께 오는 물감이 · 뚝딱이와 생산 필수 해달은 일반 방문객 소개 대기 없이 바로 광장에 있다.
     private static bool IsImmediateWorker(SettlementOtterDefinition otter) =>
-        otter.OtterId == "otter_miner" || otter.OtterId == "otter_farmer";
+        EarlyOtterRules.IsImmediate(otter.OtterId);
 
     private void HandleDevelopmentUnlocked(string developmentId)
     {
@@ -314,7 +309,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
 
     /// <summary>
     /// 주민 목록에 맞춰 광장 해달을 맞춘다. 만난 해달은 바로 내보내고, 처음 오는 해달은 대기 줄에 넣는다.
-    /// 첫 해달·광부·농부는 바로 나타나고, 나머지 미소개 해달은 대기 줄에서 한 마리씩 소개한다
+    /// 첫 해달 · 광부 · 농부 · 물감이 · 뚝딱이는 바로 나타나고, 나머지 미소개 해달은 대기 줄에서 한 마리씩 소개한다
     /// </summary>
     /// <param name="initial">씬을 연 직후 (복원은 모인 곳에서, 아니면 돌아오는 해달이 가장자리에서 걸어 들어옴)</param>
     private void SyncOtters(bool initial)

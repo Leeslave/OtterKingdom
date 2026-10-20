@@ -41,7 +41,7 @@ public static class OtterCastSetup
     /// <summary>해달 → 모습 (농부 새싹이만 원래 모습)</summary>
     private static readonly (string otterId, string look)[] Assignments =
     {
-        ("otter_first", "Explorer"),        // 몽실: 처음 온 탐험가
+        ("otter_first", "Explorer"),        // 해달이: 처음 온 탐험가
         ("otter_sleepy", "Night"),          // 꾸벅이: 늘 졸린 (밤하늘 · 별)
         ("otter_painter", "Berry"),         // 물감이
         ("otter_builder", "Sunny"),         // 뚝딱이: 건설

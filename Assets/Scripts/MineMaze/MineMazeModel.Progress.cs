@@ -87,7 +87,7 @@ public partial class MineMazeModel
     {
         if (!CanCraft(out reason)) return false;
         var next = NextPickaxe;
-        foreach (var cost in Recipe(next)) _counts[cost.Key] -= cost.Value;
+        foreach (var cost in Recipe(next)) Take(cost.Key, cost.Value);
         Gold -= next.GoldCost;
         PickaxeTier++;
         Changed?.Invoke();
@@ -99,7 +99,7 @@ public partial class MineMazeModel
         if (ore == null || !ore.CanSell || amount <= 0 || Count(ore) < amount) return false;
         long value = (long)ore.SellPrice * amount;
         if (value > int.MaxValue - Gold) return false;
-        _counts[ore] -= amount;
+        Take(ore, amount);
         Gold += (int)value;
         Changed?.Invoke();
         return true;
@@ -162,7 +162,8 @@ public partial class MineMazeModel
         {
             var ore = Pick(drops);
             if (ore == null) continue;
-            _counts[ore] = Count(ore) + 1;
+            // 자동 채굴(오프라인 포함)은 가방을 채우지 않게 작업대에
+            _counts[ore] = StoredCount(ore) + 1;
             _discovered.Add(ore.OreId);
         }
         if (finds > 0) Changed?.Invoke();

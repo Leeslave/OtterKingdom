@@ -63,7 +63,7 @@ public partial class MineMazeHud
     {
         var ores = new System.Collections.Generic.List<MineOreDefinition>();
         foreach (var ore in _model.Config.Rework.Ores)
-            if (ore != null && _model.Count(ore) > 0) ores.Add(ore);
+            if (ore != null && _model.StoredCount(ore) > 0) ores.Add(ore);
         const int pageSize = 3;
         page = Mathf.Clamp(page, 0, Mathf.Max(0, (ores.Count - 1) / pageSize));
         var panel = OpenSheet(880);
@@ -73,7 +73,7 @@ public partial class MineMazeHud
         for (int i = page * pageSize; i < Mathf.Min(ores.Count, (page + 1) * pageSize); i++)
         {
             var ore = ores[i];
-            Line(panel, $"{ore.DisplayName} · {_model.Count(ore)}개", 28, true, Cocoa);
+            Line(panel, $"{ore.DisplayName} · {_model.StoredCount(ore)}개", 28, true, Cocoa);
             RuntimeUIKit.CreateButton(panel, "1개 담기", () => { _game.TakeOre(ore, 1); ShowOreTransfer(page); }, height: 60);
             RuntimeUIKit.CreateButton(panel, "담을 수 있는 만큼 담기", () => { _game.TakeOre(ore, int.MaxValue); ShowOreTransfer(page); }, height: 60);
         }

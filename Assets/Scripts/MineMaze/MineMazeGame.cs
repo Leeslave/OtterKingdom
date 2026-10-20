@@ -89,6 +89,9 @@ public class MineMazeGame : MonoBehaviour
         {
             _model.UseKingdomLevel(ProfileManager.Instance.Level);
             _model.UseFishingAccess(SettlementManager.Instance != null && SettlementManager.Instance.HasDevelopment("fishing_dock"));
+            // 캔 광석 · 돌은 가방으로 바로 (못 들어간 것만 작업대에)
+            if (InventoryManager.Instance != null)
+                _model.UseBag(new InventoryOreBag(InventoryManager.Instance));
             HideGameBars(true);
         }
         if (loaded.savedUtcTicks > 0 && loaded.savedUtcTicks <= DateTime.UtcNow.Ticks)
@@ -198,7 +201,7 @@ public class MineMazeGame : MonoBehaviour
     // 처음 보는 한글을 폰트에 미리 (도중에 추가되면 에디터가 멈춤)
     private void PrepareGlyphs()
     {
-        var sb = new System.Text.StringBuilder(MazeGlyphs.Ui).Append(MineGlyphs.Ui).Append(_config.FloorName);
+        var sb = new System.Text.StringBuilder(MazeGlyphs.Ui).Append(MazeGlyphs.Trips).Append(MineGlyphs.Ui).Append(_config.FloorName);
         foreach (var ore in _config.Rework.Ores)
         {
             if (ore != null)
@@ -353,7 +356,13 @@ public class MineMazeGame : MonoBehaviour
 
     public void Enter()
     {
-        _model.Enter(DateTime.UtcNow);
+        var now = DateTime.UtcNow;
+        if (!_model.Enter(now))
+        {
+            _hud.ShowEntrance();
+            _hud.ShowToast($"갱도가 아직 위험해요. {WaitText(_model.EnterWait(now))} 뒤에 다시 들어갈 수 있어요");
+            return;
+        }
         ShowView();
         _hud.Flash(new Color(0f, 0f, 0f, 0.9f));
         _sfx.Play(MineSfx.Kind.Open, 0.8f);
@@ -459,6 +468,40 @@ public class MineMazeGame : MonoBehaviour
         _hud.ShowToast($"{_model.Pickaxe.DisplayName} 완성!");
         Save();
         return true;
+    }
+
+    /// <summary>"2분 05초" (다시 들어가기까지)</summary>
+    public static string WaitText(TimeSpan wait)
+    {
+        int seconds = Mathf.Max(0, Mathf.CeilToInt((float)wait.TotalSeconds));
+        return seconds >= 60 ? $"{seconds / 60}분 {seconds % 60:00}초" : $"{seconds}초";
+    }
+
+    // 본 게임 가방: 광석 ID와 같은 아이템 (돌 = ore_stone)
+    private sealed class InventoryOreBag : IMineOreBag
+    {
+        private readonly InventoryManager _manager;
+
+        public InventoryOreBag(InventoryManager manager) => _manager = manager;
+
+        private bool TryItem(MineOreDefinition ore, out ItemDefinition item)
+        {
+            item = null;
+            return ore != null && _manager.Config.ItemDatabase.TryGet(ore.OreId, out item);
+        }
+
+        public int Count(MineOreDefinition ore) => TryItem(ore, out var item) ? _manager.Inventory.GetCount(item) : 0;
+
+        public int Add(MineOreDefinition ore, int amount) =>
+            amount > 0 && TryItem(ore, out var item) ? _manager.Inventory.Add(item, amount, ItemChangeReason.Mining) : 0;
+
+        public int Remove(MineOreDefinition ore, int amount)
+        {
+            if (amount <= 0 || !TryItem(ore, out var item))
+                return 0;
+            int n = Math.Min(amount, _manager.Inventory.GetCount(item));
+            return n > 0 && _manager.Inventory.TryRemove(item, n, ItemChangeReason.Construction) ? n : 0;
+        }
     }
 
     public void TakeOre(MineOreDefinition ore, int amount)

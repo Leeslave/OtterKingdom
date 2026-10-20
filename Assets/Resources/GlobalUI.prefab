@@ -9517,7 +9517,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBABD\uC2E4"
+  m_text: "\uD574\uB2EC\uC774"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
@@ -26294,7 +26294,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBABD\uC2E4 \uC791\uC5C5 \uC911"
+  m_text: "\uD574\uB2EC\uC774 \uC791\uC5C5 \uC911"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 237a5805bd097184181530db2ded2133, type: 2}
   m_sharedMaterial: {fileID: -658371464127678442, guid: 237a5805bd097184181530db2ded2133, type: 2}
@@ -37675,7 +37675,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBABD\uC2E4"
+  m_text: "\uD574\uB2EC\uC774"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 237a5805bd097184181530db2ded2133, type: 2}
   m_sharedMaterial: {fileID: -658371464127678442, guid: 237a5805bd097184181530db2ded2133, type: 2}
@@ -38608,7 +38608,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBABD\uC2E4"
+  m_text: "\uD574\uB2EC\uC774"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
@@ -65407,7 +65407,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBABD\uC2E4"
+  m_text: "\uD574\uB2EC\uC774"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
@@ -93214,7 +93214,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBABD\uC2E4"
+  m_text: "\uD574\uB2EC\uC774"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
   m_sharedMaterial: {fileID: -4571797019834824488, guid: 6052669b8a62fce4ab2857cfaeb203f9, type: 2}
@@ -113459,6 +113459,7 @@ MonoBehaviour:
   _levelText: {fileID: 8517764582581527939}
   _expBar: {fileID: 8465795033955618087}
   _profileButton: {fileID: 5067217499173054183}
+  _portrait: {fileID: 3361527580626332143}
   _settingsButton: {fileID: 1683866062505716789}
 --- !u!1 &8880987108133735868
 GameObject:

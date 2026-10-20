@@ -297,7 +297,7 @@ public partial class SettlementManager
         if (_oldFarmHintShown || FarmConfig == null || !IsLoaded || !IsAdministrator || !HasDevelopment(FarmlandDevelopment))
             return;
         _oldFarmHintShown = true;
-        GameNotices.Post(new GameNotice("몽실이: 밭을 광장으로 옮길 수 있어요!\n마을회관 → 구역 정하기에서 땅 하나를 농업 지역으로 정하면 밭이 그리로 옮겨 와요"));
+        GameNotices.Post(new GameNotice("해달이: 밭을 광장으로 옮길 수 있어요!\n마을회관 → 구역 정하기에서 땅 하나를 농업 지역으로 정하면 밭이 그리로 옮겨 와요"));
     }
 
     #region 심기

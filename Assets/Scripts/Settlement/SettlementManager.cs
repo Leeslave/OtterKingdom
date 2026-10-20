@@ -462,7 +462,8 @@ public partial class SettlementManager : MonoBehaviour
         {
             foreach (var otter in _config.Otters)
             {
-                if (HasPendingIntro(otter))
+                // 아직 광장에 나올 수 없는 해달은 안내 띠로 부르지 않음
+                if (HasPendingIntro(otter) && EarlyOtterRules.CanAppear(otter.OtterId, Settlement))
                     return otter;
             }
             return null;
@@ -930,7 +931,7 @@ public partial class SettlementManager : MonoBehaviour
         SaveRequested?.Invoke();
     }
 
-    // 만나면 바로 도감에 오르는 해달 (이야기로 찾아오는 해달: 몽실 · 꾸벅이 · 물감이 · 뚝딱이 · 포근이).
+    // 만나면 바로 도감에 오르는 해달 (이야기로 찾아오는 해달: 해달이 · 꾸벅이 · 물감이 · 뚝딱이 · 포근이).
     // 전문 해달은 배치, 관리 해달은 역할, 장난감 해달은 입주할 때 오름
     private bool RegistersOnMeet(SettlementOtterDefinition otter) =>
         otter.CollectionEntry != null && !otter.IsSpecialist && !otter.IsToyVisitor && FindRole(otter) == null;
