@@ -39,12 +39,9 @@ OTTERS = {
     "Stripe": ("줄무늬 니트", None),
     "Hoodie": ("후드티", None),
     "Knit": ("케이블 니트", []),
-    "Overalls": ("노랑 멜빵", None),
     "Plaid": ("체크 치마", ["--open-eyes", "1"]),
     "BearPajama": ("곰돌이 잠옷", None),
-    "Beanie": ("방울 모자", []),
-    "Scholar": ("안경 학자", ["--detach", "9"]),
-    "Varsity": ("야구 점퍼", None),
+    "Hero": ("주인공", []),
 }
 
 

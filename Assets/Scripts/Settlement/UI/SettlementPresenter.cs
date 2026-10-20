@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -405,6 +405,8 @@ public class SettlementPresenter : MonoBehaviour
         long now = SettlementManager.NowTicks;
         bool sections = SettlementBoardRules.ShowsSections(_manager.BoardTier);
 
+        if (_manager.HasMineCommunityStory)
+            _rows.Add(BoardRow.Entry("mine_community", _townHallIcon, _manager.MineCommunityTitle, _manager.MineCommunityStatus, "부탁 보기"));
         AddTownEntries(sections);
 
         _manager.CollectBoardRows(_requestRows);
@@ -521,6 +523,7 @@ public class SettlementPresenter : MonoBehaviour
 
     private void HandleEntryClicked(string key)
     {
+        if (key == "mine_community") { _board.Hide(); _manager.OpenMineCommunity(); return; }
         if (key == TownHallEntry)
         {
             _manager.RequestTownHall();

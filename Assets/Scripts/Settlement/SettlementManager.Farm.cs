@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -146,7 +146,7 @@ public partial class SettlementManager
         float speed = 1f / (soil != null ? soil.DurationMultiplier : 1f);
         speed *= 1f + SprinklerBonusAt(field.instanceId);
         speed *= (100f + BonusPercent(KingdomBonusKind.GrowSpeed)) / 100f;
-        return speed;
+        return speed * MineHealthMultiplier;
     }
 
     public FarmSoilTier SoilOf(FarmFieldSaveData field)

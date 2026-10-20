@@ -52,9 +52,35 @@ public partial class MineMazeHud
             Line(panel, "이번 탐험의 곡괭이를 모두 준비했어요!", 28, false, Good);
             _progressRefresh = () => balance.text = $"골드 {_model.Gold}";
         }
+        if (_game.InGame)
+            RuntimeUIKit.CreateButton(panel, "인벤토리에 담기", () => ShowOreTransfer(0));
         RuntimeUIKit.CreateButton(panel, "남는 광석 판매", ShowOreSales);
         RuntimeUIKit.CreateButton(panel, "돌아가기", ReturnToPlay, RuntimeUIKit.ButtonKind.Secondary);
         _progressRefresh?.Invoke();
+    }
+
+    private void ShowOreTransfer(int page)
+    {
+        var ores = new System.Collections.Generic.List<MineOreDefinition>();
+        foreach (var ore in _model.Config.Rework.Ores)
+            if (ore != null && _model.Count(ore) > 0) ores.Add(ore);
+        const int pageSize = 3;
+        page = Mathf.Clamp(page, 0, Mathf.Max(0, (ores.Count - 1) / pageSize));
+        var panel = OpenSheet(880);
+        Line(panel, "인벤토리에 담기", 46, true, Cocoa);
+        Line(panel, "옮긴 광석은 작업대 재료에서 빠져요.\n가방에 들어가지 않는 수량은 여기에 남아요.", 26, false, Cocoa);
+        if (ores.Count == 0) Line(panel, "보관 중인 광석이 없어요", 28, false, Cocoa);
+        for (int i = page * pageSize; i < Mathf.Min(ores.Count, (page + 1) * pageSize); i++)
+        {
+            var ore = ores[i];
+            Line(panel, $"{ore.DisplayName} · {_model.Count(ore)}개", 28, true, Cocoa);
+            RuntimeUIKit.CreateButton(panel, "1개 담기", () => { _game.TakeOre(ore, 1); ShowOreTransfer(page); }, height: 60);
+            RuntimeUIKit.CreateButton(panel, "담을 수 있는 만큼 담기", () => { _game.TakeOre(ore, int.MaxValue); ShowOreTransfer(page); }, height: 60);
+        }
+        if (page > 0) RuntimeUIKit.CreateButton(panel, "이전", () => ShowOreTransfer(page - 1));
+        if ((page + 1) * pageSize < ores.Count) RuntimeUIKit.CreateButton(panel, "다음", () => ShowOreTransfer(page + 1));
+        RuntimeUIKit.CreateButton(panel, "작업대로", ShowWorkshop, RuntimeUIKit.ButtonKind.Secondary);
+        if (_toast.gameObject.activeSelf) _toast.SetAsLastSibling();
     }
 
     private void ShowOreSales()
@@ -84,7 +110,7 @@ public partial class MineMazeHud
 
     public void ShowGate()
     {
-        if (_model.AtContentEnd)
+        if (_model.AtContentEnd && !_model.IsSourceFloor)
         {
             var end = OpenSheet(880);
             Line(end, "더 깊은 갱도", 46, true, Cocoa);
@@ -94,7 +120,7 @@ public partial class MineMazeHud
         }
         if (_model.FloorCleared) { ShowNextEntrance(); return; }
         var panel = OpenSheet(880);
-        Line(panel, $"지하 {_model.CurrentFloor + 2}층으로 가는 길", 46, true, Cocoa);
+        Line(panel, _model.IsSourceFloor ? "가스 발생 돌" : $"지하 {_model.CurrentFloor + 2}층으로 가는 길", 46, true, Cocoa);
         var rock = RuntimeUIKit.CreateIcon(panel, _art.RockStage(0), 200);
         var progress = Line(panel, "", 36, true, Cocoa);
         var hint = Line(panel, "", 27, false, Cocoa);
@@ -118,7 +144,7 @@ public partial class MineMazeHud
     public void ShowNextEntrance()
     {
         var panel = OpenSheet(880);
-        Line(panel, $"지하 {_model.CurrentFloor + 2}층 입구", 48, true, Cocoa);
+        Line(panel, _model.IsSourceFloor ? "발생원을 제거했어요!" : $"지하 {_model.CurrentFloor + 2}층 입구", 48, true, Cocoa);
         RuntimeUIKit.CreateIcon(panel, _mazeArt.Stairs, 180);
         Line(panel, $"{_model.CurrentFloor + 1}층 돌파 완료! 깡깡이의 자동 채굴이 넓어졌어요.", 30, true, Good);
         var timer = Line(panel, "", 28, false, Cocoa);
@@ -132,7 +158,7 @@ public partial class MineMazeHud
                 if (!_model.Inside) _game.Enter();
                 else ShowFloorTitle();
             }, RuntimeUIKit.ButtonKind.Primary);
-        else Line(panel, "다음 층 내부는 후속 단계예요.", 27, false, Cocoa);
+        else Line(panel, "주민들의 증상이 회복돼요. 마을 게시판에서 또박이에게 소식을 전해 주세요.", 27, false, Cocoa);
         RuntimeUIKit.CreateButton(panel, "작업대 · 보유 광석", ShowWorkshop);
         RuntimeUIKit.CreateButton(panel, "돌아가기", ReturnToPlay, RuntimeUIKit.ButtonKind.Secondary);
     }

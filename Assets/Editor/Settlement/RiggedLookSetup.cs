@@ -19,29 +19,29 @@ public static class RiggedLookSetup
     private static readonly (string otterId, string rig)[] Assignments =
     {
         ("otter_first", "Walker"),          // 몽실: 산책하는
-        ("otter_painter", "Fashion"),       // 물감이: 꾸미는
-        ("otter_sleepy", "Sleepy"),         // 꾸벅이: 잠꾸러기
+        ("otter_painter", "Plaid"),       // 물감이: 꾸미는
+        ("otter_sleepy", "BearPajama"),         // 꾸벅이: 잠꾸러기
         ("otter_receptionist", "Reception"),// 또박이: 안내원
-        ("otter_p3_neighbor", "Fluffy"),    // 포근이: 복슬복슬
+        ("otter_p3_neighbor", "Flower"),    // 포근이: 복슬복슬
         ("otter_farmer", ""),               // 새싹이: 농부 (V14)
         ("otter_miner", "Miner"),           // 깡깡이: 광부
         ("otter_fisher", "Fisher"),         // 첨벙이: 뱃사람
-        ("otter_toy_bodeul", "Overalls"),   // 보들이 (농사): 노랑 멜빵
-        ("otter_toy_degul", "Playful"),     // 데굴이 (채굴): 장난꾸러기
+        ("otter_toy_bodeul", "Flower"),   // 보들이 (농사): 노랑 멜빵
+        ("otter_toy_degul", "Stripe"),     // 데굴이 (채굴): 장난꾸러기
         ("otter_toy_duribeon", "Hoodie"),   // 두리번 (탐험): 후드티
-        ("otter_toy_jaejal", "Lively"),     // 재잘이 (장사): 활발한
+        ("otter_toy_jaejal", "Stripe"),     // 재잘이 (장사): 활발한
         ("otter_toy_jjalrang", "Merchant"), // 짤랑이 (장사): 행상인
-        ("otter_toy_kkeujeok", "Scholar"),  // 끄적이 (기록): 안경 학자
-        ("otter_toy_kkomkkom", "Neat"),     // 꼼꼼이 (손재주): 단정한
+        ("otter_toy_kkeujeok", "Quiet"),  // 끄적이 (기록): 안경 학자
+        ("otter_toy_kkomkkom", "Knit"),     // 꼼꼼이 (손재주): 단정한
         ("otter_toy_kongkong", "Artisan"),  // 콩콩이 (건설): 작업반장
-        ("otter_toy_kungkung", "Varsity"),  // 쿵쿵이 (나무캐기): 야구 점퍼
+        ("otter_toy_kungkung", "Stripe"),  // 쿵쿵이 (나무캐기): 야구 점퍼
         ("otter_toy_pongdang", "Diver"),    // 퐁당이 (낚시): 잠수부
         ("otter_toy_sallang", "Flower"),    // 살랑이 (탐험): 꽃 카디건
         ("otter_toy_yeongcha", "Knit"),     // 영차 (운반): 케이블 니트
     };
 
     /// <summary>처음부터 광장을 거니는 일반 리그 (특수 행동 없음)</summary>
-    private static readonly string[] Wanderers = { "BearPajama", "Beanie", "Stripe", "Plaid", "Shy", "Laidback", "Quiet" };
+    private static readonly string[] Wanderers = { "BearPajama", "Walker", "Stripe", "Plaid", "Flower", "Hoodie", "Quiet" };
 
     private static GameObject Prefab(string rig) =>
         AssetDatabase.LoadAssetAtPath<GameObject>($"{PrefabDir}/PlazaOtter_{rig}Rigged.prefab");

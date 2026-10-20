@@ -123,6 +123,21 @@ public partial class MineMazeTests
     }
 
     [Test]
+    public void Miner_IncludesHighRarityNormalVeinsButExcludesRelics()
+    {
+        var oreSettings = new SerializedObject(_copper);
+        oreSettings.FindProperty("_rarity").enumValueIndex = (int)MineOreRarity.Epic;
+        oreSettings.ApplyModifiedPropertiesWithoutUndo();
+        _layer = Layer(4, new[] { (_copper, 1), (_fossil, 100) });
+        var save = Stock(0);
+        save.floorCleared = true;
+        var model = Model(save: save);
+        Assert.AreEqual(10, model.AdvanceMiner(model.MinerInterval * 10));
+        Assert.AreEqual(10, model.Count(_copper));
+        Assert.AreEqual(0, model.Count(_fossil));
+    }
+
+    [Test]
     public void Miner_OfflineUsesSlowdownAndCap()
     {
         var save = Stock(0); save.floorCleared = true;

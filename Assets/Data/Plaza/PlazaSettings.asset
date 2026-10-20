@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlazaSettings
   otterPrefabs:
   - {fileID: 7310524418817630001, guid: 26aa899017ad4262a3297b54bab76c14, type: 3}
-  - {fileID: 7310524418817630001, guid: 649f11639540481cab6b7efacaa2d1b5, type: 3}
+  - {fileID: 7310524418817630001, guid: c05e3f88d3764da8858f99b7d7fe3dff, type: 3}
   - {fileID: 7310524418817630001, guid: cfce7cec19f34ee48f28bc0a1e2c8486, type: 3}
   - {fileID: 7310524418817630001, guid: c3aa946e15fe400788b9350d1de7beff, type: 3}
-  - {fileID: 7310524418817630001, guid: 5a64e93865764a87b1886031854fe757, type: 3}
-  - {fileID: 7310524418817630001, guid: b6a1682879104ce6b5afd13999e26937, type: 3}
+  - {fileID: 7310524418817630001, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
+  - {fileID: 7310524418817630001, guid: 2015aa342d1948499e2414f9837ac74f, type: 3}
   - {fileID: 7310524418817630001, guid: 616ca4abf0834d78a8c285d6e1d387da, type: 3}
   otterCount: 0
   otterHeight: 1.67

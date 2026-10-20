@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static partial class MineMazeSetup
 {
-    [MenuItem("Tools/Mine Maze/Update Floors 2 and 3")]
+    [MenuItem("Tools/Mine Maze/Update Floors 2 through 5")]
     public static void UpdateFloors()
     {
         var root = AssetDatabase.LoadAssetAtPath<MineMazeConfig>($"{DataFolder}/MineMazeConfig.asset");
@@ -16,9 +16,9 @@ public static partial class MineMazeSetup
 
     private static void ConfigureAdditionalFloors(MineMazeConfig root, MineReworkConfig rework)
     {
-        if (rework.Layers.Count < 3) throw new InvalidOperationException("Three mine layers are required.");
-        var floors = new MineMazeConfig[2];
-        for (int i = 0; i < 2; i++)
+        if (rework.Layers.Count < 5) throw new InvalidOperationException("Five mine layers are required.");
+        var floors = new MineMazeConfig[4];
+        for (int i = 0; i < 4; i++)
         {
             int number = i + 2;
             var floor = Asset<MineMazeConfig>($"{DataFolder}/MineMazeFloor{number}.asset");
@@ -34,20 +34,23 @@ public static partial class MineMazeSetup
             for (int r = 0; r < rows.Length; r++) map.GetArrayElementAtIndex(r).stringValue = rows[r];
             so.FindProperty("_rockRespawnSeconds").floatValue = 60;
             so.FindProperty("_testKingdomLevel").intValue = 13;
-            so.FindProperty("_gateKingdomLevel").intValue = number == 2 ? 13 : 16;
+            so.FindProperty("_gateKingdomLevel").intValue = number == 2 ? 13 : number == 3 ? 16 : number == 4 ? 18 : 20;
             so.FindProperty("_gatePickaxeTier").intValue = number;
-            so.FindProperty("_gateHits").intValue = number == 2 ? 45 : 60;
+            so.FindProperty("_gateHits").intValue = number == 2 ? 45 : number == 3 ? 60 : number == 4 ? 80 : 100;
+            so.FindProperty("_gasSource").boolValue = number == 5;
             var loot = so.FindProperty("_chestLoot");
             loot.arraySize = 2;
             string[] ids = number == 2 ? new[] { "ore_wave_iron", "ore_moon_silver" }
-                : new[] { "ore_coral_crystal", "ore_moon_silver" };
+                : number == 3 ? new[] { "ore_coral_crystal", "ore_moon_silver" }
+                : number == 4 ? new[] { "ore_sun_gold", "ore_coral_crystal" }
+                : new[] { "ore_star_diamond", "ore_sea_ruby" };
             for (int n = 0; n < 2; n++)
             {
                 var ore = rework.FindOre(ids[n]);
                 if (ore == null) throw new InvalidOperationException($"Missing ore: {ids[n]}");
                 var entry = loot.GetArrayElementAtIndex(n);
                 entry.FindPropertyRelative("_ore").objectReferenceValue = ore;
-                entry.FindPropertyRelative("_min").intValue = n == 0 ? 5 : 2;
+                entry.FindPropertyRelative("_min").intValue = number == 5 ? 3 : n == 0 ? 5 : 2;
                 entry.FindPropertyRelative("_max").intValue = n == 0 ? 8 : 4;
                 entry.FindPropertyRelative("_chance").floatValue = 1;
             }
@@ -57,8 +60,8 @@ public static partial class MineMazeSetup
         var rootSo = new SerializedObject(root);
         rootSo.FindProperty("_testKingdomLevel").intValue = 13;
         var list = rootSo.FindProperty("_additionalFloors");
-        list.arraySize = 2;
-        for (int i = 0; i < 2; i++) list.GetArrayElementAtIndex(i).objectReferenceValue = floors[i];
+        list.arraySize = 4;
+        for (int i = 0; i < 4; i++) list.GetArrayElementAtIndex(i).objectReferenceValue = floors[i];
         rootSo.ApplyModifiedPropertiesWithoutUndo();
         EditorUtility.SetDirty(root);
     }

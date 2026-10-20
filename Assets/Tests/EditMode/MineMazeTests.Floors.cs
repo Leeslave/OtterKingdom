@@ -136,10 +136,10 @@ public partial class MineMazeTests
     {
         var root = AssetDatabase.LoadAssetAtPath<MineMazeConfig>("Assets/Scriptable Obejects/MineMaze/MineMazeConfig.asset");
         Assert.NotNull(root);
-        Assert.AreEqual(2, root.AdditionalFloors.Count);
+        Assert.AreEqual(4, root.AdditionalFloors.Count);
         var model = Model(root);
         var mapStrings = new HashSet<string>();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < model.FloorCount; i++)
         {
             var floor = model.FloorConfig(i);
             var map = MazeMap.Parse(floor.MapRows);

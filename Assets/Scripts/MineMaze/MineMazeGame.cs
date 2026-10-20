@@ -6,10 +6,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// 광산 미로 테스트 씬의 중심 (Assets/Scenes/MineMaze.unity, 지하 1층). 본 게임 세이브 · 매니저와 따로 돈다.
+/// 광산 미로 테스트 씬의 중심 (Assets/Scenes/MineMaze.unity, 지하 1층). 본 게임에서는 인벤토리와 함께 저장한다.
 /// 일인칭 갱도 그림을 지금 칸 · 보는 쪽에 맞춰 바꾸고(양옆 갈림길 · 앞이 막힘), 앞에 돌 · 상자 · 계단이 있으면 그 앞에 세운다.
 /// 돌은 광산 개편의 바위 그림 · 손맛을 그대로 쓴다 (탭 → 규칙 → 바위 · 효과 · 소리).
-/// 저장: 5초마다 · 꺼질 때 persistentDataPath/mine_maze_test.json. Docs/광산_미로탐험과_왕도성장_기획.md 4.4~4.7
+/// 저장: 5초마다 · 꺼질 때. 독립 테스트만 mine_maze_test.json 사용. Docs/광산_미로탐험과_왕도성장_기획.md 4.4~4.7
 /// </summary>
 public class MineMazeGame : MonoBehaviour
 {
@@ -88,6 +88,7 @@ public class MineMazeGame : MonoBehaviour
         if (InGame)
         {
             _model.UseKingdomLevel(ProfileManager.Instance.Level);
+            _model.UseFishingAccess(SettlementManager.Instance != null && SettlementManager.Instance.HasDevelopment("fishing_dock"));
             HideGameBars(true);
         }
         if (loaded.savedUtcTicks > 0 && loaded.savedUtcTicks <= DateTime.UtcNow.Ticks)
@@ -107,6 +108,7 @@ public class MineMazeGame : MonoBehaviour
         _hud.Setup(this, _model, _art, _mazeArt, _sfx);
 
         _model.Changed += _hud.Refresh;
+        SettlementManager.SaveRequested += SaveCommunity;
         _model.Discovered += ore => StartCoroutine(DiscoverLater(ore));
         _model.RockRespawned += HandleRockRespawned;
 
@@ -116,8 +118,11 @@ public class MineMazeGame : MonoBehaviour
         Save();
     }
 
-    private static MineMazeSave Load()
+    private MineMazeSave Load()
     {
+        if (InGame && InventoryManager.Instance != null && InventoryManager.Instance.MineMazeState != null)
+            return InventoryManager.Instance.MineMazeState;
+        // First in-game visit migrates the existing standalone mine save.
         try
         {
             if (File.Exists(SavePath))
@@ -130,14 +135,35 @@ public class MineMazeGame : MonoBehaviour
         return new MineMazeSave();
     }
 
-    private void Save()
+    private bool Save()
     {
         if (_model == null || _resetting)
-            return;
+            return false;
+        _saveTimer = 0f;
         var saved = _model.ToSave();
         saved.savedUtcTicks = (_pausedUtc ?? DateTime.UtcNow).Ticks;
-        File.WriteAllText(SavePath, JsonUtility.ToJson(saved));
+        if (InGame && InventoryManager.Instance != null)
+        {
+            // Commit the bag and remaining ore in a single atomic save.
+            var manager = InventoryManager.Instance;
+            manager.MineMazeState = saved;
+            var service = new SaveService();
+            service.Load(out var main);
+            if (main == null || service.WritesBlocked) return false;
+            main.mineMaze = saved;
+            if (SettlementManager.Instance != null && SettlementManager.Instance.IsLoaded)
+                SettlementManager.Instance.WriteToSave(main.settlement ??= new SettlementSaveData());
+            manager.WriteToSave(main.inventory);
+            main.inventoryCapacity = manager.Inventory.Capacity;
+            // Item acquisition can also advance collections and quests.
+            if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(main.collection);
+            if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(main.quests);
+            // Keep the kingdom offline-production clock anchored to its last simulation.
+            if (!service.Save(main, stampTime: false)) return false;
+        }
+        else File.WriteAllText(SavePath, JsonUtility.ToJson(saved));
         _saveTimer = 0f;
+        return true;
     }
 
     private void OnApplicationPause(bool paused)
@@ -157,7 +183,13 @@ public class MineMazeGame : MonoBehaviour
 
     private void OnApplicationQuit() => Save();
 
-    private void OnDisable() => Save();
+    private void SaveCommunity() => Save();
+
+    private void OnDisable()
+    {
+        SettlementManager.SaveRequested -= SaveCommunity;
+        Save();
+    }
 
     private void OnDestroy() => HideGameBars(false);
 
@@ -429,7 +461,7 @@ public class MineMazeGame : MonoBehaviour
     }
 
     // 계단 위에서 아래층 길을 막은 큰 돌 (돌파 횟수 = 돌 체력). 3층 끝 · 이미 뚫린 층은 없음
-    public bool GateAhead => _model.Inside && _model.OnStairs && !_model.FloorCleared && !_model.AtContentEnd;
+    public bool GateAhead => _model.Inside && _model.OnStairs && !_model.FloorCleared && (!_model.AtContentEnd || _model.IsSourceFloor);
 
     private MineRock GateRock() => new MineRock { Vein = null, Hp = Math.Max(1, _model.GateRemaining), MaxHp = _model.Config.GateHits };
 
@@ -481,7 +513,7 @@ public class MineMazeGame : MonoBehaviour
         _fx.Ring(center, new Color(1f, 1f, 1f, 0.8f), 4f, 0.35f);
         _fx.Shake(0.3f);
         _hud.Flash(new Color(.8f, .9f, 1, .5f));
-        _hud.ShowToast("아래층 길이 뚫렸어요!");
+        _hud.ShowToast(_model.IsSourceFloor ? "가스 발생원을 제거했어요! 마을로 돌아가요." : "아래층 길이 뚫렸어요!");
         Save();
         StartCoroutine(GateOpenedLater());
     }
@@ -490,7 +522,7 @@ public class MineMazeGame : MonoBehaviour
     {
         yield return new WaitForSeconds(0.7f);
         ShowView();
-        _hud.ShowNextEntrance();
+        if (_model.IsSourceFloor) _hud.ShowGate(); else _hud.ShowNextEntrance();
     }
 
     public bool CraftPickaxe()
@@ -500,6 +532,21 @@ public class MineMazeGame : MonoBehaviour
         _hud.ShowToast($"{_model.Pickaxe.DisplayName} 완성!");
         Save();
         return true;
+    }
+
+    public void TakeOre(MineOreDefinition ore, int amount)
+    {
+        var manager = InventoryManager.Instance;
+        if (!InGame || manager == null || ore == null) return;
+        if (!manager.Config.ItemDatabase.TryGet(ore.OreId, out var item))
+        {
+            _hud.ShowToast("등록되지 않은 광석이에요");
+            return;
+        }
+        int moved = _model.TransferToInventory(ore, item, manager.Inventory, amount);
+        if (moved == 0) { _hud.ShowToast("가방에 빈칸이나 쌓을 공간이 없어요"); return; }
+        bool saved = Save();
+        _hud.ShowToast(saved ? $"{ore.DisplayName} {moved}개를 가방에 담았어요" : "가방에 담았지만 저장에 실패했어요. 잠시 후 다시 저장합니다.");
     }
 
     public void SellOre(MineOreDefinition ore)
@@ -702,6 +749,14 @@ public class MineMazeGame : MonoBehaviour
 
     public void ResetAll()
     {
+        if (InGame && InventoryManager.Instance != null)
+        {
+            _model = new MineMazeModel(_config, new MineMazeSave(), new System.Random(), DateTime.UtcNow);
+            Save();
+            _resetting = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            return;
+        }
         _resetting = true;
         if (File.Exists(SavePath))
             File.Delete(SavePath);

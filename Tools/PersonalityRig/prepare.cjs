@@ -1,7 +1,7 @@
 const fs=require('fs'),path=require('path');
 const root=path.resolve(__dirname,'../..'),cast=require('./cast.json');
 const bounds=[[0,435,820,1015,1235,1536],[0,435,765,955,1190,1536],[0,430,785,1010,1225,1536],[0,420,770,975,1180,1536],[0,465,805,1005,1215,1536],[0,445,820,1005,1215,1536],[0,420,790,1000,1225,1536],[0,455,800,985,1205,1536],[0,425,795,985,1210,1536],[0,410,750,975,1200,1536]];
-for(const [i,c]of cast.entries()){
+for(const c of cast){const i=c.number-41;
  const dir=path.join(root,'Tools',c.stem+'Rig'),art=path.join(root,'ArtSource/Otter',c.stem+'Rig/V1');fs.mkdirSync(dir,{recursive:true});fs.mkdirSync(art,{recursive:true});
  const fixes=require('./fixes.json'),generated='C:/Users/이상현/.codex/generated_images/01a12f48-17ef-7873-b304-9063292668c1';
  if(!fs.existsSync(path.join(art,'atlas.png')))fs.copyFileSync(path.join(generated,fixes[i]||c.source),path.join(art,'atlas.png'));

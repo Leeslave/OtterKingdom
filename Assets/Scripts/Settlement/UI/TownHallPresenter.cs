@@ -170,6 +170,8 @@ public class TownHallPresenter : MonoBehaviour
             _hall.ShowNext(locked.Title, $"왕국 Lv.{lockedLevel}에 열려요. 퀘스트로 레벨을 올려요.", false);
         else
             _hall.ShowNext("다음 발전을 준비하고 있어요", "진행 중인 일이 끝나면 새 부탁이 열려요.", false);
+        if (_manager.HasMineCommunityStory && !_manager.MineCommunity.exported)
+            _hall.ShowNext(_manager.MineCommunityTitle, _manager.MineCommunityStatus, true);
         ShowTerritory();
         var order = _manager.DistrictOrder;
         int pending = _manager.PendingDistrictBlocks().Count;
@@ -335,6 +337,8 @@ public class TownHallPresenter : MonoBehaviour
 
     private void HandleHallGo()
     {
+        if (_manager.HasMineCommunityStory && !_manager.MineCommunity.exported)
+        { _hall.Hide(); _manager.OpenMineCommunity(); return; }
         if (_hallProject != null)
         {
             var project = _hallProject;
