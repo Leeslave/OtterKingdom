@@ -92,6 +92,11 @@ public class MineMazeGame : MonoBehaviour
             // 캔 광석 · 돌은 가방으로 바로 (못 들어간 것만 작업대에)
             if (InventoryManager.Instance != null)
                 _model.UseBag(new InventoryOreBag(InventoryManager.Instance));
+            // 작업대 · 판매는 진짜 골드로 (예전 갱도 골드는 여기서 한 번 옮김)
+            var gold = MineMazeLinkConfig.Instance.Gold;
+            if (CurrencyManager.Instance != null && gold != null)
+                _model.UseWallet(new GoldWallet(CurrencyManager.Instance, gold));
+            RecordMilestones(); // 예전에 부순 돌 · 다녀온 횟수도 메인 퀘스트에 들어가게
             HideGameBars(true);
         }
         if (loaded.savedUtcTicks > 0 && loaded.savedUtcTicks <= DateTime.UtcNow.Ticks)
@@ -150,6 +155,7 @@ public class MineMazeGame : MonoBehaviour
         {
             // Commit the bag and remaining ore in a single atomic save.
             var manager = InventoryManager.Instance;
+            _model.FlushToBag(); // 가방에 자리가 났으면 기다리던 광석부터
             manager.MineMazeState = saved;
             var service = new SaveService();
             service.Load(out var main);
@@ -159,6 +165,9 @@ public class MineMazeGame : MonoBehaviour
                 SettlementManager.Instance.WriteToSave(main.settlement ??= new SettlementSaveData());
             manager.WriteToSave(main.inventory);
             main.inventoryCapacity = manager.Inventory.Capacity;
+            // 작업대 · 판매가 진짜 골드를 쓰므로 골드도 같은 저장에
+            if (CurrencyManager.Instance != null)
+                GameManager.WriteCurrencies(main);
             // Item acquisition can also advance collections and quests.
             if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(main.collection);
             if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(main.quests);
@@ -448,6 +457,7 @@ public class MineMazeGame : MonoBehaviour
         _busy = false;
         Animate(0f, 0f, 1f, 0f);
         var result = _model.Exit(DateTime.UtcNow);
+        RecordMilestones();
         ShowView();
         _hud.Flash(new Color(0f, 0f, 0f, 0.9f));
         _hud.ShowResult(result);
@@ -470,11 +480,46 @@ public class MineMazeGame : MonoBehaviour
         return true;
     }
 
+    // 메인 퀘스트(Lv.6 첫 돌 · Lv.7 갱도 한 바퀴)가 세는 발전. 다음 저장(Save)이 정착 기록과 함께 남김
+    private void RecordMilestones()
+    {
+        var settlement = SettlementManager.Instance;
+        if (!InGame || settlement == null || !settlement.IsLoaded)
+            return;
+        if (_model.RocksBroken > 0)
+            settlement.Settlement.UnlockDevelopment(MineMazeRules.FirstRockDevelopment);
+        if (_model.Runs > 0)
+            settlement.Settlement.UnlockDevelopment(MineMazeRules.FirstTripDevelopment);
+    }
+
     /// <summary>"2분 05초" (다시 들어가기까지)</summary>
     public static string WaitText(TimeSpan wait)
     {
         int seconds = Mathf.Max(0, Mathf.CeilToInt((float)wait.TotalSeconds));
         return seconds >= 60 ? $"{seconds / 60}분 {seconds % 60:00}초" : $"{seconds}초";
+    }
+
+    // 본 게임 골드
+    private sealed class GoldWallet : IMineWallet
+    {
+        private readonly CurrencyManager _currencies;
+        private readonly Currency _gold;
+
+        public GoldWallet(CurrencyManager currencies, Currency gold)
+        {
+            _currencies = currencies;
+            _gold = gold;
+        }
+
+        public int Balance => _currencies.GetCurrency(_gold);
+
+        public bool TrySpend(int amount) => _currencies.TrySpend(_gold, amount, TransactionSource.PickaxeUpgrade);
+
+        public void Earn(int amount)
+        {
+            if (amount > 0)
+                _currencies.ProcessTransaction(new CurrencyTransaction(_gold, amount, TransactionSource.ItemSale));
+        }
     }
 
     // 본 게임 가방: 광석 ID와 같은 아이템 (돌 = ore_stone)
@@ -502,21 +547,6 @@ public class MineMazeGame : MonoBehaviour
             int n = Math.Min(amount, _manager.Inventory.GetCount(item));
             return n > 0 && _manager.Inventory.TryRemove(item, n, ItemChangeReason.Construction) ? n : 0;
         }
-    }
-
-    public void TakeOre(MineOreDefinition ore, int amount)
-    {
-        var manager = InventoryManager.Instance;
-        if (!InGame || manager == null || ore == null) return;
-        if (!manager.Config.ItemDatabase.TryGet(ore.OreId, out var item))
-        {
-            _hud.ShowToast("등록되지 않은 광석이에요");
-            return;
-        }
-        int moved = _model.TransferToInventory(ore, item, manager.Inventory, amount);
-        if (moved == 0) { _hud.ShowToast("가방에 빈칸이나 쌓을 공간이 없어요"); return; }
-        bool saved = Save();
-        _hud.ShowToast(saved ? $"{ore.DisplayName} {moved}개를 가방에 담았어요" : "가방에 담았지만 저장에 실패했어요. 잠시 후 다시 저장합니다.");
     }
 
     public void SellOre(MineOreDefinition ore)
@@ -550,6 +580,8 @@ public class MineMazeGame : MonoBehaviour
         var hit = _model.HitAhead(Time.unscaledTime, DateTime.UtcNow);
         if (hit == null)
             return;
+        if (hit.Broken)
+            RecordMilestones();
         _idle = 0f;
         var tint = RockColor;
         var center = _rock.Center;
@@ -591,7 +623,8 @@ public class MineMazeGame : MonoBehaviour
             _hud.Flash(new Color(1f, 0.92f, 0.6f, 0.45f));
         }
         DropGains(hit.Gains, center, 1f);
-        _hud.ShowToast(wasBlocking ? "길이 뚫렸어요!" : "돌을 부쉈어요!");
+        _hud.ShowToast(_model.WaitingForBag > 0 ? "가방이 가득 찼어요! 캔 광석은 자리가 나면 가방에 들어가요"
+            : wasBlocking ? "길이 뚫렸어요!" : "돌을 부쉈어요!");
         StartCoroutine(PromptLater());
     }
 

@@ -132,38 +132,63 @@ public partial class MineMazeModel
     public TimeSpan EnterWait(DateTime utcNow) => CanEnterAt(utcNow) ? TimeSpan.Zero : NextEnterUtc - utcNow;
     public IEnumerable<MazeRock> Rocks => _rocks.Values;
 
-    /// <summary>Only remove ore that actually fits in the player's bag.</summary>
-    public int TransferToInventory(MineOreDefinition ore, ItemDefinition item, Inventory bag, int amount)
-    {
-        if (ore == null || item == null || bag == null || amount <= 0 || item.ItemId != ore.OreId)
-            return 0;
-        int requested = Math.Min(amount, StoredCount(ore));
-        if (requested <= 0) return 0;
-        int moved = bag.Add(item, requested, ItemChangeReason.Mining);
-        if (moved > 0)
-        {
-            _counts[ore] -= moved;
-            Changed?.Invoke();
-        }
-        return moved;
-    }
-
-    /// <summary>쓸 수 있는 광석 (작업대 + 본 게임 가방)</summary>
+    /// <summary>쓸 수 있는 광석 (가방 + 가방이 가득 차 기다리는 것)</summary>
     public int Count(MineOreDefinition ore) => StoredCount(ore) + (_bag != null && ore != null ? _bag.Count(ore) : 0);
 
-    /// <summary>갱도 작업대에 쌓인 광석 (가방에 못 들어간 것 · 자동 채굴 · 옛 세이브)</summary>
+    /// <summary>
+    /// 가방 밖에 있는 광석. 테스트 씬은 여기가 작업대 보관함. 본 게임은 가방이 하나뿐이라
+    /// 가방이 가득 찼을 때 · 옛 세이브의 것만 잠깐 남았다가 자리가 나면 가방으로 들어감 (FlushToBag)
+    /// </summary>
     public int StoredCount(MineOreDefinition ore) => ore != null && _counts.TryGetValue(ore, out int n) ? n : 0;
 
     private IMineOreBag _bag;
 
-    /// <summary>본 게임: 캔 광석이 가방으로 바로 들어감 (없으면 = 테스트 씬, 작업대에만)</summary>
+    /// <summary>본 게임: 광석은 가방 하나에 (없으면 = 테스트 씬, 작업대 보관함). 예전 작업대 광석도 가방으로 옮김</summary>
     public void UseBag(IMineOreBag bag)
     {
         _bag = bag;
+        FlushToBag();
         Changed?.Invoke();
     }
 
-    // 가방에 먼저, 못 들어간 것은 작업대에
+    /// <summary>가방 밖에서 기다리는 광석 수 (본 게임: 가방이 가득 찼을 때)</summary>
+    public int WaitingForBag
+    {
+        get
+        {
+            if (_bag == null)
+                return 0;
+            int n = 0;
+            foreach (var count in _counts.Values)
+                n += Math.Max(0, count);
+            return n;
+        }
+    }
+
+    /// <summary>가방 밖의 광석을 가방에 자리가 있는 만큼 넣음</summary>
+    /// <returns>넣은 수</returns>
+    public int FlushToBag()
+    {
+        if (_bag == null)
+            return 0;
+        int moved = 0;
+        foreach (var ore in new List<MineOreDefinition>(_counts.Keys))
+        {
+            int n = StoredCount(ore);
+            if (n <= 0)
+                continue;
+            int added = _bag.Add(ore, n);
+            if (added <= 0)
+                continue;
+            _counts[ore] -= added;
+            moved += added;
+        }
+        if (moved > 0)
+            Changed?.Invoke();
+        return moved;
+    }
+
+    // 가방에 먼저, 못 들어간 것은 자리가 날 때까지 밖에서 기다림
     private void Put(MineOreDefinition ore, int amount)
     {
         int bagged = _bag != null ? _bag.Add(ore, amount) : 0;

@@ -10,6 +10,10 @@ public static class MineMazeRules
 {
     /// <summary>갱도를 찾음 (광산 씬의 입구 · 미로 장소 · 메인 퀘스트가 본다)</summary>
     public const string FoundDevelopment = "mine_maze_found";
+    /// <summary>갱도에서 처음 돌을 부숨 (메인 Lv.6 "길을 막은 돌", 기록으로 다시 셈)</summary>
+    public const string FirstRockDevelopment = "maze_first_rock";
+    /// <summary>그 층의 돌을 모두 부수고 처음 다녀옴 (메인 Lv.7 "갱도 한 바퀴")</summary>
+    public const string FirstTripDevelopment = "maze_first_trip";
     /// <summary>미로 씬 이름 (메인 퀘스트 "갱도에 들어가 보기" 대상)</summary>
     public const string SceneName = "MineMaze";
     public const int FoundLevel = 5;

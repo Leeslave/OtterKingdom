@@ -25,6 +25,8 @@ public class MineMazeLinkConfig : ScriptableObject
     [SerializeField] private float _backgroundPixelsPerUnit = 96f;
     [Tooltip("입구 뒤에서 숨 쉬는 빛")]
     [SerializeField] private Sprite _glow;
+    [Tooltip("본 게임 골드 (갱도 작업대 · 광석 판매가 쓰는 돈)")]
+    [SerializeField] private Currency _gold;
 
     private static MineMazeLinkConfig _loaded;
     private static bool _tried;
@@ -46,6 +48,7 @@ public class MineMazeLinkConfig : ScriptableObject
     public ZoneDefinition MazeZone => _mazeZone;
     public ZoneDefinition MineZone => _mineZone;
     public Sprite Glow => _glow;
+    public Currency Gold => _gold;
 
     /// <summary>광산 씬 월드 위치 (배경이 원점 가운데)</summary>
     public Vector2 EntranceWorld => new Vector2(

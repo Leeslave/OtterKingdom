@@ -743,7 +743,7 @@ public partial class MineMazeHud : MonoBehaviour
         if (!_model.MapOtter)
             Line(panel, $"이 층의 돌 {_model.FloorRockCount}개를 한 번씩 모두 부수고 나와야 다녀온 횟수 1번이에요", 26, false, RuntimeUIKit.Style.BodyColor);
         RuntimeUIKit.CreateSpace(panel, 10f);
-        Line(panel, _game.InGame ? $"갱도 골드 {_model.Gold} · 왕국 Lv.{_model.KingdomLevel}"
+        Line(panel, _game.InGame ? $"골드 {_model.Gold} · 왕국 Lv.{_model.KingdomLevel}"
             : $"골드 {_model.Gold} · 테스트 왕국 Lv.{_model.KingdomLevel}", 28, true, Cocoa);
         RuntimeUIKit.CreateButton(panel, "곡괭이 작업대 · 광석 판매", ShowWorkshop);
         if (_model.FloorCount > 1)
@@ -773,7 +773,7 @@ public partial class MineMazeHud : MonoBehaviour
                 CloseSheet();
                 _game.ReturnToMine();
             }, RuntimeUIKit.ButtonKind.Secondary);
-            Line(panel, "캔 광석 · 돌은 바로 가방에 들어가요 (가득 차면 작업대에). 골드 · 곡괭이는 갱도 전용이에요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
+            Line(panel, "캔 광석 · 돌은 모두 가방에 들어가요. 작업대는 가방 광석과 왕국 골드를 써요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
         }
         else
         {
@@ -820,7 +820,7 @@ public partial class MineMazeHud : MonoBehaviour
             _sfx.Play(MineSfx.Kind.Discover);
         }
         RuntimeUIKit.CreateSpace(panel, 4f);
-        Line(panel, _game.InGame ? "캔 광석 · 돌은 가방에 들어갔어요 (가득 차면 작업대에). 깡깡이의 갱도 자동 채굴은 작업대에 쌓여요."
+        Line(panel, _game.InGame ? "캔 광석 · 돌은 가방에 들어갔어요. 깡깡이의 갱도 자동 채굴도 가방으로 들어가요 (가득 차면 자리가 날 때까지 기다려요)."
             : "본 게임 연결 전 테스트예요. 자동 채굴 광석은 작업대 가방에 쌓이며, 탐험 중에도 같은 속도로 생산해요.", 24, false, new Color(0.45f, 0.38f, 0.33f));
         // 본 게임: 나가기 = 바로 밖(광산)으로. 테스트 씬: 갱도 입구 창으로
         RuntimeUIKit.CreateButton(panel, _game.InGame ? "광산으로" : "확인", () =>
@@ -976,6 +976,7 @@ public static class MazeGlyphs
 {
     // 다녀온 횟수(돌 모두 부수기) · 다시 들어가기 대기 · 가방으로 들어감 안내
     public const string Trips = "갱도가 아직 위험해요 뒤에 다시 들어갈 수 있어요 분초 이 층의 돌 개를 한 번씩 모두 부수고 나와야 다녀온 횟수 번이에요 "
-        + "부쉈어요 중 부숴야 들어가요 캔 광석 돌은 바로 가방에 들어갔어요 가득 차면 작업대에 골드 곡괭이는 전용 깡깡이의 자동 채굴은 쌓여요 1번";
+        + "부쉈어요 중 부숴야 들어가요 캔 광석 돌은 모두 가방에 들어갔어요 작업대는 왕국 골드를 써요 깡깡이의 자동 채굴도 가득 차면 자리가 날 때까지 기다려요 1번 "
+        + "가방이 가득 차서 광석 개가 기다리는 중이에요 저절로";
     public const string Ui = "!%()+,./0123467:?·×▼가간갈갔같개갱거건것게겨견결겹경계고곡골과광괭구국군굴귀규그글금기긴길김깊까깡께끝나남내냥넓녀녔누눌는니닙닛다단닫달대더던데도돌동돼된두둘뒀뒤드든들듦디따때뚫라래량러려력렸로료률르른를름리린림마막만맛매맥먼며면명모못물미밑바밖반발밟방배번벽보본볼봐부분브비빛산상새생서석선설성세셀소속손수순숨숴쉈쉬스습시쌓써쓰씬아안앞야양어억언얼업없었에여연열예옛오온올옴와완왔왕왼요용우운워원위유으은을음의이인읽임입있자작잠장재저적전점정제졌족준중줘지직짐짝째쪽착찾채처첫체쳐쳤초최층치칙친침카칸캐캔콤쾅크큼타탐택터테톡트파판편품픽필하한할함해했험혀현혔화확환횟효후흔희힌힘";
 }

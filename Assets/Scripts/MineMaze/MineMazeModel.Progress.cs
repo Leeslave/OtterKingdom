@@ -9,7 +9,22 @@ public partial class MineMazeModel
     private bool _fishingAccess = true; // standalone test scenes
     public void UseFishingAccess(bool open) => _fishingAccess = open;
     public bool IsSourceFloor => _config.GasSource;
-    public int Gold { get; private set; }
+    // 테스트 씬의 갱도 골드. 본 게임은 지갑(진짜 골드)을 씀
+    private int _gold;
+    private IMineWallet _wallet;
+    public int Gold => _wallet != null ? _wallet.Balance : _gold;
+
+    /// <summary>본 게임: 작업대 · 판매가 진짜 골드를 씀. 예전 갱도 골드는 한 번 진짜 골드로 옮김</summary>
+    public void UseWallet(IMineWallet wallet)
+    {
+        _wallet = wallet;
+        if (wallet != null && _gold > 0)
+        {
+            wallet.Earn(_gold);
+            _gold = 0;
+        }
+        Changed?.Invoke();
+    }
     public int KingdomLevel { get; private set; }
     public int GateDamage { get; private set; }
     public bool FloorCleared { get; private set; }
@@ -32,7 +47,7 @@ public partial class MineMazeModel
     private void LoadProgress(MineMazeSave save)
     {
         Community = save.community ?? new MineCommunityState();
-        Gold = save.progressionVersion > 0 ? Math.Max(0, save.gold) : Math.Max(0, _rework.StartGold);
+        _gold = save.progressionVersion > 0 ? Math.Max(0, save.gold) : Math.Max(0, _rework.StartGold);
         KingdomLevel = save.progressionVersion > 0 ? Math.Max(1, save.kingdomLevel) : _config.TestKingdomLevel;
         if (FloorCount > 1 && save.progressionVersion < 2)
             KingdomLevel = Math.Max(KingdomLevel, _rootConfig.TestKingdomLevel);
@@ -47,7 +62,7 @@ public partial class MineMazeModel
     {
         save.community = Community;
         save.progressionVersion = 2;
-        save.gold = Gold;
+        save.gold = _gold;
         save.kingdomLevel = KingdomLevel;
         save.gateDamage = GateDamage;
         save.floorCleared = FloorCleared;
@@ -87,8 +102,9 @@ public partial class MineMazeModel
     {
         if (!CanCraft(out reason)) return false;
         var next = NextPickaxe;
+        if (_wallet != null) { if (next.GoldCost > 0 && !_wallet.TrySpend(next.GoldCost)) return false; }
+        else _gold -= next.GoldCost;
         foreach (var cost in Recipe(next)) Take(cost.Key, cost.Value);
-        Gold -= next.GoldCost;
         PickaxeTier++;
         Changed?.Invoke();
         return true;
@@ -100,7 +116,8 @@ public partial class MineMazeModel
         long value = (long)ore.SellPrice * amount;
         if (value > int.MaxValue - Gold) return false;
         Take(ore, amount);
-        Gold += (int)value;
+        if (_wallet != null) _wallet.Earn((int)value);
+        else _gold += (int)value;
         Changed?.Invoke();
         return true;
     }
@@ -158,14 +175,16 @@ public partial class MineMazeModel
                     drops.Add(drop);
         }
         if (drops.Count == 0) return 0;
+        var found = new Dictionary<MineOreDefinition, int>();
         for (int i = 0; i < finds; i++)
         {
             var ore = Pick(drops);
             if (ore == null) continue;
-            // 자동 채굴(오프라인 포함)은 가방을 채우지 않게 작업대에
-            _counts[ore] = StoredCount(ore) + 1;
+            found.TryGetValue(ore, out int n);
+            found[ore] = n + 1;
             _discovered.Add(ore.OreId);
         }
+        foreach (var pair in found) Put(pair.Key, pair.Value);
         if (finds > 0) Changed?.Invoke();
         return finds;
     }

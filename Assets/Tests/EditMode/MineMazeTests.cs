@@ -577,6 +577,35 @@ public partial class MineMazeTests
         Assert.AreEqual(1, save.ores.Find(o => o.id == _copper.OreId).count, "가방 몫은 광산 세이브에 두 번 쓰지 않음");
     }
 
+    private sealed class FakeWallet : IMineWallet
+    {
+        public int Balance { get; set; }
+        public bool TrySpend(int amount)
+        {
+            if (Balance < amount) return false;
+            Balance -= amount;
+            return true;
+        }
+        public void Earn(int amount) => Balance += amount;
+    }
+
+    [Test]
+    public void Wallet_UsesRealGold_AndMovesOldMineGoldOnce()
+    {
+        var model = Model(save: Stock(4, gold: 30));
+        var wallet = new FakeWallet { Balance = 1000 };
+        model.UseWallet(wallet);
+        Assert.AreEqual(1030, wallet.Balance, "예전 갱도 골드를 진짜 골드로");
+        Assert.AreEqual(1030, model.Gold);
+        Assert.AreEqual(0, model.ToSave().gold);
+
+        var price = new SerializedObject(_copper);
+        price.FindProperty("_sellPrice").intValue = 5;
+        price.ApplyModifiedPropertiesWithoutUndo();
+        Assert.IsTrue(model.Sell(_copper, 2));
+        Assert.AreEqual(1040, wallet.Balance);
+    }
+
     [Test]
     public void Bag_SpendingUsesWorkshopFirstThenBag()
     {
@@ -615,23 +644,20 @@ public partial class MineMazeTests
     }
 
     [Test]
-    public void InventoryTransfer_PartialStackLeavesRemainderAndSurvivesReload()
+    public void Bag_OldWorkshopStockMovesIntoBag_AndWaitsWhenFull()
     {
         var model = OreStock(10);
-        var item = BagOre(_stone.OreId, 5);
-        var bag = new Inventory(1, 1);
-        bag.Add(item, 3, ItemChangeReason.Mining);
-        Assert.AreEqual(2, model.TransferToInventory(_stone, item, bag, int.MaxValue));
-        Assert.AreEqual(5, bag.GetCount(item));
-        Assert.AreEqual(8, model.Count(_stone));
-        var save = new SaveData { mineMaze = model.ToSave() };
-        InventorySaveConverter.Write(bag, null, save.inventory);
-        var restored = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(save));
-        Assert.AreEqual(8, Model(save: restored.mineMaze).Count(_stone));
-        Assert.AreEqual(1, restored.inventory.Count);
-        Assert.AreEqual(item.ItemId, restored.inventory[0].itemId);
-        Assert.AreEqual(5, restored.inventory[0].quantity);
-        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 1));
+        var bag = new FakeBag(6);
+        model.UseBag(bag);
+        Assert.AreEqual(6, bag.Count(_stone), "가방에 들어갈 만큼 바로");
+        Assert.AreEqual(4, model.WaitingForBag);
+        Assert.AreEqual(10, model.Count(_stone));
+        bag.Remove(_stone, 6); // 가방에서 팔아 자리가 남
+        Assert.AreEqual(4, model.FlushToBag());
+        Assert.AreEqual(0, model.WaitingForBag);
+        Assert.AreEqual(0, model.FlushToBag(), "같은 광석을 두 번 넣지 않음");
+        Assert.AreEqual(4, bag.Count(_stone));
+        Assert.AreEqual(0, model.ToSave().ores.Count);
     }
 
     [Test]
@@ -643,41 +669,5 @@ public partial class MineMazeTests
         visited.savedUtcTicks = T0.Ticks;
         restored = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(new SaveData { mineMaze = visited }));
         Assert.IsFalse(restored.mineMaze.IsEmpty);
-    }
-
-    [Test]
-    public void InventoryTransfer_FullBagDoesNotConsumeOre()
-    {
-        var model = OreStock(10);
-        var bag = new Inventory(1, 1);
-        bag.Add(BagOre("other"), 1, ItemChangeReason.Mining);
-        Assert.AreEqual(0, model.TransferToInventory(_stone, BagOre(_stone.OreId), bag, 10));
-        Assert.AreEqual(10, model.Count(_stone));
-    }
-
-    [Test]
-    public void InventoryTransfer_EmptyStockAndMismatchedItemDoNothing()
-    {
-        var model = OreStock(0);
-        var bag = new Inventory(1, 1);
-        var item = BagOre(_stone.OreId);
-        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 10));
-        model = OreStock(4);
-        Assert.AreEqual(0, model.TransferToInventory(_stone, BagOre("other"), bag, 4));
-        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, -1));
-        Assert.AreEqual(4, model.Count(_stone));
-        Assert.AreEqual(0, bag.GetCount(item));
-    }
-
-    [Test]
-    public void InventoryTransfer_CannotCollectTheSameStockTwice()
-    {
-        var model = OreStock(4);
-        var item = BagOre(_stone.OreId);
-        var bag = new Inventory(1, 1);
-        Assert.AreEqual(4, model.TransferToInventory(_stone, item, bag, 20));
-        Assert.AreEqual(0, model.TransferToInventory(_stone, item, bag, 20));
-        Assert.AreEqual(4, bag.GetCount(item));
-        Assert.AreEqual(0, model.Count(_stone));
     }
 }
