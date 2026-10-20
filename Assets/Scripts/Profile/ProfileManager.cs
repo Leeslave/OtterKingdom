@@ -114,6 +114,13 @@ public class ProfileManager : MonoBehaviour
         AnnounceReached();
     }
 
+    /// <summary>개발용 (OtterKingdom/Dev/Level +1): 한 레벨 바로 올리고(보상 · 해금 그대로) 저장을 부탁한다</summary>
+    public void DevLevelUp()
+    {
+        ReachLevel(Level + 1);
+        SaveRequested?.Invoke();
+    }
+
     private void AnnounceReached()
     {
         SyncProfile();
