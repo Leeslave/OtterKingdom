@@ -460,6 +460,8 @@ public class PlazaFarmView : MonoBehaviour
         if (agent != _worker)
         {
             DropCarry();
+            if (_worker != null)
+                _worker.SetHome(null, 0f);
             _worker = agent;
             _workerRig = agent != null ? agent.GetComponentInChildren<QuarterRigView>() : null;
             _phase = WorkPhase.Idle;
@@ -476,6 +478,8 @@ public class PlazaFarmView : MonoBehaviour
         if (_worker == null)
             return;
         _manager.MarkFarmWorkerDriven();
+        // 일이 없을 때도 밭 근처만 돌아다님 (밭 칸들을 둘러싼 범위)
+        _worker.SetHome(_fields.Count > 0 ? FieldsCenter : (System.Func<Vector2?>)null, FieldsRadius());
 
         _phaseTimer -= dt;
         switch (_phase)
@@ -560,6 +564,29 @@ public class PlazaFarmView : MonoBehaviour
             _carried.transform.localScale = Vector3.one * (0.55f / Mathf.Max(0.01f, _carried.sprite.bounds.size.y));
             _carried.sortingOrder = PlazaDepth.SortingOrderFor(_worker.transform.position.y) + 50;
         }
+    }
+
+    private const float WorkerHomeMargin = 1.5f;
+
+    private Vector2? FieldsCenter()
+    {
+        if (_fields.Count == 0)
+            return null;
+        var sum = Vector2.zero;
+        foreach (var visual in _fields.Values)
+            sum += (Vector2)visual.Root.position;
+        return sum / _fields.Count;
+    }
+
+    private float FieldsRadius()
+    {
+        var center = FieldsCenter();
+        if (!center.HasValue)
+            return 0f;
+        float far = 0f;
+        foreach (var visual in _fields.Values)
+            far = Mathf.Max(far, Vector2.Distance(center.Value, visual.Root.position));
+        return far + WorkerHomeMargin;
     }
 
     private void GoToCrate()

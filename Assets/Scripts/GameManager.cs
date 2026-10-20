@@ -273,6 +273,7 @@ public partial class GameManager : MonoBehaviour
         {
             StartCoroutine(PlayDistrictGuideWhenReady());
             StartCoroutine(PlayTerritoryGuideWhenReady());
+            StartCoroutine(PlayFirstFieldGuideWhenReady());
         }
         if (CurrentZoneId == ZoneTutorials.Plaza && !save.tutorialsDone.Contains(ZoneTutorials.FairyShop))
             StartCoroutine(PlayFairyShopTutorialWhenReady());
@@ -377,6 +378,7 @@ public partial class GameManager : MonoBehaviour
     private void OnDisable()
     {
         CloseDistrictGuide();
+        CloseFirstFieldPointer();
         SceneNavigator.BeforeLeave -= SaveNow;
         SettlementManager.SaveRequested -= SaveNow;
         DecorManager.SaveRequested -= SaveNow;

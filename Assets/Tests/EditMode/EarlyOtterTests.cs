@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEditor;
+using UnityEngine;
 
 public class EarlyOtterTests
 {
@@ -80,6 +81,26 @@ public class EarlyOtterTests
         Assert.IsNull(settlement.Job);
         Assert.IsTrue(settlement.HasDevelopment(SettlementMigration.RetiredGuildOfficeDevelopment));
         Assert.IsFalse(SettlementMigration.RetireGuildOfficeJob(settlement));
+    }
+
+    [Test]
+    public void FirstField_IsFreeAndInstant_OnlyOnce()
+    {
+        var field = ScriptableObject.CreateInstance<BuildingDefinition>();
+        var so = new SerializedObject(field);
+        so.FindProperty("_buildingId").stringValue = "bld_test_field";
+        so.FindProperty("_farmPart").enumValueIndex = (int)FarmPartKind.Field;
+        so.FindProperty("_gold").intValue = 500;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        var settlement = new Settlement();
+        Assert.IsTrue(BuildingRules.IsFreeFirstField(settlement, field));
+        Assert.AreEqual(0, BuildingRules.GoldCost(settlement, field));
+        Assert.IsEmpty(BuildingRules.ItemCosts(settlement, field));
+
+        BuildingRules.Start(settlement, field, 1, 0, 0);
+        Assert.IsFalse(BuildingRules.IsFreeFirstField(settlement, field));
+        Assert.AreEqual(500, BuildingRules.GoldCost(settlement, field));
+        Object.DestroyImmediate(field);
     }
 
     [Test]

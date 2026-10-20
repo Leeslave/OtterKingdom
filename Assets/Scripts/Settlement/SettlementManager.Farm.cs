@@ -638,7 +638,8 @@ public partial class SettlementManager
         return false;
     }
 
-    private BuildingDefinition FarmPartDefinition(FarmPartKind kind)
+    /// <summary>이 종류의 농장 부품 건물 (첫 밭 칸 안내 등)</summary>
+    public BuildingDefinition FarmPartDefinition(FarmPartKind kind)
     {
         foreach (var building in BuildingCatalog)
         {
