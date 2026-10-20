@@ -55,7 +55,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cff15f546a1e1994e850708b35632ed6, type: 2}
   - {fileID: 11400000, guid: 5b35dd1ccbe30bf48afbf6e7e59baabe, type: 2}
   - {fileID: 11400000, guid: 4b0c5e3237c4cd44781f8b663b77d1fd, type: 2}
-  - {fileID: 11400000, guid: c472e21e218891c46b9dd0cd9e751c05, type: 2}
   - {fileID: 11400000, guid: c6f96170303a4bd4982c3aaf48e304fd, type: 2}
   - {fileID: 11400000, guid: c92a7ca91fa6d2940ac6a23db7790aaa, type: 2}
   - {fileID: 11400000, guid: 2ae5fd9d960882b49b575e73c37f13b1, type: 2}
@@ -182,7 +181,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: abfd9530bceedfc4f9b48efd882d9ce5, type: 2}
   _boardUpgradeDevelopment: board_upgraded
   _boardManagedDevelopment: receptionist_assigned
-  _guildDevelopment: guild_office_built
+  _guildDevelopment: receptionist_assigned
   _townHallDevelopment: town_hall_built
   _residentRequestSlots: 2
   _roles:
@@ -205,7 +204,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 69507eb37779f0b429eb1d7ba740d06a, type: 2}
   - {fileID: 11400000, guid: 48eb6d2a5cacfd94dbc00c77c6951add, type: 2}
   - {fileID: 11400000, guid: d767ca02f620be946b7717f4b690848c, type: 2}
-  _lifeRequestDevelopment: town_hall_built
+  _lifeRequestDevelopment: board_upgraded
   _lifeRequestLevel: 7
   _fairyInvitedDevelopment: fairy_invited
   _fairyArrivedDevelopment: fairy_arrived

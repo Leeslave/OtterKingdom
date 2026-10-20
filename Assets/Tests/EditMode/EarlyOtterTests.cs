@@ -59,6 +59,30 @@ public class EarlyOtterTests
     }
 
     [Test]
+    public void GuildOrder_TownHallUnlocksEarlyThings_GuildWaitsForHospital()
+    {
+        const string folder = "Assets/Scriptable Obejects/";
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>(folder + "Settlement/SettlementConfig.asset");
+        Assert.IsNull(config.FindRequest(SettlementMigration.RetiredGuildOfficeRequestId), "접수 창구는 메인에서 빠짐");
+        Assert.AreEqual("mine_hospital", config.FindRequest("req_upgrade_town_hall").RequiredDevelopment);
+        Assert.AreEqual("board_upgraded", config.LifeRequestDevelopment);
+        Assert.AreEqual("board_upgraded", AssetDatabase.LoadAssetAtPath<BuildingDefinition>(folder + "Decor/Buildings/Building_SmallHouse.asset").RequiredDevelopment);
+        Assert.AreEqual("maze_first_rock", AssetDatabase.LoadAssetAtPath<QuestDefinition>(folder + "Quest/Quests/M06_Guild.asset").Target);
+        Assert.AreEqual("maze_first_trip", AssetDatabase.LoadAssetAtPath<QuestDefinition>(folder + "Quest/Quests/M07_TownHall.asset").Target);
+    }
+
+    [Test]
+    public void RetiredGuildOfficeJob_FinishesQuietly()
+    {
+        var settlement = new Settlement();
+        settlement.StartJob(SettlementMigration.RetiredGuildOfficeRequestId, "con_guild_office", 0, 1);
+        Assert.IsTrue(SettlementMigration.RetireGuildOfficeJob(settlement));
+        Assert.IsNull(settlement.Job);
+        Assert.IsTrue(settlement.HasDevelopment(SettlementMigration.RetiredGuildOfficeDevelopment));
+        Assert.IsFalse(SettlementMigration.RetireGuildOfficeJob(settlement));
+    }
+
+    [Test]
     public void FirstOtter_IsNamedHaedari()
     {
         var first = AssetDatabase.LoadAssetAtPath<SettlementOtterDefinition>(

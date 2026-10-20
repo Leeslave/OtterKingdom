@@ -180,7 +180,8 @@ public class TownHallPresenter : MonoBehaviour
         var order = _manager.DistrictOrder;
         int pending = _manager.PendingDistrictBlocks().Count;
         _hall.ShowDistrict(_manager.IsAdministrator, order != null ? order.Score : 0,
-            DistrictGuideRules.OrderGoal(config, order != null ? order.Score : 0, _manager.PlayerLevel), pending);
+            DistrictGuideRules.OrderGoal(config, order != null ? order.Score : 0, _manager.PlayerLevel,
+                _manager.HasDevelopment(CastleRules.GuildBuilt)), pending);
         _hall.ShowRelocation(RelocationLine());
     }
 

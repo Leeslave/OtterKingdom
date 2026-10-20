@@ -26,7 +26,7 @@ public static partial class SettlementSetup
         ("Building_SmallHouse", "bld_small_house", "작은 집", "장난감을 보고 찾아온 해달이 살 수 있는 집이에요.", BuildingKind.Home,
             new Vector2Int(4, 3), 0.9f, "Assets/Art/Plaza/Props/Prop_House_Blue.png",
             new[] { "Stage_House_Blue_0", "Stage_House_Blue_1", "Stage_House_Blue_2", "Stage_House_Blue_3" }, "ICON_House_Blue",
-            0, TownHallDevelopment, new (OtterTrait, int)[0], 0, 600, 20, 10, 0.3f, 180f),
+            0, BoardUpgradeDevelopment, new (OtterTrait, int)[0], 0, 600, 20, 10, 0.3f, 180f),
         // Lv.10~15 해달의 부탁 (SettlementSetup.P4Story.cs) — 그 부탁이 열려야 지을 수 있음 (필요 발전 = 입주 부탁의 결과)
         ("Building_Shop", "bld_shop", "해달 상점", "짤랑이의 가게. 요정 상점이 이곳으로 이사하고, 물건을 더 비싸게 팔아요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Shop.png", new string[0], null,

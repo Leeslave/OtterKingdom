@@ -13,7 +13,10 @@ public class MineCommunityState
 
     public const string HerbId = "item_fairy_herb";
     public const string HospitalId = "bld_mine_hospital";
+    /// <summary>예전에 따로 짓던 마을 길드 건물 (이제 꾸미기 목록에 없음. 지은 세이브만 길드로 셈)</summary>
     public const string GuildId = "bld_mine_guild";
+    /// <summary>병원이 생기면 열림 → 게시판 "우리 마을의 길드"(마을회관 넓히기)가 이걸 조건으로 둠</summary>
+    public const string HospitalDevelopment = "mine_hospital";
     public const int HerbsRequired = 10;
     public const float UntreatedMultiplier = .90f;
     public const float TreatedMultiplier = .95f;

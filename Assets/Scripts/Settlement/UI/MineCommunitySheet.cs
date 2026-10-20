@@ -54,8 +54,8 @@ public class MineCommunitySheet : MonoBehaviour
             RuntimeUIKit.CreateLabel(panel, "다온이: 진료로 증상을 덜었지만 원인을 없애야 해요.\n5층에서 재료를 모아 별빛 다이아 곡괭이를 만들고, 가장 안쪽 발생 돌을 부숴 주세요.\n5층 입장에는 해님 금 곡괭이만 필요해요.", 28);
         else if (!_manager.HasBuilt(MineCommunityState.HospitalId))
             RuntimeUIKit.CreateLabel(panel, "또박이: 이제 정식 병원을 지어요.\n광장 꾸미기 → 건물 → 마을 병원\n골드 2,000 · 돌 30개 · 공사 2분\n다온이가 마을에 남아 주민들을 돌볼 거예요.", 28);
-        else if (!_manager.HasBuilt(MineCommunityState.GuildId))
-            RuntimeUIKit.CreateLabel(panel, "또박이: 힘을 모아 이겨 낸 일을 앞으로도 이어가요.\n광장 꾸미기 → 건물 → 마을 길드\n골드 3,000 · 돌 40개 · 공사 3분\n마을회관의 의뢰를 도울 길드 공간을 마련해요.", 28);
+        else if (!_manager.IsVillageGuildBuilt)
+            RuntimeUIKit.CreateLabel(panel, "또박이: 힘을 모아 이겨 낸 일을 앞으로도 이어가요.\n게시판 \"우리 마을의 길드\" 부탁으로 마을회관을 마을 길드로 넓혀요.\n골드 3,000 · 목재 36 · 돌 40 · 건설 해달 공사 3분", 28);
         else if (!state.exported)
         {
             RuntimeUIKit.CreateLabel(panel, "요정 상인: 발생 돌의 잔여 조각은 밀봉했어요.\n이 조각을 요정 나라로 보내 약초 지원에 답례해요.\n가스 발생원은 다시 생기지 않아요.", 28);

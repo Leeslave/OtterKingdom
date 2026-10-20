@@ -60,14 +60,12 @@ public static partial class SettlementSetup
     private static readonly string[] BuildingModeConstructions = { "con_chair", "con_rest_corner", "con_board_upgrade", "con_guild_office", "con_town_hall", "con_lamp" };
     private static readonly string[] BuildingModeEntries = { "gb_rest_corner", "gb_board_upgrade", "gb_guild_office", "gb_town_hall", "gb_lamp" };
     private static readonly string[] BuildingModeRequests =
-        { "req_chair", "req_rest_corner", "req_upgrade_board", "req_build_guild_office", "req_upgrade_town_hall", SettlementMigration.LampRequestId };
+        { "req_chair", "req_rest_corner", "req_upgrade_board", "req_upgrade_town_hall", SettlementMigration.LampRequestId };
 
     // 메인 퀘스트 (QuestSetup 표와 같은 문구): 에셋, 제목, 설명, 아이콘
     private static readonly (string asset, string title, string description, string icon)[] BuildingModeQuests =
     {
         ("M05_Board", "부탁이 많아졌어요", "게시판을 마을회관으로 넓히기", "ICON_GuildOffice"),
-        ("M06_Guild", "큰 부탁도 함께", "길드 접수 창구 만들기", "ICON_GuildOffice"),
-        ("M07_TownHall", "우리 마을의 길드", "마을 길드로 넓히기", "ICON_TownHall"),
     };
 
     // 공동사업 · 생활 의뢰 문구 (SettlementSetup.P3.cs 표와 같음): 회관 앞 → 고른 자리 / 마을 길드
@@ -80,15 +78,16 @@ public static partial class SettlementSetup
         ("회관 앞에 비축 상자가 생겨요", "광장에 비축 상자가 생겨요"),
         ("회관 앞에 비축 상자가 생겼어요.", "광장에 비축 상자가 생겼어요."),
         ("회관 앞에 공동 식탁이 생기고", "광장에 공동 식탁이 생기고"),
-        ("회관에서 마을 생활 준비를", "길드에서 마을 생활 준비를"),
-        ("회관 주변 정리", "길드 주변 정리"),
-        ("회관 앞을 쓸고", "길드 앞을 쓸고"),
-        ("회관 앞이 깔끔해졌어요!", "길드 앞이 깔끔해졌어요!"),
-        ("회관은 생겼는데", "길드는 생겼는데"),
-        ("회관 살림을", "길드 살림을"),
-        ("3번 마치면 회관 앞이", "3번 마치면 길드 앞이"),
-        ("회관 물품 보충", "길드 물품 보충"),
-        ("회관 앞이 어수선해요.", "길드 앞이 어수선해요."),
+        // 마을 길드는 가스 사건 뒤라 그 전의 문구는 마을회관 (광산 기획 14장)
+        ("길드에서 마을 생활 준비를", "마을회관에서 마을 생활 준비를"),
+        ("길드 주변 정리", "마을회관 주변 정리"),
+        ("길드 앞을 쓸고", "마을회관 앞을 쓸고"),
+        ("길드 앞이 깔끔해졌어요!", "마을회관 앞이 깔끔해졌어요!"),
+        ("길드는 생겼는데", "마을회관은 생겼는데"),
+        ("길드 살림을", "마을 살림을"),
+        ("3번 마치면 길드 앞이", "3번 마치면 마을회관 앞이"),
+        ("길드 물품 보충", "마을회관 물품 보충"),
+        ("길드 앞이 어수선해요.", "마을회관 앞이 어수선해요."),
     };
 
     [MenuItem("Tools/Settlement/Apply Building Plots")]

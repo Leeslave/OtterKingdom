@@ -134,8 +134,9 @@ public static partial class SettlementSetup
             "마을회관 짓는 중", "다 지으면 게시판을 맡을 해달이 찾아와요", BoardUpgradeDevelopment),
         ("con_guild_office", "길드 접수 창구", "ICON_GuildOffice", ConstructionTarget.House, 600, 24, 12, 60f, true,
             "접수 창구 만드는 중", "다 만들면 큰 부탁을 묶어서 볼 수 있어요", GuildDevelopment),
-        ("con_town_hall", "마을 길드", "ICON_TownHall", ConstructionTarget.House, 1200, 36, 24, 120f, true,
-            "마을 길드로 넓히는 중", "다 지으면 마을 발전 현황을 볼 수 있어요", TownHallDevelopment),
+        // 마을 길드: 가스 사건 뒤 병원 다음 (광산 기획 14장). 비용은 그때 경제에 맞춤
+        ("con_town_hall", "마을 길드", "ICON_TownHall", ConstructionTarget.House, 3000, 36, 40, 180f, true,
+            "마을 길드로 넓히는 중", "다 지으면 마을회관이 마을 길드가 돼요", TownHallDevelopment),
         ("con_rest_corner", "벤치", "ICON_Chair", ConstructionTarget.House, 150, 8, 4, 20f, true,
             "벤치 만드는 중", "다 만들면 해달들이 쉬어 가요", RestCornerDevelopment),
         // 가로등: 첫 집 뒤 따로 세움 (공사 현장 없이 바로, 건설 모드에서 자리를 고름)
@@ -201,14 +202,11 @@ public static partial class SettlementSetup
             "otter_painter", BoardManagedDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_common_space", "다 같이 쉴 자리가 생겼어요!\n광장이 한결 아늑해졌어요.", 0, "", ""),
-        ("req_build_guild_office", 10, "큰 부탁도 함께 받아요", "마을회관에 큰 부탁을 받을 접수 창구를 만들어요.\n건설 해달이 필요해요.", "ICON_GuildOffice",
-            ReceptionistOtterId, CommonSpaceDevelopment, 0, "con_guild_office", new string[0],
+        // 접수 창구(req_build_guild_office)는 마을회관에 합쳐 뺐고, 마을 길드는 가스 사건 뒤 병원을 세운 다음 (광산 기획 14장)
+        ("req_upgrade_town_hall", 11, "우리 마을의 길드", "가스 사건을 함께 이겨 낸 마을회관을 마을 길드로 넓혀요.\n병원과 함께 마을의 새 얼굴이 돼요.", "ICON_TownHall",
+            "otter_first", MineCommunityState.HospitalDevelopment, 0, "con_town_hall", new string[0],
             new (string, ResidentState)[0],
-            -1, "gb_guild_office", "접수 창구가 열렸어요!\n게시판에서 큰 부탁을 볼 수 있어요.", 0, "", ""),
-        ("req_upgrade_town_hall", 11, "우리 마을의 길드", "마을회관을 넓혀 마을 길드로 만들어요.\n마을이 얼마나 자랐는지 한눈에 볼 수 있어요.", "ICON_TownHall",
-            "otter_first", GuildDevelopment, 0, "con_town_hall", new string[0],
-            new (string, ResidentState)[0],
-            4, "gb_town_hall", "마을 길드가 완성됐어요!\n게시판에서 마을 발전 현황을 볼 수 있어요.", 0, "", ""),
+            4, "gb_town_hall", "마을 길드가 완성됐어요!\n함께 이겨 낸 일을 앞으로도 이어 가요.", 0, "", ""),
         // 낚시터 (Lv.15): 레벨이 되면 해달이가 선착장을 발견(SettlementConfig 레벨 발전) → 고치면 낚시꾼 첨벙이 방문 → 배치
         // 콘텐츠 버전 0: 정착 진행 전 옛 세이브는 낚시터를 이미 쓰고 있었으므로 두 부탁 모두 끝낸 것으로 옮김
         ("req_fishing_dock", 12, "바다로 나가는 선착장", "해달이가 바닷가에서 낡은 선착장을 찾았어요.\n건설 해달과 함께 고치면 낚시터에 갈 수 있어요.", "ICON_FishingDock",

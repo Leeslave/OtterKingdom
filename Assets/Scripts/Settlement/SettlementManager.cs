@@ -1308,6 +1308,8 @@ public partial class SettlementManager : MonoBehaviour
         if (SettlementMigration.MigrateLamp(_config, Settlement, from))
             Debug.Log("[SettlementManager] 버전 4 전 세이브: 첫 집과 함께 있던 가로등을 그대로 둡니다.");
         MigrateCenterStart(from);
+        if (SettlementMigration.RetireGuildOfficeJob(Settlement))
+            Debug.Log("[SettlementManager] 짓던 접수 창구는 마을회관에 합쳐져 공사를 끝냈습니다.");
         if (SettlementMigration.MigrateToCurrent(Settlement) && from > 0)
             Debug.Log($"[SettlementManager] 정착 세이브를 버전 {from} → {SettlementSaveData.CurrentVersion}으로 옮겼습니다.");
     }
