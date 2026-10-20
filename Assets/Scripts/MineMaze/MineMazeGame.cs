@@ -120,8 +120,9 @@ public class MineMazeGame : MonoBehaviour
 
     private MineMazeSave Load()
     {
-        if (InGame && InventoryManager.Instance != null && InventoryManager.Instance.MineMazeState != null)
-            return InventoryManager.Instance.MineMazeState;
+        var inGameState = InGame && InventoryManager.Instance != null ? InventoryManager.Instance.MineMazeState : null;
+        if (inGameState != null && !inGameState.IsEmpty)
+            return inGameState;
         // First in-game visit migrates the existing standalone mine save.
         try
         {

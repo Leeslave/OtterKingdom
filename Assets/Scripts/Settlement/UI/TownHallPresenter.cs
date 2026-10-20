@@ -27,6 +27,8 @@ public class TownHallPresenter : MonoBehaviour
     private BoardRequestDefinition _hallTarget;
     // P3: 회관의 다음 목표가 공동사업일 때 (메인 부탁을 다 끝낸 뒤)
     private CommunityProjectDefinition _hallProject;
+    // 광산 주민 건강 이야기: 메인 부탁 · 공동사업이 없을 때만 회관의 다음 목표 자리를 씀
+    private bool _hallMine;
     // 영토 확장 미션 (숲 개간을 다 끝낸 단계가 있을 때)
     private CommunityProjectDefinition _territoryMission;
     private float _refreshTimer;
@@ -158,8 +160,12 @@ public class TownHallPresenter : MonoBehaviour
 
         _hallTarget = _manager.CurrentRequest;
         _hallProject = _hallTarget == null ? _manager.ActiveProject : null;
+        _hallMine = _hallProject == null && _hallTarget == null
+            && _manager.HasMineCommunityStory && !_manager.MineCommunity.exported;
         if (_hallProject != null)
             _hall.ShowNext(_manager.ProjectTitle(_hallProject), ProjectNextText(_hallProject), true);
+        else if (_hallMine)
+            _hall.ShowNext(_manager.MineCommunityTitle, _manager.MineCommunityStatus, true);
         else if (_manager.AreAllMainDone)
             _hall.ShowAllDone(AllDoneMessage);
         else if (_hallTarget != null)
@@ -170,8 +176,6 @@ public class TownHallPresenter : MonoBehaviour
             _hall.ShowNext(locked.Title, $"왕국 Lv.{lockedLevel}에 열려요. 퀘스트로 레벨을 올려요.", false);
         else
             _hall.ShowNext("다음 발전을 준비하고 있어요", "진행 중인 일이 끝나면 새 부탁이 열려요.", false);
-        if (_manager.HasMineCommunityStory && !_manager.MineCommunity.exported)
-            _hall.ShowNext(_manager.MineCommunityTitle, _manager.MineCommunityStatus, true);
         ShowTerritory();
         var order = _manager.DistrictOrder;
         int pending = _manager.PendingDistrictBlocks().Count;
@@ -337,7 +341,7 @@ public class TownHallPresenter : MonoBehaviour
 
     private void HandleHallGo()
     {
-        if (_manager.HasMineCommunityStory && !_manager.MineCommunity.exported)
+        if (_hallMine)
         { _hall.Hide(); _manager.OpenMineCommunity(); return; }
         if (_hallProject != null)
         {
