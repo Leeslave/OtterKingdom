@@ -104,6 +104,45 @@ public class EarlyOtterTests
     }
 
     [Test]
+    public void Decor_HouseDoorstepStaysClear_ButPathsAreFine()
+    {
+        var layout = new DecorLayout(new Vector2Int(20, 20));
+        layout.AddRegion("base", new[] { new RectInt(0, 0, 20, 20) }, true);
+        var house = ScriptableObject.CreateInstance<ConstructionPlotDefinition>();
+        house.SetupPlacement(new Vector2Int(4, 3), false, null);
+        house.SetupDoorstep(true);
+        var table = ScriptableObject.CreateInstance<ConstructionPlotDefinition>();
+        table.SetupPlacement(new Vector2Int(2, 2), false, null);
+        var path = ScriptableObject.CreateInstance<BuildingDefinition>();
+        var so = new SerializedObject(path);
+        so.FindProperty("_farmPart").enumValueIndex = (int)FarmPartKind.Path;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        path.SetupPlacement(Vector2Int.one, false, null);
+
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.TryPlace(house, new Vector2Int(5, 10), DecorRotation.R0, out _));
+        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(table, new Vector2Int(6, 8), DecorRotation.R0), "문 앞(9번 줄)을 가림");
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.Check(table, new Vector2Int(6, 7), DecorRotation.R0), "한 줄 띄우면 됨");
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.Check(path, new Vector2Int(6, 9), DecorRotation.R0), "길은 문 앞에 깔 수 있음");
+
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.TryPlace(table, new Vector2Int(12, 5), DecorRotation.R0, out _));
+        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(house, new Vector2Int(12, 7), DecorRotation.R0), "제 문 앞에 식탁이 있음");
+        Object.DestroyImmediate(house);
+        Object.DestroyImmediate(table);
+        Object.DestroyImmediate(path);
+    }
+
+    [Test]
+    public void RelocationShowcase_WaitsForVisibleImprovement()
+    {
+        Assert.IsFalse(RelocationShowcasePresenter.ShouldCompare(6, 5, 1), "하나만 옮김");
+        Assert.IsTrue(RelocationShowcasePresenter.ShouldCompare(6, 3, 2));
+        Assert.IsTrue(RelocationShowcasePresenter.ShouldCompare(2, 0, 1), "모두 맞는 구역");
+        Assert.IsFalse(RelocationShowcasePresenter.ShouldCompare(0, 0, 3), "처음부터 정리돼 있음");
+        Assert.IsFalse(RelocationShowcasePresenter.ShouldCompare(-1, 2, 1));
+        Assert.IsTrue(RelocationShowcasePresenter.ShouldCompare(-1, 2, 2));
+    }
+
+    [Test]
     public void FirstOtter_IsNamedHaedari()
     {
         var first = AssetDatabase.LoadAssetAtPath<SettlementOtterDefinition>(

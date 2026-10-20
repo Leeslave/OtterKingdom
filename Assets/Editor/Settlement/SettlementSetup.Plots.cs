@@ -56,6 +56,9 @@ public static partial class SettlementSetup
     // 나중에 고정 자리에 나타나는 소품 (PlazaRoot 아래 경로, 요정은 씬에서 찾음): 그 소품의 꾸미기 막음(없으면 발자국)을 처음부터 켜 둠
     private static readonly string[] PlotReservedProps = new string[0];
 
+    // 문 앞 한 줄을 비워 두는 자리 (집). 의자 · 식탁 같은 소품 자리는 아님
+    private static readonly string[] HousePlots = { "Plot_House1", "Plot_House2", "Plot_P3House" };
+
     // 문구를 표와 맞출 부탁 · 건설 · 방명록 (가로등은 새로 만듦)
     private static readonly string[] BuildingModeConstructions = { "con_chair", "con_rest_corner", "con_board_upgrade", "con_guild_office", "con_town_hall", "con_lamp" };
     private static readonly string[] BuildingModeEntries = { "gb_rest_corner", "gb_board_upgrade", "gb_guild_office", "gb_town_hall", "gb_lamp" };
@@ -381,6 +384,7 @@ public static partial class SettlementSetup
             var renderer = art.GetComponent<SpriteRenderer>();
             plot.SetupPlacement(row.size, false, renderer != null ? renderer.sprite : null);
             plot.SetupPlot(construction, defaultCell, pivotOffset, new Vector2(art.lossyScale.x, art.lossyScale.y), alternates);
+            plot.SetupDoorstep(System.Array.IndexOf(HousePlots, row.asset) >= 0);
             EditorUtility.SetDirty(plot);
             plots.Add(plot);
             Debug.Log($"[SettlementSetup] {row.asset}: 기본 칸 {defaultCell} (격자 {layoutCell}) · 발밑 {pivotOffset}"

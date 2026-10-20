@@ -57,6 +57,15 @@ public partial class SettlementManager
         return list;
     }
 
+    /// <summary>맞는 구역 밖에 있는 건물 수 (정리 전 · 후 비교 컷이 "좀 나아졌는지" 볼 때)</summary>
+    public int MisplacedBuildingCount()
+    {
+        int count = 0;
+        foreach (var candidate in RelocationCandidates())
+            if (!RelocationRules.Fits(_config, Settlement, candidate)) count++;
+        return count;
+    }
+
     /// <summary>광장에 놓인 모든 물건이 차지한 칸 (세이브 좌표, except는 빼고)</summary>
     public List<RectInt> PlazaOccupied(int except = 0)
     {
