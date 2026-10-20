@@ -223,6 +223,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c62a0a9e8bcd986409c791e7bbfd63b2, type: 2}
   - {fileID: 11400000, guid: f7e280ff7eae99247a7771123cf41f5e, type: 2}
   _territoryStartLevel: 7
+  _territoryBonusChanceUntilLevel: 12
   _levelDevelopments:
   - _level: 15
     _development: fishing_found

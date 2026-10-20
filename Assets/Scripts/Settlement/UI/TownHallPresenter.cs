@@ -419,6 +419,13 @@ public class TownHallPresenter : MonoBehaviour
                 text.Append(group.Title).Append(group.Description);
         }
         text.Append("부터 시작할 수 있어요지금 Lv재료를 조금씩 나눠 넣을 수 있어요할 일마무리하는 중이에요×");
+        // 숲 개간 줄 (SettlementManager.TerritoryChanceText): 땅 이름 · 진행 · 기회
+        text.Append("이 땅을 다 마치면 다른 방향도 개간할 수 있어요개간 기회번공터 가장자리의 점선 원을 눌러 해달을 보내요레벨이 오르면 생겨요");
+        foreach (var territory in config.Territories)
+        {
+            if (territory != null)
+                text.Append(territory.DisplayName);
+        }
         foreach (var project in config.Projects)
         {
             if (project == null)

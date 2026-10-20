@@ -178,6 +178,10 @@ public class SettlementConfig : ScriptableObject
     [Min(1)]
     [SerializeField] private int _territoryStartLevel = 6;
 
+    [Tooltip("이 왕국 레벨까지는 레벨마다 개간 기회를 한 번 더 줌 (초반에 땅이 너무 좁지 않게). 시작 레벨보다 작으면 없음")]
+    [Min(0)]
+    [SerializeField] private int _territoryBonusChanceUntilLevel;
+
     [Header("레벨로 열리는 발전")]
     [Tooltip("왕국 레벨이 되면 여는 발전 (부탁·지역의 조건으로 씀). 불러올 때와 레벨이 오를 때 맞춤")]
     [SerializeField] private List<LevelDevelopment> _levelDevelopments = new List<LevelDevelopment>();
@@ -370,6 +374,7 @@ public class SettlementConfig : ScriptableObject
     public string FairyArrivedDevelopment => _fairyArrivedDevelopment;
     public IReadOnlyList<TerritoryExpansionDefinition> Territories => _territories;
     public int TerritoryStartLevel => Mathf.Max(1, _territoryStartLevel);
+    public int TerritoryBonusChanceUntilLevel => Mathf.Max(0, _territoryBonusChanceUntilLevel);
     public IReadOnlyList<LevelDevelopment> LevelDevelopments => _levelDevelopments;
 
     /// <summary>이 발전이 왕국 레벨로 열리는 것이면 그 항목 (아니면 null)</summary>

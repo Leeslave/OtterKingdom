@@ -249,7 +249,8 @@ public class TerritoryTests
         var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
         Assert.AreEqual(TerritoryRules.TutorialLevel + 1, config.TerritoryStartLevel, "Lv.6 첫 개간(무료) → Lv.7부터 개간 기회 (한 땅 3번)");
         Assert.AreEqual(0, TerritoryRules.EarnedChances(config, 6));
-        Assert.AreEqual(1, TerritoryRules.EarnedChances(config, 7));
+        Assert.AreEqual(2, TerritoryRules.EarnedChances(config, 7), "Lv.12까지는 레벨마다 2번");
+        Assert.AreEqual(12, TerritoryRules.EarnedChances(config, 12));
     }
 
     [Test]
@@ -351,9 +352,44 @@ public class TerritoryTests
 
         manager.DevFinishTasks();
         Assert.AreEqual(1, manager.TerritoryClearingsDone(_s1));
-        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.NorthEast), "끝나면 다른 방향도 고를 수 있음");
-        Assert.AreEqual(TaskStartResult.Started, Start(manager, _ne1, _painter));
+        // 남쪽을 시작했으니 그 땅의 개간 3번을 다 마칠 때까지 남쪽만 (방향을 흩어 놓지 않게)
+        Assert.AreEqual(TerritoryBlock.OtherDirection, manager.GetTerritoryBlock(TerritoryDirection.NorthEast));
+        Assert.AreEqual(TerritoryBlock.None, manager.GetTerritoryBlock(TerritoryDirection.South));
+        Assert.AreEqual(TaskStartResult.NotAvailable, Start(manager, _ne1, _painter));
         _ = profile;
+    }
+
+    [Test]
+    public void ScatteredClearings_FinishTheMostAdvancedLandFirst()
+    {
+        // 옛 세이브: 북동 1번 · 남쪽 2번 (기회 3번을 흩어 씀) → 남쪽부터
+        var village = Village();
+        village.UnlockDevelopment("territory_ne_1_c1");
+        village.UnlockDevelopment("territory_s_1_c1");
+        village.UnlockDevelopment("territory_s_1_c2");
+        Assert.AreEqual(_s1, TerritoryRules.Started(_config, village));
+        Assert.AreEqual(TerritoryBlock.OtherDirection, TerritoryRules.GetBlock(_config, village, 20, TerritoryDirection.NorthEast));
+        Assert.AreEqual(TerritoryBlock.None, TerritoryRules.GetBlock(_config, village, 20, TerritoryDirection.South));
+
+        // 남쪽 3번째 → 개간을 다 마치면(미션 차례) 북동도 이어서 할 수 있음
+        village.UnlockDevelopment("territory_s_1_c3");
+        Assert.AreEqual(TerritoryBlock.Mission, TerritoryRules.GetBlock(_config, village, 20, TerritoryDirection.South));
+        Assert.AreEqual(_ne1, TerritoryRules.Started(_config, village));
+        Assert.AreEqual(TerritoryBlock.None, TerritoryRules.GetBlock(_config, village, 20, TerritoryDirection.NorthEast));
+    }
+
+    [Test]
+    public void BonusChances_TwicePerLevelUntilTheBonusLevel()
+    {
+        var config = Create<SettlementConfig>();
+        config.SetupTerritory(new TerritoryExpansionDefinition[0], 7);
+        var so = new SerializedObject(config);
+        so.FindProperty("_territoryBonusChanceUntilLevel").intValue = 12;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        Assert.AreEqual(0, TerritoryRules.EarnedChances(config, 6));
+        Assert.AreEqual(2, TerritoryRules.EarnedChances(config, 7));
+        Assert.AreEqual(12, TerritoryRules.EarnedChances(config, 12), "Lv.12에 땅 4개 (한 땅 3번)");
+        Assert.AreEqual(13, TerritoryRules.EarnedChances(config, 13), "Lv.13부터는 레벨마다 1번");
     }
 
     [Test]

@@ -16,14 +16,16 @@ public enum TerritoryBlock
     None,          // 시작할 수 있음
     NoChance,      // 개간 기회가 없음 (레벨이 오를 때마다 한 번)
     OtherClearing, // 다른 곳을 개간하는 중 (한 번에 한 곳만)
+    OtherDirection, // 다른 방향을 개간하다 멈춤 → 그 방향 3번을 먼저 (한 땅씩 차례로)
     Mission,       // 숲 개간은 다 끝남 → 영토 확장 미션 차례
     AllDone,       // 이 방향은 모두 넓힘
 }
 
 /// <summary>
 /// 영토 확장 규칙 (데이터 + 상태 → 결과). 진행의 원본은 발전 · 끝낸 작업 기록이라 따로 저장하지 않는다.
-/// - 개간 기회: 왕국 Lv.(시작 레벨)에 1번, 그 뒤 레벨이 오를 때마다 1번씩 쌓임. 시작한 개간(진행 중 포함)만큼 씀
-/// - 개간은 한 번에 한 곳만 (북쪽을 개간하는 동안 서쪽은 못 함). 방향은 기회가 생길 때마다 고름
+/// - 개간 기회: 왕국 Lv.(시작 레벨)에 1번, 그 뒤 레벨이 오를 때마다 1번씩 쌓임 (TerritoryBonusChanceUntilLevel까지는 2번). 시작한 개간(진행 중 포함)만큼 씀
+/// - 개간은 한 번에 한 곳만 (북쪽을 개간하는 동안 서쪽은 못 함). 한 방향을 시작하면 그 땅의 개간을 다 마칠 때까지 그 방향만
+///   (여러 방향에 흩어 놓아 땅이 하나도 안 열리는 일이 없게. 옛 세이브처럼 이미 흩어져 있으면 많이 한 방향부터)
 /// - 한 단계 = 개간 N번 → 영토 확장 미션 → 땅이 열림. 같은 방향의 다음 단계는 그 뒤에
 /// - 방향 = 중앙 공터 둘레의 구역 블록 하나, 단계 = 그 블록이 커지는 단계 (땅 · 걷기 영역 · 카메라 · 부지 칸이 그 단계의 발전으로 열림)
 /// </summary>
@@ -225,9 +227,13 @@ public static class TerritoryRules
 
     #region 개간 기회 · 시작
 
-    /// <summary>지금까지 생긴 개간 기회 (시작 레벨에 1번, 레벨이 오를 때마다 1번)</summary>
-    public static int EarnedChances(SettlementConfig config, int playerLevel) =>
-        Math.Max(0, playerLevel - config.TerritoryStartLevel + 1);
+    /// <summary>지금까지 생긴 개간 기회 (시작 레벨에 1번, 레벨이 오를 때마다 1번. 보너스 레벨까지는 레벨마다 1번 더)</summary>
+    public static int EarnedChances(SettlementConfig config, int playerLevel)
+    {
+        int start = config.TerritoryStartLevel;
+        int bonus = Math.Max(0, Math.Min(playerLevel, config.TerritoryBonusChanceUntilLevel) - start + 1);
+        return Math.Max(0, playerLevel - start + 1) + bonus;
+    }
 
     /// <summary>쓴 개간 기회 = 시작한 개간 (끝냈거나 하는 중)</summary>
     public static int UsedChances(SettlementConfig config, Settlement settlement)
@@ -273,6 +279,28 @@ public static class TerritoryRules
         return null;
     }
 
+    /// <summary>
+    /// 개간을 시작했지만 다 마치지 않은 땅 (그 방향만 이어서 개간할 수 있음). 여러 곳이면 많이 한 곳 → 앞 방향 순. 없으면 null
+    /// </summary>
+    public static TerritoryExpansionDefinition Started(SettlementConfig config, Settlement settlement)
+    {
+        TerritoryExpansionDefinition best = null;
+        int bestDone = 0;
+        foreach (var direction in HomePreference)
+        {
+            var territory = Current(config, settlement, direction);
+            if (territory == null || IsTutorial(territory, settlement) || GetStage(territory, config, settlement) != TerritoryStage.Clearing)
+                continue;
+            int done = ClearingsDone(territory, settlement);
+            if (done > bestDone)
+            {
+                best = territory;
+                bestDone = done;
+            }
+        }
+        return best;
+    }
+
     /// <summary>그 방향으로 지금 개간을 시작할 수 있는지 (안 되면 이유)</summary>
     public static TerritoryBlock GetBlock(SettlementConfig config, Settlement settlement, int playerLevel, TerritoryDirection direction)
     {
@@ -283,6 +311,9 @@ public static class TerritoryRules
             return TerritoryBlock.Mission;
         if (Working(config, settlement, out _) != null)
             return TerritoryBlock.OtherClearing;
+        var started = Started(config, settlement);
+        if (started != null && started != current)
+            return TerritoryBlock.OtherDirection;
         if (IsTutorial(current, settlement) && !settlement.HasDevelopment(TutorialDone))
             return TerritoryBlock.None;
         return AvailableChances(config, settlement, playerLevel) > 0 ? TerritoryBlock.None : TerritoryBlock.NoChance;
