@@ -19,5 +19,5 @@ MonoBehaviour:
   _category: {fileID: 11400000, guid: c0aaf6ff75ccefa499fe320afcbcbb59, type: 2}
   _rarity: {fileID: 11400000, guid: 92826ade59cca8b4f9ec100f9c9a27f3, type: 2}
   _isSellable: 1
-  _sellPrice: 30
+  _sellPrice: 10
   _maxStack: 999

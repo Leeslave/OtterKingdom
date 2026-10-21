@@ -83,6 +83,9 @@ public class TreeShakeView : MonoBehaviour, IDecorBlocker
 
     private float GroundY => transform.position.y;
 
+    /// <summary>모든 나무의 흔든 횟수를 처음부터 (오프라인에서 돌아왔을 때)</summary>
+    public static void ForgetShakes() => Shaken.Clear();
+
     private void Update()
     {
         var manager = SettlementManager.Instance;

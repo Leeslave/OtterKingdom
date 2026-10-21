@@ -110,6 +110,15 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     [Tooltip("다 지으면 요정 상점이 이 건물 앞으로 이사함")]
     [SerializeField] private bool _hostsFairyShop;
 
+    [Header("생산 (시설)")]
+    [Tooltip("다 지으면 이 특성의 해달들이 일해 꾸준히 모아 가방에 넣는 재료 (예: 목공소 = 목재). 비우면 생산 없음")]
+    [SerializeField] private ItemDefinition _productionItem;
+    [Tooltip("일하는 해달 한 마리가 1시간에 모으는 개수")]
+    [Min(0)]
+    [SerializeField] private int _productionPerHour;
+    [Tooltip("여기서 일하는 해달의 특성 (마을에 사는 그 특성 해달 수만큼 일함)")]
+    [SerializeField] private OtterTrait _productionTrait;
+
     [Header("구역")]
     [Tooltip("이 건물이 있어야 할 구역 (구역·이사). None이면 어디에 놓아도 됨")]
     [SerializeField] private DistrictType _district;
@@ -147,6 +156,11 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     public float WidthFill => _widthFill;
     public IReadOnlyList<BuildingBonus> Bonuses => _bonuses;
     public bool HostsFairyShop => _hostsFairyShop;
+    public ItemDefinition ProductionItem => _productionItem;
+    public int ProductionPerHour => Mathf.Max(0, _productionPerHour);
+    public OtterTrait ProductionTrait => _productionTrait;
+    /// <summary>다 지으면 해달들이 일해 재료를 모으는 시설인지</summary>
+    public bool Produces => _productionItem != null && _productionPerHour > 0 && _productionTrait != OtterTrait.None;
     public DistrictType District => _district;
     public FarmPartKind FarmPart => _farmPart;
     public bool IsFarmPart => _farmPart != FarmPartKind.None;
@@ -160,6 +174,14 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     {
         _bonuses = bonuses != null ? new List<BuildingBonus>(bonuses) : new List<BuildingBonus>();
         _hostsFairyShop = hostsFairyShop;
+    }
+
+    /// <summary>테스트·설정 도구용: 생산</summary>
+    public void SetupProduction(ItemDefinition item, int perHour, OtterTrait trait)
+    {
+        _productionItem = item;
+        _productionPerHour = perHour;
+        _productionTrait = trait;
     }
 
     /// <summary>테스트·설정 도구용</summary>

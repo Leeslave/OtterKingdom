@@ -118,8 +118,8 @@ public static class QuestSetup
         ("M13_Mine", "main_lv13_mine", "광맥을 찾아서", "광산에서 광석 400개 캐기", QuestGoalType.Mine, 400, "Ore", 1500, "item:Mining/다이아몬드", QuestKind.Main, 13, "M13_Decor", 700, 0f, ""),
         ("M13_Sales", "main_lv13_sales", "해달 재벌", "판매로 50,000골드 벌기", QuestGoalType.EarnFromSales, 50000, "", 2000, "gold", QuestKind.Main, 13, "M13_Mine", 1000, 0f, ""),
         // 예전 메인 (밭을 Lv.10으로 옮기며 뺌): 도전으로 남김 (세이브의 진행 기록이 남아 있을 수 있음)
-        ("M10_Harvest", "main_lv10_harvest", "밭의 주인", "작물 500개 수확하기", QuestGoalType.Harvest, 500, "Crops", 500, "item:Farming/감자", QuestKind.Challenge, 10, "", 575, 0f, ""),
-        ("M12_Harvest", "main_lv12_harvest", "풍년이다!", "작물 800개 수확하기", QuestGoalType.Harvest, 800, "Crops", 1000, "item:Farming/딸기", QuestKind.Challenge, 12, "", 1000, 0f, ""),
+        ("M10_Harvest", "main_lv10_harvest", "넉넉한 수확", "작물 500개 수확하기", QuestGoalType.Harvest, 500, "Crops", 500, "item:Farming/감자", QuestKind.Challenge, 10, "Main_Harvest_5", 575, 0f, ""),
+        ("M12_Harvest", "main_lv12_harvest", "곳간이 가득", "작물 800개 수확하기", QuestGoalType.Harvest, 800, "Crops", 1000, "item:Farming/딸기", QuestKind.Challenge, 12, "M10_Harvest", 1000, 0f, ""),
         // Lv.14 → 15 바다를 향해 (3,900)
         ("M14_Upgrade", "main_lv14_upgrade", "완벽한 설비", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 1500, "place:ICON_Place_Farm", QuestKind.Main, 14, "M13_Sales", 500, 0f, ""),
         ("M14_Harvest", "main_lv14_harvest", "전설의 농부", "작물 1,500개 수확하기", QuestGoalType.Harvest, 1500, "Crops", 2000, "item:Farming/고구마", QuestKind.Main, 14, "M14_Upgrade", 1700, 0f, ""),
@@ -156,7 +156,7 @@ public static class QuestSetup
         ("Main_Harvest_3", "main_harvest_3", "텃밭 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 200, "item:Farming/당근", QuestKind.Challenge, 3, "Main_Harvest_2", 110, 0f, ""),
         ("Main_Harvest_4", "main_harvest_4", "밭의 주인", "작물 150개 수확하기", QuestGoalType.Harvest, 150, "Crops", 400, "item:Farming/감자", QuestKind.Challenge, 5, "Main_Harvest_3", 200, 0f, ""),
         ("Main_Harvest_5", "main_harvest_5", "풍년이다!", "작물 400개 수확하기", QuestGoalType.Harvest, 400, "Crops", 800, "item:Farming/당근", QuestKind.Challenge, 8, "Main_Harvest_4", 380, 0f, ""),
-        ("Main_Harvest_6", "main_harvest_6", "농사 달인", "작물 1,000개 수확하기", QuestGoalType.Harvest, 1000, "Crops", 1500, "item:Farming/감자", QuestKind.Challenge, 11, "Main_Harvest_5", 650, 0f, ""),
+        ("Main_Harvest_6", "main_harvest_6", "농사 달인", "작물 1,000개 수확하기", QuestGoalType.Harvest, 1000, "Crops", 1500, "item:Farming/감자", QuestKind.Challenge, 11, "M12_Harvest", 650, 0f, ""),
         ("Main_Harvest_7", "main_harvest_7", "전설의 농부", "작물 2,500개 수확하기", QuestGoalType.Harvest, 2500, "Crops", 3000, "item:Farming/당근", QuestKind.Challenge, 14, "Main_Harvest_6", 1100, 0f, ""),
         ("Main_Catch_1", "main_catch_1", "첫 입질", "물고기 2마리 낚기", QuestGoalType.Catch, 2, "Fish", 50, "item:Fishing/고등어", QuestKind.Challenge, 1, "", 40, 0f, ""),
         ("Main_Catch_2", "main_catch_2", "오늘부터 낚시왕", "물고기 6마리 낚기", QuestGoalType.Catch, 6, "Fish", 100, "item:Fishing/고등어", QuestKind.Challenge, 2, "Main_Catch_1", 60, 0f, ""),

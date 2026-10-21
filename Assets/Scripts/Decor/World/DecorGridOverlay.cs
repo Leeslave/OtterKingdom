@@ -2,14 +2,15 @@
 
 /// <summary>
 /// 꾸미기 모드에서 월드에 까는 격자. 칸 상태마다 색을 칠한 작은 텍스처 한 장으로 그린다.
-/// 놓을 수 있는 칸 = 밝은 칸 + 흰 테두리, 잠긴 구역 = 어둡게, 놓을 수 없는 칸 = 비움.
+/// 놓을 수 있는 칸 = 밝은 칸 + 흰 테두리, 이미 놓인 칸 = 빨갛게(겹쳐 지을 수 없음), 잠긴 구역 = 어둡게, 놓을 수 없는 칸 = 비움.
 /// </summary>
 public class DecorGridOverlay : MonoBehaviour
 {
     private const int PixelsPerCell = 16;
 
     private static readonly Color FreeFill = new Color(1f, 1f, 1f, 0.12f);
-    private static readonly Color OccupiedFill = new Color(1f, 1f, 1f, 0.04f);
+    private static readonly Color OccupiedFill = new Color(0.95f, 0.3f, 0.28f, 0.3f);
+    private static readonly Color OccupiedLine = new Color(1f, 0.45f, 0.4f, 0.55f);
     private static readonly Color LockedFill = new Color(0.22f, 0.2f, 0.28f, 0.45f);
     private static readonly Color Line = new Color(1f, 1f, 1f, 0.4f);
     private static readonly Color LockedLine = new Color(1f, 1f, 1f, 0.2f);
@@ -106,7 +107,7 @@ public class DecorGridOverlay : MonoBehaviour
                 switch (state)
                 {
                     case DecorCellState.Free: fill = FreeFill; line = Line; break;
-                    case DecorCellState.Occupied: fill = OccupiedFill; line = Line; break;
+                    case DecorCellState.Occupied: fill = OccupiedFill; line = OccupiedLine; break;
                     case DecorCellState.Locked: fill = LockedFill; line = LockedLine; break;
                 }
 

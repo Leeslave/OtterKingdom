@@ -32,6 +32,22 @@ public class MineMazeSave
 
     // JsonUtility는 null 필드를 빈 저장으로 써서, 본 세이브의 mineMaze는 광산에 안 갔어도 null이 아님
     public bool IsEmpty => savedUtcTicks <= 0;
+
+    /// <summary>오프라인에서 돌아옴: 부순 돌이 모두 다시 생기고(다음에 불러올 때), 바로 다시 들어갈 수 있음</summary>
+    public void ResetCooldowns()
+    {
+        nextEnterUtcTicks = 0;
+        ClearRespawn(rocks);
+        foreach (var floor in floors)
+            if (floor != null) ClearRespawn(floor.rocks);
+    }
+
+    private static void ClearRespawn(List<MazeRockSave> list)
+    {
+        if (list == null) return;
+        foreach (var rock in list)
+            if (rock != null && !rock.present) rock.respawnUtcTicks = 0;
+    }
 }
 
 [Serializable]

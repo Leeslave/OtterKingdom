@@ -25,7 +25,7 @@ MonoBehaviour:
   _completionMessage: "\uC774\uC6C3\uC9D1 \uC55E\uC774 \uD658\uD574\uC84C\uC5B4\uC694!"
   _requiredLevel: 9
   _requiredDevelopment: p3_neighbor_settled
-  _gold: 150
+  _gold: 600
   _items:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
     _amount: 6

@@ -31,10 +31,10 @@ public static partial class SettlementSetup
         ("Building_Shop", "bld_shop", "해달 상점", "짤랑이의 가게. 요정 상점이 이곳으로 이사하고, 물건을 더 비싸게 팔아요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Shop.png", new string[0], null,
             0, P4TraderSettled, new[] { (OtterTrait.Trading, 1) }, 1, 2000, 40, 20, 0f, 300f),
-        ("Building_Workshop", "bld_workshop", "목공소", "숲을 개간할 때 얻는 목재가 늘어나요.", BuildingKind.Facility,
+        ("Building_Workshop", "bld_workshop", "목공소", "나무 하는 해달들이 일해 목재를 꾸준히 모아 가방에 넣어요. (한 마리당 1시간에 12개)", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Workshop.png", new string[0], null,
             0, P4LumberSettled, new[] { (OtterTrait.Woodcutting, 2) }, 1, 3000, 60, 30, 0f, 360f),
-        ("Building_Quarry", "bld_quarry", "채석 작업소", "광장 바위와 광산에서 얻는 돌이 늘어나요.", BuildingKind.Facility,
+        ("Building_Quarry", "bld_quarry", "채석 작업소", "채굴하는 해달들이 일해 돌을 꾸준히 모아 가방에 넣어요. (한 마리당 1시간에 12개)", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Quarry.png", new string[0], null,
             0, P4MinerSettled, new[] { (OtterTrait.Mining, 2) }, 1, 4000, 60, 60, 0f, 420f),
         ("Building_Granary", "bld_granary", "농업 창고", "밭에서 거두는 작물이 늘어나요.", BuildingKind.Facility,
@@ -57,13 +57,14 @@ public static partial class SettlementSetup
         new Dictionary<string, ((KingdomBonusKind, int)[], bool)>
         {
             { "bld_shop", (new[] { (KingdomBonusKind.SellPrice, 10) }, true) },
-            { "bld_workshop", (new[] { (KingdomBonusKind.ClearingWood, 20) }, false) },
-            { "bld_quarry", (new[] { (KingdomBonusKind.StoneYield, 20) }, false) },
             { "bld_granary", (new[] { (KingdomBonusKind.HarvestYield, 10) }, false) },
             { "bld_fishery", (new[] { (KingdomBonusKind.FishYield, 20) }, false) },
             { "bld_workyard", (new[] { (KingdomBonusKind.BuildSpeed, 15) }, false) },
             { "bld_archive", (new[] { (KingdomBonusKind.VisitSpeed, 20) }, false) },
         };
+
+    // 목공소 · 채석 작업소에서 일하는 해달 한 마리가 1시간에 모으는 목재 · 돌
+    private const int ProductionPerHour = 12;
 
     [MenuItem("Tools/Settlement/Apply Buildings")]
     public static void ApplyBuildings()
@@ -115,6 +116,11 @@ public static partial class SettlementSetup
                 fairy = effects.fairy;
             }
             building.SetupEffects(bonuses, fairy);
+            // 목공소 · 채석 작업소: % 효과 대신 특성 해달들이 꾸준히 목재 · 돌을 모음 (ProductionRules)
+            if (row.id == "bld_workshop")
+                building.SetupProduction(wood, ProductionPerHour, OtterTrait.Woodcutting);
+            else if (row.id == "bld_quarry")
+                building.SetupProduction(stone, ProductionPerHour, OtterTrait.Mining);
 
             var so = new SerializedObject(building);
             so.FindProperty("_description").stringValue = row.description;

@@ -16,9 +16,13 @@ public class ShopCatalog : ScriptableObject
         [SerializeField] private string _label;
         [Tooltip("이 탭에 보일 아이템의 분류 (하위 분류 포함)")]
         [SerializeField] private ItemCategory _category;
+        [Tooltip("이 발전이 열리기 전에는 탭과 그 상품을 숨김 (예: 낚시 탭 fishing_dock)")]
+        [SerializeField] private string _requiredDevelopment;
 
         public string Label => _label;
         public ItemCategory Category => _category;
+        public bool Unlocked => string.IsNullOrEmpty(_requiredDevelopment)
+            || (SettlementManager.Instance != null && SettlementManager.Instance.IsLoaded && SettlementManager.Instance.HasDevelopment(_requiredDevelopment));
 
         public Tab() { }
 

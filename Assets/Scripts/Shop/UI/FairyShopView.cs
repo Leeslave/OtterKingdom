@@ -34,6 +34,8 @@ public class FairyShopView : MonoBehaviour
     public event Action<ShopProduct> OnProductClicked;
 
     private readonly List<DecorStorageTabView> _tabs = new List<DecorStorageTabView>();
+    // _tabs와 같은 순서의 카탈로그 탭 ("전체"는 null)
+    private readonly List<ShopCatalog.Tab> _tabTargets = new List<ShopCatalog.Tab>();
     private readonly List<ShopProductCardView> _cards = new List<ShopProductCardView>();
     private ShopCatalog _catalog;
     private List<ShopProduct> _products = new List<ShopProduct>();
@@ -58,7 +60,14 @@ public class FairyShopView : MonoBehaviour
         _products = catalog.Products;
         _dialogueText.text = dialogue;
         BuildTabs();
-        Select(category);
+        // 아직 안 열린 기능의 탭은 숨김 (낚시터를 고치기 전의 낚시 탭)
+        for (int i = 0; i < _tabs.Count; i++)
+        {
+            var tab = _tabTargets[i];
+            _tabs[i].gameObject.SetActive(tab == null || tab.Unlocked);
+        }
+        var opened = category != null ? _tabTargets.Find(t => t != null && t.Category == category) : null;
+        Select(opened != null && !opened.Unlocked ? null : category);
         _animator.Show();
     }
 
@@ -72,20 +81,27 @@ public class FairyShopView : MonoBehaviour
         if (_tabs.Count > 0)
             return;
 
-        AddTab(null, "전체");
+        AddTab(null, null, "전체");
         foreach (var tab in _catalog.Tabs)
         {
             if (tab != null && tab.Category != null)
-                AddTab(tab.Category, tab.Label);
+                AddTab(tab, tab.Category, tab.Label);
         }
     }
 
-    private void AddTab(ItemCategory category, string label)
+    private void AddTab(ShopCatalog.Tab target, ItemCategory category, string label)
     {
         var tab = Instantiate(_tabPrefab, _tabParent);
         tab.Bind(category, label);
         tab.OnClicked += t => Select(t.Category);
         _tabs.Add(tab);
+        _tabTargets.Add(target);
+    }
+
+    private bool IsShown(ShopProduct product)
+    {
+        var tab = _catalog.FindTab(product);
+        return product.DevelopmentUnlocked && (tab == null || tab.Unlocked);
     }
 
     private void Select(ItemCategory category)
@@ -94,7 +110,7 @@ public class FairyShopView : MonoBehaviour
         foreach (var tab in _tabs)
             tab.SetSelected(tab.Category == category);
 
-        var shown = _products.FindAll(p => p.DevelopmentUnlocked && (category == null || category.Contains(p.Item)));
+        var shown = _products.FindAll(p => IsShown(p) && (category == null || category.Contains(p.Item)));
         while (_cards.Count < shown.Count)
         {
             var card = Instantiate(_cardPrefab, _cardParent);

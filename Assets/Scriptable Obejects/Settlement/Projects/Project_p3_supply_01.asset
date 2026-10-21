@@ -24,7 +24,7 @@ MonoBehaviour:
     \uC0DD\uACBC\uC5B4\uC694."
   _requiredLevel: 7
   _requiredDevelopment: board_upgraded
-  _gold: 300
+  _gold: 1200
   _items:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
     _amount: 12

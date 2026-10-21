@@ -117,6 +117,7 @@ public class MineMazeGame : MonoBehaviour
 
         _model.Changed += _hud.Refresh;
         SettlementManager.SaveRequested += SaveCommunity;
+        GameManager.AbsenceSettled += HandleAbsenceSettled;
         _model.Discovered += ore => StartCoroutine(DiscoverLater(ore));
         _model.RockRespawned += HandleRockRespawned;
 
@@ -131,7 +132,9 @@ public class MineMazeGame : MonoBehaviour
         var inGameState = InGame && InventoryManager.Instance != null ? InventoryManager.Instance.MineMazeState : null;
         if (inGameState != null && !inGameState.IsEmpty)
             return inGameState;
-        // First in-game visit migrates the existing standalone mine save.
+        // 본 게임은 본 세이브만 씀 — 세이브를 지우면 광산도 처음부터 (독립 테스트 파일을 다시 읽지 않음)
+        if (InGame)
+            return new MineMazeSave();
         try
         {
             if (File.Exists(SavePath))
@@ -198,9 +201,18 @@ public class MineMazeGame : MonoBehaviour
 
     private void SaveCommunity() => Save();
 
+    // 오프라인에서 돌아옴 (광산 안에 있었어도): 부순 돌이 다시 생기고 바로 다시 들어갈 수 있음
+    private void HandleAbsenceSettled()
+    {
+        _model.RefreshAfterAbsence(DateTime.UtcNow);
+        ShowView();
+        Save();
+    }
+
     private void OnDisable()
     {
         SettlementManager.SaveRequested -= SaveCommunity;
+        GameManager.AbsenceSettled -= HandleAbsenceSettled;
         Save();
     }
 

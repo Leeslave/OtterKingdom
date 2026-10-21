@@ -23,4 +23,4 @@ MonoBehaviour:
   _veinSprite: {fileID: 21300000, guid: a9039f9c489e6a344bcc0a61f764cae2, type: 3}
   _color: {r: 1, g: 0.57, b: 0.7, a: 1}
   _rarity: 2
-  _sellPrice: 40
+  _sellPrice: 14

@@ -228,6 +228,9 @@ public partial class SettlementManager
             }
             ResumeWaitingFields();
         }
+        // 농부가 일을 맡기 전(말을 걸어 배치하기 전)에는 심어 둔 작물도 자라지 않음
+        if (!HasFarmWorker)
+            return;
         // 광장 밖(광산 · 낚시터): 걷는 농부 대신 꺼 둔 동안처럼 (자람은 효율만큼, 다 자라면 바로 상자로)
         bool away = FarmWorkerAway;
         if (Farm.Grow(away ? dt * FarmConfig.OfflineEfficiency : dt, FieldSpeed) > 0)
@@ -370,9 +373,19 @@ public partial class SettlementManager
         if (ConsumeSeed(crop))
             Farm.Plant(fieldId, crop.cropId, crop.baseDurationSec);
         else
+        {
             field.waitingCropId = crop.cropId;
+            PostSeedShortage(crop);
+        }
         OnFarmChanged?.Invoke();
         return true;
+    }
+
+    // 씨앗이 없어 다시 못 심음: 옛 밭과 같은 알림 (같은 작물 알림은 GameNotices가 한 번만 띄움)
+    private void PostSeedShortage(CropDefinition crop)
+    {
+        var notice = new FarmNotice(FarmNoticeKind.SeedShortage, 1, new[] { crop.cropId });
+        GameNotices.Post(FarmNoticeText.Build(notice, id => FindCrop(id)?.displayName ?? id));
     }
 
     /// <summary>씨앗을 기다리던 밭에 씨앗이 생겼으면 심음</summary>
@@ -540,6 +553,8 @@ public partial class SettlementManager
     // 다 자란 밭은 농부가 상자에 넣고 다시 심음. 상자가 차면 멈춤
     private void ApplyFarmOffline(double seconds)
     {
+        if (!HasFarmWorker)
+            return;
         seconds = OfflineProductionService.Credited(seconds);
         float efficiency = FarmConfig.OfflineEfficiency;
         for (double t = 0; t < seconds; t += OfflineStepSeconds)
