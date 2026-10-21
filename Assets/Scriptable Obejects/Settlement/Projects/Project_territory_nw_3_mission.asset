@@ -25,12 +25,12 @@ MonoBehaviour:
     \uC4F8 \uB545\uC774 \uB113\uC5B4\uC84C\uC5B4\uC694."
   _requiredLevel: 1
   _requiredDevelopment: territory_nw_3_cleared
-  _gold: 10000
+  _gold: 7000
   _items:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
-    _amount: 110
+    _amount: 77
   - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
-    _amount: 50
+    _amount: 35
   _stages: []
   _resultDevelopment: territory_nw_3
   _xpReward: 1500

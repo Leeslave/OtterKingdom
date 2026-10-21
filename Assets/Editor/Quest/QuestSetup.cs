@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEditor;
@@ -211,6 +211,19 @@ public static class QuestSetup
         ("Main_Collection_2", "main_collection_2", "수집가", "도감에 새로 6칸 등록하기", QuestGoalType.CollectionRegister, 6, "", 300, "nav:ICON_Nav_Collection", QuestKind.Challenge, 5, "Main_Collection_1", 180, 0f, ""),
         ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.MeetOtter, 1, "", 200, "otter:ICON_Otter_Cast_Fisher", QuestKind.Challenge, 3, "", 120, 0f, ""),
         ("Main_Otter_2", "main_otter_2", "해달 친구들", "해달 2마리 만나기", QuestGoalType.MeetOtter, 2, "", 500, "otter:ICON_Otter_Farmer", QuestKind.Challenge, 8, "Main_Otter_1", 300, 0f, ""),
+
+        // Lv.5~10 짧은 도전: 메인 진행과 나란히 수행. 갱도 목표는 저장된 누적 기록도 인정.
+        ("C05_Gather", "challenge_lv5_gather", "탐험 준비물", "광장에서 재료 15개 줍기", QuestGoalType.Gather, 15, "", 150, "item:Mining/목재", QuestKind.Challenge, 5, "", 40, 0f, ""),
+        ("C06_Sales", "challenge_lv6_sales", "개간 자금 모으기", "판매로 500골드 벌기", QuestGoalType.EarnFromSales, 500, "", 250, "gold", QuestKind.Challenge, 6, "", 50, 0f, ""),
+        ("C07_Gather", "challenge_lv7_gather", "마을의 자재 담당", "광장에서 재료 30개 줍기", QuestGoalType.Gather, 30, "", 250, "item:Mining/목재", QuestKind.Challenge, 7, "C05_Gather", 60, 0f, ""),
+        ("C08_Decor", "challenge_lv8_decor", "새 땅의 놀이터", "장난감 1개 놓기", QuestGoalType.PlaceDecor, 1, "", 300, "item:Decor/축구공", QuestKind.Challenge, 8, "", 70, 0f, ""),
+        ("C09_Sales", "challenge_lv9_sales", "이웃 맞이 준비금", "판매로 1500골드 벌기", QuestGoalType.EarnFromSales, 1500, "", 400, "gold", QuestKind.Challenge, 9, "C06_Sales", 80, 0f, ""),
+        ("C10_Harvest", "challenge_lv10_harvest", "텃밭의 첫 한 바구니", "작물 20개 수확하기", QuestGoalType.Harvest, 20, "Crops", 400, "item:Farming/당근", QuestKind.Challenge, 10, "", 90, 0f, ""),
+        ("C05_MazeRocks", "challenge_maze_rocks_5", "갱도 길잡이", "오래된 갱도에서 돌 누적 5개 부수기", QuestGoalType.Milestone, 1, "", 200, "place:ICON_Place_Mine", QuestKind.Challenge, 5, "", 40, 0f, "maze_rocks_5"),
+        ("C06_MazeCraft", "challenge_maze_craft", "갱도 탐험가의 도구", "오래된 갱도 작업대에서 곡괭이 제작하기", QuestGoalType.Milestone, 1, "", 250, "place:ICON_Place_Mine", QuestKind.Challenge, 6, "", 50, 0f, "maze_pickaxe_crafted"),
+        ("C07_MazeRocks", "challenge_maze_rocks_15", "갱도를 밝히는 손", "오래된 갱도에서 돌 누적 15개 부수기", QuestGoalType.Milestone, 1, "", 300, "place:ICON_Place_Mine", QuestKind.Challenge, 7, "C05_MazeRocks", 60, 0f, "maze_rocks_15"),
+        ("C08_MazeTrips", "challenge_maze_trips_3", "깡깡이의 탐험 동료", "오래된 갱도에서 한 층의 돌을 모두 부수고 나오기 누적 3회", QuestGoalType.Milestone, 1, "", 400, "place:ICON_Place_Mine", QuestKind.Challenge, 8, "", 70, 0f, "maze_trips_3"),
+        ("C09_MazeRocks", "challenge_maze_rocks_30", "든든한 갱도 개척자", "오래된 갱도에서 돌 누적 30개 부수기", QuestGoalType.Milestone, 1, "", 500, "place:ICON_Place_Mine", QuestKind.Challenge, 9, "C07_MazeRocks", 80, 0f, "maze_rocks_30"),
 
         // 일일: Lv.9부터 (성장곡선 5장), 골드만
         ("Daily_Harvest", "daily_harvest", "오늘의 수확", "작물 30개 수확하기", QuestGoalType.Harvest, 30, "Crops", 150, "item:Farming/당근", QuestKind.Daily, 9, "", 0, 10f, ""),

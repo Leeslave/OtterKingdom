@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -44,6 +44,48 @@ public class MainQuestChainTests
     }
 
     // Lv.5가 한꺼번에 열리지 않게: 게시판 보강 → 또박이 배치 → 첫 구역 → … → 광산 연락(오래된 갱도). 실제 퀘스트 에셋의 체인
+    [Test]
+    public void EarlyChallenges_AreRegisteredAndHaveReachablePrerequisites()
+    {
+        var database = AssetDatabase.LoadAssetAtPath<QuestDatabase>("Assets/Scriptable Obejects/Quest/QuestDatabase.asset");
+        var ids = new HashSet<string>();
+        int added = 0;
+        foreach (var quest in database.Quests)
+        {
+            Assert.IsTrue(ids.Add(quest.QuestId), quest.QuestId);
+            if (!quest.QuestId.StartsWith("challenge_")) continue;
+            added++;
+            Assert.AreEqual(QuestKind.Challenge, quest.Kind);
+            Assert.That(quest.RequiredLevel, Is.InRange(5, 10));
+            Assert.Greater(quest.RewardAmount, 0);
+            if (quest.Prerequisite != null)
+                Assert.LessOrEqual(quest.Prerequisite.RequiredLevel, quest.RequiredLevel);
+            if (quest.GoalType == QuestGoalType.Harvest)
+                Assert.GreaterOrEqual(quest.RequiredLevel, 10, "밭 해금 전에는 수확 목표를 주지 않음");
+        }
+        Assert.AreEqual(11, added);
+    }
+
+    [Test]
+    public void TerritoryProjects_CostThirtyPercentLess()
+    {
+        var guids = AssetDatabase.FindAssets("t:CommunityProjectDefinition", new[] { "Assets/Scriptable Obejects/Settlement/Projects" });
+        int checkedProjects = 0;
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            if (!System.IO.Path.GetFileName(path).StartsWith("Project_territory_")) continue;
+            var project = new SerializedObject(AssetDatabase.LoadAssetAtPath<CommunityProjectDefinition>(path));
+            int tier = path.Contains("_3_mission") ? 3 : path.Contains("_2_mission") ? 2 : 1;
+            Assert.AreEqual(tier == 1 ? 1400 : tier == 2 ? 3500 : 7000, project.FindProperty("_gold").intValue, path);
+            var items = project.FindProperty("_items");
+            Assert.AreEqual(tier == 1 ? 28 : tier == 2 ? 49 : 77, items.GetArrayElementAtIndex(0).FindPropertyRelative("_amount").intValue, path);
+            Assert.AreEqual(tier == 1 ? 11 : tier == 2 ? 21 : 35, items.GetArrayElementAtIndex(1).FindPropertyRelative("_amount").intValue, path);
+            checkedProjects++;
+        }
+        Assert.AreEqual(13, checkedProjects);
+    }
+
     [Test]
     public void Level5Chain_BoardOtterBeforeMineCall()
     {

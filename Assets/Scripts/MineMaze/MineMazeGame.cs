@@ -152,6 +152,7 @@ public class MineMazeGame : MonoBehaviour
         if (_model == null || _resetting)
             return false;
         _saveTimer = 0f;
+        RecordMilestones();
         var saved = _model.ToSave();
         saved.savedUtcTicks = (_pausedUtc ?? DateTime.UtcNow).Ticks;
         if (InGame && InventoryManager.Instance != null)
@@ -576,6 +577,13 @@ public class MineMazeGame : MonoBehaviour
             settlement.Settlement.UnlockDevelopment(MineMazeRules.FirstRockDevelopment);
         if (_model.Runs > 0)
             settlement.Settlement.UnlockDevelopment(MineMazeRules.FirstTripDevelopment);
+        foreach (int count in new[] { 5, 15, 30 })
+            if (_model.RocksBroken >= count)
+                settlement.Settlement.UnlockDevelopment($"maze_rocks_{count}");
+        if (_model.PickaxeTier > 0)
+            settlement.Settlement.UnlockDevelopment("maze_pickaxe_crafted");
+        if (_model.Runs >= 3)
+            settlement.Settlement.UnlockDevelopment("maze_trips_3");
     }
 
     /// <summary>"2분 05초" (다시 들어가기까지)</summary>
