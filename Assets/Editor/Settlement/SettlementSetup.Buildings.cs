@@ -24,7 +24,7 @@ public static partial class SettlementSetup
         int gold, int wood, int stone, float growth, float seconds)[] BuildingTable =
     {
         ("Building_SmallHouse", "bld_small_house", "작은 집", "장난감을 보고 찾아온 해달이 살 수 있는 집이에요.", BuildingKind.Home,
-            new Vector2Int(4, 3), 0.9f, "Assets/Art/Plaza/Props/Prop_House_Blue.png",
+            new Vector2Int(4, 3), 0.9f, "Assets/Art/Buildings/Detail4/SmallHouse.png",
             new[] { "Stage_House_Blue_0", "Stage_House_Blue_1", "Stage_House_Blue_2", "Stage_House_Blue_3" }, "ICON_House_Blue",
             0, BoardUpgradeDevelopment, new (OtterTrait, int)[0], 0, 600, 20, 10, 0.3f, 180f),
         // Lv.10~15 해달의 부탁 (SettlementSetup.P4Story.cs) — 그 부탁이 열려야 지을 수 있음 (필요 발전 = 입주 부탁의 결과)
@@ -118,12 +118,16 @@ public static partial class SettlementSetup
 
             var so = new SerializedObject(building);
             so.FindProperty("_description").stringValue = row.description;
-            so.FindProperty("_icon").objectReferenceValue = string.IsNullOrEmpty(row.icon) ? null : LoadPropArt(row.icon);
+            var detailIcon = AssetDatabase.LoadAssetAtPath<Sprite>(
+                $"Assets/Art/Buildings/Detail4/{row.asset.Replace("Building_", "")}.png");
+            so.FindProperty("_icon").objectReferenceValue = detailIcon != null ? detailIcon
+                : string.IsNullOrEmpty(row.icon) ? null : LoadPropArt(row.icon);
             so.FindProperty("_widthFill").floatValue = row.widthFill;
             var stages = so.FindProperty("_stageSprites");
             stages.arraySize = row.stages.Length;
             for (int i = 0; i < row.stages.Length; i++)
-                stages.GetArrayElementAtIndex(i).objectReferenceValue = LoadPropArt(row.stages[i]);
+                stages.GetArrayElementAtIndex(i).objectReferenceValue =
+                    row.id == "bld_small_house" && i == row.stages.Length - 1 ? sprite : LoadPropArt(row.stages[i]);
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(building);
             buildings.Add(building);
