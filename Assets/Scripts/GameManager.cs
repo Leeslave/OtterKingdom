@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -41,6 +41,8 @@ public partial class GameManager : MonoBehaviour
     [SerializeField] private CropDefinition[] cropDefinitions;
     [SerializeField] private FarmBalanceData farmBalance;
     [SerializeField] private FishingBalanceData fishingBalance;
+    [Tooltip("바다 낚시 (낚시 개편): 물고기 표 · 줄 · 찌 · 릴 강화 · 의뢰. 비우면 예전 낚싯대 낚시")]
+    [SerializeField] private FishingReworkConfig fishingConfig;
     [SerializeField] private MiningBalanceData miningBalance;
     [SerializeField] private OtterVisitBalanceData otterVisitBalance;
 
@@ -181,11 +183,16 @@ public partial class GameManager : MonoBehaviour
         farmService.Harvested += HandleFarmHarvested;
         farmService.NoticeRaised += HandleFarmNotice;
         ReportOpenedFurrows();
-        fishingService = new FishingService(save, fishingBalance);
+        fishingService = new FishingService(save, fishingBalance, fishingConfig, fishingConfig != null ? new FishingHost(this) : null);
+        if (fishingService.Model != null)
+        {
+            fishingService.Model.Upgraded += _ => SaveNow();
+            fishingService.Model.RequestChanged += SaveNow;
+        }
         miningService = new MiningService(save, miningBalance);
         ReportPickaxeLevel();
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
-            otterVisitBalance, miningBalance);
+            otterVisitBalance, miningBalance) { FishingConfig = fishingConfig };
         gameUI = GameUI.Create(this);
         // Set here, before any view's Start asks for the first-plant guide.
         zoneTutorialPending = ZoneTutorials.Has(CurrentZoneId) && !save.tutorialsDone.Contains(CurrentZoneId);
@@ -1233,10 +1240,54 @@ public partial class GameManager : MonoBehaviour
         gameUI.HideGuide();
     }
 
-    // Called once by the fishing scene; the farm scene has no rod button.
-    public void ShowRodUpgradeButton()
+    // Called once by the fishing scene; the farm scene has no sea fishing button.
+    public void ShowSeaFishingButton()
     {
-        gameUI.ShowRodUpgradeButton();
+        gameUI.ShowSeaFishingButton();
+    }
+
+    // 바다 낚시 (낚시 개편): 낚시터 씬 안의 바다 화면 (FishingReworkGame, 본 게임 모드)
+    // 낚시꾼 해달이 선착장에서 일할 수 있게 된 뒤 (선착장 수리 · 해달 배치)
+    public bool CanOpenSeaFishing => fishingService.Model != null && CanProduceIn(FishingZoneId) && FindAnyObjectByType<FishingReworkGame>() != null;
+
+    public void SetSeaFishingButtonVisible(bool visible) => gameUI.SetSeaFishingButtonVisible(visible);
+
+    /// <summary>바다에서 나올 때 저장 (손낚시로 낚은 것 · 강화 · 의뢰)</summary>
+    public void SaveSeaFishing() => SaveNow();
+
+    public void OpenSeaFishing()
+    {
+        var sea = FindAnyObjectByType<FishingReworkGame>();
+        if (sea != null && fishingService.Model != null)
+            sea.Enter();
+    }
+
+    // 강화 · 의뢰 보상 · 낚은 물고기가 바뀌면 저장 (골드 · 가방은 본 게임 것이라 같이 저장됨)
+    private void HandleSeaFishingChanged() => SaveNow();
+
+    // 바다 낚시가 쓰는 본 게임 골드 · 가방 (강화 = 생산 업그레이드 퀘스트가 셈, 낚은 것 = AddFishingCatch: 퀘스트 · 도감 · 소리 · 어업 작업소)
+    private sealed class FishingHost : IFishingHost
+    {
+        private readonly GameManager game;
+
+        public FishingHost(GameManager game) => this.game = game;
+
+        public int Gold => CurrencyManager.Instance != null ? game.CoinBalance : 0;
+
+        public bool TrySpendGold(int amount) =>
+            amount <= 0 || (CurrencyManager.Instance != null && CurrencyManager.Instance.TrySpend(game.goldCurrency, amount, TransactionSource.RodUpgrade));
+
+        public void EarnGold(int amount)
+        {
+            if (amount > 0 && CurrencyManager.Instance != null)
+                CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(game.goldCurrency, amount, TransactionSource.QuestReward));
+        }
+
+        public void AddCatch(FishDefinition fish)
+        {
+            if (fish != null && fish.Item != null)
+                game.AddFishingCatch(fish.Item.ItemId);
+        }
     }
 
     // Single switch for "the otter is on fishing duty". FishingOtterController
@@ -1412,13 +1463,6 @@ public partial class GameManager : MonoBehaviour
         }
     }
 #endif
-
-    public bool TryUpgradeRod()
-    {
-        if (!fishingService.TryUpgradeRod(CurrencyManager.Instance, goldCurrency)) return false;
-        SaveNow();
-        return true;
-    }
 
     // Whether the whole yield of this ready slot fits in the bag (the farmer
     // skips slots that don't; they wait until the player sells).

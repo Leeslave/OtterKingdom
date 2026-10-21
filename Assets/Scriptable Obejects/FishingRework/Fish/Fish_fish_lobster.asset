@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_lobster
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_lobster
+  _displayName: "\uB2ED\uC0C8\uC6B0"
+  _description: "\uB2E8\uB2E8\uD55C \uAECD\uB370\uAE30\uC5D0 \uAE34 \uB354\uB4EC\uC774.
+    \uBC14\uB2E5\uC758 \uBCF4\uBB3C."
+  _icon: {fileID: 21300000, guid: 27b709a8af8b6a44891f5911f0899031, type: 3}
+  _rarity: 2
+  _item: {fileID: 11400000, guid: 6915b78bed7c8de49ac5f7fb32deb546, type: 2}
+  _facesLeft: 0
+  _price: 380
+  _minWeight: 1
+  _maxWeight: 3
+  _distance: {x: 30, y: 60}
+  _depth: {x: 0.2, y: 0.8}
+  _nearBottom: 1
+  _spawnWeight: 14
+  _swimSpeed: 0.4
+  _length: 1.2

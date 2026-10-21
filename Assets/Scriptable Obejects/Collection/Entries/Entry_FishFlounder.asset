@@ -15,13 +15,13 @@ MonoBehaviour:
   _entryId: fish_flounder
   _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
   _displayName: 
-  _sortOrder: 17
+  _sortOrder: 23
   _portrait: {fileID: 0}
   _silhouette: {fileID: 21300000, guid: 95711e0ec75f4924d979078aa72d0277, type: 3}
   _tagline: "\uBAA8\uB798 \uBC14\uB2E5\uC5D0 \uB0A9\uC791 \uC5CE\uB4DC\uB9B0 \uBB3C\uACE0\uAE30."
   _description: "\uB450 \uB208\uC774 \uD55C\uCABD\uC5D0 \uBAB0\uB824 \uC788\uC5B4\uC11C
     \uB298 \uD55C\uCABD\uB9CC \uBD10\uC694."
-  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130 \xB7 \uB09A\uC2EF\uB300 Lv.12"
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC \xB7 \uAC70\uB9AC 12~42m \uBC14\uB2E5"
   _hint: 
   _linkedItem: {fileID: 11400000, guid: de7b263c617a28545bc5baf3bd24d981, type: 2}
   _unlockLevel: 0

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_rockfish
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_rockfish
+  _displayName: "\uC6B0\uB7ED"
+  _description: "\uBC14\uB2E5 \uBC14\uC704\uD2C8\uC5D0 \uC0AC\uB294 \uC21C\uD55C
+    \uBB3C\uACE0\uAE30. \uAC12\uC740 \uADF8\uB7ED\uC800\uB7ED."
+  _icon: {fileID: 21300000, guid: b1bf7fdb09592dd4888bb70d478eaeb5, type: 3}
+  _rarity: 0
+  _item: {fileID: 11400000, guid: 02e9a3ca75a20b94b924f580dd39b2b3, type: 2}
+  _facesLeft: 1
+  _price: 55
+  _minWeight: 0.5
+  _maxWeight: 1.5
+  _distance: {x: 20, y: 50}
+  _depth: {x: 0.3, y: 1.2}
+  _nearBottom: 1
+  _spawnWeight: 30
+  _swimSpeed: 0.5
+  _length: 1.1

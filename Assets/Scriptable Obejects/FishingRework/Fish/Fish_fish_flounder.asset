@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_flounder
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_flounder
+  _displayName: "\uAD11\uC5B4"
+  _description: "\uBC14\uB2E5 \uBAA8\uB798\uC5D0 \uB0A9\uC791 \uC5CE\uB4DC\uB824
+    \uC788\uC5B4\uC694. \uB450 \uB208\uC774 \uD55C\uCABD\uC5D0!"
+  _icon: {fileID: 21300000, guid: ccff251e9d196a24a9558bf6d871b476, type: 3}
+  _rarity: 2
+  _item: {fileID: 11400000, guid: de7b263c617a28545bc5baf3bd24d981, type: 2}
+  _facesLeft: 1
+  _price: 260
+  _minWeight: 0.4
+  _maxWeight: 1.2
+  _distance: {x: 12, y: 42}
+  _depth: {x: 0.2, y: 0.6}
+  _nearBottom: 1
+  _spawnWeight: 22
+  _swimSpeed: 0.4
+  _length: 1.1

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uD574\uB9C8"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: fish_seahorse
+  _displayName: "\uD574\uB9C8"
+  _description: "\uD574\uCD08 \uC0AC\uC774\uC5D0 \uC228\uC5B4 \uCC9C\uCC9C\uD788
+    \uB5A0\uB2E4\uB140\uC694. \uAF2C\uB9AC\uB85C \uD574\uCD08\uB97C \uAF2D \uC7A1\uC544\uC694."
+  _icon: {fileID: 21300000, guid: c8e9f68c3dda995448287c39a9666301, type: 3}
+  _category: {fileID: 11400000, guid: 96098a6168fc46144942ab19a916aaa2, type: 2}
+  _rarity: {fileID: 11400000, guid: 92826ade59cca8b4f9ec100f9c9a27f3, type: 2}
+  _isSellable: 1
+  _sellPrice: 130
+  _maxStack: 999

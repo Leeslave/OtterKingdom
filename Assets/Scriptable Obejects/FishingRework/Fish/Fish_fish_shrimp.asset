@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_shrimp
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_shrimp
+  _displayName: "\uBCF4\uB9AC\uC0C8\uC6B0"
+  _description: "\uBC14\uB2E5 \uAC00\uAE4C\uC774\uC5D0\uC11C \uD1A1\uD1A1 \uD280\uC5B4
+    \uB2E4\uB140\uC694."
+  _icon: {fileID: 21300000, guid: b148f2335c10a6f439081036aa3f3f6b, type: 3}
+  _rarity: 0
+  _item: {fileID: 11400000, guid: 67ac5a902d820724d888f69027d9b986, type: 2}
+  _facesLeft: 0
+  _price: 28
+  _minWeight: 0.05
+  _maxWeight: 0.12
+  _distance: {x: 2, y: 18}
+  _depth: {x: 5, y: 7.5}
+  _nearBottom: 0
+  _spawnWeight: 40
+  _swimSpeed: 0.7
+  _length: 0.65
