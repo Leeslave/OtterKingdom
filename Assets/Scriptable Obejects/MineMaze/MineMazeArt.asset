@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1dab453ebfe26942a669f75435eb5fd, type: 3}
+  m_Name: MineMazeArt
+  m_EditorClassIdentifier: OtterKingdom::MineMazeArt
+  _viewForward: {fileID: 21300000, guid: ef2ababe0f4ac49418c45dd99aa1ac7e, type: 3}
+  _viewLeft: {fileID: 21300000, guid: 0171af20ef9de84438b522a02936f26c, type: 3}
+  _viewRight: {fileID: 21300000, guid: 528886b06c47f7a4fa66df587e9bf4e5, type: 3}
+  _viewBoth: {fileID: 21300000, guid: 5b91b461e4b397143a56ccdee0e404d8, type: 3}
+  _wall: {fileID: 21300000, guid: 4865002dc0db1104cb411e9cebf3ea4f, type: 3}
+  _chestClosed: {fileID: 21300000, guid: 1e97fb3ce0397a94da0206c6dde7fca4, type: 3}
+  _chestOpen: {fileID: 21300000, guid: ba9fed3a28c7f8142a61cab35312988c, type: 3}
+  _stairs: {fileID: 21300000, guid: 75331f3a7cb01354b9059aadac5e7b9c, type: 3}
+  _mapOtter: {fileID: 21300000, guid: 819d74aa7dcb5a245a4500bf5b591d3d, type: 3}

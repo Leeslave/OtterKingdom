@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 주민 작업 화면 (시안: [광산 주변 정리] 필요 인원 1명 · 작업 시간 30초 / 보낼 해달: [몽실] / [작업 시작]).
+/// 주민 작업 화면 (시안: [광산 주변 정리] 필요 인원 1명 · 작업 시간 30초 / 보낼 해달: [해달이] / [작업 시작]).
 /// 세 가지 모습: 보낼 해달 고르기 → 작업 중(진행 막대·남은 시간·일하는 해달) → 끝남(안내 + 확인).
 /// 버튼·해달 칸 클릭을 알리기만 한다.
 /// </summary>
@@ -54,7 +54,7 @@ public class SettlementTaskPopupView : MonoBehaviour
     [Tooltip("남은 시간 (예: 남은 시간 00:12)")]
     [SerializeField] private TextMeshProUGUI _timeText;
 
-    [Tooltip("일하는 해달 (예: 몽실 작업 중)")]
+    [Tooltip("일하는 해달 (예: 해달이 작업 중)")]
     [SerializeField] private TextMeshProUGUI _crewText;
 
     [Header("안내")]
@@ -73,6 +73,7 @@ public class SettlementTaskPopupView : MonoBehaviour
 
     public bool IsOpen => _animator.IsOpen;
     public SettlementTaskDefinition Task { get; private set; }
+    public RectTransform StartButton => _startButton.transform as RectTransform;
 
     /// <summary>[작업 시작]을 눌렀을 때 (끝난 모습의 [확인]은 여기서 바로 닫음)</summary>
     public event Action OnStartClicked;

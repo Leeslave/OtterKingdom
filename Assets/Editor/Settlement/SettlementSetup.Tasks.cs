@@ -233,7 +233,7 @@ public static partial class SettlementSetup
         Set(bar, "_fill", fill.rectTransform);
         var time = Label("Time", progress, _titleFont, "남은 시간 00:30", 36, Cocoa, TextAlignmentOptions.Center, 22);
         TopBand(time.rectTransform, 0, 0, 108, 56);
-        var crew = Label("Crew", progress, _bodyFont, "몽실 작업 중", 28, Green, TextAlignmentOptions.Center, 18);
+        var crew = Label("Crew", progress, _bodyFont, "해달이 작업 중", 28, Green, TextAlignmentOptions.Center, 18);
         TopBand(crew.rectTransform, 0, 0, 172, 48);
 
         // 필요 재료: 아이콘 + 가진 / 필요 (넉넉하면 체크, 모자라면 빨강). 비용이 없는 작업이면 카드째 숨김
@@ -358,7 +358,7 @@ public static partial class SettlementSetup
         var busyText = Label("Text", busy.rectTransform, _bodyFont, "작업 중", 24, Body, TextAlignmentOptions.Center, 16);
         Stretch(busyText.rectTransform, 4);
 
-        var nameText = Label("Name", root, _titleFont, "몽실", 28, Cocoa, TextAlignmentOptions.Center, 18);
+        var nameText = Label("Name", root, _titleFont, "해달이", 28, Cocoa, TextAlignmentOptions.Center, 18);
         Place(nameText.rectTransform, new Vector2(0.5f, 0), new Vector2(0, 0), new Vector2(180, 48));
 
         var view = root.gameObject.AddComponent<WorkerChipView>();

@@ -7,6 +7,7 @@ using Action = System.Action;
 /// 평소엔 광장을 거닐고, 건설이 시작되면 공사 현장의 설 자리로 걸어가 곡괭이질을 하며 망치 말풍선을 띄운다.
 /// 건설이 끝나면 다시 거닌다. 이 오브젝트의 위치 = 발밑.
 /// 구역 건물 이사 때는 옛 자리에서 건물을 머리에 이고 새 자리까지 걸어가 내려놓은 뒤 거기서 일한다.
+/// 리그(_rigPrefab)가 있으면 그림·프레임 애니메이션 대신 리그로 걷고 망치질한다.
 /// </summary>
 [RequireComponent(typeof(SpriteFrameAnimator))]
 public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
@@ -61,8 +62,13 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
     [Tooltip("왼쪽 걷기 그림 대신 오른쪽 걷기를 좌우로 뒤집어 씀 (왼쪽 걷기 그림이 따로 없는 모습)")]
     [SerializeField] private bool _mirrorLeftWalk;
 
+    [Header("리그")]
+    [Tooltip("리그 해달 모습 (리그 프리팹의 Visual). 있으면 그림 대신 이 리그로 걷고 망치질함 (망치가 있는 리그여야 일하는 몸짓이 나옴)")]
+    [SerializeField] private QuarterRigView _rigPrefab;
+
     private SpriteFrameAnimator _animator;
     private SpriteRenderer _renderer;
+    private QuarterRigView _rig;
     private PlazaWalkableArea _area;
 
     private Phase _phase = Phase.Idle;
@@ -103,6 +109,15 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
         _animator = GetComponent<SpriteFrameAnimator>();
         _renderer = GetComponent<SpriteRenderer>();
         _workBubble.gameObject.SetActive(false);
+        if (_rigPrefab != null)
+        {
+            // 발밑 = 이 오브젝트 위치 (리그 프리팹의 Visual과 같은 자리)
+            _rig = Instantiate(_rigPrefab, transform);
+            _rig.name = "Visual";
+            _rig.transform.localPosition = _rigPrefab.transform.localPosition;
+            _renderer.enabled = false;
+            _animator.enabled = false;
+        }
     }
 
     public void Initialize(PlazaWalkableArea area)
@@ -197,6 +212,8 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
         }
 
         _renderer.sortingOrder = PlazaDepth.SortingOrderFor(transform.position.y);
+        if (_rig != null)
+            _rig.SortingOrder = _renderer.sortingOrder;
         _workBubble.sortingOrder = _renderer.sortingOrder + 1;
         if (_carrying)
             AnimateCarried();
@@ -211,6 +228,11 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
         _path.Clear();
         _workBubble.gameObject.SetActive(false);
         _animator.Play(ClipIdle);
+        if (_rig != null)
+        {
+            _rig.SetWalking(false, 0f);
+            _rig.PlayLoop(QuarterRigView.Loop.None);
+        }
     }
 
     private bool TryStartWander()
@@ -282,6 +304,11 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
         _workBubble.gameObject.SetActive(true);
         _animator.Play(ClipWork);
         FaceToward(_look);
+        if (_rig != null)
+        {
+            _rig.SetWalking(false, 0f);
+            _rig.PlayLoop(QuarterRigView.Loop.Build);
+        }
     }
 
     #endregion
@@ -296,6 +323,8 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
         _pathVersion = _area.Version;
         _walkTimeLimit = PathLength(from) / Mathf.Max(CurrentSpeed, 0.01f) * StuckTimeMultiplier + StuckGraceSeconds;
         _workBubble.gameObject.SetActive(false);
+        if (_rig != null)
+            _rig.PlayLoop(QuarterRigView.Loop.None);
         PlayWalkClip(_path[0] - from);
     }
 
@@ -349,6 +378,8 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
             }
         }
         transform.position = new Vector3(position.x, position.y, transform.position.z);
+        if (_rig != null)
+            _rig.SetWalking(_pathIndex < _path.Count, CurrentSpeed);
 
         if (_pathIndex >= _path.Count)
         {
@@ -364,6 +395,12 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
 
     private void PlayWalkClip(Vector2 direction)
     {
+        if (_rig != null)
+        {
+            _rig.Face(direction);
+            _rig.SetWalking(true, CurrentSpeed);
+            return;
+        }
         _renderer.flipX = false;
         if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
         {
@@ -378,7 +415,10 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
     // 일하는 그림은 오른쪽을 보므로 왼쪽이면 뒤집음
     private void FaceToward(Vector2 point)
     {
-        _renderer.flipX = point.x < transform.position.x;
+        if (_rig != null)
+            _rig.Face(point - (Vector2)transform.position);
+        else
+            _renderer.flipX = point.x < transform.position.x;
     }
 
     private float PathLength(Vector2 from)

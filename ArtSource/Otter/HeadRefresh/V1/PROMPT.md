@@ -1,0 +1,3 @@
+내장 image_gen으로 첨부된 머리 시트의 배경과 글자를 제거했습니다.
+
+Edit the provided HEAD SPRITE SHEET. Preserve EXACTLY all 34 otter heads, their expressions, silhouettes, hats, fur colours, line widths and current positions and sizes in the same 6-column 6-row portrait layout (last row has 4 heads). Remove ALL Korean labels and the entire cream background to genuine transparency. Opaque head interiors including white muzzles. No glow, shadow, text or grid. On row4 column3 teddy pajama head only, REMOVE the hand and sleeve next to mouth and restore the cheek outline, head only. All other 33 heads unchanged. Preserve layout so each cell can be cropped. High resolution.

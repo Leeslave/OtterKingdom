@@ -5,7 +5,7 @@ using static CollectionSetup;
 using static GlobalUISetup;
 
 /// <summary>
-/// 튜토리얼 모양(Resources/TutorialStyle.asset)을 만든다: 다른 UI와 같은 패널·버튼·폰트, 안내 해달(몽실) 얼굴, 강조 테두리.
+/// 튜토리얼 모양(Resources/TutorialStyle.asset)을 만든다: 다른 UI와 같은 패널·버튼·폰트, 안내 해달(해달이) 얼굴, 강조 테두리.
 /// GlobalUISetup이 함께 호출한다.
 /// </summary>
 public static class TutorialStyleSetup

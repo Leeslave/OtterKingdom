@@ -52,6 +52,10 @@ public class TutorialOverlay : MonoBehaviour
     private GameObject _nextButton;
     private bool _focused;
     private bool _pressInHole;
+    // 이번 장에서 말풍선을 둔 쪽 (null = 아직 안 정함). 움직이는 대상(걷는 해달)을 따라가다 반대쪽으로 튀지 않게
+    private bool? _bubbleBelow;
+    private bool _bubblePlaced;
+    private const float BubbleFollowSpeed = 14f;
     private TextMeshProUGUI _titleLabel;
     private TextMeshProUGUI _messageLabel;
     private TextMeshProUGUI _counterLabel;
@@ -166,6 +170,8 @@ public class TutorialOverlay : MonoBehaviour
         _stepShownAt = Time.unscaledTime;
         _focused = false;
         _pressInHole = false;
+        _bubbleBelow = null;
+        _bubblePlaced = false;
         Update();
     }
 
@@ -264,7 +270,8 @@ public class TutorialOverlay : MonoBehaviour
         _frame.offsetMax = new Vector2(FrameOutset, FrameOutset);
     }
 
-    // 대상 위아래 중 공간이 넓은 쪽에 말풍선을 두고, 화면 밖으로 나가지 않게 자른다
+    // 대상 위아래 중 공간이 넓은 쪽에 말풍선을 두고, 화면 밖으로 나가지 않게 자른다.
+    // 한 장 동안은 처음 고른 쪽을 지키고, 그쪽에 말풍선이 들어갈 자리가 없어질 때만 반대로 옮긴다
     private void LayoutBubble(Rect? hole)
     {
         float screenH = _root.rect.height;
@@ -281,11 +288,21 @@ public class TutorialOverlay : MonoBehaviour
             float holeBottom = (hole.Value.yMin - 0.5f) * screenH;
             float roomAbove = screenH * 0.5f - holeTop;
             float roomBelow = holeBottom + screenH * 0.5f;
-            y = roomBelow >= roomAbove
+            bool below = _bubbleBelow ?? roomBelow >= roomAbove;
+            float need = BubbleGap + bubbleH + ScreenMargin;
+            if (below && roomBelow < need && roomAbove >= need + topExtra) below = false;
+            else if (!below && roomAbove < need + topExtra && roomBelow >= need) below = true;
+            _bubbleBelow = below;
+            y = below
                 ? holeBottom - BubbleGap - bubbleH * 0.5f
                 : holeTop + BubbleGap + bubbleH * 0.5f + topExtra;
         }
-        _bubble.anchoredPosition = new Vector2(0f, Mathf.Clamp(y, minY, maxY));
+        var goal = new Vector2(0f, Mathf.Clamp(y, minY, maxY));
+        // 장이 바뀌면 바로 그 자리에, 같은 장 안에서 쪽을 바꿀 때는 미끄러지듯 옮김
+        bool snap = !_bubblePlaced;
+        _bubblePlaced = true;
+        _bubble.anchoredPosition = snap ? goal
+            : Vector2.Lerp(_bubble.anchoredPosition, goal, 1f - Mathf.Exp(-BubbleFollowSpeed * Time.unscaledDeltaTime));
     }
 
     private static void SetAnchors(RectTransform rect, Vector2 min, Vector2 max)

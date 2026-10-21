@@ -27,6 +27,8 @@ public class TownHallPresenter : MonoBehaviour
     private BoardRequestDefinition _hallTarget;
     // P3: 회관의 다음 목표가 공동사업일 때 (메인 부탁을 다 끝낸 뒤)
     private CommunityProjectDefinition _hallProject;
+    // 광산 주민 건강 이야기: 메인 부탁 · 공동사업이 없을 때만 회관의 다음 목표 자리를 씀
+    private bool _hallMine;
     // 영토 확장 미션 (숲 개간을 다 끝낸 단계가 있을 때)
     private CommunityProjectDefinition _territoryMission;
     private float _refreshTimer;
@@ -158,8 +160,12 @@ public class TownHallPresenter : MonoBehaviour
 
         _hallTarget = _manager.CurrentRequest;
         _hallProject = _hallTarget == null ? _manager.ActiveProject : null;
+        _hallMine = _hallProject == null && _hallTarget == null
+            && _manager.HasMineCommunityStory && !_manager.MineCommunity.exported;
         if (_hallProject != null)
             _hall.ShowNext(_manager.ProjectTitle(_hallProject), ProjectNextText(_hallProject), true);
+        else if (_hallMine)
+            _hall.ShowNext(_manager.MineCommunityTitle, _manager.MineCommunityStatus, true);
         else if (_manager.AreAllMainDone)
             _hall.ShowAllDone(AllDoneMessage);
         else if (_hallTarget != null)
@@ -174,7 +180,8 @@ public class TownHallPresenter : MonoBehaviour
         var order = _manager.DistrictOrder;
         int pending = _manager.PendingDistrictBlocks().Count;
         _hall.ShowDistrict(_manager.IsAdministrator, order != null ? order.Score : 0,
-            DistrictGuideRules.OrderGoal(config, order != null ? order.Score : 0, _manager.PlayerLevel), pending);
+            DistrictGuideRules.OrderGoal(config, order != null ? order.Score : 0, _manager.PlayerLevel,
+                _manager.HasDevelopment(CastleRules.GuildBuilt)), pending);
         _hall.ShowRelocation(RelocationLine());
     }
 
@@ -209,7 +216,9 @@ public class TownHallPresenter : MonoBehaviour
             return;
         }
         bool anyLeft = _manager.AnyTerritoryLeft;
-        if (!anyLeft || _manager.Config.Territories.Count == 0 || _manager.PlayerLevel < _manager.Config.TerritoryStartLevel)
+        // 첫 개간(Lv.6)부터 보임. 일반 개간 기회는 TerritoryStartLevel(Lv.7)부터
+        if (!anyLeft || _manager.Config.Territories.Count == 0
+            || _manager.PlayerLevel < Mathf.Min(TerritoryRules.TutorialLevel, _manager.Config.TerritoryStartLevel))
         {
             _hall.HideTerritory();
             return;
@@ -333,6 +342,8 @@ public class TownHallPresenter : MonoBehaviour
 
     private void HandleHallGo()
     {
+        if (_hallMine)
+        { _hall.Hide(); _manager.OpenMineCommunity(); return; }
         if (_hallProject != null)
         {
             var project = _hallProject;
@@ -408,6 +419,13 @@ public class TownHallPresenter : MonoBehaviour
                 text.Append(group.Title).Append(group.Description);
         }
         text.Append("부터 시작할 수 있어요지금 Lv재료를 조금씩 나눠 넣을 수 있어요할 일마무리하는 중이에요×");
+        // 숲 개간 줄 (SettlementManager.TerritoryChanceText): 땅 이름 · 진행 · 기회
+        text.Append("이 땅을 다 마치면 다른 방향도 개간할 수 있어요개간 기회번공터 가장자리의 점선 원을 눌러 해달을 보내요레벨이 오르면 생겨요");
+        foreach (var territory in config.Territories)
+        {
+            if (territory != null)
+                text.Append(territory.DisplayName);
+        }
         foreach (var project in config.Projects)
         {
             if (project == null)

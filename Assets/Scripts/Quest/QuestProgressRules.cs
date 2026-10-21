@@ -200,7 +200,35 @@ public static class QuestProgressRules
 
         if (level < quest.RequiredLevel)
             return false;
-        return quest.Prerequisite == null || log.GetStatus(quest.Prerequisite) == QuestStatus.Claimed;
+        var prerequisite = quest.Prerequisite;
+        // 기능 안내(정착 단계 · 장소 가 보기 · 상점 등)는 앞의 모으기 퀘스트(광석 60개 등)를 기다리지 않음 — 레벨이 오르면 바로 뜸
+        if (quest.Kind == QuestKind.Main && !IsGrind(quest))
+        {
+            while (prerequisite != null && prerequisite.Kind == QuestKind.Main && IsGrind(prerequisite))
+                prerequisite = prerequisite.Prerequisite;
+        }
+        return prerequisite == null || log.GetStatus(prerequisite) == QuestStatus.Claimed;
+    }
+
+    // 이만큼 이상 모으는 퀘스트는 "모으기" (Lv.1 재료 10개 · 판매 10골드, 첫 당근 3개 같은 짧은 안내는 기능 안내로 봄)
+    private const int GrindGoal = 20;
+
+    /// <summary>수확 · 낚시 · 판매 · 채굴 · 줍기를 많이 모으는 퀘스트인지 (기능 안내가 기다리지 않는 것)</summary>
+    public static bool IsGrind(QuestDefinition quest)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+
+        switch (quest.GoalType)
+        {
+            case QuestGoalType.Harvest:
+            case QuestGoalType.Catch:
+            case QuestGoalType.EarnFromSales:
+            case QuestGoalType.Mine:
+            case QuestGoalType.Gather:
+                return quest.Goal >= GrindGoal;
+            default:
+                return false;
+        }
     }
 
     /// <summary>

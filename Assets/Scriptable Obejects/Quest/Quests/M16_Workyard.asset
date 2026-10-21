@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv16_workyard
   _title: "\uACF5\uC0AC\uB97C \uBE60\uB974\uAC8C"
   _description: "\uAC8C\uC2DC\uD310 \uBD80\uD0C1: \uAC74\uC124\uC18C \uC9D3\uAE30"
-  _sortOrder: 69
+  _sortOrder: 71
   _kind: 0
   _requiredLevel: 16
   _prerequisite: {fileID: 11400000, guid: cb7821dd3a1f89f458fec55fc46c79c0, type: 2}

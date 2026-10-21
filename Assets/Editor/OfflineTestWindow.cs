@@ -217,6 +217,13 @@ public class OfflineTestWindow : EditorWindow
     {
         var last = TryParseUtc(save.lastSaveUtc, out var parsed) ? parsed : DateTime.UtcNow;
         save.lastSaveUtc = (last - amount).ToString("o");
+        // The plaza farm and the mine maze keep their own "last run" clocks:
+        // rewind those too, or their offline time never runs in this test.
+        var farm = save.settlement?.farm;
+        if (farm != null && farm.lastUtcTicks > 0)
+            farm.lastUtcTicks = Math.Max(1, farm.lastUtcTicks - amount.Ticks);
+        if (save.mineMaze != null && save.mineMaze.savedUtcTicks > 0)
+            save.mineMaze.savedUtcTicks = Math.Max(1, save.mineMaze.savedUtcTicks - amount.Ticks);
         WriteFile(stampTime: false);
     }
 

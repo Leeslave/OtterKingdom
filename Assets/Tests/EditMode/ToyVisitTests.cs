@@ -91,6 +91,36 @@ public class ToyVisitTests
     #region 방문 시계
 
     [Test]
+    public void SettlementPlaza_DisablesAmbientSpawnEvenBeforeLoading()
+    {
+        var root = new GameObject("Settlement arrival regression");
+        root.SetActive(false);
+        _created.Add(root);
+        root.AddComponent<SettlementPlazaView>();
+        var controller = root.AddComponent<PlazaController>();
+
+        // 설정/세이브를 아직 불러오지 않았어도 정착 광장의 별도 군중 생성은 막는다.
+        var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+        typeof(PlazaController).GetMethod("TrySpawn", flags).Invoke(controller, null);
+
+        Assert.IsTrue((bool)typeof(PlazaController).GetField("spawned", flags).GetValue(controller));
+        Assert.AreEqual(0, root.GetComponentsInChildren<OtterWanderAgent>(true).Length);
+    }
+
+    [Test]
+    public void LongAbsence_IntroducesOnlyOneToyVisitorAndStartsNewInterval()
+    {
+        var settlement = new Settlement();
+        ToyVisitRules.Step(_config, settlement, 0, Start, out _);
+        long returned = Start + TimeSpan.FromDays(3).Ticks;
+
+        Assert.AreEqual(ToyVisitStep.Arrived, ToyVisitRules.Step(_config, settlement, 0, returned, out _));
+        Assert.AreEqual(ToyVisitStep.Counting, ToyVisitRules.Step(_config, settlement, 0, returned, out _));
+        Assert.AreEqual(1, settlement.ResidentOrder.Count);
+        Assert.AreEqual(returned + TimeSpan.FromMinutes(12).Ticks, settlement.ToyVisitDueUtcTicks);
+    }
+
+    [Test]
     public void NoToy_KeepsClock()
     {
         var settlement = new Settlement();

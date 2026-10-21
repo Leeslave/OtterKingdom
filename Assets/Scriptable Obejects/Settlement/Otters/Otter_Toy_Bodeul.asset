@@ -15,7 +15,7 @@ MonoBehaviour:
   _otterId: otter_toy_bodeul
   _displayName: "\uBCF4\uB4E4\uC774"
   _portrait: {fileID: 21300000, guid: 2164e715d52989742870bf600e3d5f8e, type: 3}
-  _plazaPrefab: {fileID: 6466850907306658564, guid: 1f48f9dd8e2909242bccc7346a9b8ed2, type: 3}
+  _plazaPrefab: {fileID: 7310524418817630001, guid: ac97e24495304a5ca3cace549c1913b5, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 3
   _toyVisitor: 1

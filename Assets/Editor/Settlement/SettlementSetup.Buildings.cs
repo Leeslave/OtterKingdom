@@ -24,17 +24,17 @@ public static partial class SettlementSetup
         int gold, int wood, int stone, float growth, float seconds)[] BuildingTable =
     {
         ("Building_SmallHouse", "bld_small_house", "작은 집", "장난감을 보고 찾아온 해달이 살 수 있는 집이에요.", BuildingKind.Home,
-            new Vector2Int(4, 3), 0.9f, "Assets/Art/Plaza/Props/Prop_House_Blue.png",
+            new Vector2Int(4, 3), 0.9f, "Assets/Art/Buildings/Detail4/SmallHouse.png",
             new[] { "Stage_House_Blue_0", "Stage_House_Blue_1", "Stage_House_Blue_2", "Stage_House_Blue_3" }, "ICON_House_Blue",
-            0, TownHallDevelopment, new (OtterTrait, int)[0], 0, 600, 20, 10, 0.3f, 180f),
+            0, BoardUpgradeDevelopment, new (OtterTrait, int)[0], 0, 600, 20, 10, 0.3f, 180f),
         // Lv.10~15 해달의 부탁 (SettlementSetup.P4Story.cs) — 그 부탁이 열려야 지을 수 있음 (필요 발전 = 입주 부탁의 결과)
         ("Building_Shop", "bld_shop", "해달 상점", "짤랑이의 가게. 요정 상점이 이곳으로 이사하고, 물건을 더 비싸게 팔아요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Shop.png", new string[0], null,
             0, P4TraderSettled, new[] { (OtterTrait.Trading, 1) }, 1, 2000, 40, 20, 0f, 300f),
-        ("Building_Workshop", "bld_workshop", "목공소", "숲을 개간할 때 얻는 목재가 늘어나요.", BuildingKind.Facility,
+        ("Building_Workshop", "bld_workshop", "목공소", "나무 하는 해달들이 일해 목재를 꾸준히 모아 가방에 넣어요. (한 마리당 1시간에 12개)", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Workshop.png", new string[0], null,
             0, P4LumberSettled, new[] { (OtterTrait.Woodcutting, 2) }, 1, 3000, 60, 30, 0f, 360f),
-        ("Building_Quarry", "bld_quarry", "채석 작업소", "광장 바위와 광산에서 얻는 돌이 늘어나요.", BuildingKind.Facility,
+        ("Building_Quarry", "bld_quarry", "채석 작업소", "채굴하는 해달들이 일해 돌을 꾸준히 모아 가방에 넣어요. (한 마리당 1시간에 12개)", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Quarry.png", new string[0], null,
             0, P4MinerSettled, new[] { (OtterTrait.Mining, 2) }, 1, 4000, 60, 60, 0f, 420f),
         ("Building_Granary", "bld_granary", "농업 창고", "밭에서 거두는 작물이 늘어나요.", BuildingKind.Facility,
@@ -57,13 +57,14 @@ public static partial class SettlementSetup
         new Dictionary<string, ((KingdomBonusKind, int)[], bool)>
         {
             { "bld_shop", (new[] { (KingdomBonusKind.SellPrice, 10) }, true) },
-            { "bld_workshop", (new[] { (KingdomBonusKind.ClearingWood, 20) }, false) },
-            { "bld_quarry", (new[] { (KingdomBonusKind.StoneYield, 20) }, false) },
             { "bld_granary", (new[] { (KingdomBonusKind.HarvestYield, 10) }, false) },
             { "bld_fishery", (new[] { (KingdomBonusKind.FishYield, 20) }, false) },
             { "bld_workyard", (new[] { (KingdomBonusKind.BuildSpeed, 15) }, false) },
             { "bld_archive", (new[] { (KingdomBonusKind.VisitSpeed, 20) }, false) },
         };
+
+    // 목공소 · 채석 작업소에서 일하는 해달 한 마리가 1시간에 모으는 목재 · 돌
+    private const int ProductionPerHour = 12;
 
     [MenuItem("Tools/Settlement/Apply Buildings")]
     public static void ApplyBuildings()
@@ -115,15 +116,24 @@ public static partial class SettlementSetup
                 fairy = effects.fairy;
             }
             building.SetupEffects(bonuses, fairy);
+            // 목공소 · 채석 작업소: % 효과 대신 특성 해달들이 꾸준히 목재 · 돌을 모음 (ProductionRules)
+            if (row.id == "bld_workshop")
+                building.SetupProduction(wood, ProductionPerHour, OtterTrait.Woodcutting);
+            else if (row.id == "bld_quarry")
+                building.SetupProduction(stone, ProductionPerHour, OtterTrait.Mining);
 
             var so = new SerializedObject(building);
             so.FindProperty("_description").stringValue = row.description;
-            so.FindProperty("_icon").objectReferenceValue = string.IsNullOrEmpty(row.icon) ? null : LoadPropArt(row.icon);
+            var detailIcon = AssetDatabase.LoadAssetAtPath<Sprite>(
+                $"Assets/Art/Buildings/Detail4/{row.asset.Replace("Building_", "")}.png");
+            so.FindProperty("_icon").objectReferenceValue = detailIcon != null ? detailIcon
+                : string.IsNullOrEmpty(row.icon) ? null : LoadPropArt(row.icon);
             so.FindProperty("_widthFill").floatValue = row.widthFill;
             var stages = so.FindProperty("_stageSprites");
             stages.arraySize = row.stages.Length;
             for (int i = 0; i < row.stages.Length; i++)
-                stages.GetArrayElementAtIndex(i).objectReferenceValue = LoadPropArt(row.stages[i]);
+                stages.GetArrayElementAtIndex(i).objectReferenceValue =
+                    row.id == "bld_small_house" && i == row.stages.Length - 1 ? sprite : LoadPropArt(row.stages[i]);
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(building);
             buildings.Add(building);

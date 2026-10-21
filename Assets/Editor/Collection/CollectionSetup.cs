@@ -30,7 +30,9 @@ public static class CollectionSetup
     {
         ("Tab_Vegetable", "Vegetable", "채소", 0, "수집", "미획득", "획득 완료", "획득 장소", false, "SIL_Potato"),
         ("Tab_Fish", "Fish", "어류", 1, "수집", "미획득", "획득 완료", "획득 장소", false, "SIL_Mackerel"),
-        ("Tab_Otter", "Otter", "해달", 2, "등록", "미발견", "등록 완료", "좋아하는 것", true, "SIL_Otter"),
+        // 광물 탭 항목(Entry_Ore* · Entry_Relic*)은 에셋으로만 있음 (광산 · 오래된 갱도에서 캐면 자동 획득)
+        ("Tab_Mineral", "Mineral", "광물", 2, "수집", "미획득", "획득 완료", "획득 장소", false, "SIL_Ore_Stone"),
+        ("Tab_Otter", "Otter", "해달", 3, "등록", "미발견", "등록 완료", "좋아하는 것", true, "SIL_Otter"),
     };
 
     // (에셋, ID, 탭, 이름(비우면 아이템 이름), 연결 아이템 경로, 그림(비우면 아이템 아이콘), 실루엣, 소개, 설명, 추가 값)

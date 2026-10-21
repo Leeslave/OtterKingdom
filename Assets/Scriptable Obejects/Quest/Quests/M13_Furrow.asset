@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: M13_Furrow
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv13_furrow
-  _title: "\uB9C8\uC9C0\uB9C9 \uACE0\uB791"
-  _description: "\uBC2D\uC758 \uACE0\uB791 \uD55C \uCE78 \uB354 \uC5F4\uAE30"
-  _sortOrder: 53
+  _title: "\uC544\uD649\uC9F8 \uBC2D \uCE78"
+  _description: "\uB18D\uC5C5 \uC9C0\uC5ED\uC5D0 \uBC2D \uCE78 \uD558\uB098 \uB354 \uC9D3\uAE30"
+  _sortOrder: 55
   _kind: 0
   _requiredLevel: 13
   _prerequisite: {fileID: 11400000, guid: 77c4fc6b5d2c1cb4ca266527ea98901d, type: 2}

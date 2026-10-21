@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv15_catch
   _title: "\uCCAB \uB9CC\uC120"
   _description: "\uBB3C\uACE0\uAE30 30\uB9C8\uB9AC \uB09A\uAE30"
-  _sortOrder: 65
+  _sortOrder: 67
   _kind: 0
   _requiredLevel: 15
   _prerequisite: {fileID: 11400000, guid: 5051b734b0665164a864793a2dfb0894, type: 2}

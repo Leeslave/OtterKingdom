@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv18_catch
   _title: "\uBC14\uB2E4\uC758 \uC655"
   _description: "\uBB3C\uACE0\uAE30 250\uB9C8\uB9AC \uB09A\uAE30"
-  _sortOrder: 76
+  _sortOrder: 78
   _kind: 0
   _requiredLevel: 18
   _prerequisite: {fileID: 11400000, guid: 1e1ade27d2bac8c40957c638ead984e3, type: 2}

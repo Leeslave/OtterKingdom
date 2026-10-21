@@ -166,8 +166,27 @@ public class DecorLayout
             if (worst == DecorPlacementResult.Ok || result < worst)
                 worst = result;
         }
+        if (worst == DecorPlacementResult.Ok && BlocksDoorstep(decor, area, ignoreInstanceId))
+            return DecorPlacementResult.Occupied;
         return worst;
     }
+
+    /// <summary>집 · 시설 문 앞 한 줄(발밑 바로 아래 칸)은 비워 둔다 (길은 됨). 놓을 것이 남의 문 앞을 막거나, 제 문 앞에 물건이 있으면 true</summary>
+    private bool BlocksDoorstep(DecorDefinition decor, RectInt area, int ignoreInstanceId)
+    {
+        foreach (var other in _placed.Values)
+        {
+            if (other.InstanceId == ignoreInstanceId)
+                continue;
+            if (other.Decor.KeepsDoorstepClear && !decor.AllowedOnDoorstep && area.Overlaps(Doorstep(other.Area)))
+                return true;
+            if (decor.KeepsDoorstepClear && !other.Decor.AllowedOnDoorstep && other.Area.Overlaps(Doorstep(area)))
+                return true;
+        }
+        return false;
+    }
+
+    private static RectInt Doorstep(RectInt area) => new RectInt(area.xMin, area.yMin - 1, area.width, 1);
 
     #endregion
 

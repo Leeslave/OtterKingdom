@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -405,6 +405,8 @@ public class SettlementPresenter : MonoBehaviour
         long now = SettlementManager.NowTicks;
         bool sections = SettlementBoardRules.ShowsSections(_manager.BoardTier);
 
+        if (_manager.HasMineCommunityStory)
+            _rows.Add(BoardRow.Entry("mine_community", _townHallIcon, _manager.MineCommunityTitle, _manager.MineCommunityStatus, "부탁 보기"));
         AddTownEntries(sections);
 
         _manager.CollectBoardRows(_requestRows);
@@ -493,20 +495,22 @@ public class SettlementPresenter : MonoBehaviour
         if (project != null)
             _rows.Add(BoardRow.Entry(ProjectEntry, project.Icon != null ? project.Icon : _townHallIcon, _manager.ProjectTitle(project),
                 ProjectStepText(project), "보기"));
-        if (_manager.HasHeldGathering)
-            _rows.Add(BoardRow.Entry(MemoryEntry, _townHallIcon, "첫 마을 모임 기념", "광장에서 모임을 다시 볼 수 있어요.", "다시 보기"));
-        if (group != null)
+        // 다 마친 것(모두 마친 큰 부탁 · 첫 모임 기념)은 완료 표시로 맨 아래에
+        var settlement = _manager.Settlement;
+        var step = group != null ? SettlementBoardRules.CurrentStep(group, settlement) : null;
+        if (group != null && step != null)
         {
-            var settlement = _manager.Settlement;
             int done = SettlementBoardRules.CountDone(group, settlement);
-            var step = SettlementBoardRules.CurrentStep(group, settlement);
-            string description = step != null
-                ? $"{done} / {group.Steps.Count} 단계 · 다음: {step.Title}"
-                : $"{done} / {group.Steps.Count} 단계 · 모두 마쳤어요!";
-            _rows.Add(BoardRow.Entry(MilestoneEntryPrefix + group.GroupId, group.Icon, group.Title, description, "보기"));
+            _rows.Add(BoardRow.Entry(MilestoneEntryPrefix + group.GroupId, group.Icon, group.Title,
+                $"{done} / {group.Steps.Count} 단계 · 다음: {step.Title}", "보기"));
         }
         if (hall)
             _rows.Add(BoardRow.Entry(TownHallEntry, _townHallIcon, "마을 발전 현황", "발전 · 주민 · 지금 하는 일을 한눈에 봐요.", "보기"));
+        if (group != null && step == null)
+            _rows.Add(BoardRow.DoneEntry(MilestoneEntryPrefix + group.GroupId, group.Icon, group.Title,
+                $"{group.Steps.Count} / {group.Steps.Count} 단계 · 모두 마쳤어요!", "완료"));
+        if (_manager.HasHeldGathering)
+            _rows.Add(BoardRow.DoneEntry(MemoryEntry, _townHallIcon, "첫 마을 모임 기념", "광장에서 모임을 다시 볼 수 있어요.", "다시 보기"));
     }
 
     private static string SectionTitle(BoardSection section)
@@ -521,6 +525,7 @@ public class SettlementPresenter : MonoBehaviour
 
     private void HandleEntryClicked(string key)
     {
+        if (key == "mine_community") { _board.Hide(); _manager.OpenMineCommunity(); return; }
         if (key == TownHallEntry)
         {
             _manager.RequestTownHall();

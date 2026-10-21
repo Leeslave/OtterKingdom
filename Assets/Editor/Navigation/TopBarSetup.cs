@@ -86,6 +86,7 @@ public static class TopBarSetup
         Set(view, "_levelText", levelText);
         Set(view, "_expBar", expBar);
         Set(view, "_profileButton", avatarButton);
+        Set(view, "_portrait", portrait);
         return view;
     }
 

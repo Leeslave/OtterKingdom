@@ -442,7 +442,7 @@ public static partial class SettlementSetup
         message.rectTransform.offsetMin = new Vector2(230, 56);
         message.rectTransform.offsetMax = new Vector2(-120, -84);
 
-        var name = Label("Name", card.rectTransform, _bodyFont, "몽실", 24, LightBrown, TextAlignmentOptions.Left);
+        var name = Label("Name", card.rectTransform, _bodyFont, "해달이", 24, LightBrown, TextAlignmentOptions.Left);
         Place(name.rectTransform, new Vector2(0, 0), new Vector2(230, 16), new Vector2(300, 36));
 
         var paw = CreateImage("Paw", card.rectTransform, ImportSprite(CollectionSpriteFolder, "UI_Icon_Paw"), false);

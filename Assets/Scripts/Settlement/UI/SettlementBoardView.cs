@@ -40,6 +40,10 @@ public readonly struct BoardRow
 
     public static BoardRow Entry(string key, Sprite icon, string title, string description, string buttonLabel) =>
         new BoardRow(RowKind.Entry, title, null, RequestStatus.Available, null, key, icon, description, buttonLabel);
+
+    /// <summary>다 마친 화면 카드 (완료 표시 · 아래쪽에 둠). 눌러서 다시 볼 수는 있음</summary>
+    public static BoardRow DoneEntry(string key, Sprite icon, string title, string description, string buttonLabel) =>
+        new BoardRow(RowKind.Entry, title, null, RequestStatus.Completed, null, key, icon, description, buttonLabel);
 }
 
 /// <summary>
@@ -175,7 +179,7 @@ public class SettlementBoardView : MonoBehaviour
 
             var card = NextCard(cardsUsed++);
             if (row.Kind == BoardRow.RowKind.Entry)
-                card.BindEntry(row.EntryKey, row.Icon, row.Text, row.Description, row.ButtonLabel);
+                card.BindEntry(row.EntryKey, row.Icon, row.Text, row.Description, row.ButtonLabel, row.Status == RequestStatus.Completed);
             else
             {
                 card.Bind(row.Request, row.Status, row.Time);

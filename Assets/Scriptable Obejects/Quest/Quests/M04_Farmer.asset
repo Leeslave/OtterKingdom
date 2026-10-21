@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv4_farmer
   _title: "\uB18D\uC0AC\uB97C \uC9C0\uC744 \uD574\uB2EC"
   _description: "\uC0C8\uC2F9\uC774\uB97C \uBC2D\uC5D0 \uBC30\uCE58\uD558\uAE30"
-  _sortOrder: 34
+  _sortOrder: 36
   _kind: 0
   _requiredLevel: 10
   _prerequisite: {fileID: 11400000, guid: e6a03267587b9e04cb38c3f7f10e655d, type: 2}

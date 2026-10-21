@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: OtterKingdom::ItemDatabase
   _items:
+  - {fileID: 11400000, guid: d112c854736244399e6f9764896ec50d, type: 2}
   - {fileID: 11400000, guid: 75fe364f3d85172469c9d04a63806f2d, type: 2}
   - {fileID: 11400000, guid: ace88c3612db2fc45bd6ed4235c9f639, type: 2}
   - {fileID: 11400000, guid: 0e99b5383c079a0439f83ec3ff5c30f1, type: 2}
@@ -79,3 +80,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de7b263c617a28545bc5baf3bd24d981, type: 2}
   - {fileID: 11400000, guid: dd7a78731271f5f4298014f52ecef5c8, type: 2}
   - {fileID: 11400000, guid: e962450e436d57c49a0dbad1bae65277, type: 2}
+  - {fileID: 11400000, guid: b68d1910a8884fdba8230c953119d323, type: 2}
+  - {fileID: 11400000, guid: 71491ea6095a47b5a777185bc3709c54, type: 2}
+  - {fileID: 11400000, guid: 6979d9f761d042f6a17672e4b8916f86, type: 2}
+  - {fileID: 11400000, guid: e49c8aa07f004ab3947e9c6a268c29cf, type: 2}
+  - {fileID: 11400000, guid: 4dd009b42e9f4b68aca47f7de7ab0851, type: 2}
+  - {fileID: 11400000, guid: beea3b26626245fcb0941677f14022c5, type: 2}
+  - {fileID: 11400000, guid: f5d7444a9f484cd0ab9a9273fe8052ed, type: 2}
+  - {fileID: 11400000, guid: af94748cc15f444d84103cb7cf58a536, type: 2}
+  - {fileID: 11400000, guid: d8bc5d52974b4115a6d56defa4b2e706, type: 2}
+  - {fileID: 11400000, guid: 5bab842c2fb643efa647f45a1c94709c, type: 2}
+  - {fileID: 11400000, guid: 3503ccde1e8b4d9985e7a4d295851e4e, type: 2}
+  - {fileID: 11400000, guid: c4b2a2b3cc34437d9c239f146d47836d, type: 2}
+  - {fileID: 11400000, guid: 3d8b356d94f140c197ca94998e261f7a, type: 2}
+  - {fileID: 11400000, guid: acb2ed8c37824c88b6b14b5474637688, type: 2}

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_OreShellCopper
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: ore_shell_copper
+  _tab: {fileID: 11400000, guid: e6e8bf022dd148e5b3bf0aace10f3bbb, type: 2}
+  _displayName: 
+  _sortOrder: 1
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 86a97d0dbc914b3a91bf3e122f0d78bd, type: 3}
+  _tagline: "\uC870\uAC1C\uAECD\uB370\uAE30 \uBB34\uB2AC\uAC00 \uC0C8\uACA8\uC9C4 \uAD6C\uB9AC. \uD574\uB2EC \uB300\uC7A5\uC7A5\uC774\uAC00 \uC81C\uC77C \uBA3C\uC800 \uB450\uB4DC\uB824 \uBCF4\uB294 \uAE08\uC18D\uC774\uC5D0\uC694."
+  _description: "\uC4F0\uC784: \uC870\uAC1C \uAD6C\uB9AC \uACE1\uAD2D\uC774 \xB7 \uB9C8\uC744\uD68C\uAD00 \xB7 \uC811\uC218 \uCC3D\uAD6C"
+  _extraValue: "\uC624\uB798\uB41C \uAC31\uB3C4 \uC9C0\uD558 1\uCE35"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: beea3b26626245fcb0941677f14022c5, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

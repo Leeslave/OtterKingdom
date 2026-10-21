@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,6 +55,8 @@ public class PlazaFarmSheet : MonoBehaviour
         _panel = RuntimeUIKit.CreatePanel(_canvas.transform, 960f);
         RuntimeUIKit.CreateLabel(_panel, soil != null ? $"밭 칸 · {soil.Name}" : "밭 칸", RuntimeUIKit.TitleFontSize, true);
         _status = RuntimeUIKit.CreateLabel(_panel, "", 34);
+        if (_manager.MineHealthMultiplier < 1f)
+            RuntimeUIKit.CreateLabel(_panel, _manager.MineCommunityStatus, 24);
 
         // 심을 작물: 지금 심을 수 있는 것만 (씨앗 없는 작물까지 늘어놓으면 창이 화면을 넘음)
         RuntimeUIKit.CreateLabel(_panel, "심을 작물", 32, true);

@@ -10,6 +10,8 @@ public class ProfileSaveData
     public bool nameChosen;
     public int level = 1;
     public int exp;
+    // 상단바 아바타의 대표 해달 (비면 첫 해달)
+    public string portraitOtterId;
 }
 
 /// <summary>
@@ -43,6 +45,18 @@ public class ProfileManager : MonoBehaviour
             throw new ArgumentException("이름은 1~4자로 입력해 주세요.", nameof(name));
         Profile.SetName(normalized);
         HasChosenName = true;
+    }
+
+    /// <summary>저장해 달라는 요청 (대표 해달을 바꿨을 때). GameManager가 저장한다</summary>
+    public static event Action SaveRequested;
+
+    /// <summary>상단바 아바타의 대표 해달을 바꾸고 저장을 부탁한다</summary>
+    public void ChoosePortrait(string otterId)
+    {
+        string before = Profile.PortraitOtterId;
+        Profile.SetPortrait(otterId);
+        if (Profile.PortraitOtterId != before)
+            SaveRequested?.Invoke();
     }
 
     /// <summary>새 레벨에 도달했을 때 (한 번에 여러 레벨이 오르면 레벨마다 한 번씩)</summary>
@@ -100,6 +114,13 @@ public class ProfileManager : MonoBehaviour
         AnnounceReached();
     }
 
+    /// <summary>개발용 (OtterKingdom/Dev/Level +1): 한 레벨 바로 올리고(보상 · 해금 그대로) 저장을 부탁한다</summary>
+    public void DevLevelUp()
+    {
+        ReachLevel(Level + 1);
+        SaveRequested?.Invoke();
+    }
+
     private void AnnounceReached()
     {
         SyncProfile();
@@ -138,6 +159,7 @@ public class ProfileManager : MonoBehaviour
         // Preserve names already customized by older versions.
         HasChosenName = saved.nameChosen ||
             (!string.IsNullOrWhiteSpace(saved.name) && saved.name.Trim() != _defaultName);
+        Profile.SetPortrait(saved.portraitOtterId);
         Progress.Load(saved.level, saved.exp, _levelTable);
         SyncProfile();
         OnExpChanged?.Invoke();
@@ -152,6 +174,7 @@ public class ProfileManager : MonoBehaviour
         result.nameChosen = HasChosenName;
         result.level = Progress.Level;
         result.exp = Progress.Exp;
+        result.portraitOtterId = Profile.PortraitOtterId;
     }
 
     #endregion

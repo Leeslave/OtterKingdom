@@ -144,17 +144,19 @@ public partial class SettlementManager
         // 비용은 놓기 전에 계산 (놓으면 같은 건물 수가 늘어 비용이 바뀜)
         int gold = BuildingGoldCost(building);
         var items = BuildingItemCosts(building);
+        bool freeFirstField = BuildingRules.IsFreeFirstField(Settlement, building);
         placement = decor.TryPlaceBuilding(board, building, origin, out var placed);
         if (placement != DecorPlacementResult.Ok)
             return BuildingBlock.None;
         PayCost(gold, items);
 
-        double seconds = building.Instant ? 0 : DevTimers.Duration(KingdomBonus.Shorten(KingdomBonusKind.BuildSpeed, BuildSecondsOf(building)));
+        bool instant = building.Instant || freeFirstField;
+        double seconds = instant ? 0 : DevTimers.Duration(KingdomBonus.Shorten(KingdomBonusKind.BuildSpeed, BuildSecondsOf(building)));
         BuildingRules.Start(Settlement, building, placed.InstanceId, NowTicks, seconds);
         var record = Settlement.FindBuilding(placed.InstanceId);
         OnBuildingStarted?.Invoke(record);
-        // 바로 놓이는 것(길)은 공사 없이 지금 완성
-        if (building.Instant)
+        // 바로 놓이는 것(길 · 첫 밭 칸)은 공사 없이 지금 완성
+        if (instant)
             FinishDueBuildings(false);
         SaveRequested?.Invoke();
         return BuildingBlock.None;
