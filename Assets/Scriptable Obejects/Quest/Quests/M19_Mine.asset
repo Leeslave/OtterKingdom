@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv19_mine
   _title: "\uBCF4\uBB3C \uAD11\uC0B0"
   _description: "\uAD11\uC0B0\uC5D0\uC11C \uAD11\uC11D 1,000\uAC1C \uCE90\uAE30"
-  _sortOrder: 81
+  _sortOrder: 100
   _kind: 0
   _requiredLevel: 19
   _prerequisite: {fileID: 11400000, guid: 1f129b08579bc0f45b84b97e32230814, type: 2}

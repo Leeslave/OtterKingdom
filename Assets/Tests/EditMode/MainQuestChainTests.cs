@@ -62,6 +62,57 @@ public class MainQuestChainTests
         Assert.IsTrue(clerkFirst, "오래된 갱도 찾기보다 또박이 배치가 먼저");
     }
 
+    // Lv.10~15 해달의 부탁이 메인 안에 (재설계 1차): 레벨을 올리는 부탁마다 그 바로 아래 레벨 메인의 마지막 단계(경험치 0),
+    // 같은 레벨의 다른 메인 경험치 합 = 그 레벨 필요 경험치 (Lv.10은 첫 모임 공동사업 425를 뺀 만큼). 실제 에셋
+    [Test]
+    public void Level10To15_FacilityRequestClosesEachLevel()
+    {
+        var database = AssetDatabase.LoadAssetAtPath<QuestDatabase>("Assets/Scriptable Obejects/Quest/QuestDatabase.asset");
+        var table = AssetDatabase.LoadAssetAtPath<LevelTable>("Assets/Scriptable Obejects/Profile/LevelTable.asset");
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
+        Assert.IsNotNull(database);
+        Assert.IsNotNull(table);
+        Assert.IsNotNull(config);
+
+        for (int level = 10; level <= 15; level++)
+        {
+            BoardRequestDefinition gate = null;
+            foreach (var request in config.Requests)
+            {
+                if (request != null && request.KingdomLevel == level + 1)
+                    gate = request;
+            }
+            Assert.IsNotNull(gate, $"Lv.{level + 1}로 올리는 부탁");
+
+            var mains = new List<QuestDefinition>();
+            foreach (var quest in database.Quests)
+            {
+                if (quest != null && quest.Kind == QuestKind.Main && quest.RequiredLevel == level)
+                    mains.Add(quest);
+            }
+            QuestDefinition last = null;
+            int exp = 0;
+            foreach (var quest in mains)
+            {
+                bool followed = false;
+                foreach (var other in mains)
+                    followed |= other.Prerequisite == quest;
+                if (!followed)
+                {
+                    Assert.IsNull(last, $"Lv.{level} 메인은 한 줄");
+                    last = quest;
+                }
+                exp += quest.ExpFor(level, null);
+            }
+            Assert.IsNotNull(last);
+            Assert.AreEqual(QuestGoalType.Milestone, last.GoalType, $"Lv.{level} 마지막 메인");
+            Assert.AreEqual(gate.RequestId, last.Target, $"Lv.{level} 마지막 메인 = 다음 레벨로 올리는 부탁");
+            Assert.AreEqual(0, last.ExpFor(level, null), "끝내면 바로 다음 레벨이라 경험치 0");
+            int project = level == 10 ? 425 : 0;
+            Assert.AreEqual(table.ExpToNext(level), exp + project, $"Lv.{level} 메인 경험치 합");
+        }
+    }
+
     [Test]
     public void PaidTransactions_CountBagNotFurrow()
     {

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: M10_Harvest
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv10_harvest
-  _title: "넉넉한 수확"
+  _title: "\uB109\uB109\uD55C \uC218\uD655"
   _description: "\uC791\uBB3C 500\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 59
+  _sortOrder: 63
   _kind: 2
   _requiredLevel: 10
   _prerequisite: {fileID: 11400000, guid: 3e5934ce62c1e5c49b35bf9b0e1609c5, type: 2}

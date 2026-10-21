@@ -51,6 +51,8 @@ public partial class SettlementManager
             var item = building.ProductionItem;
             int added = inventory.Add(item, amount, ItemChangeReason.Production);
             ProductionRules.Return(Settlement, building, amount - added);
+            if (added > 0)
+                Settlement.UnlockDevelopment(ProductionRules.FirstProducedDevelopment(building.BuildingId));
             if (away && added > 0)
             {
                 _producedWhileAway.TryGetValue(item, out int sum);

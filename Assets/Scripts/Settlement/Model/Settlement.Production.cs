@@ -80,6 +80,9 @@ public static class ProductionRules
         return result;
     }
 
+    /// <summary>이 시설이 처음 재료를 가방에 넣으면 열리는 발전 (메인 퀘스트 "목공소의 첫 목재" 등이 셈)</summary>
+    public static string FirstProducedDevelopment(string buildingId) => "produced_" + buildingId;
+
     /// <summary>가방이 차서 못 넣은 몫을 시설에 되돌림 (다음에 다시 넣어 봄)</summary>
     public static void Return(Settlement settlement, BuildingDefinition building, int amount)
     {

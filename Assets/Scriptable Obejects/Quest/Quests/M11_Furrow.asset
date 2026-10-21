@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv11_furrow
   _title: "\uC5EC\uB35F\uC9F8 \uBC2D \uCE78"
-  _description: "\uB18D\uC5C5 \uC9C0\uC5ED\uC5D0 \uBC2D \uCE78 \uD558\uB098 \uB354 \uC9D3\uAE30"
-  _sortOrder: 53
+  _description: "\uB18D\uC5C5 \uC9C0\uC5ED\uC5D0 \uBC2D \uCE78 \uD558\uB098 \uB354
+    \uC9D3\uAE30"
+  _sortOrder: 58
   _kind: 0
   _requiredLevel: 13
   _prerequisite: {fileID: 11400000, guid: e95d970fc30c8d64ba055d8b096ea569, type: 2}
@@ -30,5 +31,5 @@ MonoBehaviour:
   _target: 5
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 0
-  _expReward: 200
+  _expReward: 250
   _expPercentOfLevel: 0

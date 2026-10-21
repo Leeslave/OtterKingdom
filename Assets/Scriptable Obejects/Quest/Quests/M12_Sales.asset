@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv12_sales
   _title: "\uD070\uC190 \uD574\uB2EC"
   _description: "\uD310\uB9E4\uB85C 30,000\uACE8\uB4DC \uBC8C\uAE30"
-  _sortOrder: 51
-  _kind: 0
+  _sortOrder: 66
+  _kind: 2
   _requiredLevel: 12
-  _prerequisite: {fileID: 11400000, guid: 57552d53aaf13f94e82deef1b9507061, type: 2}
+  _prerequisite: {fileID: 11400000, guid: 19ffc794cf45a3b4e95ff4a92a39c098, type: 2}
   _icon: {fileID: 21300000, guid: 50d17c0c5e1496846a61da22ead35d0d, type: 3}
   _goalType: 2
   _goal: 30000

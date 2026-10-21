@@ -13,6 +13,10 @@ public partial class SettlementManager
     private const string FarmDiscoverDevelopment = "farm_discovered";
     private const string FarmPathDevelopment = "farm_path_open";
     private const string FarmWorkingDevelopment = "farm_working";
+    // 처음 써 보기 (메인 퀘스트 Lv.13~15가 셈): 스프링클러 · 흙길을 다 지어 놓음, 돌길이 열린 채 길이 깔림
+    public const string FarmSprinklerPlacedDevelopment = "farm_sprinkler_placed";
+    public const string FarmPathPlacedDevelopment = "farm_path_placed";
+    public const string FarmStonePathDevelopment = "farm_stone_path";
     private const float FarmSyncSeconds = 0.5f;
     private const float OfflineStepSeconds = 5f;
     // 이만큼 넘게 시계가 건너뛰면(앱을 내려 둠 · 꺼 둠) 꺼 둔 동안으로 셈
@@ -133,6 +137,22 @@ public partial class SettlementManager
         // 고랑 열기 퀘스트(Lv.11~13) = 처음 밭 칸 3개를 넘긴 수
         if (QuestManager.Instance != null && FarmConfig != null)
             QuestManager.Instance.SetOpenedFurrows(Mathf.Max(0, _farmFieldIds.Count - FarmConfig.FieldsAt(10)));
+        RecordFarmPartUse();
+    }
+
+    // 지금 놓인 부품으로 다시 셈 → 퀘스트보다 먼저 놓았어도 들어감. 한 번 열리면 치워도 그대로
+    private void RecordFarmPartUse()
+    {
+        if (!HasDevelopment(FarmSprinklerPlacedDevelopment) && CountFarmParts(FarmPartKind.Sprinkler, true) > 0)
+            Settlement.UnlockDevelopment(FarmSprinklerPlacedDevelopment);
+        bool stone = StonePath;
+        if (HasDevelopment(FarmPathPlacedDevelopment) && (!stone || HasDevelopment(FarmStonePathDevelopment)))
+            return;
+        if (CountFarmParts(FarmPartKind.Path, true) == 0)
+            return;
+        Settlement.UnlockDevelopment(FarmPathPlacedDevelopment);
+        if (stone)
+            Settlement.UnlockDevelopment(FarmStonePathDevelopment);
     }
 
     #endregion

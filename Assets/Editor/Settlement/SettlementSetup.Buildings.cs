@@ -36,10 +36,11 @@ public static partial class SettlementSetup
             0, P4LumberSettled, new[] { (OtterTrait.Woodcutting, 2) }, 1, 3000, 60, 30, 0f, 360f),
         ("Building_Quarry", "bld_quarry", "채석 작업소", "채굴하는 해달들이 일해 돌을 꾸준히 모아 가방에 넣어요. (한 마리당 1시간에 12개)", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Quarry.png", new string[0], null,
-            0, P4MinerSettled, new[] { (OtterTrait.Mining, 2) }, 1, 4000, 60, 60, 0f, 420f),
-        ("Building_Granary", "bld_granary", "농업 창고", "밭에서 거두는 작물이 늘어나요.", BuildingKind.Facility,
+            0, P4MinerSettled, new[] { (OtterTrait.Mining, 2) }, 1, 5000, 70, 60, 0f, 480f),
+        // 농업 창고는 채석 작업소보다 먼저 지음 (Lv.13 → 14, 채석은 14 → 15). 비용도 순서대로
+        ("Building_Granary", "bld_granary", "농업 창고", "흙길을 놓을 수 있고, 수확 상자가 커지고, 밭에서 거두는 작물이 늘어나요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Granary.png", new string[0], null,
-            0, P4FarmerSettled, new[] { (OtterTrait.Farming, 2) }, 1, 5000, 80, 50, 0f, 480f),
+            0, P4FarmerSettled, new[] { (OtterTrait.Farming, 2) }, 1, 4000, 80, 40, 0f, 420f),
         // Lv.16~18 (SettlementSetup.P4Story.cs 표 39~44)
         ("Building_Fishery", "bld_fishery", "어업 작업소", "바다에서 낚는 물고기가 늘어나요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Fishery.png", new string[0], null,
