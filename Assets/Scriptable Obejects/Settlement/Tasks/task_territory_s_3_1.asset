@@ -20,7 +20,7 @@ MonoBehaviour:
   _completionMessage: "\uBC14\uB2F7\uAC00 \uC232 \uAC1C\uAC04 1/2 \uB05D!"
   _requiredWorkers: 1
   _durationSeconds: 600
-  _requiredGold: 2000
+  _requiredGold: 0
   _requiredItems: []
   _requiredDevelopment: 
   _resultDevelopment: territory_s_3_c1

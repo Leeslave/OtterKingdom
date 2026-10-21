@@ -23,8 +23,6 @@ public class CastleTests
         Assert.IsFalse(CastleRules.ShouldOpen(_config, settlement, 100, 20), "행정 해달 전");
 
         settlement.UnlockDevelopment(DistrictGuideRules.Promotion);
-        Assert.IsFalse(CastleRules.ShouldOpen(_config, settlement, 100, 20), "마을 길드(가스 사건 뒤) 전");
-        settlement.UnlockDevelopment(CastleRules.GuildBuilt);
         Assert.IsFalse(CastleRules.ShouldOpen(_config, settlement, 79, 20));
         Assert.IsTrue(CastleRules.ShouldOpen(_config, settlement, 80, 20));
 
@@ -39,7 +37,6 @@ public class CastleTests
         _config.SetupLevelGates(16, 10);
         var settlement = new Settlement();
         settlement.UnlockDevelopment(DistrictGuideRules.Promotion);
-        settlement.UnlockDevelopment(CastleRules.GuildBuilt);
 
         Assert.IsFalse(CastleRules.ShouldOpen(_config, settlement, 100, 15));
         Assert.IsTrue(CastleRules.ShouldOpen(_config, settlement, 80, 16));

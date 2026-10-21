@@ -47,6 +47,7 @@ public static partial class SettlementSetup
         ("req_upgrade_board", RequestCategory.Main, "", ""),
         ("req_assign_receptionist", RequestCategory.Main, BoardRoleId, ""),
         ("req_prepare_common_space", RequestCategory.Main, "", "task_common_space"),
+        ("req_build_guild_office", RequestCategory.Main, "", ""),
         ("req_upgrade_town_hall", RequestCategory.Main, "", ""),
         ("req_rest_corner", RequestCategory.Resident, "", ""),
         ("req_tidy_board_area", RequestCategory.Resident, "", "task_tidy_board_area"),
@@ -54,11 +55,11 @@ public static partial class SettlementSetup
 
     // 큰 부탁 "마을 회의소 마련하기"의 단계 (부탁 ID 순서)
     // 큰 부탁: 게시판 → 마을회관 → 마을 길드 (SettlementSetup.Plots도 같은 문구로 에셋을 맞춤)
-    private const string GroupTitle = "함께 꾸리는 마을회관";
-    private const string GroupDescription = "게시판을 마을회관으로 넓히고, 또박이와 함께 꾸려요.\n마을이 함께 이루는 큰 부탁이에요.";
+    private const string GroupTitle = "마을 길드 세우기";
+    private const string GroupDescription = "게시판을 마을회관으로, 마을회관을 마을 길드로.\n마을이 함께 이루는 큰 부탁이에요.";
 
     private static readonly string[] TownCouncilSteps =
-        { "req_upgrade_board", "req_assign_receptionist", "req_prepare_common_space" };
+        { "req_upgrade_board", "req_assign_receptionist", "req_prepare_common_space", "req_build_guild_office", "req_upgrade_town_hall" };
 
     #endregion
 
@@ -130,14 +131,13 @@ public static partial class SettlementSetup
         groupSo.FindProperty("_title").stringValue = GroupTitle;
         groupSo.FindProperty("_description").stringValue = GroupDescription;
         groupSo.FindProperty("_icon").objectReferenceValue = LoadArt("ICON_TownHall");
-        // 접수 창구가 마을회관에 합쳐져, 큰 부탁 · 게시판 길드 칸은 또박이가 게시판을 맡으면 보임
-        groupSo.FindProperty("_visibleDevelopment").stringValue = BoardManagedDevelopment;
+        groupSo.FindProperty("_visibleDevelopment").stringValue = GuildDevelopment;
         SetList(groupSo.FindProperty("_steps"), TownCouncilSteps.Select(id => byId[id]).ToList());
         groupSo.ApplyModifiedPropertiesWithoutUndo();
 
         configSo.FindProperty("_boardUpgradeDevelopment").stringValue = BoardUpgradeDevelopment;
         configSo.FindProperty("_boardManagedDevelopment").stringValue = BoardManagedDevelopment;
-        configSo.FindProperty("_guildDevelopment").stringValue = BoardManagedDevelopment;
+        configSo.FindProperty("_guildDevelopment").stringValue = GuildDevelopment;
         configSo.FindProperty("_townHallDevelopment").stringValue = TownHallDevelopment;
         configSo.FindProperty("_residentRequestSlots").intValue = ResidentRequestSlots;
         SetList(configSo.FindProperty("_roles"), new List<ManagementRoleDefinition> { role });

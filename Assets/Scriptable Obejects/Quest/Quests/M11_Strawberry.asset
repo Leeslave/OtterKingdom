@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv11_strawberry
   _title: "\uB538\uAE30 \uB18D\uC0AC"
   _description: "\uB538\uAE30 100\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 54
+  _sortOrder: 52
   _kind: 0
   _requiredLevel: 13
   _prerequisite: {fileID: 11400000, guid: 0ea1c407ad5ccca4f840ea48c40038ee, type: 2}

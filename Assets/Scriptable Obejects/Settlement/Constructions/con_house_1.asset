@@ -25,5 +25,5 @@ MonoBehaviour:
   _durationSeconds: 10
   _needsBuilder: 0
   _progressLabel: "\uC791\uC740 \uC9D1 \uC9D3\uB294 \uC911"
-  _progressHint: "\uB2E4 \uC9C0\uC73C\uBA74 \uD574\uB2EC\uC774\uAC00 \uC815\uCC29\uD574\uC694"
+  _progressHint: "\uB2E4 \uC9C0\uC73C\uBA74 \uBABD\uC2E4\uC774\uAC00 \uC815\uCC29\uD574\uC694"
   _unlockResultId: house_1

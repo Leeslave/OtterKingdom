@@ -363,7 +363,7 @@ public class DistrictTests
         Assert.IsNotNull(config);
         Assert.IsNotNull(board);
         var blocks = config.DistrictBlocks;
-        Assert.AreEqual(6, blocks.Count, "중앙 + 4방향 + 동쪽");
+        Assert.AreEqual(5, blocks.Count);
 
         var expansions = new HashSet<string>();
         foreach (var territory in config.Territories)
@@ -385,17 +385,12 @@ public class DistrictTests
             }
             else
             {
-                // 공터 동쪽은 공터 · 북동 땅 모양을 채우는 1단계 블록 (바닷가 길이 지나가 부지 칸 1개, 예시 용도 없음)
-                bool east = block.BlockId == "district_east";
-                if (east)
-                    Assert.AreEqual(DistrictType.None, block.SuggestedType, "동쪽은 예시 용도 없음");
-                else
-                    Assert.IsTrue(suggested.Add(block.SuggestedType), $"예시 용도가 겹침: {block.BlockId}");
-                Assert.AreEqual(east ? 1 : 3, block.Stages.Count, $"{block.BlockId}: 단계 수");
+                Assert.IsTrue(suggested.Add(block.SuggestedType), $"예시 용도가 겹침: {block.BlockId}");
+                Assert.AreEqual(3, block.Stages.Count, $"{block.BlockId}: 3단계로 커짐");
                 foreach (var stage in block.Stages)
                     Assert.IsTrue(expansions.Contains(stage.Development), $"{block.BlockId}: 단계 발전 '{stage.Development}'이 영토 확장에 없음");
                 for (int s = 0; s < block.Stages.Count; s++)
-                    Assert.IsTrue(block.Slots.Count(x => x.Stage == s) >= (east ? 1 : 2), $"{block.BlockId} {s + 1}단계 부지 칸이 모자람");
+                    Assert.IsTrue(block.Slots.Count(x => x.Stage == s) >= 2, $"{block.BlockId} {s + 1}단계 부지 칸이 2칸보다 적음");
             }
             foreach (var stage in block.Stages)
             {
@@ -461,7 +456,7 @@ public class DistrictTests
     {
         var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>(ConfigPath);
         var layout = System.IO.File.ReadAllText("Assets/Art/Plaza/territory_layout.json");
-        Assert.AreEqual(13, config.Territories.Count, "4방향 × 3단계 + 동쪽 1단계");
+        Assert.AreEqual(12, config.Territories.Count, "4방향 × 3단계");
         foreach (var territory in config.Territories)
         {
             StringAssert.Contains($"\"development\": \"{territory.ExpandedDevelopment}\"", layout, $"{territory.ExpansionId}의 걷기 영역");

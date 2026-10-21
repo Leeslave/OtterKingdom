@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,14 +15,10 @@ public partial class SettlementManager
     private const string FarmWorkingDevelopment = "farm_working";
     private const float FarmSyncSeconds = 0.5f;
     private const float OfflineStepSeconds = 5f;
-    // 이만큼 넘게 시계가 건너뛰면(앱을 내려 둠 · 꺼 둠) 꺼 둔 동안으로 셈
-    private const double OfflineGapSeconds = 5;
-    // 광장 농부가 이만큼 안 움직였으면 광장 밖(광산 · 낚시터)에 있는 것: 규칙이 대신 거둠
-    private const float WorkerDrivenGraceSeconds = 1.5f;
+    private const double OfflineMaxSeconds = 12 * 3600;
 
     private float _farmSyncTimer;
-    private float _farmDrivenAt = float.NegativeInfinity;
-    private bool _oldFarmHintShown;
+    private bool _farmLoaded;
     private readonly List<int> _farmFieldIds = new List<int>();
     private readonly List<int> _farmCrateIds = new List<int>();
 
@@ -34,12 +30,8 @@ public partial class SettlementManager
     public PlazaFarmConfig FarmConfig => _config.Farm;
     public PlazaFarm Farm => Settlement.Farm;
 
-    /// <summary>
-    /// 광장 농장이 열림 (밭 개간 = 농업 지역에서 Lv.10). 밭을 연 옛 세이브는 농업 지역을 정할 때까지 옛 밭(밭 씬)을 그대로 씀.
-    /// 밭 칸을 지은 뒤에는 농업 지역을 바꿔도 닫히지 않음
-    /// </summary>
-    public bool FarmOpen => FarmConfig != null && IsLoaded && HasDevelopment(FarmlandDevelopment)
-        && (Farm.Fields.Count > 0 || Farm.Data.migrated || DistrictRules.HasDistrict(_config, Settlement, DistrictType.Agricultural));
+    /// <summary>광장 농장이 열림 (밭 개간 = 농업 지역에서 Lv.10)</summary>
+    public bool FarmOpen => FarmConfig != null && IsLoaded && HasDevelopment(FarmlandDevelopment);
 
     #region 해금 (건물 보상)
 
@@ -146,7 +138,7 @@ public partial class SettlementManager
         float speed = 1f / (soil != null ? soil.DurationMultiplier : 1f);
         speed *= 1f + SprinklerBonusAt(field.instanceId);
         speed *= (100f + BonusPercent(KingdomBonusKind.GrowSpeed)) / 100f;
-        return speed * MineHealthMultiplier;
+        return speed;
     }
 
     public FarmSoilTier SoilOf(FarmFieldSaveData field)
@@ -185,40 +177,24 @@ public partial class SettlementManager
         return Mathf.Max(dx, dy);
     }
 
-    /// <summary>광장 농부가 이번 프레임에 일함 (PlazaFarmView가 부름). 한동안 안 부르면 광장 밖이라 규칙이 대신 거둠</summary>
-    public void MarkFarmWorkerDriven() => _farmDrivenAt = Time.unscaledTime;
-
-    private bool FarmWorkerAway => HasFarmWorker && Time.unscaledTime - _farmDrivenAt > WorkerDrivenGraceSeconds;
-
     // Update에서 (SettlementManager.cs)
     private void TickFarm(float dt)
     {
         OpenPlazaFarm();
         if (!FarmOpen)
-        {
-            HintOldFarmMove();
             return;
-        }
-        // 작물 · 씨앗 · 가방은 GameManager가 가짐 (앱을 켤 때 · 장소를 옮기는 동안 없음): 생기면 그동안 시간을 몰아서 셈
-        if (GameManager.Instance == null)
-            return;
-        // 앱을 내려 뒀다 돌아옴 · 꺼 뒀다 켬: 그동안 자라고 농부가 거둠 (이번 프레임 시간은 아래에서)
-        long last = Farm.Data.lastUtcTicks;
-        if (last > 0)
+        if (!_farmLoaded)
         {
-            double gap = (NowTicks - last) / (double)TimeSpan.TicksPerSecond - dt;
-            if (gap > OfflineGapSeconds)
-                ApplyFarmOffline(gap);
+            _farmLoaded = true;
+            SyncFarm();
+            MigrateOldFarm();
+            ApplyFarmOffline();
         }
-        // 시계를 되돌려도 같은 시간을 두 번 세지 않게 (앞으로만)
-        Farm.Data.lastUtcTicks = Math.Max(last, NowTicks);
-
         _farmSyncTimer -= dt;
         if (_farmSyncTimer <= 0f)
         {
             _farmSyncTimer = FarmSyncSeconds;
             SyncFarm();
-            MigrateOldFarm();
             // 밭 씬이 없어져 밭 안내가 없음: 농부를 배치하면 바로 광장 밭에서 일함
             var farmer = FarmConfig != null ? _config.FindOtter(FarmConfig.FarmerOtterId) : null;
             if (farmer != null && SettlementRegionRules.StartWork(farmer, Settlement, NowTicks))
@@ -228,18 +204,9 @@ public partial class SettlementManager
             }
             ResumeWaitingFields();
         }
-        // 농부가 일을 맡기 전(말을 걸어 배치하기 전)에는 심어 둔 작물도 자라지 않음
-        if (!HasFarmWorker)
-            return;
-        // 광장 밖(광산 · 낚시터): 걷는 농부 대신 꺼 둔 동안처럼 (자람은 효율만큼, 다 자라면 바로 상자로)
-        bool away = FarmWorkerAway;
-        if (Farm.Grow(away ? dt * FarmConfig.OfflineEfficiency : dt, FieldSpeed) > 0)
+        if (Farm.Grow(dt, FieldSpeed) > 0)
             OnFarmChanged?.Invoke();
-        if (away && AutoHarvestReady())
-        {
-            OnFarmChanged?.Invoke();
-            SaveRequested?.Invoke();
-        }
+        Farm.Data.lastUtcTicks = NowTicks;
 
         if (CartActive)
         {
@@ -259,48 +226,17 @@ public partial class SettlementManager
     #endregion
 
     // 밭이 광장으로 옮겨 와 밭 씬 개간(장애물 치우기 · 주민 밭 갈기)이 없음:
-    // 농업 지역이 생겨 밭을 발견하면 바로 밭 칸을 지을 수 있게. 밭 개간 부탁(먹거리를 길러요)도 여기서 끝냄 →
-    // 농부 해달이 찾아오고 다음 부탁(농부 배치) · 메인 퀘스트가 이어짐
+    // 농업 지역이 생겨 밭을 발견하면 바로 밭 칸을 지을 수 있게 (밭 개간 부탁도 이것으로 끝남)
     private void OpenPlazaFarm()
     {
-        if (FarmConfig == null || !IsLoaded)
+        if (FarmConfig == null || !IsLoaded || HasDevelopment(FarmlandDevelopment))
             return;
-        if (HasDevelopment(FarmlandDevelopment))
-        {
-            CompletePlazaFarmOpening();
-            return;
-        }
         if (!HasDevelopment(FarmDiscoverDevelopment) || !DistrictRules.HasDistrict(_config, Settlement, DistrictType.Agricultural))
             return;
         Settlement.UnlockDevelopment(FarmPathDevelopment);
         Settlement.UnlockDevelopment(FarmlandDevelopment);
-        CompletePlazaFarmOpening();
         GameNotices.Post(new GameNotice("농업 지역에 밭을 지을 수 있어요! (꾸미기 → 밭 칸)"));
         SaveRequested?.Invoke();
-    }
-
-    // 광장 농장은 옛 밭 씬의 개간 완료 이벤트가 없으므로 여기서 부탁과 농부 도착까지 마친다.
-    // 이미 열린 저장도 첫 틱에 보완하고, 완료된 부탁은 다시 처리하지 않는다.
-    private void CompletePlazaFarmOpening()
-    {
-        if (Settlement.IsCompleted("req_farmland")) return;
-        foreach (var request in _config.Requests)
-        {
-            if (request != null && request.RequestId == "req_farmland")
-            {
-                Complete(request);
-                return;
-            }
-        }
-    }
-
-    // 밭을 연 옛 세이브인데 농업 지역이 없음: 정하면 밭이 광장으로 옮겨 온다고 한 번 알림 (세션마다)
-    private void HintOldFarmMove()
-    {
-        if (_oldFarmHintShown || FarmConfig == null || !IsLoaded || !IsAdministrator || !HasDevelopment(FarmlandDevelopment))
-            return;
-        _oldFarmHintShown = true;
-        GameNotices.Post(new GameNotice("해달이: 밭을 광장으로 옮길 수 있어요!\n마을회관 → 구역 정하기에서 땅 하나를 농업 지역으로 정하면 밭이 그리로 옮겨 와요"));
     }
 
     #region 심기
@@ -373,19 +309,9 @@ public partial class SettlementManager
         if (ConsumeSeed(crop))
             Farm.Plant(fieldId, crop.cropId, crop.baseDurationSec);
         else
-        {
             field.waitingCropId = crop.cropId;
-            PostSeedShortage(crop);
-        }
         OnFarmChanged?.Invoke();
         return true;
-    }
-
-    // 씨앗이 없어 다시 못 심음: 옛 밭과 같은 알림 (같은 작물 알림은 GameNotices가 한 번만 띄움)
-    private void PostSeedShortage(CropDefinition crop)
-    {
-        var notice = new FarmNotice(FarmNoticeKind.SeedShortage, 1, new[] { crop.cropId });
-        GameNotices.Post(FarmNoticeText.Build(notice, id => FindCrop(id)?.displayName ?? id));
     }
 
     /// <summary>씨앗을 기다리던 밭에 씨앗이 생겼으면 심음</summary>
@@ -399,57 +325,6 @@ public partial class SettlementManager
             if (crop != null && ConsumeSeed(crop))
                 Farm.Plant(field.instanceId, crop.cropId, crop.baseDurationSec);
         }
-    }
-
-    /// <summary>다 자란 밭을 바로 거둬 상자에 넣음 (꺼 둔 동안 · 광장 밖). 상자 자리가 모자라면 멈춤 (거둔 것을 버리지 않게). 거뒀으면 true</summary>
-    private bool AutoHarvestReady()
-    {
-        if (!HasFarmWorker)
-            return false;
-        bool any = false;
-        int capacity = CrateCapacity;
-        foreach (var field in Farm.Fields)
-        {
-            if (!field.ready)
-                continue;
-            var crop = FindCrop(field.cropId);
-            if (crop == null)
-                continue;
-            // 흙이 하나 더 줄 수도 있으면 그만큼 자리가 있을 때만
-            var soil = SoilOf(field);
-            int bonus = soil != null && soil.BonusChance > 0f ? 1 : 0;
-            int most = KingdomBonus.Amount(KingdomBonusKind.HarvestYield, Mathf.Max(1, crop.yieldCount) + bonus);
-            if (Farm.FreeSpace(capacity) < most)
-                break;
-            if (!HarvestField(field.instanceId, out var harvested, out int amount))
-                continue;
-            foreach (var crate in Farm.Crates)
-            {
-                if (amount <= 0)
-                    break;
-                amount -= Farm.Deposit(crate.instanceId, harvested.cropId, amount, capacity);
-            }
-            any = true;
-        }
-        return any;
-    }
-
-    /// <summary>농부가 들고 있던 작물을 둘 데 (광장을 떠남): 상자에, 자리가 없으면 가방으로</summary>
-    public void StoreFarmCarry(string cropId, int amount)
-    {
-        if (string.IsNullOrEmpty(cropId) || amount <= 0)
-            return;
-        foreach (var crate in Farm.Crates)
-        {
-            if (amount <= 0)
-                break;
-            amount -= Farm.Deposit(crate.instanceId, cropId, amount, CrateCapacity);
-        }
-        var game = GameManager.Instance;
-        if (amount > 0 && game != null && game.TryFindItem(cropId, out var item))
-            game.Bag.Add(item, amount, ItemChangeReason.Harvest);
-        OnFarmChanged?.Invoke();
-        SaveRequested?.Invoke();
     }
 
     /// <summary>상자에 넣는다. 넣은 수</summary>
@@ -549,21 +424,42 @@ public partial class SettlementManager
 
     #region 꺼 둔 동안
 
-    // 꺼 둔 동안(앱을 내려 둔 동안 포함, 다른 생산처럼 최대 8시간): 밭이 (걷는 시간만큼 덜) 자라고,
-    // 다 자란 밭은 농부가 상자에 넣고 다시 심음. 상자가 차면 멈춤
-    private void ApplyFarmOffline(double seconds)
+    // 꺼 둔 동안: 밭이 자라고, 다 자란 밭은 농부가 (걷는 시간만큼 덜) 상자에 넣고 다시 심음. 상자가 차면 멈춤
+    private void ApplyFarmOffline()
     {
-        if (!HasFarmWorker)
+        long last = Farm.Data.lastUtcTicks;
+        Farm.Data.lastUtcTicks = NowTicks;
+        if (last <= 0 || !HasFarmWorker)
             return;
-        seconds = OfflineProductionService.Credited(seconds);
+        double seconds = Math.Min(OfflineMaxSeconds, (NowTicks - last) / (double)TimeSpan.TicksPerSecond);
+        if (seconds < 1)
+            return;
         float efficiency = FarmConfig.OfflineEfficiency;
         for (double t = 0; t < seconds; t += OfflineStepSeconds)
         {
             Farm.Grow((float)Math.Min(OfflineStepSeconds, seconds - t) * efficiency, FieldSpeed);
-            AutoHarvestReady();
+            foreach (var field in Farm.Fields)
+            {
+                if (!field.ready)
+                    continue;
+                var crate = FirstCrateWithSpace();
+                if (crate < 0)
+                    break;
+                if (HarvestField(field.instanceId, out var crop, out int amount))
+                    DepositToCrate(crate, crop.cropId, amount);
+            }
         }
         OnFarmChanged?.Invoke();
-        SaveRequested?.Invoke();
+    }
+
+    private int FirstCrateWithSpace()
+    {
+        foreach (var crate in Farm.Crates)
+        {
+            if (PlazaFarm.Count(crate) < CrateCapacity)
+                return crate.instanceId;
+        }
+        return -1;
     }
 
     /// <summary>농부(광장 밭 일꾼)가 있음 — 밭에 배치된 농부 해달</summary>
@@ -579,9 +475,7 @@ public partial class SettlementManager
 
     #region 옛 밭 옮기기
 
-    // 옛 세이브(밭 씬에서 농사를 짓던 세이브): 열린 고랑 수만큼 밭 칸을 농업 지역에 놓고(자라던 작물 그대로) 상자 하나.
-    // 밭 씬을 쓴 적 없는 세이브(새 흐름은 Lv.10에 밭 발견)는 옮길 것이 없음 — 밭 칸을 직접 지음.
-    // 농업 지역이 없거나 자리가 아직 없으면 다음에 다시 봄
+    // 옛 세이브(밭 씬 밭 3 × 고랑 3): 열린 고랑 수만큼 밭 칸을 농업 지역에 놓고(자라던 작물 그대로) 상자 하나. 농업 지역이 없으면 기다림
     private void MigrateOldFarm()
     {
         if (Farm.Data.migrated)
@@ -590,17 +484,11 @@ public partial class SettlementManager
         var service = game != null ? game.FarmService : null;
         var fieldDef = FarmPartDefinition(FarmPartKind.Field);
         var crateDef = FarmPartDefinition(FarmPartKind.Crate);
-        if (service == null || fieldDef == null || crateDef == null)
-            return;
-        if (Farm.Fields.Count > 0 || !UsedOldFarm(service))
-        {
-            Farm.Data.migrated = true;
-            return;
-        }
-        if (!DistrictRules.HasDistrict(_config, Settlement, DistrictType.Agricultural)
-            || !TryFindFarmSpot(fieldDef, out _) || !TryFindFarmSpot(crateDef, out _))
+        if (service == null || fieldDef == null || crateDef == null || !DistrictRules.HasDistrict(_config, Settlement, DistrictType.Agricultural))
             return;
         Farm.Data.migrated = true;
+        if (Farm.Fields.Count > 0)
+            return;
 
         var slots = new List<(string crop, float remaining, bool ready)>();
         for (int p = 0; p < service.Plots.Count; p++)
@@ -635,26 +523,7 @@ public partial class SettlementManager
         SaveRequested?.Invoke();
     }
 
-    // 밭 씬에서 농사를 지었는지: 농부가 일했거나(farm_working, 광장 밭보다 먼저) 밭을 강화했거나 고랑을 더 열었거나 무언가 심겨 있음
-    private bool UsedOldFarm(FarmService service)
-    {
-        if (HasDevelopment(FarmWorkingDevelopment) || service.FarmLevel > 1)
-            return true;
-        for (int p = 0; p < service.Plots.Count; p++)
-        {
-            if (!service.IsPlotUnlocked(p))
-                continue;
-            for (int s = 0; s < service.Plots[p].SlotCount; s++)
-            {
-                if (service.IsSlotOpen(p, s) && (p > 0 || service.GetSlotCrop(p, s) != null))
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    /// <summary>이 종류의 농장 부품 건물 (첫 밭 칸 안내 등)</summary>
-    public BuildingDefinition FarmPartDefinition(FarmPartKind kind)
+    private BuildingDefinition FarmPartDefinition(FarmPartKind kind)
     {
         foreach (var building in BuildingCatalog)
         {

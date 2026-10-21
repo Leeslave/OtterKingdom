@@ -83,12 +83,6 @@ public class DecorDefinition : ScriptableObject
     /// <summary>건물인지 (가방·보관함이 아니라 건설로 놓이고, 해달이 가지고 놀지 않음)</summary>
     public virtual bool IsBuilding => false;
 
-    /// <summary>문 앞 한 줄(발밑 바로 아래 칸)을 비워 두는 건물 (집 · 시설). 그 줄에는 다른 물건이 문을 가리지 않게 못 놓음</summary>
-    public virtual bool KeepsDoorstepClear => false;
-
-    /// <summary>남의 문 앞에 놓아도 되는 것 (길)</summary>
-    public virtual bool AllowedOnDoorstep => false;
-
     public Vector2Int Footprint => new Vector2Int(Mathf.Max(1, _footprint.x), Mathf.Max(1, _footprint.y));
     public bool CanRotate => _canRotate;
     public DecorPlayStyle PlayStyle => _playStyle;

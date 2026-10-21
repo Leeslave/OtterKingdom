@@ -65,11 +65,10 @@ public static class BuildingRules
         var unlocked = CheckUnlocked(config, settlement, building, level);
         if (unlocked != BuildingBlock.None)
             return unlocked;
-        // 바로 놓이는 것(길 · 첫 밭 칸)은 공사 자리 · 건설 해달이 필요 없음
-        bool instant = building.Instant || IsFreeFirstField(settlement, building);
-        if (!instant && settlement.ActiveBuildingCount >= BaseSlots)
+        // 바로 놓이는 것(길)은 공사 자리 · 건설 해달이 필요 없음
+        if (!building.Instant && settlement.ActiveBuildingCount >= BaseSlots)
             return BuildingBlock.Busy;
-        if (!instant && !hasBuilder)
+        if (!building.Instant && !hasBuilder)
             return BuildingBlock.NoBuilder;
         if (gold < GoldCost(settlement, building))
             return BuildingBlock.Gold;
@@ -85,19 +84,13 @@ public static class BuildingRules
     public static float CostMultiplier(Settlement settlement, BuildingDefinition building) =>
         1f + Math.Max(0f, building.CostGrowth) * settlement.CountBuildings(building.BuildingId);
 
-    /// <summary>첫 밭 칸: 공짜 · 바로 지어짐 (밭이 열리자마자 놓고 심어 보게)</summary>
-    public static bool IsFreeFirstField(Settlement settlement, BuildingDefinition building) =>
-        building.FarmPart == FarmPartKind.Field && settlement.CountBuildings(building.BuildingId) == 0;
-
     public static int GoldCost(Settlement settlement, BuildingDefinition building) =>
-        IsFreeFirstField(settlement, building) ? 0 : Scale(building.Gold, CostMultiplier(settlement, building));
+        Scale(building.Gold, CostMultiplier(settlement, building));
 
     public static List<ItemAmount> ItemCosts(Settlement settlement, BuildingDefinition building)
     {
         float multiplier = CostMultiplier(settlement, building);
         var result = new List<ItemAmount>();
-        if (IsFreeFirstField(settlement, building))
-            return result;
         foreach (var cost in building.Items)
         {
             if (cost != null && cost.Item != null && cost.Amount > 0)

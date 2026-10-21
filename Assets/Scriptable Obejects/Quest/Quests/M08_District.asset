@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv8_district
   _title: "\uB113\uC5B4\uC9C4 \uB545\uC758 \uC4F0\uC784"
   _description: "\uC0C8\uB85C \uB113\uD78C \uB545\uC758 \uAD6C\uC5ED \uC815\uD558\uAE30"
-  _sortOrder: 28
+  _sortOrder: 26
   _kind: 0
   _requiredLevel: 8
   _prerequisite: {fileID: 11400000, guid: dc43c1f25bb393740963dc2b712a7b70, type: 2}

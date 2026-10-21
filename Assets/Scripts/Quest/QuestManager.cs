@@ -25,8 +25,8 @@ public class QuestManager : MonoBehaviour
 
     public QuestLog Log { get; private set; }
 
-    /// <summary>지금 메인 체인 표의 판 (QuestLog.MainChainVersion). 메인 표를 크게 옮기면 올림 — 2: 밭을 Lv.10으로 (Docs/밭해금_재배치_기획.md), 3: Lv.5 오래된 갱도 (광산 미로)</summary>
-    public const int MainChainVersion = 3;
+    /// <summary>지금 메인 체인 표의 판 (QuestLog.MainChainVersion). 메인 표를 크게 옮기면 올림 — 2: 밭을 Lv.10으로 (Docs/밭해금_재배치_기획.md)</summary>
+    public const int MainChainVersion = 2;
     public QuestDatabase Database => _database;
 
     /// <summary>진행·수령·열림(레벨업)·일일 초기화로 목록이 바뀌었을 때 (세이브를 불러온 뒤 포함). 화면·뱃지 갱신용</summary>

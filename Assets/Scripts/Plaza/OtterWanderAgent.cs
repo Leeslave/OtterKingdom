@@ -121,17 +121,6 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
         habitActions = actions;
     }
 
-    // Home area: while set, free wandering stays within radius of center (no toys, seats or habits elsewhere).
-    // center returns null when there is no home right now (e.g. no fields yet).
-    private System.Func<Vector2?> homeCenter;
-    private float homeRadius;
-
-    public void SetHome(System.Func<Vector2?> center, float radius)
-    {
-        homeCenter = center;
-        homeRadius = radius;
-    }
-
     // Sitting on a chair / standing at a spot (for bubbles etc.).
     public bool IsAtSpot => spotSession != null && spotPhase != SpotPhase.None;
 
@@ -407,8 +396,6 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     private bool TryStartWalk()
     {
         if (hasTask) return TryStartTaskWalk();
-        var home = homeCenter?.Invoke();
-        if (home.HasValue) return TryStartHomeWalk(home.Value);
         if (TryStartPlayWalk()) return true;
         if (TryStartSpotWalk()) return true;
         if (TryStartHabitWalk()) return true;
@@ -429,21 +416,6 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
                 continue;
             }
 
-            BeginWalk(from);
-            return true;
-        }
-        return false;
-    }
-
-    private bool TryStartHomeWalk(Vector2 center)
-    {
-        Vector2 from = transform.position;
-        for (int i = 0; i < settings.maxDestinationTries; i++)
-        {
-            if (!area.TryGetRandomPointNear(center, homeRadius, 12, out Vector2 destination)) continue;
-            if ((destination - from).sqrMagnitude < 0.25f) continue;
-            if (!PlazaCrowd.IsFree(destination, settings.SpawnSpacing, this)) continue;
-            if (!area.TryFindPath(from, destination, path) || path.Count == 0) continue;
             BeginWalk(from);
             return true;
         }

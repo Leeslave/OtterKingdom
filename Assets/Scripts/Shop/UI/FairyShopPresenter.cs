@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -91,7 +91,7 @@ public class FairyShopPresenter : MonoBehaviour
     private void HandleProductClicked(ShopProduct product)
     {
         // 아직 레벨이 안 된 상품: 사지 못하고 요정이 언제 파는지 알려 줌
-        if (!product.DevelopmentUnlocked || product.IsLockedAt(PlayerLevel))
+        if (product.IsLockedAt(PlayerLevel))
         {
             string name = product.Item.DisplayName;
             _shop.Say($"{name}{KoreanParticle.ObjectParticle(name)} 왕국 레벨 {product.RequiredLevel}부터 팔게요!");
@@ -133,7 +133,7 @@ public class FairyShopPresenter : MonoBehaviour
     /// <summary>가방 자리 확인 → 값 치르기 → 가방에 넣기. 실패하면 아무것도 바꾸지 않는다</summary>
     private static ShopPurchaseResult TryBuy(ShopProduct product, int quantity)
     {
-        if (!product.DevelopmentUnlocked || product.IsLockedAt(PlayerLevel))
+        if (product.IsLockedAt(PlayerLevel))
             return ShopPurchaseResult.Locked;
 
         var inventory = InventoryManager.Instance.Inventory;

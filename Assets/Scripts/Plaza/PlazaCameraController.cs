@@ -135,17 +135,6 @@ public class PlazaCameraController : MonoBehaviour
 
     private void Update()
     {
-        UpdateInput();
-        UpdateCelebrate();
-        // Clamp now, not only in LateUpdate: UI that follows a world point
-        // (construction progress bubble, decor buttons) reads the camera in
-        // its own Update, and an unclamped position there made it shake
-        // against the map edge.
-        ApplyZoomAndClamp();
-    }
-
-    private void UpdateInput()
-    {
         if (UpdatePinch()) return;
 #if UNITY_EDITOR
         if (UpdateEditorPinch()) return;
@@ -244,20 +233,17 @@ public class PlazaCameraController : MonoBehaviour
             return;
         }
 
-        // A point near the map edge can't be centred: glide to the nearest
-        // reachable spot and stop there (otherwise the pan never ends and
-        // keeps pushing against the clamp).
-        Vector2 target = ClampToBounds(panTarget);
         Vector2 pos = transform.position;
-        Vector2 next = Vector2.SmoothDamp(pos, target, ref panVelocity, PanSmoothTime);
+        Vector2 next = Vector2.SmoothDamp(pos, panTarget, ref panVelocity, PanSmoothTime);
         transform.position = new Vector3(next.x, next.y, transform.position.z);
-        if ((next - target).sqrMagnitude < 0.0004f) panning = false;
+        if ((next - panTarget).sqrMagnitude < 0.0004f) panning = false;
     }
 
     // Runs every frame (cheap) so resolution / orientation / viewport / map
     // size changes are picked up without any change detection.
     private void LateUpdate()
     {
+        UpdateCelebrate();
         ApplyZoomAndClamp();
     }
 
@@ -555,17 +541,6 @@ public class PlazaCameraController : MonoBehaviour
         pos.x = ClampAxis(pos.x, bounds.xMin + halfWidth, bounds.xMax - halfWidth, bounds.center.x);
         pos.y = ClampAxis(pos.y, bounds.yMin + halfHeight, bounds.yMax - halfHeight, bounds.center.y);
         transform.position = pos;
-    }
-
-    // Where the camera centre may be for the current zoom.
-    private Vector2 ClampToBounds(Vector2 point)
-    {
-        if (!TryGetBounds(out Rect bounds)) return point;
-        float halfHeight = cam.orthographicSize;
-        float halfWidth = halfHeight * cam.aspect;
-        return new Vector2(
-            ClampAxis(point.x, bounds.xMin + halfWidth, bounds.xMax - halfWidth, bounds.center.x),
-            ClampAxis(point.y, bounds.yMin + halfHeight, bounds.yMax - halfHeight, bounds.center.y));
     }
 
     private void GetZoomLimits(bool hasBounds, Rect bounds, out float min, out float max)

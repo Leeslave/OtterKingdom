@@ -17,11 +17,6 @@ using UnityEngine;
 // otter already inside.
 //
 // The transform position is the otter's feet (sprites are pivoted there).
-//
-// With a QuarterRigView assigned (the cutout quarter-view miner, the same
-// rig the plaza shows - MinerRigV1) the sprite and SpriteFrameAnimator are
-// switched off and the rig is driven instead: it walks and faces the way it
-// goes, fades by its parts' alpha and is switched off while inside.
 [RequireComponent(typeof(SpriteFrameAnimator))]
 public class MinerOtterController : MonoBehaviour
 {
@@ -60,14 +55,8 @@ public class MinerOtterController : MonoBehaviour
     [Tooltip("Above the background (0) and the entrance oval (1).")]
     [SerializeField] private int spriteSortingOrder = 2;
 
-    [Header("Cutout rig (optional)")]
-    [Tooltip("Replaces the sprite + SpriteFrameAnimator when set. Sorted at Sprite Sorting Order like the sprite.")]
-    [SerializeField] private QuarterRigView rigView;
-
     private SpriteFrameAnimator frameAnimator;
     private SpriteRenderer spriteRenderer;
-    // The rig's generated parts (rebuilt each time the rig is switched on), for fading.
-    private SpriteRenderer[] rigRenderers;
 
     private Phase phase = Phase.Idle;
     private float timer;
@@ -91,12 +80,6 @@ public class MinerOtterController : MonoBehaviour
         frameAnimator = GetComponent<SpriteFrameAnimator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = spriteSortingOrder;
-        if (rigView != null)
-        {
-            spriteRenderer.enabled = false;
-            frameAnimator.enabled = false;
-            rigView.SortingOrder = spriteSortingOrder;
-        }
     }
 
     private void Start()
@@ -169,14 +152,6 @@ public class MinerOtterController : MonoBehaviour
         }
     }
 
-    // The rig sorts where the (hidden) sprite would: GroundDepthSort keeps
-    // setting the sprite's order from the feet height (trees, rocks).
-    private void LateUpdate()
-    {
-        if (rigView != null && rigView.SortingOrder != spriteRenderer.sortingOrder)
-            rigView.SortingOrder = spriteRenderer.sortingOrder;
-    }
-
     // ---------------------------------------------------------------- mining
 
     private void BeginGoToEntrance()
@@ -217,7 +192,7 @@ public class MinerOtterController : MonoBehaviour
         if (snap) SnapTo(entrance.InsidePosition);
         phase = Phase.Inside;
         path.Clear();
-        SetShown(false);
+        spriteRenderer.enabled = false;
         if (emote != null) emote.SetVisible(true);
     }
 
@@ -228,7 +203,7 @@ public class MinerOtterController : MonoBehaviour
     private void StopMining()
     {
         if (emote != null) emote.SetVisible(false);
-        SetShown(true);
+        spriteRenderer.enabled = true;
 
         if (phase == Phase.GoToEntrance)
         {
@@ -252,35 +227,11 @@ public class MinerOtterController : MonoBehaviour
         transform.position = new Vector3(p.x, p.y, transform.position.z);
     }
 
-    private void SetShown(bool shown)
-    {
-        if (rigView == null)
-        {
-            spriteRenderer.enabled = shown;
-            return;
-        }
-        rigRenderers = null;
-        rigView.gameObject.SetActive(shown);
-    }
-
     private void SetAlpha(float alpha)
     {
-        if (rigView == null)
-        {
-            var c = spriteRenderer.color;
-            c.a = Mathf.Clamp01(alpha);
-            spriteRenderer.color = c;
-            return;
-        }
-        if (rigRenderers == null || rigRenderers.Length == 0)
-            rigRenderers = rigView.GetComponentsInChildren<SpriteRenderer>(true);
-        foreach (var part in rigRenderers)
-        {
-            if (part == null) continue;
-            var c = part.color;
-            c.a = Mathf.Clamp01(alpha);
-            part.color = c;
-        }
+        var c = spriteRenderer.color;
+        c.a = Mathf.Clamp01(alpha);
+        spriteRenderer.color = c;
     }
 
     // Straight-line distance from `from` (default: the otter) to the end of
@@ -300,11 +251,6 @@ public class MinerOtterController : MonoBehaviour
         timer = RandomInRange(idleSeconds);
         path.Clear();
         pathIndex = 0;
-        if (rigView != null)
-        {
-            rigView.SetWalking(false, 0f);
-            return;
-        }
         // Idle is a side view facing right; mirror it to keep the last facing.
         spriteRenderer.flipX = facingLeft;
         frameAnimator.Play(ClipIdle);
@@ -376,12 +322,6 @@ public class MinerOtterController : MonoBehaviour
 
     private void PlayWalkClip(Vector2 direction)
     {
-        if (rigView != null)
-        {
-            rigView.SetWalking(true, currentSpeed);
-            rigView.Face(direction);
-            return;
-        }
         if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
         {
             facingLeft = direction.x < 0f;

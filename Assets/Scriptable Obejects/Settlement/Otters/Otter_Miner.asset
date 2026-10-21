@@ -15,7 +15,7 @@ MonoBehaviour:
   _otterId: otter_miner
   _displayName: "\uAE61\uAE61\uC774"
   _portrait: {fileID: 21300000, guid: 86ccbc71a56bb93438cba76d320dd204, type: 3}
-  _plazaPrefab: {fileID: 7310524418817630001, guid: 6248b168a8f54be19c870f4d9e1ea91c, type: 3}
+  _plazaPrefab: {fileID: 6466850907306658564, guid: 581581cae1c310241af2d2212d4878c4, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 2
   _toyVisitor: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   _requestId: req_mine_path
   _order: 2
   _title: "\uAD11\uC0B0 \uAE38 \uC5F4\uAE30"
-  _description: "\uD574\uB2EC\uC774\uAC00 \uCC3E\uC740 \uB3D9\uAD74\uC740 \uAD11\uC0B0\uC774\uC5C8\uC5B4\uC694!\n\uAE38\uC744
+  _description: "\uBABD\uC2E4\uC774\uAC00 \uCC3E\uC740 \uB3D9\uAD74\uC740 \uAD11\uC0B0\uC774\uC5C8\uC5B4\uC694!\n\uAE38\uC744
     \uB9C9\uC740 \uB098\uBB34\uC640 \uB3CC\uC744 \uCE58\uC6CC \uC918\uC694."
   _icon: {fileID: 21300000, guid: 6d9590fc9fd476040933ba50c0537290, type: 3}
   _requester: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}

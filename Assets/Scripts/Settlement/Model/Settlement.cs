@@ -457,15 +457,6 @@ public partial class Settlement
     private static (long start, long end) Shorten(float progress, long nowUtcTicks, long max) =>
         (nowUtcTicks - (long)(progress * max), nowUtcTicks + (long)((1f - progress) * max));
 
-    /// <summary>광장의 나무 · 돌 · 나뭇가지를 모두 바로 다시 (오프라인에서 돌아왔을 때)</summary>
-    public void ResetGatherCooldowns()
-    {
-        if (_gatherReady.Count == 0)
-            return;
-        _gatherReady.Clear();
-        OnChanged?.Invoke();
-    }
-
     public void SetGatherReady(string pointId, long readyUtcTicks)
     {
         if (string.IsNullOrEmpty(pointId))
@@ -669,7 +660,6 @@ public partial class Settlement
         LoadDistricts(saved);
         LoadRelocation(saved);
         LoadFarm(saved);
-        LoadProduction(saved);
 
         OnChanged?.Invoke();
     }
@@ -755,7 +745,6 @@ public partial class Settlement
         WriteDistricts(result);
         WriteRelocation(result);
         WriteFarm(result);
-        WriteProduction(result);
     }
 
     #endregion

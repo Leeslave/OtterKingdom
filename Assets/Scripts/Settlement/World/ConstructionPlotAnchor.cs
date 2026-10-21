@@ -98,27 +98,6 @@ public class ConstructionPlotAnchor : MonoBehaviour
     // 이사 중 잠시 끈 그림 (켜져 있던 것만 되돌림)
     private readonly List<SpriteRenderer> _hiddenRenderers = new List<SpriteRenderer>();
 
-    /// <summary>
-    /// 묶음의 완성 그림 (자리 데이터의 그림과 같은 것, 꺼져 있어도). 꾸미기 미리보기가 씬과 같은 방향(flipX) · 자리 · 크기로 그리게.
-    /// 없으면 null
-    /// </summary>
-    public SpriteRenderer FindArt()
-    {
-        if (_plot == null || _plot.WorldSprite == null)
-            return null;
-        foreach (var (target, _) in _parts)
-        {
-            if (target == null)
-                continue;
-            foreach (var renderer in target.GetComponentsInChildren<SpriteRenderer>(true))
-            {
-                if (renderer.sprite == _plot.WorldSprite)
-                    return renderer;
-            }
-        }
-        return null;
-    }
-
     /// <summary>지금 보이는 묶음 그림 (말풍선·글자 빼고)</summary>
     public IEnumerable<SpriteRenderer> VisibleRenderers()
     {

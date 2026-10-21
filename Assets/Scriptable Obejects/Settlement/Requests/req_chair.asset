@@ -17,7 +17,7 @@ MonoBehaviour:
   _category: 0
   _contentVersion: 0
   _title: "\uC26C\uC5B4 \uAC08 \uC758\uC790"
-  _description: "\uD574\uB2EC\uC774\uAC00 \uC26C\uC5B4 \uAC08 \uC758\uC790\uB97C
+  _description: "\uBABD\uC2E4\uC774\uAC00 \uC26C\uC5B4 \uAC08 \uC758\uC790\uB97C
     \uAC16\uACE0 \uC2F6\uB300\uC694.\n\uC758\uC790\uB97C \uB9CC\uB4E4\uC5B4 \uB9C8\uC74C\uC5D0
     \uB4DC\uB294 \uACF3\uC5D0 \uB193\uC544 \uC918\uC694."
   _icon: {fileID: 21300000, guid: c965ba9ca8006aa458ac8be800e48a59, type: 3}
@@ -37,6 +37,6 @@ MonoBehaviour:
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 121d3d2726a74224d8ec68022c51cb2a, type: 2}
-  _completionMessage: "\uC758\uC790 \uC644\uC131! \uD574\uB2EC\uC774\uAC00 \uC232
+  _completionMessage: "\uC758\uC790 \uC644\uC131! \uBABD\uC2E4\uC774\uAC00 \uC232
     \uB108\uBA38\uC5D0\uC11C\n\uB3D9\uAD74\uC744 \uBC1C\uACAC\uD588\uC5B4\uC694."
   _kingdomLevel: 2

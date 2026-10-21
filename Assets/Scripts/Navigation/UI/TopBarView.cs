@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// 화면 상단바의 프로필(아바타, 이름, 레벨, 진행 바)과 설정 버튼. 재화 칸은 CurrencyPillView가 따로 그린다.
-/// 프로필은 ProfileManager의 값을 그리기만 하고, 아바타를 누르면 대표 해달 고르기(ProfilePortraitPicker)를 연다.
+/// 프로필은 ProfileManager의 값을 그리기만 하고, 버튼은 클릭을 알리기만 한다.
 /// </summary>
 public class TopBarView : MonoBehaviour
 {
@@ -15,10 +15,8 @@ public class TopBarView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _levelText;
     [Tooltip("다음 레벨까지 진행")]
     [SerializeField] private ProgressBarView _expBar;
-    [Tooltip("아바타 (누르면 대표 해달 고르기)")]
+    [Tooltip("아바타 (누르면 프로필 알림)")]
     [SerializeField] private Button _profileButton;
-    [Tooltip("아바타 안의 해달 얼굴 (고른 대표 해달)")]
-    [SerializeField] private Image _portrait;
 
     [Header("버튼")]
     [SerializeField] private Button _settingsButton;
@@ -26,7 +24,7 @@ public class TopBarView : MonoBehaviour
     /// <summary>튜토리얼이 프로필 위치를 강조할 때 사용</summary>
     public RectTransform ProfileArea => (RectTransform)_profileButton.transform;
 
-    /// <summary>아바타를 눌렀을 때 (대표 해달 고르기 창이 열림)</summary>
+    /// <summary>아바타를 눌렀을 때 (왕국 정보 화면 등이 생기면 연결)</summary>
     public event Action OnProfileClicked;
 
     /// <summary>설정 버튼을 눌렀을 때 (설정 화면이 생기면 연결)</summary>
@@ -38,15 +36,6 @@ public class TopBarView : MonoBehaviour
     {
         _profileButton.onClick.AddListener(() => OnProfileClicked?.Invoke());
         _settingsButton.onClick.AddListener(() => OnSettingsClicked?.Invoke());
-        OnProfileClicked += OpenPortraitPicker;
-    }
-
-    private void OpenPortraitPicker()
-    {
-        var picker = GetComponent<ProfilePortraitPicker>();
-        if (picker == null)
-            picker = gameObject.AddComponent<ProfilePortraitPicker>();
-        picker.Open(_profileButton.image.sprite);
     }
 
     private void OnEnable()
@@ -75,10 +64,5 @@ public class TopBarView : MonoBehaviour
         _nameText.text = _profile.Name;
         _levelText.text = $"Lv.{_profile.Level}";
         _expBar.SetRatio(_profile.ExpRatio);
-
-        var settlement = SettlementManager.Instance;
-        var otter = settlement != null ? ProfilePortraitRules.Resolve(settlement.Config, _profile.PortraitOtterId) : null;
-        if (_portrait != null && otter != null && otter.Portrait != null)
-            _portrait.sprite = otter.Portrait;
     }
 }

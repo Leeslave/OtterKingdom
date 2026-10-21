@@ -15,9 +15,9 @@ public class MiningBalanceData : ScriptableObject
 
     [Header("Pickaxe")]
     [Tooltip("Diamond chance at pickaxe level 1; the rest is stone.")]
-    [Range(0f, 1f)] public float baseDiamondChance = 0.1f;
+    [Range(0f, 1f)] public float baseDiamondChance = 0.3f;
     [Tooltip("Added to the diamond chance per pickaxe level above 1.")]
-    [Range(0f, 1f)] public float diamondChancePerPickaxeLevel = 0.025f;
+    [Range(0f, 1f)] public float diamondChancePerPickaxeLevel = 0.05f;
     // Cost to go from level (index+1) to (index+2). Max level = length + 1.
     public int[] pickaxeUpgradeCosts = { 100, 200, 400, 800 };
     public int MaxPickaxeLevel => pickaxeUpgradeCosts.Length + 1;

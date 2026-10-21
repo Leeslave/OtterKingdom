@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -35,10 +35,6 @@ public class BackButtonHandler : MonoBehaviour
         if ((navigator != null && navigator.IsTraveling) || TutorialOverlay.IsShowing)
             return;
 
-        var health = FindAnyObjectByType<MineCommunitySheet>();
-        if (health != null && health.IsOpen) { health.Close(); return; }
-        var portrait = FindAnyObjectByType<ProfilePortraitPicker>();
-        if (portrait != null && portrait.IsOpen) { portrait.Close(); return; }
         var gameUI = FindAnyObjectByType<GameUI>();
         if (gameUI != null && gameUI.CloseTopModal())
             return;

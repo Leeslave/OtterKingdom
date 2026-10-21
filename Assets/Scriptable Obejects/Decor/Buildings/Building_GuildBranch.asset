@@ -18,7 +18,7 @@ MonoBehaviour:
   _playStyle: 0
   _playSeconds: {x: 4, y: 7}
   _maxPlayers: 1
-  _worldSprite: {fileID: 21300000, guid: dc38e7d3ce9cfa74b48088eee3d8bf7f, type: 3}
+  _worldSprite: {fileID: 21300000, guid: 33ee6fd5e82532048a412e3305d24085, type: 3}
   _rotationSprites:
   - {fileID: 0}
   - {fileID: 0}
@@ -34,7 +34,7 @@ MonoBehaviour:
   _description: "\uC131\uC5D0\uC11C \uB098\uC628 \uAE38\uB4DC\uAC00 \uC0C1\uC5C5
     \uC9C0\uC5ED\uC5D0 \uC5F0 \uC9C0\uBD80. \uC7A5\uC0AC\uAC00 \uD65C\uBC1C\uD574\uC838
     \uBB3C\uAC74\uC744 \uB354 \uBE44\uC2F8\uAC8C \uD314\uC544\uC694."
-  _icon: {fileID: 21300000, guid: dc38e7d3ce9cfa74b48088eee3d8bf7f, type: 3}
+  _icon: {fileID: 21300000, guid: 7378b420846c8a2449ac9600afbe4ea4, type: 3}
   _kind: 1
   _requiredLevel: 0
   _requiredDevelopment: castle_built

@@ -12,8 +12,6 @@ public class PlazaSettings : ScriptableObject
     [Tooltip("Prefabs to spawn from (picked at random). Each needs OtterWanderAgent; OtterVisualController is optional.")]
     public GameObject[] otterPrefabs;
     [Min(0)] public int otterCount = 5;
-    [Tooltip("Kingdom level from which these otters show up (1 = from the start). Below it the plaza waits and spawns them on reaching it.")]
-    [Min(1)] public int otterMinKingdomLevel = 3;
 
     [Header("Otter size (world units, feet pivot)")]
     [Tooltip("Standing height from feet to top of the hat. FarmerOtter: ~200px at PPU 120.")]

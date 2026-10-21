@@ -89,20 +89,11 @@ public partial class SettlementManager
         var working = WorkingTerritory(out var task);
         if (working != null)
             return $"{task.Title} 중이에요.";
-        if (Settlement.HasDevelopment(TerritoryRules.TutorialReady) && !Settlement.HasDevelopment(TerritoryRules.TutorialDone))
-            return "오른쪽 숲에서 첫 개간을 배워 봐요! 이번에는 한 번만 개간하면 땅이 넓어져요.";
-        if (PlayerLevel < TerritoryRules.TutorialLevel && !Settlement.HasDevelopment(TerritoryRules.FirstDevelopment))
-            return $"Lv.{TerritoryRules.TutorialLevel}이 되면 오른쪽 숲에서 첫 개간을 할 수 있어요.";
         if (PlayerLevel < _config.TerritoryStartLevel)
             return $"Lv.{_config.TerritoryStartLevel}부터 공터 둘레의 숲을 개간할 수 있어요.";
-        // 시작한 땅은 다 마칠 때까지 그 방향만 (TerritoryRules.Started)
-        var started = TerritoryRules.Started(_config, Settlement);
-        string progress = started != null
-            ? $"{started.DisplayName} 개간 {TerritoryRules.ClearingsDone(started, Settlement)}/{started.Clearings.Count} · 이 땅을 다 마치면 다른 방향도 개간할 수 있어요.\n"
-            : "";
-        return progress + (chances > 0
+        return chances > 0
             ? $"개간 기회 {chances}번 · 공터 가장자리의 점선 원을 눌러 해달을 보내요."
-            : "레벨이 오르면 개간 기회가 생겨요.");
+            : "레벨이 오르면 개간 기회가 생겨요.";
     }
 
     /// <summary>개간이 끝났을 때 작업 화면이 띄울 말 (영토 개간이 아니면 null)</summary>
@@ -111,8 +102,6 @@ public partial class SettlementManager
         var territory = TerritoryRules.FindByTask(_config, task, out int index);
         if (territory == null)
             return null;
-        if (TerritoryRules.IsTutorial(territory, Settlement))
-            return $"첫 개간 완료! 오른쪽 땅이 넓어졌어요.\n이제 Lv.{_config.TerritoryStartLevel}부터 레벨마다 개간 기회를 얻어요.";
         int total = territory.Clearings.Count;
         var text = new StringBuilder();
         text.Append(index + 1 >= total
@@ -121,7 +110,7 @@ public partial class SettlementManager
         if (_clearingRewardText.TryGetValue(task.TaskId, out string reward) && !string.IsNullOrEmpty(reward))
             text.Append('\n').Append(reward);
         if (index + 1 >= total)
-            text.Append("\n마을회관에서 영토 확장 미션을 할 수 있어요.");
+            text.Append("\n마을 길드에서 영토 확장 미션을 할 수 있어요.");
         return text.ToString();
     }
 
@@ -159,23 +148,12 @@ public partial class SettlementManager
                 text.Append($" (가방이 가득해 {amount - added}개는 못 받았어요)");
         }
         _clearingRewardText[task.TaskId] = text.ToString();
-        UpdateTerritory(false);
         TerritoryRules.Sync(_config, Settlement);
     }
 
     // 다 낸 영토 확장 미션을 끝내고 (결과 발전 = 땅) 칸 발전을 맞춘다. 불러올 때(silent)는 알림 없이
     private void UpdateTerritory(bool silent)
     {
-        if (TerritoryRules.UnlockTutorial(_config, Settlement, PlayerLevel))
-            SaveRequested?.Invoke();
-        var tutorial = TerritoryRules.CompleteTutorial(_config, Settlement);
-        if (tutorial != null)
-        {
-            // 첫 확장은 납품 없이 완료. 기존 확장 보상은 한 번만 지급한다.
-            if (tutorial.Mission != null) CompleteProject(tutorial.Mission, true);
-            SaveRequested?.Invoke();
-            if (!silent) OnTerritoryExpanded?.Invoke(tutorial);
-        }
         foreach (var territory in _config.Territories)
         {
             var mission = territory != null ? territory.Mission : null;

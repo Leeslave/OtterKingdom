@@ -79,9 +79,6 @@ public class LevelUpPresenter : MonoBehaviour
         {
             if (zone == null || !zone.IsAvailable || zone.RequiredLevel != level)
                 continue;
-            // 밭은 광장 농업 지역으로 옮겨 와 장소로 열리지 않음
-            if (zone.ZoneId == GameManager.FarmZoneId && SettlementManager.Instance != null && SettlementManager.Instance.FarmConfig != null)
-                continue;
             string name = zone.DisplayName;
             return ZoneAccess.IsUncleared(zone)
                 ? $"{name}{KoreanParticle.ObjectParticle(name)} 발견했어요!"

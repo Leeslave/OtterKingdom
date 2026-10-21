@@ -26,8 +26,8 @@ ROOT = HERE.parents[1]
 RESOURCES = ROOT / "Assets/Resources"
 PREFABS = ROOT / "Assets/Prefabs/Plaza"
 RIG_VIEW_GUID = "a29eaed5e9ac4a1badeddf527641c691"  # QuarterRigView.cs
-RIG_LABELS = {"QuarterRigV14": "농부", "HeroRigV1": "주인공", "WaiterRigV14": "웨이터", "ChefRigV1": "요리사",
-              "FisherRigV1": "뱃사람", "BaseballRigV1": "야구 해달", "ArtisanRigV1": "작업반장", "PajamaRigV1": "잠옷 해달", "ReceptionRigV1": "안내원", "MinerRigV1": "광부", "PhotographerRigV1": "사진가", "MerchantRigV1": "행상인", "BardRigV1": "음악가", "DiverRigV1": "잠수부", "CleanerRigV1": "청소부", "FlowerRigV1": "꽃 카디건", "StripeRigV1": "줄무늬 니트", "HoodieRigV1": "후드티", "KnitRigV1": "케이블 니트", "OverallsRigV1": "노랑 멜빵", "PlaidRigV1": "체크 치마", "BearPajamaRigV1": "곰돌이 잠옷", "BeanieRigV1": "방울 모자", "ScholarRigV1": "안경 학자", "VarsityRigV1": "야구 점퍼", "ShyRigV1": "수줍은", "PlayfulRigV1": "장난꾸러기", "LaidbackRigV1": "느긋한", "NeatRigV1": "단정한", "FluffyRigV1": "복슬복슬", "FashionRigV1": "꾸미는", "SleepyRigV1": "잠꾸러기", "WalkerRigV1": "산책하는", "QuietRigV1": "조용한", "LivelyRigV1": "활발한"}
+RIG_LABELS = {"QuarterRigV14": "농부", "WaiterRigV14": "웨이터", "PainterRigV14": "화가", "ChefRigV1": "요리사",
+              "ExplorerRigV14": "탐험가", "FisherRigV1": "뱃사람", "SleepyRigV14": "잠꾸러기", "ClownRigV14": "광대", "BaseballRigV1": "야구 해달", "ArtisanRigV1": "작업반장", "PajamaRigV1": "잠옷 해달", "ReceptionRigV1": "안내원", "MinerRigV1": "광부"}
 BENCH_PNG = ROOT / "Assets/Art/Plaza/Props/Prop_Bench.png"
 BENCH_PREFAB = ROOT / "Assets/Prefabs/Plaza/Prop_Bench.prefab"
 CROP_ICON = ROOT / "Assets/Art/Item/Vegetable/Carrot.png"
@@ -134,21 +134,14 @@ def build_data():
 BODY_IMAGE_SCALE = .7
 
 
-def webp_uri(image):
-    # Lossy WebP (alpha kept) is a fraction of the PNG size, which keeps the published page under 16 MB.
-    buffer = io.BytesIO()
-    image.save(buffer, "WEBP", quality=88, method=6)
-    return "data:image/webp;base64," + base64.b64encode(buffer.getvalue()).decode("ascii")
-
-
 def shrink_images(node):
-    """Every embedded picture (src / tint) at BODY_IMAGE_SCALE of its pixels, as WebP; sizes and pivots stay."""
+    """Every embedded picture (src / tint) at BODY_IMAGE_SCALE of its pixels; sizes and pivots stay."""
     if isinstance(node, dict):
         for key, value in node.items():
             if key in ("src", "tint") and isinstance(value, str) and value.startswith("data:image/png;base64,"):
                 image = Image.open(io.BytesIO(base64.b64decode(value.split(",", 1)[1])))
                 size = (max(1, round(image.width * BODY_IMAGE_SCALE)), max(1, round(image.height * BODY_IMAGE_SCALE)))
-                node[key] = webp_uri(image.resize(size, Image.LANCZOS))
+                node[key] = data_uri(image.resize(size, Image.LANCZOS))
             else:
                 shrink_images(value)
     elif isinstance(node, list):

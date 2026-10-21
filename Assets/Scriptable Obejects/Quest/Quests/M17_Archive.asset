@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv17_archive
   _title: "\uBAA8\uB450\uC758 \uAE30\uB85D"
   _description: "\uAC8C\uC2DC\uD310 \uBD80\uD0C1: \uAE30\uB85D\uAD00 \uC9D3\uAE30"
-  _sortOrder: 75
+  _sortOrder: 73
   _kind: 0
   _requiredLevel: 17
   _prerequisite: {fileID: 11400000, guid: 880e6124ad418b648a6412089be069ca, type: 2}

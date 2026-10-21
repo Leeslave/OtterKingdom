@@ -14,7 +14,7 @@ python Tools/MapExpansion/build_territory_art.py --rebuild-map       # 원본 �
                                                  이웃집 자리 · 구역 블록 단계와 부지 칸
   Tools/MapExpansion/preview_forest.png          확인용 미리보기
 
-땅: 시작 = 중앙 공터(START). 방향마다 구역 블록 하나(북동 · 남 · 북서 · 서 · 동), 블록은 3단계로 커진다 (동쪽은 1단계).
+땅: 시작 = 중앙 공터(START). 방향마다 구역 블록 하나(북동 · 남 · 북서 · 서), 블록은 3단계로 커진다.
 단계 = 숲 개간 N번 → 영토 확장 미션 → 그 단계 땅이 열림 (걷기 영역 · 카메라 · 구역 블록의 부지 칸).
 남동쪽 옛 시작 광장은 바닷가(낚시터를 찾으면 열림). 블록 사이 · 가장자리 숲은 늘 남는다.
 
@@ -414,10 +414,6 @@ DIRECTIONS = [
      "tiers": [((-52, 58, 18, 14), 3), ((-70, 58, 18, 14), 2), ((-70, 72, 36, 14), 2)]},
     {"key": "w", "direction": "West", "block": "district_west",
      "tiers": [((-58, 34, 16, 16), 3), ((-74, 34, 16, 16), 2), ((-74, 18, 32, 16), 2)]},
-    # 동쪽: 공터 오른쪽 아래 (북동 1단계 아래 · 공터 아랫줄까지) — 공터 · 북동 땅 모양을 네모로 채움. 바닷가 길이 지나감.
-    # 처음부터 다시 돌리지 않고 기존 배치에 덧붙이려면 add_east_block.py
-    {"key": "e", "direction": "East", "block": "district_east",
-     "tiers": [((-16, 38, 18, 8), 3)]},
 ]
 CENTER_BLOCK = "district_center"
 
@@ -795,7 +791,7 @@ def preview(world, groups, sprites, sites, regions, districts, out, scale=0.25, 
         img.alpha_composite(s, (int(px - s.width / 2), int(py - s.height)))
     d = ImageDraw.Draw(img)
     colors = {"district_center": (160, 110, 255, 255), "district_northeast": (255, 99, 71, 255), "district_south": (255, 215, 0, 255),
-              "district_northwest": (30, 144, 255, 255), "district_west": (50, 205, 50, 255), "district_east": (255, 140, 200, 255)}
+              "district_northwest": (30, 144, 255, 255), "district_west": (50, 205, 50, 255)}
     for b in districts:
         c = colors.get(b["block"], (255, 255, 255, 255))
         for st in b["stages"]:

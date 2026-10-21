@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 요정 상점의 상품 하나 (예: 감자 모종 1개 = 골드 100, 지렁이 미끼 10개 묶음 = 골드 50).
@@ -41,10 +41,6 @@ public class ShopProduct : ScriptableObject
     [Min(1)]
     [SerializeField]
     private int _requiredLevel = 1;
-
-    [SerializeField] private string _requiredDevelopment;
-    public bool DevelopmentUnlocked => string.IsNullOrEmpty(_requiredDevelopment)
-        || (SettlementManager.Instance != null && SettlementManager.Instance.IsLoaded && SettlementManager.Instance.HasDevelopment(_requiredDevelopment));
 
     public string ProductId => _productId;
     public int SortOrder => _sortOrder;

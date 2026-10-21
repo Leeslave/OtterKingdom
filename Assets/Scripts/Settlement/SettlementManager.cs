@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -66,9 +66,6 @@ public partial class SettlementManager : MonoBehaviour
 
     /// <summary>바로 저장해 달라는 부탁 (부탁 완료·건설 시작·나뭇가지 줍기). GameManager가 듣는다</summary>
     public static event Action SaveRequested;
-
-    /// <summary>광장 쪽이 정착 · 꾸미기 상태를 바꿨을 때 바로 저장 (처음 놓인 소품을 가구로 바꿈)</summary>
-    public static void RequestSave() => SaveRequested?.Invoke();
 
     [Header("데이터")]
     [SerializeField] private SettlementConfig _config;
@@ -172,7 +169,6 @@ public partial class SettlementManager : MonoBehaviour
     {
         if (!IsLoaded)
             return;
-        TickMineCommunity();
         FinishDueTasks();
         // 레벨이 오르면 다음 사업·생활 의뢰가 열릴 수 있음
         int level = PlayerLevel;
@@ -196,7 +192,6 @@ public partial class SettlementManager : MonoBehaviour
         TickRelocation();
         FinishDueBuildings();
         TickFarm(Time.deltaTime);
-        TickProduction(Time.deltaTime);
         CompleteRecordRequests();
         if (Settlement.Job == null)
             return;
@@ -280,9 +275,6 @@ public partial class SettlementManager : MonoBehaviour
     {
         if (zone == null)
             throw new ArgumentNullException(nameof(zone));
-        // 밭은 광장 농업 지역으로 옮겨 옴: 광장 농장이 열리면 옛 밭 씬은 닫힘 (이동 지도 · "밭이 열렸어요" 안내 · 가 보기)
-        if (zone.ZoneId == GameManager.FarmZoneId && FarmOpen)
-            return false;
         return Settlement.HasDevelopment(zone.RequiredDevelopment);
     }
 
@@ -466,8 +458,7 @@ public partial class SettlementManager : MonoBehaviour
         {
             foreach (var otter in _config.Otters)
             {
-                // 아직 광장에 나올 수 없는 해달은 안내 띠로 부르지 않음
-                if (HasPendingIntro(otter) && EarlyOtterRules.CanAppear(otter.OtterId, Settlement))
+                if (HasPendingIntro(otter))
                     return otter;
             }
             return null;
@@ -482,15 +473,6 @@ public partial class SettlementManager : MonoBehaviour
 
     /// <summary>이 자리가 다시 생기기까지 남은 시간 (이미 있으면 0)</summary>
     public TimeSpan GatherRemaining(string pointId) => Settlement.GatherRemaining(pointId, NowTicks);
-
-    /// <summary>오프라인에서 돌아오면 광장의 나무 · 돌 · 나뭇가지가 모두 다시 나 있음 (흔든 횟수도 처음부터)</summary>
-    public void RefreshGatherPoints()
-    {
-        if (!IsLoaded)
-            return;
-        Settlement.ResetGatherCooldowns();
-        TreeShakeView.ForgetShakes();
-    }
 
     /// <summary>"1:23" 처럼 짧게 (한 시간이 넘으면 "1시간 5분")</summary>
     public static string FormatShort(TimeSpan time)
@@ -944,7 +926,7 @@ public partial class SettlementManager : MonoBehaviour
         SaveRequested?.Invoke();
     }
 
-    // 만나면 바로 도감에 오르는 해달 (이야기로 찾아오는 해달: 해달이 · 꾸벅이 · 물감이 · 뚝딱이 · 포근이).
+    // 만나면 바로 도감에 오르는 해달 (이야기로 찾아오는 해달: 몽실 · 꾸벅이 · 물감이 · 뚝딱이 · 포근이).
     // 전문 해달은 배치, 관리 해달은 역할, 장난감 해달은 입주할 때 오름
     private bool RegistersOnMeet(SettlementOtterDefinition otter) =>
         otter.CollectionEntry != null && !otter.IsSpecialist && !otter.IsToyVisitor && FindRole(otter) == null;
@@ -1231,12 +1213,10 @@ public partial class SettlementManager : MonoBehaviour
                 lines.Add($"{task.Title} · {FormatRemaining(job.Remaining(now))} 남았어요");
         }
 
-        // 돌아오면 쉬던 나무 · 돌 · 나뭇가지가 모두 다시 생김 (RefreshGatherPoints, GameManager가 이 다음에 부름)
-        int regrown = Settlement.CountGatherRegrown(leftAt, long.MaxValue);
+        int regrown = Settlement.CountGatherRegrown(leftAt, now);
         if (regrown > 0)
             lines.Add($"광장에 주울 나뭇가지·돌이 {regrown}곳 다시 생겼어요");
 
-        CollectProductionNews(lines);
         CollectBuildingNews(leftAt, now, lines);
         CollectVisitNews(lines);
     }
@@ -1323,8 +1303,6 @@ public partial class SettlementManager : MonoBehaviour
         if (SettlementMigration.MigrateLamp(_config, Settlement, from))
             Debug.Log("[SettlementManager] 버전 4 전 세이브: 첫 집과 함께 있던 가로등을 그대로 둡니다.");
         MigrateCenterStart(from);
-        if (SettlementMigration.RetireGuildOfficeJob(Settlement))
-            Debug.Log("[SettlementManager] 짓던 접수 창구는 마을회관에 합쳐져 공사를 끝냈습니다.");
         if (SettlementMigration.MigrateToCurrent(Settlement) && from > 0)
             Debug.Log($"[SettlementManager] 정착 세이브를 버전 {from} → {SettlementSaveData.CurrentVersion}으로 옮겼습니다.");
     }

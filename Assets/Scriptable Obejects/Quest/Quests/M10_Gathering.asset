@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv10_gathering
   _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBAA8\uC784"
   _description: "\uACF5\uB3D9\uC0AC\uC5C5: \uCCAB \uBAA8\uC784 \uC5F4\uAE30"
-  _sortOrder: 38
+  _sortOrder: 36
   _kind: 0
   _requiredLevel: 10
   _prerequisite: {fileID: 11400000, guid: e3423257824a4d28af0f831f40843e9b, type: 2}

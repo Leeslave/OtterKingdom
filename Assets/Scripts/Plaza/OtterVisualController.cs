@@ -70,7 +70,6 @@ public class OtterVisualController : MonoBehaviour
     [Tooltip("workWhenIdle: how long it works when it does (seconds, random in range).")]
     [SerializeField] private Vector2 workSeconds = new Vector2(5f, 9f);
     private bool workingHere;
-    private QuarterRigView.Loop work;   // the work picked when it last stopped
     private OtterWanderAgent.State lastState = OtterWanderAgent.State.Walk;
 
     [Header("Facing")]
@@ -148,12 +147,13 @@ public class OtterVisualController : MonoBehaviour
             rigView.SetWalking(walking, agent.CurrentWalkSpeed);
             rigView.SetSitting(agent.IsSeated);
             var loop = ToyLoop(agent.PlayToy);
-            // Just stopped: now and then stay a while and work (one of its works, picked each time).
+            var work = rigView.CanFish ? QuarterRigView.Loop.Fish : rigView.CanBuild ? QuarterRigView.Loop.Build
+                : rigView.CanMine ? QuarterRigView.Loop.Mine : QuarterRigView.Loop.None;
+            // Just stopped: now and then stay a while and work.
             var state = agent.CurrentState;
             if (state != lastState)
             {
                 workingHere = false;
-                work = rigView.RandomWorkLoop;
                 if (state == OtterWanderAgent.State.Idle && workWhenIdle && work != QuarterRigView.Loop.None && Random.value < workChance)
                 {
                     agent.HoldStill(Random.Range(workSeconds.x, workSeconds.y));

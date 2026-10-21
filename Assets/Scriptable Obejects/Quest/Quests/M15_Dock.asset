@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv15_dock
   _title: "\uBC14\uB2E4\uB85C \uB098\uAC00\uB294 \uC120\uCC29\uC7A5"
   _description: "\uAC8C\uC2DC\uD310 \uBD80\uD0C1: \uC120\uCC29\uC7A5 \uACE0\uCE58\uAE30"
-  _sortOrder: 64
+  _sortOrder: 62
   _kind: 0
   _requiredLevel: 15
   _prerequisite: {fileID: 11400000, guid: b850222bdaf57a14c879a1289e2755d8, type: 2}

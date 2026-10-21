@@ -55,26 +55,6 @@ public static class SettlementMigration
         return arrived;
     }
 
-    /// <summary>마을회관에 합쳐져 메인에서 빠진 접수 창구 부탁 · 그 발전 (광산 기획 14장)</summary>
-    public const string RetiredGuildOfficeRequestId = "req_build_guild_office";
-    public const string RetiredGuildOfficeDevelopment = "guild_office_built";
-
-    /// <summary>
-    /// 접수 창구를 짓던 세이브: 그 부탁이 이제 목록에 없어 공사가 끝나지 않으므로 조용히 끝낸다 (발전만 남김, 팝업 · 보상 없음).
-    /// 그 기능은 마을회관 · 또박이 배치가 이미 열어 준다
-    /// </summary>
-    /// <returns>끝냈으면 true</returns>
-    public static bool RetireGuildOfficeJob(Settlement settlement)
-    {
-        if (settlement == null)
-            throw new ArgumentNullException(nameof(settlement));
-        if (settlement.Job == null || settlement.Job.RequestId != RetiredGuildOfficeRequestId)
-            return false;
-        settlement.FinishJob();
-        settlement.UnlockDevelopment(RetiredGuildOfficeDevelopment);
-        return true;
-    }
-
     /// <summary>가로등 부탁 (건설 모드, 버전 4)</summary>
     public const string LampRequestId = "req_lamp";
 

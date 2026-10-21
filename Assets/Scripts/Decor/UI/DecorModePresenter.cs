@@ -33,8 +33,6 @@ public class DecorModePresenter : MonoBehaviour
     private const string HintUnavailable = "여기에는 놓을 수 없어요";
     private const string HintLocked = "아직 열리지 않은 구역이에요";
     private const string HintBuildPlace = "자리를 고르고 [확인]을 누르면 공사를 시작해요";
-    // 게시판 부탁(퀘스트 보상) 건물: 자리를 고르는 동안 다른 물건으로 바꾸지 않음 (취소 X 없음, 나중에 하려면 [완료])
-    private const string HintPlotFirst = "먼저 {0} 자리를 정해 주세요 (나중에 지으려면 [완료])";
     private const string HintBuildStarted = "공사를 시작했어요!";
     private const string HintMoved = "옮겼어요!";
     private const string HintRelocating = "건설 해달이 건물을 들고 이사를 시작했어요!";
@@ -198,8 +196,6 @@ public class DecorModePresenter : MonoBehaviour
             Enter();
         if (!IsOpen || building == null || !CanBuildHere)
             return;
-        if (PlotPlacementLocked())
-            return;
         _storage.SelectBuildingsTab();
         RefreshStorage();
         BeginNewBuilding(building);
@@ -334,19 +330,8 @@ public class DecorModePresenter : MonoBehaviour
 
     #region 들기 / 놓기
 
-    // 게시판 부탁 건물의 자리를 고르는 중이면 다른 물건을 들거나 놓인 물건을 옮기지 않고 안내만 (true = 막음)
-    private bool PlotPlacementLocked()
-    {
-        if (_session == null || _plotRequest == null)
-            return false;
-        _view.ShowHint(string.Format(HintPlotFirst, _session.Decor.DisplayName), true);
-        return true;
-    }
-
     private void BeginNew(DecorDefinition decor)
     {
-        if (PlotPlacementLocked())
-            return;
         if (decor is BuildingDefinition building)
         {
             BeginNewBuilding(building);
@@ -431,8 +416,6 @@ public class DecorModePresenter : MonoBehaviour
 
     private void BeginEditPlaced(PlacedDecor placed)
     {
-        if (PlotPlacementLocked())
-            return;
         // 공사 중인 건물은 옮기지 않음 (남은 시간만 알림)
         var settlement = SettlementManager.Instance;
         var record = placed.Decor.IsBuilding && settlement != null ? settlement.BuildingRecordOf(placed.InstanceId) : null;
@@ -667,7 +650,7 @@ public class DecorModePresenter : MonoBehaviour
     // 새 물건: 꺼낸 것을 취소 / 놓여 있던 물건: 보관함으로 (놓인 건물은 버튼이 없음)
     private void RemoveSession()
     {
-        if (_session == null || (_session.Decor.IsBuilding && !_session.IsNew) || _plotRequest != null)
+        if (_session == null || (_session.Decor.IsBuilding && !_session.IsNew))
             return;
 
         bool wasPlaced = !_session.IsNew;
@@ -701,8 +684,7 @@ public class DecorModePresenter : MonoBehaviour
 
     private void ShowSession()
     {
-        // 게시판 부탁 건물은 취소(X) 없이 확인만 (지을 자리를 꼭 고르게)
-        _view.ShowActions(_session.CanRotate, (!_session.Decor.IsBuilding || _session.IsNew) && _plotRequest == null);
+        _view.ShowActions(_session.CanRotate, !_session.Decor.IsBuilding || _session.IsNew);
         UpdateGhost();
     }
 

@@ -22,9 +22,6 @@ public class PlayerProfile
     public string Name { get; private set; }
     public int Level { get; private set; } = 1;
 
-    /// <summary>상단바 아바타에 보일 대표 해달 (비면 첫 해달)</summary>
-    public string PortraitOtterId { get; private set; }
-
     /// <summary>다음 레벨까지 진행 비율 (0 ~ 1)</summary>
     public float ExpRatio { get; private set; }
 
@@ -40,16 +37,6 @@ public class PlayerProfile
             return;
 
         Name = validated;
-        OnChanged?.Invoke();
-    }
-
-    public void SetPortrait(string otterId)
-    {
-        string id = string.IsNullOrWhiteSpace(otterId) ? null : otterId.Trim();
-        if (id == PortraitOtterId)
-            return;
-
-        PortraitOtterId = id;
         OnChanged?.Invoke();
     }
 

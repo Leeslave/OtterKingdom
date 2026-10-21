@@ -270,11 +270,7 @@ public partial class GameManager : MonoBehaviour
         // specialist placed here starts working right away.
         else StartSpecialistWork();
         if (CurrentZoneId == ZoneTutorials.Plaza)
-        {
             StartCoroutine(PlayDistrictGuideWhenReady());
-            StartCoroutine(PlayTerritoryGuideWhenReady());
-            StartCoroutine(PlayFirstFieldGuideWhenReady());
-        }
         if (CurrentZoneId == ZoneTutorials.Plaza && !save.tutorialsDone.Contains(ZoneTutorials.FairyShop))
             StartCoroutine(PlayFairyShopTutorialWhenReady());
         if (CurrentZoneId == ZoneTutorials.Farm && !save.tutorialsDone.Contains(ZoneTutorials.FarmOffline))
@@ -299,7 +295,6 @@ public partial class GameManager : MonoBehaviour
     {
         if (!PlazaFarmOpen) farmService.Tick(Time.deltaTime);
         TickMining(Time.deltaTime);
-        TickMineMazeDiscovery(Time.deltaTime);
 
         autoSaveTimer += Time.deltaTime;
         if (farmChanged || autoSaveTimer >= autoSaveIntervalSec)
@@ -368,7 +363,6 @@ public partial class GameManager : MonoBehaviour
         SettlementManager.SaveRequested += SaveNow;
         DecorManager.SaveRequested += SaveNow;
         GachaManager.SaveRequested += SaveNow;
-        ProfileManager.SaveRequested += SaveNow;
         FairyShopPresenter.Opened += HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan += HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted += HandleBuildStarted;
@@ -378,12 +372,10 @@ public partial class GameManager : MonoBehaviour
     private void OnDisable()
     {
         CloseDistrictGuide();
-        CloseFirstFieldPointer();
         SceneNavigator.BeforeLeave -= SaveNow;
         SettlementManager.SaveRequested -= SaveNow;
         DecorManager.SaveRequested -= SaveNow;
         GachaManager.SaveRequested -= SaveNow;
-        ProfileManager.SaveRequested -= SaveNow;
         FairyShopPresenter.Opened -= HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan -= HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted -= HandleBuildStarted;
@@ -479,7 +471,6 @@ public partial class GameManager : MonoBehaviour
         save.inventory ??= new List<ItemStack>();
         RenameLegacyItemIds(save.inventory);
         manager.LoadFromSave(save.inventory, save.inventoryCapacity);
-        manager.MineMazeState = save.mineMaze;
 
         return MoveLegacySeedsToBag() | GrantStarterSeeds();
     }
@@ -704,13 +695,6 @@ public partial class GameManager : MonoBehaviour
             settlement.CollectAbsenceNews(absenceSec, report.SettlementNews);
             report.NextGoal = settlement.NextGoalTitle;
         }
-
-        // Back from offline: plaza trees/rocks/branches and the mine maze
-        // (broken rocks, re-entry wait) are all ready again. After the news,
-        // which counts the spots that come back.
-        settlement?.RefreshGatherPoints();
-        InventoryManager.Instance?.MineMazeState?.ResetCooldowns();
-        AbsenceSettled?.Invoke();
         SaveNow();
         AnalyticsLog.Track("offline_settled", ("elapsedSec", absenceSec),
             ("simulatedSec", OfflineProductionService.Credited(absenceSec)),
@@ -802,7 +786,6 @@ public partial class GameManager : MonoBehaviour
         WriteCurrenciesToSave();
         InventoryManager.Instance.WriteToSave(save.inventory);
         save.inventoryCapacity = Bag.Capacity;
-        save.mineMaze = InventoryManager.Instance.MineMazeState;
         LoadGlobalProgressOnce();
         if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(save.collection);
         if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);
@@ -830,19 +813,15 @@ public partial class GameManager : MonoBehaviour
         CurrencyManager.Instance.GetCurrency(goldCurrency);
     }
 
-    private void WriteCurrenciesToSave() => WriteCurrencies(save);
-
-    /// <summary>재화 잔액을 세이브에 (광산 미로도 광석 · 골드를 한 번에 저장할 때 씀)</summary>
-    public static void WriteCurrencies(SaveData target)
+    private void WriteCurrenciesToSave()
     {
-        target.currencies ??= new List<CurrencyBalance>();
         foreach (var pair in CurrencyManager.Instance.Balances)
         {
-            var entry = target.currencies.Find(c => c.currencyId == pair.Key.CurrencyID);
+            var entry = save.currencies.Find(c => c.currencyId == pair.Key.CurrencyID);
             if (entry == null)
             {
                 entry = new CurrencyBalance { currencyId = pair.Key.CurrencyID };
-                target.currencies.Add(entry);
+                save.currencies.Add(entry);
             }
             entry.amount = pair.Value;
         }
@@ -1202,8 +1181,7 @@ public partial class GameManager : MonoBehaviour
     // furrows ahead of the main quest chain can't block it.
     private void ReportOpenedFurrows()
     {
-        // 광장 농장이 열리면 밭 칸 수는 SettlementManager.Farm이 알림
-        if (QuestManager.Instance != null && !PlazaFarmOpen)
+        if (QuestManager.Instance != null)
             QuestManager.Instance.SetOpenedFurrows(farmService.OpenSlotCount - PlotSaveData.SlotCount);
     }
 
@@ -1299,10 +1277,6 @@ public partial class GameManager : MonoBehaviour
     // The farm and dock otters show it as icons flying to the bag.
     public static event Action<ItemDefinition, int> HarvestStored;
     public static event Action<ItemDefinition> FishCaught;
-
-    // An offline absence was settled (launch or back from the background).
-    // The mine maze, when open, refreshes its live model with it.
-    public static event Action AbsenceSettled;
 
     // Mining runs in every zone scene once the otter is in the mine, like
     // the farm growing everywhere — not only while the mine scene is open.

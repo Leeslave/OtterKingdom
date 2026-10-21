@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv8_sweet_potato
   _title: "\uB2EC\uCF64\uD55C \uACE0\uAD6C\uB9C8"
   _description: "\uACE0\uAD6C\uB9C8 30\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 47
+  _sortOrder: 45
   _kind: 0
   _requiredLevel: 12
   _prerequisite: {fileID: 11400000, guid: 5464339e69286294d9c1587e5885bc18, type: 2}

@@ -13,7 +13,6 @@ public enum TerritoryDirection
     NorthEast = 2,
     South = 3,
     NorthWest = 4,
-    East = 5,      // 공터 동쪽 (북동 1단계 아래): 1단계만 — 공터 · 북동 땅 모양을 네모로 채움
 }
 
 /// <summary>숲 개간 한 번: 주민 해달을 보내는 작업 + 끝나면 받는 재료 (나무를 많이)</summary>

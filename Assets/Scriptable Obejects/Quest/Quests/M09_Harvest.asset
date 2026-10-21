@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv9_harvest
   _title: "\uB300\uD48D\uB144"
   _description: "\uC791\uBB3C 300\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 49
+  _sortOrder: 47
   _kind: 0
   _requiredLevel: 12
   _prerequisite: {fileID: 11400000, guid: 6ad301c51c0be42488644bde6d3616ef, type: 2}

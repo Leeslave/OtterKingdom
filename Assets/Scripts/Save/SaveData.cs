@@ -107,7 +107,6 @@ public class CurrencyBalance
 [Serializable]
 public class SaveData
 {
-    public MineMazeSave mineMaze;
     // 2: firstPlantGuideDone exists (1-saves are checked once on load).
     // 3: tutorialsDone exists (older saves skip every zone tutorial).
     // 4: settlement exists (older saves get every board request completed,

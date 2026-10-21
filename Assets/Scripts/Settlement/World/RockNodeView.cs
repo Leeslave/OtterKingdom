@@ -148,7 +148,7 @@ public class RockNodeView : MonoBehaviour, IDecorBlocker
             return;
         float left = (float)manager.GatherRemaining(_pointId).TotalSeconds;
         float done = 1f - Mathf.Clamp01(left / _regrowSeconds);
-        _timer.sprite = _timerSprites[RegrowClock.Frame(done, _timerSprites.Length)];
+        _timer.sprite = _timerSprites[Mathf.Min(_timerSprites.Length - 1, (int)(done * _timerSprites.Length))];
     }
 
     private void Hit(SettlementManager manager, Vector2 world)

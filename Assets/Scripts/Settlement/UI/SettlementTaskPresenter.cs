@@ -119,9 +119,7 @@ public class SettlementTaskPresenter : MonoBehaviour
         else if (missing != null)
             note = missing;
         else
-            note = TerritoryRules.IsTutorial(TerritoryRules.FindByTask(_manager.Config, task, out _), _manager.Settlement)
-                ? "첫 개간은 한 번만! 작업이 끝나면 추가 납품 없이 오른쪽 땅이 넓어져요."
-                : "해달이 걸어가서 일을 시작해요.";
+            note = "해달이 걸어가서 일을 시작해요.";
         _popup.ShowAssign(task, _rows, CollectCosts(task), note, _selected.Count == need && missing == null);
     }
 

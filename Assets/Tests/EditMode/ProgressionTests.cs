@@ -167,35 +167,6 @@ public class ProgressionTests
     }
 
     [Test]
-    public void FeatureQuest_DoesNotWaitForGrindBeforeIt()
-    {
-        var district = CreateQuest("district");
-        var mine = CreateQuest("mine_60", prerequisite: district);
-        var found = CreateQuest("maze_found", level: 5, prerequisite: mine);
-        var sales = CreateQuest("sales_300", level: 5, prerequisite: found);
-        var so = new SerializedObject(mine);
-        so.FindProperty("_goalType").enumValueIndex = (int)QuestGoalType.Mine;
-        so.FindProperty("_goal").intValue = 60;
-        so.ApplyModifiedPropertiesWithoutUndo();
-        so = new SerializedObject(found);
-        so.FindProperty("_goalType").enumValueIndex = (int)QuestGoalType.Milestone;
-        so.ApplyModifiedPropertiesWithoutUndo();
-        so = new SerializedObject(sales);
-        so.FindProperty("_goalType").enumValueIndex = (int)QuestGoalType.EarnFromSales;
-        so.FindProperty("_goal").intValue = 300;
-        so.ApplyModifiedPropertiesWithoutUndo();
-        var log = new QuestLog();
-
-        Assert.IsFalse(QuestProgressRules.IsAvailable(found, 5, log), "앞의 기능 안내를 받기 전에는 닫혀 있어야 합니다.");
-        log.AddProgress(district, 1);
-        log.TryClaim(district);
-        Assert.IsTrue(QuestProgressRules.IsAvailable(found, 5, log), "광석 60개를 기다리지 않고 열려야 합니다.");
-        Assert.IsFalse(QuestProgressRules.IsAvailable(found, 4, log), "레벨은 그대로 지켜야 합니다.");
-        Assert.IsTrue(QuestProgressRules.IsAvailable(mine, 5, log));
-        Assert.IsFalse(QuestProgressRules.IsAvailable(sales, 5, log), "모으기 퀘스트는 앞 단계를 그대로 기다립니다.");
-    }
-
-    [Test]
     public void Completed_ShowsOnlyClaimedAtCurrentLevel_DailyAlways()
     {
         var early = CreateQuest("early");

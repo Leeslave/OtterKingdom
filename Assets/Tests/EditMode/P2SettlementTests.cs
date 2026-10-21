@@ -188,7 +188,7 @@ public class P2SettlementTests
         return request;
     }
 
-    // 농부가 일하기 시작한 P1 끝 상태 (주민: 해달이·물감이·뚝딱이·새싹이)
+    // 농부가 일하기 시작한 P1 끝 상태 (주민: 몽실·물감이·뚝딱이·새싹이)
     private static Settlement P1Done()
     {
         var settlement = new Settlement();
@@ -609,8 +609,8 @@ public class P2SettlementTests
         manager.CollectResidents(candidates);
         int canSend = candidates.FindAll(manager.CanAssign).Count;
 
-        Assert.AreEqual(5, labor.Settled, "정착 주민 = 해달이·물감이·뚝딱이·새싹이·또박이");
-        Assert.AreEqual(2, labor.Workforce, "건설·전문·관리 해달 제외 = 해달이·물감이");
+        Assert.AreEqual(5, labor.Settled, "정착 주민 = 몽실·물감이·뚝딱이·새싹이·또박이");
+        Assert.AreEqual(2, labor.Workforce, "건설·전문·관리 해달 제외 = 몽실·물감이");
         Assert.AreEqual(canSend, labor.Available, "작업 화면에서 실제로 보낼 수 있는 수와 같음");
         Assert.AreEqual(1, labor.Available);
         Assert.AreEqual(1, labor.Working);

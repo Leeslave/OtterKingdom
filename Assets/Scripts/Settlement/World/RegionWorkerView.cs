@@ -7,7 +7,6 @@ using UnityEngine.Rendering;
 /// 광장 밖 작업 현장(광산 정비 등)에 온 주민 해달 한 마리. 광장 프리팹을 그대로 쓰되 광장용 움직임(OtterWanderAgent)과
 /// 광장 깊이 정렬(OtterVisualController)은 끄고, 여기서 직접 걷게 하고 장소의 정렬 구간(GroundDepthSort)으로 앞뒤를 정한다.
 /// 걸어와서 → 일하고(망치 말풍선, 몸짓) → 끝나면 걸어 나가 사라진다 (광장으로 돌아감). RegionTaskSiteView가 만든다.
-/// 리그 해달(QuarterRigView)은 리그로 걷고, 일할 때는 그 해달의 일(낚시·망치질·곡괭이질 등)을 한다.
 /// </summary>
 public class RegionWorkerView : MonoBehaviour
 {
@@ -21,7 +20,6 @@ public class RegionWorkerView : MonoBehaviour
 
     private Animator _animator;
     private SpriteRenderer _body;
-    private QuarterRigView _rig;
     private SortingGroup _group;
     private SettlementOtterView _view;
     private int _depthBase;
@@ -62,9 +60,7 @@ public class RegionWorkerView : MonoBehaviour
         var worker = instance.AddComponent<RegionWorkerView>();
         worker.OtterId = otter.OtterId;
         worker._animator = instance.GetComponentInChildren<Animator>();
-        worker._rig = instance.GetComponentInChildren<QuarterRigView>();
-        // 리그의 조각 그림은 하나씩 뒤집으면 안 됨
-        worker._body = worker._rig == null ? instance.GetComponentInChildren<SpriteRenderer>() : null;
+        worker._body = instance.GetComponentInChildren<SpriteRenderer>();
         worker._group = instance.GetComponent<SortingGroup>();
         worker._depthBase = depthBase;
         worker._speed = speed;
@@ -134,15 +130,6 @@ public class RegionWorkerView : MonoBehaviour
 
         if (_hasIsMoving)
             _animator.SetBool(IsMovingHash, walking);
-        if (_rig != null)
-        {
-            if (walking)
-            {
-                _rig.PlayLoop(QuarterRigView.Loop.None);
-                _rig.Face(toTarget);
-            }
-            _rig.SetWalking(walking, _speed);
-        }
         if (_phase == Phase.Work)
             UpdateWork();
         ApplySorting();
@@ -152,13 +139,6 @@ public class RegionWorkerView : MonoBehaviour
     private void UpdateWork()
     {
         Face(_lookPoint.x - transform.position.x);
-        if (_rig != null)
-        {
-            _rig.Face(_lookPoint - (Vector2)transform.position);
-            if (_rig.CurrentLoop != _rig.WorkLoop)
-                _rig.PlayLoop(_rig.WorkLoop);
-            return;
-        }
         if (_workTriggers.Count == 0)
             return;
         var state = _animator.GetCurrentAnimatorStateInfo(0);

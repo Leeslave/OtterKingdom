@@ -15,7 +15,9 @@ MonoBehaviour:
   _projectId: p3_supply_01
   _order: 1
   _title: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBE44\uCD95"
-  _line: "\uB9C8\uC744\uD68C\uAD00\uC740 \uC0DD\uACBC\uB294\uB370 \uD568\uAED8 \uC4F8 \uC7AC\uB8CC\uAC00 \uC5C6\uB124. \uB2E4\uC74C \uACF5\uC0AC\uB97C \uC704\uD574 \uC870\uAE08\uC529 \uBAA8\uC544 \uB458\uAE4C?"
+  _line: "\uAE38\uB4DC\uB294 \uC0DD\uACBC\uB294\uB370 \uD568\uAED8 \uC4F8 \uC7AC\uB8CC\uAC00
+    \uC5C6\uB124. \uB2E4\uC74C \uACF5\uC0AC\uB97C \uC704\uD574 \uC870\uAE08\uC529
+    \uBAA8\uC544 \uB458\uAE4C?"
   _requester: {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
   _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
   _resultPreview: "\uAD11\uC7A5\uC5D0 \uBE44\uCD95 \uC0C1\uC790\uAC00 \uC0DD\uACA8\uC694"
@@ -23,8 +25,8 @@ MonoBehaviour:
     \uB9C8\uCCE4\uC5B4\uC694!\n\uAD11\uC7A5\uC5D0 \uBE44\uCD95 \uC0C1\uC790\uAC00
     \uC0DD\uACBC\uC5B4\uC694."
   _requiredLevel: 7
-  _requiredDevelopment: board_upgraded
-  _gold: 1200
+  _requiredDevelopment: town_hall_built
+  _gold: 300
   _items:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
     _amount: 12

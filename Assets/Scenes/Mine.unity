@@ -2235,26 +2235,15 @@ MonoBehaviour:
   clips:
   - name: Mine
     frames:
-    - {fileID: -8428007641447502245, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -8428007641447502245, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -8428007641447502245, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: 7343535447618221321, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: 7343535447618221321, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: 7343535447618221321, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -5966972894269691302, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -5966972894269691302, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -8083635416802559594, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -8083635416802559594, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -5056933854820939388, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: 6049274999472552050, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -6759954904754417964, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -6759954904754417964, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: -6759954904754417964, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: 8516802294231083505, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: 8516802294231083505, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: 8516802294231083505, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    - {fileID: 8516802294231083505, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
-    fps: 12
+    - {fileID: 9058410090837375587, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
+    - {fileID: 8124726121430529473, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
+    - {fileID: 8671229435004206248, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
+    - {fileID: -8588549519341785491, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
+    - {fileID: -7131514882806320652, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
+    - {fileID: -8577886893449170698, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
+    - {fileID: -3340578318136227465, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
+    - {fileID: 4530077187370645881, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
+    fps: 8
     loop: 1
   speed: 1
 --- !u!4 &684784815
@@ -2266,8 +2255,8 @@ Transform:
   m_GameObject: {fileID: 684784813}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.7302181, z: 0}
-  m_LocalScale: {x: 0.99688476, y: 0.99688476, z: 1}
+  m_LocalPosition: {x: 0, y: -0.74448276, z: 0}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 311861711}
@@ -2321,7 +2310,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8428007641447502245, guid: acac897a8dfe7614e8e2571d2a303364, type: 3}
+  m_Sprite: {fileID: 9058410090837375587, guid: eb86b8d4fb5ec2c459b8a1a2e3849c3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -397,10 +397,6 @@ public class DistrictMapView : MonoBehaviour
         }
         float pop = Mathf.Clamp01((Time.unscaledTime - _labelPopAt) / LabelPopSeconds);
         float scale = focus != null ? Mathf.Lerp(0.82f, 1f, 1f - (1f - pop) * (1f - pop)) : 1f;
-        _placedLabels.Clear();
-        // 화면에 많이 보이는 땅의 이름표부터 자리를 잡고, 이웃 땅 이름표와 겹치면 비켜 놓음 (자리가 없으면 숨김)
-        if (focus == null)
-            _labels.Sort((a, b) => SeenArea(b.land, view).CompareTo(SeenArea(a.land, view)));
         foreach (var (block, root, land, half) in _labels)
         {
             if (root == null) continue;
@@ -420,54 +416,8 @@ public class DistrictMapView : MonoBehaviour
             var seen = Rect.MinMaxRect(Mathf.Max(land.xMin, view.xMin), Mathf.Max(land.yMin, view.yMin), Mathf.Min(land.xMax, view.xMax), Mathf.Min(land.yMax, view.yMax));
             float x = Mathf.Clamp(seen.center.x, view.xMin + half.x + 0.2f, view.xMax - half.x - 0.2f);
             float y = Mathf.Clamp(seen.yMax - half.y - 0.6f, view.yMin + half.y + 0.2f, view.yMax - half.y - 0.2f);
-            if (!TryAvoidLabels(x, ref y, half, Mathf.Max(seen.yMin, view.yMin + 0.2f) + half.y, Mathf.Min(seen.yMax, view.yMax - 0.2f) - half.y))
-            {
-                root.gameObject.SetActive(false);
-                continue;
-            }
             root.position = new Vector2(x, y);
-            _placedLabels.Add(new Rect(x - half.x, y - half.y, half.x * 2f, half.y * 2f));
         }
-    }
-
-    private const float LabelGap = 0.15f;
-    private readonly List<Rect> _placedLabels = new List<Rect>();
-
-    private static float SeenArea(Rect land, Rect view)
-    {
-        float w = Mathf.Min(land.xMax, view.xMax) - Mathf.Max(land.xMin, view.xMin);
-        float h = Mathf.Min(land.yMax, view.yMax) - Mathf.Max(land.yMin, view.yMin);
-        return w > 0f && h > 0f ? w * h : 0f;
-    }
-
-    // 먼저 놓인 이름표와 겹치면 아래로 비키고, 아래가 막히면 위로 (그 땅 안 · 화면 안에서만). 둘 다 안 되면 false
-    private bool TryAvoidLabels(float x, ref float y, Vector2 half, float minY, float maxY)
-    {
-        if (minY > maxY)
-            return false;
-        float start = y;
-        for (int pass = 0; pass < 2; pass++)
-        {
-            y = Mathf.Clamp(start, minY, maxY);
-            for (int i = 0; i < _placedLabels.Count + 1; i++)
-            {
-                var hit = FirstLabelHit(x, y, half);
-                if (!hit.HasValue)
-                    return true;
-                y = pass == 0 ? hit.Value.yMin - half.y - LabelGap : hit.Value.yMax + half.y + LabelGap;
-                if (y < minY || y > maxY)
-                    break;
-            }
-        }
-        return false;
-    }
-
-    private Rect? FirstLabelHit(float x, float y, Vector2 half)
-    {
-        var mine = new Rect(x - half.x - LabelGap, y - half.y - LabelGap, (half.x + LabelGap) * 2f, (half.y + LabelGap) * 2f);
-        foreach (var placed in _placedLabels)
-            if (placed.Overlaps(mine)) return placed;
-        return null;
     }
 
     private void Paint(string label, Transform parent, Rect rect, Color color, int order)

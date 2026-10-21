@@ -17,7 +17,6 @@ public class InventoryManager : MonoBehaviour
 
     public Inventory Inventory { get; private set; }
     public InventoryConfig Config => _config;
-    public MineMazeSave MineMazeState { get; set; }
 
     // 세이브에 있었지만 ItemDatabase에 없는 아이템. 다음 저장 때 그대로 다시 써서 잃어버리지 않게 보관
     private readonly List<ItemStack> _unknownSavedStacks = new List<ItemStack>();

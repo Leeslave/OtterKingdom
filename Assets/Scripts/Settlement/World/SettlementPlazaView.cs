@@ -89,8 +89,6 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     // 아직 만나지 않아 안전한 때를 기다리는 해달 (중복 없음)
     private readonly List<string> _visitQueue = new List<string>();
     private readonly List<string> _presenting = new List<string>();
-    private const float VisitorIntroductionSeconds = 15f;
-    private float _nextVisitorTime;
     private SettlementManager _manager;
     private SceneNavigator _navigator;
     private bool _builderInitialized;
@@ -100,12 +98,6 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
 
     /// <summary>방문 대기 줄 (확인용)</summary>
     public IReadOnlyList<string> VisitQueue => _visitQueue;
-
-    // 마지막으로 새 해달을 비춰 소개한 때 (그동안은 다른 안내를 띄우지 않게)
-    private float _introducedAt = float.NegativeInfinity;
-
-    /// <summary>새 해달을 막 소개하는 중 (카메라가 비추는 동안 밭 안내가 겹쳐 뜨지 않게. 줄에서 기다리는 해달은 안내가 끝난 뒤에 옴)</summary>
-    public bool IsIntroducingVisitor => _presenting.Count > 0 || Time.unscaledTime < _introducedAt + FocusHoldSeconds;
 
     private void Awake()
     {
@@ -142,8 +134,6 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         _manager.OnRoleAssigned += HandleRoleAssigned;
         _manager.OnRelocationStarted += HandleRelocationStarted;
         _manager.OnRelocationChanged += HandleRelocationChanged;
-        if (ProfileManager.Instance != null)
-            ProfileManager.Instance.OnLevelUp += HandleLevelUp;
     }
 
     // 공사 과정 (집이 올라오고, 치울 것이 하나씩 사라짐)
@@ -151,10 +141,10 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     {
         if (_manager == null || !_manager.IsLoaded)
             return;
-        if (_visitQueue.Count > 0 && Time.unscaledTime >= _nextVisitorTime && IsSafeToPresent())
+        if (_visitQueue.Count > 0 && IsSafeToPresent())
             PresentVisitors();
         // 요정은 새 해달이 다 들어온 다음 차례 (둘이 한꺼번에 화면을 차지하지 않게)
-        else if (_visitQueue.Count == 0 && Time.unscaledTime >= _nextVisitorTime && _manager.IsFairyComing && IsSafeToPresent())
+        else if (_manager.IsFairyComing && IsSafeToPresent())
             _manager.TryMarkFairyArrived();
         RemoveOttersAtWork();
         KeepManagersAtStation();
@@ -197,8 +187,6 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             _manager.OnRelocationStarted -= HandleRelocationStarted;
             _manager.OnRelocationChanged -= HandleRelocationChanged;
         }
-        if (ProfileManager.Instance != null)
-            ProfileManager.Instance.OnLevelUp -= HandleLevelUp;
     }
 
     /// <summary>진행 말풍선을 띄울 곳 (이 광장에 그 현장이 없으면 false)</summary>
@@ -212,21 +200,6 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     #region 적용
 
     private void HandleLoaded() => ApplyAll(true);
-
-    // 왕국 레벨이 오르면 레벨로 열린 부탁의 해달이 찾아올 수 있음
-    private void HandleLevelUp(int level)
-    {
-        if (_manager != null && _manager.IsLoaded)
-            SyncOtters(false);
-    }
-
-    /// <summary>지금 광장에 나와도 되는 해달인지 (또박이가 오기 전에는 처음 네 해달만, EarlyOtterRules)</summary>
-    private bool CanAppearYet(SettlementOtterDefinition otter) =>
-        EarlyOtterRules.CanAppear(otter.OtterId, _manager.Settlement);
-
-    // 광산 배치로 함께 오는 물감이 · 뚝딱이와 생산 필수 해달은 일반 방문객 소개 대기 없이 바로 광장에 있다.
-    private static bool IsImmediateWorker(SettlementOtterDefinition otter) =>
-        EarlyOtterRules.IsImmediate(otter.OtterId);
 
     private void HandleDevelopmentUnlocked(string developmentId)
     {
@@ -287,70 +260,9 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     private void ApplyAll(bool initial)
     {
         ApplyGates(_manager.HasDevelopment, false);
-        ConvertDefaultProps();
         _walkableArea.Rebuild();
         SyncOtters(initial);
         UpdateConstruction();
-    }
-
-    // 광장에 처음부터 놓인 소품(Props 아래 그루터기 · 덤불 · 통나무 · 벤치 · 가로등 · 피크닉 매트) 중 상점 가구와 같은 그림인 것은
-    // 세이브마다 한 번 같은 자리의 꾸미기 가구로 바꿔 (가방에 넣고 그 자리에 놓음) 상점 가구처럼 옮기거나 보관할 수 있게 한다.
-    // 바꾼 소품은 그 뒤로 늘 숨김. 그 자리에 아직 놓을 수 없으면(잠긴 땅 등) 소품 그대로 두고 다음에 다시 봄
-    private const string DefaultPropsRoot = "Props";
-    private const string DefaultPropFlagPrefix = "decor_prop_";
-
-    private void ConvertDefaultProps()
-    {
-        var decor = DecorManager.Instance;
-        var board = DecorBoardView.Active;
-        var bag = InventoryManager.Instance != null ? InventoryManager.Instance.Inventory : null;
-        if (!_manager.IsLoaded || decor == null || board == null || board.Layout == null || bag == null)
-            return;
-
-        bool placedAny = false;
-        foreach (var prop in FindObjectsByType<PlazaProp>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
-        {
-            var parent = prop.transform.parent;
-            if (parent == null || parent.name != DefaultPropsRoot)
-                continue;
-            var furniture = FurnitureWithSprite(decor.Catalog, prop.GetComponent<SpriteRenderer>().sprite);
-            if (furniture == null)
-                continue;
-            string flag = DefaultPropFlagPrefix + prop.name;
-            if (_manager.Settlement.HasFlag(flag))
-            {
-                prop.gameObject.SetActive(false);
-                continue;
-            }
-
-            // 소품의 발밑(가운데 아래)이 가구 칸의 아래 가운데가 되게
-            var size = furniture.Footprint;
-            var ground = (Vector2)prop.transform.position;
-            var origin = board.WorldToCell(ground + new Vector2(-(size.x - 1) * 0.5f * board.CellSize, 0.01f));
-            // 소품 자신의 발자국이 그 칸을 막고 있으므로 월드 쪽 막힘은 보지 않음 (구역 · 잠김 · 겹침은 봄)
-            if (board.Layout.Check(furniture, origin, DecorRotation.R0, 0, true) != DecorPlacementResult.Ok)
-                continue;
-            if (bag.Add(furniture.Item, 1, ItemChangeReason.Grant) < 1)
-                continue;
-            board.Layout.TryPlace(furniture, origin, DecorRotation.R0, out _, true);
-            _manager.Settlement.SetFlag(flag);
-            prop.gameObject.SetActive(false);
-            placedAny = true;
-        }
-        if (placedAny)
-            SettlementManager.RequestSave();
-    }
-
-    private static DecorDefinition FurnitureWithSprite(DecorCatalog catalog, Sprite sprite)
-    {
-        if (catalog == null || sprite == null)
-            return null;
-        foreach (var decor in catalog.Decors)
-        {
-            if (decor != null && decor.IsFurniture && decor.Item != null && decor.WorldSprite == sprite)
-                return decor;
-        }
-        return null;
     }
 
     private void ApplyGates(System.Func<string, bool> isUnlocked, bool animate)
@@ -376,7 +288,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
 
     /// <summary>
     /// 주민 목록에 맞춰 광장 해달을 맞춘다. 만난 해달은 바로 내보내고, 처음 오는 해달은 대기 줄에 넣는다.
-    /// 첫 해달 · 광부 · 농부 · 물감이 · 뚝딱이는 바로 나타나고, 나머지 미소개 해달은 대기 줄에서 한 마리씩 소개한다
+    /// 아무도 만난 적 없으면(새 게임의 첫 해달, 만남 기록이 생기기 전 세이브) 모두 모인 곳에서 바로 시작하고 만남을 남긴다
     /// </summary>
     /// <param name="initial">씬을 연 직후 (복원은 모인 곳에서, 아니면 돌아오는 해달이 가장자리에서 걸어 들어옴)</param>
     private void SyncOtters(bool initial)
@@ -391,31 +303,23 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         foreach (var otterId in settlement.ResidentOrder)
         {
             var otter = config.FindOtter(otterId);
-            if (otter == null || IsShown(otter) || IsAway(otter) || (!otter.IsBuilder && otter.PlazaPrefab == null)
-                || !CanAppearYet(otter))
+            if (otter == null || IsShown(otter) || IsAway(otter) || (!otter.IsBuilder && otter.PlazaPrefab == null))
                 continue;
 
-            // 첫 해달과 생산 필수 해달은 즉시 소개. 일반 방문객은 한 마리씩.
-            bool firstIntroduction = nobodyMet && otter == config.FirstOtter;
-            bool immediateWorker = IsImmediateWorker(otter);
-            if (!settlement.HasMet(otterId) && !firstIntroduction && !immediateWorker)
+            if (!settlement.HasMet(otterId) && !nobodyMet)
             {
                 if (!_visitQueue.Contains(otterId) && !_presenting.Contains(otterId))
                     _visitQueue.Add(otterId);
                 continue;
             }
 
-            if (!Show(otter, !initial && !immediateWorker))
+            if (!Show(otter, !initial))
                 continue;
-            _visitQueue.Remove(otterId);
-            if (!settlement.HasMet(otterId))
-            {
+            if (nobodyMet)
                 (metNow ??= new List<SettlementOtterDefinition>()).Add(otter);
-                _nextVisitorTime = Time.unscaledTime + VisitorIntroductionSeconds;
-            }
         }
 
-        // 즉시 등장한 해달의 만남을 남김 (OnChanged가 재진입하므로 생성이 끝난 뒤에).
+        // 첫 해달·옛 세이브: 광장에 있는 해달을 처음 만난 것으로 (기록이 바뀌면 OnChanged로 이 메서드가 다시 불리므로 다 내보낸 뒤에)
         if (metNow != null)
         {
             foreach (var otter in metNow)
@@ -439,13 +343,12 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         return FairyShopPresenter.Instance == null || !FairyShopPresenter.Instance.IsOpen;
     }
 
-    // 대기 줄에서 한 마리만 가장자리로 들어오게 하고, 만남을 남긴 뒤 비춘다.
+    // 대기 줄의 해달을 광장 가장자리에서 걸어 들어오게 하고, 그때 만남을 남김. 새 전문·관리 해달 쪽을 비춤
     private void PresentVisitors()
     {
         _presenting.Clear();
-        _presenting.Add(_visitQueue[0]);
-        _visitQueue.RemoveAt(0);
-        _nextVisitorTime = Time.unscaledTime + VisitorIntroductionSeconds;
+        _presenting.AddRange(_visitQueue);
+        _visitQueue.Clear();
 
         var config = _manager.Config;
         var settlement = _manager.Settlement;
@@ -456,28 +359,23 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             if (otter == null || settlement.HasMet(otterId) || !settlement.TryGetResidentState(otterId, out _))
                 continue;
             // 그새 광장을 떠난 해달은 다시 기다림
-            if (IsAway(otter) || !CanAppearYet(otter))
+            if (IsAway(otter))
             {
                 _visitQueue.Add(otterId);
                 continue;
             }
             if (!IsShown(otter) && !Show(otter, true))
-            {
-                _visitQueue.Add(otterId);
                 continue;
-            }
-            focus = otter;
+            if (focus == null && (otter.IsSpecialist || _manager.FindRole(otter) != null))
+                focus = otter;
             // 만남 기록 → OnChanged → SyncOtters가 다시 불려도 이미 내보내 만난 해달이라 그대로
             _manager.Meet(otter);
         }
         _presenting.Clear();
 
-        // 장난감 방문객도 새로 만나는 한 마리를 비춰 소개한다.
+        // 새로 찾아온 전문·관리 해달 쪽을 비춤 (말을 걸어 배치하도록)
         if (focus != null)
-        {
-            _introducedAt = Time.unscaledTime;
             FocusOtter(focus.OtterId);
-        }
         UpdateConstruction();
     }
 

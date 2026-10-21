@@ -301,7 +301,7 @@ public class P3ProjectTests
         return project;
     }
 
-    // 마을회관까지 끝난 P2 끝 상태 (주민: 해달이·물감이·뚝딱이, 농부 일하는 중)
+    // 마을회관까지 끝난 P2 끝 상태 (주민: 몽실·물감이·뚝딱이, 농부 일하는 중)
     private static Settlement HallDone()
     {
         var settlement = new Settlement();
