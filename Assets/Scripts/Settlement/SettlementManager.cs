@@ -67,6 +67,9 @@ public partial class SettlementManager : MonoBehaviour
     /// <summary>바로 저장해 달라는 부탁 (부탁 완료·건설 시작·나뭇가지 줍기). GameManager가 듣는다</summary>
     public static event Action SaveRequested;
 
+    /// <summary>광장 쪽이 정착 · 꾸미기 상태를 바꿨을 때 바로 저장 (처음 놓인 소품을 가구로 바꿈)</summary>
+    public static void RequestSave() => SaveRequested?.Invoke();
+
     [Header("데이터")]
     [SerializeField] private SettlementConfig _config;
 
@@ -193,6 +196,7 @@ public partial class SettlementManager : MonoBehaviour
         TickRelocation();
         FinishDueBuildings();
         TickFarm(Time.deltaTime);
+        TickProduction(Time.deltaTime);
         CompleteRecordRequests();
         if (Settlement.Job == null)
             return;
@@ -478,6 +482,15 @@ public partial class SettlementManager : MonoBehaviour
 
     /// <summary>이 자리가 다시 생기기까지 남은 시간 (이미 있으면 0)</summary>
     public TimeSpan GatherRemaining(string pointId) => Settlement.GatherRemaining(pointId, NowTicks);
+
+    /// <summary>오프라인에서 돌아오면 광장의 나무 · 돌 · 나뭇가지가 모두 다시 나 있음 (흔든 횟수도 처음부터)</summary>
+    public void RefreshGatherPoints()
+    {
+        if (!IsLoaded)
+            return;
+        Settlement.ResetGatherCooldowns();
+        TreeShakeView.ForgetShakes();
+    }
 
     /// <summary>"1:23" 처럼 짧게 (한 시간이 넘으면 "1시간 5분")</summary>
     public static string FormatShort(TimeSpan time)
@@ -1218,10 +1231,12 @@ public partial class SettlementManager : MonoBehaviour
                 lines.Add($"{task.Title} · {FormatRemaining(job.Remaining(now))} 남았어요");
         }
 
-        int regrown = Settlement.CountGatherRegrown(leftAt, now);
+        // 돌아오면 쉬던 나무 · 돌 · 나뭇가지가 모두 다시 생김 (RefreshGatherPoints, GameManager가 이 다음에 부름)
+        int regrown = Settlement.CountGatherRegrown(leftAt, long.MaxValue);
         if (regrown > 0)
             lines.Add($"광장에 주울 나뭇가지·돌이 {regrown}곳 다시 생겼어요");
 
+        CollectProductionNews(lines);
         CollectBuildingNews(leftAt, now, lines);
         CollectVisitNews(lines);
     }

@@ -711,6 +711,13 @@ public partial class GameManager : MonoBehaviour
             settlement.CollectAbsenceNews(absenceSec, report.SettlementNews);
             report.NextGoal = settlement.NextGoalTitle;
         }
+
+        // Back from offline: plaza trees/rocks/branches and the mine maze
+        // (broken rocks, re-entry wait) are all ready again. After the news,
+        // which counts the spots that come back.
+        settlement?.RefreshGatherPoints();
+        InventoryManager.Instance?.MineMazeState?.ResetCooldowns();
+        AbsenceSettled?.Invoke();
         SaveNow();
         AnalyticsLog.Track("offline_settled", ("elapsedSec", absenceSec),
             ("simulatedSec", OfflineProductionService.Credited(absenceSec)),
@@ -1343,6 +1350,10 @@ public partial class GameManager : MonoBehaviour
     // The farm and dock otters show it as icons flying to the bag.
     public static event Action<ItemDefinition, int> HarvestStored;
     public static event Action<ItemDefinition> FishCaught;
+
+    // An offline absence was settled (launch or back from the background).
+    // The mine maze, when open, refreshes its live model with it.
+    public static event Action AbsenceSettled;
 
     // Mining runs in every zone scene once the otter is in the mine, like
     // the farm growing everywhere — not only while the mine scene is open.

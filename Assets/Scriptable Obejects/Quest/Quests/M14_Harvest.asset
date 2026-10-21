@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv14_harvest
   _title: "\uC804\uC124\uC758 \uB18D\uBD80"
   _description: "\uC791\uBB3C 1,500\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 62
-  _kind: 0
+  _sortOrder: 72
+  _kind: 2
   _requiredLevel: 14
-  _prerequisite: {fileID: 11400000, guid: 12c973da0ba5b6440bf8d862f89e83d0, type: 2}
+  _prerequisite: {fileID: 11400000, guid: 55b8ff6290996e649879a6a7688c238e, type: 2}
   _icon: {fileID: 4481972823782185347, guid: eecc9255317c4214cb9581e7e72252fb, type: 3}
   _goalType: 0
   _goal: 1500

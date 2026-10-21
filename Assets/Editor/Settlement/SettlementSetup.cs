@@ -233,9 +233,9 @@ public static partial class SettlementSetup
             -1, "gb_lamp", "가로등을 세웠어요!\n밤에도 광장이 환해요.", 0, "", ""),
     };
 
-    // 새 게임 시작 재료 = 첫 집 비용 (시안 1: 목재 8, 돌 5)
-    private const int StartingWood = 8;
-    private const int StartingStone = 5;
+    // 새 게임 시작 재료. 상점에서 목재를 팔지 않으므로 넉넉히: 첫 집(8 · 5) · 의자(6) · 둘째 집(18 · 8)까지 거의 되고, 나머지는 광장에서 주움
+    private const int StartingWood = 30;
+    private const int StartingStone = 15;
     private const int StartingGold = 100; // 시안 1
 
     [MenuItem("Tools/Settlement/Create Data")]

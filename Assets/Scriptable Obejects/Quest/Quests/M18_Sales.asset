@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv18_sales
   _title: "\uD574\uB2EC \uC655\uAD6D\uC758 \uAE08\uACE0"
   _description: "\uD310\uB9E4\uB85C 200,000\uACE8\uB4DC \uBC8C\uAE30"
-  _sortOrder: 79
+  _sortOrder: 98
   _kind: 0
   _requiredLevel: 18
   _prerequisite: {fileID: 11400000, guid: bbf00e8dbcabe4747b7b8c811582e36c, type: 2}

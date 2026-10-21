@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv13_decor
   _title: "\uD574\uB2EC \uB180\uC774\uACF5\uC6D0"
   _description: "\uC7A5\uB09C\uAC10 3\uAC1C \uB193\uAE30"
-  _sortOrder: 56
-  _kind: 0
+  _sortOrder: 73
+  _kind: 2
   _requiredLevel: 13
-  _prerequisite: {fileID: 11400000, guid: c4e6e46fc70a1db4abda8e8e5912dc00, type: 2}
+  _prerequisite: {fileID: 0}
   _icon: {fileID: 21300000, guid: 36a103bcbf5870349be1100535869408, type: 3}
   _goalType: 5
   _goal: 3

@@ -101,6 +101,12 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     /// <summary>방문 대기 줄 (확인용)</summary>
     public IReadOnlyList<string> VisitQueue => _visitQueue;
 
+    // 마지막으로 새 해달을 비춰 소개한 때 (그동안은 다른 안내를 띄우지 않게)
+    private float _introducedAt = float.NegativeInfinity;
+
+    /// <summary>새 해달을 막 소개하는 중 (카메라가 비추는 동안 밭 안내가 겹쳐 뜨지 않게. 줄에서 기다리는 해달은 안내가 끝난 뒤에 옴)</summary>
+    public bool IsIntroducingVisitor => _presenting.Count > 0 || Time.unscaledTime < _introducedAt + FocusHoldSeconds;
+
     private void Awake()
     {
         Active = this;
@@ -281,9 +287,70 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     private void ApplyAll(bool initial)
     {
         ApplyGates(_manager.HasDevelopment, false);
+        ConvertDefaultProps();
         _walkableArea.Rebuild();
         SyncOtters(initial);
         UpdateConstruction();
+    }
+
+    // 광장에 처음부터 놓인 소품(Props 아래 그루터기 · 덤불 · 통나무 · 벤치 · 가로등 · 피크닉 매트) 중 상점 가구와 같은 그림인 것은
+    // 세이브마다 한 번 같은 자리의 꾸미기 가구로 바꿔 (가방에 넣고 그 자리에 놓음) 상점 가구처럼 옮기거나 보관할 수 있게 한다.
+    // 바꾼 소품은 그 뒤로 늘 숨김. 그 자리에 아직 놓을 수 없으면(잠긴 땅 등) 소품 그대로 두고 다음에 다시 봄
+    private const string DefaultPropsRoot = "Props";
+    private const string DefaultPropFlagPrefix = "decor_prop_";
+
+    private void ConvertDefaultProps()
+    {
+        var decor = DecorManager.Instance;
+        var board = DecorBoardView.Active;
+        var bag = InventoryManager.Instance != null ? InventoryManager.Instance.Inventory : null;
+        if (!_manager.IsLoaded || decor == null || board == null || board.Layout == null || bag == null)
+            return;
+
+        bool placedAny = false;
+        foreach (var prop in FindObjectsByType<PlazaProp>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+        {
+            var parent = prop.transform.parent;
+            if (parent == null || parent.name != DefaultPropsRoot)
+                continue;
+            var furniture = FurnitureWithSprite(decor.Catalog, prop.GetComponent<SpriteRenderer>().sprite);
+            if (furniture == null)
+                continue;
+            string flag = DefaultPropFlagPrefix + prop.name;
+            if (_manager.Settlement.HasFlag(flag))
+            {
+                prop.gameObject.SetActive(false);
+                continue;
+            }
+
+            // 소품의 발밑(가운데 아래)이 가구 칸의 아래 가운데가 되게
+            var size = furniture.Footprint;
+            var ground = (Vector2)prop.transform.position;
+            var origin = board.WorldToCell(ground + new Vector2(-(size.x - 1) * 0.5f * board.CellSize, 0.01f));
+            // 소품 자신의 발자국이 그 칸을 막고 있으므로 월드 쪽 막힘은 보지 않음 (구역 · 잠김 · 겹침은 봄)
+            if (board.Layout.Check(furniture, origin, DecorRotation.R0, 0, true) != DecorPlacementResult.Ok)
+                continue;
+            if (bag.Add(furniture.Item, 1, ItemChangeReason.Grant) < 1)
+                continue;
+            board.Layout.TryPlace(furniture, origin, DecorRotation.R0, out _, true);
+            _manager.Settlement.SetFlag(flag);
+            prop.gameObject.SetActive(false);
+            placedAny = true;
+        }
+        if (placedAny)
+            SettlementManager.RequestSave();
+    }
+
+    private static DecorDefinition FurnitureWithSprite(DecorCatalog catalog, Sprite sprite)
+    {
+        if (catalog == null || sprite == null)
+            return null;
+        foreach (var decor in catalog.Decors)
+        {
+            if (decor != null && decor.IsFurniture && decor.Item != null && decor.WorldSprite == sprite)
+                return decor;
+        }
+        return null;
     }
 
     private void ApplyGates(System.Func<string, bool> isUnlocked, bool animate)
@@ -407,7 +474,10 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
 
         // 장난감 방문객도 새로 만나는 한 마리를 비춰 소개한다.
         if (focus != null)
+        {
+            _introducedAt = Time.unscaledTime;
             FocusOtter(focus.OtterId);
+        }
         UpdateConstruction();
     }
 

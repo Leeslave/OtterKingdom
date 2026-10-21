@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv19_harvest
   _title: "\uB05D\uC5C6\uB294 \uD48D\uB144"
   _description: "\uC791\uBB3C 4,000\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 82
+  _sortOrder: 101
   _kind: 0
   _requiredLevel: 19
   _prerequisite: {fileID: 11400000, guid: a69697afe5d67034e8ba6633b0413d53, type: 2}

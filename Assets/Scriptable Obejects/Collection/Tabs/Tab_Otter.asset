@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::CollectionTab
   _tabId: Otter
   _displayName: "\uD574\uB2EC"
-  _sortOrder: 2
+  _sortOrder: 3
   _countLabel: "\uB4F1\uB85D"
   _unknownLabel: "\uBBF8\uBC1C\uACAC"
   _collectedLabel: "\uB4F1\uB85D \uC644\uB8CC"

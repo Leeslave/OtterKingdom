@@ -234,9 +234,9 @@ MonoBehaviour:
   - fishing_dock
   _startingItems:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
-    _amount: 8
+    _amount: 30
   - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
-    _amount: 5
+    _amount: 15
   _startingGold: 100
   _gatherItem: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
   _gatherAmount: 2

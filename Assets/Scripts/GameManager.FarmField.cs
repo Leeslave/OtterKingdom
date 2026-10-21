@@ -10,6 +10,7 @@ public partial class GameManager
     private const string FirstFieldPlantTutorial = "Farm.FirstFieldPlant";
     // 놓기 화면을 그냥 닫았으면 이만큼 뒤에 다시 권함
     private const float FirstFieldRetrySeconds = 60f;
+    private const float FirstFieldSettleSeconds = 1.5f;
     private TutorialPointer firstFieldPointer;
 
     private IEnumerator PlayFirstFieldGuideWhenReady()
@@ -26,7 +27,10 @@ public partial class GameManager
         while (manager.FarmParts(FarmPartKind.Field, false).Count == 0)
         {
             yield return new WaitForSecondsRealtime(FeatureTutorialPollSeconds);
-            if (!manager.FarmOpen || Time.unscaledTime < nextOffer || !DistrictGuideIdle(navigator)) continue;
+            if (Time.unscaledTime < nextOffer || !FirstFieldGuideIdle(manager, navigator)) continue;
+            // 밭이 열린 완료 팝업("농부 해달이 찾아왔어요")이 다음 프레임에 뜰 수도 있어 조금 기다렸다 다시 봄
+            yield return new WaitForSecondsRealtime(FirstFieldSettleSeconds);
+            if (!FirstFieldGuideIdle(manager, navigator)) continue;
             bool finished = false, skipped = false;
             TutorialOverlay.Play(new List<TutorialStep>
             {
@@ -87,13 +91,28 @@ public partial class GameManager
         var farmer = manager.FarmConfig != null ? manager.Config.FindOtter(manager.FarmConfig.FarmerOtterId) : null;
         string harvester = manager.HasFarmWorker && farmer != null ? $"{farmer.DisplayName}{KoreanParticle.SubjectParticle(farmer.DisplayName)}" : "농부 해달이";
         bool done = false;
+        // 농부가 밭을 맡기 전에는 작물이 자라지 않음 (SettlementManager.TickFarm)
+        string grow = manager.HasFarmWorker ? $"다 자라면 {harvester} 거둬 상자에 넣어요."
+            : $"{harvester} 밭을 맡으면 자라기 시작해요. 말을 걸어 밭에 배치해요!";
         TutorialOverlay.Play(new List<TutorialStep>
         {
-            TutorialStep.Info("첫 작물을 심었어요!", $"다 자라면 {harvester} 거둬 상자에 넣어요.\n밭 칸은 꾸미기 → 건물에서 더 지을 수 있어요."),
+            TutorialStep.Info("첫 작물을 심었어요!", $"{grow}\n밭 칸은 꾸미기 → 건물에서 더 지을 수 있어요."),
         }, () => done = true);
         while (!done) yield return null;
         save.tutorialsDone.Add(FirstFieldPlantTutorial);
         SaveNow();
+    }
+
+    // 밭 안내는 농부 해달 소개(밭 개간 완료 팝업 → 농부가 광장에 옴)가 끝난 뒤에
+    private bool FirstFieldGuideIdle(SettlementManager manager, SceneNavigator navigator)
+    {
+        if (!manager.FarmOpen || !DistrictGuideIdle(navigator))
+            return false;
+        var plaza = SettlementPlazaView.Active;
+        if (plaza != null && plaza.IsIntroducingVisitor)
+            return false;
+        string farmerId = manager.FarmConfig != null ? manager.FarmConfig.FarmerOtterId : null;
+        return string.IsNullOrEmpty(farmerId) || manager.Config.FindOtter(farmerId) == null || manager.Settlement.HasMet(farmerId);
     }
 
     private static bool AnyFieldPlanted(SettlementManager manager)

@@ -34,19 +34,19 @@ MonoBehaviour:
   - "\uD734\uC2DD \uACF5\uAC04 \uC815\uB3C8"
   - "\uB9C8\uC744\uD68C\uAD00 \uBB3C\uD488 \uBCF4\uCDA9"
   _cycleCosts:
-  - _gold: 200
+  - _gold: 800
     _items:
     - _item: {fileID: 11400000, guid: 75fe364f3d85172469c9d04a63806f2d, type: 2}
       _amount: 10
     - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
       _amount: 4
-  - _gold: 150
+  - _gold: 600
     _items:
     - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
       _amount: 10
     - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
       _amount: 6
-  - _gold: 250
+  - _gold: 1000
     _items:
     - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
       _amount: 8

@@ -13,6 +13,10 @@ public partial class SettlementManager
     private const string FarmDiscoverDevelopment = "farm_discovered";
     private const string FarmPathDevelopment = "farm_path_open";
     private const string FarmWorkingDevelopment = "farm_working";
+    // 처음 써 보기 (메인 퀘스트 Lv.13~15가 셈): 스프링클러 · 흙길을 다 지어 놓음, 돌길이 열린 채 길이 깔림
+    public const string FarmSprinklerPlacedDevelopment = "farm_sprinkler_placed";
+    public const string FarmPathPlacedDevelopment = "farm_path_placed";
+    public const string FarmStonePathDevelopment = "farm_stone_path";
     private const float FarmSyncSeconds = 0.5f;
     private const float OfflineStepSeconds = 5f;
     // 이만큼 넘게 시계가 건너뛰면(앱을 내려 둠 · 꺼 둠) 꺼 둔 동안으로 셈
@@ -133,6 +137,22 @@ public partial class SettlementManager
         // 고랑 열기 퀘스트(Lv.11~13) = 처음 밭 칸 3개를 넘긴 수
         if (QuestManager.Instance != null && FarmConfig != null)
             QuestManager.Instance.SetOpenedFurrows(Mathf.Max(0, _farmFieldIds.Count - FarmConfig.FieldsAt(10)));
+        RecordFarmPartUse();
+    }
+
+    // 지금 놓인 부품으로 다시 셈 → 퀘스트보다 먼저 놓았어도 들어감. 한 번 열리면 치워도 그대로
+    private void RecordFarmPartUse()
+    {
+        if (!HasDevelopment(FarmSprinklerPlacedDevelopment) && CountFarmParts(FarmPartKind.Sprinkler, true) > 0)
+            Settlement.UnlockDevelopment(FarmSprinklerPlacedDevelopment);
+        bool stone = StonePath;
+        if (HasDevelopment(FarmPathPlacedDevelopment) && (!stone || HasDevelopment(FarmStonePathDevelopment)))
+            return;
+        if (CountFarmParts(FarmPartKind.Path, true) == 0)
+            return;
+        Settlement.UnlockDevelopment(FarmPathPlacedDevelopment);
+        if (stone)
+            Settlement.UnlockDevelopment(FarmStonePathDevelopment);
     }
 
     #endregion
@@ -228,6 +248,9 @@ public partial class SettlementManager
             }
             ResumeWaitingFields();
         }
+        // 농부가 일을 맡기 전(말을 걸어 배치하기 전)에는 심어 둔 작물도 자라지 않음
+        if (!HasFarmWorker)
+            return;
         // 광장 밖(광산 · 낚시터): 걷는 농부 대신 꺼 둔 동안처럼 (자람은 효율만큼, 다 자라면 바로 상자로)
         bool away = FarmWorkerAway;
         if (Farm.Grow(away ? dt * FarmConfig.OfflineEfficiency : dt, FieldSpeed) > 0)
@@ -370,9 +393,19 @@ public partial class SettlementManager
         if (ConsumeSeed(crop))
             Farm.Plant(fieldId, crop.cropId, crop.baseDurationSec);
         else
+        {
             field.waitingCropId = crop.cropId;
+            PostSeedShortage(crop);
+        }
         OnFarmChanged?.Invoke();
         return true;
+    }
+
+    // 씨앗이 없어 다시 못 심음: 옛 밭과 같은 알림 (같은 작물 알림은 GameNotices가 한 번만 띄움)
+    private void PostSeedShortage(CropDefinition crop)
+    {
+        var notice = new FarmNotice(FarmNoticeKind.SeedShortage, 1, new[] { crop.cropId });
+        GameNotices.Post(FarmNoticeText.Build(notice, id => FindCrop(id)?.displayName ?? id));
     }
 
     /// <summary>씨앗을 기다리던 밭에 씨앗이 생겼으면 심음</summary>
@@ -540,6 +573,8 @@ public partial class SettlementManager
     // 다 자란 밭은 농부가 상자에 넣고 다시 심음. 상자가 차면 멈춤
     private void ApplyFarmOffline(double seconds)
     {
+        if (!HasFarmWorker)
+            return;
         seconds = OfflineProductionService.Credited(seconds);
         float efficiency = FarmConfig.OfflineEfficiency;
         for (double t = 0; t < seconds; t += OfflineStepSeconds)

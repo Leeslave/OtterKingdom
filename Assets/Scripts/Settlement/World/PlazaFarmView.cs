@@ -272,7 +272,7 @@ public class PlazaFarmView : MonoBehaviour
             if (icon != null)
             {
                 visual.Icon.sprite = icon;
-                visual.Icon.transform.localScale = Vector3.one * (0.6f / Mathf.Max(0.01f, icon.bounds.size.y));
+                visual.Icon.transform.localScale = Vector3.one * (0.45f / Mathf.Max(0.01f, icon.bounds.size.y));
             }
             int order = PlazaDepth.SortingOrderFor(rect.yMin) + 20;
             visual.Count.sortingOrder = order;
@@ -285,22 +285,27 @@ public class PlazaFarmView : MonoBehaviour
         }
     }
 
+    // 상자 위 표시: 작물 그림 위 · 개수 아래로 쌓고 상자 한 칸 너비 안에 둠 (상자를 나란히 지어도 글자가 겹치지 않게)
     private CrateVisual CreateCrate()
     {
+        float width = _board.CellSize * 0.95f;
         var visual = new CrateVisual { Root = new GameObject("FarmCrate").transform };
         visual.Root.SetParent(transform, false);
         visual.Icon = NewRenderer("Icon", visual.Root, 0);
-        visual.Icon.transform.localPosition = new Vector3(-0.45f, 0f, 0f);
+        visual.Icon.transform.localPosition = new Vector3(0f, 0.55f, 0f);
         var text = new GameObject("Count").AddComponent<TextMeshPro>();
         text.transform.SetParent(visual.Root, false);
-        text.transform.localPosition = new Vector3(0.25f, 0f, 0f);
+        text.transform.localPosition = Vector3.zero;
         if (RuntimeUIKit.Style.TitleFont != null)
             text.font = RuntimeUIKit.Style.TitleFont;
-        text.fontSize = 4.5f;
+        text.enableAutoSizing = true;
+        text.fontSizeMin = 1.5f;
+        text.fontSizeMax = 3.6f;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
         text.alignment = TextAlignmentOptions.Center;
         text.outlineWidth = 0.25f;
         text.outlineColor = new Color32(75, 46, 34, 255);
-        text.rectTransform.sizeDelta = new Vector2(2.4f, 1f);
+        text.rectTransform.sizeDelta = new Vector2(width, 0.5f);
         visual.Count = text;
         return visual;
     }

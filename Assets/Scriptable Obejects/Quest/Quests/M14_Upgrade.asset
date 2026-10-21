@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv14_upgrade
   _title: "\uC644\uBCBD\uD55C \uC124\uBE44"
   _description: "\uC0DD\uC0B0 \uC5C5\uADF8\uB808\uC774\uB4DC 2\uD68C"
-  _sortOrder: 61
+  _sortOrder: 75
   _kind: 0
   _requiredLevel: 14
-  _prerequisite: {fileID: 11400000, guid: 7978f77974931f148a9441aa403d6ff8, type: 2}
+  _prerequisite: {fileID: 11400000, guid: 26d01659881ae8a449a25aaeb1f842d0, type: 2}
   _icon: {fileID: 21300000, guid: 6f94875465a48ea498a43b677de0b768, type: 3}
   _goalType: 3
   _goal: 2
@@ -30,5 +30,5 @@ MonoBehaviour:
   _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 1500
-  _expReward: 500
+  _expReward: 900
   _expPercentOfLevel: 0

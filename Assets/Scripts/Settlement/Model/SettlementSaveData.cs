@@ -190,4 +190,6 @@ public class SettlementSaveData
     public RelocationSaveData relocation = new RelocationSaveData();
     // 광장 농장: 밭 칸 · 수확 상자 (농장 설계형. 옛 세이브는 없음 → 밭 씬에서 한 번 옮김)
     public PlazaFarmSaveData farm = new PlazaFarmSaveData();
+    // 시설 생산 (목공소 · 채석 작업소의 해달들이 모으는 재료. 옛 세이브는 없음 = 처음 셈할 때부터)
+    public BuildingProductionSaveData production = new BuildingProductionSaveData();
 }

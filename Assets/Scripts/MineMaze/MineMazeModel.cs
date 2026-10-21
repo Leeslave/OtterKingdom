@@ -673,6 +673,22 @@ public partial class MineMazeModel
         Changed?.Invoke();
     }
 
+    /// <summary>오프라인에서 돌아옴: 부순 돌이 모두 다시 생기고, 바로 다시 들어갈 수 있음</summary>
+    public void RefreshAfterAbsence(DateTime utcNow)
+    {
+        NextEnterUtc = DateTime.MinValue;
+        // 다른 층은 그 층에 갈 때 저장된 돌로 다시 만드니 저장 쪽 시각을 비움
+        foreach (var state in _floorStates.Values)
+        {
+            if (state?.rocks == null)
+                continue;
+            foreach (var rock in state.rocks)
+                if (rock != null && !rock.present) rock.respawnUtcTicks = 0;
+        }
+        CheatRespawnAll(utcNow);
+        Changed?.Invoke();
+    }
+
     /// <summary>부순 돌을 모두 바로 다시</summary>
     public void CheatRespawnAll(DateTime utcNow)
     {

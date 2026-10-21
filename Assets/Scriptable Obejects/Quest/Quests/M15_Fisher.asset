@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv15_fisher
   _title: "\uB09A\uC2DC\uB97C \uD560 \uD574\uB2EC"
   _description: "\uCCA8\uBC99\uC774\uB97C \uB09A\uC2DC\uD130\uC5D0 \uBC30\uCE58\uD558\uAE30"
-  _sortOrder: 65
+  _sortOrder: 82
   _kind: 0
   _requiredLevel: 15
   _prerequisite: {fileID: 11400000, guid: f703a2ea0e1a11e4792a01da5a7e6132, type: 2}
