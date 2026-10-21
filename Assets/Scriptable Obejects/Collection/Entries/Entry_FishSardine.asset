@@ -21,7 +21,8 @@ MonoBehaviour:
   _tagline: "\uB5BC \uC9C0\uC5B4 \uB2E4\uB2C8\uB294 \uC791\uC740 \uC740\uBE5B \uBB3C\uACE0\uAE30."
   _description: "\uD55C \uB9C8\uB9AC \uB09A\uC73C\uBA74 \uADFC\uCC98\uC5D0 \uCE5C\uAD6C\uAC00
     \uC794\uB729 \uC788\uC5B4\uC694."
-  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC\uD130"
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC \xB7 \uAC70\uB9AC 3~20m \xB7 \uAE4A\uC774
+    4~7m"
   _hint: 
   _linkedItem: {fileID: 11400000, guid: cbf1cb27e54007f4698242fb2b961f6c, type: 2}
   _unlockLevel: 0

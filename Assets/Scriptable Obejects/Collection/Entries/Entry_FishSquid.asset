@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishSquid
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_squid
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 25
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 8cbdd4398ca2c144d837d5212e8f148e, type: 3}
+  _tagline: "\uAE4A\uC740 \uBB3C\uC5D0\uC11C \uC3DC\uC0B4\uAC19\uC774 \uB2E4\uB140\uC694.
+    \uBA39\uBB3C\uC740 \uC3D8\uC9C0 \uC54A\uC544\uC694(\uC544\uB9C8\uB3C4)."
+  _description: "\uBCF4\uD1B5 \xB7 \uBB34\uAC8C 1.8~4.5kg"
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC \xB7 \uAC70\uB9AC 26~60m \xB7 \uAE4A\uC774
+    12~26m"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: 7f16989ec5effd64a98807f502c48047, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

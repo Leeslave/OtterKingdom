@@ -446,6 +446,17 @@ public sealed class QuarterRigView : MonoBehaviour
         : action == BuildKeys || action == SledgeKeys ? Loop.Build : action == MineKeys ? Loop.Mine : action == PhotoKeys ? Loop.Photo : action == RingKeys ? Loop.Ring : action == SweepKeys ? Loop.Sweep : Loop.None;
     // Only an otter with a rod (rod.png in its folder - the sailor) can fish.
     public bool CanFish => rodSprite != null;
+
+    // 낚시 개편(FishingReworkGame): 줄 · 찌는 밖에서 그리고, 입질 없이 기다리는 자세에 머묾 (챔질은 PlayFishStrike로만).
+    // 낚싯대 끝(월드)은 ExternalFishLine일 때도 매 프레임 알려 줌
+    [NonSerialized] public bool ExternalFishLine;
+    public Vector3 RodTipWorld { get; private set; }
+    private const float FishWaitEnd = 2.6f, FishStrikeFrom = 3.05f;
+
+    public void PlayFishStrike()
+    {
+        if (action == FishKeys && actionTime >= FishLoopFrom) actionTime = FishStrikeFrom;
+    }
     // Only an otter with a hammer (hammer.png in its folder - the mechanic) builds.
     public bool CanBuild => hammerSprite != null;
     // Only an otter with a rock to break (rock_0.png in its folder - the 광부) mines.
@@ -892,7 +903,7 @@ public sealed class QuarterRigView : MonoBehaviour
     // Rod from the paw, line down to the water with the float on it, ripple around it; all in the rig's own space.
     private void PoseRod(View v, Key a)
     {
-        bool hold = a.hold > .5f, wet = hold && a.line > .02f;
+        bool hold = a.hold > .5f, wet = hold && a.line > .02f && !ExternalFishLine;
         if (rod.gameObject.activeSelf != hold) rod.gameObject.SetActive(hold);
         foreach (var r in new[] { fishLine, fishFloat, ripple })
             if (r.gameObject.activeSelf != wet) r.gameObject.SetActive(wet);
@@ -906,8 +917,9 @@ public sealed class QuarterRigView : MonoBehaviour
         rod.transform.localRotation = Quaternion.Euler(0f, 0f, -tilt * Mathf.Rad2Deg);
         rod.transform.localScale = new Vector3(length / rodSprite.bounds.size.x, RodThickness / RigPixelsPerUnit / rodSprite.bounds.size.y, 1f);
         rod.sortingOrder = facingRear ? RodOrderRear : RodOrderFront;
-        if (!wet) return;
         Vector3 tip = hand + along * (length - grip);
+        RodTipWorld = visual.transform.TransformPoint(tip);
+        if (!wet) return;
         float bob = (1f - a.bite) * .02f * Mathf.Sin(clock * 2.4f) - a.bite * .07f;
         var water = new Vector3(tip.x, WaterY / RigPixelsPerUnit, 0f);
         Vector3 end = Vector3.Lerp(tip, water + Vector3.up * bob, a.line);
@@ -937,6 +949,8 @@ public sealed class QuarterRigView : MonoBehaviour
             if (action != null)
             {
                 actionTime += dt;
+                if (ExternalFishLine && action == FishKeys && actionTime >= FishWaitEnd && actionTime < FishStrikeFrom)
+                    actionTime = FishLoopFrom;
                 float length = action[action.Length - 1].t;
                 if (actionTime >= length)
                 {

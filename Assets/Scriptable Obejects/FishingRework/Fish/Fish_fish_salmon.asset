@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_salmon
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_salmon
+  _displayName: "\uC5F0\uC5B4"
+  _description: "\uAC15\uC5D0\uC11C \uD0DC\uC5B4\uB098 \uBA3C\uBC14\uB2E4\uB97C \uB204\uBE44\uB2E4
+    \uB3CC\uC544\uC640\uC694."
+  _icon: {fileID: 21300000, guid: 899f848dd5359cc47add1e401c8be08d, type: 3}
+  _rarity: 1
+  _item: {fileID: 11400000, guid: 00cd52a538f71f74f8fb1d07d89a24d6, type: 2}
+  _facesLeft: 1
+  _price: 200
+  _minWeight: 2
+  _maxWeight: 5
+  _distance: {x: 28, y: 60}
+  _depth: {x: 12, y: 22}
+  _nearBottom: 0
+  _spawnWeight: 26
+  _swimSpeed: 1.3
+  _length: 1.6

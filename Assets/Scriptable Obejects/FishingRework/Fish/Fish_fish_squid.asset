@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_squid
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_squid
+  _displayName: "\uC624\uC9D5\uC5B4"
+  _description: "\uAE4A\uC740 \uBB3C\uC5D0\uC11C \uC3DC\uC0B4\uAC19\uC774 \uB2E4\uB140\uC694.
+    \uBA39\uBB3C\uC740 \uC3D8\uC9C0 \uC54A\uC544\uC694(\uC544\uB9C8\uB3C4)."
+  _icon: {fileID: 21300000, guid: 4a61c49665628f347b9ecbdab41f6e2b, type: 3}
+  _rarity: 1
+  _item: {fileID: 11400000, guid: 7f16989ec5effd64a98807f502c48047, type: 2}
+  _facesLeft: 0
+  _price: 160
+  _minWeight: 1.8
+  _maxWeight: 4.5
+  _distance: {x: 26, y: 60}
+  _depth: {x: 12, y: 26}
+  _nearBottom: 0
+  _spawnWeight: 30
+  _swimSpeed: 1.2
+  _length: 1.7

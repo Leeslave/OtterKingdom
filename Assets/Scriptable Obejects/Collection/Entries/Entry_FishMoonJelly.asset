@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishMoonJelly
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_moon_jelly
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 17
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: c1b6fe8b15773f14ea0000d9d29e7150, type: 3}
+  _tagline: "\uB465\uC2E4\uB465\uC2E4 \uB5A0\uB2E4\uB2C8\uB294 \uD574\uD30C\uB9AC.
+    \uAC12\uC740 \uBCC4\uB85C\uC9C0\uB9CC \uC790\uAFB8 \uAC78\uB824\uC694."
+  _description: "\uD754\uD568 \xB7 \uBB34\uAC8C 0.1~0.3kg"
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC \xB7 \uAC70\uB9AC 10~36m \xB7 \uAE4A\uC774
+    3~10m"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: 193e2bbfb24f0394da3a6006c74023e2, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

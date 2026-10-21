@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishYellowtail
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_yellowtail
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 26
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 2cbe55e1ad1f9bc4ca5a82c91df039d5, type: 3}
+  _tagline: "\uB178\uB780 \uC904\uC774 \uBA4B\uC9C4 \uD798\uC13C \uBB3C\uACE0\uAE30.
+    \uACA8\uC6B8\uC5D0 \uB354 \uB9DB\uC788\uB300\uC694."
+  _description: "\uBCF4\uD1B5 \xB7 \uBB34\uAC8C 3~7kg"
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC \xB7 \uAC70\uB9AC 30~65m \xB7 \uAE4A\uC774
+    12~24m"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: d1def19abf540e8498c87738bd004107, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

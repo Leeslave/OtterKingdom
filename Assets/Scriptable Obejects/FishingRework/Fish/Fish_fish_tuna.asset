@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_tuna
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_tuna
+  _displayName: "\uCC38\uCE58"
+  _description: "\uBA3C\uBC14\uB2E4\uB97C \uBE60\uB974\uAC8C \uB2EC\uB9AC\uB294 \uD798\uC13C
+    \uBB3C\uACE0\uAE30. \uD2BC\uD2BC\uD55C \uB9B4\uC774 \uD544\uC694\uD574\uC694."
+  _icon: {fileID: 21300000, guid: 3fd9d1df9b7fc644e95cf3876f9ef1ed, type: 3}
+  _rarity: 2
+  _item: {fileID: 11400000, guid: dd7a78731271f5f4298014f52ecef5c8, type: 2}
+  _facesLeft: 1
+  _price: 800
+  _minWeight: 7
+  _maxWeight: 18
+  _distance: {x: 40, y: 85}
+  _depth: {x: 14, y: 30}
+  _nearBottom: 0
+  _spawnWeight: 20
+  _swimSpeed: 1.8
+  _length: 2.6

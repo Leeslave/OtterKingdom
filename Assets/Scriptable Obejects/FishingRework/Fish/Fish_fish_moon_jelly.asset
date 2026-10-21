@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_moon_jelly
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_moon_jelly
+  _displayName: "\uB2EC \uD574\uD30C\uB9AC"
+  _description: "\uB465\uC2E4\uB465\uC2E4 \uB5A0\uB2E4\uB2C8\uB294 \uD574\uD30C\uB9AC.
+    \uAC12\uC740 \uBCC4\uB85C\uC9C0\uB9CC \uC790\uAFB8 \uAC78\uB824\uC694."
+  _icon: {fileID: 21300000, guid: a831ec18f595f3242bdffd01a50e2685, type: 3}
+  _rarity: 0
+  _item: {fileID: 11400000, guid: 193e2bbfb24f0394da3a6006c74023e2, type: 2}
+  _facesLeft: 0
+  _price: 12
+  _minWeight: 0.1
+  _maxWeight: 0.3
+  _distance: {x: 10, y: 36}
+  _depth: {x: 3, y: 10}
+  _nearBottom: 0
+  _spawnWeight: 40
+  _swimSpeed: 0.3
+  _length: 0.9

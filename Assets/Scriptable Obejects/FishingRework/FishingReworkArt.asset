@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cef9312e6fc5344a3b2d07457fa618, type: 3}
+  m_Name: FishingReworkArt
+  m_EditorClassIdentifier: OtterKingdom::FishingReworkArt
+  _ui: {fileID: 11400000, guid: 2dfeef635c8c2bd4e8484d90a9d777a2, type: 2}
+  _sky: {fileID: 21300000, guid: fb90b49f71d08a04498987583dee7862, type: 3}
+  _water: {fileID: 21300000, guid: 87d5e9538bfffa248a28e3a93fc3b80a, type: 3}
+  _wave: {fileID: 21300000, guid: 7ba39d96ba8d62143aa07880f73431d9, type: 3}
+  _ray: {fileID: 21300000, guid: a4a46bb8ca43afe40ad07ef8655041ed, type: 3}
+  _island: {fileID: 21300000, guid: 8ce11819caa7c9f4382ec1bcaed3fefc, type: 3}
+  _cloud: {fileID: 21300000, guid: 8da9bffdbe94bf249a4d036496c81512, type: 3}
+  _pier: {fileID: 21300000, guid: 655b134cb626baa4095f008424241b80, type: 3}
+  _buoy: {fileID: 21300000, guid: 94367e6361083774aadefe760032c06f, type: 3}
+  _seaweed:
+  - {fileID: 21300000, guid: a7ff47103aab3c549ab4f15ede4d872e, type: 3}
+  - {fileID: 21300000, guid: 92d351f6b2bb80140aa95a622b3750a8, type: 3}
+  _coral:
+  - {fileID: 21300000, guid: 8081741d5bcca2749a10b6814ddb7814, type: 3}
+  - {fileID: 21300000, guid: 414a270ed42a84042aafd07cf7e4099b, type: 3}
+  _rocks:
+  - {fileID: 21300000, guid: 79d4b1a4d58d27a46ae2dde2d601c2ea, type: 3}
+  - {fileID: 21300000, guid: c5d61f6cf3a11bc4fb6b4cfe3894e235, type: 3}
+  _hook: {fileID: 21300000, guid: da7c0f75deb3cff4e987dee577468515, type: 3}
+  _sinker: {fileID: 21300000, guid: 94881a6ea36743a4681c8679e16272cc, type: 3}
+  _iconUpgrade: {fileID: 21300000, guid: dd43935ea9e934c42ba360a4966a152d, type: 3}
+  _iconBook: {fileID: 21300000, guid: 38f67661e3581f0429a75641dcb3142b, type: 3}
+  _iconAnyFish: {fileID: 21300000, guid: 11425da0f0d60364cb66db420b51688a, type: 3}
+  _iconBig: {fileID: 21300000, guid: 487eb413063749f439378fb7e57dd16d, type: 3}
+  _iconBag: {fileID: 21300000, guid: 17958b4edd174764c8d1506cba907e3a, type: 3}
+  _iconPier: {fileID: 21300000, guid: 83c4e9d4539ae1a42a11b4134583088c, type: 3}
