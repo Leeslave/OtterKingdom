@@ -99,6 +99,15 @@ public partial class SettlementManager
     public int DistrictBonusPercent(KingdomBonusKind kind) =>
         IsLoaded ? DistrictRules.BonusPercent(_config, Settlement, DistrictOrder, kind) : 0;
 
-    // 왕국 보유 효과 합계: 다 지은 특성 건물 + 구역
-    private int TotalBonusPercent(KingdomBonusKind kind) => BonusPercent(kind) + DistrictBonusPercent(kind);
+    // 왕국 보유 효과 합계: 다 지은 특성 건물 + 구역 + 특수 해달 편성 (목재 획득 편성은 개간 목재에도)
+    private int TotalBonusPercent(KingdomBonusKind kind) => BonusPercent(kind) + DistrictBonusPercent(kind) + CompanionPercent(kind);
+
+    private static int CompanionPercent(KingdomBonusKind kind)
+    {
+        var gacha = GachaManager.Instance;
+        if (gacha == null)
+            return 0;
+        int percent = gacha.FormationPercent(kind);
+        return kind == KingdomBonusKind.ClearingWood ? percent + gacha.FormationPercent(KingdomBonusKind.WoodYield) : percent;
+    }
 }

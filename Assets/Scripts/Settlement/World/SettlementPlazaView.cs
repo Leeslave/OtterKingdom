@@ -550,6 +550,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             return false;
         }
         agent.Initialize(_walkableArea, _plazaSettings);
+        agent.OtterId = otter.OtterId;
         agent.SetHabit(() => PickHabitTarget(otter.Trait), OtterHabits.Actions(otter.Trait));
         if (otter.PlazaTint != Color.white)
         {

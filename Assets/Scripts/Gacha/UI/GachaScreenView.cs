@@ -148,6 +148,8 @@ public class GachaScreenView : MonoBehaviour
     public event Action OnRatesClicked;
     public event Action OnExchangeClicked;
     public event Action OnPointsClicked;
+    /// <summary>[명부] (특수 해달 · 편성 · 장신구, 가챠 개편 3단계)</summary>
+    public event Action OnRosterClicked;
 
     private readonly List<GachaBannerTabView> _tabs = new List<GachaBannerTabView>();
     private Coroutine _noticeRoutine;
@@ -165,7 +167,28 @@ public class GachaScreenView : MonoBehaviour
         _ratesButton.onClick.AddListener(() => OnRatesClicked?.Invoke());
         _exchangeButton.onClick.AddListener(() => OnExchangeClicked?.Invoke());
         _pointsButton.onClick.AddListener(() => OnPointsClicked?.Invoke());
+        AddRosterButton();
     }
+
+    // 화면 프리팹을 다시 만들지 않도록 [확률 정보] 버튼을 복사해 링크 줄 오른쪽 빈자리(교환소 뒤)에 [명부]를 둔다
+    private void AddRosterButton()
+    {
+        var roster = Instantiate(_ratesButton.gameObject, _ratesButton.transform.parent);
+        roster.name = "RosterButton";
+        var rect = (RectTransform)roster.transform;
+        rect.anchoredPosition = new Vector2(RosterButtonX, rect.anchoredPosition.y);
+        rect.sizeDelta = new Vector2(RosterButtonWidth, rect.sizeDelta.y);
+        var label = roster.GetComponentInChildren<TMP_Text>(true);
+        if (label != null)
+            label.text = "명부";
+        var button = roster.GetComponent<Button>();
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() => OnRosterClicked?.Invoke());
+    }
+
+    // 링크 줄(폭 1020): 확률 정보 0~330 · 교환소 350~770 → 명부 790~1020
+    private const float RosterButtonX = 790f;
+    private const float RosterButtonWidth = 230f;
 
     public void Show()
     {

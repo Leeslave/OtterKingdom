@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// 왕국의 특성 수 (P4). 주민(Resident)으로 사는 서로 다른 해달만 센다:
@@ -43,6 +44,25 @@ public static class TraitRules
                 counts[index]++;
         }
         return counts;
+    }
+
+    /// <summary>이 특성을 가진, 마을에 사는 해달 ID (들어온 순서)</summary>
+    public static List<string> Settled(SettlementConfig config, Settlement settlement, OtterTrait trait)
+    {
+        if (config == null)
+            throw new ArgumentNullException(nameof(config));
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+        var result = new List<string>();
+        if (trait == OtterTrait.None)
+            return result;
+        foreach (var otterId in settlement.ResidentOrder)
+        {
+            var otter = config.FindOtter(otterId);
+            if (otter != null && otter.Trait == trait && IsSettled(settlement, otterId))
+                result.Add(otterId);
+        }
+        return result;
     }
 
     // 마을에 사는 해달: 주민 + 역할을 맡아 와 있는 해달(또박이 등). 역할 해달을 빼면 기록관(기록 2명 = 또박이 + 끄적이)을 지을 수 없음

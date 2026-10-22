@@ -38,6 +38,8 @@ public partial class SettlementManager
     public event Action<int, List<FarmStackSaveData>> OnCrateCollected;
 
     public PlazaFarmConfig FarmConfig => _config.Farm;
+    /// <summary>광장 농부 해달 ID (장신구 효과를 셈)</summary>
+    public string FarmerOtterId => FarmConfig != null ? FarmConfig.FarmerOtterId : null;
     public PlazaFarm Farm => Settlement.Farm;
 
     /// <summary>
@@ -396,7 +398,8 @@ public partial class SettlementManager
             return false;
         var soil = SoilOf(field);
         amount = Mathf.Max(1, crop.yieldCount) + (soil != null && UnityEngine.Random.value < soil.BonusChance ? 1 : 0);
-        amount = KingdomBonus.Amount(KingdomBonusKind.HarvestYield, amount);
+        // 농업 창고 + 농부 장신구 "얻는 양"
+        amount = CompanionBonus.Amount(KingdomBonusKind.HarvestYield, FarmerOtterId, amount);
         if (ConsumeSeed(crop))
             Farm.Plant(fieldId, crop.cropId, crop.baseDurationSec);
         else
@@ -445,7 +448,7 @@ public partial class SettlementManager
             // 흙이 하나 더 줄 수도 있으면 그만큼 자리가 있을 때만
             var soil = SoilOf(field);
             int bonus = soil != null && soil.BonusChance > 0f ? 1 : 0;
-            int most = KingdomBonus.Amount(KingdomBonusKind.HarvestYield, Mathf.Max(1, crop.yieldCount) + bonus);
+            int most = CompanionBonus.Amount(KingdomBonusKind.HarvestYield, FarmerOtterId, Mathf.Max(1, crop.yieldCount) + bonus, 0f);
             if (Farm.FreeSpace(capacity) < most)
                 break;
             if (!HarvestField(field.instanceId, out var harvested, out int amount))

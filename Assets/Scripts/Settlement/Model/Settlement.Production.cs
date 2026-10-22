@@ -41,16 +41,28 @@ public static class ProductionRules
     public static int Workers(SettlementConfig config, Settlement settlement, BuildingDefinition building) =>
         building != null && building.Produces ? TraitRules.Count(config, settlement, building.ProductionTrait) : 0;
 
-    /// <summary>1시간에 모으는 개수</summary>
-    public static int PerHour(SettlementConfig config, Settlement settlement, BuildingDefinition building) =>
-        building != null && building.Produces ? building.ProductionPerHour * Workers(config, settlement, building) : 0;
+    /// <summary>1시간에 모으는 개수 (반올림)</summary>
+    /// <param name="workerPercent">해달 ID → 그 해달 몫에 더하는 % (편성 · 장신구 얻는 양, 없으면 0)</param>
+    public static int PerHour(SettlementConfig config, Settlement settlement, BuildingDefinition building, Func<string, int> workerPercent = null) =>
+        (int)Math.Round(PerHourExact(config, settlement, building, workerPercent));
+
+    /// <summary>1시간에 모으는 양 (소수 그대로): 일하는 해달마다 한 마리 몫 × (100 + 그 해달 %) / 100</summary>
+    public static double PerHourExact(SettlementConfig config, Settlement settlement, BuildingDefinition building, Func<string, int> workerPercent = null)
+    {
+        if (building == null || !building.Produces)
+            return 0;
+        double total = 0;
+        foreach (var otterId in TraitRules.Settled(config, settlement, building.ProductionTrait))
+            total += building.ProductionPerHour * (100 + Math.Max(0, workerPercent != null ? workerPercent(otterId) : 0)) / 100.0;
+        return total;
+    }
 
     /// <summary>
     /// seconds만큼 일한다. 시설마다 쌓인 몫이 1개 이상이면 꺼내 (시설, 개수)로 돌려줌 — 가방에 못 넣은 것은 Return으로 되돌림.
     /// 같은 건물을 여러 채 지어도 한 번만 셈 (일하는 해달은 같은 해달들)
     /// </summary>
     public static List<(BuildingDefinition building, int amount)> Produce(SettlementConfig config, Settlement settlement,
-        Func<string, BuildingDefinition> find, double seconds)
+        Func<string, BuildingDefinition> find, double seconds, Func<BuildingDefinition, Func<string, int>> workerPercent = null)
     {
         if (settlement == null)
             throw new ArgumentNullException(nameof(settlement));
@@ -66,7 +78,7 @@ public static class ProductionRules
             if (!record.Built || !counted.Add(record.BuildingId))
                 continue;
             var building = find(record.BuildingId);
-            int perHour = PerHour(config, settlement, building);
+            double perHour = PerHourExact(config, settlement, building, building != null && workerPercent != null ? workerPercent(building) : null);
             if (perHour <= 0)
                 continue;
             var progress = ProgressOf(settlement.Production, building.BuildingId);

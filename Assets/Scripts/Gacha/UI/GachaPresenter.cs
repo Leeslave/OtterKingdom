@@ -85,6 +85,7 @@ public class GachaPresenter : MonoBehaviour
         _screen.OnPullClicked += HandlePullClicked;
         _screen.OnGoldPullClicked += HandleGoldPullClicked;
         _screen.OnRatesClicked += HandleRatesClicked;
+        _screen.OnRosterClicked += HandleRosterClicked;
         _screen.OnExchangeClicked += HandleExchangeClicked;
         _screen.OnPointsClicked += HandlePointsClicked;
         _reveal.OnClosed += HandleRevealClosed;
@@ -100,6 +101,7 @@ public class GachaPresenter : MonoBehaviour
         _screen.OnPullClicked -= HandlePullClicked;
         _screen.OnGoldPullClicked -= HandleGoldPullClicked;
         _screen.OnRatesClicked -= HandleRatesClicked;
+        _screen.OnRosterClicked -= HandleRosterClicked;
         _screen.OnExchangeClicked -= HandleExchangeClicked;
         _screen.OnPointsClicked -= HandlePointsClicked;
         _reveal.OnClosed -= HandleRevealClosed;
@@ -379,6 +381,16 @@ public class GachaPresenter : MonoBehaviour
         _exchange.Render(manager.ExchangeEntries(), Balance(manager.Shard), note);
         Refresh();
     }
+
+    // 해달 명부 (특수 해달 · 편성 · 장신구): 런타임에 그리는 화면, 처음 열 때 만듦
+    private void HandleRosterClicked()
+    {
+        if (_roster == null)
+            _roster = gameObject.AddComponent<CompanionScreen>();
+        _roster.Open();
+    }
+
+    private CompanionScreen _roster;
 
     private void HandleRatesClicked()
     {

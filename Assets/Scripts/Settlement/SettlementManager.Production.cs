@@ -17,7 +17,15 @@ public partial class SettlementManager
 
     /// <summary>이 시설에서 지금 1시간에 모으는 개수 (생산 시설이 아니거나 일할 해달이 없으면 0)</summary>
     public int ProductionPerHour(BuildingDefinition building) =>
-        IsLoaded ? ProductionRules.PerHour(_config, Settlement, building) : 0;
+        IsLoaded ? ProductionRules.PerHour(_config, Settlement, building, WorkerPercent(building)) : 0;
+
+    // 일하는 해달 몫에 더하는 %: 목재는 산림관리사 · 돌은 지질학자 편성(왕국 효과) + 그 해달의 장신구 "얻는 양"
+    private Func<string, int> WorkerPercent(BuildingDefinition building)
+    {
+        var kind = building != null && building.ProductionTrait == OtterTrait.Woodcutting ? KingdomBonusKind.WoodYield : KingdomBonusKind.StoneYield;
+        int kingdom = KingdomBonus.Percent(kind);
+        return otterId => kingdom + CompanionBonus.Accessory(otterId, AccessoryEffect.Yield);
+    }
 
     // Update에서 (SettlementManager.cs)
     private void TickProduction(float dt)
@@ -46,7 +54,7 @@ public partial class SettlementManager
         data.lastUtcTicks = now;
         bool away = seconds > ProductionNewsGapSeconds;
 
-        foreach (var (building, amount) in ProductionRules.Produce(_config, Settlement, FindBuilding, OfflineProductionService.Credited(seconds)))
+        foreach (var (building, amount) in ProductionRules.Produce(_config, Settlement, FindBuilding, OfflineProductionService.Credited(seconds), WorkerPercent))
         {
             var item = building.ProductionItem;
             int added = inventory.Add(item, amount, ItemChangeReason.Production);

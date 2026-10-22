@@ -390,8 +390,10 @@ public class BuilderOtterController : MonoBehaviour, IPlazaCrowdMember
         }
     }
 
-    private float CurrentSpeed => _phase != Phase.ToWork ? _walkSpeed
-        : _walkSpeed * (_carrying ? _carrySpeedMultiplier : _hurryMultiplier);
+    // 음유시인 편성 · 건설 해달 장신구 이동속도 (CompanionBonus)
+    private float CurrentSpeed => (_phase != Phase.ToWork ? _walkSpeed
+        : _walkSpeed * (_carrying ? _carrySpeedMultiplier : _hurryMultiplier))
+        * CompanionBonus.MoveMultiplier(SettlementManager.Instance != null ? SettlementManager.Instance.BuilderOtterId : null);
 
     private void PlayWalkClip(Vector2 direction)
     {

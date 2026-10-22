@@ -1321,8 +1321,8 @@ public partial class GameManager : MonoBehaviour
 
         if (Bag.GetAddableAmount(item) > 0)
         {
-            // 어업 작업소: 가끔 한 마리 더 (가방에 들어가는 만큼)
-            int count = Mathf.Min(Bag.GetAddableAmount(item), KingdomBonus.Amount(KingdomBonusKind.FishYield, 1));
+            // 어업 작업소 + 낚시 해달 장신구 "얻는 양": 가끔 한 마리 더 (가방에 들어가는 만큼)
+            int count = Mathf.Min(Bag.GetAddableAmount(item), CompanionBonus.Amount(KingdomBonusKind.FishYield, SpecialistId("Fishing"), 1));
             Bag.Add(item, count, ItemChangeReason.Fishing);
             fullBagCatchAlertShown = false;
             FishCaught?.Invoke(item);
@@ -1420,14 +1420,21 @@ public partial class GameManager : MonoBehaviour
     // AddFishingCatch: no room in the bag drops it with one alert per
     // full-bag spell. Returns the item that went into the bag (for the
     // pop-up above the bubble), or null if nothing did.
+    // 그 장소에서 일하는 전문 해달 (장신구 효과, 없으면 null)
+    private static string SpecialistId(string zoneId) =>
+        SettlementManager.Instance != null && SettlementManager.Instance.IsLoaded ? SettlementManager.Instance.SpecialistOtterId(zoneId) : null;
+
     public ItemDefinition AddMiningFind(string itemId)
     {
         if (!TryFindItem(itemId, out var item)) return null;
 
         if (Bag.GetAddableAmount(item) > 0)
         {
-            // Stone bonus (quarry, KingdomBonus): sometimes one extra stone per find.
-            int count = itemId == miningBalance.stoneItemId ? KingdomBonus.Amount(KingdomBonusKind.StoneYield, 1) : 1;
+            // Stone bonus (quarry, KingdomBonus) + the miner's accessory: sometimes one extra per find.
+            string miner = SpecialistId("Mine");
+            int count = itemId == miningBalance.stoneItemId
+                ? CompanionBonus.Amount(KingdomBonusKind.StoneYield, miner, 1)
+                : CompanionBonus.AccessoryAmount(miner, 1);
             Bag.Add(item, count, ItemChangeReason.Mining);
             fullBagFindAlertShown = false;
             SaveNow();

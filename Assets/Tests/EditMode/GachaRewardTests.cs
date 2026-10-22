@@ -270,6 +270,100 @@ public class GachaRewardTests
 
     #endregion
 
+    #region 효과 적용 (3단계)
+
+    [Test]
+    public void Manager_FormationPercent_OnlyOpenSlotsAndStars()
+    {
+        var bard = Otter("bard", GachaTable.Rare, KingdomBonusKind.MoveSpeed);
+        var gardener = Otter("gardener", GachaTable.Rare, KingdomBonusKind.GrowSpeed);
+        var config = ScriptableObject.CreateInstance<GachaRewardConfig>();
+        _created.Add(config);
+        config.Setup(null, null, null, new[] { bard, gardener }, new AccessoryDefinition[0]);
+        var go = new GameObject("Gacha");
+        try
+        {
+            var manager = go.AddComponent<GachaManager>();
+            var so = new SerializedObject(manager);
+            so.FindProperty("_rewardConfig").objectReferenceValue = config;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            manager.LoadFromSave(new GachaSaveData());
+
+            Assert.AreEqual(1, manager.FormationSlots, "정착 매니저가 없으면 1칸");
+            Assert.AreEqual(FormationOutcome.Locked, manager.AssignFormation(0, bard));
+            manager.Companions.AddFragments(bard, 40);
+            manager.Companions.AddFragments(gardener, 20);
+            Assert.IsTrue(manager.TryStarUp(bard));
+            Assert.IsTrue(manager.TryStarUp(gardener));
+            Assert.AreEqual(FormationOutcome.Assigned, manager.AssignFormation(0, bard));
+            Assert.AreEqual(FormationOutcome.NoSlot, manager.AssignFormation(1, gardener), "둘째 칸은 첫 개간 뒤");
+            Assert.AreEqual(4, manager.FormationPercent(KingdomBonusKind.MoveSpeed));
+            Assert.IsTrue(manager.TryStarUp(bard));
+            Assert.AreEqual(6, manager.FormationPercent(KingdomBonusKind.MoveSpeed), "2성 = 6%");
+            Assert.AreEqual(0, manager.FormationPercent(KingdomBonusKind.GrowSpeed));
+            manager.ClearFormation(0);
+            Assert.AreEqual(0, manager.FormationPercent(KingdomBonusKind.MoveSpeed));
+        }
+        finally
+        {
+            Object.DestroyImmediate(go);
+        }
+    }
+
+    [Test]
+    public void Production_EachWorkerGetsOwnPercent()
+    {
+        var wood = ScriptableObject.CreateInstance<ItemDefinition>();
+        _created.Add(wood);
+        var workshop = ScriptableObject.CreateInstance<BuildingDefinition>();
+        _created.Add(workshop);
+        workshop.SetupProduction(wood, 12, OtterTrait.Woodcutting);
+        var a = SettlementOtter("lumber_a", OtterTrait.Woodcutting);
+        var b = SettlementOtter("lumber_b", OtterTrait.Woodcutting);
+        var visitor = SettlementOtter("lumber_visitor", OtterTrait.Woodcutting);
+        var config = ScriptableObject.CreateInstance<SettlementConfig>();
+        _created.Add(config);
+        var so = new SerializedObject(config);
+        var list = so.FindProperty("_otters");
+        list.arraySize = 3;
+        list.GetArrayElementAtIndex(0).objectReferenceValue = a;
+        list.GetArrayElementAtIndex(1).objectReferenceValue = b;
+        list.GetArrayElementAtIndex(2).objectReferenceValue = visitor;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        var settlement = new Settlement();
+        settlement.SetResident("lumber_a", ResidentState.Resident);
+        settlement.SetResident("lumber_b", ResidentState.Resident);
+        settlement.SetResident("lumber_visitor", ResidentState.Visitor);
+
+        Assert.AreEqual(24, ProductionRules.PerHour(config, settlement, workshop), "주민 둘 × 12 (방문객은 안 셈)");
+        // a만 행운 목걸이 +50%
+        Assert.AreEqual(30.0, ProductionRules.PerHourExact(config, settlement, workshop, id => id == "lumber_a" ? 50 : 0), 1e-9);
+        Assert.AreEqual(27, ProductionRules.PerHour(config, settlement, workshop, id => 13), "24 × 1.13 = 27.1 → 27");
+    }
+
+    private SettlementOtterDefinition SettlementOtter(string id, OtterTrait trait)
+    {
+        var otter = ScriptableObject.CreateInstance<SettlementOtterDefinition>();
+        _created.Add(otter);
+        var so = new SerializedObject(otter);
+        so.FindProperty("_otterId").stringValue = id;
+        so.FindProperty("_trait").intValue = (int)trait;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return otter;
+    }
+
+    [Test]
+    public void CompanionBonus_AddPercentAndNoManagerMeansNoAccessory()
+    {
+        Assert.AreEqual(12, CompanionBonus.AddPercent(10, 25, 0.9f), "12.5: 0.5 확률 → 굴림 0.9면 12");
+        Assert.AreEqual(13, CompanionBonus.AddPercent(10, 25, 0.1f));
+        Assert.AreEqual(10, CompanionBonus.AddPercent(10, 0, 0f));
+        Assert.AreEqual(0, CompanionBonus.Accessory("otter_farmer", AccessoryEffect.Yield), "뽑기 매니저가 없으면 0");
+        Assert.AreEqual(100.0, CompanionBonus.WorkSeconds(new[] { "otter_farmer" }, 100.0));
+    }
+
+    #endregion
+
     #region 조각 · 해금 · 별
 
     [Test]

@@ -496,6 +496,68 @@ public class GachaManager : MonoBehaviour
 
     #endregion
 
+    #region 명부 · 편성 · 장신구 (명부 화면이 부름, 바뀌면 바로 저장)
+
+    /// <summary>열린 편성 칸: 처음 1칸, 첫 개간 뒤 2칸, 밭 농사를 시작하면 3칸</summary>
+    public int FormationSlots
+    {
+        get
+        {
+            var settlement = SettlementManager.Instance;
+            if (settlement == null || !settlement.IsLoaded)
+                return 1;
+            int slots = 1;
+            if (settlement.HasDevelopment(TerritoryRules.TutorialDone) || settlement.HasDevelopment(TerritoryRules.FirstDevelopment))
+                slots++;
+            if (settlement.HasDevelopment(SettlementQuestGate.FarmProductionDevelopment))
+                slots++;
+            return slots;
+        }
+    }
+
+    /// <summary>편성된 특수 해달들이 주는 이 종류의 왕국 버프 % (SettlementManager가 건물 · 구역과 합산)</summary>
+    public int FormationPercent(KingdomBonusKind kind) =>
+        IsLoaded && _rewardConfig != null ? Companions.FormationPercent(kind, FormationSlots, _rewardConfig.FindOtter) : 0;
+
+    /// <summary>해금하거나 별을 하나 올림</summary>
+    public bool TryStarUp(SpecialOtterDefinition otter)
+    {
+        if (otter == null || !Companions.TryStarUp(otter))
+            return false;
+        Changed();
+        return true;
+    }
+
+    public FormationOutcome AssignFormation(int slot, SpecialOtterDefinition otter)
+    {
+        var outcome = _rewardConfig != null ? Companions.Assign(slot, otter, FormationSlots, _rewardConfig.FindOtter) : FormationOutcome.Locked;
+        if (outcome == FormationOutcome.Assigned)
+            Changed();
+        return outcome;
+    }
+
+    public void ClearFormation(int slot)
+    {
+        Companions.ClearSlot(slot);
+        Changed();
+    }
+
+    public bool EquipAccessory(AccessoryDefinition accessory, string otterId)
+    {
+        if (!Companions.Equip(accessory, otterId))
+            return false;
+        Changed();
+        return true;
+    }
+
+    public void UnequipAccessory(AccessoryDefinition accessory)
+    {
+        Companions.Unequip(accessory);
+        Changed();
+    }
+
+    #endregion
+
     #region 처음 선물
 
     /// <summary>처음 선물을 아직 안 받았는지</summary>

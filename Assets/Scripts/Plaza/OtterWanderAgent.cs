@@ -554,7 +554,12 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     }
 
     // Speed of the current walk (faster on the way to a task). Visuals match the walk clip to it.
-    public float CurrentWalkSpeed => walkingToTask ? WalkSpeed * (TaskSpeed != null ? TaskSpeed(Position) : TaskWalkSpeedMultiplier) : WalkSpeed;
+    // 정착 해달이면 음유시인 편성 · 그 해달의 장신구 이동속도도 (CompanionBonus)
+    public float CurrentWalkSpeed => (walkingToTask ? WalkSpeed * (TaskSpeed != null ? TaskSpeed(Position) : TaskWalkSpeedMultiplier) : WalkSpeed)
+        * (string.IsNullOrEmpty(OtterId) ? 1f : CompanionBonus.MoveMultiplier(OtterId));
+
+    /// <summary>정착 해달 ID (SettlementPlazaView가 넣음, 비면 버프 없음 — 광장 장식 해달 등)</summary>
+    public string OtterId { get; set; }
 
     // 일하러 갈 때 속도 배수를 자리마다 정함 (광장 농부: 길 위에서 빨리). 비우면 늘 TaskWalkSpeedMultiplier
     public System.Func<Vector2, float> TaskSpeed { get; set; }

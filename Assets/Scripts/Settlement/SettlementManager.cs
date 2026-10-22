@@ -230,6 +230,43 @@ public partial class SettlementManager : MonoBehaviour
 
     public bool HasDevelopment(string developmentId) => Settlement.HasDevelopment(developmentId);
 
+    #region 장신구 · 명부 화면용 (가챠 개편 3단계)
+
+    /// <summary>건설 해달 ID (없으면 null)</summary>
+    public string BuilderOtterId => _config != null && _config.FindBuilder() != null ? _config.FindBuilder().OtterId : null;
+
+    /// <summary>이 장소(Mine · Fishing 등)에서 일하는 전문 해달 ID (없으면 null)</summary>
+    public string SpecialistOtterId(string zoneId)
+    {
+        var otter = _config != null ? _config.FindSpecialist(_config.FindRegionByZoneId(zoneId)) : null;
+        return otter != null ? otter.OtterId : null;
+    }
+
+    /// <summary>장신구를 낄 수 있는 해달: 마을에 사는 주민 · 일하는 전문 해달 (방문객 · 입주 대기는 빼고, 들어온 순서)</summary>
+    public List<SettlementOtterDefinition> SettledResidents()
+    {
+        var result = new List<SettlementOtterDefinition>();
+        if (!IsLoaded)
+            return result;
+        foreach (var id in Settlement.ResidentOrder)
+        {
+            var otter = _config.FindOtter(id);
+            if (otter != null && Settlement.TryGetResidentState(id, out var state)
+                && (state == ResidentState.Resident || state == ResidentState.SpecialNpc))
+                result.Add(otter);
+        }
+        return result;
+    }
+
+    /// <summary>해달 이름 (모르는 ID면 그대로)</summary>
+    public string OtterName(string otterId)
+    {
+        var otter = _config != null && !string.IsNullOrEmpty(otterId) ? _config.FindOtter(otterId) : null;
+        return otter != null ? otter.DisplayName : otterId;
+    }
+
+    #endregion
+
     public bool HasBuilder => SettlementRules.HasBuilder(_config, Settlement);
 
     public string StageName => _config.StageName(Settlement.Stage);
@@ -730,7 +767,9 @@ public partial class SettlementManager : MonoBehaviour
         PayCost(task.RequiredGold, task.RequiredItems);
         long now = NowTicks;
         // 생산 구역 효과: 주민 작업이 빨리 끝남
-        Settlement.StartTask(task.TaskId, ids, now, now + TimeSpan.FromSeconds(DevTimers.Duration(KingdomBonus.Faster(KingdomBonusKind.ProductionSpeed, task.DurationSeconds))).Ticks);
+        // 장신구 "작업 시간": 맡은 해달 중 가장 좋은 것만큼 더 빨리
+        Settlement.StartTask(task.TaskId, ids, now, now + TimeSpan.FromSeconds(DevTimers.Duration(
+            CompanionBonus.WorkSeconds(ids, KingdomBonus.Faster(KingdomBonusKind.ProductionSpeed, task.DurationSeconds)))).Ticks);
         OnTaskStarted?.Invoke(task);
         SaveRequested?.Invoke();
         return TaskStartResult.Started;
