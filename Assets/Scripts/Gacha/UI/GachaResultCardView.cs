@@ -101,14 +101,13 @@ public class GachaResultCardView : MonoBehaviour
             _positionKnown = true;
         }
 
-        var item = pull.Item;
         int tier = Mathf.Clamp(pull.Tier, 0, _rarityTags.Length - 1);
         _rarityTag.sprite = _rarityTags[tier];
-        _rarityText.text = item.Rarity != null ? item.Rarity.DisplayName : "흔함";
+        _rarityText.text = pull.TierName;
         _newBadge.SetActive(pull.IsNew);
         _featuredBadge.SetActive(pull.Featured);
-        _nameText.text = item.DisplayName;
-        _descriptionText.text = item.Description;
+        _nameText.text = pull.Name;
+        _descriptionText.text = pull.Description;
         _hintText.text = hint;
         _hintPortraitFrame.SetActive(portrait != null);
         _hintPortrait.sprite = portrait;
@@ -116,7 +115,7 @@ public class GachaResultCardView : MonoBehaviour
         var hintMin = _hintText.rectTransform.offsetMin;
         hintMin.x = portrait != null ? _hintIndent : 0f;
         _hintText.rectTransform.offsetMin = hintMin;
-        _shardText.text = pull.Shards > 0 ? $"이미 있는 장난감이라 반짝 조각 +{pull.Shards}" : "";
+        _shardText.text = pull.Detail;
 
         _againLabel.text = again.Label;
         _againImage.sprite = again.Button;

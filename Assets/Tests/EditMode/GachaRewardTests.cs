@@ -171,6 +171,103 @@ public class GachaRewardTests
         Assert.IsFalse(pity.FeaturedGuaranteed);
     }
 
+    [Test]
+    public void Rates_SumToOneAndSplitFeatured()
+    {
+        var table = new GachaRewardTable(GachaBannerKind.Pickup, PlanRates, 60, 10, 0.5f, (1, 3), (1, 2), 5);
+        table.AddBundle(20, 15, 3);
+        table.AddBundle(50, 40, 1);
+        table.AddAccessory(Accessory("hat_common", GachaTable.Common));
+        table.AddAccessory(Accessory("gloves_common", GachaTable.Common));
+        table.AddAccessory(Accessory("hat_rare", GachaTable.Rare));
+        table.AddAccessory(Accessory("hat_epic", GachaTable.Epic));
+        table.AddOtter(Otter("bard", GachaTable.Rare, KingdomBonusKind.MoveSpeed), false);
+        table.AddOtter(Otter("pickup", GachaTable.Epic, KingdomBonusKind.SellPrice), true);
+        table.AddOtter(Otter("architect", GachaTable.Epic, KingdomBonusKind.BuildSpeed), false);
+
+        var rates = GachaRewardRules.Rates(table);
+        double sum = 0;
+        foreach (var rate in rates)
+            sum += rate.Chance;
+        Assert.AreEqual(1.0, sum, 1e-9);
+        Assert.AreEqual(GachaTable.Epic, rates[0].Tier, "에픽부터");
+        var pickup = rates.Find(r => r.Featured);
+        Assert.AreEqual("pickup 조각", pickup.Name);
+        Assert.AreEqual(0.015, pickup.Chance, 1e-9, "에픽 조각 3%의 절반");
+        Assert.AreEqual(0.55 * 0.75, rates.Find(r => r.Name == "목재 20 · 돌 15").Chance, 1e-9, "꾸러미 무게 3 : 1");
+        Assert.AreEqual(0.11, rates.Find(r => r.Name == "hat_common").Chance, 1e-9, "일반 장신구 22%를 둘이 나눔");
+        Assert.AreEqual(0.04, GachaRewardRules.TierChance(table, GachaTable.Epic), 1e-9);
+    }
+
+    #endregion
+
+    #region 뽑기 매니저 (보상 설정 연결)
+
+    [Test]
+    public void Manager_UsesRewardConfig_GoldBannerRetired()
+    {
+        var bard = Otter("bard", GachaTable.Rare, KingdomBonusKind.MoveSpeed);
+        var architect = Otter("architect", GachaTable.Epic, KingdomBonusKind.BuildSpeed);
+        var config = ScriptableObject.CreateInstance<GachaRewardConfig>();
+        _created.Add(config);
+        config.Setup(null, null, new[] { new GachaRewardConfig.MaterialBundle { wood = 20, stone = 15, weight = 1 } },
+            new[] { bard, architect }, new[] { Accessory("hat", GachaTable.Common) });
+
+        var standard = Banner("standard", GachaBannerKind.Standard, null);
+        var pickup = Banner("pickup", GachaBannerKind.Pickup, architect);
+        var gold = Banner("gold", GachaBannerKind.Gold, null);
+
+        var go = new GameObject("Gacha");
+        try
+        {
+            var manager = go.AddComponent<GachaManager>();
+            var so = new SerializedObject(manager);
+            so.FindProperty("_rewardConfig").objectReferenceValue = config;
+            var banners = so.FindProperty("_banners");
+            banners.arraySize = 3;
+            banners.GetArrayElementAtIndex(0).objectReferenceValue = standard;
+            banners.GetArrayElementAtIndex(1).objectReferenceValue = pickup;
+            banners.GetArrayElementAtIndex(2).objectReferenceValue = gold;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            manager.LoadFromSave(new GachaSaveData());
+
+            var open = manager.OpenBanners();
+            CollectionAssert.AreEquivalent(new[] { standard, pickup }, open, "골드 배너는 정리");
+            Assert.AreEqual(1, manager.Table(pickup).Featured(GachaTable.Epic).Count);
+            Assert.AreEqual(0, manager.Table(standard).Featured(GachaTable.Epic).Count, "상시 배너에는 픽업 없음");
+            Assert.AreEqual(architect, manager.PointsReward(pickup));
+            Assert.IsNull(manager.PointsReward(standard));
+
+            var entries = manager.ExchangeEntries();
+            Assert.AreEqual(2, entries.Count);
+            Assert.AreEqual(architect, entries[0].Otter, "에픽 먼저");
+            Assert.AreEqual(CompanionCollection.EpicExchangeShards * config.ExchangeFragments, entries[0].Cost);
+            manager.Companions.AddFragments(bard, CompanionCollection.CostToMax(bard, 0));
+            Assert.AreEqual(1, manager.ExchangeEntries().Count, "5성까지 쓸 조각이 다 있으면 교환소에서 빠짐");
+        }
+        finally
+        {
+            Object.DestroyImmediate(go);
+        }
+    }
+
+    private GachaBannerDefinition Banner(string id, GachaBannerKind kind, SpecialOtterDefinition featured)
+    {
+        var banner = ScriptableObject.CreateInstance<GachaBannerDefinition>();
+        _created.Add(banner);
+        var so = new SerializedObject(banner);
+        so.FindProperty("_bannerId").stringValue = id;
+        so.FindProperty("_kind").enumValueIndex = (int)kind;
+        if (featured != null)
+        {
+            var list = so.FindProperty("_featuredSpecialOtters");
+            list.arraySize = 1;
+            list.GetArrayElementAtIndex(0).objectReferenceValue = featured;
+        }
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return banner;
+    }
+
     #endregion
 
     #region 조각 · 해금 · 별

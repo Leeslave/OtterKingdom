@@ -499,7 +499,7 @@ public class GachaTests
     }
 
     private static GachaPull Pull(ItemDefinition item, int tier, bool featured) =>
-        new GachaPull(new GachaRoll(item, tier, featured, false), false, 0);
+        new GachaPull(GachaRewardKind.Accessory, tier, featured, false, false, 0, item.Icon, item.DisplayName, "", "");
 
     private ItemRarity Rarity(string id, int tier)
     {

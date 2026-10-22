@@ -220,7 +220,7 @@ public class GachaScreenView : MonoBehaviour
         for (int i = 0; i < _highlightChips.Length; i++)
         {
             if (i < state.Highlights.Count)
-                _highlightChips[i].Show(state.Highlights[i].item, state.Highlights[i].tier, state.Highlights[i].featured);
+                _highlightChips[i].Show(state.Highlights[i].icon, state.Highlights[i].tier, state.Highlights[i].featured);
             else
                 _highlightChips[i].Show(null, 0, false);
         }
@@ -234,7 +234,7 @@ public class GachaScreenView : MonoBehaviour
         {
             _pointsText.text = $"별빛 포인트 <b>{state.Points}</b> / {state.PointsGoal}";
             _pointsBar.SetProgress(Mathf.Min(state.Points, state.PointsGoal), state.PointsGoal);
-            _pointsRewardIcon.sprite = state.PointsReward != null ? state.PointsReward.Icon : null;
+            _pointsRewardIcon.sprite = state.PointsRewardIcon;
             bool ready = state.Points >= state.PointsGoal;
             _pointsButtonImage.sprite = ready ? _activeButton : _idleButton;
         }

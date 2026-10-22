@@ -182,7 +182,7 @@ public partial class GachaRevealView
         _otter.sprite = _otterSurprise;
 
         AudioManager.Play(pull.IsEpic ? SfxKind.RevealEpic : pull.Tier == 1 ? SfxKind.RevealRare : SfxKind.RevealCommon);
-        _toy.sprite = pull.Item.Icon;
+        _toy.sprite = pull.Icon;
         _toyRoot.gameObject.SetActive(true);
         _toyRoot.position = center;
         var from = _toyRoot.anchoredPosition;
@@ -244,7 +244,7 @@ public partial class GachaRevealView
         _shellRoot.gameObject.SetActive(false);
         _toyRoot.gameObject.SetActive(true);
         _toyRoot.anchoredPosition = _toyRest;
-        _toy.sprite = pull.Item.Icon;
+        _toy.sprite = pull.Icon;
         _toy.rectTransform.localScale = Vector3.one;
         _rays.gameObject.SetActive(true);
         _rays.rectTransform.localScale = Vector3.one;
@@ -372,7 +372,7 @@ public partial class GachaRevealView
         });
 
         slot.Otter.sprite = _otterSurprise;
-        slot.Toy.sprite = pull.Item.Icon;
+        slot.Toy.sprite = pull.Icon;
         slot.Toy.gameObject.SetActive(true);
         slot.NewBadge.SetActive(pull.IsNew);
         var toy = slot.Toy.rectTransform;

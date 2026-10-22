@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 /// <summary>새 뽑기 한 번의 결과 (가방 · 명부에 넣기 전)</summary>
 public readonly struct GachaReward
@@ -38,6 +39,25 @@ public readonly struct GachaReward
 
     public bool IsEpic => Tier >= GachaTable.Epic;
     public bool IsRareOrBetter => Tier >= GachaTable.Rare;
+}
+
+/// <summary>확률 공개표 한 줄 (천장 없이 한 번 뽑을 때)</summary>
+public readonly struct GachaRewardRate
+{
+    public readonly GachaRewardKind Kind;
+    public readonly int Tier;
+    public readonly bool Featured;
+    public readonly string Name;
+    public readonly double Chance;
+
+    public GachaRewardRate(GachaRewardKind kind, int tier, bool featured, string name, double chance)
+    {
+        Kind = kind;
+        Tier = tier;
+        Featured = featured;
+        Name = name;
+        Chance = chance;
+    }
 }
 
 /// <summary>
@@ -192,6 +212,68 @@ public static class GachaRewardRules
         {
             if (Resolve(table, k, t) == (kind, tier))
                 result += table.RawChance(k, t);
+        }
+        return result;
+    }
+
+    /// <summary>이 등급이 나올 확률 (그 등급 칸들의 합)</summary>
+    public static double TierChance(GachaRewardTable table, int tier)
+    {
+        double result = 0;
+        foreach (var (kind, t) in Slots)
+        {
+            if (t == tier)
+                result += Chance(table, kind, t);
+        }
+        return result;
+    }
+
+    /// <summary>확률 공개표 (등급 높은 순 → 칸 순서 → 픽업 먼저). 재료는 꾸러미 무게대로, 장신구는 똑같이, 해달 조각은 픽업 몫을 나눔. 합은 1</summary>
+    public static List<GachaRewardRate> Rates(GachaRewardTable table)
+    {
+        if (table == null)
+            throw new ArgumentNullException(nameof(table));
+        var result = new List<GachaRewardRate>();
+        for (int tier = GachaTable.Epic; tier >= GachaTable.Common; tier--)
+        {
+            foreach (var (kind, t) in Slots)
+            {
+                if (t != tier)
+                    continue;
+                double chance = Chance(table, kind, tier);
+                if (chance <= 0)
+                    continue;
+                switch (kind)
+                {
+                    case GachaRewardKind.Materials:
+                    {
+                        int total = 0;
+                        foreach (var bundle in table.Bundles)
+                            total += bundle.Weight;
+                        foreach (var bundle in table.Bundles)
+                            result.Add(new GachaRewardRate(kind, tier, false, GachaRewardText.Materials(bundle.Wood, bundle.Stone), chance * bundle.Weight / total));
+                        break;
+                    }
+                    case GachaRewardKind.Accessory:
+                    {
+                        var list = table.Accessories(tier);
+                        foreach (var accessory in list)
+                            result.Add(new GachaRewardRate(kind, tier, false, accessory.DisplayName, chance / list.Count));
+                        break;
+                    }
+                    default:
+                    {
+                        var featured = table.Featured(tier);
+                        var standard = table.Otters(tier);
+                        double featuredPart = featured.Count == 0 ? 0 : standard.Count == 0 ? chance : chance * table.FeaturedShare;
+                        foreach (var otter in featured)
+                            result.Add(new GachaRewardRate(kind, tier, true, GachaRewardText.FragmentName(otter), featuredPart / featured.Count));
+                        foreach (var otter in standard)
+                            result.Add(new GachaRewardRate(kind, tier, false, GachaRewardText.FragmentName(otter), (chance - featuredPart) / standard.Count));
+                        break;
+                    }
+                }
+            }
         }
         return result;
     }

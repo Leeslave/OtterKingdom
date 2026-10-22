@@ -70,7 +70,7 @@ public class GachaResultsView : MonoBehaviour
                 fresh++;
             shards += pull.Shards;
         }
-        _summaryText.text = shards > 0 ? $"새 장난감 {fresh}개 · 반짝 조각 +{shards}" : $"새 장난감 {fresh}개";
+        _summaryText.text = shards > 0 ? $"처음 만난 것 {fresh}개 · 반짝 조각 +{shards}" : $"처음 만난 것 {fresh}개";
 
         _againLabel.text = again.Label;
         _againImage.sprite = again.Button;

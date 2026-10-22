@@ -17,7 +17,7 @@ MonoBehaviour:
   _description: "\uD759\uC744 \uC77D\uC744 \uC904 \uC544\uB294 \uD574\uB2EC\uC774\uC5D0\uC694.
     \uD3B8\uC131\uD558\uBA74 \uC0C8\uB85C \uC2EC\uB294 \uC791\uBB3C\uC774 \uBE68\uB9AC
     \uC790\uB77C\uC694."
-  _portrait: {fileID: 0}
+  _portrait: {fileID: 21300000, guid: 2164e715d52989742870bf600e3d5f8e, type: 3}
   _tier: 1
   _bonus: 8
   _percentByStar: 0400000006000000080000000a0000000c000000

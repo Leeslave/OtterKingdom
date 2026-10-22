@@ -25,7 +25,7 @@ public class GachaExchangePopupView : MonoBehaviour
 
     [SerializeField] private Button _closeButton;
 
-    public event Action<ItemDefinition> OnExchange;
+    public event Action<SpecialOtterDefinition> OnExchange;
 
     private readonly List<GachaExchangeRowView> _rows = new List<GachaExchangeRowView>();
 
@@ -54,7 +54,7 @@ public class GachaExchangePopupView : MonoBehaviour
         while (_rows.Count < entries.Count)
         {
             var row = Instantiate(_rowTemplate, _rowParent);
-            row.OnExchange += item => OnExchange?.Invoke(item);
+            row.OnExchange += otter => OnExchange?.Invoke(otter);
             _rows.Add(row);
         }
         for (int i = 0; i < _rows.Count; i++)

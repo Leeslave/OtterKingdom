@@ -140,6 +140,9 @@ public sealed class CompanionCollection
     public int Stars(string otterId) => !string.IsNullOrEmpty(otterId) && _otters.TryGetValue(otterId, out var s) ? s.stars : 0;
     public bool IsUnlocked(SpecialOtterDefinition otter) => Stars(otter) > 0;
 
+    /// <summary>이 해달의 조각을 한 번이라도 얻었는지 (처음 만나면 결과 카드에 "새로운!")</summary>
+    public bool HasMet(SpecialOtterDefinition otter) => otter != null && _otters.ContainsKey(otter.OtterId);
+
     /// <summary>지금 별에서 다음 별까지 드는 조각 (0성이면 해금 값, 5성이면 0)</summary>
     public static int NextStarCost(SpecialOtterDefinition otter, int stars)
     {

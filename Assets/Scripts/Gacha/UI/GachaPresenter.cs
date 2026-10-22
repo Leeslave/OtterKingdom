@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -266,39 +265,28 @@ public class GachaPresenter : MonoBehaviour
         Refresh();
     }
 
-    // 꾸미기 가구 (의자 · 가로등 · 피크닉 매트 등, 장난감이 아님)
-    private static bool IsFurniture(ItemDefinition item)
-    {
-        var decor = DecorManager.Instance != null && DecorManager.Instance.Catalog != null ? DecorManager.Instance.Catalog.FindByItem(item) : null;
-        return decor != null && decor.IsFurniture;
-    }
-
-    // 결과 카드 안내: 픽업 에픽 = 그 장난감을 좋아하는 한정 해달, 가구 = 해달이 쓰는 자리 · 아늑함, 나머지는 등급별 한 줄
+    // 결과 카드 안내: 해달 조각 = 해금 · 별 승급으로 받는 편성 버프, 장신구 = 낀 해달 한 마리의 효과, 재료 = 쓰는 곳
     private (string hint, Sprite portrait) Describe(GachaPull pull)
     {
-        var otter = _selected != null ? _selected.FeaturedOtter : null;
-        if (otter != null && otter.FavoriteToy == pull.Item)
+        var manager = GachaManager.Instance;
+        switch (pull.Kind)
         {
-            string name = otter.DisplayName;
-            return ($"광장에 두면 한정 해달 {name}{KoreanParticle.SubjectParticle(name)} 놀러 와요!", otter.Portrait);
-        }
-        var furniture = DecorManager.Instance != null && DecorManager.Instance.Catalog != null ? DecorManager.Instance.Catalog.FindByItem(pull.Item) : null;
-        if (furniture != null && furniture.IsFurniture)
-        {
-            string use = !furniture.HasSpot ? "광장이 푸릇해져요"
-                : furniture.SpotKind == PlazaSpotKind.Sit ? "해달이 앉아 쉬어 가요"
-                : furniture.SpotKind == PlazaSpotKind.Eat ? "해달이 둘러앉아 간식을 먹어요"
-                : "밤이면 해달이 불빛 아래 모여요";
-            return ($"광장에 두면 {use} (아늑함 +{furniture.Coziness})", null);
-        }
-        switch (pull.Tier)
-        {
-            case GachaTable.Epic:
-                return ("광장에 두면 어떤 해달이든 놀러 올 수 있어요", null);
-            case GachaTable.Rare:
-                return ("광장에 두면 레어 해달도 놀러 와요", null);
+            case GachaRewardKind.Fragments:
+            {
+                var otter = pull.Otter;
+                if (otter == null)
+                    return ("조각을 모으면 특수 해달을 해금해요", null);
+                int stars = manager.Companions.Stars(otter);
+                return stars <= 0
+                    ? ($"조각을 모아 해금하면 편성해서 {GachaRewardText.Bonus(otter.Bonus, otter.PercentAt(1))}", null)
+                    : stars >= SpecialOtterDefinition.MaxStars
+                        ? ($"5성 {otter.DisplayName}: {GachaRewardText.Bonus(otter.Bonus, otter.PercentAt(stars))}", null)
+                        : ($"별을 올리면 {GachaRewardText.Bonus(otter.Bonus, otter.PercentAt(stars + 1))}", null);
+            }
+            case GachaRewardKind.Accessory:
+                return ("주민 해달 한 마리에게 끼우면 그 해달만 효과를 받아요", null);
             default:
-                return ("광장에 두면 해달 친구가 놀러 와요", null);
+                return ("가방에 넣었어요. 집 · 시설 공사에 써요", null);
         }
     }
 
@@ -331,7 +319,7 @@ public class GachaPresenter : MonoBehaviour
         var manager = GachaManager.Instance;
         var outcome = manager.TryExchangePoints(_selected, out var pull);
         var reward = manager.PointsReward(_selected);
-        string name = reward != null ? reward.DisplayName : "픽업 장난감";
+        string name = reward != null ? $"{GachaRewardText.FragmentName(reward)} {manager.PointsFragments}개" : "픽업 해달 조각";
         switch (outcome)
         {
             case GachaExchangeOutcome.Exchanged:
@@ -359,29 +347,30 @@ public class GachaPresenter : MonoBehaviour
         _exchange.Show(manager.ExchangeEntries(), Balance(manager.Shard), ExchangeNote());
     }
 
-    private static string ExchangeNote()
-    {
-        var s = GachaRules.DuplicateShards;
-        return $"이미 있는 장난감이 나오면 반짝 조각을 덤으로 줘요 (흔함 {s[0]} · 레어 {s[1]} · 에픽 {s[2]})";
-    }
+    private static string ExchangeNote() =>
+        $"반짝 조각으로 원하는 특수 해달 조각을 골라요. 5성까지 쓰고 남는 조각 · 최대 강화 장신구가 반짝 조각이 돼요";
 
-    private void HandleShardExchange(ItemDefinition item)
+    private void HandleShardExchange(SpecialOtterDefinition otter)
     {
         var manager = GachaManager.Instance;
-        string name = item.DisplayName;
+        string name = GachaRewardText.FragmentName(otter);
         string note;
-        switch (manager.TryExchangeShards(item))
+        switch (manager.TryExchangeShards(otter))
         {
             case GachaExchangeOutcome.Exchanged:
                 AudioManager.Play(SfxKind.RevealRare);
-                note = $"{name}{KoreanParticle.ObjectParticle(name)} 받았어요! 꾸미기에서 광장에 놓아 보세요";
+                int stars = manager.Companions.Stars(otter);
+                int need = CompanionCollection.NextStarCost(otter, stars);
+                note = need > 0
+                    ? $"{name}{KoreanParticle.ObjectParticle(name)} 받았어요! ({(stars == 0 ? "해금" : $"{stars + 1}성")}까지 {manager.Companions.Fragments(otter)}/{need})"
+                    : $"{name}{KoreanParticle.ObjectParticle(name)} 받았어요!";
                 break;
             case GachaExchangeOutcome.NotEnough:
                 _exchange.Shake();
                 note = "반짝 조각이 모자라요";
                 break;
             case GachaExchangeOutcome.Full:
-                note = $"{name}{KoreanParticle.ObjectParticle(name)} 더 가질 수 없어요";
+                note = $"{otter.DisplayName}{KoreanParticle.SubjectParticle(otter.DisplayName)} 이미 5성까지 쓸 조각이 있어요";
                 break;
             default:
                 note = "지금은 바꿀 수 없어요";
@@ -396,17 +385,19 @@ public class GachaPresenter : MonoBehaviour
         _rates.Show($"{_selected.Title} 확률", RatesText(_selected));
     }
 
-    /// <summary>확률 공개: 한 번 뽑을 때 장난감별 확률(천장 제외) + 확정 규칙</summary>
+    /// <summary>확률 공개: 한 번 뽑을 때 등급 · 보상별 확률(천장 제외) + 확정 규칙</summary>
     private static string RatesText(GachaBannerDefinition banner)
     {
         var manager = GachaManager.Instance;
         var table = manager.Table(banner);
+        if (table == null)
+            return "";
         var rates = manager.Rates(banner);
         var text = new StringBuilder();
         text.Append("<size=26><color=#A08672>한 번 뽑을 때의 확률이에요. 확정 규칙은 아래에 있어요.</color></size>\n\n");
         for (int tier = GachaTable.Epic; tier >= GachaTable.Common; tier--)
         {
-            double chance = table.TierChance(tier);
+            double chance = GachaRewardRules.TierChance(table, tier);
             if (chance <= 0)
                 continue;
             text.Append($"<size=38><b>{TierNames[tier]}  {Percent(chance)}</b></size>\n");
@@ -415,33 +406,25 @@ public class GachaPresenter : MonoBehaviour
                 if (rate.Tier != tier)
                     continue;
                 text.Append(rate.Featured ? "<color=#E5484D>★ 픽업</color>  " : "·  ");
-                text.Append(rate.Item.DisplayName).Append("   ").Append(Percent(rate.Chance)).Append('\n');
+                text.Append(rate.Name).Append("   ").Append(Percent(rate.Chance)).Append('\n');
             }
             text.Append('\n');
         }
 
         text.Append("<size=38><b>확정 규칙</b></size>\n");
-        if (banner.IsGoldBanner)
-            text.Append($"·  {banner.RarePity}회 안에 레어 이상 확정 (지금 {manager.RarePityLeft(banner)}회 남음)\n");
-        else
-        {
-            text.Append($"·  {banner.EpicPity}회 안에 에픽 확정 (지금 {manager.EpicPityLeft(banner)}회 남음)\n");
-            text.Append($"·  {banner.RarePity}회 안에 레어 이상 확정\n");
-        }
+        text.Append($"·  {banner.EpicPity}회 안에 에픽 해달 조각 {table.PityFragments}개 확정 (지금 {manager.EpicPityLeft(banner)}회 남음)\n");
+        text.Append($"·  {banner.RarePity}회 안에 레어 이상 확정\n");
+        text.Append($"·  해달 조각은 레어 {table.RareFragments.min}~{table.RareFragments.max}개 · 에픽 {table.EpicFragments.min}~{table.EpicFragments.max}개씩 나와요\n");
         if (banner.IsPickup)
         {
-            text.Append($"·  에픽이 나오면 {Percent(banner.FeaturedShare)} 확률로 픽업 장난감, 놓치면 다음 에픽은 픽업 확정\n");
+            text.Append($"·  해달 조각이 나오면 {Percent(banner.FeaturedShare)} 확률로 픽업 해달, 에픽 픽업을 놓치면 다음 에픽 조각은 픽업 확정\n");
             text.Append("·  확정까지 남은 횟수는 다음 픽업 뽑기로 이어져요\n");
             var reward = manager.PointsReward(banner);
             if (banner.ExchangePoints > 0 && reward != null)
-                text.Append($"·  한 번 뽑을 때마다 별빛 포인트 1점, {banner.ExchangePoints}점이면 {reward.DisplayName}{KoreanParticle.ObjectParticle(reward.DisplayName)} 받아요\n");
-        }
-        else if (banner.IsGoldBanner)
-        {
-            text.Append("·  골드로 언제든 뽑아요. 값은 왕국 레벨에 따라 올라요 ")
-                .Append($"(지금 1회 {manager.GoldBannerCost(banner, 1):N0} · 10회 {manager.GoldBannerCost(banner, 10):N0})\n");
-            text.Append("·  에픽 장난감은 나오지 않아요 (에픽은 보물 조개에서)\n");
-            text.Append("·  확정까지 남은 횟수는 골드 뽑기끼리 이어져요\n");
+            {
+                string name = $"{GachaRewardText.FragmentName(reward)} {manager.PointsFragments}개";
+                text.Append($"·  한 번 뽑을 때마다 별빛 포인트 1점, {banner.ExchangePoints}점이면 {name}{KoreanParticle.ObjectParticle(name)} 받아요\n");
+            }
         }
         else
         {
@@ -449,8 +432,8 @@ public class GachaPresenter : MonoBehaviour
             if (banner.HasDailyGoldPull)
                 text.Append("·  하루 한 번 골드로 1회 뽑을 수 있어요 (새벽 4시에 다시)\n");
         }
-        var s = GachaRules.DuplicateShards;
-        text.Append($"·  이미 있는 장난감은 반짝 조각을 덤으로 줘요 (흔함 {s[0]} · 레어 {s[1]} · 에픽 {s[2]})");
+        text.Append("·  같은 장신구는 강화(최대 +4), 그 뒤로는 반짝 조각이 돼요\n");
+        text.Append("·  5성까지 쓰고 남는 해달 조각은 반짝 조각이 돼요");
         return text.ToString();
     }
 
@@ -492,41 +475,31 @@ public class GachaPresenter : MonoBehaviour
         if (selected.IsPickup)
         {
             state.HighlightLabel = "확률 UP!";
-            for (int tier = GachaTable.Epic; tier >= GachaTable.Common; tier--)
+            for (int tier = GachaTable.Epic; tier >= GachaTable.Rare; tier--)
             {
-                foreach (var item in table.Featured(tier))
-                    state.Highlights.Add((item, tier, true));
+                foreach (var otter in table.Featured(tier))
+                    state.Highlights.Add((manager.IconOf(otter), tier, true));
             }
-        }
-        else if (selected.IsGoldBanner)
-        {
-            // 골드 배너: 레어 장난감 둘 + 가구 셋 (칸이 다섯이라 둘 다 보이게)
-            state.HighlightLabel = "레어 · 가구";
-            foreach (var item in table.Standard(GachaTable.Rare).Take(2))
-                state.Highlights.Add((item, GachaTable.Rare, false));
-            foreach (var item in table.Standard(GachaTable.Common).Where(IsFurniture).Take(3))
-                state.Highlights.Add((item, GachaTable.Common, false));
         }
         else
         {
-            state.HighlightLabel = "에픽 장난감";
-            foreach (var item in table.Standard(GachaTable.Epic))
-                state.Highlights.Add((item, GachaTable.Epic, false));
+            state.HighlightLabel = "에픽 해달";
+            foreach (var otter in table.Otters(GachaTable.Epic))
+                state.Highlights.Add((manager.IconOf(otter), GachaTable.Epic, false));
         }
 
-        // 골드 배너는 에픽이 없어서 레어 이상 확정까지
-        state.PityLabel = selected.IsGoldBanner ? "레어 확정까지" : "에픽 확정까지";
-        state.PityTotal = selected.IsGoldBanner ? selected.RarePity : selected.EpicPity;
-        state.PityLeft = selected.IsGoldBanner ? manager.RarePityLeft(selected) : manager.EpicPityLeft(selected);
+        state.PityLabel = "에픽 조각 확정까지";
+        state.PityTotal = selected.EpicPity;
+        state.PityLeft = manager.EpicPityLeft(selected);
         state.Guaranteed = manager.IsFeaturedGuaranteed(selected);
 
         state.ShowPoints = selected.IsPickup && selected.ExchangePoints > 0;
         state.Points = manager.Points(selected);
         state.PointsGoal = selected.ExchangePoints;
-        state.PointsReward = manager.PointsReward(selected);
+        var pointsReward = manager.PointsReward(selected);
+        state.PointsRewardIcon = pointsReward != null ? manager.IconOf(pointsReward) : null;
 
-        // 골드 배너는 포인트 · 오늘의 골드 뽑기 줄 대신 안내 한 줄
-        state.Note = selected.IsGoldBanner ? GoldBannerNote(selected) : null;
+        state.Note = null;
         state.NoteIcon = manager.Gold != null ? manager.Gold.Icon : null;
 
         state.ShowGold = selected.HasDailyGoldPull;
@@ -535,8 +508,7 @@ public class GachaPresenter : MonoBehaviour
         state.GoldAffordable = Balance(manager.Gold) >= state.GoldCost;
 
         state.Shards = Balance(manager.Shard);
-        // 골드 배너는 뽑기권 대신 가진 골드
-        var held = selected.IsGoldBanner ? manager.Gold : selected.Ticket;
+        var held = selected.Ticket;
         state.TicketIcon = held != null ? held.Icon : null;
         state.Tickets = Balance(held);
         state.Single = PriceLook(selected, 1);
@@ -544,12 +516,6 @@ public class GachaPresenter : MonoBehaviour
 
         _screen.Render(state);
         _dirty = false;
-    }
-
-    private static string GoldBannerNote(GachaBannerDefinition banner)
-    {
-        int free = 10 - banner.GoldTenPulls;
-        return free > 0 ? $"골드로 언제든 뽑아요\n10회 뽑기는 <b>{free}번 공짜</b>!" : "골드로 언제든 뽑아요";
     }
 
     private static string PeriodText(TimeSpan left)
@@ -580,10 +546,22 @@ public class GachaPresenter : MonoBehaviour
                 text.Append(banner.Ticket.DisplayName);
             if (banner.FeaturedOtter != null)
                 text.Append(banner.FeaturedOtter.DisplayName);
-            foreach (var item in banner.Pool)
-                AppendItem(text, item);
-            foreach (var item in banner.Featured)
-                AppendItem(text, item);
+        }
+        text.Append("재료꾸러미목공소집공사에쓰는목재와돌가방이가득해해금성까지조각강화최대라장신구주민이동속도작업시간얻는양작물성장판매가")
+            .Append("편성해서별을올리면효과를받아요넣었어요시설써요원하는특수고르남는쓰고받았어요조각을모으면한마리에게끼우면그만수확량물고기생산속도");
+        var config = manager.RewardConfig;
+        if (config != null)
+        {
+            foreach (var otter in config.Otters)
+            {
+                if (otter != null)
+                    text.Append(otter.DisplayName).Append(otter.Description);
+            }
+            foreach (var accessory in config.Accessories)
+            {
+                if (accessory != null)
+                    text.Append(accessory.DisplayName).Append(accessory.Description);
+            }
         }
 
         var fonts = new HashSet<TMP_FontAsset>();
@@ -599,14 +577,5 @@ public class GachaPresenter : MonoBehaviour
                 font.TryAddCharacters(characters, out _);
         }
         _glyphsReady = true;
-    }
-
-    private static void AppendItem(StringBuilder text, ItemDefinition item)
-    {
-        if (item == null)
-            return;
-        text.Append(item.DisplayName).Append(item.Description);
-        if (item.Rarity != null)
-            text.Append(item.Rarity.DisplayName);
     }
 }

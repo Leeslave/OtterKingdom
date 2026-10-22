@@ -16,7 +16,7 @@ MonoBehaviour:
   _displayName: "\uC0B0\uB9BC\uAD00\uB9AC\uC0AC \uD574\uB2EC"
   _description: "\uC232\uC758 \uB098\uBB34\uB97C \uC544\uB07C\uBA70 \uAC00\uAFD4\uC694.
     \uD3B8\uC131\uD558\uBA74 \uBAA9\uC7AC\uB97C \uB354 \uC5BB\uC5B4\uC694."
-  _portrait: {fileID: 0}
+  _portrait: {fileID: 21300000, guid: f3d82a2a7b0bb994eb5ed2d80febc964, type: 3}
   _tier: 1
   _bonus: 10
   _percentByStar: 05000000070000000a0000000c0000000f000000

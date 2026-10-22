@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>뽑기 값을 치르는 방법</summary>
 public enum GachaPayment
@@ -25,30 +26,50 @@ public enum GachaExchangeOutcome
     Full,         // 가방에 더 넣을 수 없음 (최대 보유 수)
 }
 
-/// <summary>뽑아서 가방에 넣은 장난감 하나</summary>
+/// <summary>뽑아서 넣은 것 하나 (재료 · 장신구 · 해달 조각) — 연출 · 결과 카드가 그대로 그림</summary>
 public readonly struct GachaPull
 {
-    public readonly ItemDefinition Item;
+    public readonly GachaRewardKind Kind;
     public readonly int Tier;
     public readonly bool Featured;
     public readonly bool ByPity;
 
-    /// <summary>처음 얻음 (가방에 없던 장난감, 같은 10회 안에서 두 번째부터는 아님)</summary>
+    /// <summary>처음 얻음 (새 장신구 · 처음 만난 특수 해달의 조각)</summary>
     public readonly bool IsNew;
 
-    /// <summary>겹쳐서 덤으로 받은 반짝 조각 (가방이 가득 차 못 넣었으면 그 몫도 조각으로)</summary>
+    /// <summary>반짝 조각으로 바뀐 몫 (최대 강화 장신구 · 5성 뒤 조각 · 가방에 못 넣은 재료)</summary>
     public readonly int Shards;
 
-    public GachaPull(GachaRoll roll, bool isNew, int shards)
+    public readonly Sprite Icon;
+    /// <summary>"음유시인 해달 조각" · "레어 깃털 모자" · "재료 꾸러미"</summary>
+    public readonly string Name;
+    public readonly string Description;
+    /// <summary>"조각 ×2 · 해금까지 12/20" · "강화 +2! 이동속도 +15%" · "목재 50 · 돌 40"</summary>
+    public readonly string Detail;
+
+    /// <summary>해달 조각이면 그 해달, 장신구면 그 장신구 (재료는 둘 다 null)</summary>
+    public readonly SpecialOtterDefinition Otter;
+    public readonly AccessoryDefinition Accessory;
+
+    public GachaPull(GachaRewardKind kind, int tier, bool featured, bool byPity, bool isNew, int shards,
+        Sprite icon, string name, string description, string detail,
+        SpecialOtterDefinition otter = null, AccessoryDefinition accessory = null)
     {
-        Item = roll.Item;
-        Tier = roll.Tier;
-        Featured = roll.Featured;
-        ByPity = roll.ByPity;
+        Kind = kind;
+        Tier = tier;
+        Featured = featured;
+        ByPity = byPity;
         IsNew = isNew;
         Shards = shards;
+        Icon = icon;
+        Name = name;
+        Description = description;
+        Detail = detail;
+        Otter = otter;
+        Accessory = accessory;
     }
 
+    public string TierName => GachaRewardText.TierName(Kind, Tier);
     public bool IsEpic => Tier >= GachaTable.Epic;
     public bool IsRareOrBetter => Tier >= GachaTable.Rare;
 }

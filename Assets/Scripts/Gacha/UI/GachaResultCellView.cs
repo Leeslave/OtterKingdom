@@ -20,9 +20,9 @@ public class GachaResultCellView : MonoBehaviour
     public void Show(GachaPull pull, Color frameColor)
     {
         _frame.color = frameColor;
-        _icon.sprite = pull.Item.Icon;
+        _icon.sprite = pull.Icon;
         _newBadge.SetActive(pull.IsNew);
         _featuredBadge.SetActive(pull.Featured);
-        _nameText.text = pull.Item.DisplayName;
+        _nameText.text = pull.Name;
     }
 }

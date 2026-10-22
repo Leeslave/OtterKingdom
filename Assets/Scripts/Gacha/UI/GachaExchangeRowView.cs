@@ -42,9 +42,9 @@ public class GachaExchangeRowView : MonoBehaviour
     [Tooltip("한 번 더 누르면 교환 (확인) 버튼")]
     [SerializeField] private Sprite _confirmButton;
 
-    public event Action<ItemDefinition> OnExchange;
+    public event Action<SpecialOtterDefinition> OnExchange;
 
-    private ItemDefinition _item;
+    private SpecialOtterDefinition _otter;
     private bool _affordable;
     private bool _confirming;
 
@@ -60,14 +60,14 @@ public class GachaExchangeRowView : MonoBehaviour
 
     public void Bind(GachaExchangeEntry entry, bool affordable)
     {
-        _item = entry.Item;
+        _otter = entry.Otter;
         _affordable = affordable;
-        _icon.sprite = entry.Item.Icon;
-        _nameText.text = entry.Item.DisplayName;
+        _icon.sprite = entry.Icon;
+        _nameText.text = $"{GachaRewardText.FragmentName(entry.Otter)} ×{entry.Count}";
         int tier = Mathf.Clamp(entry.Tier, 0, _rarityTags.Length - 1);
         _rarityTag.sprite = _rarityTags[tier];
-        _rarityText.text = entry.Item.Rarity != null ? entry.Item.Rarity.DisplayName : "";
-        _pastBadge.SetActive(entry.PastFeatured);
+        _rarityText.text = GachaRewardText.TierName(GachaRewardKind.Fragments, entry.Tier);
+        _pastBadge.SetActive(false); // 지난 픽업 표시는 장난감 교환소 때 것 (특수 해달은 모두 같은 값)
         _costText.text = entry.Cost.ToString("N0");
         SetConfirming(false);
     }
@@ -76,7 +76,7 @@ public class GachaExchangeRowView : MonoBehaviour
     {
         if (!_affordable)
         {
-            OnExchange?.Invoke(_item); // 모자라다는 안내는 받는 쪽이
+            OnExchange?.Invoke(_otter); // 모자라다는 안내는 받는 쪽이
             return;
         }
         if (!_confirming)
@@ -87,7 +87,7 @@ public class GachaExchangeRowView : MonoBehaviour
             return;
         }
         SetConfirming(false);
-        OnExchange?.Invoke(_item);
+        OnExchange?.Invoke(_otter);
     }
 
     private IEnumerator CancelLater()

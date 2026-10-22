@@ -81899,10 +81899,11 @@ MonoBehaviour:
   _banners:
   - {fileID: 11400000, guid: f6e92d97f66bbd64788405c913c492bd, type: 2}
   - {fileID: 11400000, guid: 901be3d901e28194ca63b348a9b0f7a4, type: 2}
-  - {fileID: 11400000, guid: da7c1dfaf45584042bd1affe60e8d42c, type: 2}
+  - {fileID: 11400000, guid: 37e88f00253af8840938178a1a10dd47, type: 2}
   _gold: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _shard: {fileID: 11400000, guid: 1904a5655abc8104294f83794c48c5ec, type: 2}
   _welcomeTickets: 1
+  _rewardConfig: {fileID: 11400000, guid: a25dbb289cbbc5443a736d53b039e98b, type: 2}
 --- !u!114 &3069638032600652774
 MonoBehaviour:
   m_ObjectHideFlags: 0

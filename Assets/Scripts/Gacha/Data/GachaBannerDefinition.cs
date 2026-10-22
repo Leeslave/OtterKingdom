@@ -68,6 +68,10 @@ public class GachaBannerDefinition : ScriptableObject
     [Tooltip("픽업 에픽을 좋아하는 한정 해달 (결과 카드에 얼굴을 보여 줌, 비워도 됨)")]
     [SerializeField] private SettlementOtterDefinition _featuredOtter;
 
+    [Header("픽업 특수 해달 (가챠 개편)")]
+    [Tooltip("해달 조각이 나올 때 FeaturedShare 확률로 이 해달들의 조각 (픽업만). 상시 배너는 비움")]
+    [SerializeField] private List<SpecialOtterDefinition> _featuredSpecialOtters = new List<SpecialOtterDefinition>();
+
     [Header("확률 (0~1)")]
     [Tooltip("한 번 뽑을 때 에픽이 나올 확률")]
     [Range(0f, 1f)]
@@ -142,6 +146,7 @@ public class GachaBannerDefinition : ScriptableObject
     public IReadOnlyList<ItemDefinition> Pool => _pool;
     public IReadOnlyList<ItemDefinition> Featured => _featured;
     public SettlementOtterDefinition FeaturedOtter => _featuredOtter;
+    public IReadOnlyList<SpecialOtterDefinition> FeaturedSpecialOtters => IsPickup ? _featuredSpecialOtters : (IReadOnlyList<SpecialOtterDefinition>)Array.Empty<SpecialOtterDefinition>();
     public float EpicRate => _epicRate;
     public float RareRate => _rareRate;
     public float FeaturedShare => IsPickup ? _featuredShare : 0f;

@@ -27,11 +27,11 @@ public sealed class GachaScreenState
     public string Period;
     public bool Limited;
 
-    /// <summary>배너 아래 눈여겨볼 장난감 (픽업 = 확률 UP, 상시 = 에픽)</summary>
+    /// <summary>배너 아래 눈여겨볼 특수 해달 (픽업 = 확률 UP, 상시 = 에픽)</summary>
     public string HighlightLabel;
-    public readonly List<(ItemDefinition item, int tier, bool featured)> Highlights = new List<(ItemDefinition, int, bool)>();
+    public readonly List<(Sprite icon, int tier, bool featured)> Highlights = new List<(Sprite, int, bool)>();
 
-    /// <summary>"에픽 확정까지" · "레어 확정까지" (골드 배너)</summary>
+    /// <summary>"에픽 조각 확정까지"</summary>
     public string PityLabel = "에픽 확정까지";
     public int PityLeft;
     public int PityTotal;
@@ -40,7 +40,8 @@ public sealed class GachaScreenState
     public bool ShowPoints;
     public int Points;
     public int PointsGoal;
-    public ItemDefinition PointsReward;
+    /// <summary>별빛 포인트로 받는 픽업 해달 그림</summary>
+    public Sprite PointsRewardIcon;
 
     public bool ShowGold;
     public bool GoldAvailable;

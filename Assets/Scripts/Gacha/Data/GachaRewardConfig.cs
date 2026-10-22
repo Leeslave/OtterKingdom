@@ -35,12 +35,26 @@ public class GachaRewardConfig : ScriptableObject
     [Tooltip("에픽 천장에서 확정으로 주는 에픽 해달 조각")]
     [Min(1)] [SerializeField] private int _pityFragments = 5;
 
+    [Header("별빛 포인트 · 교환소")]
+    [Tooltip("픽업 별빛 포인트를 다 모으면 주는 픽업 해달 조각")]
+    [Min(1)] [SerializeField] private int _pointsFragments = 30;
+    [Tooltip("교환소에서 한 번에 고르는 해달 조각 (값 = 조각 하나 값 × 이 수)")]
+    [Min(1)] [SerializeField] private int _exchangeFragments = 5;
+
+    [Header("그림이 아직 없을 때")]
+    [SerializeField] private Sprite _otterFallbackIcon;
+    [SerializeField] private Sprite _accessoryFallbackIcon;
+
     [Header("목록")]
     [SerializeField] private List<SpecialOtterDefinition> _otters = new List<SpecialOtterDefinition>();
     [SerializeField] private List<AccessoryDefinition> _accessories = new List<AccessoryDefinition>();
 
     public ItemDefinition Wood => _wood;
     public ItemDefinition Stone => _stone;
+    public int PointsFragments => Mathf.Max(1, _pointsFragments);
+    public int ExchangeFragments => Mathf.Max(1, _exchangeFragments);
+    public Sprite IconOf(SpecialOtterDefinition otter) => otter != null && otter.Portrait != null ? otter.Portrait : _otterFallbackIcon;
+    public Sprite IconOf(AccessoryDefinition accessory) => accessory != null && accessory.Icon != null ? accessory.Icon : _accessoryFallbackIcon;
     public IReadOnlyList<SpecialOtterDefinition> Otters => _otters;
     public IReadOnlyList<AccessoryDefinition> Accessories => _accessories;
 
@@ -93,5 +107,12 @@ public class GachaRewardConfig : ScriptableObject
             _bundles = new List<MaterialBundle>(bundles);
         _otters = new List<SpecialOtterDefinition>(otters);
         _accessories = new List<AccessoryDefinition>(accessories);
+    }
+
+    /// <summary>설정 도구 · 테스트용: 그림이 아직 없을 때 쓰는 그림</summary>
+    public void SetupFallbackIcons(Sprite otter, Sprite accessory)
+    {
+        _otterFallbackIcon = otter;
+        _accessoryFallbackIcon = accessory;
     }
 }

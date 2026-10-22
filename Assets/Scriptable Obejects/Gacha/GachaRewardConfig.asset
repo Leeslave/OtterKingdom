@@ -31,6 +31,10 @@ MonoBehaviour:
   _rareFragments: {x: 1, y: 3}
   _epicFragments: {x: 1, y: 2}
   _pityFragments: 5
+  _pointsFragments: 30
+  _exchangeFragments: 5
+  _otterFallbackIcon: {fileID: 21300000, guid: 68c977b13184ce94c954771473035bcb, type: 3}
+  _accessoryFallbackIcon: {fileID: 21300000, guid: 68c977b13184ce94c954771473035bcb, type: 3}
   _otters:
   - {fileID: 11400000, guid: 8bdb364401371bf4daa6afb4fe90666c, type: 2}
   - {fileID: 11400000, guid: fc5c9f477ae562c49812d6afd55bd257, type: 2}

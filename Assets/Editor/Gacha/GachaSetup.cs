@@ -531,12 +531,14 @@ public static class GachaSetup
     public static void Attach(GameObject root, Screens screens, GachaHudButtonView hudButton, CurrencyShortagePopupView shortage)
     {
         var manager = root.AddComponent<GachaManager>();
+        // 골드 배너는 가챠 개편으로 정리 (Docs/가챠개편_특수해달조각_장신구_기획.md 1장) — 상시 배너의 하루 1회 골드 뽑기만
         SetArray(manager, "_banners", new Object[]
         {
+            AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(GachaRewardSetup.OtterPickupBannerPath),
             AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(PickupBannerPath),
             AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(StandardBannerPath),
-            AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(GoldBannerPath),
         });
+        Set(manager, "_rewardConfig", AssetDatabase.LoadAssetAtPath<GachaRewardConfig>(GachaRewardSetup.RewardConfigPath));
         Set(manager, "_gold", AssetDatabase.LoadAssetAtPath<Currency>(GoldPath));
         Set(manager, "_shard", AssetDatabase.LoadAssetAtPath<Currency>(ShardPath));
 

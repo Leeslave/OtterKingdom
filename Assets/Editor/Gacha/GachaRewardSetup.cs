@@ -98,4 +98,128 @@ public static class GachaRewardSetup
         AssetDatabase.SaveAssets();
         Debug.Log($"[GachaRewardSetup] 특수 해달 {otters.Count}종 · 장신구 {accessories.Count}개 · 보상 설정 완료");
     }
+
+    // 2단계: 그림이 오기 전 임시 초상화 (쓰지 않는 해달 얼굴), 픽업 해달
+    private static readonly (string asset, string portrait)[] PlaceholderPortraits =
+    {
+        ("Bard", "ICON_Otter_Cast_Lilac"), ("Gardener", "ICON_Otter_Cast_Sprout"), ("Forester", "ICON_Otter_Cast_Forest"),
+        ("Geologist", "ICON_Otter_Cast_Explorer"), ("Accountant", "ICON_Otter_Cast_Honey"), ("Architect", "ICON_Otter_Cast_Sky"),
+    };
+    private const string PickupOtterAsset = "Architect";
+    private const string PlaceholderIconPath = "Assets/Art/UI/Currency/Shard.png";
+    private const string OtterArtFolder = "Assets/Art/Otter";
+    private const string GlobalUIPath = "Assets/Resources/GlobalUI.prefab";
+
+    /// <summary>
+    /// 가챠 개편 2단계: 비어 있는 초상화 · 대신 쓰는 그림을 채우고, 픽업 배너에 픽업 해달을 넣고,
+    /// 전역 UI의 뽑기 매니저에 보상 설정을 연결하며 골드 배너를 목록에서 뺀다 (골드 배너 에셋은 남김).
+    /// 배치 모드: -executeMethod GachaRewardSetup.ConnectToGame
+    /// </summary>
+    [MenuItem("Tools/Gacha/Connect Companion Data")]
+    public static void ConnectToGame()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<GachaRewardConfig>(RewardConfigPath);
+        if (config == null)
+        {
+            Debug.LogError("[GachaRewardSetup] 보상 설정이 없습니다. Tools/Gacha/Create Companion Data를 먼저 실행하세요.");
+            return;
+        }
+        foreach (var (asset, portrait) in PlaceholderPortraits)
+        {
+            var otter = AssetDatabase.LoadAssetAtPath<SpecialOtterDefinition>($"{OtterFolder}/SpecialOtter_{asset}.asset");
+            if (otter == null)
+                continue;
+            var so = new SerializedObject(otter);
+            FillIfEmpty(so, "_portrait", ImportSprite(OtterArtFolder, portrait));
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+        var placeholder = AssetDatabase.LoadAssetAtPath<Sprite>(PlaceholderIconPath);
+        var configSo = new SerializedObject(config);
+        FillIfEmpty(configSo, "_otterFallbackIcon", placeholder);
+        FillIfEmpty(configSo, "_accessoryFallbackIcon", placeholder);
+        configSo.ApplyModifiedPropertiesWithoutUndo();
+
+        var pickup = CreateOtterPickupBanner();
+        AssetDatabase.SaveAssets();
+
+        var root = PrefabUtility.LoadPrefabContents(GlobalUIPath);
+        try
+        {
+            var manager = root.GetComponentInChildren<GachaManager>(true);
+            if (manager == null)
+            {
+                Debug.LogError("[GachaRewardSetup] 전역 UI에 뽑기 매니저가 없습니다.");
+                return;
+            }
+            var so = new SerializedObject(manager);
+            so.FindProperty("_rewardConfig").objectReferenceValue = config;
+            RemoveGoldBanners(so.FindProperty("_banners"));
+            if (pickup != null)
+                AddUnique(so.FindProperty("_banners"), pickup);
+            so.ApplyModifiedPropertiesWithoutUndo();
+            PrefabUtility.SaveAsPrefabAsset(root, GlobalUIPath);
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+        Debug.Log("[GachaRewardSetup] 보상 설정을 전역 UI 뽑기 매니저에 연결했습니다 (골드 배너는 목록에서 뺌).");
+    }
+
+    /// <summary>
+    /// 첫 특수 해달 픽업 (건축가, 2026-10-22 ~ 11-04): 지난 봄바람 픽업을 복사해 그림 · 조개 · 뽑기권 · 값은 그대로 쓰고,
+    /// 장난감 목록은 비우고 픽업 해달만 넣음. 이미 있으면 그대로 (사람이 고친 값을 지킴)
+    /// </summary>
+    private static GachaBannerDefinition CreateOtterPickupBanner()
+    {
+        var existing = AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(OtterPickupBannerPath);
+        if (existing != null)
+            return existing;
+        var otter = AssetDatabase.LoadAssetAtPath<SpecialOtterDefinition>($"{OtterFolder}/SpecialOtter_{PickupOtterAsset}.asset");
+        if (otter == null || !AssetDatabase.CopyAsset(GachaSetup.PickupBannerPath, OtterPickupBannerPath))
+        {
+            Debug.LogWarning("[GachaRewardSetup] 특수 해달 픽업 배너를 만들지 못했습니다 (건축가 해달 · 봄바람 픽업 배너 확인).");
+            return null;
+        }
+        var banner = AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(OtterPickupBannerPath);
+        var so = new SerializedObject(banner);
+        so.FindProperty("_bannerId").stringValue = "pickup_architect";
+        so.FindProperty("_title").stringValue = "건축가 픽업";
+        so.FindProperty("_tabTitle").stringValue = "건축가";
+        so.FindProperty("_subtitle").stringValue = "에픽 건축가 해달 조각 확률 UP!\n별빛 포인트를 모으면 조각 30개";
+        so.FindProperty("_startDate").stringValue = "2026-10-22";
+        so.FindProperty("_endDate").stringValue = "2026-11-04";
+        so.FindProperty("_pool").arraySize = 0;
+        so.FindProperty("_featured").arraySize = 0;
+        so.FindProperty("_featuredOtter").objectReferenceValue = null;
+        var list = so.FindProperty("_featuredSpecialOtters");
+        list.arraySize = 1;
+        list.GetArrayElementAtIndex(0).objectReferenceValue = otter;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return banner;
+    }
+
+    internal const string OtterPickupBannerPath = DataFolder + "/Banners/Banner_Pickup_Architect.asset";
+
+    private static void AddUnique(SerializedProperty list, Object value)
+    {
+        for (int i = 0; i < list.arraySize; i++)
+        {
+            if (list.GetArrayElementAtIndex(i).objectReferenceValue == value)
+                return;
+        }
+        list.arraySize++;
+        list.GetArrayElementAtIndex(list.arraySize - 1).objectReferenceValue = value;
+    }
+
+    /// <summary>뽑기 매니저 배너 목록에서 골드 배너를 뺀다</summary>
+    internal static void RemoveGoldBanners(SerializedProperty banners)
+    {
+        for (int i = banners.arraySize - 1; i >= 0; i--)
+        {
+            var banner = banners.GetArrayElementAtIndex(i).objectReferenceValue as GachaBannerDefinition;
+            if (banner == null || banner.IsGoldBanner)
+                banners.DeleteArrayElementAtIndex(i);
+        }
+    }
 }

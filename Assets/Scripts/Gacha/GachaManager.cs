@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>교환소 한 줄 (반짝 조각으로 고르는 장난감)</summary>
+/// <summary>교환소 한 줄 (반짝 조각으로 고르는 특수 해달 조각 묶음)</summary>
 public readonly struct GachaExchangeEntry
 {
-    public readonly ItemDefinition Item;
-    public readonly int Tier;
+    public readonly SpecialOtterDefinition Otter;
+    public readonly Sprite Icon;
+    public readonly int Count;
     public readonly int Cost;
-    public readonly bool PastFeatured;
 
-    public GachaExchangeEntry(ItemDefinition item, int tier, int cost, bool pastFeatured)
+    public GachaExchangeEntry(SpecialOtterDefinition otter, Sprite icon, int count, int cost)
     {
-        Item = item;
-        Tier = tier;
+        Otter = otter;
+        Icon = icon;
+        Count = count;
         Cost = cost;
-        PastFeatured = pastFeatured;
     }
+
+    public int Tier => Otter != null ? Otter.Tier : GachaTable.Rare;
 }
 
 /// <summary>
 /// 보물 조개 뽑기의 주인. 전역 UI(GlobalUI) 루트에 붙어 씬을 넘어 유지된다.
-/// 값 치르기 → 뽑기(GachaRules) → 가방에 넣기 → 겹친 장난감은 반짝 조각 덤 → 바로 저장 순서로, 연출보다 먼저 결과를 확정한다
+/// 값 치르기 → 뽑기(GachaRewardRules) → 재료는 가방, 장신구 · 해달 조각은 명부(CompanionCollection) → 넘친 몫은 반짝 조각 → 바로 저장 순서로,
+/// 연출보다 먼저 결과를 확정한다
 /// (연출 도중 앱을 꺼도 다시 뽑을 수 없음). 천장·별빛 포인트·골드 뽑기 날짜를 가진다.
 /// 뽑기는 요정이 광장에 온 뒤(요정 상점이 열린 뒤) 열린다.
 /// - 세이브: 게임 쪽이 LoadFromSave / WriteToSave를 호출
@@ -64,7 +67,7 @@ public class GachaManager : MonoBehaviour
     private readonly GachaPity _standardPity = new GachaPity();
     private readonly GachaPity _pickupPity = new GachaPity();
     private readonly GachaPity _goldPity = new GachaPity();
-    private readonly Dictionary<GachaBannerDefinition, GachaTable> _tables = new Dictionary<GachaBannerDefinition, GachaTable>();
+    private readonly Dictionary<GachaBannerDefinition, GachaRewardTable> _tables = new Dictionary<GachaBannerDefinition, GachaRewardTable>();
     private readonly HashSet<string> _seenBanners = new HashSet<string>();
     private readonly System.Random _random = new System.Random();
 
@@ -109,13 +112,16 @@ public class GachaManager : MonoBehaviour
 
     #region 배너
 
-    /// <summary>지금 열린 배너 (탭 순서)</summary>
+    /// <summary>지금 열린 배너 (탭 순서). 골드 배너는 가챠 개편으로 정리 (상시 배너의 하루 1회 골드 뽑기만 남김)</summary>
     public List<GachaBannerDefinition> OpenBanners()
     {
         var result = new List<GachaBannerDefinition>();
         foreach (var banner in _banners)
         {
-            if (banner != null && banner.IsOpenAt(Now) && !Table(banner).IsEmpty)
+            if (banner == null || banner.IsGoldBanner || !banner.IsOpenAt(Now))
+                continue;
+            var table = Table(banner);
+            if (table != null && !table.IsEmpty)
                 result.Add(banner);
         }
         result.Sort((a, b) => a.SortOrder.CompareTo(b.SortOrder));
@@ -124,30 +130,37 @@ public class GachaManager : MonoBehaviour
 
     public bool IsOpen(GachaBannerDefinition banner) => banner != null && IsUnlocked && banner.IsOpenAt(Now);
 
-    public GachaTable Table(GachaBannerDefinition banner)
+    /// <summary>이 배너의 보상 표 (보상 설정이 없으면 null)</summary>
+    public GachaRewardTable Table(GachaBannerDefinition banner)
     {
         if (banner == null)
             throw new ArgumentNullException(nameof(banner));
+        if (_rewardConfig == null)
+            return null;
         if (!_tables.TryGetValue(banner, out var table))
         {
-            table = GachaTable.From(banner);
+            table = _rewardConfig.BuildTable(banner.Kind, banner.EpicPity, banner.RarePity, banner.FeaturedShare, banner.FeaturedSpecialOtters);
             _tables.Add(banner, table);
         }
         return table;
     }
 
-    public List<GachaRate> Rates(GachaBannerDefinition banner) => GachaRules.Rates(Table(banner));
+    public List<GachaRewardRate> Rates(GachaBannerDefinition banner)
+    {
+        var table = Table(banner);
+        return table != null ? GachaRewardRules.Rates(table) : new List<GachaRewardRate>();
+    }
 
     private GachaPity Pity(GachaBannerKind kind) =>
         kind == GachaBannerKind.Pickup ? _pickupPity : kind == GachaBannerKind.Gold ? _goldPity : _standardPity;
 
     /// <summary>레어 이상 확정까지 남은 수 (이번이 1번째)</summary>
-    public int RarePityLeft(GachaBannerDefinition banner) => GachaRules.RarePityLeft(Table(banner), Pity(banner.Kind));
+    public int RarePityLeft(GachaBannerDefinition banner) => Math.Max(1, banner.RarePity - Pity(banner.Kind).SinceRare);
 
-    /// <summary>에픽 확정까지 남은 수 (이번이 1번째)</summary>
-    public int EpicPityLeft(GachaBannerDefinition banner) => GachaRules.EpicPityLeft(Table(banner), Pity(banner.Kind));
+    /// <summary>에픽 해달 조각 확정까지 남은 수 (이번이 1번째)</summary>
+    public int EpicPityLeft(GachaBannerDefinition banner) => Math.Max(1, banner.EpicPity - Pity(banner.Kind).SinceEpic);
 
-    /// <summary>다음 에픽은 픽업 확정인지 (픽업 에픽을 한 번 놓친 뒤)</summary>
+    /// <summary>다음 에픽 해달 조각은 픽업 확정인지 (픽업을 한 번 놓친 뒤)</summary>
     public bool IsFeaturedGuaranteed(GachaBannerDefinition banner) => banner.IsPickup && _pickupPity.FeaturedGuaranteed;
 
     /// <summary>처음 보는 배너 (탭에 새 배너 표시)</summary>
@@ -241,7 +254,8 @@ public class GachaManager : MonoBehaviour
             throw new ArgumentException("골드 배너는 골드로만 뽑습니다.", nameof(payment));
 
         report = null;
-        if (!IsOpen(banner))
+        var table = Table(banner);
+        if (!IsOpen(banner) || table == null || table.IsEmpty)
             return GachaPullOutcome.Closed;
         if (dailyGold && !CanGoldPullToday(banner))
             return GachaPullOutcome.GoldUsedToday;
@@ -264,29 +278,79 @@ public class GachaManager : MonoBehaviour
         }
 
         report = new GachaPullReport { Banner = banner, Payment = payment, Cost = cost };
-        var table = Table(banner);
         var pity = Pity(banner.Kind);
-        var inventory = InventoryManager.Instance.Inventory;
         int shards = 0;
         for (int i = 0; i < count; i++)
         {
-            var roll = GachaRules.Roll(table, pity, _random);
-            // 광장 등에 놓은 장난감은 가방에서 빠져 있으므로 놓인 것까지 셈
-            bool isNew = DecorManager.OwnedCount(inventory, roll.Item) == 0;
-            int added = inventory.Add(roll.Item, 1, ItemChangeReason.Gacha);
-            int bonus = isNew ? 0 : GachaRules.ShardsFor(roll.Tier);
-            if (added == 0) // 최대 보유 수에 걸림: 그 몫까지 조각으로
-                bonus += GachaRules.ShardsFor(roll.Tier);
-            shards += bonus;
-            report.Pulls.Add(new GachaPull(roll, isNew && added > 0, bonus));
+            var pull = Grant(GachaRewardRules.Roll(table, pity, _random));
+            shards += pull.Shards;
+            report.Pulls.Add(pull);
         }
-        if (shards > 0 && _shard != null)
-            CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(_shard, shards, TransactionSource.GachaReward));
+        GiveShards(shards);
 
         _totalPulls += count;
         Changed();
         Pulled?.Invoke(report);
         return GachaPullOutcome.Pulled;
+    }
+
+    /// <summary>뽑은 것을 넣고 결과 카드 모양으로: 재료는 가방(못 넣은 몫 10개당 반짝 조각 1, 최소 1), 장신구 · 해달 조각은 명부</summary>
+    private GachaPull Grant(GachaReward reward)
+    {
+        switch (reward.Kind)
+        {
+            case GachaRewardKind.Materials:
+            {
+                var inventory = InventoryManager.Instance != null ? InventoryManager.Instance.Inventory : null;
+                int missing = reward.Wood - AddItem(inventory, _rewardConfig.Wood, reward.Wood)
+                    + reward.Stone - AddItem(inventory, _rewardConfig.Stone, reward.Stone);
+                int shards = missing > 0 ? Math.Max(1, missing / 10) : 0;
+                string text = GachaRewardText.Materials(reward.Wood, reward.Stone);
+                return new GachaPull(reward.Kind, reward.Tier, false, reward.ByPity, false, shards,
+                    _rewardConfig.Wood != null ? _rewardConfig.Wood.Icon : null, "재료 꾸러미", "목공소 · 집 공사에 쓰는 목재와 돌이에요.",
+                    shards > 0 ? $"{text} · 가방이 가득해 반짝 조각 +{shards}" : text);
+            }
+            case GachaRewardKind.Accessory:
+            {
+                var accessory = reward.Accessory;
+                var gain = Companions.AddAccessory(accessory, out int shards);
+                int plus = Companions.Plus(accessory);
+                string effect = GachaRewardText.Effect(accessory.Effect, accessory.PercentAt(plus));
+                string detail = gain == AccessoryGain.New ? $"새 장신구! {effect}"
+                    : gain == AccessoryGain.Enhanced ? $"강화 +{plus}! {effect}"
+                    : $"최대 강화라 반짝 조각 +{shards}";
+                return new GachaPull(reward.Kind, reward.Tier, false, reward.ByPity, gain == AccessoryGain.New, shards,
+                    _rewardConfig.IconOf(accessory), accessory.DisplayName, accessory.Description, detail, accessory: accessory);
+            }
+            default:
+                return GrantFragments(reward.Otter, reward.Fragments, reward.Featured, reward.ByPity);
+        }
+    }
+
+    // 해달 조각을 명부에 (5성까지 쓰고 남는 몫은 반짝 조각 — 넘겨주는 쪽이 GiveShards)
+    private GachaPull GrantFragments(SpecialOtterDefinition otter, int count, bool featured, bool byPity)
+    {
+        bool isNew = !Companions.HasMet(otter);
+        int shards = Companions.AddFragments(otter, count);
+        int stars = Companions.Stars(otter);
+        int need = CompanionCollection.NextStarCost(otter, stars);
+        int have = Companions.Fragments(otter);
+        string detail = need <= 0 ? $"조각 ×{count} · 5성이라 반짝 조각 +{shards}"
+            : stars == 0 ? $"조각 ×{count} · 해금까지 {have}/{need}"
+            : $"조각 ×{count} · {stars + 1}성까지 {have}/{need}";
+        if (need > 0 && shards > 0)
+            detail += $" · 반짝 조각 +{shards}";
+        return new GachaPull(GachaRewardKind.Fragments, otter.Tier, featured, byPity, isNew, shards,
+            _rewardConfig != null ? _rewardConfig.IconOf(otter) : otter.Portrait, GachaRewardText.FragmentName(otter), otter.Description, detail, otter);
+    }
+
+    private static int AddItem(Inventory inventory, ItemDefinition item, int amount) =>
+        amount <= 0 || inventory == null || item == null ? 0 : inventory.Add(item, amount, ItemChangeReason.Gacha);
+
+    private void GiveShards(int shards)
+    {
+        if (shards > 0 && _shard != null && CurrencyManager.Instance != null)
+            CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(_shard, shards, TransactionSource.GachaReward));
     }
 
     #endregion
@@ -297,37 +361,41 @@ public class GachaManager : MonoBehaviour
     public int Points(GachaBannerDefinition banner) =>
         banner != null && banner.IsPickup && _pointsBannerId == banner.BannerId ? _points : 0;
 
-    /// <summary>별빛 포인트로 받는 장난감 (픽업 에픽, 없으면 첫 픽업 장난감)</summary>
-    public ItemDefinition PointsReward(GachaBannerDefinition banner)
+    /// <summary>별빛 포인트로 받는 픽업 해달 (픽업 에픽, 없으면 첫 픽업 해달)</summary>
+    public SpecialOtterDefinition PointsReward(GachaBannerDefinition banner)
     {
-        if (banner == null || banner.Featured.Count == 0)
+        if (banner == null || banner.FeaturedSpecialOtters.Count == 0)
             return null;
-        var table = Table(banner);
-        var epics = table.Featured(GachaTable.Epic);
-        return epics.Count > 0 ? epics[0] : banner.Featured[0];
+        foreach (var otter in banner.FeaturedSpecialOtters)
+        {
+            if (otter != null && otter.IsEpic)
+                return otter;
+        }
+        return banner.FeaturedSpecialOtters[0];
     }
 
-    /// <summary>별빛 포인트로 픽업 에픽을 받는다 (연출에 쓰도록 뽑기 결과 모양으로 돌려줌)</summary>
+    /// <summary>별빛 포인트로 받는 조각 수</summary>
+    public int PointsFragments => _rewardConfig != null ? _rewardConfig.PointsFragments : 0;
+
+    /// <summary>그 해달의 그림 (그림이 아직 없으면 대신 쓰는 그림)</summary>
+    public Sprite IconOf(SpecialOtterDefinition otter) => _rewardConfig != null ? _rewardConfig.IconOf(otter) : otter != null ? otter.Portrait : null;
+
+    /// <summary>별빛 포인트로 픽업 해달 조각을 받는다 (연출에 쓰도록 뽑기 결과 모양으로 돌려줌)</summary>
     public GachaExchangeOutcome TryExchangePoints(GachaBannerDefinition banner, out GachaPull pull)
     {
         if (banner == null)
             throw new ArgumentNullException(nameof(banner));
 
         pull = default;
-        var item = PointsReward(banner);
-        if (!IsOpen(banner) || banner.ExchangePoints <= 0 || item == null)
+        var otter = PointsReward(banner);
+        if (!IsOpen(banner) || banner.ExchangePoints <= 0 || otter == null || _rewardConfig == null)
             return GachaExchangeOutcome.NotAvailable;
         if (Points(banner) < banner.ExchangePoints)
             return GachaExchangeOutcome.NotEnough;
 
-        var inventory = InventoryManager.Instance.Inventory;
-        if (inventory.GetAddableAmount(item) < 1)
-            return GachaExchangeOutcome.Full;
-
-        bool isNew = DecorManager.OwnedCount(inventory, item) == 0;
-        inventory.Add(item, 1, ItemChangeReason.Gacha);
         _points -= banner.ExchangePoints;
-        pull = new GachaPull(new GachaRoll(item, GachaTable.TierOf(item), true, false), isNew, 0);
+        pull = GrantFragments(otter, PointsFragments, true, false);
+        GiveShards(pull.Shards);
         Changed();
         return GachaExchangeOutcome.Exchanged;
     }
@@ -380,62 +448,48 @@ public class GachaManager : MonoBehaviour
 
     #region 교환소 (반짝 조각)
 
-    /// <summary>
-    /// 반짝 조각으로 고를 수 있는 장난감: 열린 상시 배너의 레어·에픽 + 기간이 끝난 픽업 배너의 픽업 장난감 (지금 픽업은 포인트로만)
-    /// </summary>
+    /// <summary>반짝 조각으로 고를 수 있는 특수 해달 조각 묶음 (5성까지 조각이 더 필요한 해달만, 에픽 먼저)</summary>
     public List<GachaExchangeEntry> ExchangeEntries()
     {
         var result = new List<GachaExchangeEntry>();
-        var added = new HashSet<ItemDefinition>();
-        var now = Now;
-        foreach (var banner in _banners)
+        if (_rewardConfig == null)
+            return result;
+        int count = _rewardConfig.ExchangeFragments;
+        for (int tier = GachaTable.Epic; tier >= GachaTable.Rare; tier--)
         {
-            if (banner == null || banner.Kind != GachaBannerKind.Standard || !banner.IsOpenAt(now))
-                continue;
-            var table = Table(banner);
-            for (int tier = GachaTable.Epic; tier >= GachaTable.Rare; tier--)
+            foreach (var otter in _rewardConfig.Otters)
             {
-                foreach (var item in table.Standard(tier))
-                {
-                    if (added.Add(item))
-                        result.Add(new GachaExchangeEntry(item, tier, GachaRules.ExchangeCost(tier, false), false));
-                }
-            }
-        }
-        foreach (var banner in _banners)
-        {
-            if (banner == null || !banner.IsPickup || banner.IsOpenAt(now) || banner.EndsAt == null || banner.EndsAt > now)
-                continue;
-            foreach (var item in banner.Featured)
-            {
-                if (item != null && added.Add(item))
-                    result.Add(new GachaExchangeEntry(item, GachaTable.TierOf(item), GachaRules.ExchangeCost(GachaTable.TierOf(item), true), true));
+                if (otter == null || otter.Tier != tier || RoomFor(otter) <= 0)
+                    continue;
+                result.Add(new GachaExchangeEntry(otter, _rewardConfig.IconOf(otter), count, CompanionCollection.ExchangeCost(otter) * count));
             }
         }
         return result;
     }
 
-    public GachaExchangeOutcome TryExchangeShards(ItemDefinition item)
+    // 5성까지 더 받을 수 있는 조각 수
+    private int RoomFor(SpecialOtterDefinition otter) =>
+        CompanionCollection.CostToMax(otter, Companions.Stars(otter)) - Companions.Fragments(otter);
+
+    public GachaExchangeOutcome TryExchangeShards(SpecialOtterDefinition otter)
     {
-        if (item == null)
-            throw new ArgumentNullException(nameof(item));
+        if (otter == null)
+            throw new ArgumentNullException(nameof(otter));
+        if (_shard == null || !IsUnlocked || _rewardConfig == null || _rewardConfig.FindOtter(otter.OtterId) == null)
+            return GachaExchangeOutcome.NotAvailable;
 
         GachaExchangeEntry? found = null;
         foreach (var entry in ExchangeEntries())
         {
-            if (entry.Item == item)
+            if (entry.Otter == otter)
                 found = entry;
         }
-        if (found == null || _shard == null || !IsUnlocked)
-            return GachaExchangeOutcome.NotAvailable;
-
-        var inventory = InventoryManager.Instance.Inventory;
-        if (inventory.GetAddableAmount(item) < 1)
+        if (found == null)
             return GachaExchangeOutcome.Full;
         if (!CurrencyManager.Instance.TrySpend(_shard, found.Value.Cost, TransactionSource.GotchaUse))
             return GachaExchangeOutcome.NotEnough;
 
-        inventory.Add(item, 1, ItemChangeReason.Gacha);
+        GiveShards(Companions.AddFragments(otter, found.Value.Count));
         Changed();
         return GachaExchangeOutcome.Exchanged;
     }
