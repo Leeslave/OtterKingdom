@@ -48,6 +48,10 @@ public class GachaManager : MonoBehaviour
     [Min(0)]
     [SerializeField] private int _welcomeTickets = 1;
 
+    [Header("특수 해달 · 장신구 (가챠 개편)")]
+    [Tooltip("새 뽑기 보상 · 특수 해달 · 장신구 목록 (Docs/가챠개편_특수해달조각_장신구_기획.md). 비어 있어도 명부 세이브는 그대로 지킴")]
+    [SerializeField] private GachaRewardConfig _rewardConfig;
+
     /// <summary>바로 저장해 달라는 부탁 (뽑기·교환 직후). GameManager가 듣는다</summary>
     public static event Action SaveRequested;
 
@@ -69,8 +73,14 @@ public class GachaManager : MonoBehaviour
     private int _goldPullDay;
     private bool _welcomeGiven;
     private int _totalPulls;
+    private CompanionCollection _companions;
 
     public IReadOnlyList<GachaBannerDefinition> Banners => _banners;
+    public GachaRewardConfig RewardConfig => _rewardConfig;
+
+    /// <summary>특수 해달 명부 · 편성 · 장신구 (세이브는 이 매니저가 함께 읽고 씀)</summary>
+    public CompanionCollection Companions =>
+        _companions ??= new CompanionCollection(id => _rewardConfig != null ? _rewardConfig.FindAccessory(id) : null);
     public Currency Shard => _shard;
     public Currency Gold => _gold;
     public bool IsLoaded { get; private set; }
@@ -484,6 +494,7 @@ public class GachaManager : MonoBehaviour
                     _seenBanners.Add(id);
             }
         }
+        Companions.Load(saved);
         IsLoaded = true;
         OnChanged?.Invoke();
     }
@@ -508,6 +519,7 @@ public class GachaManager : MonoBehaviour
         result.seenBanners ??= new List<string>();
         result.seenBanners.Clear();
         result.seenBanners.AddRange(_seenBanners);
+        Companions.Write(result);
     }
 
     #endregion

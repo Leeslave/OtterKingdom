@@ -12,6 +12,8 @@ public enum KingdomBonusKind
     VisitSpeed = 6,   // 장난감 해달 방문 간격 −% (기록관 · 주거 구역)
     ProductionSpeed = 7, // 생산 속도 +% (생산 구역): 주민 작업이 그만큼 빨리 끝남
     GrowSpeed = 8,       // 밭 자라는 시간 −% (농업 구역): 새로 심는 작물부터
+    MoveSpeed = 9,       // 주민 이동속도 +% (특수 해달 편성: 음유시인)
+    WoodYield = 10,      // 목재 획득 +% (특수 해달 편성: 산림관리사 — 목공소 생산 · 개간)
 }
 
 /// <summary>

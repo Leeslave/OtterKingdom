@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65beb1a4aafd4b56b3a85b2cbf4804fa, type: 3}
+  m_Name: GachaRewardConfig
+  m_EditorClassIdentifier: OtterKingdom::GachaRewardConfig
+  _materialRate: 0.55
+  _accessoryRates:
+  - 0.22
+  - 0.07
+  - 0.01
+  _rareFragmentRate: 0.12
+  _epicFragmentRate: 0.03
+  _wood: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
+  _stone: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
+  _bundles:
+  - wood: 20
+    stone: 15
+    weight: 3
+  - wood: 50
+    stone: 40
+    weight: 1
+  _rareFragments: {x: 1, y: 3}
+  _epicFragments: {x: 1, y: 2}
+  _pityFragments: 5
+  _otters:
+  - {fileID: 11400000, guid: 8bdb364401371bf4daa6afb4fe90666c, type: 2}
+  - {fileID: 11400000, guid: fc5c9f477ae562c49812d6afd55bd257, type: 2}
+  - {fileID: 11400000, guid: 8e12301d67cdbf54ebabafc25c21f13a, type: 2}
+  - {fileID: 11400000, guid: c699ce2863133754fb553cb46b107e9d, type: 2}
+  - {fileID: 11400000, guid: be7da8f7f6b8ef844a1bd8e94d4effad, type: 2}
+  - {fileID: 11400000, guid: 8dc93632fd7eef54dabab19f66316a2a, type: 2}
+  _accessories:
+  - {fileID: 11400000, guid: a095222b12d90b54d9a381d97e5730cb, type: 2}
+  - {fileID: 11400000, guid: 9d1744c360a520e41a731df7cb11a563, type: 2}
+  - {fileID: 11400000, guid: 0ddea1dfe9a182d47b31fbc49ffbe742, type: 2}
+  - {fileID: 11400000, guid: 2280da96ac9bf2d40a0eaf997bb6418f, type: 2}
+  - {fileID: 11400000, guid: 1f1fa67f20eb80345896fafc451dfc7c, type: 2}
+  - {fileID: 11400000, guid: 349843483f0c1f74389bb1876f2ab139, type: 2}
+  - {fileID: 11400000, guid: f11aa74c0aedb7a45a5ae90aae3510b0, type: 2}
+  - {fileID: 11400000, guid: c0a4b240219427c448d12d4ab687ee84, type: 2}
+  - {fileID: 11400000, guid: 19acc58db54bc3e4089c6a5fe7de3440, type: 2}

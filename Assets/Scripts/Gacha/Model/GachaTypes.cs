@@ -105,4 +105,28 @@ public class GachaSaveData
 
     // 한 번 열어 본 배너 (탭의 새 배너 표시용)
     public List<string> seenBanners = new List<string>();
+
+    // 특수 해달 · 편성 · 장신구 (CompanionCollection, Docs/가챠개편_특수해달조각_장신구_기획.md 7장)
+    public List<SpecialOtterSaveData> specialOtters = new List<SpecialOtterSaveData>();
+    // 편성 칸 순서대로 해달 ID (빈 칸은 빈 문자열)
+    public List<string> formation = new List<string>();
+    public List<AccessorySaveData> accessories = new List<AccessorySaveData>();
+}
+
+/// <summary>세이브: 특수 해달 하나 (아직 안 쓴 조각 · 별, 0성 = 잠김)</summary>
+[Serializable]
+public class SpecialOtterSaveData
+{
+    public string otterId;
+    public int fragments;
+    public int stars;
+}
+
+/// <summary>세이브: 가진 장신구 하나 (강화 단계 · 낀 주민 해달 ID, 비면 안 낌)</summary>
+[Serializable]
+public class AccessorySaveData
+{
+    public string accessoryId;
+    public int plus;
+    public string otterId;
 }
