@@ -12,8 +12,8 @@ public enum DecorUnlockResult
 
 /// <summary>
 /// 꾸미기 모델의 주인. 전역 UI(GlobalUI) 루트에 붙어 씬을 넘어 유지된다.
-/// 장소마다(광장, 밭, 낚시터) 격자(DecorLayout)를 하나씩 가지고, 가방 개수(보관함에 남은 수)와 구역 해금(레벨·재화)을 조율한다.
-/// 보관함은 모든 장소가 함께 쓴다: 밭에 놓은 공은 광장 보관함에서도 빠진다.
+/// 장소마다(광장, 밭, 낚시터) 격자(DecorLayout)를 하나씩 가지고, 가방(보관함)과 구역 해금(레벨·재화)을 조율한다.
+/// 놓은 장난감 · 가구는 가방에서 빠지고 치우면 가방으로 돌아온다. 보관함 = 가방이라 모든 장소가 함께 쓴다.
 /// - 세이브: 게임 쪽이 LoadFromSave / WriteToSave를 호출
 /// </summary>
 // 매니저들(-100)이 준비된 뒤, 게임 쪽(GameManager)이 세이브를 불러오기 전에 준비
@@ -146,14 +146,32 @@ public class DecorManager : MonoBehaviour
 
     #region 보관함
 
-    /// <summary>보관함에 남은 개수 = 가방에 있는 개수 − 모든 장소에 놓인 개수</summary>
+    /// <summary>보관함에 남은 개수 = 가방에 있는 개수 (놓은 것은 가방에서 빠져 있음)</summary>
     public int StorageCount(DecorDefinition decor)
     {
         if (decor == null)
             throw new ArgumentNullException(nameof(decor));
 
-        int owned = _inventory != null ? _inventory.GetCount(decor.Item) : 0;
-        return DecorStorage.Available(owned, _layouts.Values, decor);
+        return _inventory != null && decor.Item != null ? _inventory.GetCount(decor.Item) : 0;
+    }
+
+    /// <summary>가진 개수 = 가방 + 모든 장소에 놓인 개수 (뽑기의 새 장난감 판정 등)</summary>
+    public int OwnedCount(ItemDefinition item)
+    {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+
+        int count = _inventory != null ? _inventory.GetCount(item) : 0;
+        var decor = _catalog != null ? _catalog.FindByItem(item) : null;
+        return decor != null ? count + PlacedCount(decor) : count;
+    }
+
+    /// <summary>OwnedCount를 DecorManager 없이도 (없으면 가방 개수만)</summary>
+    public static int OwnedCount(Inventory bag, ItemDefinition item)
+    {
+        if (Instance != null)
+            return Instance.OwnedCount(item);
+        return bag != null && item != null ? bag.GetCount(item) : 0;
     }
 
     /// <summary>모든 장소에 놓인 개수</summary>
@@ -165,33 +183,36 @@ public class DecorManager : MonoBehaviour
         return DecorStorage.PlacedCount(_layouts.Values, decor);
     }
 
-    /// <summary>보관함에서 꺼내 이 장소에 놓기. 남은 개수가 없으면 NotOwned</summary>
+    /// <summary>보관함(가방)에서 꺼내 이 장소에 놓기: 놓으면 가방에서 하나 빠진다. 남은 개수가 없으면 NotOwned</summary>
     public DecorPlacementResult TryPlaceFromStorage(DecorBoardDefinition board, DecorDefinition decor, Vector2Int origin,
         DecorRotation rotation, out PlacedDecor placed)
     {
         placed = null;
         var layout = GetLayout(board);
-        if (StorageCount(decor) <= 0)
+        if (_inventory == null)
             return DecorPlacementResult.NotOwned;
 
-        return layout.TryPlace(decor, origin, rotation, out placed);
+        return DecorStorage.TryPlaceFromBag(_inventory, layout, decor, origin, rotation, out placed);
     }
 
-    /// <summary>놓인 물건을 보관함으로 되돌린다 (건물은 치울 수 없음)</summary>
+    /// <summary>놓인 물건을 보관함(가방)으로 되돌린다. 건물이거나 가방에 자리가 없으면 false</summary>
     public bool ReturnToStorage(DecorBoardDefinition board, int instanceId)
     {
         var layout = GetLayout(board);
-        if (layout.TryGet(instanceId, out var placed) && placed.Decor.IsBuilding)
-            return false;
-        return layout.Remove(instanceId);
+        return _inventory != null && DecorStorage.TryReturnToBag(_inventory, layout, instanceId);
     }
 
     /// <summary>건물을 놓는다 (보관함과 상관없음. 비용·공사는 SettlementManager가 함께 처리)</summary>
     public DecorPlacementResult TryPlaceBuilding(DecorBoardDefinition board, BuildingDefinition building, Vector2Int origin, out PlacedDecor placed)
+        => TryPlaceBuilding(board, building, origin, DecorRotation.R0, out placed);
+
+    /// <summary>건물을 이 방향으로 놓는다 (돌릴 수 없는 건물은 0도)</summary>
+    public DecorPlacementResult TryPlaceBuilding(DecorBoardDefinition board, BuildingDefinition building, Vector2Int origin,
+        DecorRotation rotation, out PlacedDecor placed)
     {
         if (building == null)
             throw new ArgumentNullException(nameof(building));
-        return GetLayout(board).TryPlace(building, origin, DecorRotation.R0, out placed);
+        return GetLayout(board).TryPlace(building, origin, rotation, out placed);
     }
 
     /// <returns>이름이 이 ID인 격자 (없으면 null)</returns>
@@ -205,15 +226,11 @@ public class DecorManager : MonoBehaviour
         return null;
     }
 
-    // 가방에서 빠져(판매·삭제 등) 가진 수보다 많이 놓여 있으면 넘치는 만큼 치운다
+    // 가방 개수 = 보관함 개수 (놓인 물건은 가방과 따로라 가방에서 빠져도 그대로)
     private void HandleItemChanged(ItemChangedEvent e)
     {
-        var decor = _catalog.FindByItem(e.Item);
-        if (decor == null)
-            return;
-
-        DecorStorage.RemoveExcess(e.NewCount, _layouts.Values, decor);
-        OnStorageChanged?.Invoke();
+        if (_catalog.FindByItem(e.Item) != null)
+            OnStorageChanged?.Invoke();
     }
 
     #endregion
@@ -284,7 +301,10 @@ public class DecorManager : MonoBehaviour
 
     #region 세이브
 
-    /// <summary>게임 시작 시 한 번, 가방을 불러온 뒤에 호출</summary>
+    /// <summary>
+    /// 게임 시작 시 한 번, 가방을 불러온 뒤에 호출. 자리가 맞지 않는 장난감 · 가구는 가방으로 돌아가고,
+    /// 옛 세이브(놓아도 가방에 남던 때)의 격자는 놓인 만큼 가방에서 한 번 뺀다 (DecorSaveConverter.ReadWithBag)
+    /// </summary>
     /// <returns>자리가 맞지 않아 보관함으로 돌아간 물건 수</returns>
     public int LoadFromSave(DecorSaveData saved)
     {
@@ -306,7 +326,9 @@ public class DecorManager : MonoBehaviour
                     _unknownSavedBoards.Add(boardSave);
                     continue;
                 }
-                skipped += DecorSaveConverter.Read(boardSave, _layouts[board], _catalog, board.SaveOrigin);
+                skipped += _inventory != null
+                    ? DecorSaveConverter.ReadWithBag(boardSave, _layouts[board], _catalog, _inventory, board.SaveOrigin)
+                    : DecorSaveConverter.Read(boardSave, _layouts[board], _catalog, board.SaveOrigin);
             }
         }
 

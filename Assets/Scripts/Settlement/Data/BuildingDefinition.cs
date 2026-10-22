@@ -51,7 +51,9 @@ public class TraitRequirement
 /// <summary>
 /// 플레이어가 자리를 골라 짓는 건물 (P4: 작은 집, 특성 건물). 꾸미기 격자에 장난감과 같은 규칙으로 놓이고(칸 크기·겹침·옮기기),
 /// 놓는 순간 비용을 내고 공사가 시작된다. 보관함·가방에는 들어가지 않고 치울 수 없다 (옮기기만).
-/// 놓인 자리는 꾸미기 세이브, 공사·완성 기록은 정착 세이브(SettlementSaveData.buildings)가 원본이다
+/// 놓인 자리(방향 포함)는 꾸미기 세이브, 공사·완성 기록은 정착 세이브(SettlementSaveData.buildings)가 원본이다.
+/// 돌리기: 칸은 90도마다 가로·세로가 바뀌고(4×3 ↔ 3×4), 그림은 옆에서 본 한 장이라 90·180도는 좌우 반전으로 보여준다
+/// (방향별 그림을 넣으면 그 그림). 문 앞 한 줄은 어느 방향이든 발밑 아래 줄. 농장 부품은 정사각형이라 돌리지 않는다
 /// </summary>
 [CreateAssetMenu(fileName = "Building", menuName = "Game Data/Settlement/Building")]
 public class BuildingDefinition : DecorDefinition, IDistrictBuilding
@@ -166,6 +168,23 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     public bool IsFarmPart => _farmPart != FarmPartKind.None;
     public bool Instant => _instant;
 
+    /// <summary>방향별 그림이 없을 때 좌우 반전으로 보여줄 방향 (90 · 180도)</summary>
+    public static bool Mirrored(DecorRotation rotation) => rotation == DecorRotation.R90 || rotation == DecorRotation.R180;
+
+    /// <summary>이 방향의 완성 그림 (방향별 그림이 없으면 기본 완성 그림)</summary>
+    public Sprite FinishedSprite(DecorRotation rotation)
+    {
+        var own = RotationSprite(rotation);
+        return own != null ? own : WorldSprite;
+    }
+
+    /// <summary>이 방향에서 이 그림(완성 · 공사 단계)을 좌우 반전할지. 방향별 그림 자신은 뒤집지 않음</summary>
+    public bool FlipsAt(DecorRotation rotation, Sprite shown)
+    {
+        var own = RotationSprite(rotation);
+        return Mirrored(rotation) && (own == null || shown != own);
+    }
+
     /// <summary>테스트·설정 도구용: 구역</summary>
     public void SetupDistrict(DistrictType district) => _district = district;
 
@@ -206,7 +225,7 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     {
         if (string.IsNullOrWhiteSpace(_buildingId))
             Debug.LogWarning($"[{name}] BuildingId가 비어 있습니다.", this);
-        if (CanRotate)
-            Debug.LogWarning($"[{name}] 건물은 돌리지 않습니다 (회전을 꺼 주세요).", this);
+        if (CanRotate && IsFarmPart)
+            Debug.LogWarning($"[{name}] 농장 부품은 돌리지 않습니다 (회전을 꺼 주세요).", this);
     }
 }

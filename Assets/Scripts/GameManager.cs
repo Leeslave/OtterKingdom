@@ -505,7 +505,8 @@ public partial class GameManager : MonoBehaviour
             profile.LoadFromSave(save.profile);
         }
 
-        // Placed toys and decor regions: after the bag (storage = owned - placed),
+        // Placed toys and decor regions: after the bag (placing takes a toy out of
+        // the bag; an old save's placed toys are taken out here once),
         // before the settlement (an operational region unlocks its decor region).
         var decor = DecorManager.Instance;
         if (decor != null && loadedDecor != decor)
@@ -806,11 +807,13 @@ public partial class GameManager : MonoBehaviour
 
     private void SaveNow()
     {
+        // Before the bag is written: loading decor may take an old save's
+        // placed toys out of the bag.
+        LoadGlobalProgressOnce();
         WriteCurrenciesToSave();
         InventoryManager.Instance.WriteToSave(save.inventory);
         save.inventoryCapacity = Bag.Capacity;
         save.mineMaze = InventoryManager.Instance.MineMazeState;
-        LoadGlobalProgressOnce();
         if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(save.collection);
         if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);
         if (ProfileManager.Instance != null) ProfileManager.Instance.WriteToSave(save.profile ??= new ProfileSaveData());

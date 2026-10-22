@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::BuildingDefinition
   _item: {fileID: 0}
   _footprint: {x: 4, y: 3}
-  _canRotate: 0
+  _canRotate: 1
   _playStyle: 0
   _playSeconds: {x: 4, y: 7}
   _maxPlayers: 1

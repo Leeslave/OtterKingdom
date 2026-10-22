@@ -93,6 +93,7 @@ public static partial class SettlementSetup
         so.FindProperty("_icon").objectReferenceValue = sprite;
         so.FindProperty("_worldSprite").objectReferenceValue = sprite;
         so.FindProperty("_footprint").vector2IntValue = new Vector2Int(row.size, row.size);
+        // 농장 부품은 정사각형이라 돌리지 않음
         so.FindProperty("_canRotate").boolValue = false;
         so.FindProperty("_kind").enumValueIndex = (int)BuildingKind.Facility;
         so.FindProperty("_requiredLevel").intValue = 0;

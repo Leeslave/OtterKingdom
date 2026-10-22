@@ -261,7 +261,8 @@ public class GachaManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             var roll = GachaRules.Roll(table, pity, _random);
-            bool isNew = inventory.GetCount(roll.Item) == 0;
+            // 광장 등에 놓은 장난감은 가방에서 빠져 있으므로 놓인 것까지 셈
+            bool isNew = DecorManager.OwnedCount(inventory, roll.Item) == 0;
             int added = inventory.Add(roll.Item, 1, ItemChangeReason.Gacha);
             int bonus = isNew ? 0 : GachaRules.ShardsFor(roll.Tier);
             if (added == 0) // 최대 보유 수에 걸림: 그 몫까지 조각으로
@@ -313,7 +314,7 @@ public class GachaManager : MonoBehaviour
         if (inventory.GetAddableAmount(item) < 1)
             return GachaExchangeOutcome.Full;
 
-        bool isNew = inventory.GetCount(item) == 0;
+        bool isNew = DecorManager.OwnedCount(inventory, item) == 0;
         inventory.Add(item, 1, ItemChangeReason.Gacha);
         _points -= banner.ExchangePoints;
         pull = new GachaPull(new GachaRoll(item, GachaTable.TierOf(item), true, false), isNew, 0);

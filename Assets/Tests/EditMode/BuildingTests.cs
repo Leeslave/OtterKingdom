@@ -194,7 +194,7 @@ public class BuildingTests
         layout.AddRegion("base", new[] { new RectInt(0, 0, 101, 40) }, true);
         Assert.AreEqual(DecorPlacementResult.Ok, layout.TryPlace(toy, new Vector2Int(80, 5), DecorRotation.R0, out _));
         Assert.AreEqual(DecorPlacementResult.Ok, layout.TryPlace(_house, new Vector2Int(10, 20), DecorRotation.R90, out var house));
-        Assert.AreEqual(DecorRotation.R0, house.Rotation, "건물은 돌리지 않음");
+        Assert.AreEqual(DecorRotation.R0, house.Rotation, "돌리기를 끈 건물은 0도");
 
         var saved = new DecorBoardSaveData { boardId = "plaza" };
         DecorSaveConverter.Write(layout, saved, origin);
@@ -218,6 +218,148 @@ public class BuildingTests
         DecorSaveConverter.Read(oldSave, expanded, catalog, origin);
         Assert.IsTrue(expanded.TryGet(1, out var oldToy));
         Assert.AreEqual(new Vector2Int(80, 5), oldToy.Origin, "옛 자리 그대로");
+    }
+
+    #endregion
+
+    #region 돌리기
+
+    [Test]
+    public void RotatedBuilding_FootprintTurnsForOverlap()
+    {
+        var house = RotatableHouse();
+        var layout = OpenLayout();
+
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R90, out var placed));
+        Assert.AreEqual(DecorRotation.R90, placed.Rotation);
+        Assert.AreEqual(new Vector2Int(3, 4), placed.Size, "4×3 → 3×4");
+        Assert.AreEqual(placed, layout.GetAt(new Vector2Int(4, 5)), "돌린 칸의 위쪽 끝");
+        Assert.IsNull(layout.GetAt(new Vector2Int(5, 2)), "돌리기 전이면 차지했을 칸은 비어 있음");
+
+        // 빈 칸이 된 오른쪽에는 놓을 수 있고, 돌린 칸과 겹치면 안 됨
+        var toy = Create<DecorDefinition>();
+        toy.SetupPlacement(Vector2Int.one, false, null);
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.Check(toy, new Vector2Int(5, 3), DecorRotation.R0));
+        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(toy, new Vector2Int(3, 5), DecorRotation.R0));
+        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(house, new Vector2Int(4, 4), DecorRotation.R0));
+
+        // 옮기면서 다시 돌림 (0도로 돌아오면 다시 4×3)
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.TryMove(placed.InstanceId, new Vector2Int(2, 2), DecorRotation.R180));
+        Assert.AreEqual(new Vector2Int(4, 3), placed.Size);
+        Assert.AreEqual(placed, layout.GetAt(new Vector2Int(5, 2)));
+        Assert.IsNull(layout.GetAt(new Vector2Int(2, 5)));
+    }
+
+    [Test]
+    public void RotatedBuilding_KeepsDoorstepBelow()
+    {
+        var house = RotatableHouse();
+        var layout = OpenLayout();
+        layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R270, out _);
+
+        var toy = Create<DecorDefinition>();
+        toy.SetupPlacement(Vector2Int.one, false, null);
+        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(toy, new Vector2Int(4, 1), DecorRotation.R0), "돌린 집도 발밑 아래 줄은 비워 둠");
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.Check(toy, new Vector2Int(5, 1), DecorRotation.R0), "돌린 칸(3칸 폭) 밖은 문 앞이 아님");
+    }
+
+    [Test]
+    public void RotatedBuilding_SaveRoundTrip()
+    {
+        var house = RotatableHouse();
+        var catalog = Create<DecorCatalog>();
+        catalog.Setup(new DecorDefinition[0], new[] { house });
+        var layout = OpenLayout();
+        layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R270, out var placed);
+
+        var saved = new DecorBoardSaveData { boardId = "plaza" };
+        DecorSaveConverter.Write(layout, saved);
+        var loaded = OpenLayout();
+        Assert.AreEqual(0, DecorSaveConverter.Read(JsonUtility.FromJson<DecorBoardSaveData>(JsonUtility.ToJson(saved)), loaded, catalog));
+
+        Assert.IsTrue(loaded.TryGet(placed.InstanceId, out var back));
+        Assert.AreEqual(DecorRotation.R270, back.Rotation);
+        Assert.AreEqual(new RectInt(2, 2, 3, 4), back.Area, "불러와도 돌린 칸 그대로");
+        Assert.AreEqual(back, loaded.GetAt(new Vector2Int(4, 5)));
+    }
+
+    [Test]
+    public void FarmPart_DoesNotRotate()
+    {
+        var field = Create<BuildingDefinition>();
+        field.Setup("bld_farm_field", "밭", BuildingKind.Facility, 0, null, null, 0, 0, null, 0f, 60f);
+        field.SetupPlacement(new Vector2Int(3, 3), false, null);
+        var so = new SerializedObject(field);
+        so.FindProperty("_farmPart").intValue = (int)FarmPartKind.Field;
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        OpenLayout().TryPlace(field, new Vector2Int(2, 2), DecorRotation.R90, out var placed);
+        Assert.AreEqual(DecorRotation.R0, placed.Rotation);
+        Assert.IsFalse(DecorEditSession.ForNew(field, Vector2Int.zero).CanRotate, "회전 버튼이 안 보임");
+    }
+
+    [Test]
+    public void Picture_MirrorsAt90And180_UnlessOwnPicture()
+    {
+        var house = RotatableHouse();
+        var finished = CreateSprite();
+        var stage = CreateSprite();
+        house.SetupPlacement(new Vector2Int(4, 3), true, finished);
+
+        Assert.IsFalse(house.FlipsAt(DecorRotation.R0, finished));
+        Assert.IsTrue(house.FlipsAt(DecorRotation.R90, finished));
+        Assert.IsTrue(house.FlipsAt(DecorRotation.R180, finished));
+        Assert.IsFalse(house.FlipsAt(DecorRotation.R270, finished));
+        Assert.AreEqual(finished, house.FinishedSprite(DecorRotation.R90));
+
+        // 90도 전용 그림을 넣으면 그 그림은 뒤집지 않고, 공사 단계 그림은 여전히 뒤집음
+        var side = CreateSprite();
+        var so = new SerializedObject(house);
+        so.FindProperty("_rotationSprites").GetArrayElementAtIndex(1).objectReferenceValue = side;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        Assert.AreEqual(side, house.FinishedSprite(DecorRotation.R90));
+        Assert.IsFalse(house.FlipsAt(DecorRotation.R90, side));
+        Assert.IsTrue(house.FlipsAt(DecorRotation.R90, stage));
+    }
+
+    [Test]
+    public void BuildingAssets_RotateExceptFarmParts()
+    {
+        int rotatable = 0;
+        foreach (var guid in AssetDatabase.FindAssets("t:BuildingDefinition", new[] { "Assets/Scriptable Obejects/Decor/Buildings" }))
+        {
+            var building = AssetDatabase.LoadAssetAtPath<BuildingDefinition>(AssetDatabase.GUIDToAssetPath(guid));
+            if (building == null)
+                continue;
+            Assert.AreEqual(!building.IsFarmPart, building.CanRotate, $"{building.name}: 농장 부품만 돌리지 않음");
+            if (building.CanRotate)
+                rotatable++;
+        }
+        Assert.Greater(rotatable, 0);
+    }
+
+    private BuildingDefinition RotatableHouse()
+    {
+        var house = Create<BuildingDefinition>();
+        house.Setup("bld_rot_house", "집", BuildingKind.Home, 0, null, null, 0, 0, null, 0f, 60f);
+        house.SetupPlacement(new Vector2Int(4, 3), true, null);
+        return house;
+    }
+
+    private static DecorLayout OpenLayout()
+    {
+        var layout = new DecorLayout(new Vector2Int(12, 12));
+        layout.AddRegion("base", new[] { new RectInt(0, 0, 12, 12) }, true);
+        return layout;
+    }
+
+    private Sprite CreateSprite()
+    {
+        var texture = new Texture2D(4, 4);
+        _created.Add(texture);
+        var sprite = Sprite.Create(texture, new Rect(0, 0, 4, 4), new Vector2(0.5f, 0f));
+        _created.Add(sprite);
+        return sprite;
     }
 
     #endregion

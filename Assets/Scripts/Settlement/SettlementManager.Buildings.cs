@@ -117,10 +117,14 @@ public partial class SettlementManager
         return string.Join(" · ", parts);
     }
 
-    /// <summary>
-    /// 고른 자리에 건물을 놓고 공사를 시작: 확인 → 자리 확인 → 비용 → 놓기 → 공사 기록 → 저장. 하나라도 안 되면 아무것도 바꾸지 않는다
-    /// </summary>
+    /// <summary>고른 자리에 0도로 건물을 놓고 공사를 시작 (아래 참고)</summary>
     public BuildingBlock TryStartBuilding(BuildingDefinition building, Vector2Int origin, out DecorPlacementResult placement)
+        => TryStartBuilding(building, origin, DecorRotation.R0, out placement);
+
+    /// <summary>
+    /// 고른 자리 · 방향에 건물을 놓고 공사를 시작: 확인 → 자리 확인 → 비용 → 놓기 → 공사 기록 → 저장. 하나라도 안 되면 아무것도 바꾸지 않는다
+    /// </summary>
+    public BuildingBlock TryStartBuilding(BuildingDefinition building, Vector2Int origin, DecorRotation rotation, out DecorPlacementResult placement)
     {
         if (building == null)
             throw new ArgumentNullException(nameof(building));
@@ -137,7 +141,7 @@ public partial class SettlementManager
             placement = DecorPlacementResult.Unavailable;
             return BuildingBlock.None;
         }
-        placement = decor.GetLayout(board).Check(building, origin, DecorRotation.R0);
+        placement = decor.GetLayout(board).Check(building, origin, rotation);
         if (placement != DecorPlacementResult.Ok)
             return BuildingBlock.None;
 
@@ -145,7 +149,7 @@ public partial class SettlementManager
         int gold = BuildingGoldCost(building);
         var items = BuildingItemCosts(building);
         bool freeFirstField = BuildingRules.IsFreeFirstField(Settlement, building);
-        placement = decor.TryPlaceBuilding(board, building, origin, out var placed);
+        placement = decor.TryPlaceBuilding(board, building, origin, rotation, out var placed);
         if (placement != DecorPlacementResult.Ok)
             return BuildingBlock.None;
         PayCost(gold, items);

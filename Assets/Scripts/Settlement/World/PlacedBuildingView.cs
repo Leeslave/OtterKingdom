@@ -52,7 +52,7 @@ public class PlacedBuildingView : PlacedDecorView
     {
         WorldRect = worldRect;
         transform.position = new Vector3(worldRect.center.x, worldRect.yMin, 0f);
-        BuildingVisual.Fit(_body, _renderer, _building, SpriteFor(_shownStage), worldRect);
+        BuildingVisual.Fit(_body, _renderer, _building, SpriteFor(_shownStage), Placed.Rotation, worldRect);
         PlaceBar();
         SetSortingOrder(0);
     }
@@ -83,7 +83,7 @@ public class PlacedBuildingView : PlacedDecorView
         {
             bool finishing = animate && stage == -1 && _shownStage != int.MinValue;
             _shownStage = stage;
-            BuildingVisual.Fit(_body, _renderer, _building, SpriteFor(stage), WorldRect);
+            BuildingVisual.Fit(_body, _renderer, _building, SpriteFor(stage), Placed.Rotation, WorldRect);
             if (animate)
                 Bounce(finishing ? 0.25f : 0.08f);
         }
@@ -132,7 +132,7 @@ public class PlacedBuildingView : PlacedDecorView
             : Color.white;
         if (underConstruction && stage < stages.Count && stages[stage] != null)
             return stages[stage];
-        return _building.WorldSprite;
+        return _building.FinishedSprite(Placed.Rotation);
     }
 
     private void Bounce(float strength)
@@ -179,7 +179,7 @@ public class PlacedBuildingView : PlacedDecorView
     // 완성될 그림의 지붕 위
     private void PlaceBar()
     {
-        var reference = _building.WorldSprite;
+        var reference = _building.FinishedSprite(Placed.Rotation);
         float height = reference != null
             ? reference.bounds.size.y * (WorldRect.width * _building.WidthFill / Mathf.Max(0.01f, reference.bounds.size.x))
             : WorldRect.height;

@@ -117,6 +117,13 @@ public class DecorDefinition : ScriptableObject
         return WorldSprite;
     }
 
+    /// <returns>이 방향 전용 그림 (없으면 null)</returns>
+    protected Sprite RotationSprite(DecorRotation rotation)
+    {
+        int index = (int)rotation;
+        return _rotationSprites != null && index < _rotationSprites.Length ? _rotationSprites[index] : null;
+    }
+
     /// <summary>테스트·설정 도구용: 가구 · 자리 · 아늑함</summary>
     public void SetupFurniture(bool furniture, bool hasSpot, PlazaSpotKind spotKind, Vector2[] spotPoints, int coziness)
     {

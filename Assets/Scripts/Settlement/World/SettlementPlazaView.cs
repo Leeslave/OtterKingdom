@@ -294,7 +294,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     }
 
     // 광장에 처음부터 놓인 소품(Props 아래 그루터기 · 덤불 · 통나무 · 벤치 · 가로등 · 피크닉 매트) 중 상점 가구와 같은 그림인 것은
-    // 세이브마다 한 번 같은 자리의 꾸미기 가구로 바꿔 (가방에 넣고 그 자리에 놓음) 상점 가구처럼 옮기거나 보관할 수 있게 한다.
+    // 세이브마다 한 번 같은 자리의 꾸미기 가구로 바꿔 (그 자리에 놓음. 치우면 가방으로) 상점 가구처럼 옮기거나 보관할 수 있게 한다.
     // 바꾼 소품은 그 뒤로 늘 숨김. 그 자리에 아직 놓을 수 없으면(잠긴 땅 등) 소품 그대로 두고 다음에 다시 봄
     private const string DefaultPropsRoot = "Props";
     private const string DefaultPropFlagPrefix = "decor_prop_";
@@ -303,8 +303,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     {
         var decor = DecorManager.Instance;
         var board = DecorBoardView.Active;
-        var bag = InventoryManager.Instance != null ? InventoryManager.Instance.Inventory : null;
-        if (!_manager.IsLoaded || decor == null || board == null || board.Layout == null || bag == null)
+        if (!_manager.IsLoaded || decor == null || board == null || board.Layout == null)
             return;
 
         bool placedAny = false;
@@ -330,8 +329,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             // 소품 자신의 발자국이 그 칸을 막고 있으므로 월드 쪽 막힘은 보지 않음 (구역 · 잠김 · 겹침은 봄)
             if (board.Layout.Check(furniture, origin, DecorRotation.R0, 0, true) != DecorPlacementResult.Ok)
                 continue;
-            if (bag.Add(furniture.Item, 1, ItemChangeReason.Grant) < 1)
-                continue;
+            // 놓인 가구는 가방에 들지 않음 (치우면 그때 가방으로)
             board.Layout.TryPlace(furniture, origin, DecorRotation.R0, out _, true);
             _manager.Settlement.SetFlag(flag);
             prop.gameObject.SetActive(false);

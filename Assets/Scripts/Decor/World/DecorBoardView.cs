@@ -526,8 +526,9 @@ public class DecorBoardView : MonoBehaviour
         if (Layout == null)
             return;
 
+        // 장난감 · 가구는 가방으로 (건물은 그대로)
         foreach (var placed in new List<PlacedDecor>(Layout.Placed))
-            Layout.Remove(placed.InstanceId);
+            DecorManager.Instance.ReturnToStorage(_board, placed.InstanceId);
     }
 
     private void OnDrawGizmosSelected()

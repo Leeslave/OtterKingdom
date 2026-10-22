@@ -29,6 +29,8 @@ public class PlacedDecorSaveEntry
 public class DecorBoardSaveData
 {
     public string boardId;
+    // true = 놓인 장난감 · 가구가 가방에서 빠진 세이브. 옛 세이브(false)는 불러올 때 한 번 놓인 만큼 가방에서 뺀다
+    public bool placedOutOfBag;
     public List<PlacedDecorSaveEntry> placed = new List<PlacedDecorSaveEntry>();
     public List<string> unlockedRegions = new List<string>();
 }
@@ -52,6 +54,7 @@ public static class DecorSaveConverter
         if (result == null) throw new ArgumentNullException(nameof(result));
 
         result.placed.Clear();
+        result.placedOutOfBag = true;
         var placed = new List<PlacedDecor>(layout.Placed);
         placed.Sort((a, b) => a.InstanceId.CompareTo(b.InstanceId));
         foreach (var p in placed)
@@ -67,8 +70,10 @@ public static class DecorSaveConverter
     /// 없는 물건이나 자리가 맞지 않는 물건은 건너뛴다 (보관함으로 돌아간 것처럼 됨)
     /// </summary>
     /// <param name="saveOrigin">세이브 좌표의 기준 칸: 칸 = 세이브 + 기준</param>
+    /// <param name="skippedDecors">자리가 맞지 않아 놓지 못한 물건 (종류를 아는 것만, 선택)</param>
     /// <returns>건너뛴 물건 수</returns>
-    public static int Read(DecorBoardSaveData saved, DecorLayout layout, DecorCatalog catalog, Vector2Int saveOrigin = default)
+    public static int Read(DecorBoardSaveData saved, DecorLayout layout, DecorCatalog catalog, Vector2Int saveOrigin = default,
+        List<DecorDefinition> skippedDecors = null)
     {
         if (saved == null) throw new ArgumentNullException(nameof(saved));
         if (layout == null) throw new ArgumentNullException(nameof(layout));
@@ -86,14 +91,37 @@ public static class DecorSaveConverter
 
         foreach (var line in saved.placed)
         {
+            DecorDefinition decor = null;
             bool loaded = line != null
                 && !string.IsNullOrEmpty(line.itemId)
                 && Enum.IsDefined(typeof(DecorRotation), line.rotation)
-                && catalog.TryGetDecor(line.itemId, out var decor)
+                && catalog.TryGetDecor(line.itemId, out decor)
                 && layout.LoadPlaced(line.instanceId, decor, new Vector2Int(line.x, line.y) + saveOrigin, line.rotation);
-            if (!loaded)
-                skipped++;
+            if (loaded)
+                continue;
+            skipped++;
+            if (decor != null)
+                skippedDecors?.Add(decor);
         }
+        return skipped;
+    }
+
+    /// <summary>
+    /// Read + 가방 맞추기. 새 세이브는 놓지 못한 장난감 · 가구를 가방에 돌려놓고(보관함으로 돌아감),
+    /// 옛 세이브(placedOutOfBag = false)는 그 개수가 아직 가방에 있으므로 대신 놓인 만큼을 가방에서 한 번 뺀다
+    /// </summary>
+    /// <returns>건너뛴 물건 수</returns>
+    public static int ReadWithBag(DecorBoardSaveData saved, DecorLayout layout, DecorCatalog catalog, Inventory bag,
+        Vector2Int saveOrigin = default)
+    {
+        if (bag == null) throw new ArgumentNullException(nameof(bag));
+
+        var skippedDecors = new List<DecorDefinition>();
+        int skipped = Read(saved, layout, catalog, saveOrigin, skippedDecors);
+        if (saved.placedOutOfBag)
+            DecorStorage.ReturnSkippedToBag(bag, skippedDecors);
+        else
+            DecorStorage.TakePlacedOutOfBag(bag, layout);
         return skipped;
     }
 }

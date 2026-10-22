@@ -99,7 +99,8 @@ public class FairyShopPresenter : MonoBehaviour
         }
 
         var inventory = InventoryManager.Instance.Inventory;
-        int owned = inventory.GetCount(product.Item);
+        // 광장 등에 놓은 가구는 가방에서 빠져 있으므로 놓인 것까지 셈
+        int owned = DecorManager.OwnedCount(inventory, product.Item);
         int max = ShopPurchaseRules.MaxQuantity(product, inventory.GetAddableAmount(product.Item));
         _popup.Show(product, owned, max);
     }

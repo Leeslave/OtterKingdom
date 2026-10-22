@@ -125,7 +125,8 @@ public class Inventory
         _acquiredOrder[item] = ++_acquireSequence;
 
         bool hadNewItems = HasNewItems;
-        if (oldCount == 0)
+        // 치운 꾸미기가 돌아온 것은 새로 얻은 게 아님
+        if (oldCount == 0 && reason != ItemChangeReason.DecorReturn)
             _unseenItems.Add(item);
 
         OnItemChanged?.Invoke(new ItemChangedEvent(item, oldCount, newCount, reason));

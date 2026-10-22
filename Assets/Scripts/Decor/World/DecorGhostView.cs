@@ -73,7 +73,7 @@ public class DecorGhostView : MonoBehaviour
             _toy.transform.localScale = new Vector3(scale.x, scale.y, 1f);
         }
         else if (decor is BuildingDefinition building)
-            BuildingVisual.Fit(_toyBody, _toy, building, building.WorldSprite, worldRect);
+            BuildingVisual.Fit(_toyBody, _toy, building, building.FinishedSprite(rotation), rotation, worldRect);
         else
             DecorVisual.Fit(_toyBody, _toy, decor, rotation, worldRect, fill);
         _toyBody.localPosition += new Vector3(worldRect.width * 0.5f, 0f, 0f);

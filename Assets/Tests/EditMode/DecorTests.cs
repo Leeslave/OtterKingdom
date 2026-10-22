@@ -205,7 +205,7 @@ public class DecorTests
 
     #endregion
 
-    #region 보관함 (여러 장소)
+    #region 보관함 (가방: 놓으면 빠지고 치우면 돌아옴)
 
     [Test]
     public void Storage_CountsPlacementsInEveryPlace()
@@ -215,21 +215,131 @@ public class DecorTests
         _layout.TryPlace(_ball, new Vector2Int(0, 0), DecorRotation.R0, out _);
         farm.TryPlace(_ball, new Vector2Int(1, 1), DecorRotation.R0, out _);
 
-        var layouts = new[] { _layout, farm };
-        Assert.AreEqual(1, DecorStorage.Available(3, layouts, _ball), "광장 1 + 밭 1 → 3개 중 1개 남음");
-        Assert.AreEqual(0, DecorStorage.Available(1, layouts, _ball), "0 아래로 내려가지 않습니다.");
+        Assert.AreEqual(2, DecorStorage.PlacedCount(new[] { _layout, farm }, _ball), "광장 1 + 밭 1");
     }
 
     [Test]
-    public void RemoveExcess_TakesBackNewestFirst()
+    public void PlaceFromBag_TakesOneOut_ReturnPutsItBack()
     {
-        _layout.TryPlace(_ball, new Vector2Int(0, 0), DecorRotation.R0, out var older);
-        _layout.TryPlace(_ball, new Vector2Int(1, 0), DecorRotation.R0, out var newer);
+        var bag = new Inventory(4, 4);
+        bag.Add(_ball.Item, 2, ItemChangeReason.Test);
 
-        // 가방에서 1개가 빠짐 → 2개 놓였는데 1개만 가짐
-        Assert.AreEqual(1, DecorStorage.RemoveExcess(1, new[] { _layout }, _ball));
-        Assert.IsTrue(_layout.TryGet(older.InstanceId, out _));
-        Assert.IsFalse(_layout.TryGet(newer.InstanceId, out _));
+        Assert.AreEqual(DecorPlacementResult.Ok,
+            DecorStorage.TryPlaceFromBag(bag, _layout, _ball, new Vector2Int(0, 0), DecorRotation.R0, out var placed));
+        Assert.AreEqual(1, bag.GetCount(_ball.Item), "놓으면 가방에서 하나 빠짐");
+        Assert.AreEqual(1, _layout.PlacedCount(_ball));
+
+        Assert.IsTrue(DecorStorage.TryReturnToBag(bag, _layout, placed.InstanceId));
+        Assert.AreEqual(2, bag.GetCount(_ball.Item), "치우면 가방으로 돌아옴");
+        Assert.AreEqual(0, _layout.PlacedCount(_ball));
+    }
+
+    [Test]
+    public void PlaceFromBag_EmptyBagOrBadSpot_ChangesNothing()
+    {
+        var bag = new Inventory(4, 4);
+        Assert.AreEqual(DecorPlacementResult.NotOwned,
+            DecorStorage.TryPlaceFromBag(bag, _layout, _ball, new Vector2Int(0, 0), DecorRotation.R0, out _));
+
+        bag.Add(_ball.Item, 1, ItemChangeReason.Test);
+        Assert.AreEqual(DecorPlacementResult.Locked,
+            DecorStorage.TryPlaceFromBag(bag, _layout, _ball, new Vector2Int(4, 0), DecorRotation.R0, out _));
+        Assert.AreEqual(1, bag.GetCount(_ball.Item), "놓지 못하면 가방은 그대로");
+        Assert.AreEqual(0, _layout.PlacedCount(_ball));
+    }
+
+    [Test]
+    public void ReturnToBag_IsNotANewItem()
+    {
+        var bag = new Inventory(4, 4);
+        bag.Add(_ball.Item, 1, ItemChangeReason.Test);
+        bag.MarkAllSeen();
+        DecorStorage.TryPlaceFromBag(bag, _layout, _ball, new Vector2Int(0, 0), DecorRotation.R0, out var placed);
+        Assert.AreEqual(0, bag.GetCount(_ball.Item));
+
+        DecorStorage.TryReturnToBag(bag, _layout, placed.InstanceId);
+        Assert.IsFalse(bag.HasNewItems, "치워서 돌아온 것은 새 아이템(N) 표시가 없음");
+    }
+
+    [Test]
+    public void ReturnToBag_RefusesBuildingAndFullBag()
+    {
+        // 카테고리 없는 아이템은 가방 칸을 씀: 1칸짜리 가방을 다른 아이템이 채움
+        var bag = new Inventory(1, 1);
+        bag.Add(_ball.Item, 1, ItemChangeReason.Test);
+        DecorStorage.TryPlaceFromBag(bag, _layout, _ball, new Vector2Int(0, 0), DecorRotation.R0, out var placed);
+        bag.Add(_bench.Item, 1, ItemChangeReason.Test);
+
+        Assert.IsFalse(DecorStorage.TryReturnToBag(bag, _layout, placed.InstanceId), "가방에 자리가 없으면 치우지 않음");
+        Assert.IsTrue(_layout.TryGet(placed.InstanceId, out _), "놓인 그대로");
+
+        var house = Track(ScriptableObject.CreateInstance<BuildingDefinition>());
+        house.Setup("bld_house", "집", BuildingKind.Home, 0, null, null, 0, 0, null, 0f, 60f);
+        house.SetupPlacement(new Vector2Int(2, 2), true, null);
+        _layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R0, out var building);
+        Assert.IsFalse(DecorStorage.TryReturnToBag(new Inventory(4, 4), _layout, building.InstanceId), "건물은 가방으로 가지 않음");
+    }
+
+    [Test]
+    public void OldSave_TakesPlacedOutOfBagOnce()
+    {
+        var board = CreateBoard();
+        var catalog = CreateCatalog();
+        var bag = new Inventory(4, 4);
+        bag.Add(_ball.Item, 3, ItemChangeReason.Test);
+
+        // 놓아도 가방에 남아 있던 때의 세이브: 공 3개 중 2개가 놓여 있음
+        var oldSave = new DecorBoardSaveData { boardId = "plaza" };
+        oldSave.placed.Add(new PlacedDecorSaveEntry(1, "toy_ball", 0, 0, DecorRotation.R0));
+        oldSave.placed.Add(new PlacedDecorSaveEntry(2, "toy_ball", 1, 0, DecorRotation.R0));
+        var oldJson = JsonUtility.ToJson(oldSave).Replace(",\"placedOutOfBag\":false", "");
+        Assert.IsFalse(oldJson.Contains("placedOutOfBag"), "옛 세이브에는 표시가 없음");
+
+        var layout = DecorManager.CreateLayout(board);
+        DecorSaveConverter.ReadWithBag(JsonUtility.FromJson<DecorBoardSaveData>(oldJson), layout, catalog, bag);
+        Assert.AreEqual(2, layout.PlacedCount(_ball), "놓인 것은 그대로");
+        Assert.AreEqual(1, bag.GetCount(_ball.Item), "놓인 2개만큼 가방에서 빠짐 (복제 없음)");
+
+        // 다시 저장 → 다시 불러와도 또 빼지 않음
+        var saved = new DecorBoardSaveData { boardId = "plaza" };
+        DecorSaveConverter.Write(layout, saved);
+        Assert.IsTrue(saved.placedOutOfBag);
+        var again = DecorManager.CreateLayout(board);
+        DecorSaveConverter.ReadWithBag(JsonUtility.FromJson<DecorBoardSaveData>(JsonUtility.ToJson(saved)), again, catalog, bag);
+        Assert.AreEqual(2, again.PlacedCount(_ball));
+        Assert.AreEqual(1, bag.GetCount(_ball.Item), "두 번 빼지 않음");
+    }
+
+    [Test]
+    public void OldSave_BagShortOfPlaced_TakesOnlyWhatIsThere()
+    {
+        var bag = new Inventory(4, 4);
+        bag.Add(_ball.Item, 1, ItemChangeReason.Test);
+        var oldSave = new DecorBoardSaveData { boardId = "plaza" };
+        oldSave.placed.Add(new PlacedDecorSaveEntry(1, "toy_ball", 0, 0, DecorRotation.R0));
+        oldSave.placed.Add(new PlacedDecorSaveEntry(2, "toy_ball", 1, 0, DecorRotation.R0));
+        oldSave.placed.Add(new PlacedDecorSaveEntry(3, "toy_ball", 5, 0, DecorRotation.R0)); // 잠긴 구역: 가방에 있던 몫이라 그대로
+
+        var layout = DecorManager.CreateLayout(CreateBoard());
+        DecorSaveConverter.ReadWithBag(oldSave, layout, CreateCatalog(), bag);
+
+        Assert.AreEqual(2, layout.PlacedCount(_ball));
+        Assert.AreEqual(0, bag.GetCount(_ball.Item), "있는 만큼만 빼고 0 아래로 내려가지 않음");
+    }
+
+    [Test]
+    public void NewSave_SkippedPlacementGoesBackToBag()
+    {
+        var bag = new Inventory(4, 4);
+        var saved = new DecorBoardSaveData { boardId = "plaza", placedOutOfBag = true };
+        saved.placed.Add(new PlacedDecorSaveEntry(1, "toy_ball", 5, 0, DecorRotation.R0));    // 잠긴 구역 → 가방으로
+        saved.placed.Add(new PlacedDecorSaveEntry(2, "toy_removed", 0, 0, DecorRotation.R0)); // 없는 물건 → 돌려놓을 수 없음
+        saved.placed.Add(new PlacedDecorSaveEntry(3, "toy_ball", 1, 1, DecorRotation.R0));    // 정상
+
+        var layout = DecorManager.CreateLayout(CreateBoard());
+        Assert.AreEqual(2, DecorSaveConverter.ReadWithBag(saved, layout, CreateCatalog(), bag));
+        Assert.AreEqual(1, layout.PlacedCount(_ball));
+        Assert.AreEqual(1, bag.GetCount(_ball.Item), "놓지 못한 공은 가방(보관함)으로");
     }
 
     #endregion

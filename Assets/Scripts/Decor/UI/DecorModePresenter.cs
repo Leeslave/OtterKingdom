@@ -25,6 +25,7 @@ public class DecorModePresenter : MonoBehaviour
     private const string HintPlace = "초록색 칸에 놓을 수 있어요";
     private const string HintPlaced = "놓았어요!";
     private const string HintStored = "보관함에 넣었어요";
+    private const string HintBagFull = "가방이 가득 차서 넣을 수 없어요";
     private const string HintNoRoom = "놓을 자리가 없어요";
     private const string HintEmpty = "보관함에 남은 게 없어요";
     private const string HintShop = "상점은 준비 중이에요";
@@ -560,20 +561,21 @@ public class DecorModePresenter : MonoBehaviour
         }
 
         var origin = _session.Origin;
+        var rotation = _session.Rotation;
         string cost = settlement.BuildingCostText(building);
         var game = GameManager.Instance;
         if (game == null)
         {
-            StartBuilding(building, origin);
+            StartBuilding(building, origin, rotation);
             return;
         }
-        game.ShowConfirm($"{building.DisplayName} 짓기", $"{cost}\n이 자리에 지을까요?", () => StartBuilding(building, origin));
+        game.ShowConfirm($"{building.DisplayName} 짓기", $"{cost}\n이 자리에 지을까요?", () => StartBuilding(building, origin, rotation));
     }
 
-    private void StartBuilding(BuildingDefinition building, Vector2Int origin)
+    private void StartBuilding(BuildingDefinition building, Vector2Int origin, DecorRotation rotation)
     {
         var settlement = SettlementManager.Instance;
-        var block = settlement.TryStartBuilding(building, origin, out var placement);
+        var block = settlement.TryStartBuilding(building, origin, rotation, out var placement);
         if (block != BuildingBlock.None)
         {
             _view.ShowHint(settlement.BuildingBlockText(building, block), true);
@@ -671,8 +673,11 @@ public class DecorModePresenter : MonoBehaviour
             return;
 
         bool wasPlaced = !_session.IsNew;
-        if (wasPlaced)
-            _manager.ReturnToStorage(_board.Board, _session.InstanceId);
+        if (wasPlaced && !_manager.ReturnToStorage(_board.Board, _session.InstanceId))
+        {
+            _view.ShowHint(HintBagFull, true);
+            return;
+        }
         EndSession();
         _view.ShowHint(WithCoziness(wasPlaced ? HintStored : HintIdle));
     }
