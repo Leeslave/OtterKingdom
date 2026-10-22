@@ -41,16 +41,15 @@ public static class FairyShopSetup
         ("Seed_Strawberry", "shop_seed_strawberry", "Farming/딸기 모종", 1, false, 300, 13),
         ("Toy_SoccerBall", "shop_toy_soccerball", "Decor/축구공", 1, false, 800, 1),
         ("Toy_Puzzle", "shop_toy_puzzle", "Decor/퍼즐", 1, true, 25, 1),
-        // 목재는 광장 나무 · 나뭇가지 · 숲 개간에서만 나와 건설이 목재 줍기에 막힘(4차 QA) → 남는 골드로 살 수 있게
-        ("Material_Wood", "shop_material_wood", "Mining/목재", 10, false, 300, 4),
+        // 목재는 상점에서 팔지 않음 — 처음에 조금 주고(SettlementConfig 시작 재료) 이후는 목공소 해달 · 광장 나무로
     };
 
-    // (탭 이름, 분류 에셋)
-    private static readonly (string label, string category)[] Tabs =
+    // (탭 이름, 분류 에셋, 열리기 전에는 숨기는 발전)
+    private static readonly (string label, string category, string development)[] Tabs =
     {
-        ("씨앗", "Seedlings"),
-        ("낚시", "Fishing"),
-        ("장난감", "Toy"),
+        ("씨앗", "Seedlings", null),
+        ("낚시", "Fishing", SettlementQuestGate.FishingDevelopment),
+        ("장난감", "Toy", null),
     };
 
     #region 데이터
@@ -109,6 +108,7 @@ public static class FairyShopSetup
             tab.FindPropertyRelative("_label").stringValue = Tabs[i].label;
             tab.FindPropertyRelative("_category").objectReferenceValue =
                 AssetDatabase.LoadAssetAtPath<ItemCategory>($"{CategoryFolder}/{Tabs[i].category}.asset");
+            tab.FindPropertyRelative("_requiredDevelopment").stringValue = Tabs[i].development ?? "";
         }
         SetList(catalogSo.FindProperty("_products"), FindAll<ShopProduct>(DataFolder + "/Products"));
         catalogSo.ApplyModifiedPropertiesWithoutUndo();

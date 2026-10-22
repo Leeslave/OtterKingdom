@@ -14,6 +14,8 @@ public class PlazaFarmView : MonoBehaviour
     private const int PlantsPerField = 6;
     private const float RefreshSeconds = 0.25f;
     private const float FieldWorkSpeed = 1.2f;
+    // 이만큼 걸어도 못 닿으면(길이 막힘) 닿은 셈 치고 일함 — 농장이 멈추지 않게
+    private const float StuckSeconds = 30f;
 
     private static PlazaFarmView _instance;
 
@@ -84,6 +86,7 @@ public class PlazaFarmView : MonoBehaviour
 
     private void OnDestroy()
     {
+        DropCarry();
         if (_manager != null)
         {
             _manager.OnCrateCollected -= HandleCollected;
@@ -269,7 +272,7 @@ public class PlazaFarmView : MonoBehaviour
             if (icon != null)
             {
                 visual.Icon.sprite = icon;
-                visual.Icon.transform.localScale = Vector3.one * (0.6f / Mathf.Max(0.01f, icon.bounds.size.y));
+                visual.Icon.transform.localScale = Vector3.one * (0.45f / Mathf.Max(0.01f, icon.bounds.size.y));
             }
             int order = PlazaDepth.SortingOrderFor(rect.yMin) + 20;
             visual.Count.sortingOrder = order;
@@ -282,22 +285,27 @@ public class PlazaFarmView : MonoBehaviour
         }
     }
 
+    // 상자 위 표시: 작물 그림 위 · 개수 아래로 쌓고 상자 한 칸 너비 안에 둠 (상자를 나란히 지어도 글자가 겹치지 않게)
     private CrateVisual CreateCrate()
     {
+        float width = _board.CellSize * 0.95f;
         var visual = new CrateVisual { Root = new GameObject("FarmCrate").transform };
         visual.Root.SetParent(transform, false);
         visual.Icon = NewRenderer("Icon", visual.Root, 0);
-        visual.Icon.transform.localPosition = new Vector3(-0.45f, 0f, 0f);
+        visual.Icon.transform.localPosition = new Vector3(0f, 0.55f, 0f);
         var text = new GameObject("Count").AddComponent<TextMeshPro>();
         text.transform.SetParent(visual.Root, false);
-        text.transform.localPosition = new Vector3(0.25f, 0f, 0f);
+        text.transform.localPosition = Vector3.zero;
         if (RuntimeUIKit.Style.TitleFont != null)
             text.font = RuntimeUIKit.Style.TitleFont;
-        text.fontSize = 4.5f;
+        text.enableAutoSizing = true;
+        text.fontSizeMin = 1.5f;
+        text.fontSizeMax = 3.6f;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
         text.alignment = TextAlignmentOptions.Center;
         text.outlineWidth = 0.25f;
         text.outlineColor = new Color32(75, 46, 34, 255);
-        text.rectTransform.sizeDelta = new Vector2(2.4f, 1f);
+        text.rectTransform.sizeDelta = new Vector2(width, 0.5f);
         visual.Count = text;
         return visual;
     }
@@ -312,7 +320,19 @@ public class PlazaFarmView : MonoBehaviour
             Destroy(v.Root.gameObject);
         _fields.Clear();
         _crates.Clear();
+        DropCarry();
         _worker = null;
+    }
+
+    // 들고 있던 작물은 버리지 않음 (광장을 떠남 · 농장이 닫힘): 상자에, 자리가 없으면 가방으로
+    private void DropCarry()
+    {
+        if (_carryAmount > 0 && _manager != null)
+            _manager.StoreFarmCarry(_carryId, _carryAmount);
+        _carryAmount = 0;
+        if (_carried != null)
+            _carried.enabled = false;
+        _phase = WorkPhase.Idle;
     }
 
     #endregion
@@ -432,14 +452,21 @@ public class PlazaFarmView : MonoBehaviour
     private int _targetField;
     private int _targetCrate;
     private float _phaseTimer;
+    private float _walkSince;
     private string _carryId;
     private int _carryAmount;
+
+    // 일하러 간 곳에 닿음 (오래 걸려도 못 닿으면 닿은 셈)
+    private bool Arrived => _worker.IsOnTask || Time.time - _walkSince > StuckSeconds;
 
     private void UpdateWorker(float dt)
     {
         var agent = _manager.HasFarmWorker ? _plaza.FindAgent(_manager.FarmConfig.FarmerOtterId) : null;
         if (agent != _worker)
         {
+            DropCarry();
+            if (_worker != null)
+                _worker.SetHome(null, 0f);
             _worker = agent;
             _workerRig = agent != null ? agent.GetComponentInChildren<QuarterRigView>() : null;
             _phase = WorkPhase.Idle;
@@ -455,6 +482,9 @@ public class PlazaFarmView : MonoBehaviour
         }
         if (_worker == null)
             return;
+        _manager.MarkFarmWorkerDriven();
+        // 일이 없을 때도 밭 근처만 돌아다님 (밭 칸들을 둘러싼 범위)
+        _worker.SetHome(_fields.Count > 0 ? FieldsCenter : (System.Func<Vector2?>)null, FieldsRadius());
 
         _phaseTimer -= dt;
         switch (_phase)
@@ -466,6 +496,7 @@ public class PlazaFarmView : MonoBehaviour
                 if (TryPickField(out _targetField, out var stand, out var look) && FreeCrate(out _))
                 {
                     _phase = WorkPhase.ToField;
+                    _walkSince = Time.time;
                     _worker.AssignTask(stand, look);
                 }
                 else
@@ -480,7 +511,7 @@ public class PlazaFarmView : MonoBehaviour
                     _phase = WorkPhase.Idle;
                     break;
                 }
-                if (_worker.IsOnTask)
+                if (Arrived)
                 {
                     _phase = WorkPhase.Harvesting;
                     _phaseTimer = _manager.FarmConfig.HarvestSeconds;
@@ -508,7 +539,7 @@ public class PlazaFarmView : MonoBehaviour
                 break;
 
             case WorkPhase.ToCrate:
-                if (_worker.IsOnTask)
+                if (Arrived)
                 {
                     int put = _manager.DepositToCrate(_targetCrate, _carryId, _carryAmount);
                     _carryAmount -= put;
@@ -540,11 +571,35 @@ public class PlazaFarmView : MonoBehaviour
         }
     }
 
+    private const float WorkerHomeMargin = 1.5f;
+
+    private Vector2? FieldsCenter()
+    {
+        if (_fields.Count == 0)
+            return null;
+        var sum = Vector2.zero;
+        foreach (var visual in _fields.Values)
+            sum += (Vector2)visual.Root.position;
+        return sum / _fields.Count;
+    }
+
+    private float FieldsRadius()
+    {
+        var center = FieldsCenter();
+        if (!center.HasValue)
+            return 0f;
+        float far = 0f;
+        foreach (var visual in _fields.Values)
+            far = Mathf.Max(far, Vector2.Distance(center.Value, visual.Root.position));
+        return far + WorkerHomeMargin;
+    }
+
     private void GoToCrate()
     {
         if (FreeCrate(out _targetCrate) && TryStandOf(_targetCrate, out var stand, out var look))
         {
             _phase = WorkPhase.ToCrate;
+            _walkSince = Time.time;
             _worker.AssignTask(stand, look);
         }
         else

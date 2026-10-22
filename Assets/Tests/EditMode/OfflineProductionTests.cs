@@ -288,21 +288,21 @@ public class OfflineProductionTests
     public void Mining_ManyFinds_StayNearTheExpectedDiamondRate()
     {
         var save = CreateSave(1);
-        save.pickaxeLevel = 2; // 35% diamond
+        save.pickaxeLevel = 2; // 12.5% diamond
 
         // 한 번 비운 시간은 8시간까지라 1,000번 캘 시간을 네 번에 나눠 (남은 시간은 이어짐)
         var service = CreateService(seed: 42);
         for (int i = 0; i < 4; i++)
             service.Run(save, 80f * 1000 / 4, _bag);
 
-        Assert.AreEqual(350, _bag.GetCount(_mining.diamondItemId), 50);
+        Assert.AreEqual(125, _bag.GetCount(_mining.diamondItemId), 40);
     }
 
     [Test]
     public void Mining_DiamondChance_CapsAtMaxPickaxeLevel()
     {
-        Assert.AreEqual(0.3f, _mining.DiamondChanceAt(1), 0.001f);
-        Assert.AreEqual(0.5f, _mining.DiamondChanceAt(_mining.MaxPickaxeLevel), 0.001f);
+        Assert.AreEqual(0.1f, _mining.DiamondChanceAt(1), 0.001f);
+        Assert.AreEqual(0.2f, _mining.DiamondChanceAt(_mining.MaxPickaxeLevel), 0.001f);
     }
 
     // ---------------------------------------------------------- otter visits

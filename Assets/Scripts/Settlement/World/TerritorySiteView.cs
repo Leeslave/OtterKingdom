@@ -158,7 +158,9 @@ public class TerritorySiteView : MonoBehaviour
         {
             case TerritoryBlock.None:
                 _task = _manager.NextTerritoryClearing(_territory);
-                _label.text = $"{_territory.DisplayName} 개간 {_manager.TerritoryClearingsDone(_territory) + 1}/{_territory.Clearings.Count}";
+                _label.text = TerritoryRules.IsTutorial(_territory, _manager.Settlement)
+                    ? "첫 개간 · 1회만 하면 확장!"
+                    : $"{_territory.DisplayName} 개간 {_manager.TerritoryClearingsDone(_territory) + 1}/{_territory.Clearings.Count}";
                 Show(_task != null ? Mode.Clear : Mode.Hidden);
                 break;
             case TerritoryBlock.Mission:

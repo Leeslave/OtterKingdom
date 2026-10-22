@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: req_p4_granary
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p4_granary
-  _order: 38
+  _order: 36
   _category: 0
   _contentVersion: 4
   _title: "\uBC2D \uC606 \uCC3D\uACE0"
-  _description: "\uAC70\uB454 \uC791\uBB3C\uC744 \uC798 \uBCF4\uAD00\uD560 \uCC3D\uACE0\uAC00
-    \uC788\uC73C\uBA74\n\uC218\uD655\uC774 \uD6E8\uC52C \uB109\uB109\uD574\uC9C8
-    \uAC70\uC608\uC694."
-  _icon: {fileID: 21300000, guid: 0df8850067a44be4d88237c1839fc692, type: 3}
+  _description: "\uBC2D\uC774 \uB113\uC5B4\uC9C0\uB2C8 \uC218\uD655 \uC0C1\uC790\uAC00
+    \uAE08\uBC29 \uCC28\uACE0 \uAE38\uB3C4 \uBA40\uC5B4\uC694.\n\uBC2D \uC606\uC5D0
+    \uCC3D\uACE0\uAC00 \uC788\uC73C\uBA74 \uBCF4\uAD00\uB3C4 \uB109\uB109\uD558\uACE0
+    \uD759\uAE38\uB3C4 \uB193\uC744 \uC218 \uC788\uC5B4\uC694."
+  _icon: {fileID: 21300000, guid: 6e42bb4ab25b18e1c3ac8c1f47eac80f, type: 3}
   _requester: {fileID: 11400000, guid: f67334a72b334d8fb371a7a4fe78ff5f, type: 2}
   _requiredDevelopment: p4_farmer_settled
   _minResidents: 0
@@ -35,12 +36,14 @@ MonoBehaviour:
   _resultDevelopment: p4_granary_built
   _settles: []
   _arrivals:
-  - _otter: {fileID: 11400000, guid: b9c681d6bbf9435381dc3a1e349ef2e6, type: 2}
+  - _otter: {fileID: 11400000, guid: 82f6229b64b54a9fb0a98688d677f6c7, type: 2}
     _state: 0
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 67108e59a537a494287a18760c9ab698, type: 2}
   _completionMessage: "\uB18D\uC5C5 \uCC3D\uACE0\uAC00 \uC0DD\uACBC\uC5B4\uC694!
-    \uBC2D\uC5D0\uC11C \uAC70\uB450\uB294 \uC791\uBB3C\uC774 \uB298\uC5B4\uB098\uC694.
-    (\uC218\uD655\uB7C9 +10%)\n\uBC14\uB2E4\uB97C \uC88B\uC544\uD558\uB294 \uD401\uB2F9\uC774\uAC00
-    \uCC3E\uC544\uC654\uC5B4\uC694."
-  _kingdomLevel: 15
+    \uBC2D\uACFC \uC0C1\uC790 \uC0AC\uC774\uC5D0 \uD759\uAE38\uC744 \uB193\uC544
+    \uBD10\uC694. \uB18D\uBD80\uAC00 \uAE38 \uC704\uC5D0\uC11C \uBE68\uB9AC \uAC78\uC5B4\uC694.\n\uC218\uD655
+    \uC0C1\uC790\uAC00 \uB450 \uBC30\uB85C \uCEE4\uC9C0\uACE0, \uAC70\uB450\uB294
+    \uC791\uBB3C\uB3C4 \uB298\uC5B4\uB098\uC694. (\uC218\uD655\uB7C9 +10%)\n\uB3D9\uAE00\uB3D9\uAE00\uD55C
+    \uB3CC\uC744 \uC88B\uC544\uD558\uB294 \uB370\uAD74\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
+  _kingdomLevel: 14

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_RelicCrownPiece
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: relic_crown_piece
+  _tab: {fileID: 11400000, guid: e6e8bf022dd148e5b3bf0aace10f3bbb, type: 2}
+  _displayName: 
+  _sortOrder: 23
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 6ac3fd1169694a3a9f573aa9867cfa04, type: 3}
+  _tagline: "\uAE08\uBE5B \uC655\uAD00\uC758 \uD55C \uC870\uAC01. \uC61B\uB0A0\uC5D0\uB3C4 \uD574\uB2EC \uC655\uAD6D\uC774 \uC788\uC5C8\uB358 \uAC78\uAE4C\uC694?"
+  _description: "\uC4F0\uC784: \uB3C4\uAC10 \xB7 \uC61B \uC655\uAD6D \uC774\uC57C\uAE30"
+  _extraValue: "\uC624\uB798\uB41C \uAC31\uB3C4 \uAE4A\uC740 \uACF3"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: 5bab842c2fb643efa647f45a1c94709c, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

@@ -22,7 +22,10 @@ public static partial class SettlementSetup
     private const string TerritoryLayoutPath = "Assets/Art/Plaza/territory_layout.json";
     private const string TerritoryFolder = DataFolder + "/Territory";
     private const string TerritoryRootName = "Territory";
-    private const int TerritoryStartLevel = 6;
+    // 일반 개간 기회가 생기기 시작하는 레벨. Lv.6은 첫 개간(TerritoryRules.TutorialLevel, 한 번에 땅이 열림)
+    private const int TerritoryStartLevel = 7;
+    // Lv.12까지는 레벨마다 개간 기회 2번 (한 땅 3번이라 초반 땅이 좁았음)
+    private const int TerritoryBonusChanceUntilLevel = 12;
 
 #pragma warning disable 0649 // JsonUtility가 채움
     [System.Serializable] private class TerritoryLayout
@@ -90,18 +93,20 @@ public static partial class SettlementSetup
     // 단계 표: (방향, 단계, 이름, 개간 시간(초) — 개수 = 개간 수, 목재(개간마다), 미션 골드, 목재, 돌, 경험치). 수치는 임시
     private static readonly (TerritoryDirection dir, int tier, string name, int[] seconds, int[] wood, int gold, int missionWood, int stone, int xp)[] TerritoryTable =
     {
-        (TerritoryDirection.NorthEast, 1, "북동쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 500, 40, 15, 600),
-        (TerritoryDirection.NorthEast, 2, "북동쪽 깊은 숲", new[] { 360, 480 }, new[] { 45, 55 }, 1200, 70, 30, 1000),
-        (TerritoryDirection.NorthEast, 3, "북동쪽 언덕 숲", new[] { 600, 780 }, new[] { 60, 75 }, 2400, 110, 50, 1500),
-        (TerritoryDirection.South, 1, "남쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 500, 40, 15, 600),
-        (TerritoryDirection.South, 2, "남쪽 깊은 숲", new[] { 360, 480 }, new[] { 45, 55 }, 1200, 70, 30, 1000),
-        (TerritoryDirection.South, 3, "바닷가 숲", new[] { 600, 780 }, new[] { 60, 75 }, 2400, 110, 50, 1500),
-        (TerritoryDirection.NorthWest, 1, "북서쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 500, 40, 15, 600),
-        (TerritoryDirection.NorthWest, 2, "북서쪽 깊은 숲", new[] { 360, 480 }, new[] { 45, 55 }, 1200, 70, 30, 1000),
-        (TerritoryDirection.NorthWest, 3, "북서쪽 끝 숲", new[] { 600, 780 }, new[] { 60, 75 }, 2400, 110, 50, 1500),
-        (TerritoryDirection.West, 1, "서쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 500, 40, 15, 600),
-        (TerritoryDirection.West, 2, "서쪽 깊은 숲", new[] { 360, 480 }, new[] { 45, 55 }, 1200, 70, 30, 1000),
-        (TerritoryDirection.West, 3, "서쪽 끝 숲", new[] { 600, 780 }, new[] { 60, 75 }, 2400, 110, 50, 1500),
+        (TerritoryDirection.NorthEast, 1, "북동쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 1400, 28, 11, 600),
+        (TerritoryDirection.NorthEast, 2, "북동쪽 깊은 숲", new[] { 360, 480 }, new[] { 45, 55 }, 3500, 49, 21, 1000),
+        (TerritoryDirection.NorthEast, 3, "북동쪽 언덕 숲", new[] { 600, 780 }, new[] { 60, 75 }, 7000, 77, 35, 1500),
+        (TerritoryDirection.South, 1, "남쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 1400, 28, 11, 600),
+        (TerritoryDirection.South, 2, "남쪽 깊은 숲", new[] { 360, 480 }, new[] { 45, 55 }, 3500, 49, 21, 1000),
+        (TerritoryDirection.South, 3, "바닷가 숲", new[] { 600, 780 }, new[] { 60, 75 }, 7000, 77, 35, 1500),
+        (TerritoryDirection.NorthWest, 1, "북서쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 1400, 28, 11, 600),
+        (TerritoryDirection.NorthWest, 2, "북서쪽 깊은 숲", new[] { 360, 480 }, new[] { 45, 55 }, 3500, 49, 21, 1000),
+        (TerritoryDirection.NorthWest, 3, "북서쪽 끝 숲", new[] { 600, 780 }, new[] { 60, 75 }, 7000, 77, 35, 1500),
+        (TerritoryDirection.West, 1, "서쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 1400, 28, 11, 600),
+        (TerritoryDirection.West, 2, "서쪽 깊은 숲", new[] { 360, 480 }, new[] { 45, 55 }, 3500, 49, 21, 1000),
+        (TerritoryDirection.West, 3, "서쪽 끝 숲", new[] { 600, 780 }, new[] { 60, 75 }, 7000, 77, 35, 1500),
+        // 동쪽: 공터 오른쪽 아래 한 단계 (개간 3번 → 미션). 지도: Tools/MapExpansion/add_east_block.py
+        (TerritoryDirection.East, 1, "동쪽 숲", new[] { 180, 240, 300 }, new[] { 30, 35, 40 }, 1400, 28, 11, 600),
     };
 
     /// <summary>영토 확장 단계 ID (= 그 땅이 열린 발전, 구역 블록 단계의 발전)</summary>
@@ -265,6 +270,7 @@ public static partial class SettlementSetup
         }
         SetList(configSo.FindProperty("_territories"), territories);
         configSo.FindProperty("_territoryStartLevel").intValue = TerritoryStartLevel;
+        configSo.FindProperty("_territoryBonusChanceUntilLevel").intValue = TerritoryBonusChanceUntilLevel;
         return territories;
     }
 

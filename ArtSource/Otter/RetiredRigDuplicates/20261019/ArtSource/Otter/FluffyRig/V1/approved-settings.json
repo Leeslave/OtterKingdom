@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "adjustments": {
+    "nearArm": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "farArm": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "nearLeg": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "farLeg": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "body": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "head": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    },
+    "tail": {
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "pawWidth": 100,
+      "pawHeight": 100
+    }
+  }
+}

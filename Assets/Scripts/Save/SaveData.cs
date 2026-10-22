@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 [Serializable]
@@ -107,6 +107,7 @@ public class CurrencyBalance
 [Serializable]
 public class SaveData
 {
+    public MineMazeSave mineMaze;
     // 2: firstPlantGuideDone exists (1-saves are checked once on load).
     // 3: tutorialsDone exists (older saves skip every zone tutorial).
     // 4: settlement exists (older saves get every board request completed,
@@ -116,7 +117,10 @@ public class SaveData
     public int schemaVersion = CurrentSchemaVersion;
     public int lifetimeSales;
     public int farmLevel = 1;
+    // 옛 낚싯대 레벨 (1~20). 낚시 개편 뒤에는 fishing의 줄 · 찌 · 릴 단계로 옮겨 씀 (FishingService.Migrate)
     public int rodLevel = 1;
+    // 바다 낚시 (낚시 개편): 줄 · 찌 · 릴 단계, 도감 기록(가장 큰 것), 의뢰. 골드 · 가방은 본 게임 것
+    public FishingReworkSave fishing = new FishingReworkSave();
     public int pickaxeLevel = 1;
     // True while the fishing otter is assigned to the fishing spot (between
     // the player's "start fishing" and "stop fishing" confirmations).

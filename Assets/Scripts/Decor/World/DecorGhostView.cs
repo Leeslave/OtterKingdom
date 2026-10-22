@@ -54,15 +54,23 @@ public class DecorGhostView : MonoBehaviour
         }
 
         // DecorVisual은 부모 원점이 칸 아래 가운데라고 보므로, 이 오브젝트(칸 왼쪽 아래)에서 가로 절반만큼 옮김
+        _toy.flipX = false;
+        _toy.flipY = false;
         if (decor is ConstructionPlotDefinition plot)
         {
-            // 건설 자리: 씬의 건물이 설 자리(발밑)에 같은 크기로
-            _toy.sprite = plot.WorldSprite;
-            _toyBody.localPosition = plot.PivotOffset;
+            // 건설 자리: 씬의 건물 그림 그대로 (뒤집기 · 발밑에서 떨어진 자리 · 크기). 씬에서 뒤집거나 옮긴 그림도 놓였을 때와 같게
+            var anchor = ConstructionPlotAnchor.Find(plot.SaveId);
+            var art = anchor != null ? anchor.FindArt() : null;
+            Vector2 offset = art != null ? (Vector2)art.transform.position - anchor.Pivot : Vector2.zero;
+            Vector3 scale = art != null ? art.transform.lossyScale : new Vector3(plot.WorldScale.x, plot.WorldScale.y, 1f);
+            _toy.sprite = art != null ? art.sprite : plot.WorldSprite;
+            _toy.flipX = art != null && art.flipX;
+            _toy.flipY = art != null && art.flipY;
+            _toyBody.localPosition = plot.PivotOffset + offset;
             _toyBody.localRotation = Quaternion.identity;
             _toy.transform.localPosition = Vector3.zero;
             _toy.transform.localRotation = Quaternion.identity;
-            _toy.transform.localScale = new Vector3(plot.WorldScale.x, plot.WorldScale.y, 1f);
+            _toy.transform.localScale = new Vector3(scale.x, scale.y, 1f);
         }
         else if (decor is BuildingDefinition building)
             BuildingVisual.Fit(_toyBody, _toy, building, building.WorldSprite, worldRect);

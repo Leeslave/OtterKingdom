@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_anchovy
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_anchovy
+  _displayName: "\uAF2C\uB9C8 \uBA78\uCE58"
+  _description: "\uC120\uCC29\uC7A5 \uC55E\uC5D0 \uB5BC \uC9C0\uC5B4 \uB2E4\uB140\uC694.
+    \uC791\uC9C0\uB9CC \uB298 \uBC18\uAC00\uC6B4 \uCCAB \uC190\uB2D8."
+  _icon: {fileID: 21300000, guid: 02dc153336ea700439f0d1c66a0211da, type: 3}
+  _rarity: 0
+  _item: {fileID: 11400000, guid: 0c924c67da2954a4c97579f54f1414fa, type: 2}
+  _facesLeft: 0
+  _price: 15
+  _minWeight: 0.03
+  _maxWeight: 0.08
+  _distance: {x: 3, y: 16}
+  _depth: {x: 3, y: 5}
+  _nearBottom: 0
+  _spawnWeight: 55
+  _swimSpeed: 1.3
+  _length: 0.7

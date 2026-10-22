@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: M12_Harvest
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv12_harvest
-  _title: "\uD48D\uB144\uC774\uB2E4!"
+  _title: "\uACF3\uAC04\uC774 \uAC00\uB4DD"
   _description: "\uC791\uBB3C 800\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 58
+  _sortOrder: 64
   _kind: 2
   _requiredLevel: 12
-  _prerequisite: {fileID: 0}
+  _prerequisite: {fileID: 11400000, guid: 14bd1bbaae3ab594ea9311d90ea7e04c, type: 2}
   _icon: {fileID: 21300000, guid: 36663a2e1b0244b468a75d497e361228, type: 3}
   _goalType: 0
   _goal: 800

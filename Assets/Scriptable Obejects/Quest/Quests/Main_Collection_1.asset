@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_collection_1
   _title: "\uB3C4\uAC10 \uC2DC\uC791"
   _description: "\uB3C4\uAC10\uC5D0 \uC0C8\uB85C 3\uCE78 \uB4F1\uB85D\uD558\uAE30"
-  _sortOrder: 114
+  _sortOrder: 135
   _kind: 2
   _requiredLevel: 2
   _prerequisite: {fileID: 0}

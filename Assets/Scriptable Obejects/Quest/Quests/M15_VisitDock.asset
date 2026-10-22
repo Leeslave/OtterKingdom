@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv15_visit_dock
   _title: "\uBC14\uB2E4\uAC00 \uC5F4\uB838\uB2E4"
   _description: "\uB09A\uC2DC\uD130\uC5D0 \uAC00 \uBCF4\uAE30"
-  _sortOrder: 64
+  _sortOrder: 83
   _kind: 0
   _requiredLevel: 15
   _prerequisite: {fileID: 11400000, guid: 6301ab21b199b6c42b5023ef091f38df, type: 2}

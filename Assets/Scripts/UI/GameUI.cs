@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -45,7 +45,7 @@ public class GameUI : MonoBehaviour
 
     private GameManager game;
     private RuntimeUIStyle style;
-    private Button rodUpgradeButton;
+    private Button seaFishingButton;
     private Button pickaxeUpgradeButton;
     private Button farmUpgradeButton;
     private RectTransform guideBubble;
@@ -63,7 +63,7 @@ public class GameUI : MonoBehaviour
     public bool IsModalOpen => modals.Count > 0;
 
     // For the zone tutorial's highlight; null until the scene shows the button.
-    public RectTransform RodUpgradeButton => rodUpgradeButton != null ? (RectTransform)rodUpgradeButton.transform : null;
+    public RectTransform SeaFishingButton => seaFishingButton != null ? (RectTransform)seaFishingButton.transform : null;
     public RectTransform PickaxeUpgradeButton =>
         pickaxeUpgradeButton != null ? (RectTransform)pickaxeUpgradeButton.transform : null;
     public RectTransform FarmUpgradeButton =>
@@ -495,71 +495,28 @@ public class GameUI : MonoBehaviour
 
     // --------------------------------------------------------------- fishing
 
-    public void ShowRodUpgradeButton()
+    // 바다 낚시 (낚시 개편): 선착장에서 바다 화면으로. 강화(줄 · 찌 · 릴) · 의뢰도 바다 화면에서
+    public void ShowSeaFishingButton()
     {
-        if (rodUpgradeButton != null) return;
+        if (seaFishingButton != null) return;
 
-        rodUpgradeButton = CreateButton(screenLayer, "낚싯대 강화", ShowRodUpgradePrompt, kind: ButtonKind.Feature);
-        var rect = (RectTransform)rodUpgradeButton.transform;
+        seaFishingButton = CreateButton(screenLayer, "바다 낚시", () =>
+        {
+            CloseAllModals();
+            if (game.CanOpenSeaFishing) game.OpenSeaFishing();
+            else ShowAlert("낚시꾼 해달이 선착장에서 일하게 되면\n바다 낚시를 할 수 있어요!");
+        }, kind: ButtonKind.Feature);
+        var rect = (RectTransform)seaFishingButton.transform;
         rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 0f);
         rect.sizeDelta = new Vector2(340f, ButtonHeight);
         rect.anchoredPosition = new Vector2(40f, FeatureButtonBottom);
     }
 
-    private void ShowRodUpgradePrompt()
+    /// <summary>바다 화면에 있는 동안 선착장 버튼을 숨김</summary>
+    public void SetSeaFishingButtonVisible(bool visible)
     {
-        CloseAllModals();
-        var fishing = game.FishingService;
-        var modal = OpenModal("낚싯대 강화", out var content);
-
-        var infoLabel = CreateLabel(content, "");
-        var balanceLabel = CreateLabel(content, "");
-        var row = CreateRow(content, ButtonHeight);
-        var upgradeButton = CreateButton(row, "강화", () =>
-        {
-            if (!game.TryUpgradeRod()) ShowAlert("골드가 부족해요!");
-        }, flexible: true, kind: ButtonKind.Primary);
-        CreateButton(row, "닫기", () => CloseModal(modal), flexible: true, kind: ButtonKind.Secondary);
-
-        // Stays open after an upgrade so the new level/chance shows right away.
-        SetRefresher(modal, () =>
-        {
-            int level = fishing.RodLevel;
-            string current = $"현재 Lv.{level} ({RodEffect(fishing, level)})";
-            infoLabel.text = fishing.CanUpgradeRod
-                ? $"{current}\n다음 Lv.{level + 1} ({RodEffect(fishing, level + 1)})\n" +
-                  NewFishLine(fishing, level + 1) +
-                  $"강화 비용 : {fishing.NextRodUpgradeCost:N0} 골드"
-                : $"{current}\n최대 레벨이에요!";
-            balanceLabel.text = $"보유 골드 : {game.CoinBalance}";
-            upgradeButton.interactable = fishing.CanUpgradeRod;
-        });
+        if (seaFishingButton != null) seaFishingButton.gameObject.SetActive(visible);
     }
-
-    private static readonly string[] TierNames = { "흔함", "레어", "에픽" };
-
-    // 물고기 확률은 Lv.10에서 끝(95%)이라 그 뒤 강화는 레어 · 에픽이 잘 낚이는 것만 오름 → 함께 보여 줌 (5차 QA: "95% → 95%"로 효과가 없어 보였음)
-    private static string RodEffect(FishingService fishing, int level)
-    {
-        string text = $"물고기 확률 {Percent(fishing.FishChanceAt(level))}";
-        float luck = fishing.Balance.RareLuckAt(level) - 1f;
-        return luck > 0f ? $"{text} · 레어 · 에픽 +{Percent(luck)}" : text;
-    }
-
-    // 다음 레벨에서 처음 낚이는 물고기 (없으면 빈 줄)
-    private string NewFishLine(FishingService fishing, int level)
-    {
-        var fish = fishing.Balance.FirstCaughtAt(level);
-        if (fish.Count == 0) return "";
-        var names = new List<string>();
-        foreach (var f in fish)
-        {
-            string name = game.TryFindItem(f.itemId, out var item) ? item.DisplayName : f.itemId;
-            names.Add($"{name}({TierNames[Mathf.Clamp(f.tier, 0, 2)]})");
-        }
-        return $"새로 낚여요 : {string.Join(", ", names)}\n";
-    }
-
     // ---------------------------------------------------------------- mining
 
     public void ShowPickaxeUpgradeButton()

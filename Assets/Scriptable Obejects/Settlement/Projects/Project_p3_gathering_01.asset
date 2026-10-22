@@ -21,12 +21,10 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: ad2aab974b612974ba832e82cc0b1c96, type: 3}
   _resultPreview: "\uAD11\uC7A5\uC5D0 \uACF5\uB3D9 \uC2DD\uD0C1\uC774 \uC0DD\uAE30\uACE0
     \uCCAB \uBAA8\uC784\uC744 \uC5F4\uC5B4\uC694"
-  _completionMessage: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBAA8\uC784\uC744
-    \uC5F4\uC5C8\uC5B4\uC694!\n\uAE38\uB4DC\uC5D0\uC11C \uB9C8\uC744 \uC0DD\uD65C
-    \uC900\uBE44\uB97C \uC774\uC5B4 \uAC08 \uC218 \uC788\uC5B4\uC694."
+  _completionMessage: "\uC6B0\uB9AC \uB9C8\uC744\uC758 \uCCAB \uBAA8\uC784\uC744 \uC5F4\uC5C8\uC5B4\uC694!\n\uB9C8\uC744\uD68C\uAD00\uC5D0\uC11C \uB9C8\uC744 \uC0DD\uD65C \uC900\uBE44\uB97C \uC774\uC5B4 \uAC08 \uC218 \uC788\uC5B4\uC694."
   _requiredLevel: 10
   _requiredDevelopment: welcome_corner_ready
-  _gold: 300
+  _gold: 1200
   _items:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
     _amount: 8

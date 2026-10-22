@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -213,9 +213,9 @@ public static class ZoneTutorials
             TutorialStep.At("낚시 해달",
                 "낚은 물고기는 가방에 들어가요.\n가끔 쓰레기가 걸리기도 해요!\n낚시 중인 해달을 누르면 낚시를 멈춰요.",
                 () => TutorialTargets.World(otter)),
-            TutorialStep.At("낚싯대 강화",
-                "골드로 낚싯대를 강화하면\n물고기가 더 잘 잡혀요.\n레벨이 오르면 게임을 꺼 둔 동안에도 낚시해요.",
-                () => TutorialTargets.Ui(gameUI.RodUpgradeButton)),
+            TutorialStep.At("바다 낚시",
+                "직접 줄을 던져 원하는 물고기를 골라 낚아요.\n줄 · 찌 · 릴을 강화하면 더 멀고 깊은 곳의\n비싼 물고기를 낚고, 꺼 둔 동안에도 낚시해요.",
+                () => TutorialTargets.Ui(gameUI.SeaFishingButton)),
             TutorialStep.TryIt("낚시 자리",
                 "동그라미를 누르면 해달이 걸어가서\n낚시를 시작해요. 눌러 봐요!",
                 () => TutorialTargets.World(spot), spot),

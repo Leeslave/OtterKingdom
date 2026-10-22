@@ -15,7 +15,7 @@ MonoBehaviour:
   _otterId: otter_fisher
   _displayName: "\uCCA8\uBC99\uC774"
   _portrait: {fileID: 21300000, guid: 8fda13eb26fa1774ab993ccaf0c395d3, type: 3}
-  _plazaPrefab: {fileID: 6466850907306658564, guid: 4fbd62c1dd920d4419791157d323adc4, type: 3}
+  _plazaPrefab: {fileID: 7310524418817630001, guid: 7e6c0b1cc0ba4e71af08dcbac271726b, type: 3}
   _plazaTint: {r: 1, g: 1, b: 1, a: 1}
   _trait: 4
   _toyVisitor: 0

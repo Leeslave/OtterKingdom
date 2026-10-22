@@ -152,7 +152,9 @@ public class FishingOtterController : MonoBehaviour
                 break;
 
             case Phase.Wait:
-                timer -= dt;
+                // 바다 낚시 화면에 있는 동안은 거기서 해달이 던지므로, 선착장 쪽은 입질을 기다리기만 함
+                if (!GameManager.Instance.FishingService.HandFishing)
+                    timer -= dt;
                 if (timer <= 0f)
                 {
                     pendingCatch = GameManager.Instance.FishingService.RollCatch();

@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf24d3d38f229924ab7b4008c9dc2451, type: 3}
+  m_Name: FishingReworkConfig
+  m_EditorClassIdentifier: OtterKingdom::FishingReworkConfig
+  _fish:
+  - {fileID: 11400000, guid: 2dfd5b369f36cbb44a6b87ad6eada4d5, type: 2}
+  - {fileID: 11400000, guid: 8b8f05a77429ff34486ebcdf73fd5ef7, type: 2}
+  - {fileID: 11400000, guid: c38063de6228c4040977cc6455164964, type: 2}
+  - {fileID: 11400000, guid: 588a35886cb2d4c448661389ec420abf, type: 2}
+  - {fileID: 11400000, guid: bf74459534928b54587ce91f30693d4f, type: 2}
+  - {fileID: 11400000, guid: dd680936c7bc4654aafca77689ef9963, type: 2}
+  - {fileID: 11400000, guid: eb2b9050b965cd74d87de741bd56181e, type: 2}
+  - {fileID: 11400000, guid: 064ddc57876f8b648b8aa0a38ab6b84a, type: 2}
+  - {fileID: 11400000, guid: e2373c8aeff289e47a7461851f73d1be, type: 2}
+  - {fileID: 11400000, guid: f268f3552ef57ec40ab29c7782ca3370, type: 2}
+  - {fileID: 11400000, guid: 4b6b061b5a76633428478ed85b6f06d6, type: 2}
+  - {fileID: 11400000, guid: cc18a625572394a409977a9ab7c89ef2, type: 2}
+  - {fileID: 11400000, guid: b2840a2f7011c3543ace5fe687e9504e, type: 2}
+  - {fileID: 11400000, guid: d2ff02d1ec729c343b9a9113c08ff7df, type: 2}
+  - {fileID: 11400000, guid: 47251d96e400910469033666e013b29d, type: 2}
+  - {fileID: 11400000, guid: 22336e319920049458d497d4b36cb9ff, type: 2}
+  - {fileID: 11400000, guid: 090b376a1b5d1484198c2f953d2c643a, type: 2}
+  - {fileID: 11400000, guid: 1a146e1d514ca184997dd67dcdf293e6, type: 2}
+  - {fileID: 11400000, guid: 2cdb9cc7efe247f489721ea3351b56f6, type: 2}
+  - {fileID: 11400000, guid: a487176b895a564468d7f7047cac9c4c, type: 2}
+  - {fileID: 11400000, guid: afdae46f54e36644a82a7dbd00d76cc4, type: 2}
+  - {fileID: 11400000, guid: fdc3b297b20c8bb4f956e64d09891f89, type: 2}
+  - {fileID: 11400000, guid: ba0793f57c1b9ce409570e18c017a7bb, type: 2}
+  - {fileID: 11400000, guid: f88e9a0799f735140af2459259ffb502, type: 2}
+  - {fileID: 11400000, guid: dcdc9847a3552724fafb2e38901cd43d, type: 2}
+  - {fileID: 11400000, guid: d98f8e422c96e4b43b0e17b9ccf85920, type: 2}
+  - {fileID: 11400000, guid: e8b70531dcbd3234785cffb88e95564b, type: 2}
+  - {fileID: 11400000, guid: 2fd049615895e3d4c89a2df06ab281c8, type: 2}
+  - {fileID: 11400000, guid: 11e0c042b6f11c746bda423c249528e4, type: 2}
+  - {fileID: 11400000, guid: bbd37011590ce0e459fddb93fa0b8a79, type: 2}
+  - {fileID: 11400000, guid: 9f26f96283a06f14bbc96914f67e27af, type: 2}
+  _line:
+    _displayName: "\uC904 \uAE38\uC774"
+    _effectName: "\uB358\uC9C0\uB294 \uAC70\uB9AC"
+    _unit: m
+    _icon: {fileID: 21300000, guid: dfdac9afdbe4fb74f8d8ef198e505cfe, type: 3}
+    _values:
+    - 12
+    - 18
+    - 25
+    - 33
+    - 42
+    - 52
+    - 63
+    - 75
+    _costs: 2c01000020030000d007000088130000f82a0000f0550000409c0000
+  _sinker:
+    _displayName: "\uCC0C \uBB34\uAC8C"
+    _effectName: "\uB0B4\uB824\uAC00\uB294 \uAE4A\uC774"
+    _unit: m
+    _icon: {fileID: 21300000, guid: f12edb629996c9e45a94556e1df4202e, type: 3}
+    _values:
+    - 7
+    - 10
+    - 14
+    - 19
+    - 25
+    - 32
+    - 40
+    - 50
+    _costs: fa000000bc020000080700009411000010270000204e0000a08c0000
+  _reel:
+    _displayName: "\uB9B4"
+    _effectName: "\uBC84\uD2F0\uB294 \uBB34\uAC8C"
+    _unit: kg
+    _icon: {fileID: 21300000, guid: 71c8961a79e147749bbc17ccd824bb55, type: 3}
+    _values:
+    - 1
+    - 2
+    - 3.5
+    - 6
+    - 10
+    - 16
+    - 25
+    - 40
+    _costs: 5e01000084030000980800007c150000e02e0000c05d0000c8af0000
+  _rodTipHeight: 2.4
+  _seabedStart: 8
+  _seabedSlope: 0.5
+  _seabedMax: 58
+  _seaLength: 95
+  _castSeconds: 1.1
+  _autoReel: 1.5
+  _holdReel: 2.4
+  _liftSpeed: 3
+  _sinkSpeed: 2.2
+  _sinkSpeedPerLevel: 0.35
+  _fishTopDepth: 2.5
+  _hookedReel: 6.5
+  _landDistance: 0.6
+  _hookRadius: 0.15
+  _fishHitScale: 0.25
+  _attractRadius: 0
+  _segmentLength: 8
+  _layerCaps: 03000000030000000200000002000000
+  _layerRegenSeconds:
+  - 8
+  - 8
+  - 10
+  - 10
+  _requestRewardFactor: 1.8
+  _requestSkipCooldown: 30

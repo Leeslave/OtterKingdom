@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -41,6 +41,8 @@ public partial class GameManager : MonoBehaviour
     [SerializeField] private CropDefinition[] cropDefinitions;
     [SerializeField] private FarmBalanceData farmBalance;
     [SerializeField] private FishingBalanceData fishingBalance;
+    [Tooltip("바다 낚시 (낚시 개편): 물고기 표 · 줄 · 찌 · 릴 강화 · 의뢰. 비우면 예전 낚싯대 낚시")]
+    [SerializeField] private FishingReworkConfig fishingConfig;
     [SerializeField] private MiningBalanceData miningBalance;
     [SerializeField] private OtterVisitBalanceData otterVisitBalance;
 
@@ -181,11 +183,16 @@ public partial class GameManager : MonoBehaviour
         farmService.Harvested += HandleFarmHarvested;
         farmService.NoticeRaised += HandleFarmNotice;
         ReportOpenedFurrows();
-        fishingService = new FishingService(save, fishingBalance);
+        fishingService = new FishingService(save, fishingBalance, fishingConfig, fishingConfig != null ? new FishingHost(this) : null);
+        if (fishingService.Model != null)
+        {
+            fishingService.Model.Upgraded += _ => SaveNow();
+            fishingService.Model.RequestChanged += SaveNow;
+        }
         miningService = new MiningService(save, miningBalance);
         ReportPickaxeLevel();
         offlineProduction = new OfflineProductionService(cropDefinitions, farmBalance, fishingBalance,
-            otterVisitBalance, miningBalance);
+            otterVisitBalance, miningBalance) { FishingConfig = fishingConfig };
         gameUI = GameUI.Create(this);
         // Set here, before any view's Start asks for the first-plant guide.
         zoneTutorialPending = ZoneTutorials.Has(CurrentZoneId) && !save.tutorialsDone.Contains(CurrentZoneId);
@@ -270,7 +277,11 @@ public partial class GameManager : MonoBehaviour
         // specialist placed here starts working right away.
         else StartSpecialistWork();
         if (CurrentZoneId == ZoneTutorials.Plaza)
+        {
             StartCoroutine(PlayDistrictGuideWhenReady());
+            StartCoroutine(PlayTerritoryGuideWhenReady());
+            StartCoroutine(PlayFirstFieldGuideWhenReady());
+        }
         if (CurrentZoneId == ZoneTutorials.Plaza && !save.tutorialsDone.Contains(ZoneTutorials.FairyShop))
             StartCoroutine(PlayFairyShopTutorialWhenReady());
         if (CurrentZoneId == ZoneTutorials.Farm && !save.tutorialsDone.Contains(ZoneTutorials.FarmOffline))
@@ -295,6 +306,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (!PlazaFarmOpen) farmService.Tick(Time.deltaTime);
         TickMining(Time.deltaTime);
+        TickMineMazeDiscovery(Time.deltaTime);
 
         autoSaveTimer += Time.deltaTime;
         if (farmChanged || autoSaveTimer >= autoSaveIntervalSec)
@@ -363,6 +375,7 @@ public partial class GameManager : MonoBehaviour
         SettlementManager.SaveRequested += SaveNow;
         DecorManager.SaveRequested += SaveNow;
         GachaManager.SaveRequested += SaveNow;
+        ProfileManager.SaveRequested += SaveNow;
         FairyShopPresenter.Opened += HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan += HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted += HandleBuildStarted;
@@ -372,10 +385,12 @@ public partial class GameManager : MonoBehaviour
     private void OnDisable()
     {
         CloseDistrictGuide();
+        CloseFirstFieldPointer();
         SceneNavigator.BeforeLeave -= SaveNow;
         SettlementManager.SaveRequested -= SaveNow;
         DecorManager.SaveRequested -= SaveNow;
         GachaManager.SaveRequested -= SaveNow;
+        ProfileManager.SaveRequested -= SaveNow;
         FairyShopPresenter.Opened -= HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan -= HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted -= HandleBuildStarted;
@@ -471,6 +486,7 @@ public partial class GameManager : MonoBehaviour
         save.inventory ??= new List<ItemStack>();
         RenameLegacyItemIds(save.inventory);
         manager.LoadFromSave(save.inventory, save.inventoryCapacity);
+        manager.MineMazeState = save.mineMaze;
 
         return MoveLegacySeedsToBag() | GrantStarterSeeds();
     }
@@ -695,6 +711,13 @@ public partial class GameManager : MonoBehaviour
             settlement.CollectAbsenceNews(absenceSec, report.SettlementNews);
             report.NextGoal = settlement.NextGoalTitle;
         }
+
+        // Back from offline: plaza trees/rocks/branches and the mine maze
+        // (broken rocks, re-entry wait) are all ready again. After the news,
+        // which counts the spots that come back.
+        settlement?.RefreshGatherPoints();
+        InventoryManager.Instance?.MineMazeState?.ResetCooldowns();
+        AbsenceSettled?.Invoke();
         SaveNow();
         AnalyticsLog.Track("offline_settled", ("elapsedSec", absenceSec),
             ("simulatedSec", OfflineProductionService.Credited(absenceSec)),
@@ -786,6 +809,7 @@ public partial class GameManager : MonoBehaviour
         WriteCurrenciesToSave();
         InventoryManager.Instance.WriteToSave(save.inventory);
         save.inventoryCapacity = Bag.Capacity;
+        save.mineMaze = InventoryManager.Instance.MineMazeState;
         LoadGlobalProgressOnce();
         if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(save.collection);
         if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);
@@ -813,15 +837,19 @@ public partial class GameManager : MonoBehaviour
         CurrencyManager.Instance.GetCurrency(goldCurrency);
     }
 
-    private void WriteCurrenciesToSave()
+    private void WriteCurrenciesToSave() => WriteCurrencies(save);
+
+    /// <summary>재화 잔액을 세이브에 (광산 미로도 광석 · 골드를 한 번에 저장할 때 씀)</summary>
+    public static void WriteCurrencies(SaveData target)
     {
+        target.currencies ??= new List<CurrencyBalance>();
         foreach (var pair in CurrencyManager.Instance.Balances)
         {
-            var entry = save.currencies.Find(c => c.currencyId == pair.Key.CurrencyID);
+            var entry = target.currencies.Find(c => c.currencyId == pair.Key.CurrencyID);
             if (entry == null)
             {
                 entry = new CurrencyBalance { currencyId = pair.Key.CurrencyID };
-                save.currencies.Add(entry);
+                target.currencies.Add(entry);
             }
             entry.amount = pair.Value;
         }
@@ -1181,7 +1209,8 @@ public partial class GameManager : MonoBehaviour
     // furrows ahead of the main quest chain can't block it.
     private void ReportOpenedFurrows()
     {
-        if (QuestManager.Instance != null)
+        // 광장 농장이 열리면 밭 칸 수는 SettlementManager.Farm이 알림
+        if (QuestManager.Instance != null && !PlazaFarmOpen)
             QuestManager.Instance.SetOpenedFurrows(farmService.OpenSlotCount - PlotSaveData.SlotCount);
     }
 
@@ -1218,10 +1247,54 @@ public partial class GameManager : MonoBehaviour
         gameUI.HideGuide();
     }
 
-    // Called once by the fishing scene; the farm scene has no rod button.
-    public void ShowRodUpgradeButton()
+    // Called once by the fishing scene; the farm scene has no sea fishing button.
+    public void ShowSeaFishingButton()
     {
-        gameUI.ShowRodUpgradeButton();
+        gameUI.ShowSeaFishingButton();
+    }
+
+    // 바다 낚시 (낚시 개편): 낚시터 씬 안의 바다 화면 (FishingReworkGame, 본 게임 모드)
+    // 낚시꾼 해달이 선착장에서 일할 수 있게 된 뒤 (선착장 수리 · 해달 배치)
+    public bool CanOpenSeaFishing => fishingService.Model != null && CanProduceIn(FishingZoneId) && FindAnyObjectByType<FishingReworkGame>() != null;
+
+    public void SetSeaFishingButtonVisible(bool visible) => gameUI.SetSeaFishingButtonVisible(visible);
+
+    /// <summary>바다에서 나올 때 저장 (손낚시로 낚은 것 · 강화 · 의뢰)</summary>
+    public void SaveSeaFishing() => SaveNow();
+
+    public void OpenSeaFishing()
+    {
+        var sea = FindAnyObjectByType<FishingReworkGame>();
+        if (sea != null && fishingService.Model != null)
+            sea.Enter();
+    }
+
+    // 강화 · 의뢰 보상 · 낚은 물고기가 바뀌면 저장 (골드 · 가방은 본 게임 것이라 같이 저장됨)
+    private void HandleSeaFishingChanged() => SaveNow();
+
+    // 바다 낚시가 쓰는 본 게임 골드 · 가방 (강화 = 생산 업그레이드 퀘스트가 셈, 낚은 것 = AddFishingCatch: 퀘스트 · 도감 · 소리 · 어업 작업소)
+    private sealed class FishingHost : IFishingHost
+    {
+        private readonly GameManager game;
+
+        public FishingHost(GameManager game) => this.game = game;
+
+        public int Gold => CurrencyManager.Instance != null ? game.CoinBalance : 0;
+
+        public bool TrySpendGold(int amount) =>
+            amount <= 0 || (CurrencyManager.Instance != null && CurrencyManager.Instance.TrySpend(game.goldCurrency, amount, TransactionSource.RodUpgrade));
+
+        public void EarnGold(int amount)
+        {
+            if (amount > 0 && CurrencyManager.Instance != null)
+                CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(game.goldCurrency, amount, TransactionSource.QuestReward));
+        }
+
+        public void AddCatch(FishDefinition fish)
+        {
+            if (fish != null && fish.Item != null)
+                game.AddFishingCatch(fish.Item.ItemId);
+        }
     }
 
     // Single switch for "the otter is on fishing duty". FishingOtterController
@@ -1277,6 +1350,10 @@ public partial class GameManager : MonoBehaviour
     // The farm and dock otters show it as icons flying to the bag.
     public static event Action<ItemDefinition, int> HarvestStored;
     public static event Action<ItemDefinition> FishCaught;
+
+    // An offline absence was settled (launch or back from the background).
+    // The mine maze, when open, refreshes its live model with it.
+    public static event Action AbsenceSettled;
 
     // Mining runs in every zone scene once the otter is in the mine, like
     // the farm growing everywhere — not only while the mine scene is open.
@@ -1397,13 +1474,6 @@ public partial class GameManager : MonoBehaviour
         }
     }
 #endif
-
-    public bool TryUpgradeRod()
-    {
-        if (!fishingService.TryUpgradeRod(CurrencyManager.Instance, goldCurrency)) return false;
-        SaveNow();
-        return true;
-    }
 
     // Whether the whole yield of this ready slot fits in the bag (the farmer
     // skips slots that don't; they wait until the player sells).

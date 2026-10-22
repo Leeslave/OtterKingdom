@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -59,7 +59,10 @@ public class OfflineProductionService
 
     public bool IsFarmUnlocked(SaveData save) => save.farmLevel >= farmBalance.offlineUnlockLevel;
 
-    public bool IsFishingUnlocked(SaveData save) => save.rodLevel >= fishingBalance.offlineUnlockRodLevel;
+    /// <summary>바다 낚시 설정 (있으면 꺼 둔 동안도 줄 · 찌 · 릴 강화로 닿는 물고기 중에서 낚음)</summary>
+    public FishingReworkConfig FishingConfig { get; set; }
+
+    public bool IsFishingUnlocked(SaveData save) => FishingService.OfflineUnlocked(save, fishingBalance, FishingConfig);
 
     public bool IsMiningUnlocked(SaveData save) => save.pickaxeLevel >= miningBalance.offlineUnlockPickaxeLevel;
 
@@ -186,6 +189,15 @@ public class OfflineProductionService
         long fish = 0;
         for (long i = 0; i < catches; i++)
         {
+            if (FishingConfig != null)
+            {
+                // 바다 낚시: 강화로 닿는 물고기 중에서 (가끔 쓰레기)
+                string caught = FishingService.RollCatch(FishingConfig, save.fishing, fishingBalance.trashItemId, random.NextDouble(), random.NextDouble());
+                if (caught == fishingBalance.trashItemId) continue;
+                fishCounts[caught] = (fishCounts.TryGetValue(caught, out long c) ? c : 0) + 1;
+                fish++;
+                continue;
+            }
             if (random.NextDouble() >= fishChance) continue;
             string id = fishingBalance.RollFish(save.rodLevel, random.NextDouble());
             fishCounts[id] = (fishCounts.TryGetValue(id, out long n) ? n : 0) + 1;

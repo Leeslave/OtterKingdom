@@ -119,6 +119,9 @@ public partial class SettlementManager
     /// <returns>이번에 찾아온 해달 (없으면 null)</returns>
     private SettlementOtterDefinition UpdateToyVisits()
     {
+        // 또박이가 오기 전에는 처음 네 해달만 (EarlyOtterRules)
+        if (!EarlyOtterRules.IsVillageOpen(Settlement))
+            return null;
         var step = ToyVisitRules.Step(_config, Settlement, PlazaToyTier, CollectPlazaToys(), PlazaVisitContext, NowTicks, out var arrived);
         if (step != ToyVisitStep.Arrived)
             return null;

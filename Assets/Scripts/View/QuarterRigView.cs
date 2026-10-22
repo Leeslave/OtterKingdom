@@ -32,14 +32,34 @@ using UnityEngine.Rendering;
 //            over, and again. With a sledgehammer instead (sledge.png, the
 //            작업반장): heave it up over the head in both paws, bring it down in
 //            one heavy blow that jolts the body, chips flying wide, and again.
+//   Photo  - only rigs with a flash (Resources/<folder>/flash_star.png, the
+//            사진가; the camera is part of its arm), paparazzi style like the
+//            raccoon reporters of 주간너굴: crouch, glance both ways, camera up to
+//            the eye, a burst of three flashes, then a look at the shots on the
+//            camera and a little hop with a sparkle over the head.
+//   Ring   - only rigs with a smiling head (Resources/<folder>/front-head-smile.png,
+//            the 행상인; the bell is part of its far arm): stands where it is,
+//            raises the bell and rings it, beckoning with the other paw and
+//            bobbing along, eyes smiling, calling the customers in.
+//   Sweep  - only rigs with a dust puff (Resources/<folder>/sweep_dust.png, the
+//            청소부; the broom is part of its far arm): stands where it is and
+//            sweeps the broom to and fro, dust puffing up from the bristles at the
+//            end of each stroke, looking down at the work.
 //   Mine   - only rigs with a rock (Resources/<folder>/rock_0.png, the 광부;
 //            the pickaxe is part of its arm): crouch at a rock in front, swing
 //            the pickaxe in both paws from behind, over the top and down onto it three times - each blow cracks it a stage
 //            (rock_1, rock_2) with stone chips flying (stone_chip), the third
 //            breaks it to rubble (rock_rubble) - straighten up, and a new rock.
+// A rig can have any number of these (the 주인공 has them all). One whose tool is
+// not drawn into its own arm gets an arm holding it for that action:
+// front-<arm>-<tag>.png (tag mine, photo, ring, sweep, or play for the guitar
+// when seated - Tools/HeroRig/tool_arms.py) is shown instead of the arm while it
+// runs.
 //
 // SetSitting(true) settles onto a seat whose surface is this transform (a
 // chair or bench spot): bottom on the seat, legs stretched out in front, and
+// (a rig with fx-note.png, the 음악가: legs crossed, eyes softly closed, swaying
+// as it strums its guitar, music notes floating up - instead of)
 // dozing - the head sinks slowly with the eyes closed (front-head-sleep),
 // jerks back up with a startled blink, and a "z" (fx-z) floats up now and then.
 //
@@ -90,11 +110,13 @@ public sealed class QuarterRigView : MonoBehaviour
     private readonly struct Key
     {
         public readonly float t, hips, body, head, near, far, tail, pack, spread, crop, kick, fiddle, rod, hold, line, bite, hammer, hit, stone,
-            nearX, nearY, grip;
+            nearX, nearY, grip, flash, up, sparkle, ring, smile, dust;
         public Key(float t, float hips, float body, float head, float near, float far, float tail, float pack, float spread, float crop,
             float kick = 0f, float fiddle = 0f, float rod = 0f, float hold = 0f, float line = 0f, float bite = 0f, float hammer = 0f, float hit = 0f,
-            float stone = -1f, float nearX = 0f, float nearY = 0f, float grip = 0f)
+            float stone = -1f, float nearX = 0f, float nearY = 0f, float grip = 0f, float flash = 0f, float up = 0f, float sparkle = 0f,
+            float ring = 0f, float smile = 0f, float dust = 0f)
         {
+            this.flash = flash; this.up = up; this.sparkle = sparkle; this.ring = ring; this.smile = smile; this.dust = dust;
             this.t = t; this.hips = hips; this.body = body; this.head = head; this.near = near;
             this.far = far; this.tail = tail; this.pack = pack; this.spread = spread; this.crop = crop; this.kick = kick;
             this.fiddle = fiddle; this.rod = rod; this.hold = hold; this.line = line; this.bite = bite; this.hammer = hammer; this.hit = hit;
@@ -104,7 +126,7 @@ public sealed class QuarterRigView : MonoBehaviour
     // Where the far paw takes hold of a tool held in the near paw: on the handle a little above it (towards the head) (near arm space, rig px, y down).
     private static readonly Vector2 GripOnHandle = new Vector2(5f, -30f);
 
-    public enum Loop { None, Kick, Puzzle, Fish, Build, Mine }
+    public enum Loop { None, Kick, Puzzle, Fish, Build, Mine, Photo, Ring, Sweep }
 
     private static readonly Key[] HarvestKeys =
     {
@@ -243,6 +265,71 @@ public sealed class QuarterRigView : MonoBehaviour
         M(6.7f, 10f, -0.06f, -0.1f, 1.67f, 85.9f, 10.7f, 1f, 0.06f, 0f),   // a new rock; = the .50 key
     };
     private const float MineLoopFrom = .50f;
+    // Photo: the camera raised to the eye (near arm turned up, drawn over the head) and lowered to look at it.
+    private const float NearUp = -.9f, FarUp = -.75f, NearLook = .45f;
+    private static Key P(float t, float hips, float body, float head, float near, float far, float fiddle, float flash, float up, float sparkle) =>
+        new Key(t, hips, body, head, near, far, 0f, 0f, 4f, 0f, 0f, fiddle, 0f, 0f, 0f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, flash, up, sparkle);
+    private static readonly Key[] PhotoKeys =
+    {
+        //    t     hips   body   head   near   far   fiddle flash up sparkle
+        P(0f,     0f,    0f,    0f,     0f,    0f,   0f,   0f,  0f,  0f),
+        P(.45f,  12f,   .08f, -.14f,   .15f,  .10f,  0f,   0f,  0f,  0f),   // crouches, glances one way
+        P(.85f,  12f,   .08f,  .12f,   .15f,  .10f,  0f,   0f,  0f,  0f),   // ...and the other: nobody looking
+        P(1.15f, 14f,   .12f,  .04f, NearUp, FarUp, .35f,  0f,  1f,  0f),   // camera up to the eye
+        P(1.45f, 14f,   .12f,  .04f, NearUp, FarUp, .35f,  0f,  1f,  0f),   // zooming in
+        P(1.50f, 13f,   .07f,  .02f, NearUp, FarUp,  0f,   1f,  1f,  0f),   // flash!
+        P(1.62f, 14f,   .11f,  .04f, NearUp, FarUp,  0f,   0f,  1f,  0f),
+        P(1.72f, 13f,   .07f,  .02f, NearUp, FarUp,  0f,   1f,  1f,  0f),   // flash!
+        P(1.84f, 14f,   .11f,  .04f, NearUp, FarUp,  0f,   0f,  1f,  0f),
+        P(1.94f, 13f,   .07f,  .02f, NearUp, FarUp,  0f,   1f,  1f,  0f),   // flash!
+        P(2.10f, 14f,   .11f,  .04f, NearUp, FarUp,  0f,   0f,  1f,  0f),
+        P(2.40f,  4f,   .06f,  .20f,  NearLook, .05f, 0f,  0f,  0f,  0f),   // looks at the shots on the camera
+        P(2.85f, -8f,  -.04f, -.08f,  NearLook, -.10f, 0f, 0f,  0f,  1f),   // a little hop: got it!
+        P(3.10f,  0f,   0f,   -.04f,  NearLook, 0f,  0f,   0f,  0f,  .6f),
+        P(3.40f,  0f,   0f,    0f,     .15f,  .10f,  0f,   0f,  0f,  0f),
+        P(3.80f, 12f,   .08f, -.14f,   .15f,  .10f,  0f,   0f,  0f,  0f),   // = the .45 key
+    };
+    private const float PhotoLoopFrom = .45f;
+    // The lens in the near arm sprite (arm space, rig px, y down); flash and sparkle sizes (rig px).
+    private static readonly Vector2 LensInArm = new Vector2(79f, 36f);
+    private static readonly Vector2 SparkleOverHead = new Vector2(70f, -190f);
+    private const float FlashSize = 110f, FlashGlowSize = 190f, SparkleSize = 40f;
+    private const int FlashOrder = 11;
+    // Ringing the bell: the far arm raised and shaken, the near paw beckoning, a bob in time; looped from RingLoopFrom.
+    private static Key R(float t, float hips, float body, float head, float near, float ring, float smile) =>
+        new Key(t, hips, body, head, near, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 0f, 0f, 0f, ring, smile);
+    private static readonly Key[] RingKeys =
+    {
+        //    t     hips  body   head   near   ring smile
+        R(0f,     0f,   0f,    0f,    0f,    0f,  0f),
+        R(.30f,   2f,  -.03f,  .06f, -.30f,  1f,  1f),   // bell up, eyes smiling
+        R(1.40f,  2f,  -.05f, -.05f, -.45f,  1f,  1f),   // calling one way...
+        R(2.50f,  2f,  -.03f,  .06f, -.30f,  1f,  1f),   // ...and the other; = the .30 key
+    };
+    private const float RingLoopFrom = .30f;
+    // Sweeping: the far arm (holding the broom) swung to and fro about the shoulder, the body leaning into each
+    // stroke; dust at the end of each stroke. Looped from SweepLoopFrom (two strokes).
+    private static Key W(float t, float hips, float body, float head, float near, float far, float dust = 0f) =>
+        new Key(t, hips, body, head, near, far, 0f, 0f, 6f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, dust);
+    private static readonly Key[] SweepKeys =
+    {
+        //    t     hips  body   head   near   far    dust
+        W(0f,     0f,   0f,    0f,    0f,    0f),
+        W(.35f,   6f,  .05f,  .10f,  .15f, -.50f),          // broom back, looking down at the floor
+        W(.62f,   8f, -.04f,  .14f, -.10f,  .42f,  1f),     // swish!
+        W(.70f,   7f, -.03f,  .13f, -.08f,  .38f, .85f),
+        W(.97f,   6f,  .05f,  .10f,  .15f, -.50f),          // and back
+        W(1.24f,  8f, -.04f,  .16f, -.10f,  .42f,  1f),     // swish!
+        W(1.32f,  7f, -.03f,  .15f, -.08f,  .38f, .85f),
+        W(1.59f,  6f,  .05f,  .10f,  .15f, -.50f),          // = the .35 key
+    };
+    private const float SweepLoopFrom = .35f;
+    // The bristles' tip in the far arm sprite (arm space, rig px, y down); dust puff size and drift (rig px).
+    private static readonly Vector2 BroomTipInArm = new Vector2(32f, 118f);
+    private const float DustSize = 50f, DustDrift = 30f;
+    // Far arm raised by RingRaise (rad, counter-clockwise lifts the paw) and shaken by RingShake RingRate times a
+    // second; the near paw beckons; the body bobs twice a ring.
+    private const float RingRaise = .8f, RingShake = .28f, RingRate = 4.5f, RingBeckon = .25f, RingBob = 2.5f;
     // The rock stands on the ground just in front of the feet (rig px, y down: + = nearer the camera), its top
     // where the pickaxe tip lands; chips fly up from there.
     private const float RockX = 115f, RockY = 10f, RockHeight = 52f, RockTop = -36f, StoneChipSize = 14f, StoneChipFlight = 34f;
@@ -275,6 +362,14 @@ public sealed class QuarterRigView : MonoBehaviour
     private const float SitNearAngle = 75.5f, SitFarAngle = 80.5f;  // degrees from pointing down
     private const float SitLegLength = 72f, SitLegForeshorten = .95f;
     private const float SitBlendSeconds = .25f;
+    // Playing on the seat (PlaysSeated): the near leg crossed over the far one - its hip moved under the far
+    // thigh and its foot turned up past horizontal (rig px y up, degrees from pointing down) - with a sway, a strum
+    // of the guitar arm and the tail keeping time; a note every PlayNoteEvery seconds from PlayNoteStart.
+    private static readonly Vector2 CrossNearHip = new Vector2(4f, 40f);
+    private const float CrossNearAngle = 120f, CrossFarAngle = 70f;
+    private const float PlaySway = .6f, PlayBody = .03f, PlayHead = .07f, PlayHeadTilt = .08f, PlayStrum = .07f, PlayStrumRate = 2.2f;
+    private const float PlayNoteEvery = .8f;
+    private static readonly Vector2 PlayNoteStart = new Vector2(.55f, 1.45f);
     // One nod: the head sinks for most of it, jerks back up, then settles.
     private const float NodSeconds = 3.4f;
     private const float NodSinkEnd = .72f, NodJerkEnd = .78f;
@@ -322,12 +417,22 @@ public sealed class QuarterRigView : MonoBehaviour
     private bool sitting;
     private float sitBlend, nodTime, zTimer;
     private SpriteRenderer frontHead;
+    private Sprite smileHead, noteSprite;
+    // Arms holding a tool, by "<arm>-<tag>" (front view), and the front arms as drawn.
+    private static readonly string[] ToolTags = { "mine", "photo", "ring", "sweep", "play" };
+    private readonly Dictionary<string, Sprite> toolArms = new Dictionary<string, Sprite>();
+    private Sprite nearArmSprite, farArmSprite;
+    private readonly List<Loop> workLoops = new List<Loop>();
+    // Sits down to play its guitar instead of dozing (fx-note.png in its folder - the 음악가).
+    public bool PlaysSeated => noteSprite != null;
     private Sprite awakeHead, sleepHead, zSprite, rodSprite, hammerSprite;
     private bool sledge;   // the hammer is a sledgehammer (sledge.png): the heavy two-handed swing
     private SpriteRenderer rod, fishLine, fishFloat, ripple;
     private SpriteRenderer hammer, log;
     private Sprite[] rockStages;   // rock_0..2, rock_rubble: the 광부's rock
     private SpriteRenderer rock;
+    private SpriteRenderer flashStar, flashGlow, sparkle;
+    private readonly SpriteRenderer[] dustPuffs = new SpriteRenderer[2];   // the 청소부's sweeping dust   // the 사진가's flash and its "got it!" sparkle
     private readonly SpriteRenderer[] stoneChips = new SpriteRenderer[3];
     private readonly SpriteRenderer[] chips = new SpriteRenderer[2];
     private readonly List<SpriteRenderer> zs = new List<SpriteRenderer>();
@@ -338,13 +443,35 @@ public sealed class QuarterRigView : MonoBehaviour
     public float Width => 2.7f * characterScale * Mathf.Abs(transform.lossyScale.x);
     public bool IsActing => action != null;
     public Loop CurrentLoop => action == KickKeys ? Loop.Kick : action == PuzzleKeys ? Loop.Puzzle : action == FishKeys ? Loop.Fish
-        : action == BuildKeys || action == SledgeKeys ? Loop.Build : action == MineKeys ? Loop.Mine : Loop.None;
+        : action == BuildKeys || action == SledgeKeys ? Loop.Build : action == MineKeys ? Loop.Mine : action == PhotoKeys ? Loop.Photo : action == RingKeys ? Loop.Ring : action == SweepKeys ? Loop.Sweep : Loop.None;
     // Only an otter with a rod (rod.png in its folder - the sailor) can fish.
     public bool CanFish => rodSprite != null;
+
+    // 낚시 개편(FishingReworkGame): 줄 · 찌는 밖에서 그리고, 입질 없이 기다리는 자세에 머묾 (챔질은 PlayFishStrike로만).
+    // 낚싯대 끝(월드)은 ExternalFishLine일 때도 매 프레임 알려 줌
+    [NonSerialized] public bool ExternalFishLine;
+    public Vector3 RodTipWorld { get; private set; }
+    private const float FishWaitEnd = 2.6f, FishStrikeFrom = 3.05f;
+
+    public void PlayFishStrike()
+    {
+        if (action == FishKeys && actionTime >= FishLoopFrom) actionTime = FishStrikeFrom;
+    }
     // Only an otter with a hammer (hammer.png in its folder - the mechanic) builds.
     public bool CanBuild => hammerSprite != null;
     // Only an otter with a rock to break (rock_0.png in its folder - the 광부) mines.
     public bool CanMine => rockStages != null;
+    // Only an otter with a flash (flash_star.png in its folder - the 사진가) takes photos.
+    public bool CanPhoto => flashStar != null;
+    // Only an otter with a smiling head (front-head-smile.png in its folder - the 행상인) rings its bell.
+    public bool CanRing => smileHead != null;
+    // Only an otter with a dust puff (sweep_dust.png in its folder - the 청소부) sweeps.
+    public bool CanSweep => dustPuffs[0] != null;
+    // This otter's own work (fishing, building, ...), Loop.None for an otter without one; with several, the first.
+    public Loop WorkLoop => workLoops.Count > 0 ? workLoops[0] : Loop.None;
+    // Every work it can do, and one of them at random (the 주인공 does them all).
+    public IReadOnlyList<Loop> WorkLoops => workLoops;
+    public Loop RandomWorkLoop => workLoops.Count > 0 ? workLoops[UnityEngine.Random.Range(0, workLoops.Count)] : Loop.None;
     public bool IsSitting => sitting;
 
     public int SortingOrder
@@ -376,13 +503,16 @@ public sealed class QuarterRigView : MonoBehaviour
         if (loop == Loop.Fish && !CanFish) return;
         if (loop == Loop.Build && !CanBuild) return;
         if (loop == Loop.Mine && !CanMine) return;
+        if (loop == Loop.Photo && !CanPhoto) return;
+        if (loop == Loop.Ring && !CanRing) return;
+        if (loop == Loop.Sweep && !CanSweep) return;
         walking = false;
         action = loop == Loop.Kick ? KickKeys : loop == Loop.Puzzle ? PuzzleKeys : loop == Loop.Fish ? FishKeys
-            : loop == Loop.Mine ? MineKeys : sledge ? SledgeKeys : BuildKeys;
+            : loop == Loop.Mine ? MineKeys : loop == Loop.Photo ? PhotoKeys : loop == Loop.Ring ? RingKeys : loop == Loop.Sweep ? SweepKeys : sledge ? SledgeKeys : BuildKeys;
         actionTime = 0f;
         actionLoops = true;
         actionLoopFrom = loop == Loop.Kick ? 0f : loop == Loop.Puzzle ? PuzzleLoopFrom : loop == Loop.Fish ? FishLoopFrom
-            : loop == Loop.Mine ? MineLoopFrom : sledge ? SledgeLoopFrom : BuildLoopFrom;
+            : loop == Loop.Mine ? MineLoopFrom : loop == Loop.Photo ? PhotoLoopFrom : loop == Loop.Ring ? RingLoopFrom : loop == Loop.Sweep ? SweepLoopFrom : sledge ? SledgeLoopFrom : BuildLoopFrom;
     }
 
     public void StopAction()
@@ -438,14 +568,42 @@ public sealed class QuarterRigView : MonoBehaviour
         front = Build(rig.bones, false, tuning?.front);
         rear = Build(rig.rearBones, true, tuning?.rear);
         sleepHead = Resources.Load<Sprite>(resourceFolder + "/front-head-sleep");
+        smileHead = Resources.Load<Sprite>(resourceFolder + "/front-head-smile");
         zSprite = Resources.Load<Sprite>(resourceFolder + "/fx-z");
+        noteSprite = Resources.Load<Sprite>(resourceFolder + "/fx-note");
         rodSprite = Resources.Load<Sprite>(resourceFolder + "/rod");
         if (rodSprite != null) BuildRod();
         hammerSprite = Resources.Load<Sprite>(resourceFolder + "/hammer");
         if (hammerSprite == null) { hammerSprite = Resources.Load<Sprite>(resourceFolder + "/sledge"); sledge = hammerSprite != null; }
         if (hammerSprite != null) BuildHammer();
+        var puff = Resources.Load<Sprite>(resourceFolder + "/sweep_dust");
+        if (puff != null)
+            for (int i = 0; i < dustPuffs.Length; i++)
+            {
+                dustPuffs[i] = NewChild("Dust", visual.transform).AddComponent<SpriteRenderer>();
+                dustPuffs[i].sprite = puff;
+                dustPuffs[i].sortingOrder = FlashOrder;
+                dustPuffs[i].gameObject.SetActive(false);
+            }
+        var star = Resources.Load<Sprite>(resourceFolder + "/flash_star");
+        if (star != null) BuildFlash(star);
         var rock0 = Resources.Load<Sprite>(resourceFolder + "/rock_0");
         if (rock0 != null) BuildRock(rock0);
+        foreach (var tag in ToolTags)
+            foreach (var arm in new[] { "nearArm", "farArm" })
+            {
+                var held = Resources.Load<Sprite>($"{resourceFolder}/front-{arm}-{tag}");
+                if (held != null) toolArms[$"{arm}-{tag}"] = held;
+            }
+        nearArmSprite = front.nearArm != null ? front.nearArm.sprite : null;
+        farArmSprite = front.farArm != null ? front.farArm.sprite : null;
+        workLoops.Clear();
+        if (CanFish) workLoops.Add(Loop.Fish);
+        if (CanBuild) workLoops.Add(Loop.Build);
+        if (CanMine) workLoops.Add(Loop.Mine);
+        if (CanPhoto) workLoops.Add(Loop.Photo);
+        if (CanRing) workLoops.Add(Loop.Ring);
+        if (CanSweep) workLoops.Add(Loop.Sweep);
         ApplyPose();
     }
 
@@ -459,7 +617,11 @@ public sealed class QuarterRigView : MonoBehaviour
         rod = fishLine = fishFloat = ripple = null;
         hammer = log = null;
         rock = null;
+        flashStar = flashGlow = sparkle = null;
+        for (int i = 0; i < dustPuffs.Length; i++) dustPuffs[i] = null;
         rockStages = null;
+        toolArms.Clear();
+        workLoops.Clear();
         for (int i = 0; i < stoneChips.Length; i++) stoneChips[i] = null;
         chips[0] = chips[1] = null;
         foreach (var made in madeForFishing) if (made != null) { if (Application.isPlaying) Destroy(made); else DestroyImmediate(made); }
@@ -603,6 +765,76 @@ public sealed class QuarterRigView : MonoBehaviour
         }
     }
 
+    // The flash (a star on a soft glow) and the sparkle, hidden until taking photos.
+    private void BuildFlash(Sprite star)
+    {
+        flashGlow = NewChild("FlashGlow", visual.transform).AddComponent<SpriteRenderer>();
+        flashGlow.sprite = Resources.Load<Sprite>(resourceFolder + "/flash_glow");
+        flashStar = NewChild("Flash", visual.transform).AddComponent<SpriteRenderer>();
+        flashStar.sprite = star;
+        sparkle = NewChild("Sparkle", visual.transform).AddComponent<SpriteRenderer>();
+        sparkle.sprite = Resources.Load<Sprite>(resourceFolder + "/sparkle");
+        foreach (var r in new[] { flashGlow, flashStar, sparkle }) { r.sortingOrder = FlashOrder; r.gameObject.SetActive(false); }
+    }
+
+    // Flash at the lens, sparkle over the head; the near arm over the head while the camera is up.
+    private void PoseFlash(View v, Key a)
+    {
+        if (v.nearArm != null)
+        {
+            int head = v.bones.First(b => b.name == "head").layer;
+            int order = a.up > .5f ? head + 1 : v.bones.First(b => b.name == "nearArm").layer;
+            if (v.nearArm.sortingOrder != order) v.nearArm.sortingOrder = order;
+        }
+        bool flash = a.flash > .02f;
+        foreach (var r in new[] { flashStar, flashGlow }) if (r != null && r.gameObject.activeSelf != flash && r.sprite != null) r.gameObject.SetActive(flash);
+        if (flash)
+        {
+            var arm = v.joints["nearArm"];
+            Vector3 lens = visual.transform.InverseTransformPoint(arm.TransformPoint(new Vector3(LensInArm.x, -LensInArm.y, 0f) / RigPixelsPerUnit));
+            flashStar.transform.localPosition = lens;
+            flashStar.transform.localScale = Vector3.one * (FlashSize * (.6f + .6f * a.flash) / RigPixelsPerUnit / flashStar.sprite.bounds.size.y);
+            flashStar.transform.localRotation = Quaternion.Euler(0f, 0f, 20f * a.flash);
+            flashStar.color = new Color(1f, 1f, 1f, a.flash);
+            if (flashGlow.sprite != null)
+            {
+                flashGlow.transform.localPosition = lens;
+                flashGlow.transform.localScale = Vector3.one * (FlashGlowSize * a.flash / RigPixelsPerUnit / flashGlow.sprite.bounds.size.y);
+                flashGlow.color = new Color(1f, 1f, .9f, a.flash);
+            }
+        }
+        bool pop = a.sparkle > .02f && sparkle.sprite != null;
+        if (sparkle.gameObject.activeSelf != pop) sparkle.gameObject.SetActive(pop);
+        if (pop)
+        {
+            var head = v.joints["head"];
+            sparkle.transform.localPosition = visual.transform.InverseTransformPoint(head.TransformPoint(new Vector3(SparkleOverHead.x, -SparkleOverHead.y, 0f) / RigPixelsPerUnit));
+            sparkle.transform.localScale = Vector3.one * (SparkleSize * (.5f + .5f * a.sparkle) / RigPixelsPerUnit / sparkle.sprite.bounds.size.y);
+            sparkle.transform.localRotation = Quaternion.Euler(0f, 0f, 30f * (1f - a.sparkle));
+            sparkle.color = new Color(1f, 1f, 1f, Mathf.Clamp01(a.sparkle * 1.5f));
+        }
+    }
+
+    // Dust from the broom's tip at the end of a stroke: two puffs drifting up and apart, growing and fading.
+    private void PoseDust(View v, Key a)
+    {
+        bool show = a.dust > .02f && v.joints.ContainsKey("farArm");
+        foreach (var d in dustPuffs) if (d.gameObject.activeSelf != show) d.gameObject.SetActive(show);
+        if (!show) return;
+        var arm = v.joints["farArm"];
+        Vector3 tip = visual.transform.InverseTransformPoint(arm.TransformPoint(new Vector3(BroomTipInArm.x, -BroomTipInArm.y, 0f) / RigPixelsPerUnit));
+        tip.y = Mathf.Max(tip.y, 0f);
+        float t = 1f - a.dust;
+        for (int i = 0; i < dustPuffs.Length; i++)
+        {
+            float side = i == 0 ? -.6f : 1f;
+            var d = dustPuffs[i];
+            d.transform.localPosition = tip + new Vector3(side * DustDrift * (.3f + t), DustDrift * (.2f + t) * (i == 0 ? .7f : 1f), 0f) / RigPixelsPerUnit;
+            d.transform.localScale = Vector3.one * (DustSize * (.6f + .8f * t) * (i == 0 ? .8f : 1f) / RigPixelsPerUnit / d.sprite.bounds.size.y);
+            d.color = new Color(1f, 1f, 1f, Mathf.Clamp01(a.dust * 1.3f));
+        }
+    }
+
     // The rock (its crack stages) and the stone chips, hidden until mining.
     private void BuildRock(Sprite rock0)
     {
@@ -671,7 +903,7 @@ public sealed class QuarterRigView : MonoBehaviour
     // Rod from the paw, line down to the water with the float on it, ripple around it; all in the rig's own space.
     private void PoseRod(View v, Key a)
     {
-        bool hold = a.hold > .5f, wet = hold && a.line > .02f;
+        bool hold = a.hold > .5f, wet = hold && a.line > .02f && !ExternalFishLine;
         if (rod.gameObject.activeSelf != hold) rod.gameObject.SetActive(hold);
         foreach (var r in new[] { fishLine, fishFloat, ripple })
             if (r.gameObject.activeSelf != wet) r.gameObject.SetActive(wet);
@@ -685,8 +917,9 @@ public sealed class QuarterRigView : MonoBehaviour
         rod.transform.localRotation = Quaternion.Euler(0f, 0f, -tilt * Mathf.Rad2Deg);
         rod.transform.localScale = new Vector3(length / rodSprite.bounds.size.x, RodThickness / RigPixelsPerUnit / rodSprite.bounds.size.y, 1f);
         rod.sortingOrder = facingRear ? RodOrderRear : RodOrderFront;
-        if (!wet) return;
         Vector3 tip = hand + along * (length - grip);
+        RodTipWorld = visual.transform.TransformPoint(tip);
+        if (!wet) return;
         float bob = (1f - a.bite) * .02f * Mathf.Sin(clock * 2.4f) - a.bite * .07f;
         var water = new Vector3(tip.x, WaterY / RigPixelsPerUnit, 0f);
         Vector3 end = Vector3.Lerp(tip, water + Vector3.up * bob, a.line);
@@ -716,6 +949,8 @@ public sealed class QuarterRigView : MonoBehaviour
             if (action != null)
             {
                 actionTime += dt;
+                if (ExternalFishLine && action == FishKeys && actionTime >= FishWaitEnd && actionTime < FishStrikeFrom)
+                    actionTime = FishLoopFrom;
                 float length = action[action.Length - 1].t;
                 if (actionTime >= length)
                 {
@@ -734,7 +969,7 @@ public sealed class QuarterRigView : MonoBehaviour
     {
         visual.transform.localScale = new Vector3(facingLeft ? -characterScale : characterScale, characterScale, 1f);
         // Building faces the camera (the work in front of it), like harvesting.
-        if (action == BuildKeys || action == SledgeKeys || action == MineKeys) facingRear = false;
+        if (action == BuildKeys || action == SledgeKeys || action == MineKeys || action == PhotoKeys || action == RingKeys || action == SweepKeys) facingRear = false;
         front.root.SetActive(!facingRear);
         rear.root.SetActive(facingRear);
         var v = facingRear ? rear : front;
@@ -744,14 +979,17 @@ public sealed class QuarterRigView : MonoBehaviour
         if (heldCrop != null) PoseHeldCrop(a);
         float sb = sitBlend * sitBlend * (3f - 2f * sitBlend);
         float nod = Mathf.Repeat(nodTime / NodSeconds, 1f);
-        float droop = sb * Droop(nod);
+        float play = PlaysSeated ? sb : 0f;
+        float droop = play > 0f ? 0f : sb * Droop(nod);
+        if (toolArms.Count > 0) HoldTool(play > .5f);
         if (frontHead != null)
-            frontHead.sprite = sitting && sleepHead != null && sb > .5f && (nod < BlinkFrom || nod >= BlinkTo) ? sleepHead : awakeHead;
+            frontHead.sprite = sitting && sleepHead != null && sb > .5f && (PlaysSeated || nod < BlinkFrom || nod >= BlinkTo) ? sleepHead
+                : smileHead != null && a.smile > .5f ? smileHead : awakeHead;
         foreach (var b in v.bones)
         {
             var joint = v.joints[b.name];
             var tuned = v.TuningOf(b.name);
-            if (IsLeg(b)) { PoseLeg(joint, b.name == "nearLeg", w, a.spread, sb, tuned, b.name == "nearLeg" ? a.kick : 0f); continue; }
+            if (IsLeg(b)) { PoseLeg(joint, b.name == "nearLeg", w, a.spread, sb, tuned, b.name == "nearLeg" ? a.kick : 0f, play); continue; }
             float x = b.pos[0], y = b.pos[1], angle = 0f;
             switch (b.name)
             {
@@ -772,21 +1010,36 @@ public sealed class QuarterRigView : MonoBehaviour
                 case "hips": y += a.hips; break;
                 case "body": angle += a.body; break;
                 case "head": angle += a.head; break;
-                case "nearArm": angle += a.near + a.fiddle * FiddleNear * Mathf.Sin(clock * FiddleTapsPerSecond * Mathf.PI * 2f); x += a.nearX; y += a.nearY; break;
-                case "farArm": angle += a.far + a.fiddle * FiddleFar * Mathf.Sin(clock * FiddleTapsPerSecond * Mathf.PI * 2f + 1.3f); break;
+                case "nearArm": angle += a.near + a.fiddle * FiddleNear * Mathf.Sin(clock * FiddleTapsPerSecond * Mathf.PI * 2f); x += a.nearX; y += a.nearY;
+                    angle += a.ring * RingBeckon * Mathf.Sin(clock * RingRate * .5f * Mathf.PI * 2f); break;
+                case "farArm": angle += a.far + a.fiddle * FiddleFar * Mathf.Sin(clock * FiddleTapsPerSecond * Mathf.PI * 2f + 1.3f);
+                    angle += a.ring * (-RingRaise + RingShake * Mathf.Sin(clock * RingRate * Mathf.PI * 2f)); break;
                 case "tail": angle += a.tail; break;
                 case "backpack": angle += a.pack; break;
             }
             if (b.name == "head") angle += a.fiddle * FiddleHead * Mathf.Sin(clock * 1.3f);
+            if (b.name == "hips") y -= a.ring * RingBob * Mathf.Abs(Mathf.Sin(clock * RingRate * .5f * Mathf.PI * 2f));
             // Sitting and dozing: settled on the seat, hands in the lap, slow deep breaths, nodding off.
             switch (b.name)
             {
                 case "hips": y += SitHipsDrop * sb; break;
                 case "body": y += sb * Mathf.Sin(clock * 1.7f) * 1.4f; angle += .035f * droop; break;
                 case "head": y += 10f * droop; angle += .28f * droop; break;
-                case "nearArm": angle += -.4f * sb; break;
-                case "farArm": angle += .18f * sb; break;
+                case "nearArm": angle += -.4f * sb * (1f - play); break;
+                case "farArm": angle += .18f * sb * (1f - play); break;
                 case "tail": angle += .22f * sb; break;
+            }
+            // Playing: swaying to the tune, strumming (the guitar arm), the tail keeping time.
+            if (play > 0f)
+            {
+                float beat = clock * PlaySway * Mathf.PI * 2f;
+                switch (b.name)
+                {
+                    case "body": angle += play * PlayBody * Mathf.Sin(beat); break;
+                    case "head": angle += play * (PlayHeadTilt + PlayHead * Mathf.Sin(beat - .6f)); break;
+                    case "nearArm": angle += play * PlayStrum * Mathf.Sin(clock * PlayStrumRate * Mathf.PI * 2f); break;
+                    case "tail": angle += play * .1f * Mathf.Sin(beat * 2f); break;
+                }
             }
             x += tuned.x;
             y += tuned.y;
@@ -809,6 +1062,25 @@ public sealed class QuarterRigView : MonoBehaviour
         if (rod != null) PoseRod(v, a);
         if (hammer != null) PoseHammer(v, a);
         if (rock != null) PoseRock(action != null ? a : new Key(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
+        if (flashStar != null) PoseFlash(v, action != null ? a : new Key(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
+        if (dustPuffs[0] != null) PoseDust(v, action != null ? a : new Key(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
+    }
+
+    // The arm holding this action's tool (front-<arm>-<tag>.png) in place of the arm as drawn, while it runs.
+    private void HoldTool(bool playing)
+    {
+        var loop = CurrentLoop;
+        string tag = loop == Loop.Mine ? "mine" : loop == Loop.Photo ? "photo" : loop == Loop.Ring ? "ring"
+            : loop == Loop.Sweep ? "sweep" : playing ? "play" : null;
+        ShowArm(front.nearArm, nearArmSprite, tag == null ? null : "nearArm-" + tag);
+        ShowArm(front.farArm, farArmSprite, tag == null ? null : "farArm-" + tag);
+    }
+
+    private void ShowArm(SpriteRenderer arm, Sprite drawn, string key)
+    {
+        if (arm == null) return;
+        var sprite = key != null && toolArms.TryGetValue(key, out var held) ? held : drawn;
+        if (arm.sprite != sprite) arm.sprite = sprite;
     }
 
     // Two-handed: turn the far arm (about its shoulder) to point at the handle below the near paw.
@@ -824,7 +1096,7 @@ public sealed class QuarterRigView : MonoBehaviour
     }
 
     // Rigid leg with its sole on the ground: slides back during stance, lifts and swings forward otherwise.
-    private void PoseLeg(Transform joint, bool near, float w, float spread, float sit, PartTuning tuned, float kick)
+    private void PoseLeg(Transform joint, bool near, float w, float spread, float sit, PartTuning tuned, float kick, float cross = 0f)
     {
         float q = Mathf.Repeat(phase + (near ? 0f : .5f), 1f);
         bool stance = q < legs.stanceFraction;
@@ -837,10 +1109,10 @@ public sealed class QuarterRigView : MonoBehaviour
 
         // Seated: the sole sits a leg's length out from the hip, the leg turned to point there
         // (the sprite's pivot is the sole, its up axis runs back to the hip).
-        float degrees = near ? SitNearAngle : SitFarAngle;
+        float degrees = near ? Mathf.Lerp(SitNearAngle, CrossNearAngle, cross) : Mathf.Lerp(SitFarAngle, CrossFarAngle, cross);
         float length = SitLegLength * SitLegForeshorten;
         var toFoot = new Vector2(Mathf.Sin(degrees * Mathf.Deg2Rad), -Mathf.Cos(degrees * Mathf.Deg2Rad));
-        var seated = (near ? SitNearHip : SitFarHip) + toFoot * length;
+        var seated = (near ? Vector2.Lerp(SitNearHip, CrossNearHip, cross) : SitFarHip) + toFoot * length;
 
         var position = Vector2.Lerp(stand, seated, sit) + new Vector2(tuned.x, -tuned.y);
         float rotation = Mathf.Lerp(swing, degrees, sit) - tuned.rotation;
@@ -891,12 +1163,12 @@ public sealed class QuarterRigView : MonoBehaviour
     private void UpdateZs(float dt)
     {
         float nod = Mathf.Repeat(nodTime / NodSeconds, 1f);
-        if (sitting && sitBlend >= 1f && zSprite != null && nod > .1f && nod < NodSinkEnd)
+        if (sitting && sitBlend >= 1f && zSprite != null && (PlaysSeated || (nod > .1f && nod < NodSinkEnd)))
         {
             zTimer -= dt;
             if (zTimer <= 0f)
             {
-                zTimer = ZEverySeconds;
+                zTimer = PlaysSeated ? PlayNoteEvery : ZEverySeconds;
                 SpawnZ();
             }
         }
@@ -907,7 +1179,7 @@ public sealed class QuarterRigView : MonoBehaviour
             float age = zAges[i] += dt;
             float t = age / ZLifeSeconds;
             if (t >= 1f) { z.gameObject.SetActive(false); continue; }
-            var pos = ZStart + new Vector2(ZRise.x * t + .12f * Mathf.Sin(t * 7f), ZRise.y * t);
+            var pos = (PlaysSeated ? PlayNoteStart : ZStart) + new Vector2(ZRise.x * t + .12f * Mathf.Sin(t * 7f), ZRise.y * t);
             z.transform.localPosition = pos;
             z.transform.localScale = Vector3.one * Mathf.Lerp(.7f, 1.15f, t);
             z.transform.localRotation = Quaternion.Euler(0f, 0f, 12f * Mathf.Sin(t * 5f));
@@ -923,7 +1195,7 @@ public sealed class QuarterRigView : MonoBehaviour
         if (i < 0)
         {
             var z = NewChild("Z", visual.transform).AddComponent<SpriteRenderer>();
-            z.sprite = zSprite;
+            z.sprite = noteSprite != null ? noteSprite : zSprite;
             z.sortingOrder = ZOrder;
             zs.Add(z);
             zAges.Add(0f);
@@ -947,7 +1219,9 @@ public sealed class QuarterRigView : MonoBehaviour
             Mathf.Lerp(k0.kick, k1.kick, u), Mathf.Lerp(k0.fiddle, k1.fiddle, u), Mathf.Lerp(k0.rod, k1.rod, u),
             Mathf.Lerp(k0.hold, k1.hold, u), Mathf.Lerp(k0.line, k1.line, u), Mathf.Lerp(k0.bite, k1.bite, u),
             Mathf.Lerp(k0.hammer, k1.hammer, u), Mathf.Lerp(k0.hit, k1.hit, u), u >= 1f ? k1.stone : k0.stone,
-            Mathf.Lerp(k0.nearX, k1.nearX, u), Mathf.Lerp(k0.nearY, k1.nearY, u), Mathf.Lerp(k0.grip, k1.grip, u));
+            Mathf.Lerp(k0.nearX, k1.nearX, u), Mathf.Lerp(k0.nearY, k1.nearY, u), Mathf.Lerp(k0.grip, k1.grip, u),
+            Mathf.Lerp(k0.flash, k1.flash, u), u >= 1f ? k1.up : k0.up, Mathf.Lerp(k0.sparkle, k1.sparkle, u),
+            Mathf.Lerp(k0.ring, k1.ring, u), Mathf.Lerp(k0.smile, k1.smile, u), Mathf.Lerp(k0.dust, k1.dust, u));
     }
 
     private static bool IsLeg(Bone b) => b.name.EndsWith("Leg", StringComparison.Ordinal);

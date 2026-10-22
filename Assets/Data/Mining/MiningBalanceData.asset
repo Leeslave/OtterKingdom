@@ -15,8 +15,8 @@ MonoBehaviour:
   diamondItemId: ore_diamond
   stoneItemId: ore_stone
   findIntervalSec: {x: 15, y: 30}
-  baseDiamondChance: 0.3
-  diamondChancePerPickaxeLevel: 0.05
+  baseDiamondChance: 0.1
+  diamondChancePerPickaxeLevel: 0.025
   pickaxeUpgradeCosts: 64000000c80000009001000020030000
   offlineUnlockPickaxeLevel: 2
   offlineSlowdown: 4

@@ -42,8 +42,8 @@ public class BoardRequestCardView : MonoBehaviour
         _button.onClick.AddListener(() => OnClicked?.Invoke(this));
     }
 
-    /// <summary>화면으로 가는 카드 (큰 부탁 "3/5", 마을 발전 현황). 늘 누를 수 있음</summary>
-    public void BindEntry(string key, Sprite icon, string title, string description, string buttonLabel)
+    /// <summary>화면으로 가는 카드 (큰 부탁 "3/5", 마을 발전 현황). 늘 누를 수 있음 (done = 다 마침: 완료 표시만 붙임)</summary>
+    public void BindEntry(string key, Sprite icon, string title, string description, string buttonLabel, bool done = false)
     {
         Request = null;
         EntryKey = key;
@@ -52,10 +52,10 @@ public class BoardRequestCardView : MonoBehaviour
         _titleText.text = title;
         _descriptionText.text = description;
         _timeText.gameObject.SetActive(false);
-        _buttonImage.sprite = _openSprite;
+        _buttonImage.sprite = done ? _doneSprite : _openSprite;
         _buttonLabel.text = buttonLabel;
         _button.interactable = true;
-        _doneCheck.SetActive(false);
+        _doneCheck.SetActive(done);
     }
 
     public void Bind(BoardRequestDefinition request, RequestStatus status, string remainingTime)

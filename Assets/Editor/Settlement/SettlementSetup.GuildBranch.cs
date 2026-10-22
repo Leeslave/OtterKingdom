@@ -37,8 +37,9 @@ public static partial class SettlementSetup
         so.FindProperty("_buildingId").stringValue = GuildBranchId;
         so.FindProperty("_buildingName").stringValue = "길드 지부";
         so.FindProperty("_description").stringValue = "성에서 나온 길드가 상업 지역에 연 지부. 장사가 활발해져 물건을 더 비싸게 팔아요.";
-        so.FindProperty("_icon").objectReferenceValue = LoadArt("ICON_GuildOffice");
-        so.FindProperty("_worldSprite").objectReferenceValue = LoadPropArt("Prop_GuildOffice");
+        var branchArt = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Buildings/Detail4/GuildBranch.png");
+        so.FindProperty("_icon").objectReferenceValue = branchArt;
+        so.FindProperty("_worldSprite").objectReferenceValue = branchArt;
         so.FindProperty("_footprint").vector2IntValue = new Vector2Int(6, 4);
         so.FindProperty("_requiredDevelopment").stringValue = CastleRules.Built;
         so.FindProperty("_traits").arraySize = 0;

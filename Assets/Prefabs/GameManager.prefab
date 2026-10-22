@@ -62,6 +62,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3fbb277fa8f065141aeb60db62392837, type: 2}
   farmBalance: {fileID: 0}
   fishingBalance: {fileID: 11400000, guid: 821d8ca2ca83e6f49b91a462ea19214a, type: 2}
+  fishingConfig: {fileID: 11400000, guid: 59177675e37b1884285921612ecb9749, type: 2}
   miningBalance: {fileID: 11400000, guid: 83ffdef1f57a2a5489c9bacc6dd0928b, type: 2}
   otterVisitBalance: {fileID: 0}
   autoSaveIntervalSec: 30

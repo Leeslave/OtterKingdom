@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p4_farmer_home
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p4_farmer_home
-  _order: 37
+  _order: 35
   _category: 0
   _contentVersion: 4
   _title: "\uBCF4\uB4E4\uC774\uAC00 \uC0B4 \uC9D1"
@@ -22,7 +22,7 @@ MonoBehaviour:
     \uB3CC\uBCF4\uACE0 \uC2F6\uB300\uC694."
   _icon: {fileID: 21300000, guid: 2164e715d52989742870bf600e3d5f8e, type: 3}
   _requester: {fileID: 11400000, guid: f67334a72b334d8fb371a7a4fe78ff5f, type: 2}
-  _requiredDevelopment: p4_quarry_built
+  _requiredDevelopment: p4_workshop_built
   _minResidents: 0
   _construction: {fileID: 0}
   _clearZone: {fileID: 0}

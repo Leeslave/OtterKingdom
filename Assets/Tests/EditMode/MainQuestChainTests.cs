@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -41,6 +41,118 @@ public class MainQuestChainTests
         var item = ScriptableObject.CreateInstance<ItemDefinition>();
         _created.Add(item);
         return item;
+    }
+
+    // Lv.5가 한꺼번에 열리지 않게: 게시판 보강 → 또박이 배치 → 첫 구역 → … → 광산 연락(오래된 갱도). 실제 퀘스트 에셋의 체인
+    [Test]
+    public void EarlyChallenges_AreRegisteredAndHaveReachablePrerequisites()
+    {
+        var database = AssetDatabase.LoadAssetAtPath<QuestDatabase>("Assets/Scriptable Obejects/Quest/QuestDatabase.asset");
+        var ids = new HashSet<string>();
+        int added = 0;
+        foreach (var quest in database.Quests)
+        {
+            Assert.IsTrue(ids.Add(quest.QuestId), quest.QuestId);
+            if (!quest.QuestId.StartsWith("challenge_")) continue;
+            added++;
+            Assert.AreEqual(QuestKind.Challenge, quest.Kind);
+            Assert.That(quest.RequiredLevel, Is.InRange(5, 10));
+            Assert.Greater(quest.RewardAmount, 0);
+            if (quest.Prerequisite != null)
+                Assert.LessOrEqual(quest.Prerequisite.RequiredLevel, quest.RequiredLevel);
+            if (quest.GoalType == QuestGoalType.Harvest)
+                Assert.GreaterOrEqual(quest.RequiredLevel, 10, "밭 해금 전에는 수확 목표를 주지 않음");
+        }
+        Assert.AreEqual(11, added);
+    }
+
+    [Test]
+    public void TerritoryProjects_CostThirtyPercentLess()
+    {
+        var guids = AssetDatabase.FindAssets("t:CommunityProjectDefinition", new[] { "Assets/Scriptable Obejects/Settlement/Projects" });
+        int checkedProjects = 0;
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            if (!System.IO.Path.GetFileName(path).StartsWith("Project_territory_")) continue;
+            var project = new SerializedObject(AssetDatabase.LoadAssetAtPath<CommunityProjectDefinition>(path));
+            int tier = path.Contains("_3_mission") ? 3 : path.Contains("_2_mission") ? 2 : 1;
+            Assert.AreEqual(tier == 1 ? 1400 : tier == 2 ? 3500 : 7000, project.FindProperty("_gold").intValue, path);
+            var items = project.FindProperty("_items");
+            Assert.AreEqual(tier == 1 ? 28 : tier == 2 ? 49 : 77, items.GetArrayElementAtIndex(0).FindPropertyRelative("_amount").intValue, path);
+            Assert.AreEqual(tier == 1 ? 11 : tier == 2 ? 21 : 35, items.GetArrayElementAtIndex(1).FindPropertyRelative("_amount").intValue, path);
+            checkedProjects++;
+        }
+        Assert.AreEqual(13, checkedProjects);
+    }
+
+    [Test]
+    public void Level5Chain_BoardOtterBeforeMineCall()
+    {
+        const string folder = "Assets/Scriptable Obejects/Quest/Quests/";
+        var clerk = AssetDatabase.LoadAssetAtPath<QuestDefinition>(folder + "M06_Clerk.asset");
+        var found = AssetDatabase.LoadAssetAtPath<QuestDefinition>(folder + "M05_MazeFound.asset");
+        var board = AssetDatabase.LoadAssetAtPath<QuestDefinition>(folder + "M05_Board.asset");
+        Assert.IsNotNull(clerk);
+        Assert.IsNotNull(found);
+        Assert.AreEqual(board, clerk.Prerequisite, "게시판 보강 바로 다음이 또박이 배치");
+        Assert.AreEqual(5, clerk.RequiredLevel);
+        Assert.AreEqual(MineMazeRules.BoardOtterRequest, clerk.Target);
+        bool clerkFirst = false;
+        for (var q = found.Prerequisite; q != null && q.RequiredLevel >= 5; q = q.Prerequisite)
+            clerkFirst |= q == clerk;
+        Assert.IsTrue(clerkFirst, "오래된 갱도 찾기보다 또박이 배치가 먼저");
+    }
+
+    // Lv.10~15 해달의 부탁이 메인 안에 (재설계 1차): 레벨을 올리는 부탁마다 그 바로 아래 레벨 메인의 마지막 단계(경험치 0),
+    // 같은 레벨의 다른 메인 경험치 합 = 그 레벨 필요 경험치 (Lv.10은 첫 모임 공동사업 425를 뺀 만큼). 실제 에셋
+    [Test]
+    public void Level10To15_FacilityRequestClosesEachLevel()
+    {
+        var database = AssetDatabase.LoadAssetAtPath<QuestDatabase>("Assets/Scriptable Obejects/Quest/QuestDatabase.asset");
+        var table = AssetDatabase.LoadAssetAtPath<LevelTable>("Assets/Scriptable Obejects/Profile/LevelTable.asset");
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
+        Assert.IsNotNull(database);
+        Assert.IsNotNull(table);
+        Assert.IsNotNull(config);
+
+        for (int level = 10; level <= 15; level++)
+        {
+            BoardRequestDefinition gate = null;
+            foreach (var request in config.Requests)
+            {
+                if (request != null && request.KingdomLevel == level + 1)
+                    gate = request;
+            }
+            Assert.IsNotNull(gate, $"Lv.{level + 1}로 올리는 부탁");
+
+            var mains = new List<QuestDefinition>();
+            foreach (var quest in database.Quests)
+            {
+                if (quest != null && quest.Kind == QuestKind.Main && quest.RequiredLevel == level)
+                    mains.Add(quest);
+            }
+            QuestDefinition last = null;
+            int exp = 0;
+            foreach (var quest in mains)
+            {
+                bool followed = false;
+                foreach (var other in mains)
+                    followed |= other.Prerequisite == quest;
+                if (!followed)
+                {
+                    Assert.IsNull(last, $"Lv.{level} 메인은 한 줄");
+                    last = quest;
+                }
+                exp += quest.ExpFor(level, null);
+            }
+            Assert.IsNotNull(last);
+            Assert.AreEqual(QuestGoalType.Milestone, last.GoalType, $"Lv.{level} 마지막 메인");
+            Assert.AreEqual(gate.RequestId, last.Target, $"Lv.{level} 마지막 메인 = 다음 레벨로 올리는 부탁");
+            Assert.AreEqual(0, last.ExpFor(level, null), "끝내면 바로 다음 레벨이라 경험치 0");
+            int project = level == 10 ? 425 : 0;
+            Assert.AreEqual(table.ExpToNext(level), exp + project, $"Lv.{level} 메인 경험치 합");
+        }
     }
 
     [Test]

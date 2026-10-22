@@ -1,0 +1,254 @@
+[
+  {
+    "name": "HouseRed",
+    "target": "Assets/Art/Buildings/Detail4/HouseRed.png",
+    "guid": "b89cc4155cecd0a1607e0e5477d907c3",
+    "cell": {
+      "left": 62,
+      "top": 91,
+      "width": 399,
+      "height": 381
+    },
+    "replaced": [
+      "Assets/Art/Plaza/Props/Prop_House_Red.png",
+      "Assets/Art/Plaza/Props/Prop_House_Red_OtterStyle.png",
+      "Assets/Art/Settlement/Stage_House_Red_3.png",
+      "Assets/Art/Settlement/ICON_House_Red.png"
+    ]
+  },
+  {
+    "name": "HouseBlue",
+    "target": "Assets/Art/Buildings/Detail4/HouseBlue.png",
+    "guid": "813714915df2c31849e5c465e3696b72",
+    "cell": {
+      "left": 547,
+      "top": 98,
+      "width": 464,
+      "height": 385
+    },
+    "replaced": [
+      "Assets/Art/Plaza/Props/Prop_House_Blue.png",
+      "Assets/Art/Plaza/Props/Prop_House_Blue_OtterStyle.png",
+      "Assets/Art/Settlement/Stage_House_Blue_3.png",
+      "Assets/Art/Settlement/ICON_House_Blue.png"
+    ]
+  },
+  {
+    "name": "SmallHouse",
+    "target": "Assets/Art/Buildings/Detail4/SmallHouse.png",
+    "guid": "f040e43efa04ee0b63e472b456a24b36",
+    "cell": {
+      "left": 1118,
+      "top": 139,
+      "width": 356,
+      "height": 335
+    },
+    "replaced": []
+  },
+  {
+    "name": "Castle",
+    "target": "Assets/Art/Buildings/Detail4/Castle.png",
+    "guid": "26ef675865ebc2a19c379bc9ba4437e7",
+    "cell": {
+      "left": 34,
+      "top": 511,
+      "width": 487,
+      "height": 418
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Prop_Castle.png"
+    ]
+  },
+  {
+    "name": "TownHall",
+    "target": "Assets/Art/Buildings/Detail4/TownHall.png",
+    "guid": "56f6a89bd9ac35b03d8a02b76a60ffd5",
+    "cell": {
+      "left": 547,
+      "top": 518,
+      "width": 495,
+      "height": 439
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Prop_TownHall.png",
+      "Assets/Art/Settlement/ICON_TownHall.png"
+    ]
+  },
+  {
+    "name": "Hospital",
+    "target": "Assets/Art/Buildings/Detail4/Hospital.png",
+    "guid": "745b958f99e6fc63ebea74b731a2790d",
+    "cell": {
+      "left": 1068,
+      "top": 567,
+      "width": 438,
+      "height": 382
+    },
+    "replaced": []
+  },
+  {
+    "name": "Shop",
+    "target": "Assets/Art/Buildings/Detail4/Shop.png",
+    "guid": "1945c40a937f996a507ddf0d3331d89f",
+    "cell": {
+      "left": 39,
+      "top": 80,
+      "width": 447,
+      "height": 405
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Building_Shop.png"
+    ]
+  },
+  {
+    "name": "Workshop",
+    "target": "Assets/Art/Buildings/Detail4/Workshop.png",
+    "guid": "f20b3332a6b8cda072033f16cd8da1ca",
+    "cell": {
+      "left": 545,
+      "top": 86,
+      "width": 425,
+      "height": 400
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Building_Workshop.png"
+    ]
+  },
+  {
+    "name": "Workyard",
+    "target": "Assets/Art/Buildings/Detail4/Workyard.png",
+    "guid": "88b324fdc4be0c322470f112bb47fc7a",
+    "cell": {
+      "left": 1020,
+      "top": 80,
+      "width": 484,
+      "height": 416
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Building_Workyard.png"
+    ]
+  },
+  {
+    "name": "Quarry",
+    "target": "Assets/Art/Buildings/Detail4/Quarry.png",
+    "guid": "8d83d0068bc99bf6ddc64e240c2598aa",
+    "cell": {
+      "left": 26,
+      "top": 530,
+      "width": 468,
+      "height": 404
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Building_Quarry.png"
+    ]
+  },
+  {
+    "name": "Fishery",
+    "target": "Assets/Art/Buildings/Detail4/Fishery.png",
+    "guid": "6fa6664e1ca8767364ef89f915411817",
+    "cell": {
+      "left": 536,
+      "top": 534,
+      "width": 430,
+      "height": 400
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Building_Fishery.png"
+    ]
+  },
+  {
+    "name": "Granary",
+    "target": "Assets/Art/Buildings/Detail4/Granary.png",
+    "guid": "6e42bb4ab25b18e1c3ac8c1f47eac80f",
+    "cell": {
+      "left": 997,
+      "top": 531,
+      "width": 514,
+      "height": 411
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Building_Granary.png"
+    ]
+  },
+  {
+    "name": "Archive",
+    "target": "Assets/Art/Buildings/Detail4/Archive.png",
+    "guid": "8c31a4b2f623cf14cb77357fc76b9a79",
+    "cell": {
+      "left": 48,
+      "top": 61,
+      "width": 441,
+      "height": 420
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Building_Archive.png"
+    ]
+  },
+  {
+    "name": "GuildOffice",
+    "target": "Assets/Art/Buildings/Detail4/GuildOffice.png",
+    "guid": "fff1136df2e8b6ef6021880222d6050b",
+    "cell": {
+      "left": 535,
+      "top": 63,
+      "width": 448,
+      "height": 424
+    },
+    "replaced": [
+      "Assets/Art/Settlement/Prop_GuildOffice.png",
+      "Assets/Art/Settlement/ICON_GuildOffice.png"
+    ]
+  },
+  {
+    "name": "GuildBranch",
+    "target": "Assets/Art/Buildings/Detail4/GuildBranch.png",
+    "guid": "dc38e7d3ce9cfa74b48088eee3d8bf7f",
+    "cell": {
+      "left": 44,
+      "top": 538,
+      "width": 444,
+      "height": 417
+    },
+    "replaced": []
+  },
+  {
+    "name": "VillageGuild",
+    "target": "Assets/Art/Buildings/Detail4/VillageGuild.png",
+    "guid": "a0ee69ec5ac54b45c96d032dd152c1b9",
+    "cell": {
+      "left": 501,
+      "top": 535,
+      "width": 504,
+      "height": 426
+    },
+    "replaced": []
+  },
+  {
+    "name": "FishingDock",
+    "target": "Assets/Art/Buildings/Detail4/FishingDock.png",
+    "guid": "aeae59bdff56ec28261908be87e8978f",
+    "cell": {
+      "left": 39,
+      "top": 991,
+      "width": 485,
+      "height": 426
+    },
+    "replaced": [
+      "Assets/Art/Settlement/ICON_FishingDock.png"
+    ]
+  },
+  {
+    "name": "MineEntrance",
+    "target": "Assets/Art/Buildings/Detail4/MineEntrance.png",
+    "guid": "88d6f4dea5abfabac16b2ade9421eecf",
+    "cell": {
+      "left": 522,
+      "top": 1002,
+      "width": 477,
+      "height": 428
+    },
+    "replaced": [
+      "Assets/Art/Settlement/ICON_MinePath.png"
+    ]
+  }
+]

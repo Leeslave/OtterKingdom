@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_sea_bream
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_sea_bream
+  _displayName: "\uB3C4\uBBF8"
+  _description: "\uBD84\uD64D\uBE5B \uBAB8\uC774 \uACE0\uC6B4 \uC794\uCE6B\uC0C1\uC758
+    \uC8FC\uC778\uACF5."
+  _icon: {fileID: 21300000, guid: 689c74785e8b34149900fe66cc895e4b, type: 3}
+  _rarity: 1
+  _item: {fileID: 11400000, guid: f82caea9da3324d47b20e5c924bfaac1, type: 2}
+  _facesLeft: 1
+  _price: 150
+  _minWeight: 1.2
+  _maxWeight: 3.2
+  _distance: {x: 16, y: 50}
+  _depth: {x: 10, y: 20}
+  _nearBottom: 0
+  _spawnWeight: 32
+  _swimSpeed: 1
+  _length: 1.4

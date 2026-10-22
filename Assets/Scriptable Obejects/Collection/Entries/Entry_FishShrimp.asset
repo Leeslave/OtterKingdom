@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishShrimp
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_shrimp
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 12
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: f28e1163d01e8954a83f71b6093b4b86, type: 3}
+  _tagline: "\uBC14\uB2E5 \uAC00\uAE4C\uC774\uC5D0\uC11C \uD1A1\uD1A1 \uD280\uC5B4
+    \uB2E4\uB140\uC694."
+  _description: "\uD754\uD568 \xB7 \uBB34\uAC8C 0.05~0.1kg"
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC \xB7 \uAC70\uB9AC 2~18m \xB7 \uAE4A\uC774
+    5~8m"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: 67ac5a902d820724d888f69027d9b986, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

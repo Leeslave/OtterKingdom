@@ -22,6 +22,7 @@ MonoBehaviour:
   - "\uD574\uB2EC \uC655\uAD6D"
   _firstOtter: {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   _otters:
+  - {fileID: 11400000, guid: 6972da82a455451a908dc0857f0e5135, type: 2}
   - {fileID: 11400000, guid: 9353d4fe90eabbe40b699d02fd5598a3, type: 2}
   - {fileID: 11400000, guid: b0187b75dfd9a104b8c3725c8a4f5e91, type: 2}
   - {fileID: 11400000, guid: 8ff3e80563dfd8a4cbf590e6056ddc02, type: 2}
@@ -54,7 +55,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cff15f546a1e1994e850708b35632ed6, type: 2}
   - {fileID: 11400000, guid: 5b35dd1ccbe30bf48afbf6e7e59baabe, type: 2}
   - {fileID: 11400000, guid: 4b0c5e3237c4cd44781f8b663b77d1fd, type: 2}
-  - {fileID: 11400000, guid: c472e21e218891c46b9dd0cd9e751c05, type: 2}
   - {fileID: 11400000, guid: c6f96170303a4bd4982c3aaf48e304fd, type: 2}
   - {fileID: 11400000, guid: c92a7ca91fa6d2940ac6a23db7790aaa, type: 2}
   - {fileID: 11400000, guid: 2ae5fd9d960882b49b575e73c37f13b1, type: 2}
@@ -176,9 +176,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e8b40d5334f5f7429ee6c64bf31ddb2, type: 2}
   - {fileID: 11400000, guid: 35f1a9968f672ef418e1365b90532ca2, type: 2}
   - {fileID: 11400000, guid: 10b3408e97da7e440a0430031a514cc6, type: 2}
+  - {fileID: 11400000, guid: 83e366f8129943e4fa5bf2fdf29e3115, type: 2}
+  - {fileID: 11400000, guid: 23785f48e9f3f6e49b1df186c93a6f79, type: 2}
+  - {fileID: 11400000, guid: abfd9530bceedfc4f9b48efd882d9ce5, type: 2}
   _boardUpgradeDevelopment: board_upgraded
   _boardManagedDevelopment: receptionist_assigned
-  _guildDevelopment: guild_office_built
+  _guildDevelopment: receptionist_assigned
   _townHallDevelopment: town_hall_built
   _residentRequestSlots: 2
   _roles:
@@ -201,7 +204,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 69507eb37779f0b429eb1d7ba740d06a, type: 2}
   - {fileID: 11400000, guid: 48eb6d2a5cacfd94dbc00c77c6951add, type: 2}
   - {fileID: 11400000, guid: d767ca02f620be946b7717f4b690848c, type: 2}
-  _lifeRequestDevelopment: town_hall_built
+  _lifeRequestDevelopment: board_upgraded
   _lifeRequestLevel: 7
   _fairyInvitedDevelopment: fairy_invited
   _fairyArrivedDevelopment: fairy_arrived
@@ -218,20 +221,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba97b37e8832aad4da74eba9e5a96ec4, type: 2}
   - {fileID: 11400000, guid: 3257f79b4bdb79a41816f14fe3967d05, type: 2}
   - {fileID: 11400000, guid: c62a0a9e8bcd986409c791e7bbfd63b2, type: 2}
-  _territoryStartLevel: 6
+  - {fileID: 11400000, guid: f7e280ff7eae99247a7771123cf41f5e, type: 2}
+  _territoryStartLevel: 7
+  _territoryBonusChanceUntilLevel: 12
   _levelDevelopments:
   - _level: 15
     _development: fishing_found
-    _notice: "\uC655\uAD6D Lv.15! \uBABD\uC2E4\uC774\uAC00 \uBC14\uB2F7\uAC00\uC5D0\uC11C
+    _notice: "\uC655\uAD6D Lv.15! \uD574\uB2EC\uC774\uAC00 \uBC14\uB2F7\uAC00\uC5D0\uC11C
       \uB0A1\uC740 \uC120\uCC29\uC7A5\uC744 \uCC3E\uC558\uC5B4\uC694.\n\uAC8C\uC2DC\uD310\uC5D0\uC11C
       \uC120\uCC29\uC7A5\uC744 \uACE0\uCCD0 \uC918\uC694."
   _legacyDevelopments:
   - fishing_dock
   _startingItems:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
-    _amount: 8
+    _amount: 30
   - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
-    _amount: 5
+    _amount: 15
   _startingGold: 100
   _gatherItem: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
   _gatherAmount: 2
@@ -252,6 +257,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 750bac1e3e6026346a52db59a077422e, type: 2}
   - {fileID: 11400000, guid: 3a6dc8d257dc3e74aa85b1504540c816, type: 2}
   - {fileID: 11400000, guid: c43499e0e918c0f4b8932fef7909c255, type: 2}
+  - {fileID: 11400000, guid: 33f75cfc753bb3e40b800a52eb86996b, type: 2}
   _firstDistrict: 2
   _orderMatchWeight: 60
   _orderPerDistrict: 10

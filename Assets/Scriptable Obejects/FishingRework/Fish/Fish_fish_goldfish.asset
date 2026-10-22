@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c3413461497654a9b302825b6bcba9, type: 3}
+  m_Name: Fish_fish_goldfish
+  m_EditorClassIdentifier: OtterKingdom::FishDefinition
+  _fishId: fish_goldfish
+  _displayName: "\uAE08\uBD95\uC5B4"
+  _description: "\uBA78\uCE58 \uB5BC \uC0AC\uC774\uC5D0\uC11C \uC544\uC8FC \uAC00\uB054
+    \uBC18\uC9DD\uC5EC\uC694. \uC791\uC544\uB3C4 \uAC12\uC774 \uAF64 \uB098\uAC00\uC694."
+  _icon: {fileID: 21300000, guid: 0d9c42c2aae36a24c96e309a0b091656, type: 3}
+  _rarity: 2
+  _item: {fileID: 11400000, guid: ac39124c1ecacea4d95b201f438dd66c, type: 2}
+  _facesLeft: 0
+  _price: 180
+  _minWeight: 0.1
+  _maxWeight: 0.3
+  _distance: {x: 4, y: 30}
+  _depth: {x: 3, y: 5}
+  _nearBottom: 0
+  _spawnWeight: 10
+  _swimSpeed: 0.9
+  _length: 0.8

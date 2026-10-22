@@ -56,18 +56,19 @@ public static partial class SettlementSetup
     // 나중에 고정 자리에 나타나는 소품 (PlazaRoot 아래 경로, 요정은 씬에서 찾음): 그 소품의 꾸미기 막음(없으면 발자국)을 처음부터 켜 둠
     private static readonly string[] PlotReservedProps = new string[0];
 
+    // 문 앞 한 줄을 비워 두는 자리 (집). 의자 · 식탁 같은 소품 자리는 아님
+    private static readonly string[] HousePlots = { "Plot_House1", "Plot_House2", "Plot_P3House" };
+
     // 문구를 표와 맞출 부탁 · 건설 · 방명록 (가로등은 새로 만듦)
     private static readonly string[] BuildingModeConstructions = { "con_chair", "con_rest_corner", "con_board_upgrade", "con_guild_office", "con_town_hall", "con_lamp" };
     private static readonly string[] BuildingModeEntries = { "gb_rest_corner", "gb_board_upgrade", "gb_guild_office", "gb_town_hall", "gb_lamp" };
     private static readonly string[] BuildingModeRequests =
-        { "req_chair", "req_rest_corner", "req_upgrade_board", "req_build_guild_office", "req_upgrade_town_hall", SettlementMigration.LampRequestId };
+        { "req_chair", "req_rest_corner", "req_upgrade_board", "req_upgrade_town_hall", SettlementMigration.LampRequestId };
 
     // 메인 퀘스트 (QuestSetup 표와 같은 문구): 에셋, 제목, 설명, 아이콘
     private static readonly (string asset, string title, string description, string icon)[] BuildingModeQuests =
     {
         ("M05_Board", "부탁이 많아졌어요", "게시판을 마을회관으로 넓히기", "ICON_GuildOffice"),
-        ("M06_Guild", "큰 부탁도 함께", "길드 접수 창구 만들기", "ICON_GuildOffice"),
-        ("M07_TownHall", "우리 마을의 길드", "마을 길드로 넓히기", "ICON_TownHall"),
     };
 
     // 공동사업 · 생활 의뢰 문구 (SettlementSetup.P3.cs 표와 같음): 회관 앞 → 고른 자리 / 마을 길드
@@ -80,15 +81,16 @@ public static partial class SettlementSetup
         ("회관 앞에 비축 상자가 생겨요", "광장에 비축 상자가 생겨요"),
         ("회관 앞에 비축 상자가 생겼어요.", "광장에 비축 상자가 생겼어요."),
         ("회관 앞에 공동 식탁이 생기고", "광장에 공동 식탁이 생기고"),
-        ("회관에서 마을 생활 준비를", "길드에서 마을 생활 준비를"),
-        ("회관 주변 정리", "길드 주변 정리"),
-        ("회관 앞을 쓸고", "길드 앞을 쓸고"),
-        ("회관 앞이 깔끔해졌어요!", "길드 앞이 깔끔해졌어요!"),
-        ("회관은 생겼는데", "길드는 생겼는데"),
-        ("회관 살림을", "길드 살림을"),
-        ("3번 마치면 회관 앞이", "3번 마치면 길드 앞이"),
-        ("회관 물품 보충", "길드 물품 보충"),
-        ("회관 앞이 어수선해요.", "길드 앞이 어수선해요."),
+        // 마을 길드는 가스 사건 뒤라 그 전의 문구는 마을회관 (광산 기획 14장)
+        ("길드에서 마을 생활 준비를", "마을회관에서 마을 생활 준비를"),
+        ("길드 주변 정리", "마을회관 주변 정리"),
+        ("길드 앞을 쓸고", "마을회관 앞을 쓸고"),
+        ("길드 앞이 깔끔해졌어요!", "마을회관 앞이 깔끔해졌어요!"),
+        ("길드는 생겼는데", "마을회관은 생겼는데"),
+        ("길드 살림을", "마을 살림을"),
+        ("3번 마치면 길드 앞이", "3번 마치면 마을회관 앞이"),
+        ("길드 물품 보충", "마을회관 물품 보충"),
+        ("길드 앞이 어수선해요.", "마을회관 앞이 어수선해요."),
     };
 
     [MenuItem("Tools/Settlement/Apply Building Plots")]
@@ -382,6 +384,7 @@ public static partial class SettlementSetup
             var renderer = art.GetComponent<SpriteRenderer>();
             plot.SetupPlacement(row.size, false, renderer != null ? renderer.sprite : null);
             plot.SetupPlot(construction, defaultCell, pivotOffset, new Vector2(art.lossyScale.x, art.lossyScale.y), alternates);
+            plot.SetupDoorstep(System.Array.IndexOf(HousePlots, row.asset) >= 0);
             EditorUtility.SetDirty(plot);
             plots.Add(plot);
             Debug.Log($"[SettlementSetup] {row.asset}: 기본 칸 {defaultCell} (격자 {layoutCell}) · 발밑 {pivotOffset}"
@@ -415,13 +418,22 @@ public static partial class SettlementSetup
         return true;
     }
 
-    // 가로등 묶음 기준: 늘 켜진 빈 오브젝트를 가로등 발밑에
+    // 가로등 묶음 기준: 늘 켜진 빈 오브젝트를 가로등 발밑에.
+    // 가로등은 가로등 부탁(lamp_built)으로 켜짐 — 첫 집(house_1)으로 켜지던 옛 씬은 여기서 바로잡음 (Setup Plaza를 다시 돌리지 않아도)
     private static void EnsureLampSite(Transform plazaRoot)
     {
         var root = plazaRoot.Find(RootName);
         var lamp = plazaRoot.Find("Props/Lamp_01");
         if (lamp == null)
             return;
+        var gate = lamp.GetComponent<DevelopmentGate>();
+        if (gate != null && gate.DevelopmentId != LampDevelopment)
+        {
+            var gateSo = new SerializedObject(gate);
+            gateSo.FindProperty("_developmentId").stringValue = LampDevelopment;
+            gateSo.ApplyModifiedPropertiesWithoutUndo();
+            Debug.Log($"[SettlementSetup] 가로등 발전 조건을 {LampDevelopment}(으)로 맞췄습니다.");
+        }
         var site = root.Find(LampSiteName);
         if (site == null)
         {

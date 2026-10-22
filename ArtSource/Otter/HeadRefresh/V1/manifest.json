@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Quarter",
+    "label": "농부",
+    "art": "ArtSource/Otter/QuarterRig",
+    "resource": "Assets/Resources/QuarterRigV14",
+    "width": 544,
+    "height": 424
+  },
+  {
+    "name": "Waiter",
+    "label": "웨이터",
+    "art": "ArtSource/Otter/WaiterRig/V14",
+    "resource": "Assets/Resources/WaiterRigV14",
+    "width": 540,
+    "height": 400
+  },
+  {
+    "name": "Chef",
+    "label": "요리사",
+    "art": "ArtSource/Otter/ChefRig/V1",
+    "resource": "Assets/Resources/ChefRigV1",
+    "width": 540,
+    "height": 520
+  },
+  {
+    "name": "Fisher",
+    "label": "뱃사람",
+    "art": "ArtSource/Otter/FisherRig/V1",
+    "resource": "Assets/Resources/FisherRigV1",
+    "width": 540,
+    "height": 460
+  },
+  {
+    "name": "Baseball",
+    "label": "야구 해달",
+    "art": "ArtSource/Otter/BaseballRig/V1",
+    "resource": "Assets/Resources/BaseballRigV1",
+    "width": 540,
+    "height": 440
+  },
+  {
+    "name": "Artisan",
+    "label": "작업반장",
+    "art": "ArtSource/Otter/ArtisanRig/V1",
+    "resource": "Assets/Resources/ArtisanRigV1",
+    "width": 540,
+    "height": 410
+  },
+  {
+    "name": "Pajama",
+    "label": "잠옷 해달",
+    "art": "ArtSource/Otter/PajamaRig/V1",
+    "resource": "Assets/Resources/PajamaRigV1",
+    "width": 540,
+    "height": 460
+  },
+  {
+    "name": "Reception",
+    "label": "안내원",
+    "art": "ArtSource/Otter/ReceptionRig/V1",
+    "resource": "Assets/Resources/ReceptionRigV1",
+    "width": 540,
+    "height": 420
+  },
+  {
+    "name": "Miner",
+    "label": "광부",
+    "art": "ArtSource/Otter/MinerRig/V1",
+    "resource": "Assets/Resources/MinerRigV1",
+    "width": 540,
+    "height": 470
+  },
+  {
+    "name": "Photographer",
+    "label": "사진가",
+    "art": "ArtSource/Otter/PhotographerRig/V1",
+    "resource": "Assets/Resources/PhotographerRigV1",
+    "width": 540,
+    "height": 440
+  },
+  {
+    "name": "Merchant",
+    "label": "행상인",
+    "art": "ArtSource/Otter/MerchantRig/V1",
+    "resource": "Assets/Resources/MerchantRigV1",
+    "width": 540,
+    "height": 410
+  },
+  {
+    "name": "Bard",
+    "label": "음악가",
+    "art": "ArtSource/Otter/BardRig/V1",
+    "resource": "Assets/Resources/BardRigV1",
+    "width": 540,
+    "height": 430
+  },
+  {
+    "name": "Diver",
+    "label": "잠수부",
+    "art": "ArtSource/Otter/DiverRig/V1",
+    "resource": "Assets/Resources/DiverRigV1",
+    "width": 540,
+    "height": 430
+  },
+  {
+    "name": "Cleaner",
+    "label": "청소부",
+    "art": "ArtSource/Otter/CleanerRig/V1",
+    "resource": "Assets/Resources/CleanerRigV1",
+    "width": 540,
+    "height": 410
+  },
+  {
+    "name": "Flower",
+    "label": "꽃 카디건",
+    "art": "ArtSource/Otter/FlowerRig/V1",
+    "resource": "Assets/Resources/FlowerRigV1",
+    "width": 540,
+    "height": 496
+  },
+  {
+    "name": "Stripe",
+    "label": "줄무늬 니트",
+    "art": "ArtSource/Otter/StripeRig/V1",
+    "resource": "Assets/Resources/StripeRigV1",
+    "width": 540,
+    "height": 437
+  },
+  {
+    "name": "Hoodie",
+    "label": "후드티",
+    "art": "ArtSource/Otter/HoodieRig/V1",
+    "resource": "Assets/Resources/HoodieRigV1",
+    "width": 540,
+    "height": 456
+  },
+  {
+    "name": "Knit",
+    "label": "케이블 니트",
+    "art": "ArtSource/Otter/KnitRig/V1",
+    "resource": "Assets/Resources/KnitRigV1",
+    "width": 540,
+    "height": 446
+  },
+  {
+    "name": "Plaid",
+    "label": "체크 치마",
+    "art": "ArtSource/Otter/PlaidRig/V1",
+    "resource": "Assets/Resources/PlaidRigV1",
+    "width": 540,
+    "height": 500
+  },
+  {
+    "name": "BearPajama",
+    "label": "곰돌이 잠옷",
+    "art": "ArtSource/Otter/BearPajamaRig/V1",
+    "resource": "Assets/Resources/BearPajamaRigV1",
+    "width": 540,
+    "height": 488
+  },
+  {
+    "name": "Walker",
+    "label": "산책하는",
+    "art": "ArtSource/Otter/WalkerRig/V1",
+    "resource": "Assets/Resources/WalkerRigV1",
+    "width": 540,
+    "height": 430
+  },
+  {
+    "name": "Quiet",
+    "label": "조용한",
+    "art": "ArtSource/Otter/QuietRig/V1",
+    "resource": "Assets/Resources/QuietRigV1",
+    "width": 540,
+    "height": 430
+  }
+]

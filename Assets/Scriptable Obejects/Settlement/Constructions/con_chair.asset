@@ -23,6 +23,6 @@ MonoBehaviour:
   _durationSeconds: 8
   _needsBuilder: 0
   _progressLabel: "\uC758\uC790 \uB9CC\uB4DC\uB294 \uC911"
-  _progressHint: "\uB2E4 \uB9CC\uB4E4\uBA74 \uBABD\uC2E4\uC774\uAC00 \uC274 \uC218
+  _progressHint: "\uB2E4 \uB9CC\uB4E4\uBA74 \uD574\uB2EC\uC774\uAC00 \uC274 \uC218
     \uC788\uC5B4\uC694"
   _unlockResultId: chair

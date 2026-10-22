@@ -124,7 +124,7 @@ public class HarvestExpansionTests
 
         _balance.rodUpgradeCosts = new int[19];
         var service = new FishingService(new SaveData { rodLevel = 25 }, _balance);
-        Assert.AreEqual(20, service.MaxRodLevel);
+        Assert.AreEqual(20, _balance.MaxRodLevel);
         Assert.AreEqual(20, service.RodLevel, "세이브의 레벨은 끝으로 맞춤");
     }
 

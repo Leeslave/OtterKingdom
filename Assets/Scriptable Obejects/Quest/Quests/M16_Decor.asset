@@ -15,7 +15,7 @@ MonoBehaviour:
   _questId: main_lv16_decor
   _title: "\uC544\uB291\uD55C \uAD11\uC7A5"
   _description: "\uAC00\uAD6C\uB098 \uC7A5\uB09C\uAC10 4\uAC1C \uB193\uAE30"
-  _sortOrder: 68
+  _sortOrder: 89
   _kind: 0
   _requiredLevel: 16
   _prerequisite: {fileID: 11400000, guid: 45c900fe76d30cd478eac222175f83df, type: 2}

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: "\uBCF5\uC5B4"
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: fish_puffer
+  _displayName: "\uBCF5\uC5B4"
+  _description: "\uB180\uB77C\uBA74 \uB3D9\uADF8\uB797\uAC8C \uBD80\uD480\uC5B4\uC694.
+    \uAC00\uC2DC\uAC00 \uC788\uC9C0\uB9CC \uC21C\uD574\uC694."
+  _icon: {fileID: 21300000, guid: 355cbba48f42a454d8c22f3d803cd9ec, type: 3}
+  _category: {fileID: 11400000, guid: 96098a6168fc46144942ab19a916aaa2, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 1
+  _sellPrice: 70
+  _maxStack: 999

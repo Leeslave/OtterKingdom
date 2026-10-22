@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cb4da6efcbabf4694e31212b45d155, type: 3}
+  m_Name: Entry_FishCongerEel
+  m_EditorClassIdentifier: OtterKingdom::CollectionEntry
+  _entryId: fish_conger_eel
+  _tab: {fileID: 11400000, guid: c747b543b17b7804fa3d8b3376505fe3, type: 2}
+  _displayName: 
+  _sortOrder: 29
+  _portrait: {fileID: 0}
+  _silhouette: {fileID: 21300000, guid: 0b7d405a0fc399846beed2aa905a2e2b, type: 3}
+  _tagline: "\uBC14\uB2E5 \uAD74\uC5D0\uC11C \uAE38\uCB49\uD55C \uBAB8\uC744 \uC3D9
+    \uB0B4\uBC00\uC5B4\uC694."
+  _description: "\uBCF4\uD1B5 \xB7 \uBB34\uAC8C 1~3kg"
+  _extraValue: "\uBC14\uB2E4 \uB09A\uC2DC \xB7 \uAC70\uB9AC 25~55m \uBC14\uB2E5"
+  _hint: 
+  _linkedItem: {fileID: 11400000, guid: 5247edc256f7b6d49a79de9f60d91472, type: 2}
+  _unlockLevel: 0
+  _story: {fileID: 0}

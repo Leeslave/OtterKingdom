@@ -143,6 +143,75 @@ public class ConstructionPlotTests
         Assert.IsFalse(SettlementMigration.MigrateLamp(config, old, 3), "다시 해도 그대로");
     }
 
+    private const string SettlementConfigPath = "Assets/Scriptable Obejects/Settlement/SettlementConfig.asset";
+    private const string PlazaScenePath = "Assets/Scenes/Plaza.unity";
+
+    [Test]
+    public void LampMigration_NewGameFirstHouseLeavesLampRequest()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>(SettlementConfigPath);
+        Assert.IsNotNull(config, SettlementConfigPath);
+        var firstHouse = config.FindRequest("req_first_house");
+        var lamp = config.FindRequest(SettlementMigration.LampRequestId);
+        Assert.IsNotNull(firstHouse, "첫 집 부탁");
+        Assert.IsNotNull(lamp, "가로등 부탁");
+        string houseDevelopment = SettlementRules.CompletionDevelopment(firstHouse);
+        string lampDevelopment = SettlementRules.CompletionDevelopment(lamp);
+        Assert.AreEqual(houseDevelopment, lamp.RequiredDevelopment, "가로등 부탁은 첫 집 뒤에 열림");
+        Assert.AreNotEqual(houseDevelopment, lampDevelopment, "가로등은 첫 집과 다른 발전으로 켜짐");
+
+        // 새 게임: 불러오기 순서대로 (MigrateLamp → MigrateToCurrent) 맞춘 뒤 첫 집을 짓고, 저장했다 다시 불러옴
+        var settlement = new Settlement();
+        SettlementRules.InitializeNewGame(config, settlement);
+        Assert.IsFalse(SettlementMigration.MigrateLamp(config, settlement, settlement.Version), "새 게임은 옮길 가로등이 없음");
+        SettlementMigration.MigrateToCurrent(settlement);
+        Assert.IsTrue(SettlementRules.ApplyCompletion(firstHouse, settlement));
+        Assert.IsTrue(settlement.HasDevelopment(houseDevelopment));
+        Assert.IsFalse(settlement.IsCompleted(lamp.RequestId), "첫 집을 지어도 가로등 부탁은 남음");
+        Assert.IsFalse(settlement.HasDevelopment(lampDevelopment), "첫 집을 지어도 가로등은 안 생김");
+
+        var saved = new SettlementSaveData();
+        settlement.Write(saved);
+        var loaded = new Settlement();
+        loaded.Load(saved);
+        Assert.IsFalse(SettlementMigration.MigrateLamp(config, loaded, loaded.Version), "새 게임 세이브는 버전 4라 옮기지 않음");
+        Assert.IsFalse(loaded.IsCompleted(lamp.RequestId));
+        Assert.IsFalse(loaded.HasDevelopment(lampDevelopment));
+    }
+
+    [Test]
+    public void PlazaScene_LampShowsWithLampRequestNotFirstHouse()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>(SettlementConfigPath);
+        string lampDevelopment = SettlementRules.CompletionDevelopment(config.FindRequest(SettlementMigration.LampRequestId));
+
+        // 에디터에 이미 열려 있는 광장 씬은 닫지 않음
+        var scene = UnityEngine.SceneManagement.SceneManager.GetSceneByPath(PlazaScenePath);
+        bool opened = !scene.isLoaded;
+        if (opened)
+            scene = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(PlazaScenePath, UnityEditor.SceneManagement.OpenSceneMode.Additive);
+        try
+        {
+            var lampGates = new List<DevelopmentGate>();
+            foreach (var root in scene.GetRootGameObjects())
+            {
+                foreach (var gate in root.GetComponentsInChildren<DevelopmentGate>(true))
+                {
+                    if (gate.name.StartsWith("Lamp_"))
+                        lampGates.Add(gate);
+                }
+            }
+            Assert.IsNotEmpty(lampGates, "광장 가로등 소품");
+            foreach (var gate in lampGates)
+                Assert.AreEqual(lampDevelopment, gate.DevelopmentId, $"{gate.name}: 첫 집(house_1)이 아니라 가로등 부탁으로 켜짐");
+        }
+        finally
+        {
+            if (opened)
+                UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene, true);
+        }
+    }
+
     [Test]
     public void Walkable_MovableFootprintBlocksOttersButNotDecor()
     {

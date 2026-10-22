@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 // The dashed circle at the end of the dock (same sprite as an empty furrow
@@ -25,7 +25,7 @@ public class FishingSpotView : MonoBehaviour
     {
         // The rod upgrade belongs to the fishing spot, so the button only
         // exists in scenes that have one.
-        if (GameManager.Instance != null) GameManager.Instance.ShowRodUpgradeButton();
+        if (GameManager.Instance != null) GameManager.Instance.ShowSeaFishingButton();
     }
 
     private void Update()
