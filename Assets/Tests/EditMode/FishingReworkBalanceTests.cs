@@ -51,4 +51,41 @@ public class FishingReworkBalanceTests
             from = to;
         }
     }
+
+    /// <summary>
+    /// 강화 재료(물고기): 모든 단계에 재료가 있고, 어떤 강화 상태든 가장 낮은 강화의 재료는 지금 낚을 수 있음 (막히지 않음).
+    /// 재료는 전설 · 에픽이 아님
+    /// </summary>
+    [Test]
+    public void UpgradeRecipes_AreAlwaysReachable()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<FishingReworkConfig>(ConfigPath);
+        if (config == null)
+            Assert.Ignore("낚시 개편 데이터가 없음 (Tools/Fishing Rework/Build Test Scene)");
+        var upgrades = new[] { FishingUpgrade.Line, FishingUpgrade.Sinker, FishingUpgrade.Reel };
+        int max = config.Track(FishingUpgrade.Line).MaxLevel;
+        foreach (var upgrade in upgrades)
+        {
+            for (int level = 1; level <= config.Track(upgrade).MaxLevel; level++)
+            {
+                var recipe = config.RecipeFor(upgrade, level);
+                Assert.IsNotEmpty(recipe, $"{upgrade} Lv.{level}");
+                foreach (var cost in recipe)
+                {
+                    Assert.Greater(cost.Amount, 0);
+                    Assert.LessOrEqual(cost.Fish.Rarity, FishRarity.Rare, $"{upgrade} Lv.{level}: {cost.Fish.DisplayName}");
+                }
+            }
+        }
+        // 셋의 단계가 어떻게 섞여 있든 (0..max), 가장 낮은 강화의 재료는 지금 낚을 수 있음
+        for (int l = 0; l < max; l++)
+        for (int s = 0; s < max; s++)
+        for (int r = 0; r < max; r++)
+        {
+            int low = Mathf.Min(l, Mathf.Min(s, r));
+            var lowest = l == low ? FishingUpgrade.Line : s == low ? FishingUpgrade.Sinker : FishingUpgrade.Reel;
+            foreach (var cost in config.RecipeFor(lowest, low + 1))
+                Assert.IsTrue(config.Catchable(cost.Fish, l, s, r), $"({l},{s},{r}) {lowest} → {cost.Fish.DisplayName}");
+        }
+    }
 }

@@ -186,7 +186,13 @@ public partial class GameManager : MonoBehaviour
         fishingService = new FishingService(save, fishingBalance, fishingConfig, fishingConfig != null ? new FishingHost(this) : null);
         if (fishingService.Model != null)
         {
-            fishingService.Model.Upgraded += _ => SaveNow();
+            // 강화는 골드가 아니라 물고기를 내므로 업그레이드 퀘스트에는 직접 알림
+            fishingService.Model.Upgraded += _ =>
+            {
+                if (QuestManager.Instance != null)
+                    QuestManager.Instance.ReportUpgrade();
+                SaveNow();
+            };
             fishingService.Model.RequestChanged += SaveNow;
         }
         miningService = new MiningService(save, miningBalance);
@@ -1294,6 +1300,15 @@ public partial class GameManager : MonoBehaviour
         {
             if (fish != null && fish.Item != null)
                 game.AddFishingCatch(fish.Item.ItemId);
+        }
+
+        public int CountFish(FishDefinition fish) =>
+            fish != null && fish.Item != null && InventoryManager.Instance != null ? game.Bag.GetCount(fish.Item) : 0;
+
+        public void TakeFish(FishDefinition fish, int amount)
+        {
+            if (fish != null && fish.Item != null && amount > 0)
+                game.Bag.TryRemove(fish.Item, amount, ItemChangeReason.Upgrade);
         }
     }
 

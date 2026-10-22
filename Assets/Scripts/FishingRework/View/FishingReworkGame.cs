@@ -43,11 +43,28 @@ public class FishingReworkGame : MonoBehaviour
     private readonly List<(Transform t, float parallax, float offset)> _parallax = new List<(Transform, float, float)>();
     private readonly List<(Transform t, float phase)> _sway = new List<(Transform, float)>();
     private readonly List<(Transform t, float x)> _buoys = new List<(Transform, float)>();
+    // 빨간 핀 부표: 직접 꽂은 자리
+    private SpriteRenderer _pin;
+    // 핀 꽂기: 바다를 끌어서 화면 가운데에 둔 거리에 꽂음 (지도 앱처럼 핀은 가운데 고정, 바다가 움직임)
+    private bool _pinning;
+    private bool _pinDragging;
+    private Vector2 _pinDragLast;
+    private Vector2? _pinGlide;
     private readonly List<SpriteRenderer> _rays = new List<SpriteRenderer>();
     private Vector2 _cameraVelocity;
     private Vector2 _cameraPos = new Vector2(HomeX, HomeY);
     private float _aspect;
     private bool _holdValid;
+    // 던질 곳 고르기 (도넛 게이지): 꾹 누르고 있으면 게이지가 0 → 끝 → 0으로 오가고, 떼면 그 거리로 던짐.
+    // 톡 누르면(GaugeAfterSeconds 전에 뗌) 지난 거리
+    private bool _aiming;
+    private float _aimTime;
+    private float _aimDistance;
+    private const float AimSnapMeters = 2f;
+    private const float GaugeAfterSeconds = 0.18f;
+
+    // 게이지가 끝까지 한 번 차는 초 (줄이 길면 조금 더 천천히 — 긴 줄에서도 맞추기 쉽게)
+    private float GaugeSeconds => 0.95f + _model.CastDistance * 0.012f;
     private float _bubbleTimer, _reelTimer, _saveTimer;
     private bool _resetting;
     private bool _active = true;
@@ -67,6 +84,10 @@ public class FishingReworkGame : MonoBehaviour
     public bool Active => _active;
     /// <summary>낚시꾼 해달이 알아서 낚는 중 (안 만진 지 오래)</summary>
     public bool AutoFishing => _autoFishing;
+    /// <summary>핀 꽂는 중 (바다를 끌어 고름)</summary>
+    public bool Pinning => _pinning;
+    /// <summary>핀 꽂는 중: 화면 가운데의 거리 (줄 길이 안)</summary>
+    public float PinCenter => Mathf.Clamp(_cameraPos.x, FishingReworkModel.MinCastDistance, _model.CastDistance);
 
     // 바다 좌표(m, 수면 0 · 선착장 끝 0) ↔ 월드
     private Vector3 W(Vector2 sea) => _seaRoot != null ? _seaRoot.TransformPoint(sea) : (Vector3)sea;
@@ -196,6 +217,7 @@ public class FishingReworkGame : MonoBehaviour
     {
         if (!_hosted || !_active)
             return;
+        EndPin(false);
         _active = false;
         _model.Reset();
         _seaRoot.gameObject.SetActive(false);
@@ -453,6 +475,10 @@ public class FishingReworkGame : MonoBehaviour
             label.sortingOrder = -99;
             _buoys.Add((buoy.transform, d));
         }
+        _pin = NewSprite("Pin", _art.Buoy, Vector3.zero, -98, root);
+        _pin.color = new Color(1f, 0.35f, 0.3f);
+        _pin.transform.localScale = Vector3.one * 1.25f;
+        _pin.enabled = false;
     }
 
     private void BuildTackle()
@@ -572,6 +598,54 @@ public class FishingReworkGame : MonoBehaviour
 
     #region 매 프레임
 
+    private static Vector2 PointerPosition()
+    {
+        var touchscreen = Touchscreen.current;
+        if (touchscreen != null && touchscreen.primaryTouch.press.isPressed)
+            return touchscreen.primaryTouch.position.ReadValue();
+        var mouse = Mouse.current;
+        return mouse != null ? mouse.position.ReadValue() : Vector2.zero;
+    }
+
+    // 던질 곳: 빨간 핀 ±2m에서 떼면 핀 자리로
+    private float SnapAim(float distance)
+    {
+        float pin = _model.PinDistance;
+        return pin > 0f && Mathf.Abs(distance - pin) <= AimSnapMeters ? pin : distance;
+    }
+
+    // 의뢰 물고기 · 아직 덜 모은 강화 재료 물고기
+    private bool Wanted(FishingFish fish)
+    {
+        var request = _model.Request;
+        if (request != null && !request.Done && request.Kind == FishingRequestKind.Fish && request.Fish == fish.Def)
+            return true;
+        return _model.TryNeededFor(fish.Def, out _, out int owned, out int needed) && owned < needed;
+    }
+
+    /// <summary>해달(방치)이 던질 곳: 의뢰 물고기 > 강화 재료 > 아무 물고기 (가끔 빗나감). 없으면 줄 길이의 반~끝</summary>
+    private float AutoAim()
+    {
+        float total = 0f;
+        foreach (var fish in _model.Fish)
+        {
+            if (!fish.Hooked && fish.Weight <= _model.ReelCapacity && fish.Position.x <= _model.CastDistance && -fish.Position.y <= _model.MaxDepth + 0.5f)
+                total += Wanted(fish) ? 5f : 1f;
+        }
+        if (total <= 0f)
+            return _model.CastDistance * UnityEngine.Random.Range(0.5f, 1f);
+        float pick = UnityEngine.Random.value * total;
+        foreach (var fish in _model.Fish)
+        {
+            if (fish.Hooked || fish.Weight > _model.ReelCapacity || fish.Position.x > _model.CastDistance || -fish.Position.y > _model.MaxDepth + 0.5f)
+                continue;
+            pick -= Wanted(fish) ? 5f : 1f;
+            if (pick <= 0f)
+                return _model.AimFor(fish) + UnityEngine.Random.Range(-1.5f, 1.5f);
+        }
+        return _model.CastDistance;
+    }
+
     private static bool PointerDown()
     {
         var touchscreen = Touchscreen.current;
@@ -583,6 +657,12 @@ public class FishingReworkGame : MonoBehaviour
 
     private void Update()
     {
+        // 바다에 있는 동안 꾸미기 모드를 열면 선착장으로 (꾸미기는 선착장 격자 · 카메라를 씀)
+        if (_hosted && _active && DecorModePresenter.IsActive)
+        {
+            Exit();
+            return;
+        }
         if (_model == null || !_active)
             return;
         float dt = Mathf.Min(Time.deltaTime, 0.1f);
@@ -602,9 +682,17 @@ public class FishingReworkGame : MonoBehaviour
         }
         else
             _idleTime += dt;
-        if (pressed && _model.Phase == FishingPhase.Ready)
-            _model.TryCast();
-        holding |= TickAuto(dt);
+        if (_pinning)
+        {
+            UpdatePin(pressed, down);
+            holding = false;
+            _idleTime = 0f;
+        }
+        else
+        {
+            UpdateAim(pressed, down, blocked);
+            holding |= TickAuto(dt);
+        }
 
         _model.Tick(dt, holding && _model.Phase != FishingPhase.Casting);
 
@@ -619,6 +707,121 @@ public class FishingReworkGame : MonoBehaviour
         _saveTimer += dt;
         if (_saveTimer > 10f)
             Save();
+    }
+
+    #region 핀 꽂기
+
+    /// <summary>핀 꽂기 시작: 지금 핀(없으면 지난 거리)으로 바다가 흘러가고, 끌어서 고름</summary>
+    public void BeginPin()
+    {
+        if (_pinning || _model.Phase != FishingPhase.Ready)
+            return;
+        _pinning = true;
+        _pinDragging = false;
+        _aiming = false;
+        _hud.AimPreview = null;
+        _autoFishing = false;
+        float start = _model.PinDistance > 0f ? _model.PinDistance : _model.LastCastDistance;
+        _pinGlide = new Vector2(start, HomeY);
+    }
+
+    /// <summary>핀 꽂기 끝: place면 화면 가운데 거리에 꽂음. 카메라는 선착장으로 돌아감</summary>
+    public void EndPin(bool place)
+    {
+        if (!_pinning)
+            return;
+        _pinning = false;
+        _pinDragging = false;
+        _pinGlide = null;
+        _holdValid = false;
+        if (place)
+        {
+            _model.SetPin(PinCenter);
+            _sfx.Play(MineSfx.Kind.Tap);
+        }
+    }
+
+    public void ClearPin()
+    {
+        _model.ClearPin();
+        EndPin(false);
+    }
+
+    // 끌면 바다가 손가락을 따라 움직임 (화면 가운데 = 핀 자리)
+    private void UpdatePin(bool pressed, bool down)
+    {
+        if (_model.Phase != FishingPhase.Ready)
+        {
+            EndPin(false);
+            return;
+        }
+        var screen = PointerPosition();
+        if (pressed)
+        {
+            _pinDragging = true;
+            _pinGlide = null;
+            _pinDragLast = screen;
+        }
+        if (!down)
+            _pinDragging = false;
+        if (!_pinDragging)
+            return;
+        var from = _camera.ScreenToWorldPoint(new Vector3(_pinDragLast.x, _pinDragLast.y, 10f));
+        var to = _camera.ScreenToWorldPoint(new Vector3(screen.x, screen.y, 10f));
+        Vector2 delta = _seaRoot.InverseTransformVector(to - from);
+        _cameraPos = ClampPinView(_cameraPos - delta);
+        _cameraVelocity = Vector2.zero;
+        _pinDragLast = screen;
+    }
+
+    // 핀 꽂는 동안 카메라: 가로 = 가장 가까운 거리 ~ 줄 길이, 세로 = 수면 ~ 바닥 조금 위
+    private Vector2 ClampPinView(Vector2 view)
+    {
+        float x = Mathf.Clamp(view.x, FishingReworkModel.MinCastDistance, _model.CastDistance);
+        float floor = -_config.SeabedDepth(x) + _camera.orthographicSize * 0.45f;
+        return new Vector2(x, Mathf.Clamp(view.y, Mathf.Min(HomeY, floor), HomeY));
+    }
+
+    #endregion
+
+    // 준비 중: 꾹 누르면 게이지 (누른 곳 위에 도넛), 떼면 던짐. 톡 누르고 떼면 지난 거리
+    private void UpdateAim(bool pressed, bool down, bool blocked)
+    {
+        if (_model.Phase != FishingPhase.Ready || blocked)
+        {
+            if (_aiming)
+            {
+                _aiming = false;
+                _hud.AimPreview = null;
+            }
+            return;
+        }
+        if (!_aiming && pressed)
+        {
+            _aiming = true;
+            _aimTime = 0f;
+            _aimDistance = FishingReworkModel.MinCastDistance;
+            _hud.GaugeAt = PointerPosition();
+        }
+        if (!_aiming)
+            return;
+        bool gauge = _aimTime >= GaugeAfterSeconds;
+        if (down)
+        {
+            _aimTime += Time.unscaledDeltaTime;
+            if (_aimTime >= GaugeAfterSeconds)
+            {
+                float t = Mathf.PingPong((_aimTime - GaugeAfterSeconds) / GaugeSeconds, 1f);
+                _aimDistance = Mathf.Lerp(FishingReworkModel.MinCastDistance, _model.CastDistance, t);
+            }
+            _aimDistance = Mathf.Clamp(_aimDistance, FishingReworkModel.MinCastDistance, _model.CastDistance);
+            _hud.AimPreview = gauge ? _aimDistance : (float?)null;
+            return;
+        }
+        _aiming = false;
+        _hud.AimPreview = null;
+        _holdValid = false;
+        _model.TryCast(gauge ? SnapAim(_aimDistance) : _model.LastCastDistance);
     }
 
     /// <summary>
@@ -644,7 +847,7 @@ public class FishingReworkGame : MonoBehaviour
             if (_autoTimer <= 0f)
             {
                 _autoTimer = UnityEngine.Random.Range(1.5f, 3f);
-                _model.TryCast();
+                _model.TryCast(AutoAim());
             }
             return false;
         }
@@ -687,6 +890,13 @@ public class FishingReworkGame : MonoBehaviour
 
     private void UpdateCamera(float dt)
     {
+        if (_pinning)
+        {
+            if (_pinGlide.HasValue)
+                _cameraPos = Vector2.SmoothDamp(_cameraPos, ClampPinView(_pinGlide.Value), ref _cameraVelocity, 0.3f, 80f, dt);
+            _fx.SetCameraBase(W(_cameraPos) + Vector3.back * 10f);
+            return;
+        }
         var target = new Vector2(HomeX, HomeY);
         if (_model.Phase != FishingPhase.Ready)
         {
@@ -727,6 +937,13 @@ public class FishingReworkGame : MonoBehaviour
         {
             tr.localPosition = new Vector3(x, 0.08f * Mathf.Sin(t * 1.6f + x), 0f);
             tr.localRotation = Quaternion.Euler(0f, 0f, 4f * Mathf.Sin(t * 1.1f + x * 0.7f));
+        }
+        float pin = _model.PinDistance;
+        _pin.enabled = pin > 0f;
+        if (pin > 0f)
+        {
+            _pin.transform.localPosition = new Vector3(pin, 0.12f + 0.1f * Mathf.Sin(t * 2.2f), 0f);
+            _pin.transform.localRotation = Quaternion.Euler(0f, 0f, 6f * Mathf.Sin(t * 1.7f));
         }
     }
 

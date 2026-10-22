@@ -182,8 +182,79 @@ public class FishingReworkModel
 
     public float Value(FishingUpgrade upgrade) => _config.Track(upgrade).ValueAt(Level(upgrade));
     public bool IsMax(FishingUpgrade upgrade) => Level(upgrade) >= _config.Track(upgrade).MaxLevel;
-    public int NextCost(FishingUpgrade upgrade) => IsMax(upgrade) ? 0 : _config.Track(upgrade).CostAt(Level(upgrade));
-    public bool CanUpgrade(FishingUpgrade upgrade) => !IsMax(upgrade) && Gold >= NextCost(upgrade);
+    /// <summary>다음 단계로 올리는 재료 (물고기 · 마릿수). 끝이면 비어 있음</summary>
+    public IReadOnlyList<FishCost> NextRecipe(FishingUpgrade upgrade) =>
+        IsMax(upgrade) ? Array.Empty<FishCost>() : _config.RecipeFor(upgrade, Level(upgrade) + 1);
+
+    /// <summary>가방에 있는 이 물고기 수 (본 게임 가방 · 테스트 씬 가방)</summary>
+    public int Owned(FishDefinition fish)
+    {
+        if (fish == null)
+            return 0;
+        if (_host != null)
+            return _host.CountFish(fish);
+        int n = 0;
+        foreach (var item in _save.bag)
+        {
+            if (item.fishId == fish.FishId)
+                n++;
+        }
+        return n;
+    }
+
+    public bool CanUpgrade(FishingUpgrade upgrade)
+    {
+        if (IsMax(upgrade))
+            return false;
+        foreach (var cost in NextRecipe(upgrade))
+        {
+            if (Owned(cost.Fish) < cost.Amount)
+                return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 이 물고기가 다음 강화 재료이면 그 강화 · 지금 가진 수 · 필요한 수 (낚았을 때 "강화 재료!" 알림). 아니면 false.
+    /// 여러 강화에 쓰이면 아직 덜 모은 쪽
+    /// </summary>
+    public bool TryNeededFor(FishDefinition fish, out FishingUpgrade upgrade, out int owned, out int needed)
+    {
+        upgrade = FishingUpgrade.Line;
+        owned = needed = 0;
+        bool found = false;
+        foreach (FishingUpgrade candidate in Enum.GetValues(typeof(FishingUpgrade)))
+        {
+            foreach (var cost in NextRecipe(candidate))
+            {
+                if (cost.Fish != fish)
+                    continue;
+                int have = Owned(fish);
+                if (found && have >= cost.Amount)
+                    continue;
+                upgrade = candidate;
+                owned = have;
+                needed = cost.Amount;
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    /// <summary>이 물고기를 지금 강화로 못 낚으면 먼저 올릴 강화 (낚을 수 있으면 false)</summary>
+    public bool TryMissingFor(FishDefinition fish, out FishingUpgrade upgrade)
+    {
+        upgrade = FishingUpgrade.Line;
+        if (fish == null || _config.Catchable(fish, _save.lineLevel, _save.sinkerLevel, _save.reelLevel))
+            return false;
+        if (fish.MinWeight > Value(FishingUpgrade.Reel))
+            upgrade = FishingUpgrade.Reel;
+        else if (fish.MinDistance > Value(FishingUpgrade.Line) - 1f)
+            upgrade = FishingUpgrade.Line;
+        else
+            upgrade = FishingUpgrade.Sinker;
+        return true;
+    }
 
     public bool AnyUpgradeAffordable
     {
@@ -210,12 +281,34 @@ public class FishingReworkModel
 
     #region 던지기 · 감기
 
-    public bool TryCast()
+    /// <summary>가장 가까이 던질 수 있는 거리 (m)</summary>
+    public const float MinCastDistance = 3f;
+
+    /// <summary>지난번 던진 거리 (처음 · 끝까지 던졌으면 지금 줄 길이)</summary>
+    public float LastCastDistance =>
+        _save.lastCastDistance > 0f ? Mathf.Clamp(_save.lastCastDistance, MinCastDistance, CastDistance) : CastDistance;
+
+    /// <summary>빨간 핀: 직접 꽂은 거리 (지금 줄 길이 안, 없으면 0)</summary>
+    public float PinDistance => _save.pinDistance > 0f ? Mathf.Clamp(_save.pinDistance, MinCastDistance, CastDistance) : 0f;
+
+    /// <summary>빨간 핀 꽂기 (줄 길이 안으로)</summary>
+    public void SetPin(float distance) => _save.pinDistance = Mathf.Clamp(distance, MinCastDistance, CastDistance);
+
+    public void ClearPin() => _save.pinDistance = 0f;
+
+    /// <summary>지난번 거리로 던짐 (탭)</summary>
+    public bool TryCast() => TryCast(LastCastDistance);
+
+    /// <summary>
+    /// 이 거리로 던짐 (거리 줄자로 고름). 줄 길이를 넘지 않음. 끝까지 던지면 "끝까지"로 기억해 줄을 강화하면 같이 늘어남
+    /// </summary>
+    public bool TryCast(float distance)
     {
         if (Phase != FishingPhase.Ready)
             return false;
         Phase = FishingPhase.Casting;
-        CastTarget = CastDistance;
+        CastTarget = Mathf.Clamp(distance, MinCastDistance, CastDistance);
+        _save.lastCastDistance = CastTarget >= CastDistance - 0.5f ? 0f : CastTarget;
         _castTime = 0f;
         Hook = Tip;
         Casted?.Invoke();
@@ -234,6 +327,34 @@ public class FishingReworkModel
         Phase = FishingPhase.Ready;
         Hook = Tip;
         Changed?.Invoke();
+    }
+
+    /// <summary>바늘 앞(선착장 쪽) 가까이에 지금 낚을 수 있는 물고기가 있음 → 천천히 감김</summary>
+    public bool NearCatchableFish
+    {
+        get
+        {
+            float ahead = _config.NearFishAhead;
+            foreach (var fish in _fish)
+            {
+                if (fish.Hooked || fish.Weight > ReelCapacity || -fish.Position.y > MaxDepth + 0.5f)
+                    continue;
+                float dx = Hook.x - fish.Position.x;
+                if (dx >= -0.3f && dx <= ahead)
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 이 물고기를 노리려면 어디로 던질지: 바늘이 물고기 깊이까지 가라앉는 동안 천천히 감겨 오는 만큼 물고기보다 조금 멀리 (줄 길이 안)
+    /// </summary>
+    public float AimFor(FishingFish fish)
+    {
+        float depth = Mathf.Max(0f, -fish.Position.y);
+        float drift = _config.NearFishReel * depth / Mathf.Max(0.1f, SinkSpeed);
+        return Mathf.Clamp(fish.Position.x + drift + 0.5f, MinCastDistance, CastDistance);
     }
 
     public void Tick(float dt, bool holding)
@@ -286,8 +407,10 @@ public class FishingReworkModel
     private void TickInWater(float dt, bool holding)
     {
         // 선착장 쪽으로 늘 감기고(누르면 빨리), 누르면 올라오고 떼면 찌 깊이까지 가라앉음
-        float reel = holding ? _config.HoldReel : _config.AutoReel;
-        float vertical = holding ? _config.LiftSpeed : -SinkSpeed;
+        // 던진 거리에 맞춰 감김 (가까이 던지면 천천히), 바늘 앞에 낚을 수 있는 물고기가 있으면 천천히.
+        // 누르면 올라오기만 함 (앞으로 빨라지지 않음 — 깊이를 맞추다 지나치지 않게)
+        float reel = NearCatchableFish ? Mathf.Min(_config.NearFishReel, _config.AutoReelFor(CastTarget)) : _config.AutoReelFor(CastTarget);
+        float vertical = holding ? _config.LiftSpeedAt(Level(FishingUpgrade.Sinker)) : -SinkSpeed;
         var hook = new Vector2(Hook.x - reel * dt, Hook.y + vertical * dt);
         hook.y = Mathf.Clamp(hook.y, -MaxDepth, 0f);
         float floor = -_config.SeabedDepth(hook.x) + FloorClearance;
@@ -331,7 +454,7 @@ public class FishingReworkModel
 
     private void TickHooked(float dt, bool holding)
     {
-        float speed = _config.HookedReel * (holding ? 1.5f : 1f);
+        float speed = _config.HookedReelFor(CastDistance) * (holding ? 1.5f : 1f);
         Hook += TowardTip(Hook) * speed * dt;
         if (HookedFish != null)
         {
@@ -586,13 +709,26 @@ public class FishingReworkModel
     {
         if (!CanUpgrade(upgrade))
             return false;
-        if (_host != null)
+        // 재료(물고기)를 가방에서 냄 — 테스트 씬은 값이 싼 것부터
+        foreach (var cost in NextRecipe(upgrade))
         {
-            if (!_host.TrySpendGold(NextCost(upgrade)))
-                return false;
+            if (_host != null)
+            {
+                _host.TakeFish(cost.Fish, cost.Amount);
+                continue;
+            }
+            for (int i = 0; i < cost.Amount; i++)
+            {
+                int cheapest = -1;
+                for (int k = 0; k < _save.bag.Count; k++)
+                {
+                    if (_save.bag[k].fishId == cost.Fish.FishId && (cheapest < 0 || _save.bag[k].price < _save.bag[cheapest].price))
+                        cheapest = k;
+                }
+                if (cheapest >= 0)
+                    _save.bag.RemoveAt(cheapest);
+            }
         }
-        else
-            _save.gold -= NextCost(upgrade);
         SetLevel(upgrade, Level(upgrade) + 1);
         Upgraded?.Invoke(upgrade);
         Changed?.Invoke();

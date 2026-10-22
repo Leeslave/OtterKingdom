@@ -12,6 +12,7 @@ public class FishingHud : MonoBehaviour
     private static readonly Color Cocoa = new Color32(75, 46, 34, 255);
     private static readonly Color Gold = new Color32(255, 214, 92, 255);
     private static readonly Color Muted = new Color32(140, 112, 96, 255);
+    private static readonly Color Good = new Color32(86, 150, 70, 255);
 
     private FishingReworkGame _game;
     private FishingReworkModel _model;
@@ -35,6 +36,34 @@ public class FishingHud : MonoBehaviour
 
     private RectTransform _info;
     private TextMeshProUGUI _infoText;
+
+    // 던질 거리 도넛 게이지: 꾹 누르면 손가락 위에 떠서 시계 방향으로 참 (0 = 가장 가까이, 한 바퀴 = 지금 줄 길이).
+    // 고리 위 빨간 핀 = 직접 꽂은 자리 (거기서 떼면 그 자리로)
+    private const float DonutRadius = 150f;
+    private RectTransform _donut;
+    private Image _donutFill;
+    private TextMeshProUGUI _donutLabel;
+    private RectTransform _donutPin;
+    private TextMeshProUGUI _donutPinLabel;
+    private float _donutPop = -1f;
+    private float _lastAim;
+    private Sprite _dotSprite;
+
+    /// <summary>게이지로 고르는 중인 던질 거리 (없으면 게이지 안 보임)</summary>
+    public float? AimPreview { get; set; }
+
+    /// <summary>게이지를 띄울 곳 (누른 화면 위치)</summary>
+    public Vector2 GaugeAt { get; set; }
+
+    // 핀 꽂기: [핀] 버튼 → 다른 UI는 숨기고, 화면 가운데 고정 핀 + 거리 · [취소] [핀 빼기] [여기에 꽂기]
+    private static readonly Color PinRed = new Color32(235, 70, 60, 255);
+    private RectTransform _pinButton;
+    private RectTransform _pinCross;
+    private RectTransform _pinPanel;
+    private TextMeshProUGUI _pinCrossLabel;
+    private GameObject _pinClear;
+    private bool _pinShown;
+    private readonly System.Collections.Generic.List<GameObject> _pinHidden = new System.Collections.Generic.List<GameObject>();
     private TextMeshProUGUI _hint;
     private string _hintOverride;
     private float _hintTimer;
@@ -327,14 +356,7 @@ public class FishingHud : MonoBehaviour
 
     private void BuildMiddle()
     {
-        var chip = NewImage(_safe, "Info", _ui.ChipNormal, new Color(1f, 1f, 1f, 0.92f));
-        _info = chip.rectTransform;
-        Place(_info, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(24f, -378f), new Vector2(470f, 80f));
-        _infoText = NewText(chip.transform, "", 32, true, Cocoa);
-        Fill(_infoText.rectTransform, 12f, 6f, 12f);
-        _infoText.enableAutoSizing = true;
-        _infoText.fontSizeMin = 22f;
-        _infoText.fontSizeMax = 32f;
+        BuildGauge();
 
         var toast = NewImage(_safe, "Toast", _ui.Paper, Color.white);
         _toast = toast.rectTransform;
@@ -354,6 +376,144 @@ public class FishingHud : MonoBehaviour
         _toast.gameObject.SetActive(false);
     }
 
+    private void BuildGauge()
+    {
+        // 바늘 거리 · 깊이 (물속일 때만, 오른쪽 위 — 해달을 가리지 않게)
+        var chip = NewImage(_safe, "Info", _ui.ChipNormal, new Color(1f, 1f, 1f, 0.92f));
+        _info = chip.rectTransform;
+        Place(_info, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(-24f, -378f), new Vector2(400f, 70f));
+        _infoText = NewText(chip.transform, "", 28, true, Cocoa);
+        Fill(_infoText.rectTransform, 12f, 6f, 12f);
+        _infoText.enableAutoSizing = true;
+        _infoText.fontSizeMin = 20f;
+        _infoText.fontSizeMax = 28f;
+
+        _dotSprite = Circle(64, 0f);
+        var ring = Circle(256, 0.78f);
+        _donut = NewRect(_safe, "CastGauge");
+        _donut.anchorMin = _donut.anchorMax = new Vector2(0.5f, 0.5f);
+        _donut.sizeDelta = Vector2.one * (DonutRadius * 2f + 40f);
+        var back = NewImage(_donut, "Back", _dotSprite, new Color(0.18f, 0.12f, 0.1f, 0.35f), true);
+        Fill(back.rectTransform, 30f, 30f);
+        var track = NewImage(_donut, "Track", ring, new Color(1f, 1f, 1f, 0.35f), true);
+        Fill(track.rectTransform, 20f, 20f);
+        _donutFill = NewImage(_donut, "Fill", ring, new Color32(255, 160, 80, 255), true);
+        Fill(_donutFill.rectTransform, 20f, 20f);
+        _donutFill.type = Image.Type.Filled;
+        _donutFill.fillMethod = Image.FillMethod.Radial360;
+        _donutFill.fillOrigin = (int)Image.Origin360.Top;
+        _donutFill.fillClockwise = true;
+        // 빨간 핀 (흰 테두리 + 빨간 점)
+        var pinBack = NewImage(_donut, "Pin", _dotSprite, Color.white, true);
+        _donutPin = pinBack.rectTransform;
+        _donutPin.anchorMin = _donutPin.anchorMax = new Vector2(0.5f, 0.5f);
+        _donutPin.sizeDelta = Vector2.one * 46f;
+        var pinDot = NewImage(_donutPin, "Dot", _dotSprite, new Color32(235, 70, 60, 255), true);
+        Fill(pinDot.rectTransform, 7f, 7f, 7f, 7f);
+        _donutPinLabel = NewText(_donutPin, "", 24, true, Color.white, TextAlignmentOptions.Center, 0.25f);
+        Place(_donutPinLabel.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(120f, 34f));
+        _donutLabel = NewText(_donut, "", 64, true, Color.white, TextAlignmentOptions.Center, 0.25f);
+        Place(_donutLabel.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 8f), new Vector2(240f, 90f));
+        var sub = NewText(_donut, "떼면 던져요", 26, true, new Color(1f, 1f, 1f, 0.9f), TextAlignmentOptions.Center, 0.2f);
+        Place(sub.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -48f), new Vector2(240f, 40f));
+        foreach (var image in _donut.GetComponentsInChildren<Image>(true))
+            image.raycastTarget = false;
+        _donut.gameObject.SetActive(false);
+    }
+
+    // 원 · 고리 그림 (hole = 안쪽 빈 비율, 0이면 꽉 찬 원)
+    private static Sprite Circle(int size, float hole)
+    {
+        var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        float r = size * 0.5f;
+        for (int y = 0; y < size; y++)
+        for (int x = 0; x < size; x++)
+        {
+            float d = Vector2.Distance(new Vector2(x + 0.5f, y + 0.5f), new Vector2(r, r));
+            float outer = Mathf.Clamp01(r - 1f - d);
+            float inner = hole > 0f ? Mathf.Clamp01(d - r * hole) : 1f;
+            tex.SetPixel(x, y, new Color(1f, 1f, 1f, Mathf.Min(outer, inner)));
+        }
+        tex.Apply();
+        return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 100f);
+    }
+
+    // 거리 → 도넛 위 비율 (0 = 가장 가까이, 1 = 줄 길이)
+    private float GaugeRatio(float distance) =>
+        Mathf.Clamp01((distance - FishingReworkModel.MinCastDistance) / Mathf.Max(0.1f, _model.CastDistance - FishingReworkModel.MinCastDistance));
+
+    private Vector2 OnRing(float ratio, float radius)
+    {
+        float angle = ratio * Mathf.PI * 2f;
+        return new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * radius;
+    }
+
+    private void UpdateGauge(float dt)
+    {
+        bool aiming = AimPreview.HasValue && _model.Phase == FishingPhase.Ready && _reveal == null;
+        if (aiming)
+        {
+            if (!_donut.gameObject.activeSelf)
+            {
+                _donut.gameObject.SetActive(true);
+                // 누른 곳 위 (엄지에 가리지 않게), 화면 밖으로 안 나가게
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(_safe, GaugeAt, null, out var local);
+                var area = _safe.rect;
+                float half = DonutRadius + 30f;
+                var at = local - area.center + new Vector2(0f, 230f);
+                at.x = Mathf.Clamp(at.x, -area.width * 0.5f + half, area.width * 0.5f - half);
+                at.y = Mathf.Clamp(at.y, -area.height * 0.5f + half + 260f, area.height * 0.5f - half - 520f);
+                _donut.anchoredPosition = at;
+            }
+            _donutPop = -1f;
+            _lastAim = AimPreview.Value;
+            _donut.localScale = Vector3.one;
+            _donutFill.fillAmount = GaugeRatio(_lastAim);
+            _donutLabel.text = $"{_lastAim:0}m";
+            float pin = _model.PinDistance;
+            _donutPin.gameObject.SetActive(pin > 0f);
+            if (pin > 0f)
+            {
+                float ratio = GaugeRatio(pin);
+                _donutPin.anchoredPosition = OnRing(ratio, DonutRadius - 17f);
+                // 핀 거리 글자는 고리 바깥쪽에
+                _donutPinLabel.text = $"{pin:0}m";
+                _donutPinLabel.rectTransform.anchoredPosition = OnRing(ratio, 1f).normalized * 50f;
+                bool near = Mathf.Abs(_lastAim - pin) <= 2f;
+                _donutPin.localScale = Vector3.one * (near ? 1.25f + 0.1f * Mathf.Sin(Time.unscaledTime * 18f) : 1f);
+            }
+            return;
+        }
+        if (!_donut.gameObject.activeSelf)
+            return;
+        // 떼면 퍽: 커지며 사라짐
+        if (_donutPop < 0f)
+            _donutPop = 0f;
+        _donutPop += dt;
+        float t = Mathf.Clamp01(_donutPop / 0.22f);
+        _donut.localScale = Vector3.one * (1f + 0.35f * t);
+        foreach (var graphic in _donut.GetComponentsInChildren<Graphic>())
+        {
+            var c = graphic.color;
+            c.a = Mathf.Min(c.a, 1f - t);
+            graphic.color = c;
+        }
+        if (t >= 1f)
+        {
+            _donut.gameObject.SetActive(false);
+            _donut.localScale = Vector3.one;
+            // 색(투명도) 되돌림
+            _donut.Find("Back").GetComponent<Image>().color = new Color(0.18f, 0.12f, 0.1f, 0.35f);
+            _donut.Find("Track").GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.35f);
+            _donutFill.color = new Color32(255, 160, 80, 255);
+            _donutPin.GetComponent<Image>().color = Color.white;
+            _donutPin.Find("Dot").GetComponent<Image>().color = new Color32(235, 70, 60, 255);
+            _donutLabel.color = Color.white;
+            foreach (var text in _donut.GetComponentsInChildren<TextMeshProUGUI>(true))
+                text.alpha = text == _donutLabel ? 1f : 0.9f;
+        }
+    }
+
     private void BuildBottom()
     {
         _hint = NewText(_safe, "", 38, true, Color.white, TextAlignmentOptions.Center, 0.22f);
@@ -366,11 +526,91 @@ public class FishingHud : MonoBehaviour
         _bagCount.fontSize = 30f;
         _bookBadge = RoundButton("Book", _art.IconBook, "도감", new Vector2(270f, 70f), OpenBook);
 
+        BuildPin();
+
         var test = NewImage(_safe, "Test", _ui.ChipNormal, new Color(1f, 1f, 1f, 0.75f));
         Place(test.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(20f, 20f), new Vector2(150f, 64f));
         MakeButton(test.rectTransform, OpenTest);
         var label = NewText(test.transform, "테스트", 26, true, Muted);
         Fill(label.rectTransform, 0f, 4f);
+    }
+
+    private void BuildPin()
+    {
+        // [핀] 버튼: 오른쪽 아래 (준비 중일 때만)
+        var back = NewImage(_safe, "PinButton", _ui.RoundFeatured, Color.white, true);
+        _pinButton = back.rectTransform;
+        Place(_pinButton, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-24f, 380f), new Vector2(150f, 150f));
+        MakeButton(_pinButton, () => _game.BeginPin());
+        var ring = NewImage(_pinButton, "Ring", _dotSprite, Color.white, true);
+        Place(ring.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 14f), new Vector2(64f, 64f));
+        var dot = NewImage(ring.rectTransform, "Dot", _dotSprite, PinRed, true);
+        Fill(dot.rectTransform, 9f, 9f, 9f, 9f);
+        var label = NewText(_pinButton, "핀", 32, true, Color.white, TextAlignmentOptions.Center, 0.25f);
+        Place(label.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0.5f), new Vector2(0f, 4f), new Vector2(150f, 44f));
+
+        // 화면 가운데 고정 핀 (카메라 가운데 = 핀 자리): 세로 안내선 + 핀(끝이 가운데) + 거리
+        _pinCross = NewRect(_root, "PinCross");
+        RuntimeUIKit.Stretch(_pinCross);
+        var guide = NewImage(_pinCross, "Guide", null, new Color(1f, 1f, 1f, 0.35f));
+        guide.rectTransform.anchorMin = new Vector2(0.5f, 0f);
+        guide.rectTransform.anchorMax = new Vector2(0.5f, 1f);
+        guide.rectTransform.sizeDelta = new Vector2(4f, 0f);
+        var tip = NewImage(_pinCross, "Tip", _dotSprite, PinRed, true);
+        Place(tip.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(18f, 18f));
+        var stem = NewImage(_pinCross, "Stem", null, Cocoa);
+        Place(stem.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0f), Vector2.zero, new Vector2(8f, 70f));
+        var head = NewImage(_pinCross, "Head", _dotSprite, Color.white, true);
+        Place(head.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 96f), new Vector2(72f, 72f));
+        var headDot = NewImage(head.rectTransform, "Dot", _dotSprite, PinRed, true);
+        Fill(headDot.rectTransform, 9f, 9f, 9f, 9f);
+        var pill = NewImage(_pinCross, "Distance", RuntimeUIKit.Style.OptionButton, Color.white);
+        Place(pill.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0f), new Vector2(0f, 148f), new Vector2(260f, 84f));
+        _pinCrossLabel = NewText(pill.transform, "", 44, true, Cocoa);
+        Fill(_pinCrossLabel.rectTransform, 0f, 8f);
+        _pinCross.gameObject.SetActive(false);
+
+        // 위 안내 · 아래 버튼
+        _pinPanel = NewRect(_safe, "PinPanel");
+        RuntimeUIKit.Stretch(_pinPanel);
+        var tell = NewText(_pinPanel, "바다를 끌어서 핀 자리를 골라요", 40, true, Color.white, TextAlignmentOptions.Center, 0.22f);
+        Place(tell.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -40f), new Vector2(1000f, 60f));
+        var row = RuntimeUIKit.CreateRow(_pinPanel, 120f, 18f);
+        Place(row, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 40f), new Vector2(1000f, 120f));
+        RuntimeUIKit.CreateButton(row, "취소", () => _game.EndPin(false), RuntimeUIKit.ButtonKind.Secondary, 260f);
+        _pinClear = RuntimeUIKit.CreateButton(row, "핀 빼기", () => _game.ClearPin(), RuntimeUIKit.ButtonKind.Secondary, 260f).gameObject;
+        RuntimeUIKit.CreateButton(row, "여기에 꽂기", () =>
+        {
+            _game.EndPin(true);
+            ShowMessage("핀을 꽂았어요! 게이지가 빨간 점에 닿을 때 떼요", 2.4f);
+        }, RuntimeUIKit.ButtonKind.Primary, 340f);
+        _pinPanel.gameObject.SetActive(false);
+    }
+
+    // 핀 꽂는 동안 다른 UI는 숨김 (끝나면 원래대로)
+    private void ShowPinMode(bool show)
+    {
+        _pinShown = show;
+        if (show)
+        {
+            _pinHidden.Clear();
+            foreach (Transform child in _safe)
+            {
+                if (child == _pinPanel || child == _toast || !child.gameObject.activeSelf)
+                    continue;
+                _pinHidden.Add(child.gameObject);
+                child.gameObject.SetActive(false);
+            }
+            _pinClear.SetActive(_model.PinDistance > 0f);
+        }
+        else
+        {
+            foreach (var hidden in _pinHidden)
+                hidden.SetActive(true);
+            _pinHidden.Clear();
+        }
+        _pinCross.gameObject.SetActive(show);
+        _pinPanel.gameObject.SetActive(show);
     }
 
     // 본 게임: 골드 · 가방 · 도감은 전역 UI 것 → 숨기고, 강화 옆에 [나가기] (선착장으로)
@@ -397,7 +637,8 @@ public class FishingHud : MonoBehaviour
         _requestReward.rectTransform.anchoredPosition = new Vector2(556f, -126f);
         _requestReward.rectTransform.sizeDelta = new Vector2(110f, 50f);
         _requestButtonImage.rectTransform.sizeDelta = new Vector2(170f, 108f);
-        _info.anchoredPosition = new Vector2(24f, -244f);
+        // 바늘 거리 · 깊이는 의뢰 카드 아래 오른쪽 (왼쪽 선착장 해달을 가리지 않게)
+        _info.anchoredPosition = new Vector2(-24f, -236f);
         _toast.anchoredPosition = new Vector2(0f, -350f);
         var upgrade = (RectTransform)_upgradeBadge.transform.parent;
         upgrade.anchoredPosition = new Vector2(-170f, 30f);
@@ -450,10 +691,15 @@ public class FishingHud : MonoBehaviour
     {
         switch (_model.Phase)
         {
-            case FishingPhase.Ready: return _game.AutoFishing ? "해달이 알아서 낚는 중… 누르면 직접 낚아요" : "화면을 눌러 던지기";
+            case FishingPhase.Ready:
+                if (_game.AutoFishing)
+                    return "해달이 알아서 낚는 중… 누르면 직접 낚아요";
+                return AimPreview.HasValue ? $"떼면 {AimPreview.Value:0}m로 던져요" : $"꾹 누르면 게이지 · 톡 누르면 지난 {_model.LastCastDistance:0}m로";
             case FishingPhase.Casting: return "";
             case FishingPhase.InWater:
                 if (_game.AutoFishing) return "해달이 알아서 낚는 중… 누르면 직접 낚아요";
+                if (_model.NearCatchableFish)
+                    return _model.Holding ? "물고기 근처! 떼면 가라앉아요" : "물고기 근처! 깊이를 맞춰요";
                 return _model.Holding ? "올라오는 중… 떼면 가라앉아요" : "누르고 있으면 올라와요";
             default: return "걸렸다! 누르면 더 빨리 올라와요";
         }
@@ -478,10 +724,22 @@ public class FishingHud : MonoBehaviour
         _hint.text = _hintTimer > 0f && _hintOverride != null ? _hintOverride : PhaseHint();
         _hint.alpha = _model.Phase == FishingPhase.Ready && _hintTimer <= 0f ? 0.75f + 0.25f * Mathf.Sin(Time.unscaledTime * 3f) : 1f;
 
-        bool out_ = _model.Phase == FishingPhase.InWater || _model.Phase == FishingPhase.Hooked;
+        if (_game.Pinning != _pinShown)
+            ShowPinMode(_game.Pinning);
+        if (_pinShown)
+        {
+            float center = _game.PinCenter;
+            _pinCrossLabel.text = center >= _model.CastDistance - 0.05f ? $"{center:0}m 줄 끝" : $"{center:0}m";
+        }
+        else
+            _pinButton.gameObject.SetActive(_model.Phase == FishingPhase.Ready && _reveal == null);
+
+        UpdateGauge(dt);
+        // 새 물고기 발견 화면이 떠 있으면 거리 · 깊이 글자는 숨김 (제목과 겹침)
+        bool out_ = (_model.Phase == FishingPhase.InWater || _model.Phase == FishingPhase.Hooked) && _reveal == null;
         _info.gameObject.SetActive(out_);
         if (out_)
-            _infoText.text = $"거리 {_model.HookDistance:0}m · 깊이 {_model.HookDepth:0.0}m";
+            _infoText.text = $"바늘 {_model.HookDistance:0}m · 깊이 {_model.HookDepth:0.0}m";
 
         var request = _model.Request;
         if (request != null && !request.Done)
@@ -514,7 +772,10 @@ public class FishingHud : MonoBehaviour
         _toastDetail.text = $"{result.Weight:0.##}kg · {FishingReworkArt.RarityName(result.Def.Rarity)}";
         _toastGold.text = $"값 {result.Price}";
         _bagPunch = 1f;
-        string tag = result.IsNew ? "새 물고기!" : result.IsRecord ? "기록!" : result.IsBig ? "대물!" : null;
+        string material = null;
+        if (_model.TryNeededFor(result.Def, out _, out int owned, out int needed))
+            material = owned >= needed ? "강화 준비!" : $"강화 재료 {owned}/{needed}";
+        string tag = result.IsNew ? "새 물고기!" : material ?? (result.IsRecord ? "기록!" : result.IsBig ? "대물!" : null);
         _toastTag.transform.parent.gameObject.SetActive(tag != null);
         if (tag != null)
             _toastTag.text = tag;
@@ -564,7 +825,7 @@ public class FishingHud : MonoBehaviour
         var panel = OpenSheet("낚시 도구 강화");
         foreach (FishingUpgrade upgrade in Enum.GetValues(typeof(FishingUpgrade)))
             UpgradeRow(panel, upgrade);
-        var note = RuntimeUIKit.CreateLabel(panel, "줄이 길면 더 멀리 · 찌가 무거우면 더 깊이 · 릴이 튼튼하면 무거운 물고기", 28);
+        var note = RuntimeUIKit.CreateLabel(panel, "낚은 물고기를 재료로 강화해요 (가방에서 내요)\n줄이 길면 더 멀리 · 찌가 무거우면 더 깊이 · 릴이 튼튼하면 무거운 물고기", 28);
         note.color = Muted;
         note.textWrappingMode = TextWrappingModes.Normal;
         AddCloseButton(panel);
@@ -592,27 +853,54 @@ public class FishingHud : MonoBehaviour
         line.fontSizeMin = 20f;
         line.fontSizeMax = 28f;
 
-        int cost = _model.NextCost(upgrade);
         bool can = _model.CanUpgrade(upgrade);
-        var button = RuntimeUIKit.CreateButton(row, max ? "최대" : Money(cost), () =>
+        var button = RuntimeUIKit.CreateButton(row, max ? "최대" : "강화", () =>
         {
             if (_model.TryUpgrade(upgrade))
             {
-                _goldPunch = 1f;
+                _bagPunch = 1f;
                 OpenUpgrades();
             }
             else
                 _sfx.Play(MineSfx.Kind.Tap, 0.6f);
-        }, can ? RuntimeUIKit.ButtonKind.Primary : RuntimeUIKit.ButtonKind.Option, 250f);
+        }, can ? RuntimeUIKit.ButtonKind.Primary : RuntimeUIKit.ButtonKind.Option, 200f);
         button.interactable = !max;
+        if (!max && !can)
+            button.GetComponentInChildren<TextMeshProUGUI>().color = Muted;
         if (!max)
+            RecipeRow(panel, upgrade);
+    }
+
+    // 강화 재료: 물고기 그림 · 가진 수/필요한 수 (다 모으면 초록) · 못 낚는 물고기면 먼저 올릴 강화, 낚을 수 있으면 사는 곳
+    private void RecipeRow(RectTransform panel, FishingUpgrade upgrade)
+    {
+        var row = RuntimeUIKit.CreateRow(panel, 96f, 14f);
+        var spacer = NewRect(row, "Indent");
+        spacer.gameObject.AddComponent<LayoutElement>().minWidth = 120f;
+        foreach (var cost in _model.NextRecipe(upgrade))
         {
-            var coin = NewImage(button.transform, "Coin", _ui.Gold, Color.white, true);
-            Place(coin.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(14f, 6f), new Vector2(50f, 50f));
-            var label = button.GetComponentInChildren<TextMeshProUGUI>();
-            ((RectTransform)label.transform).offsetMin = new Vector2(60f, 12f);
-            if (!can)
-                label.color = Muted;
+            var cell = NewRect(row, "Cost");
+            var layout = cell.gameObject.AddComponent<LayoutElement>();
+            layout.flexibleWidth = 1f;
+            layout.minHeight = 92f;
+            var icon = NewImage(cell, "Fish", cost.Fish.Icon, Color.white, true);
+            Place(icon.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(0f, 0f), new Vector2(84f, 64f));
+            int owned = _model.Owned(cost.Fish);
+            bool enough = owned >= cost.Amount;
+            var count = NewText(cell, $"{cost.Fish.DisplayName} {Mathf.Min(owned, cost.Amount)}/{cost.Amount}", 28, true,
+                enough ? Good : Cocoa, TextAlignmentOptions.Left);
+            Place(count.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0f), new Vector2(92f, 2f), new Vector2(260f, 40f));
+            count.enableAutoSizing = true;
+            count.fontSizeMin = 20f;
+            count.fontSizeMax = 28f;
+            string where = _model.TryMissingFor(cost.Fish, out var missing)
+                ? $"{_model.Config.Track(missing).DisplayName} 강화가 먼저 필요"
+                : cost.Fish.NearBottom ? $"{cost.Fish.MinDistance:0}m 넘어 바닥" : $"{cost.Fish.MinDistance:0}m · 깊이 {cost.Fish.MinDepth:0.#}m~";
+            var hint = NewText(cell, enough ? "다 모았어요" : where, 22, false, enough ? Good : Muted, TextAlignmentOptions.Left);
+            Place(hint.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 1f), new Vector2(92f, -2f), new Vector2(260f, 34f));
+            hint.enableAutoSizing = true;
+            hint.fontSizeMin = 16f;
+            hint.fontSizeMax = 22f;
         }
     }
 
@@ -802,11 +1090,12 @@ public class FishingHud : MonoBehaviour
         });
         var rays = NewImage(dim, "Rays", _ui.Rays, new Color(1f, 0.95f, 0.7f, 0.55f), true);
         _revealRays = rays.rectTransform;
-        Place(_revealRays, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 160f), new Vector2(900f, 900f));
+        // 제목 · 그림은 위쪽 의뢰 카드(화면 위 ~450까지)와 겹치지 않게 그 아래에서 시작
+        Place(_revealRays, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 110f), new Vector2(900f, 900f));
         var title = NewText(dim, "새 물고기 발견!", 64, true, Color.white, TextAlignmentOptions.Center, 0.25f);
-        Place(title.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 560f), new Vector2(1000f, 90f));
+        Place(title.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 380f), new Vector2(1000f, 90f));
         var icon = NewImage(dim, "Icon", result.Def.Icon, Color.white, true);
-        Place(icon.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 160f), new Vector2(620f, 420f));
+        Place(icon.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 110f), new Vector2(620f, 420f));
         var card = NewImage(dim, "Card", _ui.Paper, Color.white);
         Place(card.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(860f, 330f));
         var name = NewText(card.transform, result.Def.DisplayName, 56, true, Cocoa);
