@@ -13,6 +13,10 @@ public class FishingReworkSave
     public int reelLevel;
     public int totalCaught;
     public int requestsDone;
+    // 지난번 던진 거리 (m). 0 = 끝까지 (줄을 강화하면 같이 늘어남)
+    public float lastCastDistance;
+    // 빨간 핀: 바다를 끌어 직접 꽂은 거리 (m, 0 = 없음)
+    public float pinDistance;
     public List<FishingBookSave> book = new List<FishingBookSave>();
     public List<FishingBagSave> bag = new List<FishingBagSave>();
 

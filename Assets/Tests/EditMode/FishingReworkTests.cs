@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 
 /// <summary>
-/// 낚시 개편 규칙 (FishingReworkModel): 던지기 거리 · 저절로 감김 · 누르면 빨리 · 찌가 무거우면 깊이 ·
+/// 낚시 개편 규칙 (FishingReworkModel): 던지기 거리(고르기 · 기억) · 저절로 감김(물고기 근처는 천천히) · 누르면 올라옴 · 찌가 무거우면 깊이 ·
 /// 걸리면 낚음(골드 · 도감 · 의뢰) · 무거우면 놓침 · 강화 · 의뢰 받기/바꾸기 · 세이브
 /// </summary>
 public class FishingReworkTests
@@ -52,6 +52,16 @@ public class FishingReworkTests
     private FishingReworkModel Model(FishingReworkSave save = null) =>
         new FishingReworkModel(_config, save ?? new FishingReworkSave(), new System.Random(1));
 
+    // 다음 강화 재료(물고기)를 가방에 넣어 줌
+    private static void GiveRecipe(FishingReworkModel model, FishingUpgrade upgrade)
+    {
+        foreach (var cost in model.NextRecipe(upgrade))
+        {
+            for (int i = 0; i < cost.Amount; i++)
+                model.Save.bag.Add(new FishingBagSave { fishId = cost.Fish.FishId, weight = 0.3f, price = cost.Fish.Price });
+        }
+    }
+
     private static float RunUntilReady(FishingReworkModel model, bool holding, float limit = 60f)
     {
         float time = 0f;
@@ -97,21 +107,68 @@ public class FishingReworkTests
     }
 
     [Test]
-    public void Line_ReelsBackByItself_AndHoldingIsFaster()
+    public void Line_ReelsBackByItself_AndHoldingOnlyLifts()
     {
         var model = Model();
         bool missed = false;
         model.Missed += () => missed = true;
         model.TryCast();
         RunUntilInWater(model);
-        float slow = RunUntilReady(model, false);
+        float released = RunUntilReady(model, false);
         Assert.IsTrue(missed, "아무것도 안 걸리면 빈 바늘로 돌아옴");
-        Assert.Less(slow, 60f);
+        Assert.Less(released, 60f);
 
         model.TryCast();
         RunUntilInWater(model);
-        float fast = RunUntilReady(model, true);
-        Assert.Less(fast, slow * 0.7f, "누르고 있으면 더 빨리 감김");
+        float held = RunUntilReady(model, true);
+        Assert.AreEqual(released, held, 0.5f, "누르면 올라오기만 함 (앞으로 빨라지지 않음 — 깊이를 맞추다 지나치지 않게)");
+    }
+
+    [Test]
+    public void Cast_ToChosenDistance_IsRemembered_AndFullFollowsTheLine()
+    {
+        var model = Model(new FishingReworkSave());
+        Assert.AreEqual(12f, model.LastCastDistance, 0.01f, "처음은 끝까지");
+        Vector2? splash = null;
+        model.Splashed += at => splash = at;
+        Assert.IsTrue(model.TryCast(7f));
+        RunUntilInWater(model);
+        Assert.AreEqual(7f, splash.Value.x, 0.01f, "고른 거리로");
+        RunUntilReady(model, false);
+        Assert.AreEqual(7f, model.LastCastDistance, 0.01f, "탭은 지난 거리로");
+        Assert.IsTrue(model.TryCast(99f));
+        RunUntilInWater(model);
+        Assert.AreEqual(12f, splash.Value.x, 0.01f, "줄 길이를 넘지 않음");
+        RunUntilReady(model, false);
+
+        // 끝까지 던졌으면 줄을 강화한 뒤에도 끝까지
+        GiveRecipe(model, FishingUpgrade.Line);
+        Assert.IsTrue(model.TryUpgrade(FishingUpgrade.Line));
+        Assert.AreEqual(20f, model.LastCastDistance, 0.01f);
+        Assert.IsTrue(model.TryCast(1f));
+        RunUntilInWater(model);
+        Assert.AreEqual(FishingReworkModel.MinCastDistance, splash.Value.x, 0.01f, "너무 가까우면 가장 가까운 거리로");
+    }
+
+    [Test]
+    public void Reel_SlowsDownNearCatchableFish()
+    {
+        var model = Model();
+        model.TryCast();
+        RunUntilInWater(model);
+        float startX = model.Hook.x;
+        model.Tick(0.5f, false);
+        float freeSpeed = (startX - model.Hook.x) / 0.5f;
+        Assert.IsFalse(model.NearCatchableFish);
+
+        // 바늘 바로 앞(선착장 쪽)에 낚을 수 있는 물고기
+        model.PlaceFish(_small, new Vector2(model.Hook.x - 2f, model.Hook.y - 3f), 0.5f);
+        Assert.IsTrue(model.NearCatchableFish);
+        float x = model.Hook.x;
+        model.Tick(0.1f, false);
+        float nearSpeed = (x - model.Hook.x) / 0.1f;
+        Assert.LessOrEqual(nearSpeed, model.Config.NearFishReel + 0.01f, "물고기 근처는 천천히");
+        Assert.LessOrEqual(nearSpeed, freeSpeed + 0.01f);
     }
 
     private static float DeepestDepth(FishingReworkModel model, bool holding)
@@ -135,6 +192,7 @@ public class FishingReworkTests
         float held = DeepestDepth(model, true);
         Assert.Less(held, released, "누르면 줄이 당겨져 얕게 지나감");
 
+        GiveRecipe(model, FishingUpgrade.Sinker);
         Assert.IsTrue(model.TryUpgrade(FishingUpgrade.Sinker));
         float heavy = DeepestDepth(model, false);
         Assert.Greater(heavy, released, "찌가 무거우면 더 깊이");
@@ -159,6 +217,25 @@ public class FishingReworkTests
         Assert.AreEqual(1, model.CaughtCount(_small));
         Assert.AreEqual(1, model.TotalCaught);
         Assert.IsEmpty(model.Fish, "낚은 물고기는 바다에서 빠짐");
+    }
+
+    [Test]
+    public void Pin_IsPlacedByHand_StaysInLineReach_AndIsSaved()
+    {
+        var save = new FishingReworkSave();
+        var model = Model(save);
+        Assert.AreEqual(0f, model.PinDistance, "처음은 핀 없음");
+
+        model.SetPin(8f);
+        Assert.AreEqual(8f, model.PinDistance, 0.01f);
+        CatchOne(model, _small);
+        Assert.AreEqual(8f, model.PinDistance, 0.01f, "낚아도 핀은 그대로 (직접 꽂은 것만)");
+        Assert.AreEqual(8f, Model(save).PinDistance, 0.01f, "저장됨");
+
+        model.SetPin(99f);
+        Assert.AreEqual(model.CastDistance, model.PinDistance, 0.01f, "줄 길이를 넘지 않음");
+        model.ClearPin();
+        Assert.AreEqual(0f, model.PinDistance, "핀 빼기");
     }
 
     [Test]
@@ -241,6 +318,7 @@ public void Zones_StayUnderTheirCap_AndRefillOneAtATime()
         Assert.IsNotNull(heavy, "릴(1kg)보다 무거움");
         Assert.IsNull(result);
 
+        GiveRecipe(model, FishingUpgrade.Reel);
         Assert.IsTrue(model.TryUpgrade(FishingUpgrade.Reel));
         model.Tick(10f, false);
         CatchOne(model, _heavy);
@@ -249,16 +327,39 @@ public void Zones_StayUnderTheirCap_AndRefillOneAtATime()
     }
 
     [Test]
-    public void Upgrade_SpendsGold_AndStopsAtMax()
+    public void Upgrade_SpendsFishFromTheBag_NotGold_AndStopsAtMax()
     {
         var model = Model(new FishingReworkSave { gold = 150 });
+        var recipe = model.NextRecipe(FishingUpgrade.Line);
+        Assert.IsNotEmpty(recipe, "재료는 물고기");
+        Assert.AreSame(_small, recipe[0].Fish, "처음 강화는 지금 낚을 수 있는 물고기로 (무거운 물고기는 릴이 못 버팀)");
+        Assert.IsFalse(model.CanUpgrade(FishingUpgrade.Line), "재료가 없음");
+        Assert.IsFalse(model.TryUpgrade(FishingUpgrade.Line));
+
+        GiveRecipe(model, FishingUpgrade.Line);
+        model.Save.bag.Add(new FishingBagSave { fishId = _heavy.FishId, weight = 5f, price = 100 });
         Assert.IsTrue(model.TryUpgrade(FishingUpgrade.Line));
-        Assert.AreEqual(50, model.Gold);
+        Assert.AreEqual(150, model.Gold, "골드는 안 씀");
+        Assert.AreEqual(1, model.Bag.Count, "재료만 냄 (다른 물고기는 그대로)");
         Assert.AreEqual(20f, model.CastDistance);
         Assert.IsTrue(model.IsMax(FishingUpgrade.Line));
+        Assert.IsEmpty(model.NextRecipe(FishingUpgrade.Line), "끝이면 재료 없음");
         Assert.IsFalse(model.TryUpgrade(FishingUpgrade.Line), "끝");
-        Assert.IsFalse(model.TryUpgrade(FishingUpgrade.Reel), "골드 모자람");
-        Assert.AreEqual(50, model.Gold);
+    }
+
+    [Test]
+    public void CaughtMaterial_IsReportedWithProgress()
+    {
+        var model = Model();
+        var cost = model.NextRecipe(FishingUpgrade.Line)[0];
+        Assert.IsTrue(model.TryNeededFor(cost.Fish, out _, out int owned, out int needed));
+        Assert.AreEqual(0, owned);
+        Assert.GreaterOrEqual(needed, 1, "여러 강화에 쓰이면 그중 하나의 필요한 수");
+        CatchOne(model, cost.Fish);
+        Assert.IsTrue(model.TryNeededFor(cost.Fish, out _, out owned, out _));
+        Assert.AreEqual(1, owned, "낚은 물고기가 재료로 셈");
+        Assert.IsTrue(model.TryMissingFor(_heavy, out var missing), "무거운 물고기는 지금 못 낚음");
+        Assert.AreEqual(FishingUpgrade.Reel, missing, "릴을 먼저");
     }
 
     [Test]
@@ -299,7 +400,8 @@ public void Zones_StayUnderTheirCap_AndRefillOneAtATime()
     {
         var save = new FishingReworkSave { gold = 500 };
         var model = Model(save);
-        model.TryUpgrade(FishingUpgrade.Sinker);
+        GiveRecipe(model, FishingUpgrade.Sinker);
+        Assert.IsTrue(model.TryUpgrade(FishingUpgrade.Sinker));
         CatchOne(model, _small);
         var json = JsonUtility.ToJson(model.Save);
 
