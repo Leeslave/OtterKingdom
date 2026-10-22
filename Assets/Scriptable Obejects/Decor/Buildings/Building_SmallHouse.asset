@@ -31,8 +31,8 @@ MonoBehaviour:
   _coziness: 0
   _buildingId: bld_small_house
   _buildingName: "\uC791\uC740 \uC9D1"
-  _description: "\uC7A5\uB09C\uAC10\uC744 \uBCF4\uACE0 \uCC3E\uC544\uC628 \uD574\uB2EC\uC774
-    \uC0B4 \uC218 \uC788\uB294 \uC9D1\uC774\uC5D0\uC694."
+  _description: "\uC0C8\uB85C \uCC3E\uC544\uC628 \uD574\uB2EC\uC774 \uC0B4 \uC218
+    \uC788\uB294 \uC9D1\uC774\uC5D0\uC694."
   _icon: {fileID: 21300000, guid: f040e43efa04ee0b63e472b456a24b36, type: 3}
   _kind: 0
   _requiredLevel: 0
@@ -54,5 +54,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f040e43efa04ee0b63e472b456a24b36, type: 3}
   _bonuses: []
   _hostsFairyShop: 0
+  _productionItem: {fileID: 0}
+  _productionPerHour: 0
+  _productionTrait: 0
   _district: 2
+  _farmPart: 0
+  _instant: 0
   _widthFill: 0.9

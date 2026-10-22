@@ -96,9 +96,9 @@ public static partial class SettlementSetup
             "otter_toy_kkeujeok", P5WorkyardBuilt, null, new[] { "otter_toy_kkeujeok" }, P5RecorderSettled, 0, null,
             "끄적이가 마을 주민이 되었어요!",
             ("otter_toy_kkeujeok", "입주", "끄적끄적… 이 마을 이야기를 모두 적어 둘게요.")),
-        (44, "req_p5_archive", "기록관", "찾아온 해달들을 모두 적어 두는 기록관이 있으면\n소문을 듣고 더 많은 해달이 찾아와요.",
+        (44, "req_p5_archive", "기록관", "주민들의 부탁을 모두 적어 두는 기록관이 있으면\n생활 의뢰를 더 알차게 챙길 수 있어요.",
             "otter_toy_kkeujeok", P5RecorderSettled, "Building_Archive", null, P5ArchiveBuilt, 18, null,
-            "기록관이 생겼어요! 장난감 해달이 더 자주 찾아와요. (방문 간격 -20%)",
+            "기록관이 생겼어요! 주민들의 부탁을 챙겨 생활 의뢰 보상이 늘어나요. (생활 의뢰 보상 +10%)",
             ("otter_receptionist", "기록관", "끄적이랑 같이 정리하니 기록관이 가득 찼어요!")),
     };
 

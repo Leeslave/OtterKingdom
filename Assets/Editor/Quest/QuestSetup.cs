@@ -55,7 +55,7 @@ public static class QuestSetup
         ("M03_Neighbor", "main_lv3_neighbor", "새 이웃의 집", "게시판 부탁: 새 이웃의 집 짓기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_House_Red", QuestKind.Main, 3, "Main_Mine_1", 100, 0f, "req_neighbor_house"),
         // Lv.4 → 5 요정이 왔어요 (320) — 밭은 Lv.10 농업 지역으로 (Docs/밭해금_재배치_기획.md). 초반 돈은 광산 · 장난감
         ("M04_Fairy", "main_lv4_fairy", "요정이 왔어요", "광장에 찾아온 요정 만나기", QuestGoalType.Milestone, 1, "", 50, "npc:Fairy", QuestKind.Main, 4, "M03_Neighbor", 60, 0f, "fairy_arrived"),
-        ("M10_Decor", "main_lv10_decor", "광장 놀이터", "장난감 2개 놓기", QuestGoalType.PlaceDecor, 2, "", 300, "item:Decor/축구공", QuestKind.Main, 4, "M04_Fairy", 80, 0f, ""),
+        ("M10_Decor", "main_lv10_decor", "광장 놀이터", "가구 2개 놓기", QuestGoalType.PlaceDecor, 2, "", 300, "item:Decor/그루터기 의자", QuestKind.Main, 4, "M04_Fairy", 80, 0f, ""),
         ("M04_Mine", "main_lv4_mine", "광석 모으기", "광산에서 광석 20개 캐기", QuestGoalType.Mine, 20, "Ore", 80, "item:Mining/돌", QuestKind.Main, 4, "M10_Decor", 80, 0f, ""),
         ("M04_Sales", "main_lv4_sales", "첫 장사", "판매로 300골드 벌기", QuestGoalType.EarnFromSales, 300, "", 50, "gold", QuestKind.Main, 4, "M04_Mine", 100, 0f, ""),
         // Lv.5 → 6 부탁이 많아졌어요 (450): 곡괭이 강화 · 마을회관 → 게시판 해달(또박이) 배치 → (행정 해달 승격 · 첫 구역) →
@@ -137,7 +137,7 @@ public static class QuestSetup
         ("M13_Mine", "main_lv13_mine", "광맥을 찾아서", "광산에서 광석 400개 캐기", QuestGoalType.Mine, 400, "Ore", 1500, "item:Mining/다이아몬드", QuestKind.Challenge, 13, "M11_Mine", 700, 0f, ""),
         ("M09_Harvest", "main_lv9_harvest", "대풍년", "작물 300개 수확하기", QuestGoalType.Harvest, 300, "Crops", 300, "item:Farming/당근", QuestKind.Challenge, 12, "", 400, 0f, ""),
         ("M14_Harvest", "main_lv14_harvest", "전설의 농부", "작물 1,500개 수확하기", QuestGoalType.Harvest, 1500, "Crops", 2000, "item:Farming/고구마", QuestKind.Challenge, 14, "M09_Harvest", 1700, 0f, ""),
-        ("M13_Decor", "main_lv13_decor", "해달 놀이공원", "장난감 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 800, "item:Decor/퍼즐", QuestKind.Challenge, 13, "", 300, 0f, ""),
+        ("M13_Decor", "main_lv13_decor", "해달 놀이공원", "가구 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 800, "item:Decor/통나무 의자", QuestKind.Challenge, 13, "", 300, 0f, ""),
         // Lv.14 → 15 길을 놓아요 (3,900): 흙길 → 설비 · 수확 → 데굴이 입주 → 채석 작업소
         ("M14_Path", "main_lv14_path", "밭으로 가는 길", "밭과 수확 상자 사이에 흙길 놓기", QuestGoalType.Milestone, 1, "", 500, "place:ICON_Place_Farm", QuestKind.Main, 14, "M13_Granary", 800, 0f, SettlementManager.FarmPathPlacedDevelopment),
         ("M14_Upgrade", "main_lv14_upgrade", "완벽한 설비", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 1500, "place:ICON_Place_Farm", QuestKind.Main, 14, "M14_Path", 900, 0f, ""),
@@ -156,7 +156,7 @@ public static class QuestSetup
         // Lv.16 → 17 바다 마을 (5,600): 다음 레벨은 건설소 (해달의 부탁 42)
         ("M16_Builder", "main_lv16_builder", "망치 소리", "게시판 부탁: 콩콩이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "otter:ICON_Otter_Cast_Cocoa", QuestKind.Main, 16, "M15_Fishery", 1200, 0f, "req_p5_builder_home"),
         ("M16_Catch", "main_lv16_catch", "그물 가득", "물고기 100마리 낚기", QuestGoalType.Catch, 100, "Fish", 2500, "item:Fishing/고등어", QuestKind.Main, 16, "M16_Builder", 2000, 0f, ""),
-        ("M16_Decor", "main_lv16_decor", "아늑한 광장", "가구나 장난감 4개 놓기", QuestGoalType.PlaceDecor, 4, "", 1500, "item:Decor/나무 벤치", QuestKind.Main, 16, "M16_Catch", 1000, 0f, ""),
+        ("M16_Decor", "main_lv16_decor", "아늑한 광장", "가구 4개 놓기", QuestGoalType.PlaceDecor, 4, "", 1500, "item:Decor/나무 벤치", QuestKind.Main, 16, "M16_Catch", 1000, 0f, ""),
         ("M16_Workyard", "main_lv16_workyard", "공사를 빠르게", "게시판 부탁: 건설소 짓기", QuestGoalType.Milestone, 1, "", 2000, "settle:ICON_GuildOffice", QuestKind.Main, 16, "M16_Decor", 1400, 0f, "req_p5_workyard"),
         // Lv.17 → 18 이야기가 모이는 마을 (6,600): 다음 레벨은 기록관 (해달의 부탁 44)
         ("M17_Recorder", "main_lv17_recorder", "밤의 메모쟁이", "게시판 부탁: 끄적이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "otter:ICON_Otter_Cast_Ink", QuestKind.Main, 17, "M16_Workyard", 1200, 0f, "req_p5_recorder_home"),
@@ -201,7 +201,7 @@ public static class QuestSetup
         ("M18_Catch", "main_lv18_catch", "바다의 왕", "물고기 250마리 낚기", QuestGoalType.Catch, 250, "Fish", 3000, "item:Fishing/고등어", QuestKind.Challenge, 18, "", 2000, 0f, ""),
         ("M18_Sales", "main_lv18_sales", "해달 왕국의 금고", "판매로 200,000골드 벌기", QuestGoalType.EarnFromSales, 200000, "", 4000, "gold", QuestKind.Challenge, 18, "M14_Sales", 2000, 0f, ""),
         ("M19_Sales", "main_lv19_sales", "왕국의 전설", "판매로 300,000골드 벌기", QuestGoalType.EarnFromSales, 300000, "", 5000, "gold", QuestKind.Challenge, 19, "M18_Sales", 2400, 0f, ""),
-        ("M19_Decor", "main_lv19_decor", "모두의 광장", "가구나 장난감 8개 놓기", QuestGoalType.PlaceDecor, 8, "", 3000, "item:Decor/피크닉 매트", QuestKind.Challenge, 19, "", 2000, 0f, ""),
+        ("M19_Decor", "main_lv19_decor", "모두의 광장", "가구 8개 놓기", QuestGoalType.PlaceDecor, 8, "", 3000, "item:Decor/피크닉 매트", QuestKind.Challenge, 19, "", 2000, 0f, ""),
         ("M19_Mine", "main_lv19_mine", "보물 광산", "광산에서 광석 1,000개 캐기", QuestGoalType.Mine, 1000, "Ore", 4000, "item:Mining/다이아몬드", QuestKind.Challenge, 19, "M13_Mine", 2300, 0f, ""),
 
         // 도전: 예전 누적 체인 (골드 + 예전 경험치). 첫 단계가 메인으로 옮겨 간 체인은 그 메인을 앞 단계로 둔다
@@ -234,9 +234,9 @@ public static class QuestSetup
         ("Main_Upgrade_4", "main_upgrade_4", "완벽한 설비", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 800, "place:ICON_Place_FishingSpot", QuestKind.Challenge, 10, "Main_Upgrade_3", 400, 0f, ""),
         ("Main_Shop_1", "main_shop_1", "요정과 첫 거래", "요정 상점에서 1번 사기", QuestGoalType.ShopPurchase, 1, "", 50, "npc:Fairy", QuestKind.Challenge, 2, "", 60, 0f, ""),
         ("Main_Shop_2", "main_shop_2", "요정 상점 단골", "요정 상점에서 5번 사기", QuestGoalType.ShopPurchase, 5, "", 300, "npc:Fairy", QuestKind.Challenge, 6, "Main_Shop_1", 160, 0f, ""),
-        ("Main_Decor_1", "main_decor_1", "광장 꾸미기", "장난감 1개 놓기", QuestGoalType.PlaceDecor, 1, "", 100, "item:Decor/축구공", QuestKind.Challenge, 3, "", 80, 0f, ""),
-        ("Main_Decor_2", "main_decor_2", "놀이터 만들기", "장난감 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 200, "item:Decor/퍼즐", QuestKind.Challenge, 5, "Main_Decor_1", 140, 0f, ""),
-        ("Main_Decor_3", "main_decor_3", "해달 놀이공원", "장난감 6개 놓기", QuestGoalType.PlaceDecor, 6, "", 500, "item:Decor/축구공", QuestKind.Challenge, 9, "Main_Decor_2", 300, 0f, ""),
+        ("Main_Decor_1", "main_decor_1", "광장 꾸미기", "가구 1개 놓기", QuestGoalType.PlaceDecor, 1, "", 100, "item:Decor/그루터기 의자", QuestKind.Challenge, 3, "", 80, 0f, ""),
+        ("Main_Decor_2", "main_decor_2", "놀이터 만들기", "가구 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 200, "item:Decor/통나무 의자", QuestKind.Challenge, 5, "Main_Decor_1", 140, 0f, ""),
+        ("Main_Decor_3", "main_decor_3", "해달 놀이공원", "가구 6개 놓기", QuestGoalType.PlaceDecor, 6, "", 500, "item:Decor/그루터기 의자", QuestKind.Challenge, 9, "Main_Decor_2", 300, 0f, ""),
         ("Main_Collection_1", "main_collection_1", "도감 시작", "도감에 새로 3칸 등록하기", QuestGoalType.CollectionRegister, 3, "", 100, "nav:ICON_Nav_Collection", QuestKind.Challenge, 2, "", 80, 0f, ""),
         ("Main_Collection_2", "main_collection_2", "수집가", "도감에 새로 6칸 등록하기", QuestGoalType.CollectionRegister, 6, "", 300, "nav:ICON_Nav_Collection", QuestKind.Challenge, 5, "Main_Collection_1", 180, 0f, ""),
         ("Main_Otter_1", "main_otter_1", "처음 뵙겠습니다!", "해달 1마리 만나기", QuestGoalType.MeetOtter, 1, "", 200, "otter:ICON_Otter_Cast_Fisher", QuestKind.Challenge, 3, "", 120, 0f, ""),
@@ -246,7 +246,7 @@ public static class QuestSetup
         ("C05_Gather", "challenge_lv5_gather", "탐험 준비물", "광장에서 재료 15개 줍기", QuestGoalType.Gather, 15, "", 150, "item:Mining/목재", QuestKind.Challenge, 5, "", 40, 0f, ""),
         ("C06_Sales", "challenge_lv6_sales", "개간 자금 모으기", "판매로 500골드 벌기", QuestGoalType.EarnFromSales, 500, "", 250, "gold", QuestKind.Challenge, 6, "", 50, 0f, ""),
         ("C07_Gather", "challenge_lv7_gather", "마을의 자재 담당", "광장에서 재료 30개 줍기", QuestGoalType.Gather, 30, "", 250, "item:Mining/목재", QuestKind.Challenge, 7, "C05_Gather", 60, 0f, ""),
-        ("C08_Decor", "challenge_lv8_decor", "새 땅의 놀이터", "장난감 1개 놓기", QuestGoalType.PlaceDecor, 1, "", 300, "item:Decor/축구공", QuestKind.Challenge, 8, "", 70, 0f, ""),
+        ("C08_Decor", "challenge_lv8_decor", "새 땅의 놀이터", "가구 1개 놓기", QuestGoalType.PlaceDecor, 1, "", 300, "item:Decor/그루터기 의자", QuestKind.Challenge, 8, "", 70, 0f, ""),
         ("C09_Sales", "challenge_lv9_sales", "이웃 맞이 준비금", "판매로 1500골드 벌기", QuestGoalType.EarnFromSales, 1500, "", 400, "gold", QuestKind.Challenge, 9, "C06_Sales", 80, 0f, ""),
         ("C10_Harvest", "challenge_lv10_harvest", "텃밭의 첫 한 바구니", "작물 20개 수확하기", QuestGoalType.Harvest, 20, "Crops", 400, "item:Farming/당근", QuestKind.Challenge, 10, "", 90, 0f, ""),
         ("C05_MazeRocks", "challenge_maze_rocks_5", "갱도 길잡이", "오래된 갱도에서 돌 누적 5개 부수기", QuestGoalType.Milestone, 1, "", 200, "place:ICON_Place_Mine", QuestKind.Challenge, 5, "", 40, 0f, "maze_rocks_5"),
@@ -327,10 +327,10 @@ public static class QuestSetup
             case 0: { int g = 600 + 60 * n; return ("Harvest", title, $"작물 {g:N0}개 수확하기", QuestGoalType.Harvest, g, "Crops", "item:Farming/딸기", exp); }
             case 1: { int g = 30 + 3 * n; return ("GoldenCarrot", title, $"황금 당근 {g:N0}개 수확하기", QuestGoalType.Harvest, g, "only:Farming/황금 당근", "item:Farming/황금 당근", exp); }
             case 2: { int g = 120 + 12 * n; return ("Catch", title, $"물고기 {g:N0}마리 낚기", QuestGoalType.Catch, g, "Fish", "item:Fishing/고등어", exp); }
-            case 3: return ("Decor", title, "가구나 장난감 4개 놓기", QuestGoalType.PlaceDecor, 4, "", "item:Decor/나무 벤치", exp);
+            case 3: return ("Decor", title, "가구 4개 놓기", QuestGoalType.PlaceDecor, 4, "", "item:Decor/나무 벤치", exp);
             case 4: { int g = 300 + 30 * n; return ("Mine", title, $"광산에서 광석 {g:N0}개 캐기", QuestGoalType.Mine, g, "Ore", "item:Mining/다이아몬드", exp); }
             case 5: { int g = 40 + 2 * n; return ("Gather", title, $"광장에서 재료 {g:N0}개 줍기", QuestGoalType.Gather, g, "", "item:Mining/목재", exp); }
-            case 6: return ("Decor", title, "가구나 장난감 6개 놓기", QuestGoalType.PlaceDecor, 6, "", "item:Decor/피크닉 매트", exp);
+            case 6: return ("Decor", title, "가구 6개 놓기", QuestGoalType.PlaceDecor, 6, "", "item:Decor/피크닉 매트", exp);
             default: { int g = 30 + 3 * n; return ("GoldenPotato", title, $"황금 감자 {g:N0}개 수확하기", QuestGoalType.Harvest, g, "only:Farming/황금 감자", "item:Farming/황금 감자", exp); }
         }
     }

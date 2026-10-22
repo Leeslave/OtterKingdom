@@ -46,29 +46,7 @@ public static class GachaSetup
     private static readonly Color Body = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
     private static readonly Color DayWater = new Color32(0x6E, 0xC8, 0xD6, 0xFF);
 
-    // 장난감: (에셋, 아이템 ID, 이름, 설명, 아이콘, 등급(0 흔함 · 1 레어 · 2 에픽), 놀이 반응, 동시 인원, 칸)
-    // 상시 = 흔함 6(축구공 포함) · 레어 4(퍼즐 포함) · 에픽 2, 픽업 = 벚꽃 바람개비(에픽) · 꽃잎 연 · 나비 모빌(레어)
-    private static readonly (string asset, string id, string name, string description, string icon, int tier, DecorPlayStyle style, int players, int size)[] Toys =
-    {
-        ("BeachBall", "toy_beachball", "비치볼", "통통 튀는 알록달록 공이에요. 해달들이 머리로 받으며 놀아요.", "ICON_Toy_BeachBall", 0, DecorPlayStyle.Bounce, 2, 1),
-        ("RubberDuck", "toy_rubberduck", "고무 오리", "물에 띄우면 둥실둥실, 누르면 꽉꽉 소리가 나요.", "ICON_Toy_RubberDuck", 0, DecorPlayStyle.Wiggle, 1, 1),
-        ("SandBucket", "toy_sandbucket", "모래 양동이", "모래성을 쌓을 때 꼭 필요한 양동이와 삽이에요.", "ICON_Toy_SandBucket", 0, DecorPlayStyle.Wiggle, 2, 1),
-        ("Yoyo", "toy_yoyo", "요요", "말랑한 끈을 따라 오르락내리락, 손재주 자랑에 딱이에요.", "ICON_Toy_Yoyo", 0, DecorPlayStyle.Bounce, 1, 1),
-        ("PaperBoat", "toy_paperboat", "종이배", "작은 물웅덩이만 있으면 어디든 떠나는 종이배예요.", "ICON_Toy_PaperBoat", 0, DecorPlayStyle.Wiggle, 1, 1),
-        ("Drum", "toy_drum", "작은 북", "둥둥 두드리면 광장이 금세 흥겨워져요.", "ICON_Toy_Drum", 1, DecorPlayStyle.Bounce, 1, 1),
-        ("Bubbles", "toy_bubbles", "비눗방울", "후 불면 무지갯빛 방울이 하늘로 날아올라요.", "ICON_Toy_Bubbles", 1, DecorPlayStyle.Wiggle, 2, 1),
-        ("Kite", "toy_kite", "다이아몬드 연", "바람 좋은 날, 리본 꼬리를 흔들며 높이 날아요.", "ICON_Toy_Kite", 1, DecorPlayStyle.Wiggle, 1, 1),
-        ("Carousel", "toy_carousel", "회전목마", "빙글빙글 도는 작은 회전목마예요. 해달 셋이 함께 탈 수 있어요.", "ICON_Toy_Carousel", 2, DecorPlayStyle.Spin, 3, 2),
-        ("HotAirBalloon", "toy_hotairballoon", "미니 열기구", "작지만 진짜처럼 둥실 떠오르는 열기구예요.", "ICON_Toy_HotAirBalloon", 2, DecorPlayStyle.Wiggle, 2, 2),
-        ("CherryPinwheel", "toy_cherrypinwheel", "벚꽃 바람개비", "봄바람에 빙글빙글 도는 벚꽃 바람개비. 살랑이가 가장 좋아해요.", "ICON_Toy_CherryPinwheel", 2, DecorPlayStyle.Spin, 2, 1),
-        ("PetalKite", "toy_petalkite", "꽃잎 연", "벚꽃잎 모양으로 하늘하늘 나는 연이에요.", "ICON_Toy_PetalKite", 1, DecorPlayStyle.Wiggle, 1, 1),
-        ("ButterflyMobile", "toy_butterflymobile", "나비 모빌", "바람이 불면 나비들이 춤을 춰요.", "ICON_Toy_ButterflyMobile", 1, DecorPlayStyle.Spin, 1, 1),
-    };
-
-    private static readonly string[] StandardPool =
-        { "축구공", "BeachBall", "RubberDuck", "SandBucket", "Yoyo", "PaperBoat", "퍼즐", "Drum", "Bubbles", "Kite", "Carousel", "HotAirBalloon" };
-
-    private static readonly string[] PickupFeatured = { "CherryPinwheel", "PetalKite", "ButterflyMobile" };
+    // 장난감 · 장난감 배너 목록은 가챠 개편 4단계에서 없앰 (뽑기 보상은 GachaRewardSetup)
 
     // 골드 배너 = 상시 장난감 중 흔함 · 레어 + 가구 (PlazaLifeSetup이 만든 아이템, 흔함). 에픽은 조개 뽑기에만
     private static readonly string[] GoldFurniture = { "작은 덤불", "그루터기 의자", "통나무 의자", "나무 벤치", "가로등", "피크닉 매트" };
@@ -100,11 +78,11 @@ public static class GachaSetup
 
         var pickupTicket = CreateCurrency("TicketPickup", "별빛 조개권", "픽업 뽑기를 한 번 할 수 있어요.");
         var standardTicket = CreateCurrency("TicketStandard", "보물 조개권", "상시 뽑기를 한 번 할 수 있어요.");
-        CreateCurrency("Shard", "반짝 조각", "이미 있는 장난감이 나오면 덤으로 받아요. 교환소에서 장난감과 바꿔요.");
+        CreateCurrency("Shard", "반짝 조각", ShardDescription);
 
-        var toys = CreateToys();
-        var sallang = CreateLimitedOtter(toys["CherryPinwheel"]);
-        CreateBanners(toys, sallang, pickupTicket, standardTicket);
+        // 장난감은 가챠 개편 4단계에서 없앰: 뽑기 보상은 GachaRewardSetup (특수 해달 조각 · 장신구 · 재료)
+        var sallang = CreateLimitedOtter();
+        CreateBanners(sallang, pickupTicket, standardTicket);
         AssetDatabase.SaveAssets();
     }
 
@@ -141,71 +119,10 @@ public static class GachaSetup
         return currency;
     }
 
-    private static Dictionary<string, ItemDefinition> CreateToys()
-    {
-        var category = AssetDatabase.LoadAssetAtPath<ItemCategory>(ToyCategoryPath);
-        var rarities = new[]
-        {
-            AssetDatabase.LoadAssetAtPath<ItemRarity>($"{RarityFolder}/Common.asset"),
-            AssetDatabase.LoadAssetAtPath<ItemRarity>($"{RarityFolder}/Rare.asset"),
-            AssetDatabase.LoadAssetAtPath<ItemRarity>($"{RarityFolder}/Epic.asset"),
-        };
-
-        var items = new Dictionary<string, ItemDefinition>();
-        var decors = new List<DecorDefinition>();
-        foreach (var t in Toys)
-        {
-            var (item, itemIsNew) = LoadOrCreate<ItemDefinition>($"{ItemFolder}/{t.name}.asset");
-            var itemSo = new SerializedObject(item);
-            if (itemIsNew)
-            {
-                itemSo.FindProperty("_itemId").stringValue = t.id;
-                itemSo.FindProperty("_displayName").stringValue = t.name;
-                itemSo.FindProperty("_description").stringValue = t.description;
-                itemSo.FindProperty("_category").objectReferenceValue = category;
-                itemSo.FindProperty("_rarity").objectReferenceValue = rarities[t.tier];
-                itemSo.FindProperty("_isSellable").boolValue = false; // 광장에 놓인 채로 팔리는 일이 없게
-                itemSo.FindProperty("_maxStack").intValue = 99;
-            }
-            FillIfEmpty(itemSo, "_icon", ImportSprite(ToyArtFolder, t.icon));
-            itemSo.ApplyModifiedPropertiesWithoutUndo();
-            items[t.asset] = item;
-
-            var (decor, decorIsNew) = LoadOrCreate<DecorDefinition>($"{DecorFolder}/Decor_{t.asset}.asset");
-            if (decorIsNew)
-            {
-                var so = new SerializedObject(decor);
-                so.FindProperty("_item").objectReferenceValue = item;
-                so.FindProperty("_footprint").vector2IntValue = new Vector2Int(t.size, t.size);
-                so.FindProperty("_playStyle").enumValueIndex = (int)t.style;
-                so.FindProperty("_maxPlayers").intValue = t.players;
-                so.ApplyModifiedPropertiesWithoutUndo();
-            }
-            decors.Add(decor);
-        }
-
-        // 세이브 복원이 찾도록 ItemDatabase에, 꾸미기 보관함에 보이도록 DecorCatalog에 (이미 있으면 그대로)
-        var database = AssetDatabase.LoadAssetAtPath<ItemDatabase>(ItemDatabasePath);
-        if (database != null)
-        {
-            var so = new SerializedObject(database);
-            foreach (var item in items.Values)
-                AddUnique(so.FindProperty("_items"), item);
-            so.ApplyModifiedPropertiesWithoutUndo();
-        }
-        var catalog = AssetDatabase.LoadAssetAtPath<DecorCatalog>(DecorSetup.CatalogPath);
-        if (catalog != null)
-        {
-            var so = new SerializedObject(catalog);
-            foreach (var decor in decors)
-                AddUnique(so.FindProperty("_decors"), decor);
-            so.ApplyModifiedPropertiesWithoutUndo();
-        }
-        return items;
-    }
-
     // 한정 해달 살랑이: 벚꽃 바람개비가 광장에 있을 때만 찾아옴 (그림은 얼굴만 새것, 광장 모습은 기존 해달 + 분홍 색)
-    private static SettlementOtterDefinition CreateLimitedOtter(ItemDefinition pinwheel)
+    internal const string ShardDescription = "5성까지 쓰고 남는 해달 조각 · 최대 강화 장신구가 바뀌어요. 교환소에서 특수 해달 조각과 바꿔요.";
+
+    private static SettlementOtterDefinition CreateLimitedOtter()
     {
         var (entry, _) = LoadOrCreate<GuestbookEntryDefinition>(SallangEntryPath);
         var (otter, isNew) = LoadOrCreate<SettlementOtterDefinition>(SallangOtterPath);
@@ -237,7 +154,6 @@ public static class GachaSetup
                 lines.GetArrayElementAtIndex(i).stringValue = texts[i];
         }
         FillIfEmpty(so, "_portrait", ImportSprite(OtterFolder, "ICON_Otter_Cast_Blossom"));
-        FillIfEmpty(so, "_favoriteToy", pinwheel);
         so.ApplyModifiedPropertiesWithoutUndo();
         return otter;
     }
@@ -275,14 +191,9 @@ public static class GachaSetup
             AddUnique(configSo.FindProperty("_guestbookEntries"), entry);
     }
 
-    private static void CreateBanners(Dictionary<string, ItemDefinition> toys, SettlementOtterDefinition sallang,
-        Currency pickupTicket, Currency standardTicket)
+    private static void CreateBanners(SettlementOtterDefinition sallang, Currency pickupTicket, Currency standardTicket)
     {
         var gem = AssetDatabase.LoadAssetAtPath<Currency>(GemPath);
-        var pool = StandardPool.Select(key => toys.TryGetValue(key, out var item) ? item
-                : AssetDatabase.LoadAssetAtPath<ItemDefinition>($"{ItemFolder}/{key}.asset"))
-            .Where(item => item != null).ToList();
-        var featured = PickupFeatured.Select(key => toys[key]).ToList();
 
         var (standard, standardIsNew) = LoadOrCreate<GachaBannerDefinition>(StandardBannerPath);
         var so = new SerializedObject(standard);
@@ -295,7 +206,6 @@ public static class GachaSetup
             so.FindProperty("_subtitle").stringValue = "늘 열려 있는 보물 조개. 하루 한 번은 골드로!";
             so.FindProperty("_sortOrder").intValue = 1;
             so.FindProperty("_themeColor").colorValue = new Color(1f, 0.86f, 0.5f);
-            SetList(so.FindProperty("_pool"), pool);
             so.FindProperty("_epicRate").floatValue = 0.025f;
             so.FindProperty("_rareRate").floatValue = 0.15f;
             so.FindProperty("_epicPity").intValue = 80;
@@ -325,8 +235,6 @@ public static class GachaSetup
             so.FindProperty("_startDate").stringValue = "2026-10-07";
             so.FindProperty("_endDate").stringValue = "2026-10-20";
             so.FindProperty("_themeColor").colorValue = new Color(1f, 0.78f, 0.86f);
-            SetList(so.FindProperty("_pool"), pool);
-            SetList(so.FindProperty("_featured"), featured);
             so.FindProperty("_epicRate").floatValue = 0.03f;
             so.FindProperty("_rareRate").floatValue = 0.15f;
             so.FindProperty("_featuredShare").floatValue = 0.5f;
@@ -342,8 +250,6 @@ public static class GachaSetup
         FillIfEmpty(so, "_gem", gem);
         FillIfEmpty(so, "_ticket", pickupTicket);
         so.ApplyModifiedPropertiesWithoutUndo();
-
-        CreateGoldBanner(pool);
     }
 
     /// <summary>

@@ -506,6 +506,8 @@ public partial class SettlementManager
         });
         if (taken.Count > 0)
         {
+            // 영차가 찾아오는 조건 (StoryArrivalRules)
+            Settlement.UnlockDevelopment(StoryArrivalRules.FarmCrateCollectedDevelopment);
             OnCrateCollected?.Invoke(crateId, taken);
             OnFarmChanged?.Invoke();
             SaveRequested?.Invoke();

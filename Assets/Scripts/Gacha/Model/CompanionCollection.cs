@@ -30,9 +30,9 @@ public sealed class CompanionCollection
 {
     public const int MaxSlots = 3;
 
-    /// <summary>별 단계마다 드는 조각 (0 → 1 = 해금, …, 4 → 5): 레어 · 에픽</summary>
-    public static readonly int[] RareStarCosts = { 20, 20, 30, 50, 80 };
-    public static readonly int[] EpicStarCosts = { 30, 30, 50, 80, 120 };
+    /// <summary>별 단계마다 드는 조각 (0 → 1 = 해금, …, 4 → 5): 레어 · 에픽 (5단계 밸런스: 특정 레어 해금 약 60회 · 에픽 약 180회 · 레어 5성 약 700회)</summary>
+    public static readonly int[] RareStarCosts = { 10, 15, 20, 30, 45 };
+    public static readonly int[] EpicStarCosts = { 12, 18, 25, 40, 65 };
 
     /// <summary>5성까지 쓰고 남는 조각 하나가 바뀌는 반짝 조각 (레어 · 에픽)</summary>
     public const int RareOverflowShards = 1;

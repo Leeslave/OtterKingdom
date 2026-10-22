@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv32_decor
   _title: "\uD30C\uB3C4 \uC18C\uB9AC \uAD11\uC7A5"
-  _description: "\uAC00\uAD6C\uB098 \uC7A5\uB09C\uAC10 4\uAC1C \uB193\uAE30"
+  _description: "\uAC00\uAD6C 4\uAC1C \uB193\uAE30"
   _sortOrder: 214
   _kind: 0
   _requiredLevel: 32

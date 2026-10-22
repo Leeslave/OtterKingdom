@@ -750,11 +750,13 @@ public partial class SettlementManager
     {
         if (!Settlement.RemoveLifeRequest(record.Serial, true))
             return;
-        int gold = template.Gold;
+        // 기록관 · 주거 구역: 생활 의뢰 보상 +%
+        int bonus = KingdomBonus.Percent(KingdomBonusKind.LifeReward);
+        int gold = template.Gold * (100 + bonus) / 100;
         if (gold > 0 && CurrencyManager.Instance != null && _config.GoldCurrency != null)
             CurrencyManager.Instance.ProcessTransaction(new CurrencyTransaction(_config.GoldCurrency, gold, TransactionSource.RequestReward));
         var profile = ProfileManager.Instance;
-        int xp = profile != null ? LifeRequestRules.XpFor(template, profile.Level, profile.LevelTable) : 0;
+        int xp = profile != null ? LifeRequestRules.XpFor(template, profile.Level, profile.LevelTable) * (100 + bonus) / 100 : 0;
         GrantXp(xp);
         EnsureLifeRequests();
         OnLifeRequestCompleted?.Invoke(template, gold, xp);

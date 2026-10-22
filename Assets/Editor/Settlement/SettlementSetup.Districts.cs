@@ -59,7 +59,7 @@ public static partial class SettlementSetup
     // 구역 보너스 (임시): 용도, 효과, 정하기만 해도 %, 맞는 건물마다 %, 최대 %
     private static readonly DistrictBonusEntry[] DistrictBonusTable =
     {
-        new DistrictBonusEntry(DistrictType.Residential, KingdomBonusKind.VisitSpeed, 0, 5, 20),
+        new DistrictBonusEntry(DistrictType.Residential, KingdomBonusKind.LifeReward, 0, 5, 20),
         new DistrictBonusEntry(DistrictType.Commercial, KingdomBonusKind.SellPrice, 0, 5, 10),
         new DistrictBonusEntry(DistrictType.Production, KingdomBonusKind.ProductionSpeed, 0, 5, 20),
         new DistrictBonusEntry(DistrictType.Agricultural, KingdomBonusKind.GrowSpeed, 10, 0, 10),

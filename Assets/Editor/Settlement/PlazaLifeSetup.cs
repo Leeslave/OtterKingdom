@@ -117,13 +117,13 @@ public static class PlazaLifeSetup
         ("Entry_OtterToyJjalrang", "otter_toy_jjalrang", OtterArtFolder, "ICON_Otter_Toy_Jjalrang", "동전을 좋아하는 해달",
             "짤랑짤랑 동전 소리를 들으면 기분이 좋아지는 장사 해달이에요.", "요정 상점", ""),
         ("Entry_OtterToyJaejal", "otter_toy_jaejal", OtterArtFolder, "ICON_Otter_Toy_Jaejal", "수다쟁이 해달",
-            "식탁에 둘러앉아 이야기하는 걸 제일 좋아하는 장사 해달이에요.", "공동 식탁", ""),
+            "새 가게 소문을 듣고 찾아온, 이야기하는 걸 제일 좋아하는 장사 해달이에요.", "공동 식탁", ""),
         ("Entry_OtterToyKongkong", "otter_toy_kongkong", OtterArtFolder, "ICON_Otter_Toy_Kongkong", "망치 소리 해달",
             "해가 떠 있는 동안 콩콩 망치질을 하는 건설 해달이에요.", "공사 현장", ""),
         ("Entry_OtterToyKkomkkom", "otter_toy_kkomkkom", OtterArtFolder, "ICON_Otter_Toy_Kkomkkom", "꼼꼼한 손재주 해달",
-            "아늑하게 꾸민 광장을 보면 찾아오는 손재주 해달이에요.", "예쁜 장난감", ""),
+            "스프링클러 같은 설비를 꼼꼼히 들여다보는 손재주 해달이에요.", "튼튼한 설비", ""),
         ("Entry_OtterToyDuribeon", "otter_toy_duribeon", OtterArtFolder, "ICON_Otter_Toy_Duribeon", "길찾기 해달",
-            "가로등 불빛을 따라 두리번두리번 찾아오는 탐험 해달이에요.", "가로등", ""),
+            "넓어진 땅을 구경하러 두리번두리번 찾아온 탐험 해달이에요.", "새 땅", ""),
         ("Entry_OtterToyKkeujeok", "otter_toy_kkeujeok", OtterArtFolder, "ICON_Otter_Toy_Kkeujeok", "밤의 메모쟁이 해달",
             "모두 잠든 밤에 찾아와 이것저것 적어 두는 기록 해달이에요.", "게시판", ""),
         ("Entry_OtterToySallang", "otter_toy_sallang", OtterArtFolder, "ICON_Otter_Sallang", "벚꽃 바람을 타고 온 해달",
@@ -350,6 +350,23 @@ public static class PlazaLifeSetup
         }
     }
 
+    /// <summary>이미 있는 도감 해달 항목의 글(설명 · 좋아하는 것 · 힌트)만 표로 맞춤 (그림은 그대로 — 가챠 개편 4단계 장난감 문구 정리)</summary>
+    internal static void RefreshEntryTexts()
+    {
+        var otters = LoadOtters();
+        foreach (var e in Entries)
+        {
+            var entry = AssetDatabase.LoadAssetAtPath<CollectionEntry>($"{EntryFolder}/{e.asset}.asset");
+            if (entry == null || !otters.TryGetValue(e.otter, out var otter))
+                continue;
+            var so = new SerializedObject(entry);
+            so.FindProperty("_description").stringValue = e.description;
+            so.FindProperty("_extraValue").stringValue = e.extra;
+            so.FindProperty("_hint").stringValue = string.IsNullOrEmpty(e.hint) ? ArrivalHint(otter) : e.hint;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+    }
+
     // 도감 해달 탭 항목 + 해달 연결 + 도감 목록
     private static void ApplyOtterEntries()
     {
@@ -378,7 +395,7 @@ public static class PlazaLifeSetup
             so.FindProperty("_tagline").stringValue = e.tagline;
             so.FindProperty("_description").stringValue = e.description;
             so.FindProperty("_extraValue").stringValue = e.extra;
-            so.FindProperty("_hint").stringValue = string.IsNullOrEmpty(e.hint) ? ToyHint(otter) : e.hint;
+            so.FindProperty("_hint").stringValue = string.IsNullOrEmpty(e.hint) ? ArrivalHint(otter) : e.hint;
             so.ApplyModifiedPropertiesWithoutUndo();
             AddUnique(dbSo.FindProperty("_entries"), entry);
 
@@ -389,17 +406,25 @@ public static class PlazaLifeSetup
         dbSo.ApplyModifiedPropertiesWithoutUndo();
     }
 
-    // 장난감 해달 힌트: 어떤 장난감을 놓으면 오는지 + 방문 조건
-    private static string ToyHint(SettlementOtterDefinition otter)
+    // 못 만났을 때 힌트: 이야기 · 생활 진행으로 찾아오는 조건 (장난감은 가챠 개편 4단계에서 없앰)
+    internal static readonly Dictionary<string, string> ArrivalHints = new Dictionary<string, string>
     {
-        string toy = otter.FavoriteToy != null
-            ? $"{otter.FavoriteToy.DisplayName}{KoreanParticle.ObjectParticle(otter.FavoriteToy.DisplayName)} 광장에 놓으면 찾아와요"
-            : otter.VisitTier >= 2 ? "에픽 장난감을 광장에 놓으면 찾아와요"
-            : otter.VisitTier == 1 ? "레어 장난감(퍼즐 등)을 광장에 놓으면 찾아와요"
-            : "장난감(축구공 등)을 광장에 놓으면 찾아와요";
-        string condition = ToyVisitRules.ConditionText(otter);
-        return string.IsNullOrEmpty(condition) ? toy : $"{toy}\n{condition}";
-    }
+        { "otter_toy_jjalrang", "첫 모임 뒤 놀러 온 친구의 집을 지으면 찾아와요" },
+        { "otter_toy_kungkung", "해달 상점을 지으면 찾아와요" },
+        { "otter_toy_bodeul", "목공소를 지으면 찾아와요" },
+        { "otter_toy_degul", "농업 창고를 지으면 찾아와요" },
+        { "otter_toy_pongdang", "채석 작업소를 지으면 찾아와요" },
+        { "otter_toy_kongkong", "어업 작업소를 지으면 찾아와요" },
+        { "otter_toy_kkeujeok", "건설소를 지으면 찾아와요" },
+        { "otter_toy_duribeon", "숲을 개간해 첫 영토를 넓히면 찾아와요" },
+        { "otter_toy_sallang", "마을의 첫 모임을 열면 찾아와요" },
+        { "otter_toy_yeongcha", "광장 농장 수확 상자에서 처음 거두면 찾아와요" },
+        { "otter_toy_jaejal", "해달 상점을 지으면 찾아와요" },
+        { "otter_toy_kkomkkom", "밭 옆에 스프링클러를 놓으면 찾아와요" },
+    };
+
+    private static string ArrivalHint(SettlementOtterDefinition otter) =>
+        otter != null && ArrivalHints.TryGetValue(otter.OtterId, out var hint) ? hint : "마을이 자라면 찾아와요";
 
     private static Dictionary<string, SettlementOtterDefinition> LoadOtters()
     {

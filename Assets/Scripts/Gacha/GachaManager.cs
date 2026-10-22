@@ -75,6 +75,7 @@ public class GachaManager : MonoBehaviour
     private int _points;
     private int _goldPullDay;
     private bool _welcomeGiven;
+    private bool _starterGiven;
     private int _totalPulls;
     private CompanionCollection _companions;
 
@@ -584,6 +585,27 @@ public class GachaManager : MonoBehaviour
 
     public int WelcomeTickets => _welcomeTickets;
 
+    /// <summary>
+    /// 처음 선물 특수 해달 (음유시인): 뽑기가 열려 있고 아직 안 받았으면 해금해 첫 응원 칸에 넣는다 (칸이 차 있으면 명부에만).
+    /// 이미 조각 · 별이 있는 세이브는 해금까지 모자란 만큼만 채움. 받은 해달 (없으면 null)
+    /// </summary>
+    public SpecialOtterDefinition TryGiveStarterOtter()
+    {
+        var otter = _rewardConfig != null ? _rewardConfig.StarterOtter : null;
+        if (!IsLoaded || !IsUnlocked || _starterGiven || otter == null)
+            return null;
+        _starterGiven = true;
+        if (!Companions.IsUnlocked(otter))
+        {
+            Companions.AddFragments(otter, Math.Max(0, CompanionCollection.NextStarCost(otter, 0) - Companions.Fragments(otter)));
+            Companions.TryStarUp(otter);
+        }
+        if (string.IsNullOrEmpty(Companions.Formation[0]))
+            Companions.Assign(0, otter, FormationSlots, _rewardConfig.FindOtter);
+        Changed();
+        return otter;
+    }
+
     #endregion
 
     #region 세이브
@@ -600,6 +622,7 @@ public class GachaManager : MonoBehaviour
         _points = Math.Max(0, saved.points);
         _goldPullDay = saved.goldPullDay;
         _welcomeGiven = saved.welcomeGiftGiven;
+        _starterGiven = saved.starterOtterGiven;
         _totalPulls = Math.Max(0, saved.totalPulls);
         _seenBanners.Clear();
         if (saved.seenBanners != null)
@@ -631,6 +654,7 @@ public class GachaManager : MonoBehaviour
         result.points = _points;
         result.goldPullDay = _goldPullDay;
         result.welcomeGiftGiven = _welcomeGiven;
+        result.starterOtterGiven = _starterGiven;
         result.totalPulls = _totalPulls;
         result.seenBanners ??= new List<string>();
         result.seenBanners.Clear();

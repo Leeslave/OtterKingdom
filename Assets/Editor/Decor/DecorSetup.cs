@@ -24,11 +24,9 @@ public static class DecorSetup
     private const string ToyArtFolder = "Assets/Art/Item/Toy";
     private const string ZoneFolder = "Assets/Scriptable Obejects/Navigation";
 
-    // (에셋, 아이템 ID, 이름, 설명, 아이콘, 놀이 반응, 동시 인원)
+    // 장난감(축구공 · 퍼즐)은 가챠 개편 4단계에서 없앰 (Docs/가챠개편_특수해달조각_장신구_기획.md 6장). 꾸미기 물건은 가구(PlazaLifeSetup)만
     private static readonly (string asset, string id, string name, string description, string icon, DecorPlayStyle style, int players)[] Toys =
     {
-        ("SoccerBall", "toy_soccerball", "축구공", "해달들이 통통 차며 노는 공이에요.", "ICON_Toy_SoccerBall", DecorPlayStyle.Bounce, 1),
-        ("Puzzle", "toy_puzzle", "퍼즐", "조각을 맞추며 시간을 보내요.", "ICON_Toy_Puzzle", DecorPlayStyle.Wiggle, 1),
     };
 
     // 장소별 격자: (ID, 장소 에셋, 씬, 격자 왼쪽 아래, 칸 크기, 칸 수, 깊이 정렬, 고정 순서, 걷기 영역 밖 허용, 장애물)
@@ -242,7 +240,7 @@ public static class DecorSetup
         for (int i = 0; i < list.arraySize; i++)
             existing.Add(list.GetArrayElementAtIndex(i).objectReferenceValue);
 
-        foreach (var name in new[] { "Decor", "Toy" })
+        foreach (var name in new[] { "Decor" })
         {
             var category = AssetDatabase.LoadAssetAtPath<ItemCategory>($"{CategoryFolder}/{name}.asset");
             if (category == null || existing.Contains(category))

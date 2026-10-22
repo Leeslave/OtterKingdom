@@ -364,6 +364,77 @@ public class GachaRewardTests
 
     #endregion
 
+    #region 장난감 삭제 (4단계)
+
+    [Test]
+    public void StoryArrivals_ComeOnceWhenTheirMilestoneOpens()
+    {
+        var duribeon = SettlementOtter("otter_toy_duribeon", OtterTrait.Exploring);
+        var jaejal = SettlementOtter("otter_toy_jaejal", OtterTrait.Trading);
+        var config = ScriptableObject.CreateInstance<SettlementConfig>();
+        _created.Add(config);
+        var so = new SerializedObject(config);
+        var list = so.FindProperty("_otters");
+        list.arraySize = 2;
+        list.GetArrayElementAtIndex(0).objectReferenceValue = duribeon;
+        list.GetArrayElementAtIndex(1).objectReferenceValue = jaejal;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        var settlement = new Settlement();
+
+        Assert.IsNull(StoryArrivalRules.Next(config, settlement), "조건이 열리기 전에는 아무도 안 옴");
+        settlement.UnlockDevelopment("p4_shop_built");
+        settlement.UnlockDevelopment(TerritoryRules.FirstDevelopment);
+        Assert.AreEqual(duribeon, StoryArrivalRules.ArriveNext(config, settlement), "표 순서대로 한 마리씩");
+        Assert.IsTrue(settlement.TryGetResidentState(duribeon.OtterId, out var state));
+        Assert.AreEqual(ResidentState.Visitor, state);
+        Assert.AreEqual(jaejal, StoryArrivalRules.ArriveNext(config, settlement));
+        Assert.IsNull(StoryArrivalRules.ArriveNext(config, settlement), "한 번 온 해달은 다시 부르지 않음");
+
+        settlement.SetResident(duribeon.OtterId, ResidentState.Resident);
+        Assert.IsNull(StoryArrivalRules.Next(config, settlement), "주민이 되어도 다시 안 옴");
+        Assert.IsNotNull(StoryArrivalRules.ReasonOf("otter_toy_kkomkkom"));
+    }
+
+    [Test]
+    public void RetiredItems_AreToysOnly()
+    {
+        Assert.IsTrue(InventoryManager.IsRetiredItem("toy_soccerball"));
+        Assert.IsTrue(InventoryManager.IsRetiredItem("toy_carousel"));
+        Assert.IsFalse(InventoryManager.IsRetiredItem("material_wood"));
+        Assert.IsFalse(InventoryManager.IsRetiredItem(null));
+    }
+
+    [Test]
+    public void ToysAreGoneFromGameData()
+    {
+        var database = AssetDatabase.LoadAssetAtPath<ItemDatabase>("Assets/Scriptable Obejects/Inventory/ItemDatabase.asset");
+        Assert.IsNotNull(database);
+        var items = new SerializedObject(database).FindProperty("_items");
+        for (int i = 0; i < items.arraySize; i++)
+        {
+            var item = items.GetArrayElementAtIndex(i).objectReferenceValue as ItemDefinition;
+            Assert.IsNotNull(item, "빈 아이템 칸 없음");
+            Assert.IsFalse(InventoryManager.IsRetiredItem(item.ItemId), item.ItemId);
+        }
+        var catalog = AssetDatabase.LoadAssetAtPath<DecorCatalog>("Assets/Scriptable Obejects/Decor/DecorCatalog.asset");
+        var decors = new SerializedObject(catalog).FindProperty("_decors");
+        for (int i = 0; i < decors.arraySize; i++)
+        {
+            var decor = decors.GetArrayElementAtIndex(i).objectReferenceValue as DecorDefinition;
+            Assert.IsNotNull(decor);
+            Assert.IsTrue(decor.Item == null || !InventoryManager.IsRetiredItem(decor.Item.ItemId), decor.name);
+        }
+        foreach (var guid in AssetDatabase.FindAssets("t:GachaBannerDefinition"))
+        {
+            var banner = AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>(AssetDatabase.GUIDToAssetPath(guid));
+            Assert.AreEqual(0, banner.Pool.Count, banner.name);
+            Assert.AreEqual(0, banner.Featured.Count, banner.name);
+        }
+        Assert.AreEqual(0, AssetDatabase.FindAssets("Toy_", new[] { "Assets/Scriptable Obejects/Shop/Products" }).Length, "장난감 상품 없음");
+    }
+
+    #endregion
+
     #region 조각 · 해금 · 별
 
     [Test]
@@ -371,19 +442,20 @@ public class GachaRewardTests
     {
         var bard = Otter("bard", GachaTable.Rare, KingdomBonusKind.MoveSpeed);
         var collection = new CompanionCollection();
+        int unlock = CompanionCollection.RareStarCosts[0];
 
-        Assert.AreEqual(0, collection.AddFragments(bard, 19));
-        Assert.IsFalse(collection.CanStarUp(bard), "해금 20개 중 19개");
+        Assert.AreEqual(0, collection.AddFragments(bard, unlock - 1));
+        Assert.IsFalse(collection.CanStarUp(bard), "해금까지 하나 모자람");
         collection.AddFragments(bard, 1);
         Assert.IsTrue(collection.TryStarUp(bard));
         Assert.AreEqual(1, collection.Stars(bard));
         Assert.AreEqual(0, collection.Fragments(bard));
         Assert.IsTrue(collection.IsUnlocked(bard));
 
-        collection.AddFragments(bard, 20);
+        collection.AddFragments(bard, CompanionCollection.RareStarCosts[1]);
         Assert.IsTrue(collection.TryStarUp(bard));
         Assert.AreEqual(2, collection.Stars(bard));
-        Assert.AreEqual(30, CompanionCollection.NextStarCost(bard, 2));
+        Assert.AreEqual(CompanionCollection.RareStarCosts[2], CompanionCollection.NextStarCost(bard, 2));
         Assert.IsFalse(collection.TryStarUp(bard), "조각이 모자람");
     }
 
@@ -394,16 +466,19 @@ public class GachaRewardTests
         var architect = Otter("architect", GachaTable.Epic, KingdomBonusKind.BuildSpeed);
         var collection = new CompanionCollection();
 
-        Assert.AreEqual(200, CompanionCollection.CostToMax(bard, 0));
-        Assert.AreEqual(310, CompanionCollection.CostToMax(architect, 0));
-        Assert.AreEqual(10 * CompanionCollection.RareOverflowShards, collection.AddFragments(bard, 210), "5성까지 쓸 200개만 남김");
-        Assert.AreEqual(200, collection.Fragments(bard));
+        int rareMax = 0, epicMax = 0;
+        foreach (int cost in CompanionCollection.RareStarCosts) rareMax += cost;
+        foreach (int cost in CompanionCollection.EpicStarCosts) epicMax += cost;
+        Assert.AreEqual(rareMax, CompanionCollection.CostToMax(bard, 0));
+        Assert.AreEqual(epicMax, CompanionCollection.CostToMax(architect, 0));
+        Assert.AreEqual(10 * CompanionCollection.RareOverflowShards, collection.AddFragments(bard, rareMax + 10), "5성까지 쓸 만큼만 남김");
+        Assert.AreEqual(rareMax, collection.Fragments(bard));
         for (int i = 0; i < 5; i++)
             Assert.IsTrue(collection.TryStarUp(bard));
         Assert.AreEqual(5, collection.Stars(bard));
         Assert.IsFalse(collection.CanStarUp(bard));
         Assert.AreEqual(3 * CompanionCollection.RareOverflowShards, collection.AddFragments(bard, 3), "5성 뒤 조각은 모두 반짝 조각");
-        Assert.AreEqual(4 * CompanionCollection.EpicOverflowShards, collection.AddFragments(architect, 314));
+        Assert.AreEqual(4 * CompanionCollection.EpicOverflowShards, collection.AddFragments(architect, epicMax + 4));
     }
 
     #endregion
@@ -506,7 +581,7 @@ public class GachaRewardTests
         var bard = Otter("bard", GachaTable.Rare, KingdomBonusKind.MoveSpeed);
         var hat = Accessory("hat", GachaTable.Common);
         var collection = new CompanionCollection(id => id == "hat" ? hat : null);
-        collection.AddFragments(bard, 25);
+        collection.AddFragments(bard, CompanionCollection.RareStarCosts[0] + 5);
         collection.TryStarUp(bard);
         collection.Assign(1, bard, 3, Finder(bard));
         collection.AddAccessory(hat, out _);
@@ -579,7 +654,12 @@ public class GachaRewardTests
         foreach (var (kind, tier) in GachaRewardRules.Slots)
             sum += GachaRewardRules.Chance(table, kind, tier);
         Assert.AreEqual(1.0, sum, 1e-6);
-        Assert.AreEqual(0.03, GachaRewardRules.Chance(table, GachaRewardKind.Fragments, GachaTable.Epic), 1e-6);
+        Assert.AreEqual(0.05, GachaRewardRules.Chance(table, GachaRewardKind.Fragments, GachaTable.Epic), 1e-6, "5단계 밸런스");
+        Assert.AreEqual(0.22, GachaRewardRules.Chance(table, GachaRewardKind.Fragments, GachaTable.Rare), 1e-6);
+        Assert.IsNotNull(config.StarterOtter, "처음 선물 해달");
+        Assert.AreEqual(KingdomBonusKind.MoveSpeed, config.StarterOtter.Bonus, "음유시인 (이동속도)");
+        foreach (var accessory in config.Accessories)
+            Assert.IsNotNull(accessory.Icon, $"{accessory.AccessoryId} 아이콘");
     }
 
     #endregion

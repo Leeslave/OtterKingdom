@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65beb1a4aafd4b56b3a85b2cbf4804fa, type: 3}
   m_Name: GachaRewardConfig
   m_EditorClassIdentifier: OtterKingdom::GachaRewardConfig
-  _materialRate: 0.55
+  _materialRate: 0.45
   _accessoryRates:
-  - 0.22
+  - 0.2
   - 0.07
   - 0.01
-  _rareFragmentRate: 0.12
-  _epicFragmentRate: 0.03
+  _rareFragmentRate: 0.22
+  _epicFragmentRate: 0.05
   _wood: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
   _stone: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
   _bundles:
@@ -28,11 +28,12 @@ MonoBehaviour:
   - wood: 50
     stone: 40
     weight: 1
-  _rareFragments: {x: 1, y: 3}
-  _epicFragments: {x: 1, y: 2}
-  _pityFragments: 5
-  _pointsFragments: 30
+  _rareFragments: {x: 2, y: 4}
+  _epicFragments: {x: 2, y: 3}
+  _pityFragments: 12
+  _pointsFragments: 20
   _exchangeFragments: 5
+  _starterOtter: {fileID: 11400000, guid: 8bdb364401371bf4daa6afb4fe90666c, type: 2}
   _otterFallbackIcon: {fileID: 21300000, guid: 68c977b13184ce94c954771473035bcb, type: 3}
   _accessoryFallbackIcon: {fileID: 21300000, guid: 68c977b13184ce94c954771473035bcb, type: 3}
   _otters:

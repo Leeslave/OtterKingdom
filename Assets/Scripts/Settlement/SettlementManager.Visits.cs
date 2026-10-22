@@ -117,13 +117,14 @@ public partial class SettlementManager
     }
 
     /// <returns>이번에 찾아온 해달 (없으면 null)</returns>
+    /// <remarks>장난감은 가챠 개편 4단계에서 없어짐: 장난감으로만 오던 해달은 생활 진행 조건으로 한 번 찾아옴 (StoryArrivalRules)</remarks>
     private SettlementOtterDefinition UpdateToyVisits()
     {
         // 또박이가 오기 전에는 처음 네 해달만 (EarlyOtterRules)
         if (!EarlyOtterRules.IsVillageOpen(Settlement))
             return null;
-        var step = ToyVisitRules.Step(_config, Settlement, PlazaToyTier, CollectPlazaToys(), PlazaVisitContext, NowTicks, out var arrived);
-        if (step != ToyVisitStep.Arrived)
+        var arrived = StoryArrivalRules.ArriveNext(_config, Settlement);
+        if (arrived == null)
             return null;
 
         OnToyVisitorArrived?.Invoke(arrived);
@@ -153,6 +154,7 @@ public partial class SettlementManager
         if (arrived == null)
             return;
         string name = arrived.DisplayName;
-        lines.Add($"{name}{KoreanParticle.SubjectParticle(name)} 장난감을 보고 광장에 놀러 왔어요");
+        string reason = StoryArrivalRules.ReasonOf(arrived.OtterId);
+        lines.Add(reason != null ? $"{name}{KoreanParticle.SubjectParticle(name)} {reason}" : $"{name}{KoreanParticle.SubjectParticle(name)} 광장에 놀러 왔어요");
     }
 }

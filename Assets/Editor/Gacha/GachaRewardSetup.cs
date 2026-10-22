@@ -201,6 +201,56 @@ public static class GachaRewardSetup
 
     internal const string OtterPickupBannerPath = DataFolder + "/Banners/Banner_Pickup_Architect.asset";
 
+    /// <summary>
+    /// 가챠 개편 5단계 밸런스 (Docs/가챠개편_특수해달조각_장신구_기획.md 13장): 보상 설정 확률 · 조각 수 · 천장 조각 · 별빛 포인트 조각 ·
+    /// 처음 선물 해달(음유시인), 장신구 아이콘(코드로 그린 그림, 비어 있을 때만). 별 승급 비용은 CompanionCollection 표.
+    /// 배치 모드: -executeMethod GachaRewardSetup.ApplyBalance
+    /// </summary>
+    [MenuItem("Tools/Gacha/Apply Companion Balance")]
+    public static void ApplyBalance()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<GachaRewardConfig>(RewardConfigPath);
+        if (config == null)
+        {
+            Debug.LogError("[GachaRewardSetup] 보상 설정이 없습니다. Tools/Gacha/Create Companion Data를 먼저 실행하세요.");
+            return;
+        }
+        var so = new SerializedObject(config);
+        so.FindProperty("_materialRate").floatValue = 0.45f;
+        var accessoryRates = so.FindProperty("_accessoryRates");
+        accessoryRates.arraySize = 3;
+        accessoryRates.GetArrayElementAtIndex(0).floatValue = 0.20f;
+        accessoryRates.GetArrayElementAtIndex(1).floatValue = 0.07f;
+        accessoryRates.GetArrayElementAtIndex(2).floatValue = 0.01f;
+        so.FindProperty("_rareFragmentRate").floatValue = 0.22f;
+        so.FindProperty("_epicFragmentRate").floatValue = 0.05f;
+        so.FindProperty("_rareFragments").vector2IntValue = new Vector2Int(2, 4);
+        so.FindProperty("_epicFragments").vector2IntValue = new Vector2Int(2, 3);
+        so.FindProperty("_pityFragments").intValue = 12;
+        so.FindProperty("_pointsFragments").intValue = 20;
+        so.FindProperty("_starterOtter").objectReferenceValue =
+            AssetDatabase.LoadAssetAtPath<SpecialOtterDefinition>($"{OtterFolder}/SpecialOtter_{StarterOtterAsset}.asset");
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        foreach (var row in Accessories)
+        {
+            var icon = AssetDatabase.LoadAssetAtPath<Sprite>($"{AccessoryIconArt.Folder}/ICON_Accessory_{row.asset}.png");
+            for (int tier = GachaTable.Common; tier <= GachaTable.Epic; tier++)
+            {
+                var accessory = AssetDatabase.LoadAssetAtPath<AccessoryDefinition>($"{AccessoryFolder}/Accessory_{row.asset}_{TierKeys[tier]}.asset");
+                if (accessory == null)
+                    continue;
+                var accessorySo = new SerializedObject(accessory);
+                FillIfEmpty(accessorySo, "_icon", icon);
+                accessorySo.ApplyModifiedPropertiesWithoutUndo();
+            }
+        }
+        AssetDatabase.SaveAssets();
+        Debug.Log("[GachaRewardSetup] 특수 해달 밸런스 · 처음 선물 · 장신구 아이콘을 맞췄습니다.");
+    }
+
+    private const string StarterOtterAsset = "Bard";
+
     private static void AddUnique(SerializedProperty list, Object value)
     {
         for (int i = 0; i < list.arraySize; i++)

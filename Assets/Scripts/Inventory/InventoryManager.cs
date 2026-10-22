@@ -124,10 +124,16 @@ public class InventoryManager : MonoBehaviour
             Inventory.ExpandCapacity(savedCapacity - Inventory.Capacity);
 
         InventorySaveConverter.Read(items, _config.ItemDatabase, Inventory, _unknownSavedStacks);
+        // 장난감은 가챠 개편 4단계에서 없어짐: 옛 세이브의 장난감은 보상 없이 버림 (다른 모르는 아이템은 그대로 보존)
+        _unknownSavedStacks.RemoveAll(stack => IsRetiredItem(stack.itemId));
 
         foreach (var stack in _unknownSavedStacks)
             Debug.LogWarning($"[InventoryManager] ItemDatabase에 없는 아이템 ID: {stack.itemId} x{stack.quantity} (저장 시 그대로 보존)");
     }
+
+    /// <summary>게임에서 없앤 아이템 (세이브에 남아 있어도 보존하지 않음): 장난감 toy_*</summary>
+    public static bool IsRetiredItem(string itemId) =>
+        !string.IsNullOrEmpty(itemId) && itemId.StartsWith("toy_", StringComparison.Ordinal);
 
     /// <summary>가방 내용을 세이브 목록에 쓴다 (기존 내용은 지움). 용량은 Inventory.Capacity를 따로 저장.</summary>
     public void WriteToSave(List<ItemStack> items)

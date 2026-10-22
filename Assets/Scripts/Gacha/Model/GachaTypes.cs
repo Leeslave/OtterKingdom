@@ -122,6 +122,8 @@ public class GachaSaveData
     public int goldSinceRare;
 
     public bool welcomeGiftGiven;
+    // 처음 선물 특수 해달 (가챠 개편 5단계, 옛 세이브도 한 번 받음)
+    public bool starterOtterGiven;
     public int totalPulls;
 
     // 한 번 열어 본 배너 (탭의 새 배너 표시용)

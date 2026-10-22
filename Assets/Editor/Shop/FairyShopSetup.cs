@@ -39,8 +39,6 @@ public static class FairyShopSetup
         ("Seed_Potato", "shop_seed_potato", "Farming/감자 모종", 1, false, 100, 11), // 밭이 Lv.10에 열려 모종도 그 뒤 (밭 재배치)
         ("Seed_SweetPotato", "shop_seed_sweetpotato", "Farming/고구마 모종", 1, false, 150, 12),
         ("Seed_Strawberry", "shop_seed_strawberry", "Farming/딸기 모종", 1, false, 300, 13),
-        ("Toy_SoccerBall", "shop_toy_soccerball", "Decor/축구공", 1, false, 800, 1),
-        ("Toy_Puzzle", "shop_toy_puzzle", "Decor/퍼즐", 1, true, 25, 1),
         // 목재는 상점에서 팔지 않음 — 처음에 조금 주고(SettlementConfig 시작 재료) 이후는 목공소 해달 · 광장 나무로
     };
 
@@ -49,7 +47,6 @@ public static class FairyShopSetup
     {
         ("씨앗", "Seedlings", null),
         ("낚시", "Fishing", SettlementQuestGate.FishingDevelopment),
-        ("장난감", "Toy", null),
     };
 
     #region 데이터
@@ -59,16 +56,6 @@ public static class FairyShopSetup
         EnsureFolder(DataFolder + "/Products");
         var gold = AssetDatabase.LoadAssetAtPath<Currency>(GoldPath);
         var gem = AssetDatabase.LoadAssetAtPath<Currency>(GemPath);
-
-        // 희귀 장난감은 조개로 판다는 규칙에 맞춰 퍼즐은 레어 (시안)
-        var puzzle = AssetDatabase.LoadAssetAtPath<ItemDefinition>($"{ItemFolder}/Decor/퍼즐.asset");
-        var rare = AssetDatabase.LoadAssetAtPath<ItemRarity>($"{RarityFolder}/Rare.asset");
-        if (puzzle != null && rare != null)
-        {
-            var so = new SerializedObject(puzzle);
-            so.FindProperty("_rarity").objectReferenceValue = rare;
-            so.ApplyModifiedPropertiesWithoutUndo();
-        }
 
         var products = new List<ShopProduct>();
         for (int i = 0; i < Products.Length; i++)

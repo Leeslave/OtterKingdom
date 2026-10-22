@@ -94,11 +94,16 @@ public class CompanionScreen : MonoBehaviour
 
     private void DrawOtters(Transform panel)
     {
-        foreach (var otter in SortedOtters())
+        var otters = SortedOtters();
+        int unlocked = otters.FindAll(o => Companions.IsUnlocked(o)).Count;
+        RuntimeUIKit.CreateLabel(panel, $"만난 특수 해달 {unlocked}/{otters.Count} · 조각은 뽑기와 교환소에서 모아요", 26);
+        foreach (var otter in otters)
         {
             int stars = Companions.Stars(otter);
             int need = CompanionCollection.NextStarCost(otter, stars);
-            string title = $"<b>{otter.DisplayName}</b>  {GachaRewardText.TierName(GachaRewardKind.Fragments, otter.Tier)} · {(stars > 0 ? $"{stars}성" : "잠김")}";
+            string ready = Companions.CanStarUp(otter) ? (stars <= 0 ? "  <color=#E5484D>해금 가능!</color>" : "  <color=#E5484D>별 올리기 가능!</color>") : "";
+            string title = $"<b>{otter.DisplayName}</b>  {GachaRewardText.TierName(GachaRewardKind.Fragments, otter.Tier)} · "
+                + $"{(stars > 0 ? $"<color=#E5A21A>{new string('★', stars)}</color>" : "잠김")}{ready}";
             string bonus = GachaRewardText.Bonus(otter.Bonus, otter.PercentAt(Mathf.Max(1, stars)));
             string progress = need > 0 ? $"조각 {Companions.Fragments(otter)}/{need}" : "5성 완성!";
             var row = Row(panel, 130, Manager.IconOf(otter), $"{title}\n{bonus}{(stars > 0 ? "" : " (해금하면)")} · {progress}");
@@ -308,7 +313,7 @@ public class CompanionScreen : MonoBehaviour
     // 처음 보는 한글을 미리 폰트에 (목록을 그리는 도중 글자가 추가되면 D3D12 에디터가 멈춤)
     private static void PrepareGlyphs(string hint)
     {
-        var text = new StringBuilder("해달명부특수편성장신구닫기해금별올리기완성잠김조각성모자라요뽑기교환소에서모아요명부에들어왔어요응원을맡겨보세요")
+        var text = new StringBuilder("해달명부특수편성장신구닫기해금별올리기완성잠김조각성모자라요뽑기교환소에서모아요명부에들어왔어요응원을맡겨보세요★가능만난은와")
             .Append("칸비어있음넣기바꾸기빼기같은버프는한마리만맡을수있어요첫개간을하면열려요밭농사를시작하면지금받는아직응원하는해달이없어요")
             .Append("누구를넣을까요해금한탭으로이미다른에있어요넣을주민하나씩낀효과를받아요끼우기옮기기아무도안꼈어요끼고뺐어요누구에게끼울까요")
             .Append("목록으로마을에사는끼웠어요레어에픽흔함이동속도작업시간얻는양작물성장목재돌판매가공사수확량물고기생산완성0123456789+−%·/():!")

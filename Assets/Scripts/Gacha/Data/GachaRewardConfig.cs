@@ -18,11 +18,11 @@ public class GachaRewardConfig : ScriptableObject
     }
 
     [Header("확률 (합 1)")]
-    [Range(0f, 1f)] [SerializeField] private float _materialRate = 0.55f;
+    [Range(0f, 1f)] [SerializeField] private float _materialRate = 0.45f;
     [Tooltip("장신구 일반 · 레어 · 에픽")]
-    [SerializeField] private float[] _accessoryRates = { 0.22f, 0.07f, 0.01f };
-    [Range(0f, 1f)] [SerializeField] private float _rareFragmentRate = 0.12f;
-    [Range(0f, 1f)] [SerializeField] private float _epicFragmentRate = 0.03f;
+    [SerializeField] private float[] _accessoryRates = { 0.20f, 0.07f, 0.01f };
+    [Range(0f, 1f)] [SerializeField] private float _rareFragmentRate = 0.22f;
+    [Range(0f, 1f)] [SerializeField] private float _epicFragmentRate = 0.05f;
 
     [Header("재료 꾸러미")]
     [SerializeField] private ItemDefinition _wood;
@@ -30,16 +30,20 @@ public class GachaRewardConfig : ScriptableObject
     [SerializeField] private List<MaterialBundle> _bundles = new List<MaterialBundle>();
 
     [Header("특수 해달 조각 (한 번에 나오는 수)")]
-    [SerializeField] private Vector2Int _rareFragments = new Vector2Int(1, 3);
-    [SerializeField] private Vector2Int _epicFragments = new Vector2Int(1, 2);
+    [SerializeField] private Vector2Int _rareFragments = new Vector2Int(2, 4);
+    [SerializeField] private Vector2Int _epicFragments = new Vector2Int(2, 3);
     [Tooltip("에픽 천장에서 확정으로 주는 에픽 해달 조각")]
-    [Min(1)] [SerializeField] private int _pityFragments = 5;
+    [Min(1)] [SerializeField] private int _pityFragments = 12;
 
     [Header("별빛 포인트 · 교환소")]
     [Tooltip("픽업 별빛 포인트를 다 모으면 주는 픽업 해달 조각")]
-    [Min(1)] [SerializeField] private int _pointsFragments = 30;
+    [Min(1)] [SerializeField] private int _pointsFragments = 20;
     [Tooltip("교환소에서 한 번에 고르는 해달 조각 (값 = 조각 하나 값 × 이 수)")]
     [Min(1)] [SerializeField] private int _exchangeFragments = 5;
+
+    [Header("처음 선물")]
+    [Tooltip("뽑기가 처음 열리면 해금해 첫 응원 칸에 넣어 주는 특수 해달 (편성 효과를 바로 보게)")]
+    [SerializeField] private SpecialOtterDefinition _starterOtter;
 
     [Header("그림이 아직 없을 때")]
     [SerializeField] private Sprite _otterFallbackIcon;
@@ -52,6 +56,7 @@ public class GachaRewardConfig : ScriptableObject
     public ItemDefinition Wood => _wood;
     public ItemDefinition Stone => _stone;
     public int PointsFragments => Mathf.Max(1, _pointsFragments);
+    public SpecialOtterDefinition StarterOtter => _starterOtter;
     public int ExchangeFragments => Mathf.Max(1, _exchangeFragments);
     public Sprite IconOf(SpecialOtterDefinition otter) => otter != null && otter.Portrait != null ? otter.Portrait : _otterFallbackIcon;
     public Sprite IconOf(AccessoryDefinition accessory) => accessory != null && accessory.Icon != null ? accessory.Icon : _accessoryFallbackIcon;

@@ -186,6 +186,9 @@ public class GachaPresenter : MonoBehaviour
                 names.Add($"{ticket.DisplayName} {manager.WelcomeTickets}장");
             lines.Add($"요정의 선물! {string.Join(" · ", names)}을 받았어요");
         }
+        var starter = manager.TryGiveStarterOtter();
+        if (starter != null)
+            lines.Add($"요정의 선물! {starter.DisplayName}{KoreanParticle.SubjectParticle(starter.DisplayName)} 명부에 들어와 응원을 맡았어요 ({GachaRewardText.Bonus(starter.Bonus, starter.PercentAt(1))})");
         int converted = manager.ConvertExpiredPoints();
         if (converted > 0)
             lines.Add($"지난 픽업의 별빛 포인트 {converted}점이 반짝 조각이 됐어요");

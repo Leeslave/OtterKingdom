@@ -23,7 +23,7 @@ public static partial class SettlementSetup
         string sprite, string[] stages, string icon, int level, string development, (OtterTrait trait, int count)[] traits, int maxCount,
         int gold, int wood, int stone, float growth, float seconds)[] BuildingTable =
     {
-        ("Building_SmallHouse", "bld_small_house", "작은 집", "장난감을 보고 찾아온 해달이 살 수 있는 집이에요.", BuildingKind.Home,
+        ("Building_SmallHouse", "bld_small_house", "작은 집", "새로 찾아온 해달이 살 수 있는 집이에요.", BuildingKind.Home,
             new Vector2Int(4, 3), 0.9f, "Assets/Art/Buildings/Detail4/SmallHouse.png",
             new[] { "Stage_House_Blue_0", "Stage_House_Blue_1", "Stage_House_Blue_2", "Stage_House_Blue_3" }, "ICON_House_Blue",
             0, BoardUpgradeDevelopment, new (OtterTrait, int)[0], 0, 600, 20, 10, 0.3f, 180f),
@@ -48,7 +48,7 @@ public static partial class SettlementSetup
         ("Building_Workyard", "bld_workyard", "건설소", "공사가 더 빨리 끝나요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Workyard.png", new string[0], null,
             0, P5BuilderSettled, new[] { (OtterTrait.Building, 2) }, 1, 7000, 100, 70, 0f, 600f),
-        ("Building_Archive", "bld_archive", "기록관", "찾아온 해달을 모두 적어 두면 장난감 해달이 더 자주 찾아와요.", BuildingKind.Facility,
+        ("Building_Archive", "bld_archive", "기록관", "주민들의 부탁을 적어 두고 챙겨요. 생활 의뢰 보상이 늘어나요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Archive.png", new string[0], null,
             0, P5RecorderSettled, new[] { (OtterTrait.Recording, 2) }, 1, 8000, 100, 80, 0f, 660f),
     };
@@ -61,7 +61,8 @@ public static partial class SettlementSetup
             { "bld_granary", (new[] { (KingdomBonusKind.HarvestYield, 10) }, false) },
             { "bld_fishery", (new[] { (KingdomBonusKind.FishYield, 20) }, false) },
             { "bld_workyard", (new[] { (KingdomBonusKind.BuildSpeed, 15) }, false) },
-            { "bld_archive", (new[] { (KingdomBonusKind.VisitSpeed, 20) }, false) },
+            // 장난감 방문이 없어져 "방문 간격 −20%" 대신 생활 의뢰 보상 +10% (가챠 개편 4단계)
+            { "bld_archive", (new[] { (KingdomBonusKind.LifeReward, 10) }, false) },
         };
 
     // 목공소 · 채석 작업소에서 일하는 해달 한 마리가 1시간에 모으는 목재 · 돌

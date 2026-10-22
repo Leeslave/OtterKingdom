@@ -20,7 +20,7 @@ MonoBehaviour:
   _trait: 9
   _toyVisitor: 1
   _visitTier: 2
-  _favoriteToy: {fileID: 11400000, guid: 458852b7db310b54786db1e633998149, type: 2}
+  _favoriteToy: {fileID: 0}
   _visitCondition: 0
   _visitConditionValue: 0
   _homelessLine: "\uBC14\uB78C\uC774 \uC798 \uB4DC\uB294 \uC9D1\uC774 \uC788\uC73C\uBA74

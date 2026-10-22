@@ -9,11 +9,12 @@ public enum KingdomBonusKind
     HarvestYield = 3, // 밭 수확량 +%
     FishYield = 4,    // 낚은 물고기 +% (어업 작업소)
     BuildSpeed = 5,   // 공사 시간 −% (건설소)
-    VisitSpeed = 6,   // 장난감 해달 방문 간격 −% (기록관 · 주거 구역)
+    VisitSpeed = 6,   // (안 씀) 장난감 해달 방문 간격 −% — 장난감이 없어져 LifeReward로 바뀜
     ProductionSpeed = 7, // 생산 속도 +% (생산 구역): 주민 작업이 그만큼 빨리 끝남
     GrowSpeed = 8,       // 밭 자라는 시간 −% (농업 구역): 새로 심는 작물부터
     MoveSpeed = 9,       // 주민 이동속도 +% (특수 해달 편성: 음유시인)
     WoodYield = 10,      // 목재 획득 +% (특수 해달 편성: 산림관리사 — 목공소 생산 · 개간)
+    LifeReward = 11,     // 생활 의뢰 보상(골드 · 경험치) +% (기록관 · 주거 구역)
 }
 
 /// <summary>
