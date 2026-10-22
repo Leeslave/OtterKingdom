@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M18_Ore
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv18_ore
+  _title: "\uAE4A\uC740 \uACF3\uC758 \uAD11\uC11D"
+  _description: "\uAD11\uC0B0\uC5D0\uC11C \uAD11\uC11D 300\uAC1C \uCE90\uAE30"
+  _sortOrder: 99
+  _kind: 0
+  _requiredLevel: 18
+  _prerequisite: {fileID: 11400000, guid: e8cca556998612f4ea8e7b0f101d169f, type: 2}
+  _icon: {fileID: 21300000, guid: fcbb2374e547b94488a2a8d6e246f1d6, type: 3}
+  _goalType: 7
+  _goal: 300
+  _itemFilter: {fileID: 11400000, guid: c0aaf6ff75ccefa499fe320afcbcbb59, type: 2}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 3000
+  _expReward: 2000
+  _expPercentOfLevel: 0

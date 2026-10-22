@@ -70,3 +70,93 @@ MonoBehaviour:
   - _expToNext: 9000
     _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
     _rewardAmount: 50
+  - _expToNext: 10400
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 11900
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 13500
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 15200
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 17000
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 80
+  - _expToNext: 18900
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 20900
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 23000
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 25200
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 27500
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 80
+  - _expToNext: 29900
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 32400
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 35000
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 37700
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 40500
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 80
+  - _expToNext: 43400
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 46400
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 49500
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 52700
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 56000
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 80
+  - _expToNext: 59400
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 62900
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 66500
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 70200
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 74000
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 80
+  - _expToNext: 77900
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 81900
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 86000
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 90200
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 30
+  - _expToNext: 94500
+    _rewardCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
+    _rewardAmount: 80

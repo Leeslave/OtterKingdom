@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: C06_MazeCraft
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: challenge_maze_craft
-  _title: "\uac31\ub3c4 \ud0d0\ud5d8\uac00\uc758 \ub3c4\uad6c"
-  _description: "\uc624\ub798\ub41c \uac31\ub3c4 \uc791\uc5c5\ub300\uc5d0\uc11c \uace1\uad2d\uc774 \uc81c\uc791\ud558\uae30"
-  _sortOrder: 146
+  _title: "\uAC31\uB3C4 \uD0D0\uD5D8\uAC00\uC758 \uB3C4\uAD6C"
+  _description: "\uC624\uB798\uB41C \uAC31\uB3C4 \uC791\uC5C5\uB300\uC5D0\uC11C \uACE1\uAD2D\uC774
+    \uC81C\uC791\uD558\uAE30"
+  _sortOrder: 169
   _kind: 2
   _requiredLevel: 6
   _prerequisite: {fileID: 0}

@@ -584,6 +584,12 @@ public class MineMazeGame : MonoBehaviour
             settlement.Settlement.UnlockDevelopment("maze_pickaxe_crafted");
         if (_model.Runs >= 3)
             settlement.Settlement.UnlockDevelopment("maze_trips_3");
+        // Lv.18~22 메인: 곡괭이 단계 · 층 정복 (예전에 해 둔 것도 다시 셈)
+        for (int tier = 1; tier <= _model.PickaxeTier; tier++)
+            settlement.Settlement.UnlockDevelopment(MineMazeRules.PickaxeDevelopment(tier));
+        for (int floor = 0; floor < _model.FloorCount; floor++)
+            if (_model.IsFloorCleared(floor))
+                settlement.Settlement.UnlockDevelopment(MineMazeRules.FloorClearedDevelopment(floor + 1));
     }
 
     /// <summary>"2분 05초" (다시 들어가기까지)</summary>

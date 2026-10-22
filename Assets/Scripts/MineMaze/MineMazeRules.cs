@@ -14,6 +14,10 @@ public static class MineMazeRules
     public const string FirstRockDevelopment = "maze_first_rock";
     /// <summary>그 층의 돌을 모두 부수고 처음 다녀옴 (메인 Lv.7 "갱도 한 바퀴")</summary>
     public const string FirstTripDevelopment = "maze_first_trip";
+    /// <summary>갱도 작업대에서 이 단계 곡괭이를 만듦 (메인 Lv.18 · 21, 아래 층 입장 조건)</summary>
+    public static string PickaxeDevelopment(int tier) => "maze_pickaxe_" + tier;
+    /// <summary>지하 N층(1부터)의 돌을 모두 부숴 다음 층이 열림 (메인 Lv.18 · 21 · 22)</summary>
+    public static string FloorClearedDevelopment(int floor) => $"maze_floor_{floor}_cleared";
     /// <summary>미로 씬 이름 (메인 퀘스트 "갱도에 들어가 보기" 대상)</summary>
     public const string SceneName = "MineMaze";
     public const int FoundLevel = 5;

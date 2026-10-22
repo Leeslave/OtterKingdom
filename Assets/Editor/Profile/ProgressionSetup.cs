@@ -7,7 +7,7 @@ using static GlobalUISetup;
 
 /// <summary>
 /// 왕국 레벨 표(경험치 곡선 + 레벨업 보상)와 레벨업 팝업을 만든다. GlobalUISetup이 함께 호출한다.
-/// 레벨 표는 이미 있으면 덮어쓰지 않는다 (기획이 에셋에서 고친 값을 지킴).
+/// 레벨 표는 이미 있으면 덮어쓰지 않는다 (기획이 에셋에서 고친 값을 지킴). 표가 길어지면 늘어난 레벨만 뒤에 붙인다.
 /// </summary>
 public static class ProgressionSetup
 {
@@ -17,26 +17,34 @@ public static class ProgressionSetup
 
     private static readonly Color Body = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
 
-    // Lv.1 → 2부터: (다음 레벨까지 경험치, 도달 보상 조개). 최고 Lv.20
-    // 경험치는 레벨마다 약 ×1.3. 조개는 5레벨마다(마을 단계 후보) 크게 — 설계는 Docs/성장곡선_퀘스트설계.md
+    // Lv.1 → 2부터: (다음 레벨까지 경험치, 도달 보상 조개). 최고 Lv.50
+    // 경험치는 Lv.19까지 레벨마다 약 ×1.3, Lv.20부터는 늘어나는 폭이 레벨마다 100씩 커짐(1,400 → 4,300).
+    // 조개는 5레벨마다(마을 단계 후보) 크게 — 설계는 Docs/성장곡선_퀘스트설계.md, Lv.18~50은 Docs/레벨별_메인퀘스트.md
     private static readonly (int exp, int gem)[] Levels =
     {
         (100, 5), (150, 5), (220, 10), (320, 20), (450, 10), (600, 10), (800, 15), (1050, 15), (1350, 30),
         (1700, 15), (2100, 15), (2600, 20), (3200, 20), (3900, 40), (4700, 20), (5600, 25), (6600, 25), (7700, 30), (9000, 50),
+        (10400, 30), (11900, 30), (13500, 30), (15200, 30), (17000, 80), (18900, 30), (20900, 30), (23000, 30), (25200, 30), (27500, 80),
+        (29900, 30), (32400, 30), (35000, 30), (37700, 30), (40500, 80), (43400, 30), (46400, 30), (49500, 30), (52700, 30), (56000, 80),
+        (59400, 30), (62900, 30), (66500, 30), (70200, 30), (74000, 80), (77900, 30), (81900, 30), (86000, 30), (90200, 30), (94500, 80),
     };
+
+    /// <summary>표의 Lv.level → level+1 경험치 (퀘스트 표가 레벨 메인 경험치 합을 맞출 때 씀. 최고 레벨이면 0)</summary>
+    internal static int ExpToNext(int level) => level >= 1 && level <= Levels.Length ? Levels[level - 1].exp : 0;
 
     public static void CreateData()
     {
         EnsureFolder(DataFolder);
         var (table, isNew) = LoadOrCreate<LevelTable>(LevelTablePath);
-        if (!isNew)
-            return;
-
         var gem = AssetDatabase.LoadAssetAtPath<Currency>(GemPath);
         var so = new SerializedObject(table);
         var list = so.FindProperty("_levels");
+        // 이미 있으면 고친 값은 지키고, 표가 늘어난 만큼(최고 레벨을 올림)만 뒤에 붙임
+        int start = isNew ? 0 : list.arraySize;
+        if (start >= Levels.Length)
+            return;
         list.arraySize = Levels.Length;
-        for (int i = 0; i < Levels.Length; i++)
+        for (int i = start; i < Levels.Length; i++)
         {
             var entry = list.GetArrayElementAtIndex(i);
             entry.FindPropertyRelative("_expToNext").intValue = Levels[i].exp;

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M18_Herbs
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv18_herbs
+  _title: "\uC8FC\uBBFC\uB4E4\uC744 \uC704\uD55C \uC57D\uCD08"
+  _description: "\uC694\uC815 \uC57D\uCD08\uB97C \uBAA8\uC544 \uC8FC\uBBFC\uB4E4
+    \uB3CC\uBD10 \uC8FC\uAE30"
+  _sortOrder: 98
+  _kind: 0
+  _requiredLevel: 18
+  _prerequisite: {fileID: 11400000, guid: ef286a7b897da3742959d000e2f9d5b9, type: 2}
+  _icon: {fileID: 21300000, guid: ba10b195dc6f789408312b64596f6b65, type: 3}
+  _goalType: 11
+  _goal: 1
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: mine_temporary_clinic
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 3000
+  _expReward: 2000
+  _expPercentOfLevel: 0

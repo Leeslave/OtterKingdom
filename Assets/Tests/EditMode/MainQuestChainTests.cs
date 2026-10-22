@@ -155,6 +155,54 @@ public class MainQuestChainTests
         }
     }
 
+    // 최고 Lv.50: Lv.16~49는 레벨마다 메인이 있고(한 줄), 메인 경험치 합 = 그 레벨 필요 경험치. 앞 레벨의 마지막 메인에서 이어짐. 실제 에셋
+    [Test]
+    public void Level16To49_EveryLevelHasMainChain()
+    {
+        var database = AssetDatabase.LoadAssetAtPath<QuestDatabase>("Assets/Scriptable Obejects/Quest/QuestDatabase.asset");
+        var table = AssetDatabase.LoadAssetAtPath<LevelTable>("Assets/Scriptable Obejects/Profile/LevelTable.asset");
+        Assert.IsNotNull(database);
+        Assert.IsNotNull(table);
+        Assert.AreEqual(50, table.MaxLevel);
+
+        QuestDefinition previousLast = null;
+        for (int level = 16; level <= 49; level++)
+        {
+            var mains = new List<QuestDefinition>();
+            foreach (var quest in database.Quests)
+            {
+                if (quest != null && quest.Kind == QuestKind.Main && quest.RequiredLevel == level)
+                    mains.Add(quest);
+            }
+            Assert.Greater(mains.Count, 0, $"Lv.{level} 메인");
+            QuestDefinition first = null, last = null;
+            int exp = 0;
+            foreach (var quest in mains)
+            {
+                bool followed = false;
+                foreach (var other in mains)
+                    followed |= other.Prerequisite == quest;
+                if (!followed)
+                {
+                    Assert.IsNull(last, $"Lv.{level} 메인은 한 줄");
+                    last = quest;
+                }
+                if (!mains.Contains(quest.Prerequisite))
+                {
+                    Assert.IsNull(first, $"Lv.{level} 메인 시작은 하나");
+                    first = quest;
+                }
+                exp += quest.ExpFor(level, null);
+            }
+            Assert.AreEqual(table.ExpToNext(level), exp, $"Lv.{level} 메인 경험치 합");
+            if (previousLast != null)
+                Assert.AreEqual(previousLast, first.Prerequisite, $"Lv.{level} 첫 메인은 Lv.{level - 1} 마지막 메인 다음");
+            previousLast = last;
+        }
+        foreach (var quest in database.Quests)
+            Assert.IsFalse(quest != null && quest.Kind == QuestKind.Main && quest.RequiredLevel >= 50, "최고 레벨에는 메인 없음");
+    }
+
     [Test]
     public void PaidTransactions_CountBagNotFurrow()
     {

@@ -17,6 +17,8 @@ public partial class SettlementManager
     public const string FarmSprinklerPlacedDevelopment = "farm_sprinkler_placed";
     public const string FarmPathPlacedDevelopment = "farm_path_placed";
     public const string FarmStonePathDevelopment = "farm_stone_path";
+    /// <summary>밭 칸 하나라도 이 흙(1 = 기름진 흙, 2 = 황금 흙)으로 바꿈 (메인 Lv.20 "황금 흙")</summary>
+    public static string FarmSoilDevelopment(int soil) => "farm_soil_" + soil;
     private const float FarmSyncSeconds = 0.5f;
     private const float OfflineStepSeconds = 5f;
     // 이만큼 넘게 시계가 건너뛰면(앱을 내려 둠 · 꺼 둠) 꺼 둔 동안으로 셈
@@ -145,6 +147,11 @@ public partial class SettlementManager
     {
         if (!HasDevelopment(FarmSprinklerPlacedDevelopment) && CountFarmParts(FarmPartKind.Sprinkler, true) > 0)
             Settlement.UnlockDevelopment(FarmSprinklerPlacedDevelopment);
+        int bestSoil = 0;
+        foreach (var field in Farm.Fields)
+            bestSoil = Mathf.Max(bestSoil, field.soil);
+        for (int soil = 1; soil <= bestSoil; soil++)
+            Settlement.UnlockDevelopment(FarmSoilDevelopment(soil));
         bool stone = StonePath;
         if (HasDevelopment(FarmPathPlacedDevelopment) && (!stone || HasDevelopment(FarmStonePathDevelopment)))
             return;

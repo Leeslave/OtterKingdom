@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: C07_MazeRocks
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: challenge_maze_rocks_15
-  _title: "\uac31\ub3c4\ub97c \ubc1d\ud788\ub294 \uc190"
-  _description: "\uc624\ub798\ub41c \uac31\ub3c4\uc5d0\uc11c \ub3cc \ub204\uc801 15\uac1c \ubd80\uc218\uae30"
-  _sortOrder: 147
+  _title: "\uAC31\uB3C4\uB97C \uBC1D\uD788\uB294 \uC190"
+  _description: "\uC624\uB798\uB41C \uAC31\uB3C4\uC5D0\uC11C \uB3CC \uB204\uC801
+    15\uAC1C \uBD80\uC218\uAE30"
+  _sortOrder: 170
   _kind: 2
   _requiredLevel: 7
   _prerequisite: {fileID: 11400000, guid: dc8676bf602c465784468aad8f57cb4a, type: 2}

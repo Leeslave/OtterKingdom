@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: C09_Sales
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: challenge_lv9_sales
-  _title: "\uc774\uc6c3 \ub9de\uc774 \uc900\ube44\uae08"
-  _description: "\ud310\ub9e4\ub85c 1500\uace8\ub4dc \ubc8c\uae30"
-  _sortOrder: 143
+  _title: "\uC774\uC6C3 \uB9DE\uC774 \uC900\uBE44\uAE08"
+  _description: "\uD310\uB9E4\uB85C 1500\uACE8\uB4DC \uBC8C\uAE30"
+  _sortOrder: 166
   _kind: 2
   _requiredLevel: 9
   _prerequisite: {fileID: 11400000, guid: 7cca54dfa5504b7c9ad3d1f9a7a5d984, type: 2}
@@ -27,7 +27,7 @@ MonoBehaviour:
   _item: {fileID: 0}
   _constructions: []
   _builderOnly: 0
-  _target:
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 400
   _expReward: 80

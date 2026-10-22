@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: C10_Harvest
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: challenge_lv10_harvest
-  _title: "\ud143\ubc2d\uc758 \uccab \ud55c \ubc14\uad6c\ub2c8"
-  _description: "\uc791\ubb3c 20\uac1c \uc218\ud655\ud558\uae30"
-  _sortOrder: 144
+  _title: "\uD143\uBC2D\uC758 \uCCAB \uD55C \uBC14\uAD6C\uB2C8"
+  _description: "\uC791\uBB3C 20\uAC1C \uC218\uD655\uD558\uAE30"
+  _sortOrder: 167
   _kind: 2
   _requiredLevel: 10
   _prerequisite: {fileID: 0}
@@ -27,7 +27,7 @@ MonoBehaviour:
   _item: {fileID: 0}
   _constructions: []
   _builderOnly: 0
-  _target:
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 400
   _expReward: 90

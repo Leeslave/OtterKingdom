@@ -38,7 +38,7 @@ public static class QuestSetup
     // 이미 있는 에셋도 구조 칸(종류·레벨·앞 단계·경험치·정렬·대상·목표 종류)은 이 표로 맞춘다. 문구·목표 수치·보상은 사람이 고친 값을 지킨다.
     // (에셋, ID, 제목, 조건, 목표 종류, 목표, 필터, 골드, 아이콘, 종류, 필요 레벨, 앞 단계 에셋, 경험치, 경험치 %, 대상)
     private static readonly (string asset, string id, string title, string description, QuestGoalType type, int goal, string filter,
-        int reward, string icon, QuestKind kind, int level, string prerequisite, int exp, float expPercent, string target)[] Quests =
+        int reward, string icon, QuestKind kind, int level, string prerequisite, int exp, float expPercent, string target)[] TableQuests =
     {
         // Lv.1 → 2 해달 왕국에 어서 와 (100) — 의자를 끝내면 바로 Lv.2
         ("M01_House", "main_lv1_house", "첫 번째 집", "게시판 부탁: 첫 번째 집 만들기", QuestGoalType.Milestone, 1, "", 30, "settle:ICON_House_Blue", QuestKind.Main, 1, "", 40, 0f, "req_first_house"),
@@ -163,16 +163,46 @@ public static class QuestSetup
         ("M17_Mine", "main_lv17_mine", "깊은 광맥", "광산에서 광석 600개 캐기", QuestGoalType.Mine, 600, "Ore", 2500, "item:Mining/다이아몬드", QuestKind.Main, 17, "M17_Recorder", 1700, 0f, ""),
         ("M17_Sales", "main_lv17_sales", "광장의 큰손", "판매로 120,000골드 벌기", QuestGoalType.EarnFromSales, 120000, "", 3000, "gold", QuestKind.Main, 17, "M17_Mine", 1900, 0f, ""),
         ("M17_Archive", "main_lv17_archive", "모두의 기록", "게시판 부탁: 기록관 짓기", QuestGoalType.Milestone, 1, "", 2500, "settle:ICON_TownHall", QuestKind.Main, 17, "M17_Sales", 1800, 0f, "req_p5_archive"),
-        // Lv.18 → 19 해달이 모이는 왕국 (7,700)
-        ("M18_Harvest", "main_lv18_harvest", "왕국의 곳간", "작물 2,500개 수확하기", QuestGoalType.Harvest, 2500, "Crops", 3000, "item:Farming/딸기", QuestKind.Main, 18, "M17_Archive", 2200, 0f, ""),
-        ("M18_Upgrade", "main_lv18_upgrade", "최고의 설비", "생산 업그레이드 3회", QuestGoalType.Upgrade, 3, "", 2500, "place:ICON_Place_Mine", QuestKind.Main, 18, "M18_Harvest", 1500, 0f, ""),
-        ("M18_Catch", "main_lv18_catch", "바다의 왕", "물고기 250마리 낚기", QuestGoalType.Catch, 250, "Fish", 3000, "item:Fishing/고등어", QuestKind.Main, 18, "M18_Upgrade", 2000, 0f, ""),
-        ("M18_Sales", "main_lv18_sales", "해달 왕국의 금고", "판매로 200,000골드 벌기", QuestGoalType.EarnFromSales, 200000, "", 4000, "gold", QuestKind.Main, 18, "M18_Catch", 2000, 0f, ""),
-        // Lv.19 → 20 해달 왕국 (9,000)
-        ("M19_Decor", "main_lv19_decor", "모두의 광장", "가구나 장난감 8개 놓기", QuestGoalType.PlaceDecor, 8, "", 3000, "item:Decor/피크닉 매트", QuestKind.Main, 19, "M18_Sales", 2000, 0f, ""),
-        ("M19_Mine", "main_lv19_mine", "보물 광산", "광산에서 광석 1,000개 캐기", QuestGoalType.Mine, 1000, "Ore", 4000, "item:Mining/다이아몬드", QuestKind.Main, 19, "M19_Decor", 2300, 0f, ""),
-        ("M19_Harvest", "main_lv19_harvest", "끝없는 풍년", "작물 4,000개 수확하기", QuestGoalType.Harvest, 4000, "Crops", 4000, "item:Farming/당근", QuestKind.Main, 19, "M19_Mine", 2300, 0f, ""),
-        ("M19_Sales", "main_lv19_sales", "왕국의 전설", "판매로 300,000골드 벌기", QuestGoalType.EarnFromSales, 300000, "", 5000, "gold", QuestKind.Main, 19, "M19_Harvest", 2400, 0f, ""),
+        // Lv.18~22: 이미 있는 뒷이야기를 메인으로 안내 — 갱도 3 · 4층 → 가스 사건(약초 · 원인 · 병원) → 마을 길드 → 성 → 황금 흙 · 길드 지부 → 갱도 5층.
+        //   층 · 곡괭이 · 흙은 기록(발전)으로 다시 셈: MineMazeRules.FloorClearedDevelopment · PickaxeDevelopment, SettlementManager.FarmSoilDevelopment
+        // Lv.18 → 19 깊은 갱도의 걱정 (7,700): 지하 4층(Lv.18 · 곡괭이 4단계)에 들어가면 또박이의 걱정이 시작됨 (MineCommunityState.Discover)
+        ("M18_Floor3", "main_lv18_floor3", "지하 3층 정복", "오래된 갱도 지하 3층의 돌을 모두 부수기", QuestGoalType.Milestone, 1, "", 2000, "place:ICON_Place_Mine", QuestKind.Main, 18, "M17_Archive", 1200, 0f, MineMazeRules.FloorClearedDevelopment(3)),
+        ("M18_Pickaxe", "main_lv18_pickaxe", "더 단단한 곡괭이", "갱도 작업대에서 4단계 곡괭이 만들기", QuestGoalType.Milestone, 1, "", 2000, "place:ICON_Place_Mine", QuestKind.Main, 18, "M18_Floor3", 1000, 0f, MineMazeRules.PickaxeDevelopment(4)),
+        ("M18_Concern", "main_lv18_concern", "또박이의 걱정", "지하 4층에 들어가 보고, 또박이의 걱정 들어 주기", QuestGoalType.Milestone, 1, "", 2000, "otter:ICON_Otter_Cast_Sailor", QuestKind.Main, 18, "M18_Pickaxe", 1500, 0f, "mine_herbs_open"),
+        ("M18_Herbs", "main_lv18_herbs", "주민들을 위한 약초", "요정 약초를 모아 주민들 돌봐 주기", QuestGoalType.Milestone, 1, "", 3000, "npc:Fairy", QuestKind.Main, 18, "M18_Concern", 2000, 0f, "mine_temporary_clinic"),
+        ("M18_Ore", "main_lv18_ore", "깊은 곳의 광석", "광산에서 광석 300개 캐기", QuestGoalType.Mine, 300, "Ore", 3000, "item:Mining/다이아몬드", QuestKind.Main, 18, "M18_Herbs", 2000, 0f, ""),
+        // Lv.19 → 20 다시 평온해진 마을 (9,000)
+        ("M19_Source", "main_lv19_source", "깊은 갱도의 원인", "갱도 깊은 곳에서 가스의 원인 없애기", QuestGoalType.Milestone, 1, "", 3000, "place:ICON_Place_Mine", QuestKind.Main, 19, "M18_Ore", 2000, 0f, "mine_source_removed"),
+        ("M19_Hospital", "main_lv19_hospital", "마을에 남을 병원", "광장에 병원 짓기", QuestGoalType.Milestone, 1, "", 3000, "building:Hospital", QuestKind.Main, 19, "M19_Source", 2000, 0f, MineCommunityState.HospitalDevelopment),
+        ("M19_Guild", "main_lv19_guild", "함께 세우는 마을 길드", "게시판 부탁: 마을회관을 마을 길드로 넓히기", QuestGoalType.Milestone, 1, "", 3000, "building:VillageGuild", QuestKind.Main, 19, "M19_Hospital", 2000, 0f, CastleRules.GuildBuilt),
+        ("M19_Thanks", "main_lv19_thanks", "요정 나라에 보내는 답례", "요정 나라에 답례 보내기", QuestGoalType.Milestone, 1, "", 3000, "npc:Fairy", QuestKind.Main, 19, "M19_Guild", 1500, 0f, "mine_fairy_trade"),
+        ("M19_GoldenCarrot", "main_lv19_golden_carrot", "반짝이는 당근", "황금 당근 20개 수확하기", QuestGoalType.Harvest, 20, "only:Farming/황금 당근", 3000, "item:Farming/황금 당근", QuestKind.Main, 19, "M19_Thanks", 1500, 0f, ""),
+        // Lv.20 → 21 왕국의 성 (10,400): 질서도가 성 기준(80)에 닿으면 게시판에 "왕국의 성" (CastleRules)
+        ("M20_CastleReady", "main_lv20_castle_ready", "성을 세울 준비", "구역을 정돈해 질서도 80 채우기", QuestGoalType.Milestone, 1, "", 3000, "settle:ICON_TownHall", QuestKind.Main, 20, "M19_GoldenCarrot", 2400, 0f, CastleRules.Ready),
+        ("M20_Castle", "main_lv20_castle", "왕국의 성", "게시판 부탁: 성 짓기", QuestGoalType.Milestone, 1, "", 5000, "building:Castle", QuestKind.Main, 20, "M20_CastleReady", 3000, 0f, CastleRules.Built),
+        ("M20_GoldenSoil", "main_lv20_golden_soil", "황금 흙", "밭 칸 하나를 황금 흙으로 바꾸기", QuestGoalType.Milestone, 1, "", 3000, "place:ICON_Place_Farm", QuestKind.Main, 20, "M20_Castle", 2500, 0f, SettlementManager.FarmSoilDevelopment(2)),
+        ("M20_Sales", "main_lv20_sales", "성의 살림", "판매로 50,000골드 벌기", QuestGoalType.EarnFromSales, 50000, "", 3000, "gold", QuestKind.Main, 20, "M20_GoldenSoil", 2500, 0f, ""),
+        // Lv.21 → 22 길드 지부 (11,900): 지부는 성을 지은 뒤 상업 지역에 (SettlementSetup.GuildBranch)
+        ("M21_Branch", "main_lv21_branch", "길드 지부", "게시판 부탁: 상업 지역에 길드 지부 짓기", QuestGoalType.Milestone, 1, "", 4000, "building:GuildBranch", QuestKind.Main, 21, "M20_Sales", 3000, 0f, "guild_branch_built"),
+        ("M21_Pickaxe", "main_lv21_pickaxe", "전설의 곡괭이", "갱도 작업대에서 5단계 곡괭이 만들기", QuestGoalType.Milestone, 1, "", 3000, "place:ICON_Place_Mine", QuestKind.Main, 21, "M21_Branch", 2000, 0f, MineMazeRules.PickaxeDevelopment(5)),
+        ("M21_Floor4", "main_lv21_floor4", "지하 4층 정복", "오래된 갱도 지하 4층의 돌을 모두 부수기", QuestGoalType.Milestone, 1, "", 4000, "place:ICON_Place_Mine", QuestKind.Main, 21, "M21_Pickaxe", 3000, 0f, MineMazeRules.FloorClearedDevelopment(4)),
+        ("M21_GoldenPotato", "main_lv21_golden_potato", "반짝이는 감자", "황금 감자 20개 수확하기", QuestGoalType.Harvest, 20, "only:Farming/황금 감자", 3000, "item:Farming/황금 감자", QuestKind.Main, 21, "M21_Floor4", 2000, 0f, ""),
+        ("M21_Catch", "main_lv21_catch", "바다의 단골", "물고기 150마리 낚기", QuestGoalType.Catch, 150, "Fish", 3000, "item:Fishing/고등어", QuestKind.Main, 21, "M21_GoldenPotato", 1900, 0f, ""),
+        // Lv.22 → 23 갱도의 끝 (13,500)
+        ("M22_Floor5", "main_lv22_floor5", "지하 5층 정복", "오래된 갱도 가장 깊은 지하 5층의 돌을 모두 부수기", QuestGoalType.Milestone, 1, "", 6000, "place:ICON_Place_Mine", QuestKind.Main, 22, "M21_Catch", 4500, 0f, MineMazeRules.FloorClearedDevelopment(5)),
+        ("M22_Mine", "main_lv22_mine", "보물 광맥", "광산에서 광석 500개 캐기", QuestGoalType.Mine, 500, "Ore", 4000, "item:Mining/다이아몬드", QuestKind.Main, 22, "M22_Floor5", 3000, 0f, ""),
+        ("M22_Harvest", "main_lv22_harvest", "성의 곳간", "작물 1,000개 수확하기", QuestGoalType.Harvest, 1000, "Crops", 4000, "item:Farming/딸기", QuestKind.Main, 22, "M22_Mine", 3000, 0f, ""),
+        ("M22_Sales", "main_lv22_sales", "왕국의 금고", "판매로 100,000골드 벌기", QuestGoalType.EarnFromSales, 100000, "", 4000, "gold", QuestKind.Main, 22, "M22_Harvest", 3000, 0f, ""),
+        // Lv.23~49: 아래 LateMains가 만듦
+        // 예전 Lv.18~19 누적 메인 (뒷이야기를 메인에 넣으며 뺌): 도전으로 남김
+        ("M18_Harvest", "main_lv18_harvest", "왕국의 곳간", "작물 2,500개 수확하기", QuestGoalType.Harvest, 2500, "Crops", 3000, "item:Farming/딸기", QuestKind.Challenge, 18, "M14_Harvest", 2200, 0f, ""),
+        ("M19_Harvest", "main_lv19_harvest", "끝없는 풍년", "작물 4,000개 수확하기", QuestGoalType.Harvest, 4000, "Crops", 4000, "item:Farming/당근", QuestKind.Challenge, 19, "M18_Harvest", 2300, 0f, ""),
+        ("M18_Upgrade", "main_lv18_upgrade", "최고의 설비", "생산 업그레이드 3회", QuestGoalType.Upgrade, 3, "", 2500, "place:ICON_Place_Mine", QuestKind.Challenge, 18, "", 1500, 0f, ""),
+        ("M18_Catch", "main_lv18_catch", "바다의 왕", "물고기 250마리 낚기", QuestGoalType.Catch, 250, "Fish", 3000, "item:Fishing/고등어", QuestKind.Challenge, 18, "", 2000, 0f, ""),
+        ("M18_Sales", "main_lv18_sales", "해달 왕국의 금고", "판매로 200,000골드 벌기", QuestGoalType.EarnFromSales, 200000, "", 4000, "gold", QuestKind.Challenge, 18, "M14_Sales", 2000, 0f, ""),
+        ("M19_Sales", "main_lv19_sales", "왕국의 전설", "판매로 300,000골드 벌기", QuestGoalType.EarnFromSales, 300000, "", 5000, "gold", QuestKind.Challenge, 19, "M18_Sales", 2400, 0f, ""),
+        ("M19_Decor", "main_lv19_decor", "모두의 광장", "가구나 장난감 8개 놓기", QuestGoalType.PlaceDecor, 8, "", 3000, "item:Decor/피크닉 매트", QuestKind.Challenge, 19, "", 2000, 0f, ""),
+        ("M19_Mine", "main_lv19_mine", "보물 광산", "광산에서 광석 1,000개 캐기", QuestGoalType.Mine, 1000, "Ore", 4000, "item:Mining/다이아몬드", QuestKind.Challenge, 19, "M13_Mine", 2300, 0f, ""),
 
         // 도전: 예전 누적 체인 (골드 + 예전 경험치). 첫 단계가 메인으로 옮겨 간 체인은 그 메인을 앞 단계로 둔다
         ("Main_Harvest_1", "main_harvest_1", "내가 키운 첫 수확", "작물 5개 수확하기", QuestGoalType.Harvest, 5, "Crops", 50, "item:Farming/당근", QuestKind.Challenge, 1, "", 40, 0f, ""),
@@ -230,6 +260,82 @@ public static class QuestSetup
         ("Daily_Catch", "daily_catch", "오늘의 낚시", "물고기 3마리 낚기", QuestGoalType.Catch, 3, "Fish", 150, "item:Fishing/고등어", QuestKind.Daily, 9, "", 0, 10f, ""),
         ("Daily_Sales", "daily_sales", "오늘의 장사", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 200, "gold", QuestKind.Daily, 9, "", 0, 10f, ""),
     };
+
+    // Lv.23~49 왕국 생활 (최고 Lv.50): 새 콘텐츠가 붙기 전까지 레벨마다 4개 — 오늘의 일일 모두 → 테마 둘(농사 · 바다 · 광산 · 꾸미기 차례) → 장사.
+    // 목표 수치는 레벨마다 늘고, 경험치는 그 레벨 필요 경험치(ProgressionSetup)를 20 · 30 · 30 · 나머지로 나눔. Docs/레벨별_메인퀘스트.md 2장
+    internal const int LateMainFirstLevel = 23;
+    internal const int LateMainLastLevel = 49;
+    private const string LateMainStart = "M22_Sales";
+
+    private static readonly string[] DailyTitles = { "바쁜 하루", "부지런한 왕국", "오늘도 힘차게", "해달들의 하루", "알찬 하루", "모두의 일과", "왕국의 일과" };
+    private static readonly string[] SalesTitles = { "성의 장부", "번창하는 시장", "왕국의 보물 창고", "큰 장날", "황금빛 장사", "소문난 상인", "왕국의 부자" };
+    // 테마별 (첫째 목표, 둘째 목표) 제목 — 같은 테마가 돌아올 때마다 다음 제목
+    private static readonly string[][] ThemeTitles =
+    {
+        new[] { "풍성한 밭", "가득 찬 곳간", "밭의 노래", "들판의 축제", "황금 들녘", "넉넉한 수확", "농부의 자랑" },
+        new[] { "반짝이는 당근밭", "황금 당근 잔치", "당근 부자", "빛나는 당근", "당근 축제", "황금빛 당근", "당근 왕국" },
+        new[] { "바다의 선물", "그물 가득", "물고기 축제", "바다의 단골", "만선의 깃발", "파도 위의 해달", "바다의 왕" },
+        new[] { "바닷가 꾸미기", "모래사장 놀이터", "파도 소리 광장", "해변 산책로", "바다 쉼터", "조개 정원", "물결 광장" },
+        new[] { "깊은 광맥", "광석 수레", "반짝이는 갱도", "보석 상자", "광부의 노래", "끝없는 광맥", "광산의 전설" },
+        new[] { "광장 정리", "부지런한 손길", "깨끗한 왕국", "자재 모으기", "광장 산책", "손이 바쁜 날", "알뜰한 살림" },
+        new[] { "아늑한 광장", "새 단장", "모두의 쉼터", "꽃길 광장", "축제 준비", "광장의 밤", "왕국의 정원" },
+        new[] { "반짝이는 감자밭", "황금 감자 잔치", "감자 부자", "빛나는 감자", "감자 축제", "황금빛 감자", "감자 왕국" },
+    };
+
+    // 표 + Lv.23~49 메인 (정적 필드는 적힌 순서대로 초기화 — TableQuests · 제목 표 뒤에 있어야 함)
+    private static readonly (string asset, string id, string title, string description, QuestGoalType type, int goal, string filter,
+        int reward, string icon, QuestKind kind, int level, string prerequisite, int exp, float expPercent, string target)[] Quests = WithLateMains();
+
+    private static (string, string, string, string, QuestGoalType, int, string, int, string, QuestKind, int, string, int, float, string)[] WithLateMains()
+    {
+        var all = new List<(string, string, string, string, QuestGoalType, int, string, int, string, QuestKind, int, string, int, float, string)>(TableQuests);
+        string previous = LateMainStart;
+        for (int level = LateMainFirstLevel; level <= LateMainLastLevel; level++)
+        {
+            int n = level - LateMainFirstLevel, theme = n % 4, round = n / 4;
+            int need = ProgressionSetup.ExpToNext(level);
+            int daily = Round50(need * 0.2f), first = Round50(need * 0.3f), second = Round50(need * 0.3f);
+            int sales = need - daily - first - second;
+            int gold = 1500 + 150 * n;
+
+            var rows = new List<(string key, string title, string description, QuestGoalType type, int goal, string filter, string icon, int exp)>
+            {
+                ("Daily", DailyTitles[round % DailyTitles.Length], "오늘의 일일 퀘스트 3개 모두 끝내기", QuestGoalType.CompleteDaily, 3, "", "nav:ICON_Nav_Quest", daily),
+            };
+            rows.Add(Theme(theme * 2, round, n, first));
+            rows.Add(Theme(theme * 2 + 1, round, n, second));
+            int earn = 60000 + 6000 * n;
+            rows.Add(("Sales", SalesTitles[round % SalesTitles.Length], $"판매로 {earn:N0}골드 벌기", QuestGoalType.EarnFromSales, earn, "", "gold", sales));
+
+            foreach (var row in rows)
+            {
+                string asset = $"M{level}_{row.key}";
+                all.Add((asset, $"main_lv{level}_{row.key.ToLowerInvariant()}", row.title, row.description, row.type, row.goal, row.filter,
+                    row.key == "Daily" ? gold / 2 : gold, row.icon, QuestKind.Main, level, previous, row.exp, 0f, ""));
+                previous = asset;
+            }
+        }
+        return all.ToArray();
+    }
+
+    // 테마 목표 하나 (slot: 농사 0 · 1, 바다 2 · 3, 광산 4 · 5, 꾸미기 6 · 7)
+    private static (string, string, string, QuestGoalType, int, string, string, int) Theme(int slot, int round, int n, int exp)
+    {
+        string title = ThemeTitles[slot][round % ThemeTitles[slot].Length];
+        switch (slot)
+        {
+            case 0: { int g = 600 + 60 * n; return ("Harvest", title, $"작물 {g:N0}개 수확하기", QuestGoalType.Harvest, g, "Crops", "item:Farming/딸기", exp); }
+            case 1: { int g = 30 + 3 * n; return ("GoldenCarrot", title, $"황금 당근 {g:N0}개 수확하기", QuestGoalType.Harvest, g, "only:Farming/황금 당근", "item:Farming/황금 당근", exp); }
+            case 2: { int g = 120 + 12 * n; return ("Catch", title, $"물고기 {g:N0}마리 낚기", QuestGoalType.Catch, g, "Fish", "item:Fishing/고등어", exp); }
+            case 3: return ("Decor", title, "가구나 장난감 4개 놓기", QuestGoalType.PlaceDecor, 4, "", "item:Decor/나무 벤치", exp);
+            case 4: { int g = 300 + 30 * n; return ("Mine", title, $"광산에서 광석 {g:N0}개 캐기", QuestGoalType.Mine, g, "Ore", "item:Mining/다이아몬드", exp); }
+            case 5: { int g = 40 + 2 * n; return ("Gather", title, $"광장에서 재료 {g:N0}개 줍기", QuestGoalType.Gather, g, "", "item:Mining/목재", exp); }
+            case 6: return ("Decor", title, "가구나 장난감 6개 놓기", QuestGoalType.PlaceDecor, 6, "", "item:Decor/피크닉 매트", exp);
+            default: { int g = 30 + 3 * n; return ("GoldenPotato", title, $"황금 감자 {g:N0}개 수확하기", QuestGoalType.Harvest, g, "only:Farming/황금 감자", "item:Farming/황금 감자", exp); }
+        }
+    }
+
+    private static int Round50(float value) => Mathf.RoundToInt(value / 50f) * 50;
 
     #region 데이터
 

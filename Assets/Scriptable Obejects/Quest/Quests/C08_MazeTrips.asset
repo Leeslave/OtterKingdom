@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: C08_MazeTrips
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: challenge_maze_trips_3
-  _title: "\uae61\uae61\uc774\uc758 \ud0d0\ud5d8 \ub3d9\ub8cc"
-  _description: "\uc624\ub798\ub41c \uac31\ub3c4\uc5d0\uc11c \ud55c \uce35\uc758 \ub3cc\uc744 \ubaa8\ub450 \ubd80\uc218\uace0 \ub098\uc624\uae30 \ub204\uc801 3\ud68c"
-  _sortOrder: 148
+  _title: "\uAE61\uAE61\uC774\uC758 \uD0D0\uD5D8 \uB3D9\uB8CC"
+  _description: "\uC624\uB798\uB41C \uAC31\uB3C4\uC5D0\uC11C \uD55C \uCE35\uC758
+    \uB3CC\uC744 \uBAA8\uB450 \uBD80\uC218\uACE0 \uB098\uC624\uAE30 \uB204\uC801
+    3\uD68C"
+  _sortOrder: 171
   _kind: 2
   _requiredLevel: 8
   _prerequisite: {fileID: 0}

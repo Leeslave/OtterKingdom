@@ -15,10 +15,10 @@ MonoBehaviour:
   _questId: main_lv19_harvest
   _title: "\uB05D\uC5C6\uB294 \uD48D\uB144"
   _description: "\uC791\uBB3C 4,000\uAC1C \uC218\uD655\uD558\uAE30"
-  _sortOrder: 101
-  _kind: 0
+  _sortOrder: 119
+  _kind: 2
   _requiredLevel: 19
-  _prerequisite: {fileID: 11400000, guid: a69697afe5d67034e8ba6633b0413d53, type: 2}
+  _prerequisite: {fileID: 11400000, guid: c9798e1ce7686ef4884e438d8684338e, type: 2}
   _icon: {fileID: -5859083586626064994, guid: 125917c9ef5a91e478059e3954180ecc, type: 3}
   _goalType: 0
   _goal: 4000

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: C08_Decor
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: challenge_lv8_decor
-  _title: "\uc0c8 \ub545\uc758 \ub180\uc774\ud130"
-  _description: "\uc7a5\ub09c\uac10 1\uac1c \ub193\uae30"
-  _sortOrder: 142
+  _title: "\uC0C8 \uB545\uC758 \uB180\uC774\uD130"
+  _description: "\uC7A5\uB09C\uAC10 1\uAC1C \uB193\uAE30"
+  _sortOrder: 165
   _kind: 2
   _requiredLevel: 8
   _prerequisite: {fileID: 0}
@@ -27,7 +27,7 @@ MonoBehaviour:
   _item: {fileID: 0}
   _constructions: []
   _builderOnly: 0
-  _target:
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 300
   _expReward: 70

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c348f3a137c6fe41b34b013fc2a0112, type: 3}
+  m_Name: M37_Daily
+  m_EditorClassIdentifier: OtterKingdom::QuestDefinition
+  _questId: main_lv37_daily
+  _title: "\uD574\uB2EC\uB4E4\uC758 \uD558\uB8E8"
+  _description: "\uC624\uB298\uC758 \uC77C\uC77C \uD018\uC2A4\uD2B8 3\uAC1C \uBAA8\uB450
+    \uB05D\uB0B4\uAE30"
+  _sortOrder: 232
+  _kind: 0
+  _requiredLevel: 37
+  _prerequisite: {fileID: 11400000, guid: 46a44754f94a67d4fb7b5a3c4e9c5fdd, type: 2}
+  _icon: {fileID: 21300000, guid: ac26a7b75623abc4780199c33d6e9451, type: 3}
+  _goalType: 15
+  _goal: 3
+  _itemFilter: {fileID: 0}
+  _collectionTab: {fileID: 0}
+  _item: {fileID: 0}
+  _constructions: []
+  _builderOnly: 0
+  _target: 
+  _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
+  _rewardAmount: 1800
+  _expReward: 9900
+  _expPercentOfLevel: 0

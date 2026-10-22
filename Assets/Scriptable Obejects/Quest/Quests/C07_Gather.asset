@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: C07_Gather
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: challenge_lv7_gather
-  _title: "\ub9c8\uc744\uc758 \uc790\uc7ac \ub2f4\ub2f9"
-  _description: "\uad11\uc7a5\uc5d0\uc11c \uc7ac\ub8cc 30\uac1c \uc90d\uae30"
-  _sortOrder: 141
+  _title: "\uB9C8\uC744\uC758 \uC790\uC7AC \uB2F4\uB2F9"
+  _description: "\uAD11\uC7A5\uC5D0\uC11C \uC7AC\uB8CC 30\uAC1C \uC90D\uAE30"
+  _sortOrder: 164
   _kind: 2
   _requiredLevel: 7
   _prerequisite: {fileID: 11400000, guid: b4e13fb1f81f4858a1a283d486683cc7, type: 2}
@@ -27,7 +27,7 @@ MonoBehaviour:
   _item: {fileID: 0}
   _constructions: []
   _builderOnly: 0
-  _target:
+  _target: 
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 250
   _expReward: 60
