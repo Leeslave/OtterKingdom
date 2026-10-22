@@ -39,16 +39,16 @@ public static partial class FishingReworkSetup
         ("fish_goldfish", null, "goldfish", "금붕어", "멸치 떼 사이에서 아주 가끔 반짝여요. 작아도 값이 꽤 나가요.",
             FishRarity.Rare, 180, 0.1f, 0.3f, new Vector2(4f, 30f), new Vector2(3f, 5f), false, 10f, 0.9f, 0.8f),
         ("fish_mackerel", "고등어", null, "", "등에 파도 무늬가 있는 바다의 단골. 해달 식탁의 인기 메뉴.",
-            FishRarity.Common, 0, 0.3f, 0.9f, new Vector2(6f, 34f), new Vector2(4f, 8f), false, 45f, 1.0f, 1.15f),
+            FishRarity.Common, 0, 0.3f, 0.9f, new Vector2(6f, 60f), new Vector2(4f, 8f), false, 45f, 1.0f, 1.15f),
         // 구간 2 (~25m · ~14m · 바닥이 열림)
         ("fish_crab", null, "crab", "꽃게", "바닥을 옆으로 걸어 다녀요. 집게 조심!",
             FishRarity.Common, 35, 0.2f, 0.6f, new Vector2(2f, 26f), new Vector2(0.2f, 0.8f), true, 35f, 0.4f, 0.9f),
         ("fish_moon_jelly", null, "jelly", "달 해파리", "둥실둥실 떠다니는 해파리. 값은 별로지만 자꾸 걸려요.",
-            FishRarity.Common, 12, 0.1f, 0.3f, new Vector2(10f, 36f), new Vector2(3f, 10f), false, 40f, 0.3f, 0.9f),
+            FishRarity.Common, 12, 0.1f, 0.3f, new Vector2(10f, 70f), new Vector2(3f, 10f), false, 40f, 0.3f, 0.9f),
         ("fish_saury", "꽁치", null, "", "가늘고 긴 은빛 물고기. 얕은 물을 빠르게 지나가요.",
-            FishRarity.Common, 0, 0.1f, 0.3f, new Vector2(14f, 40f), new Vector2(3f, 6f), false, 35f, 1.4f, 1.1f),
+            FishRarity.Common, 0, 0.1f, 0.3f, new Vector2(14f, 90f), new Vector2(3f, 6f), false, 35f, 1.4f, 1.1f),
         ("fish_horse_mackerel", "전갱이", null, "", "고등어의 사촌. 조금 더 깊은 데서 무리 지어 다녀요.",
-            FishRarity.Common, 0, 0.2f, 0.6f, new Vector2(10f, 36f), new Vector2(6f, 11f), false, 35f, 1.0f, 1.0f),
+            FishRarity.Common, 0, 0.2f, 0.6f, new Vector2(10f, 60f), new Vector2(6f, 11f), false, 35f, 1.0f, 1.0f),
         ("fish_filefish", null, "filefish", "쥐치", "작은 입으로 오물오물. 거칠한 껍질이 특징.",
             FishRarity.Uncommon, 60, 0.3f, 0.8f, new Vector2(10f, 32f), new Vector2(6f, 11f), false, 30f, 0.8f, 0.9f),
         ("fish_puffer", null, "puffer", "복어", "놀라면 동그랗게 부풀어요. 가시가 있지만 순해요.",
@@ -264,12 +264,15 @@ public static partial class FishingReworkSetup
         cso.FindProperty("_holdReel").floatValue = 2.4f;
         cso.FindProperty("_liftSpeed").floatValue = 3f;
         cso.FindProperty("_sinkSpeed").floatValue = 2.2f;
-        cso.FindProperty("_sinkSpeedPerLevel").floatValue = 0.35f;
+        cso.FindProperty("_sinkSpeedPerLevel").floatValue = 1f;
         cso.FindProperty("_fishTopDepth").floatValue = 2.5f;
-        cso.FindProperty("_hookRadius").floatValue = 0.15f;
+        cso.FindProperty("_hookRadius").floatValue = 0.35f;
         cso.FindProperty("_fishHitScale").floatValue = 0.25f;
         cso.FindProperty("_hookedReel").floatValue = 6.5f;
-        cso.FindProperty("_attractRadius").floatValue = 0f;
+        cso.FindProperty("_attractRadius").floatValue = 1.8f;
+        // 줄이 길어도 한 번 쓸고 오는 데 9초쯤 · 걸린 물고기는 4초쯤 (Docs/낚시_밸런스_시뮬.md)
+        cso.FindProperty("_sweepSeconds").floatValue = 9f;
+        cso.FindProperty("_landSeconds").floatValue = 4f;
         cso.ApplyModifiedPropertiesWithoutUndo();
         EditorUtility.SetDirty(config);
 

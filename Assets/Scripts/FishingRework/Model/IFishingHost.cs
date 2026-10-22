@@ -14,4 +14,10 @@ public interface IFishingHost
 
     /// <summary>낚은 물고기를 가방에 (가득이면 놓아줌)</summary>
     void AddCatch(FishDefinition fish);
+
+    /// <summary>가방에 있는 이 물고기 수 (강화 재료)</summary>
+    int CountFish(FishDefinition fish);
+
+    /// <summary>강화 재료로 가방에서 냄</summary>
+    void TakeFish(FishDefinition fish, int amount);
 }

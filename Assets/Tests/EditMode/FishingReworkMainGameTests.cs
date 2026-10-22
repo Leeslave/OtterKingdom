@@ -36,6 +36,23 @@ public class FishingReworkMainGameTests
         }
 
         public void AddCatch(FishDefinition fish) => Catches.Add(fish);
+
+        public int CountFish(FishDefinition fish)
+        {
+            int n = 0;
+            foreach (var f in Catches)
+            {
+                if (f == fish)
+                    n++;
+            }
+            return n;
+        }
+
+        public void TakeFish(FishDefinition fish, int amount)
+        {
+            for (int i = 0; i < amount; i++)
+                Catches.Remove(fish);
+        }
     }
 
     [SetUp]
@@ -137,9 +154,15 @@ public class FishingReworkMainGameTests
         Assert.IsTrue(model.Hosted);
         Assert.AreEqual(1000, model.Gold);
 
-        int cost = model.NextCost(FishingUpgrade.Line);
+        Assert.IsFalse(model.TryUpgrade(FishingUpgrade.Line), "재료 물고기가 없음");
+        foreach (var cost in model.NextRecipe(FishingUpgrade.Line))
+        {
+            for (int i = 0; i < cost.Amount; i++)
+                host.Catches.Add(cost.Fish);
+        }
         Assert.IsTrue(model.TryUpgrade(FishingUpgrade.Line));
-        Assert.AreEqual(1000 - cost, host.GoldAmount, "강화는 본 게임 골드로");
+        Assert.AreEqual(1000, host.GoldAmount, "강화는 골드 없이 본 게임 가방의 물고기로");
+        Assert.IsEmpty(host.Catches, "재료로 냄");
         Assert.AreEqual(0, save.gold);
 
         // 바늘 길에 물고기를 두고 낚기

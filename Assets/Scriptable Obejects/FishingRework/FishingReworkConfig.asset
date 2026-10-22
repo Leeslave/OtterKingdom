@@ -99,13 +99,17 @@ MonoBehaviour:
   _holdReel: 2.4
   _liftSpeed: 3
   _sinkSpeed: 2.2
-  _sinkSpeedPerLevel: 0.35
+  _sinkSpeedPerLevel: 1
   _fishTopDepth: 2.5
   _hookedReel: 6.5
+  _sweepSeconds: 9
+  _landSeconds: 4
+  _nearFishAhead: 3
+  _nearFishReel: 1.6
   _landDistance: 0.6
-  _hookRadius: 0.15
+  _hookRadius: 0.35
   _fishHitScale: 0.25
-  _attractRadius: 0
+  _attractRadius: 1.8
   _segmentLength: 8
   _layerCaps: 03000000030000000200000002000000
   _layerRegenSeconds:

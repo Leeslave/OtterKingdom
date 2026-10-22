@@ -23,7 +23,7 @@ MonoBehaviour:
   _price: 35
   _minWeight: 0.2
   _maxWeight: 0.6
-  _distance: {x: 10, y: 36}
+  _distance: {x: 10, y: 60}
   _depth: {x: 6, y: 11}
   _nearBottom: 0
   _spawnWeight: 35

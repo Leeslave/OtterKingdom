@@ -195,6 +195,16 @@ public class QuestManager : MonoBehaviour
             AddProgress(quest, QuestProgressRules.From(quest, change));
     }
 
+    /// <summary>골드를 내지 않는 생산 업그레이드 1회 (낚시 도구 강화 — 재료가 물고기). 업그레이드 퀘스트를 1 올림</summary>
+    public void ReportUpgrade()
+    {
+        foreach (var quest in _database.Quests)
+        {
+            if (quest != null && quest.GoalType == QuestGoalType.Upgrade)
+                AddProgress(quest, 1);
+        }
+    }
+
     private void HandleCollectionChanged(CollectionEntry entry, CollectionState state)
     {
         foreach (var quest in _database.Quests)
