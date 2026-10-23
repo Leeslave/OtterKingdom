@@ -272,10 +272,7 @@ public class DecorLayout
 
     #endregion
 
-    private static DecorRotation Normalize(DecorDefinition decor, DecorRotation rotation)
-    {
-        return decor.CanRotate ? rotation : DecorRotation.R0;
-    }
+    private static DecorRotation Normalize(DecorDefinition decor, DecorRotation rotation) => decor.NormalizeRotation(rotation);
 
     private void Occupy(PlacedDecor placed)
     {

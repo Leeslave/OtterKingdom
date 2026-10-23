@@ -225,52 +225,60 @@ public class BuildingTests
     #region 돌리기
 
     [Test]
-    public void RotatedBuilding_FootprintTurnsForOverlap()
+    public void Building_RotateButtonOnlyMirrors()
+    {
+        var house = RotatableHouse();
+        var session = DecorEditSession.ForNew(house, new Vector2Int(2, 2));
+        Assert.IsTrue(session.CanRotate);
+
+        session.Rotate();
+        Assert.AreEqual(DecorRotation.R180, session.Rotation, "누르면 좌우 반전");
+        Assert.AreEqual(new Vector2Int(4, 3), session.Size, "칸은 그대로");
+        session.Rotate();
+        Assert.AreEqual(DecorRotation.R0, session.Rotation, "다시 누르면 원래대로");
+    }
+
+    [Test]
+    public void MirroredBuilding_KeepsFootprintAndDoorstep()
     {
         var house = RotatableHouse();
         var layout = OpenLayout();
 
-        Assert.AreEqual(DecorPlacementResult.Ok, layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R90, out var placed));
-        Assert.AreEqual(DecorRotation.R90, placed.Rotation);
-        Assert.AreEqual(new Vector2Int(3, 4), placed.Size, "4×3 → 3×4");
-        Assert.AreEqual(placed, layout.GetAt(new Vector2Int(4, 5)), "돌린 칸의 위쪽 끝");
-        Assert.IsNull(layout.GetAt(new Vector2Int(5, 2)), "돌리기 전이면 차지했을 칸은 비어 있음");
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R180, out var placed));
+        Assert.AreEqual(DecorRotation.R180, placed.Rotation);
+        Assert.AreEqual(new RectInt(2, 2, 4, 3), placed.Area);
 
-        // 빈 칸이 된 오른쪽에는 놓을 수 있고, 돌린 칸과 겹치면 안 됨
         var toy = Create<DecorDefinition>();
         toy.SetupPlacement(Vector2Int.one, false, null);
-        Assert.AreEqual(DecorPlacementResult.Ok, layout.Check(toy, new Vector2Int(5, 3), DecorRotation.R0));
-        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(toy, new Vector2Int(3, 5), DecorRotation.R0));
-        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(house, new Vector2Int(4, 4), DecorRotation.R0));
-
-        // 옮기면서 다시 돌림 (0도로 돌아오면 다시 4×3)
-        Assert.AreEqual(DecorPlacementResult.Ok, layout.TryMove(placed.InstanceId, new Vector2Int(2, 2), DecorRotation.R180));
-        Assert.AreEqual(new Vector2Int(4, 3), placed.Size);
-        Assert.AreEqual(placed, layout.GetAt(new Vector2Int(5, 2)));
-        Assert.IsNull(layout.GetAt(new Vector2Int(2, 5)));
+        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(toy, new Vector2Int(5, 4), DecorRotation.R0));
+        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(toy, new Vector2Int(5, 1), DecorRotation.R0), "반전한 집도 발밑 아래 줄은 비워 둠");
+        Assert.AreEqual(DecorPlacementResult.Ok, layout.Check(toy, new Vector2Int(6, 1), DecorRotation.R0));
     }
 
     [Test]
-    public void RotatedBuilding_KeepsDoorstepBelow()
+    public void Building_NinetyDegreesBecomeMirrorOrNormal()
     {
         var house = RotatableHouse();
         var layout = OpenLayout();
-        layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R270, out _);
 
-        var toy = Create<DecorDefinition>();
-        toy.SetupPlacement(Vector2Int.one, false, null);
-        Assert.AreEqual(DecorPlacementResult.Occupied, layout.Check(toy, new Vector2Int(4, 1), DecorRotation.R0), "돌린 집도 발밑 아래 줄은 비워 둠");
-        Assert.AreEqual(DecorPlacementResult.Ok, layout.Check(toy, new Vector2Int(5, 1), DecorRotation.R0), "돌린 칸(3칸 폭) 밖은 문 앞이 아님");
+        // 4방향 회전 때 90 · 270도로 놓인 건물: 보이던 모습대로 90도 → 반전, 270도 → 그대로, 칸은 4×3
+        layout.TryPlace(house, new Vector2Int(0, 0), DecorRotation.R90, out var ninety);
+        Assert.AreEqual(DecorRotation.R180, ninety.Rotation);
+        Assert.AreEqual(new Vector2Int(4, 3), ninety.Size);
+        Assert.IsTrue(layout.LoadPlaced(50, house, new Vector2Int(6, 6), DecorRotation.R270));
+        Assert.IsTrue(layout.TryGet(50, out var twoSeventy));
+        Assert.AreEqual(DecorRotation.R0, twoSeventy.Rotation);
+        Assert.AreEqual(new Vector2Int(4, 3), twoSeventy.Size);
     }
 
     [Test]
-    public void RotatedBuilding_SaveRoundTrip()
+    public void MirroredBuilding_SaveRoundTrip()
     {
         var house = RotatableHouse();
         var catalog = Create<DecorCatalog>();
         catalog.Setup(new DecorDefinition[0], new[] { house });
         var layout = OpenLayout();
-        layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R270, out var placed);
+        layout.TryPlace(house, new Vector2Int(2, 2), DecorRotation.R180, out var placed);
 
         var saved = new DecorBoardSaveData { boardId = "plaza" };
         DecorSaveConverter.Write(layout, saved);
@@ -278,9 +286,8 @@ public class BuildingTests
         Assert.AreEqual(0, DecorSaveConverter.Read(JsonUtility.FromJson<DecorBoardSaveData>(JsonUtility.ToJson(saved)), loaded, catalog));
 
         Assert.IsTrue(loaded.TryGet(placed.InstanceId, out var back));
-        Assert.AreEqual(DecorRotation.R270, back.Rotation);
-        Assert.AreEqual(new RectInt(2, 2, 3, 4), back.Area, "불러와도 돌린 칸 그대로");
-        Assert.AreEqual(back, loaded.GetAt(new Vector2Int(4, 5)));
+        Assert.AreEqual(DecorRotation.R180, back.Rotation, "불러와도 반전 그대로");
+        Assert.AreEqual(new RectInt(2, 2, 4, 3), back.Area);
     }
 
     [Test]
@@ -299,7 +306,7 @@ public class BuildingTests
     }
 
     [Test]
-    public void Picture_MirrorsAt90And180_UnlessOwnPicture()
+    public void Picture_MirrorsAt180_UnlessOwnPicture()
     {
         var house = RotatableHouse();
         var finished = CreateSprite();
@@ -307,19 +314,17 @@ public class BuildingTests
         house.SetupPlacement(new Vector2Int(4, 3), true, finished);
 
         Assert.IsFalse(house.FlipsAt(DecorRotation.R0, finished));
-        Assert.IsTrue(house.FlipsAt(DecorRotation.R90, finished));
         Assert.IsTrue(house.FlipsAt(DecorRotation.R180, finished));
-        Assert.IsFalse(house.FlipsAt(DecorRotation.R270, finished));
-        Assert.AreEqual(finished, house.FinishedSprite(DecorRotation.R90));
+        Assert.AreEqual(finished, house.FinishedSprite(DecorRotation.R180));
 
-        // 90도 전용 그림을 넣으면 그 그림은 뒤집지 않고, 공사 단계 그림은 여전히 뒤집음
-        var side = CreateSprite();
+        // 반전 전용 그림을 넣으면 그 그림은 뒤집지 않고, 공사 단계 그림은 여전히 뒤집음
+        var mirrored = CreateSprite();
         var so = new SerializedObject(house);
-        so.FindProperty("_rotationSprites").GetArrayElementAtIndex(1).objectReferenceValue = side;
+        so.FindProperty("_rotationSprites").GetArrayElementAtIndex(2).objectReferenceValue = mirrored;
         so.ApplyModifiedPropertiesWithoutUndo();
-        Assert.AreEqual(side, house.FinishedSprite(DecorRotation.R90));
-        Assert.IsFalse(house.FlipsAt(DecorRotation.R90, side));
-        Assert.IsTrue(house.FlipsAt(DecorRotation.R90, stage));
+        Assert.AreEqual(mirrored, house.FinishedSprite(DecorRotation.R180));
+        Assert.IsFalse(house.FlipsAt(DecorRotation.R180, mirrored));
+        Assert.IsTrue(house.FlipsAt(DecorRotation.R180, stage));
     }
 
     [Test]

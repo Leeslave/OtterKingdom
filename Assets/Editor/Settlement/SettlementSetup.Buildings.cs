@@ -107,7 +107,7 @@ public static partial class SettlementSetup
             var sprite = row.sprite.StartsWith(BuildingArtPrefix)
                 ? ImportP3Sprite(row.sprite, BuildingArtPixelsPerUnit, BuildingArtPivot)
                 : AssetDatabase.LoadAssetAtPath<Sprite>(row.sprite);
-            // 돌릴 수 있음: 칸은 4×3 ↔ 3×4, 그림은 90 · 180도에서 좌우 반전 (BuildingDefinition.FlipsAt)
+            // 돌릴 수 있음: 좌우 반전만 (칸은 그대로, BuildingDefinition.NextRotation)
             building.SetupPlacement(row.footprint, true, sprite);
 
             var bonuses = new List<BuildingBonus>();

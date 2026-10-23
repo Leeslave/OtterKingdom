@@ -52,8 +52,8 @@ public class TraitRequirement
 /// 플레이어가 자리를 골라 짓는 건물 (P4: 작은 집, 특성 건물). 꾸미기 격자에 장난감과 같은 규칙으로 놓이고(칸 크기·겹침·옮기기),
 /// 놓는 순간 비용을 내고 공사가 시작된다. 보관함·가방에는 들어가지 않고 치울 수 없다 (옮기기만).
 /// 놓인 자리(방향 포함)는 꾸미기 세이브, 공사·완성 기록은 정착 세이브(SettlementSaveData.buildings)가 원본이다.
-/// 돌리기: 칸은 90도마다 가로·세로가 바뀌고(4×3 ↔ 3×4), 그림은 옆에서 본 한 장이라 90·180도는 좌우 반전으로 보여준다
-/// (방향별 그림을 넣으면 그 그림). 문 앞 한 줄은 어느 방향이든 발밑 아래 줄. 농장 부품은 정사각형이라 돌리지 않는다
+/// 돌리기: 그림이 옆에서 본 한 장이라 좌우 반전만 한다 (0도 ↔ 180도 = 반전). 칸은 그대로(4×3).
+/// 180도 칸에 방향별 그림을 넣으면 반전 대신 그 그림. 농장 부품은 정사각형이라 돌리지 않는다
 /// </summary>
 [CreateAssetMenu(fileName = "Building", menuName = "Game Data/Settlement/Building")]
 public class BuildingDefinition : DecorDefinition, IDistrictBuilding
@@ -168,8 +168,23 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     public bool IsFarmPart => _farmPart != FarmPartKind.None;
     public bool Instant => _instant;
 
-    /// <summary>방향별 그림이 없을 때 좌우 반전으로 보여줄 방향 (90 · 180도)</summary>
-    public static bool Mirrored(DecorRotation rotation) => rotation == DecorRotation.R90 || rotation == DecorRotation.R180;
+    /// <summary>방향별 그림이 없을 때 좌우 반전으로 보여줄 방향 (180도)</summary>
+    public static bool Mirrored(DecorRotation rotation) => rotation == DecorRotation.R180;
+
+    /// <summary>
+    /// 건물은 0도(그대로)와 180도(좌우 반전)만. 90 · 270도로 저장된 건물(잠깐 있던 4방향 회전)은
+    /// 그때 보이던 모습대로 90도 → 반전, 270도 → 그대로
+    /// </summary>
+    public override DecorRotation NormalizeRotation(DecorRotation rotation)
+    {
+        if (!CanRotate)
+            return DecorRotation.R0;
+        return rotation == DecorRotation.R90 || rotation == DecorRotation.R180 ? DecorRotation.R180 : DecorRotation.R0;
+    }
+
+    /// <summary>회전 버튼 = 좌우 반전</summary>
+    public override DecorRotation NextRotation(DecorRotation rotation) =>
+        NormalizeRotation(rotation) == DecorRotation.R0 ? NormalizeRotation(DecorRotation.R180) : DecorRotation.R0;
 
     /// <summary>이 방향의 완성 그림 (방향별 그림이 없으면 기본 완성 그림)</summary>
     public Sprite FinishedSprite(DecorRotation rotation)

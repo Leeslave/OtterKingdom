@@ -53,11 +53,11 @@ public class DecorEditSession
 
     public void MoveTo(Vector2Int origin) => Origin = origin;
 
-    /// <summary>시계 방향으로 90도 (회전할 수 없는 물건이면 그대로)</summary>
+    /// <summary>다음 방향으로 (장난감은 시계 방향 90도, 건물은 좌우 반전. 회전할 수 없는 물건이면 그대로)</summary>
     public void Rotate()
     {
         if (Decor.CanRotate)
-            Rotation = Rotation.Next();
+            Rotation = Decor.NextRotation(Rotation);
     }
 
     /// <summary>지금 자리에 놓을 수 있는지 (옮기는 중이면 자기 칸은 비어 있는 것으로 봄)</summary>

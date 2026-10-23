@@ -117,6 +117,12 @@ public class DecorDefinition : ScriptableObject
         return WorldSprite;
     }
 
+    /// <summary>놓을 수 있는 방향으로 맞춤 (돌릴 수 없으면 0도)</summary>
+    public virtual DecorRotation NormalizeRotation(DecorRotation rotation) => CanRotate ? rotation : DecorRotation.R0;
+
+    /// <summary>회전 버튼을 눌렀을 때의 다음 방향 (기본: 시계 방향 90도)</summary>
+    public virtual DecorRotation NextRotation(DecorRotation rotation) => NormalizeRotation(rotation.Next());
+
     /// <returns>이 방향 전용 그림 (없으면 null)</returns>
     protected Sprite RotationSprite(DecorRotation rotation)
     {

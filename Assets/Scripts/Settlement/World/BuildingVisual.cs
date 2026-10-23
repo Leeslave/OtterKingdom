@@ -4,7 +4,7 @@ using UnityEngine;
 /// 건물 그림을 차지한 칸에 맞춰 놓는 규칙 (놓인 건물, 꾸미기 미리보기가 함께 씀).
 /// 완성 그림의 가로를 칸 가로(× WidthFill)에 맞추고 아래를 칸 아랫변에 붙인다. 공사 단계 그림도 같은 배율·같은 자리에
 /// 피벗(발밑)을 맞춰 그리므로 단계가 바뀌어도 집이 제자리에 있다 (단계 그림은 완성 그림과 같은 피벗으로 만들어 둠).
-/// 돌린 건물: 90 · 270도는 칸 가로가 좁아져(3칸) 그림도 그만큼 작아지고, 90 · 180도는 좌우 반전 (BuildingDefinition.FlipsAt)
+/// 돌린 건물(180도)은 좌우 반전 (BuildingDefinition.FlipsAt)
 /// </summary>
 public static class BuildingVisual
 {
