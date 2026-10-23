@@ -171,15 +171,12 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     /// <summary>방향별 그림이 없을 때 좌우 반전으로 보여줄 방향 (180도)</summary>
     public static bool Mirrored(DecorRotation rotation) => rotation == DecorRotation.R180;
 
-    /// <summary>
-    /// 건물은 0도(그대로)와 180도(좌우 반전)만. 90 · 270도로 저장된 건물(잠깐 있던 4방향 회전)은
-    /// 그때 보이던 모습대로 90도 → 반전, 270도 → 그대로
-    /// </summary>
+    /// <summary>건물은 0도(그대로)와 180도(좌우 반전)만</summary>
     public override DecorRotation NormalizeRotation(DecorRotation rotation)
     {
         if (!CanRotate)
             return DecorRotation.R0;
-        return rotation == DecorRotation.R90 || rotation == DecorRotation.R180 ? DecorRotation.R180 : DecorRotation.R0;
+        return rotation == DecorRotation.R180 ? DecorRotation.R180 : DecorRotation.R0;
     }
 
     /// <summary>회전 버튼 = 좌우 반전</summary>

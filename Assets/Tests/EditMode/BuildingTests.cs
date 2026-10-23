@@ -256,22 +256,6 @@ public class BuildingTests
     }
 
     [Test]
-    public void Building_NinetyDegreesBecomeMirrorOrNormal()
-    {
-        var house = RotatableHouse();
-        var layout = OpenLayout();
-
-        // 4방향 회전 때 90 · 270도로 놓인 건물: 보이던 모습대로 90도 → 반전, 270도 → 그대로, 칸은 4×3
-        layout.TryPlace(house, new Vector2Int(0, 0), DecorRotation.R90, out var ninety);
-        Assert.AreEqual(DecorRotation.R180, ninety.Rotation);
-        Assert.AreEqual(new Vector2Int(4, 3), ninety.Size);
-        Assert.IsTrue(layout.LoadPlaced(50, house, new Vector2Int(6, 6), DecorRotation.R270));
-        Assert.IsTrue(layout.TryGet(50, out var twoSeventy));
-        Assert.AreEqual(DecorRotation.R0, twoSeventy.Rotation);
-        Assert.AreEqual(new Vector2Int(4, 3), twoSeventy.Size);
-    }
-
-    [Test]
     public void MirroredBuilding_SaveRoundTrip()
     {
         var house = RotatableHouse();
