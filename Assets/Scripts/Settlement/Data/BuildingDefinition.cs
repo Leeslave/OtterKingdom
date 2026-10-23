@@ -83,6 +83,10 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     [Tooltip("왕국에 사는 해달의 특성 수 (모두 채워야 함)")]
     [SerializeField] private List<TraitRequirement> _traits = new List<TraitRequirement>();
 
+    [Tooltip("도감 진척도가 이 % 이상이어야 함 (획득 ÷ 모든 항목, 0 = 조건 없음. 예: 사진관 50)")]
+    [Range(0, 100)]
+    [SerializeField] private int _requiredCollectionPercent;
+
     [Tooltip("지을 수 있는 최대 수 (0 = 제한 없음)")]
     [Min(0)]
     [SerializeField] private int _maxCount;
@@ -111,6 +115,9 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
 
     [Tooltip("다 지으면 요정 상점이 이 건물 앞으로 이사함")]
     [SerializeField] private bool _hostsFairyShop;
+
+    [Tooltip("다 지으면 열리는 발전 (비우면 없음). 해달이 찾아오는 조건 등에 씀 (예: 사진관 → photo_studio_built → 사진가 해달)")]
+    [SerializeField] private string _builtDevelopment;
 
     [Header("생산 (시설)")]
     [Tooltip("다 지으면 이 특성의 해달들이 일해 꾸준히 모아 가방에 넣는 재료 (예: 목공소 = 목재). 비우면 생산 없음")]
@@ -149,6 +156,8 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     public int RequiredLevel => _requiredLevel;
     public string RequiredDevelopment => _requiredDevelopment;
     public IReadOnlyList<TraitRequirement> Traits => _traits;
+    public int RequiredCollectionPercent => Mathf.Clamp(_requiredCollectionPercent, 0, 100);
+    public string BuiltDevelopment => _builtDevelopment;
     public int MaxCount => _maxCount;
     public int Gold => _gold;
     public IReadOnlyList<ItemAmount> Items => _items;
@@ -195,6 +204,13 @@ public class BuildingDefinition : DecorDefinition, IDistrictBuilding
     {
         var own = RotationSprite(rotation);
         return Mirrored(rotation) && (own == null || shown != own);
+    }
+
+    /// <summary>테스트·설정 도구용: 도감 진척도 조건, 다 지으면 열리는 발전</summary>
+    public void SetupCollectionUnlock(int requiredCollectionPercent, string builtDevelopment)
+    {
+        _requiredCollectionPercent = requiredCollectionPercent;
+        _builtDevelopment = builtDevelopment;
     }
 
     /// <summary>테스트·설정 도구용: 구역</summary>

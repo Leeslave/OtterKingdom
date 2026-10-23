@@ -132,6 +132,21 @@ public class Collection
         return count;
     }
 
+    /// <summary>도감 진척도 (%, 내림): 획득한 항목 ÷ 모든 항목. 방문 흔적은 세지 않음. 항목이 없으면 0</summary>
+    public int CollectedPercent(IReadOnlyCollection<CollectionEntry> entries)
+    {
+        if (entries == null)
+            throw new ArgumentNullException(nameof(entries));
+
+        int total = 0;
+        foreach (var entry in entries)
+        {
+            if (entry != null)
+                total++;
+        }
+        return total == 0 ? 0 : Count(entries, CollectionState.Collected) * 100 / total;
+    }
+
     // 상태는 올라가기만 한다 (획득한 것이 방문 흔적으로 내려가지 않게)
     private bool Raise(CollectionEntry entry, CollectionState target)
     {

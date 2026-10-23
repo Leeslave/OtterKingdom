@@ -15,7 +15,14 @@ public static class StoryArrivalRules
         ("otter_toy_yeongcha", FarmCrateCollectedDevelopment, "수확 상자를 나르는 모습에 반해서 왔어요"),
         ("otter_toy_jaejal", "p4_shop_built", "새 가게 소문을 듣고 수다 떨러 왔어요"),
         ("otter_toy_kkomkkom", SettlementManager.FarmSprinklerPlacedDevelopment, "스프링클러를 구경하러 왔어요"),
+        (PhotographerOtterId, PhotoStudioBuiltDevelopment, "사진관이 생겼다는 소식에 카메라를 메고 왔어요"),
     };
+
+    /// <summary>사진가 해달 (사진관을 다 지으면 찾아옴)</summary>
+    public const string PhotographerOtterId = "otter_photographer";
+
+    /// <summary>사진관을 다 지음 (BuildingDefinition.BuiltDevelopment, 도감 진척도 50%부터 지을 수 있음)</summary>
+    public const string PhotoStudioBuiltDevelopment = "photo_studio_built";
 
     /// <summary>광장 농장 수확 상자에서 처음 거둠 (SettlementManager.Farm이 남김)</summary>
     public const string FarmCrateCollectedDevelopment = "farm_crate_collected";

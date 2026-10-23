@@ -8,7 +8,7 @@ using UnityEngine;
 /// - 특수 행동이 없는 일반 리그 7마리: 처음부터 광장을 거니는 해달 (PlazaSettings.otterPrefabs)
 /// - 건설 해달 뚝딱이는 광장 씬의 BuilderOtterController._rigPrefab(야구 해달)로 바꿈 (씬에 직접 연결)
 /// 다른 설정 메뉴(SettlementSetup, OtterCastSetup)가 해달을 다시 채워도 ApplyTo로 리그 모습이 남는다.
-/// 웨이터 · 요리사 · 잠옷 · 사진가 · 청소부 · 음악가는 해금 조건이 정해질 때까지 광장에 나오지 않음.
+/// 사진가는 찰칵이(사진관을 다 지으면 찾아옴)의 모습. 웨이터 · 요리사 · 잠옷 · 청소부 · 음악가는 해금 조건이 정해질 때까지 광장에 나오지 않음.
 /// </summary>
 public static class RiggedLookSetup
 {
@@ -38,6 +38,7 @@ public static class RiggedLookSetup
         ("otter_toy_pongdang", "Diver"),    // 퐁당이 (낚시): 잠수부
         ("otter_toy_sallang", "Flower"),    // 살랑이 (탐험): 꽃 카디건
         ("otter_toy_yeongcha", "Knit"),     // 영차 (운반): 케이블 니트
+        ("otter_photographer", "Photographer"), // 찰칵이 (기록): 사진가 — 사진관을 다 지으면 찾아옴
     };
 
     /// <summary>처음부터 광장을 거니는 일반 리그 (특수 행동 없음)</summary>

@@ -353,6 +353,108 @@ public class BuildingTests
 
     #endregion
 
+    #region 사진관 (도감 진척도)
+
+    [Test]
+    public void CollectedPercent_CountsCollectedOverAllEntries()
+    {
+        var entries = new[] { Entry("a"), Entry("b"), Entry("c"), Entry("d") };
+        var collection = new Collection();
+        Assert.AreEqual(0, collection.CollectedPercent(entries));
+
+        collection.LoadState("a", CollectionState.Collected);
+        collection.LoadState("b", CollectionState.Visited);
+        Assert.AreEqual(25, collection.CollectedPercent(entries), "방문 흔적은 세지 않음");
+        collection.LoadState("b", CollectionState.Collected);
+        Assert.AreEqual(50, collection.CollectedPercent(entries));
+        Assert.AreEqual(33, collection.CollectedPercent(new[] { entries[0], entries[2], entries[3] }), "내림");
+        Assert.AreEqual(0, collection.CollectedPercent(new CollectionEntry[0]), "항목이 없으면 0");
+    }
+
+    [Test]
+    public void PhotoStudio_UnlocksAtHalfCollection()
+    {
+        var studio = PhotoStudio();
+        var settlement = new Settlement();
+
+        Assert.AreEqual(BuildingBlock.Collection, BuildingRules.CheckUnlocked(_config, settlement, studio, 1, 49));
+        Assert.AreEqual(BuildingBlock.None, BuildingRules.CheckUnlocked(_config, settlement, studio, 1, 50), "50%부터");
+        Assert.AreEqual(BuildingBlock.Collection, BuildingRules.CheckStart(_config, settlement, studio, 1, true, 99999, _ => 999, 10));
+        Assert.AreEqual(BuildingBlock.None, BuildingRules.CheckStart(_config, settlement, studio, 1, true, 99999, _ => 999, 80));
+
+        // 조건이 없는 건물은 도감과 상관없음 (특성이 먼저)
+        settlement.UnlockDevelopment("town_hall_built");
+        Assert.AreEqual(BuildingBlock.None, BuildingRules.CheckUnlocked(_config, settlement, _house, 1, 0));
+        Assert.AreEqual(BuildingBlock.Traits, BuildingRules.CheckUnlocked(_config, settlement, _workshop, 8, 0));
+
+        settlement.StartBuilding(1, studio.BuildingId, Now, Now + 1);
+        Assert.AreEqual(BuildingBlock.MaxCount, BuildingRules.CheckUnlocked(_config, settlement, studio, 1, 100), "한 채만");
+    }
+
+    [Test]
+    public void PhotoStudio_BuiltOpensDevelopment_ThenPhotographerArrives()
+    {
+        var studio = PhotoStudio();
+        var photographer = Otter(StoryArrivalRules.PhotographerOtterId, OtterTrait.Recording, true);
+        SetList(_config, "_otters", new Object[] { _lumber, _toy, photographer });
+        var settlement = new Settlement();
+        Func<string, BuildingDefinition> find = id => id == studio.BuildingId ? studio : null;
+
+        BuildingRules.Start(settlement, studio, 3, Now, 60);
+        Assert.AreEqual(0, BuildingRules.UnlockBuiltDevelopments(settlement, find), "짓는 중에는 아직");
+        Assert.IsNull(StoryArrivalRules.Next(_config, settlement));
+
+        BuildingRules.FinishDue(settlement, Now + TimeSpan.FromSeconds(60).Ticks, new List<BuildingRecord>());
+        Assert.AreEqual(1, BuildingRules.UnlockBuiltDevelopments(settlement, find));
+        Assert.AreEqual(0, BuildingRules.UnlockBuiltDevelopments(settlement, find), "다시 해도 같음");
+        Assert.IsTrue(settlement.HasDevelopment(StoryArrivalRules.PhotoStudioBuiltDevelopment));
+
+        Assert.AreEqual(photographer, StoryArrivalRules.ArriveNext(_config, settlement), "다 지으면 찰칵이가 찾아옴");
+        Assert.IsTrue(settlement.TryGetResidentState(photographer.OtterId, out var state));
+        Assert.AreEqual(ResidentState.Visitor, state);
+        Assert.IsNotNull(StoryArrivalRules.ReasonOf(photographer.OtterId));
+    }
+
+    [Test]
+    public void PhotoStudioAssets_HalfCollectionAndPhotographer()
+    {
+        var studio = AssetDatabase.LoadAssetAtPath<BuildingDefinition>("Assets/Scriptable Obejects/Decor/Buildings/Building_PhotoStudio.asset");
+        Assert.IsNotNull(studio, "사진관 건물 에셋");
+        Assert.AreEqual("bld_photo_studio", studio.BuildingId);
+        Assert.AreEqual(50, studio.RequiredCollectionPercent);
+        Assert.AreEqual(StoryArrivalRules.PhotoStudioBuiltDevelopment, studio.BuiltDevelopment);
+        Assert.AreEqual(1, studio.MaxCount);
+        Assert.IsNotNull(studio.WorldSprite);
+        var catalog = AssetDatabase.LoadAssetAtPath<DecorCatalog>("Assets/Scriptable Obejects/Decor/DecorCatalog.asset");
+        CollectionAssert.Contains(catalog.Buildings, studio, "건물 목록에 있음");
+
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
+        var photographer = config.FindOtter(StoryArrivalRules.PhotographerOtterId);
+        Assert.IsNotNull(photographer, "찰칵이");
+        Assert.IsTrue(photographer.IsToyVisitor, "방문객 → 빈 집에 입주");
+        Assert.IsNotNull(photographer.Portrait);
+        Assert.IsNotNull(photographer.PlazaPrefab);
+        Assert.IsNotNull(photographer.CollectionEntry, "도감 해달 탭");
+    }
+
+    private BuildingDefinition PhotoStudio()
+    {
+        var studio = Building("bld_photo_studio", BuildingKind.Facility, 0, "", null, 1, 6000, 0, 0f);
+        studio.SetupCollectionUnlock(50, StoryArrivalRules.PhotoStudioBuiltDevelopment);
+        return studio;
+    }
+
+    private CollectionEntry Entry(string id)
+    {
+        var entry = Create<CollectionEntry>();
+        var so = new SerializedObject(entry);
+        so.FindProperty("_entryId").stringValue = id;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        return entry;
+    }
+
+    #endregion
+
     #region 만들기
 
     private BuildingDefinition Find(string id) => id == _house.BuildingId ? _house : id == _workshop.BuildingId ? _workshop : null;

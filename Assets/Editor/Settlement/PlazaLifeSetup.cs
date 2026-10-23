@@ -128,6 +128,8 @@ public static class PlazaLifeSetup
             "모두 잠든 밤에 찾아와 이것저것 적어 두는 기록 해달이에요.", "게시판", ""),
         ("Entry_OtterToySallang", "otter_toy_sallang", OtterArtFolder, "ICON_Otter_Sallang", "벚꽃 바람을 타고 온 해달",
             "봄바람에 실려 온 살랑살랑 한정 해달이에요.", "벚꽃 바람개비", ""),
+        ("Entry_OtterPhotographer", "otter_photographer", OtterArtFolder, "ICON_Otter_Photographer", "카메라를 멘 사진가 해달",
+            "왕국의 좋은 순간을 찰칵찰칵 사진으로 남기는 기록 해달이에요.", "사진관", ""),
     };
 
     [MenuItem("Tools/Settlement/Apply Plaza Life")]
@@ -368,7 +370,7 @@ public static class PlazaLifeSetup
     }
 
     // 도감 해달 탭 항목 + 해달 연결 + 도감 목록
-    private static void ApplyOtterEntries()
+    internal static void ApplyOtterEntries()
     {
         var otters = LoadOtters();
         var tab = AssetDatabase.LoadAssetAtPath<CollectionTab>(OtterTabPath);
@@ -421,6 +423,7 @@ public static class PlazaLifeSetup
         { "otter_toy_yeongcha", "광장 농장 수확 상자에서 처음 거두면 찾아와요" },
         { "otter_toy_jaejal", "해달 상점을 지으면 찾아와요" },
         { "otter_toy_kkomkkom", "밭 옆에 스프링클러를 놓으면 찾아와요" },
+        { "otter_photographer", "도감을 절반 넘게 채우고 사진관을 지으면 찾아와요" },
     };
 
     private static string ArrivalHint(SettlementOtterDefinition otter) =>

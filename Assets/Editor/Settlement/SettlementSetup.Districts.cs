@@ -44,8 +44,9 @@ public static partial class SettlementSetup
         { "Building_SmallHouse", DistrictType.Residential },
         { "Plot_Chair", DistrictType.Residential },
         { "Plot_RestCorner", DistrictType.Residential },
-        // 상업: 가게 (요정 상점이 함께 이사함)
+        // 상업: 가게 (요정 상점이 함께 이사함), 사진관
         { "Building_Shop", DistrictType.Commercial },
+        { "Building_PhotoStudio", DistrictType.Commercial },
         // 생산: 공방 · 채석장 · 곡물창고 (+ 건설소 · 어업 작업소)
         { "Building_Workshop", DistrictType.Production },
         { "Building_Quarry", DistrictType.Production },

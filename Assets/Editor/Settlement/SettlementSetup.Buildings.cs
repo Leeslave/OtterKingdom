@@ -51,7 +51,18 @@ public static partial class SettlementSetup
         ("Building_Archive", "bld_archive", "기록관", "주민들의 부탁을 적어 두고 챙겨요. 생활 의뢰 보상이 늘어나요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Archive.png", new string[0], null,
             0, P5RecorderSettled, new[] { (OtterTrait.Recording, 2) }, 1, 8000, 100, 80, 0f, 660f),
+        // 도감 진척도 50%부터 (BuildingCollectionUnlocks). 다 지으면 사진가 해달 찰칵이가 찾아옴 (SettlementSetup.PhotoStudio.cs)
+        ("Building_PhotoStudio", "bld_photo_studio", "사진관", "도감을 절반 넘게 채우면 지을 수 있어요. 다 지으면 사진가 해달 찰칵이가 찾아와요.", BuildingKind.Facility,
+            new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "PhotoStudio.png", new string[0], null,
+            0, "", new (OtterTrait, int)[0], 1, 6000, 80, 60, 0f, 540f),
     };
+
+    // 도감 진척도 조건(%)과 다 지으면 열리는 발전 (표에 없으면 조건 · 발전 없음)
+    private static readonly Dictionary<string, (int percent, string builtDevelopment)> BuildingCollectionUnlocks =
+        new Dictionary<string, (int, string)>
+        {
+            { "bld_photo_studio", (50, StoryArrivalRules.PhotoStudioBuiltDevelopment) },
+        };
 
     // 시설의 왕국 보유 효과 (%), 요정 상점이 이사하는지
     private static readonly Dictionary<string, ((KingdomBonusKind kind, int percent)[] bonuses, bool fairy)> BuildingEffects =
@@ -109,6 +120,10 @@ public static partial class SettlementSetup
                 : AssetDatabase.LoadAssetAtPath<Sprite>(row.sprite);
             // 돌릴 수 있음: 좌우 반전만 (칸은 그대로, BuildingDefinition.NextRotation)
             building.SetupPlacement(row.footprint, true, sprite);
+            BuildingCollectionUnlocks.TryGetValue(row.id, out var collectionUnlock);
+            building.SetupCollectionUnlock(collectionUnlock.percent, collectionUnlock.builtDevelopment);
+            // 구역은 SettlementSetup.Districts의 표와 같게 (구역 메뉴를 다시 돌리기 전에 새 건물도 맞는 구역에)
+            building.SetupDistrict(BuildingDistricts.TryGetValue(row.asset, out var district) ? district : DistrictType.None);
 
             var bonuses = new List<BuildingBonus>();
             bool fairy = false;

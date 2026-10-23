@@ -312,6 +312,8 @@ public class DecorModePresenter : MonoBehaviour
                 return ($"Lv.{building.RequiredLevel}", false);
             case BuildingBlock.Traits:
                 return (FirstMissingTrait(building), false);
+            case BuildingBlock.Collection:
+                return ($"도감 {settlement.CollectionPercent}/{building.RequiredCollectionPercent}%", false);
             case BuildingBlock.MaxCount:
                 return ("다 지음", false);
             default:

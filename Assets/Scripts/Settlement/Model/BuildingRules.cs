@@ -13,11 +13,12 @@ public enum BuildingBlock
     NoBuilder,   // 건설 해달이 없음
     Gold,        // 골드가 모자람
     Items,       // 재료가 모자람
+    Collection,  // 도감 진척도가 모자람 (특성 다음, 최대 수 앞에서 확인)
 }
 
 /// <summary>
-/// 자리를 골라 짓는 건물 (P4, 순수 C#): 해금 조건(레벨 · 발전 · 특성 · 최대 수), 동시에 짓는 수, 늘어나는 비용,
-/// 공사 완료, 다 지은 집 → 빈 집 기록 (Settlement.Houses, 자리 ID = bld_{배치 ID})
+/// 자리를 골라 짓는 건물 (P4, 순수 C#): 해금 조건(레벨 · 발전 · 특성 · 도감 진척도 · 최대 수), 동시에 짓는 수, 늘어나는 비용,
+/// 공사 완료, 다 지은 집 → 빈 집 기록 (Settlement.Houses, 자리 ID = bld_{배치 ID}), 다 지으면 열리는 발전
 /// </summary>
 public static class BuildingRules
 {
@@ -29,8 +30,10 @@ public static class BuildingRules
 
     public static string HomeInstanceId(int instanceId) => $"house_bld_{instanceId}";
 
-    /// <summary>이 건물이 열렸는지 (레벨 → 발전 → 특성 → 최대 수 순서로 첫 이유)</summary>
-    public static BuildingBlock CheckUnlocked(SettlementConfig config, Settlement settlement, BuildingDefinition building, int level)
+    /// <summary>이 건물이 열렸는지 (레벨 → 발전 → 특성 → 도감 진척도 → 최대 수 순서로 첫 이유)</summary>
+    /// <param name="collectionPercent">지금 도감 진척도 (%, Collection.CollectedPercent)</param>
+    public static BuildingBlock CheckUnlocked(SettlementConfig config, Settlement settlement, BuildingDefinition building, int level,
+        int collectionPercent = 100)
     {
         if (config == null)
             throw new ArgumentNullException(nameof(config));
@@ -48,6 +51,8 @@ public static class BuildingRules
             if (requirement != null && TraitRules.Count(config, settlement, requirement.Trait) < requirement.Count)
                 return BuildingBlock.Traits;
         }
+        if (collectionPercent < building.RequiredCollectionPercent)
+            return BuildingBlock.Collection;
         if (building.MaxCount > 0 && settlement.CountBuildings(building.BuildingId) >= building.MaxCount)
             return BuildingBlock.MaxCount;
         return BuildingBlock.None;
@@ -57,12 +62,12 @@ public static class BuildingRules
     /// <param name="gold">가진 골드</param>
     /// <param name="owned">가진 아이템 수</param>
     public static BuildingBlock CheckStart(SettlementConfig config, Settlement settlement, BuildingDefinition building, int level,
-        bool hasBuilder, int gold, Func<ItemDefinition, int> owned)
+        bool hasBuilder, int gold, Func<ItemDefinition, int> owned, int collectionPercent = 100)
     {
         if (owned == null)
             throw new ArgumentNullException(nameof(owned));
 
-        var unlocked = CheckUnlocked(config, settlement, building, level);
+        var unlocked = CheckUnlocked(config, settlement, building, level, collectionPercent);
         if (unlocked != BuildingBlock.None)
             return unlocked;
         // 바로 놓이는 것(길 · 첫 밭 칸)은 공사 자리 · 건설 해달이 필요 없음
@@ -141,6 +146,29 @@ public static class BuildingRules
                 added++;
         }
         return added;
+    }
+
+    /// <summary>다 지은 건물이 여는 발전을 연다 (다시 해도 같음. 불러온 뒤에도 맞춤)</summary>
+    /// <returns>새로 연 발전 수</returns>
+    public static int UnlockBuiltDevelopments(Settlement settlement, Func<string, BuildingDefinition> find)
+    {
+        if (settlement == null)
+            throw new ArgumentNullException(nameof(settlement));
+        if (find == null)
+            throw new ArgumentNullException(nameof(find));
+        int opened = 0;
+        foreach (var record in new List<BuildingRecord>(settlement.Buildings))
+        {
+            if (!record.Built)
+                continue;
+            var building = find(record.BuildingId);
+            var development = building != null ? building.BuiltDevelopment : null;
+            if (string.IsNullOrEmpty(development) || settlement.HasDevelopment(development))
+                continue;
+            settlement.UnlockDevelopment(development);
+            opened++;
+        }
+        return opened;
     }
 
     /// <summary>다 지은 시설의 이 효과 합계 (%). 같은 건물은 여러 채여도 한 번만 셈</summary>
