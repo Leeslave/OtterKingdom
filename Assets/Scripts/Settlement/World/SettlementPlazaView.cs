@@ -134,6 +134,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         }
 
         ApplyAll(true);
+        gameObject.AddComponent<PlazaMomentDirector>().Init(this, _manager, _speechBubble, _speechFont, _plazaSettings.otterHeight);
         _manager.OnLoaded += HandleLoaded;
         _manager.OnChanged += HandleChanged;
         _manager.OnDevelopmentUnlocked += HandleDevelopmentUnlocked;
@@ -528,6 +529,9 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         _manager != null && _manager.FarmOpen && _manager.HasFarmWorker && _manager.FarmConfig.FarmerOtterId == otterId;
 
     /// <summary>광장에 나온 해달의 걷기 (없으면 null) — 광장 농장의 농부</summary>
+    /// <summary>광장에 나와 있는 정착 해달 (해달 ID → 걷는 해달). 건설 해달은 따로라 없음</summary>
+    public IEnumerable<KeyValuePair<string, OtterWanderAgent>> SpawnedOtters => _spawned;
+
     public OtterWanderAgent FindAgent(string otterId) =>
         _spawned.TryGetValue(otterId, out var agent) && agent != null ? agent : null;
 

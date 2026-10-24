@@ -445,6 +445,24 @@ public class CollectionTests
     }
 
     [Test]
+    public void MomentRecord_KeepsFirstAndSurvivesSave()
+    {
+        Assert.IsTrue(_collection.AddRecord(_farmer, "보들이", "2026.10.24"));
+        Assert.IsFalse(_collection.AddRecord(_farmer, "영차", "2026.10.25"), "두 번째 포착은 첫 기록을 덮지 않음");
+        _collection.Collect(_farmer);
+
+        var saved = new List<CollectionSaveEntry>();
+        CollectionSaveConverter.Write(_collection, saved);
+        var restored = new Collection();
+        CollectionSaveConverter.Read(saved, restored);
+
+        Assert.IsTrue(restored.TryGetRecord("otter_farmer", out var record));
+        Assert.AreEqual("보들이", record.Companion);
+        Assert.AreEqual("2026.10.24", record.Date);
+        Assert.IsFalse(restored.TryGetRecord("crop_carrot", out _), "기록이 없는 항목은 그대로 없음");
+    }
+
+    [Test]
     public void EveryOtterEntry_HasStoryWithDrawnCuts()
     {
         var database = AssetDatabase.LoadAssetAtPath<CollectionDatabase>("Assets/Scriptable Obejects/Collection/CollectionDatabase.asset");

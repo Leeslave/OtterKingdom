@@ -128,7 +128,8 @@ public class SettlementOtterView : MonoBehaviour
         if (attention)
             _attention.transform.localPosition = _attentionBase + Vector3.up * (Mathf.Abs(Mathf.Sin(Time.time * 4f)) * BobHeight);
 
-        if (PlazaTapInput.TryGetTap(out Vector2 world) && _tapArea.OverlapPoint(world))
+        // 순간포착 카메라 말풍선을 누른 탭은 사진 찍기 (한마디 하지 않음)
+        if (PlazaTapInput.TryGetTap(out Vector2 world) && _tapArea.OverlapPoint(world) && !PlazaMomentDirector.OwnsTap(world))
             Speak(manager);
     }
 

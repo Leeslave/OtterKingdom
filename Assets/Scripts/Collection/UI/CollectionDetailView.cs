@@ -65,7 +65,8 @@ public class CollectionDetailView : MonoBehaviour
         _storyPulse.enabled = isNew;
     }
 
-    public void Show(CollectionEntry entry, CollectionState state)
+    /// <param name="recordLine">순간포착 첫 발견 기록 줄 (함께한 해달 · 날짜). 있으면 두 번째 줄 대신 보임</param>
+    public void Show(CollectionEntry entry, CollectionState state, string recordLine = null)
     {
         if (entry == null)
             throw new ArgumentNullException(nameof(entry));
@@ -92,8 +93,8 @@ public class CollectionDetailView : MonoBehaviour
         string hint = !collected && !string.IsNullOrEmpty(entry.Hint) ? entry.Hint : null;
         _taglineText.text = collected ? entry.Tagline : visited ? _visitedTagline : _unknownTagline;
         _descriptionText.text = collected ? entry.Description : hint ?? "";
-        _extraText.text = collected && tab != null && !string.IsNullOrEmpty(entry.ExtraValue)
-            ? $"{tab.ExtraLabel}: {entry.ExtraValue}"
+        _extraText.text = collected && !string.IsNullOrEmpty(recordLine) ? recordLine
+            : collected && tab != null && !string.IsNullOrEmpty(entry.ExtraValue) ? $"{tab.ExtraLabel}: {entry.ExtraValue}"
             : "";
     }
 

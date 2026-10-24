@@ -33,6 +33,8 @@ public static class CollectionSetup
         // 광물 탭 항목(Entry_Ore* · Entry_Relic*)은 에셋으로만 있음 (광산 · 오래된 갱도에서 캐면 자동 획득)
         ("Tab_Mineral", "Mineral", "광물", 2, "수집", "미획득", "획득 완료", "획득 장소", false, "SIL_Ore_Stone"),
         ("Tab_Otter", "Otter", "해달", 3, "등록", "미발견", "등록 완료", "좋아하는 것", true, "SIL_Otter"),
+        // 순간포착: 사진관을 다 지은 뒤 광장에서 찍은 장면 (PlazaMomentRules · PlazaMomentDirector)
+        ("Tab_Moment", "Moment", "순간", 4, "포착", "미발견", "포착 완료", "함께한 해달", false, "SIL_Moment"),
     };
 
     // (에셋, ID, 탭, 이름(비우면 아이템 이름), 연결 아이템 경로, 그림(비우면 아이템 아이콘), 실루엣, 소개, 설명, 추가 값)
@@ -69,6 +71,26 @@ public static class CollectionSetup
     // 레벨로 해금하는 항목 (기획서 1.1). 지금은 없음: 해달은 정착 진행에서 만나거나 배치할 때
     // SettlementManager가 등록한다 (농부는 밭 개간 뒤, 낚시꾼은 Lv.15 선착장 뒤)
     private static readonly Dictionary<string, int> UnlockLevels = new Dictionary<string, int>();
+
+    // 순간포착 사진: Tools/StoryCuts/build.py가 그림 (MOMENT_<그림>.png). 항목 ID = PlazaMomentRules.All의 EntryId
+    private const string MomentFolder = "Assets/Art/Collection/Moments";
+
+    // (에셋, ID, 제목, 그림, 소개, 설명, 못 찍었을 때 힌트)
+    private static readonly (string asset, string id, string name, string picture, string tagline, string description, string hint)[] Moments =
+    {
+        ("Entry_MomentSleepyBench", "moment_sleepy_bench", "졸음은 옮는 거야", "MOMENT_sleepy_bench",
+            "꾸벅이와 친구가 벤치에서 서로 기대어 졸아요.", "옆에 앉은 친구가 하품을 하더니… 둘 다 꾸벅꾸벅.",
+            "꾸벅이가 벤치에서 졸 때 옆자리가 비어 있으면…"),
+        ("Entry_MomentSecretTable", "moment_secret_table", "우리끼리 비밀인데", "MOMENT_secret_table",
+            "재잘이의 비밀 이야기에 모두 웃음이 터졌어요.", "둘이 배를 잡고 웃는 사이, 옆 해달까지 궁금해서 얼굴을 들이밀었어요.",
+            "재잘이가 식탁에서 친구들과 이야기할 때…"),
+        ("Entry_MomentNightNotes", "moment_night_notes", "오늘의 모델", "MOMENT_night_notes",
+            "끄적이의 수첩 속 그림과 똑같은 표정!", "수첩을 들여다본 친구가 자기 얼굴 낙서를 발견하고 같은 표정을 지었어요.",
+            "밤에 끄적이가 가로등 아래에서 무언가 적고 있을 때…"),
+        ("Entry_MomentLampMap", "moment_lamp_map", "아 이쪽이었구나", "MOMENT_lamp_map",
+            "거꾸로 든 지도를 친구가 바로 돌려 줬어요.", "둘이 함께 지도를 들여다보다 동시에 고개를 끄덕였어요.",
+            "밤에 두리번이 가로등 근처에서 지도를 볼 때…"),
+    };
 
     // (항목 에셋, 컷 수, 대사(컷 번호, 문장)) — 기획서 4장. {이름}은 플레이어 이름
     private static readonly (string entry, int cuts, (int cut, string text)[] lines)[] Stories =
@@ -372,6 +394,7 @@ public static class CollectionSetup
         }
 
         CreateStories();
+        CreateMoments(tabs["Tab_Moment"]);
 
         // 사람이 추가한 항목까지 포함해, 실루엣이 비어 있으면 그림(또는 아이템 아이콘)으로 자동 생성
         SilhouetteGenerator.FillMissing(FindAll<CollectionEntry>(DataFolder + "/Entries"));
@@ -384,6 +407,30 @@ public static class CollectionSetup
         dbSo.ApplyModifiedPropertiesWithoutUndo();
 
         AssetDatabase.SaveAssets();
+    }
+
+    // 순간포착 항목: 새로 만들 때만 문구를 넣고, 그림 · 실루엣은 빈 칸이면 채움
+    private static void CreateMoments(CollectionTab tab)
+    {
+        for (int i = 0; i < Moments.Length; i++)
+        {
+            var m = Moments[i];
+            var (entry, isNew) = LoadOrCreate<CollectionEntry>($"{DataFolder}/Entries/{m.asset}.asset");
+            var so = new SerializedObject(entry);
+            if (isNew)
+            {
+                so.FindProperty("_entryId").stringValue = m.id;
+                so.FindProperty("_tab").objectReferenceValue = tab;
+                so.FindProperty("_displayName").stringValue = m.name;
+                so.FindProperty("_sortOrder").intValue = i;
+                so.FindProperty("_tagline").stringValue = m.tagline;
+                so.FindProperty("_description").stringValue = m.description;
+                so.FindProperty("_hint").stringValue = m.hint;
+            }
+            FillIfEmpty(so, "_portrait", ImportSprite(MomentFolder, m.picture));
+            FillIfEmpty(so, "_silhouette", ImportSprite(SilhouetteFolder, "SIL_Moment"));
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
     }
 
     // 이야기 에셋: 새로 만들 때만 대사를 넣고(사람이 고친 문구 유지), 컷 그림은 파일이 생기면 빈 칸에 채움

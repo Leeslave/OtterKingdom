@@ -92,6 +92,16 @@ public class CollectionManager : MonoBehaviour
         return TryGetEntry(entryId, out var entry) && Collection.Collect(entry);
     }
 
+    /// <summary>순간포착: 등록하고 처음이면 함께한 해달 · 날짜를 남긴다 (다시 찍으면 첫 기록 그대로)</summary>
+    /// <returns>처음 포착했으면 true</returns>
+    public bool CaptureMoment(string entryId, string companion, string date)
+    {
+        if (!TryGetEntry(entryId, out var entry))
+            return false;
+        Collection.AddRecord(entry, companion, date);
+        return Collection.Collect(entry);
+    }
+
     /// <summary>방문 흔적 (오프라인 동안 왔다 감). 이미 방문/등록했거나 방문 흔적을 쓰지 않는 탭이면 무시</summary>
     public bool MarkVisited(string entryId)
     {

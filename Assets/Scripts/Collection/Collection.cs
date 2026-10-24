@@ -8,6 +8,19 @@ public enum CollectionState
     Collected, // 획득 완료 / 등록 완료
 }
 
+/// <summary>순간포착 첫 발견 기록: 함께한 해달 이름과 날짜 (yyyy.MM.dd)</summary>
+public readonly struct CollectionRecord
+{
+    public readonly string Companion;
+    public readonly string Date;
+
+    public CollectionRecord(string companion, string date)
+    {
+        Companion = companion;
+        Date = date;
+    }
+}
+
 /// <summary>
 /// 도감 모델 (순수 C#). 항목 ID별 상태만 가진다. UI와 세이브 형식을 모른다.
 /// 상태는 되돌아가지 않는다: 미획득 → (방문 흔적) → 획득.
@@ -25,7 +38,39 @@ public class Collection
     // 이야기를 본 항목 ID
     private readonly HashSet<string> _watchedStories = new HashSet<string>();
 
+    // 순간포착 기록 (항목 ID → 함께한 해달 · 첫 발견 날짜). 처음 포착한 것만 남는다
+    private readonly Dictionary<string, CollectionRecord> _records = new Dictionary<string, CollectionRecord>();
+
     public IReadOnlyDictionary<string, CollectionState> States => _states;
+
+    /// <summary>첫 발견 기록이 있으면 true</summary>
+    public bool TryGetRecord(string entryId, out CollectionRecord record) => _records.TryGetValue(entryId ?? "", out record);
+
+    /// <summary>
+    /// 처음 포착했을 때의 기록을 남긴다 (이미 있으면 그대로 둠 = 첫 발견만). 항목을 획득으로 올리는 것은 Collect가 한다
+    /// </summary>
+    /// <returns>새로 남겼으면 true</returns>
+    public bool AddRecord(CollectionEntry entry, string companion, string date)
+    {
+        if (entry == null)
+            throw new ArgumentNullException(nameof(entry));
+        if (_records.ContainsKey(entry.EntryId))
+            return false;
+
+        _records[entry.EntryId] = new CollectionRecord(companion ?? "", date ?? "");
+        return true;
+    }
+
+    /// <summary>세이브 복원용</summary>
+    public void LoadRecord(string entryId, string companion, string date)
+    {
+        if (string.IsNullOrEmpty(entryId))
+            throw new ArgumentException("entryId가 비어 있습니다.", nameof(entryId));
+        if (string.IsNullOrEmpty(companion) && string.IsNullOrEmpty(date))
+            return;
+
+        _records[entryId] = new CollectionRecord(companion ?? "", date ?? "");
+    }
 
     public bool IsStoryWatched(string entryId) => _watchedStories.Contains(entryId);
 

@@ -143,8 +143,20 @@ public class CollectionPresenter : MonoBehaviour
         }
 
         var state = _collection.GetState(_selectedEntry);
-        _detailView.Show(_selectedEntry, state);
+        _detailView.Show(_selectedEntry, state, BuildRecordLine(_selectedEntry));
         _detailView.ShowStory(_selectedEntry.HasStory && state == CollectionState.Collected, _collection.HasNewStory(_selectedEntry));
+    }
+
+    // 순간포착: "함께한 해달: 보들이 · 첫 발견 2026.10.24" (기록이 없으면 null → 항목의 고정 문구)
+    private string BuildRecordLine(CollectionEntry entry)
+    {
+        if (!_collection.TryGetRecord(entry.EntryId, out var record))
+            return null;
+
+        string label = entry.Tab != null ? entry.Tab.ExtraLabel : "함께한 해달";
+        string companion = string.IsNullOrEmpty(record.Companion) ? "" : $"{label}: {record.Companion}";
+        string date = string.IsNullOrEmpty(record.Date) ? "" : $"첫 발견 {record.Date}";
+        return companion.Length > 0 && date.Length > 0 ? $"{companion} · {date}" : companion + date;
     }
 
     // "수집 6/12" 또는 해달처럼 방문 흔적을 쓰면 "등록 4/12 · 방문 흔적 3"

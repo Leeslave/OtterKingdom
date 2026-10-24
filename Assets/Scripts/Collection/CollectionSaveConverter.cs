@@ -9,6 +9,9 @@ public class CollectionSaveEntry
     public CollectionState state;
     // 이야기를 봤는지 (옛 세이브에는 없어서 false = 안 본 것으로 시작)
     public bool storyWatched;
+    // 순간포착 첫 발견 기록 (없으면 빈 문자열)
+    public string companion;
+    public string date;
 
     public CollectionSaveEntry() { }
 
@@ -36,7 +39,15 @@ public static class CollectionSaveConverter
         var ids = new List<string>(collection.States.Keys);
         ids.Sort(string.CompareOrdinal);
         foreach (var id in ids)
-            result.Add(new CollectionSaveEntry(id, collection.States[id], collection.IsStoryWatched(id)));
+        {
+            var line = new CollectionSaveEntry(id, collection.States[id], collection.IsStoryWatched(id));
+            if (collection.TryGetRecord(id, out var record))
+            {
+                line.companion = record.Companion;
+                line.date = record.Date;
+            }
+            result.Add(line);
+        }
     }
 
     /// <summary>저장된 상태를 넣는다. 비었거나 잘못된 줄은 건너뛴다.</summary>
@@ -53,6 +64,7 @@ public static class CollectionSaveConverter
             collection.LoadState(line.entryId, line.state);
             if (line.storyWatched)
                 collection.LoadStoryWatched(line.entryId);
+            collection.LoadRecord(line.entryId, line.companion, line.date);
         }
     }
 }

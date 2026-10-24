@@ -5,6 +5,7 @@
     python Tools/StoryCuts/build.py --sheet out.png   # also a contact sheet of what was drawn
 
 Each cut is CUT_<entryId>_<A|B|C>.png (1536x1024), the name CollectionSetup.CreateStories looks for.
+Moment photos (도감 순간 탭) go to Assets/Art/Collection/Moments/MOMENT_<name>.png, plus SIL_Moment.png.
 Otters are the plaza rigs (RiggedLookSetup) drawn by rig.py; places and props are game art (scene.py).
 """
 import argparse
@@ -536,6 +537,82 @@ def yeongcha_b():
     return c.vignette(.4, (80, 30, 10))
 
 
+# ---------------------------------------------------------------------------------------------
+# 순간포착 사진 (도감 순간 탭) — MOMENT_<entryId>.png. 함께한 해달은 그때그때 다르므로 그림 속 동료는 대표 모습
+MOMENTS = s.ROOT / "Assets/Art/Collection/Moments"
+
+
+@cut("moment_sleepy_bench")
+def moment_sleepy_bench():
+    c = Cut(map_bg(*MEADOW, zoom=1.3))
+    c.prop("Plaza/Territory/Forest_Oak_0.png", 1240, 520, 600, shadow=.6)
+    c.prop("Plaza/Props/Prop_Bench.png", 720, 920, width=700, shadow=.9)
+    c.otter("BearPajamaRigV1", 590, 700, 380, shadow=False, sit=1, droop=1, head="sleep", head_angle=.3)
+    c.otter("QuarterRigV14", 860, 745, 370, shadow=False, sit=1, droop=1, head="sleep", head_angle=.3, flip=True)
+    c.zzz(500, 210, 64).zzz(930, 250, 58)
+    c.scatter("Settlement/FX_Leaf.png", (150, 80, 1400, 450), 5, 50, seed=31)
+    return c.grade((255, 220, 170), .3).vignette(.4)
+
+
+@cut("moment_secret_table")
+def moment_secret_table():
+    c = Cut(map_bg(2200, 1900, zoom=1.15))
+    c.otter("HoodieRigV1", 780, 640, 360, head="smile", head_angle=-.25)
+    c.prop("Settlement/Prop_CommunityTable.png", 780, 860, 400, shadow=.9)
+    c.otter("StripeRigV1", 470, 960, 440, head="smile", nearArm=-1.6, head_angle=.18)
+    c.otter("FlowerRigV1", 1090, 960, 440, head="smile", nearArm=WAVE, armOverHead=True, flip=True)
+    c.fx("Settlement/UI_Bubble_Alert.png", [(860, 170)], 110)
+    c.scatter("Settlement/FX_Twinkle.png", (380, 260, 1200, 520), 7, 46, seed=32)
+    return c.vignette(.35)
+
+
+@cut("moment_night_notes")
+def moment_night_notes():
+    c = Cut(map_bg(2100, 1500, zoom=1.4))
+    c.prop("Plaza/Props/Prop_Lamp.png", 1430, 900, 640)
+    model, _ = s.rig.render("QuarterRigV14", 1.0, dict(head="smile"))
+    face = model.crop((0, 0, model.width, int(model.height * .62)))
+    book = s.notebook(440, 300, lines=0)
+    sketch = fit(face, 200)
+    book.alpha_composite(sketch, (int(book.width * .75 - sketch.width / 2), 50))
+    c.otter("QuietRigV1", 290, 980, 520, head="smile", nearArm=-1.1)
+    c.put(book, 640, 640, (.5, .5), angle=-6)
+    c.otter("QuarterRigV14", 1110, 980, 500, head="smile", flip=True)
+    c.night()
+    c.prop("Settlement/Night_Lamp.png", 1430, 900, 640)
+    c.light(1320, 460, 340, strength=.5).light(680, 640, 320, strength=.3)
+    c.scatter("Settlement/FX_Firefly.png", (300, 100, 1500, 700), 8, 40, seed=33)
+    return c.vignette(.45, (15, 15, 45))
+
+
+@cut("moment_lamp_map")
+def moment_lamp_map():
+    c = Cut(map_bg(2100, 1500, zoom=1.4))
+    c.prop("Plaza/Props/Prop_Lamp.png", 210, 900, 640)
+    c.otter("HoodieRigV1", 500, 990, 500, head="smile", nearArm=-1.2, head_angle=.2)
+    c.otter("KnitRigV1", 1260, 990, 500, head="smile", nearArm=-1.2, head_angle=.2, flip=True)
+    chart = s.world_map().resize((560, 548))
+    c.put(s.paper(360, 260, inner=chart.crop((40, 60, 600, 460))), 880, 600, (.5, .5), angle=3)
+    c.night()
+    c.prop("Settlement/Night_Lamp.png", 210, 900, 640)
+    c.light(300, 460, 360, strength=.5).light(880, 600, 340, strength=.35)
+    c.fx("Settlement/FX_Sparkle.png", [(880, 400), (1000, 440, .6), (760, 450, .6)], 70)
+    c.scatter("Settlement/FX_Firefly.png", (300, 100, 1500, 700), 8, 40, seed=34)
+    return c.vignette(.45, (15, 15, 45))
+
+
+def moment_silhouette(path):
+    """도감 순간 탭의 못 찍은 칸: 사진 한 장 실루엣 (다른 실루엣과 같은 짙은 갈색)"""
+    im = Image.new("RGBA", (256, 256))
+    d = ImageDraw.Draw(im)
+    brown = (91, 58, 44, 255)
+    d.rounded_rectangle((28, 52, 228, 214), 16, fill=brown)
+    d.rounded_rectangle((44, 68, 212, 176), 8, fill=(0, 0, 0, 0))
+    d.polygon([(52, 168), (102, 112), (138, 148), (160, 128), (204, 168)], fill=brown)
+    d.ellipse((150, 80, 174, 104), fill=brown)
+    im.rotate(-6, resample=Image.BICUBIC).save(path)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("only", nargs="*")
@@ -545,10 +622,13 @@ def main():
     names = [n for n in CUTS if not args.only or any(n.startswith(o) for o in args.only)]
     drawn = []
     for n in names:
-        path = f"{args.out}/CUT_{n}.png"
+        moment = n.startswith("moment_")
+        path = f"{MOMENTS if moment and args.out == str(OUT) else args.out}/{'MOMENT_' + n[len('moment_'):] if moment else 'CUT_' + n}.png"
         CUTS[n]().save(path)
         drawn.append((n, path))
         print("drew", path)
+    if not args.only or any("moment".startswith(o) or o.startswith("moment") for o in args.only):
+        moment_silhouette(s.ROOT / "Assets/Art/UI/Collection/Silhouettes/SIL_Moment.png")
     if args.sheet:
         tw, th = 384, 256
         cols = 4

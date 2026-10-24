@@ -94,14 +94,49 @@ public class PlazaSpotView : MonoBehaviour
         _taken[seat] = taken;
     }
 
-    private bool HasFreeSeat()
+    private bool HasFreeSeat() => FreeSeats > 0;
+
+    /// <summary>비어 있는 자리 수</summary>
+    public int FreeSeats
     {
-        for (int i = 0; i < _seats.Count; i++)
+        get
         {
-            if (_seats[i] != null && !IsTaken(i))
-                return true;
+            int free = 0;
+            for (int i = 0; i < _seats.Count; i++)
+            {
+                if (_seats[i] != null && !IsTaken(i))
+                    free++;
+            }
+            return free;
         }
-        return false;
+    }
+
+    /// <summary>지금 쓸 수 있고 빈자리가 있는, from에서 가장 가까운 이 종류의 자리 (없으면 null)</summary>
+    public static PlazaSpotView FindNearestOpen(PlazaSpotKind kind, Vector2 from)
+    {
+        PlazaSpotView best = null;
+        float bestDistance = float.MaxValue;
+        foreach (var spot in Opened)
+        {
+            if (spot._kind != kind || !spot.IsOpen || !spot.HasFreeSeat())
+                continue;
+            float distance = Vector2.Distance(from, spot.transform.position);
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                best = spot;
+            }
+        }
+        return best;
+    }
+
+    /// <summary>이 자리 묶음의 빈자리 하나를 예약 (순간포착처럼 정해진 곳으로 부를 때)</summary>
+    public bool TryReserveHere(Func<Vector2, bool> canStand, out PlazaSpotSession session)
+    {
+        if (canStand == null)
+            throw new ArgumentNullException(nameof(canStand));
+        session = null;
+        return IsOpen && TryReserveSeat(canStand, out session);
     }
 
     /// <summary>해달이 다음 행동으로 자리에 갈지 (확률 + 빈자리가 있는지)</summary>

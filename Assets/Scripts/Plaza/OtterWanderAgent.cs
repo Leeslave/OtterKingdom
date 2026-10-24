@@ -84,6 +84,7 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
     private const float HopSeconds = 0.3f;
     private const float HopHeight = 0.45f;
     private PlazaSpotSession spotSession;
+    private float spotMinStay;
     private bool walkingToSpot;
     private SpotPhase spotPhase;
     private float hopTimer;
@@ -146,6 +147,45 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
 
     // Working at the task spot (not walking there).
     public bool IsOnTask => hasTask && CurrentState == State.Play && playSession == null;
+
+    // The chair / table / lamp it is staying at right now (null while walking there, hopping or elsewhere).
+    public PlazaSpotView CurrentSpot => spotSession != null && spotPhase == SpotPhase.Stay ? spotSession.Spot : null;
+
+    // Free to be called somewhere (no task, toy or spot of its own, not walking to one).
+    public bool IsFree => initialized && !hasTask && playSession == null && spotSession == null && !walkingToHabit && !atHabit;
+
+    // Walk to a free seat at this spot and stay at least minStaySeconds (a plaza moment calling it over).
+    public bool TryVisitSpot(PlazaSpotView spot, float minStaySeconds)
+    {
+        if (!initialized || spot == null || hasTask) return false;
+        Vector2 from = transform.position;
+        if (!spot.TryReserveHere(area.IsWalkable, out var session)) return false;
+        EnterIdle(0f);
+        if (!area.TryFindPath(from, session.StandPoint, path) || path.Count == 0)
+        {
+            session.Release();
+            EnterIdle(settings.RollIdleSeconds());
+            return false;
+        }
+        spotSession = session;
+        spotMinStay = minStaySeconds;
+        walkingToSpot = true;
+        BeginWalk(from);
+        return true;
+    }
+
+    // Walk to the nearest open spot of this kind (a plaza moment nudging its main otter to its favourite place).
+    public bool TryVisitSpot(PlazaSpotKind kind)
+    {
+        if (!IsFree || CurrentState == State.Walk) return false;
+        return TryVisitSpot(PlazaSpotView.FindNearestOpen(kind, transform.position), 0f);
+    }
+
+    // Staying at a spot: stay at least this many more seconds (the moment around it is still going on).
+    public void KeepStaying(float seconds)
+    {
+        if (spotSession != null && spotPhase == SpotPhase.Stay) stateTimer = Mathf.Max(stateTimer, seconds);
+    }
 
     // Go to standPoint and stay there facing lookPoint until ClearTask.
     public void AssignTask(Vector2 standPoint, Vector2 lookPoint)
@@ -316,7 +356,8 @@ public class OtterWanderAgent : MonoBehaviour, IPlazaCrowdMember
         CurrentState = State.Play;
         MoveDirection = Vector2.zero;
         LookTarget = spotSession.LookPoint;
-        stateTimer = spotSession.Seconds;
+        stateTimer = Mathf.Max(spotSession.Seconds, spotMinStay);
+        spotMinStay = 0f;
         path.Clear();
         pathIndex = 0;
         if (spotSession.Hops)
