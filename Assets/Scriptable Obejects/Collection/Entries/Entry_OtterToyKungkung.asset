@@ -25,4 +25,4 @@ MonoBehaviour:
   _hint: "\uD574\uB2EC \uC0C1\uC810\uC744 \uC9C0\uC73C\uBA74 \uCC3E\uC544\uC640\uC694"
   _linkedItem: {fileID: 0}
   _unlockLevel: 0
-  _story: {fileID: 0}
+  _story: {fileID: 11400000, guid: c93f3554e16747b493d1ae71287f9616, type: 2}

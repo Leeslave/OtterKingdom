@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterToyYeongcha
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: e7cbc64024d947958feb02a04ee77007, type: 3}
+  - {fileID: 21300000, guid: 04cc9bf856f4405db84c802db21942cd, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "\uc601\ucc28, \uc601\ucc28! \uc218\ud655 \uc0c1\uc790\ub294 \uc800\ud55c\ud14c \ub9e1\uaca8\uc694."
+  - _cut: 0
+    _text: "\ubb34\uac70\uc6b4 \uac78 \ub2e4 \uc62e\uae30\uace0 \ub098\uba74\u2026 \uc5b4\uae68\uac00 \uac1c\uc6b4\ud574\uc694."
+  - _cut: 1
+    _text: "\uc624\ub298 \uc9d0\uc740 \ub05d! {\uc774\ub984}\ub2d8, \uadf8\ub7fc \uac19\uc774 \uc0b0\ucc45\ud574\uc694!"

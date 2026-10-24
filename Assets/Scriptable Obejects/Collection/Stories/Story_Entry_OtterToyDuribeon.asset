@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterToyDuribeon
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: 5d2453b08a1f4817bb3a5a7fe86ff22e, type: 3}
+  - {fileID: 21300000, guid: 69452391d366434e961659e74c749328, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "\ub450\ub9ac\ubc88\ub450\ub9ac\ubc88\u2026 \uc800 \uc232 \ub108\uba38\uc5d0 \uc0c8 \ub545\uc774 \uc788\ub2e4\uace0 \ub4e4\uc5c8\uc5b4\uc694!"
+  - _cut: 1
+    _text: "\uc9c0\ub3c4\uc5d4 \uc544\uc9c1 \ube48 \uacf3\uc774 \ub9ce\uc544\uc694. \uadf8\ub798\uc11c \uc81c\uac00 \ucc44\uc6b0\ub7ec \uc654\uc8e0."
+  - _cut: 1
+    _text: "{\uc774\ub984}\ub2d8, \ub2e4\uc74c\uc5d0 \ub545 \ub113\ud790 \ub550 \uaf2d \ubd88\ub7ec \uc8fc\uc138\uc694. \uae38\uc740 \uc81c\uac00 \ucc3e\uc744\uac8c\uc694!"

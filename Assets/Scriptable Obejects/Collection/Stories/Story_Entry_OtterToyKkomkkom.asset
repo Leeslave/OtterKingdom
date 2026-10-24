@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterToyKkomkkom
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: 32522e9ae08c4549a2247c0e0bfcdbfd, type: 3}
+  - {fileID: 21300000, guid: 1966283102dc4a41b93c1f474143e8d3, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "{\uc774\ub984}\ub2d8, \uc774 \uc2a4\ud504\ub9c1\ud074\ub7ec\u2026 \ub098\uc0ac\uac00 \ubc18 \ubc14\ud034 \ub35c \uc870\uc5ec\uc84c\uc5b4\uc694."
+  - _cut: 0
+    _text: "\ud55c \ubc14\ud034, \ub610 \ud55c \ubc14\ud034\u2026 \uaf3c\uaf3c\ud558\uac8c."
+  - _cut: 1
+    _text: "\ub410\ub2e4! \uc774\uc81c \ubb3c\ubc29\uc6b8\uc774 \ub611\uac19\uc740 \ud06c\uae30\ub85c \ub098\uc640\uc694. \uc138\uc5b4 \ubd24\uac70\ub4e0\uc694!"

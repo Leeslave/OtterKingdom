@@ -444,5 +444,28 @@ public class CollectionTests
         Assert.AreEqual("해달왕님, 해달왕님! 이것 좀 보세요!", line);
     }
 
+    [Test]
+    public void EveryOtterEntry_HasStoryWithDrawnCuts()
+    {
+        var database = AssetDatabase.LoadAssetAtPath<CollectionDatabase>("Assets/Scriptable Obejects/Collection/CollectionDatabase.asset");
+        Assert.IsNotNull(database);
+
+        int otters = 0;
+        foreach (var entry in database.Entries)
+        {
+            if (entry == null || entry.Tab == null || !entry.Tab.SupportsVisits)
+                continue;
+
+            otters++;
+            Assert.IsTrue(entry.HasStory, $"{entry.name}: 이야기가 없음");
+            Assert.Greater(entry.Story.Lines.Count, 0, $"{entry.name}: 대사가 없음");
+            foreach (var cut in entry.Story.Cuts)
+                Assert.IsNotNull(cut, $"{entry.name}: 컷 그림이 빠짐");
+            foreach (var line in entry.Story.Lines)
+                Assert.Less(line.Cut, entry.Story.Cuts.Count, $"{entry.name}: 컷 번호가 컷 목록 밖");
+        }
+        Assert.Greater(otters, 0, "해달 탭 항목이 없음");
+    }
+
     #endregion
 }

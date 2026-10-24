@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterNeighbor
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: e5572384211f4fc3a936e7f366503c8c, type: 3}
+  - {fileID: 21300000, guid: 5e2a7283cb3b4d89a8d44e9a36d53adc, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "\uc601\ucc28\u2026 \uc774\uc0bf\uc9d0\uc740 \uc774\uac8c \ub2e4\uc608\uc694. \uc0c1\uc790 \uc18d\uc5d4 \uc81c\uc77c \uc544\ub07c\ub294 \uc774\ubd88\uc774 \uc788\uc5b4\uc694!"
+  - _cut: 1
+    _text: "\uc0c8 \uc9d1\uc5d0 \ubd88\uc744 \ucf30\ub354\ub2c8\u2026 \ud587\uc0b4 \ub0c4\uc0c8\uac00 \ub098\uc694."
+  - _cut: 1
+    _text: "{\uc774\ub984}\ub2d8, \uc774\uc6c3\uc774 \ub3fc \uc918\uc11c \uace0\ub9c8\uc6cc\uc694. \uc624\ub298 \ubc24\uc740 \ud3ec\uadfc\ud558\uac8c \uc798 \uc218 \uc788\uaca0\uc5b4\uc694."

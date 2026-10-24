@@ -26,4 +26,4 @@ MonoBehaviour:
     \uCC3E\uC544\uC640\uC694"
   _linkedItem: {fileID: 0}
   _unlockLevel: 0
-  _story: {fileID: 0}
+  _story: {fileID: 11400000, guid: 6681745be1734bd285bef6fd8d273c41, type: 2}

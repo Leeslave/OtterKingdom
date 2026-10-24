@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterPhotographer
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: 0b695405fe144d3e9e8f658c8342a07b, type: 3}
+  - {fileID: 21300000, guid: 1a4a25588c80435f8e681f71cf91fc2b, type: 3}
+  - {fileID: 21300000, guid: 82c9aec8d1b745129108c0b6e4d3e470, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "{\uc774\ub984}\ub2d8, \uac70\uae30 \uc11c \ubcf4\uc138\uc694. \uc544\ub2c8, \uc870\uae08\ub9cc \uc67c\ucabd\uc73c\ub85c\u2026"
+  - _cut: 1
+    _text: "\uc790, \uc6c3\uc5b4\uc694! \ud558\ub098, \ub458\u2026 \ucc30\uce75!"
+  - _cut: 2
+    _text: "\uc74c\u2026 \ub208\uc744 \uac10\uc73c\uc168\ub124\uc694. \uad1c\ucc2e\uc544\uc694, \uc774\uac83\ub3c4 \uc88b\uc740 \uc21c\uac04\uc774\uc5d0\uc694!"

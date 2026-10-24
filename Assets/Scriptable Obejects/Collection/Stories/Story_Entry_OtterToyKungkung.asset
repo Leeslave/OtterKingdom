@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterToyKungkung
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: 32f2a8df46804a8eaa15e565b546a350, type: 3}
+  - {fileID: 21300000, guid: 565eb5be913f4b2d8bf85cc63c23b89b, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "\ucff5, \ucff5\u2026 \ub180\ub77c\uc9c0 \ub9c8\uc138\uc694. \uc81c \ubc1c\uc18c\ub9ac\uc608\uc694."
+  - _cut: 1
+    _text: "\ud1b5\ub098\ubb34 \ud558\ub098\ucbe4\uc740 \ubc88\uca4d! \u2026\ub450 \uac1c\ub294 \uc870\uae08 \ubb34\uac70\uc6cc\uc694."
+  - _cut: 1
+    _text: "{\uc774\ub984}\ub2d8, \uc232\uc5d0\uc11c \uc81c\uc77c \ud070 \ub098\ubb34 \ub0c4\uc0c8 \ub9e1\uc544 \ubd24\uc5b4\uc694? \uadf8\uac8c \uc81c\uc77c \uc88b\uc544\uc694."

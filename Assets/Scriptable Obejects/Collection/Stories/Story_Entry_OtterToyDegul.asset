@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterToyDegul
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: be8fc7d075ff40e6a4e66cdece4b33a8, type: 3}
+  - {fileID: 21300000, guid: 3d810590960e4559a2be1096334bc811, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "{\uc774\ub984}\ub2d8, \uc624\ub298\uc758 \uc870\uc57d\ub3cc\uc774\uc5d0\uc694! \ubc14\ub2f7\uac00\uc5d0\uc11c \uc8fc\uc6e0\uc5b4\uc694."
+  - _cut: 1
+    _text: "\uc774\uac74 \ub3d9\uae00\ub3d9\uae00, \uc774\uac74 \uc6b8\ud241\ubd88\ud241, \uc774\uac74\u2026 \ubc18\uc9dd\ubc18\uc9dd!"
+  - _cut: 1
+    _text: "\uc81c\uc77c \ubc18\uc9dd\uc774\ub294 \uac74 {\uc774\ub984}\ub2d8 \uac70\uc608\uc694. \ub370\uad74\ub370\uad74 \uad74\ub824\uc11c \ub4dc\ub9b4\uac8c\uc694~"

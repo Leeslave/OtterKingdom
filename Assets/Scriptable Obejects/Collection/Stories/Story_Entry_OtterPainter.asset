@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterPainter
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: f5b710d65bd446a8b35f283ce2e0f769, type: 3}
+  - {fileID: 21300000, guid: db2f0b8d95ed49a6b1e4cbc2dc49283a, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "\uc27f, {\uc774\ub984}\ub2d8. \uc9c0\uae08 \uad11\uc7a5\uc744 \uadf8\ub9ac\ub294 \uc911\uc774\uc5d0\uc694."
+  - _cut: 0
+    _text: "\ud558\ub298\uc0c9\uc774 \ubaa8\uc790\ub77c\uc11c\u2026 \ubc14\ub2e4\ub97c \uc870\uae08 \ucc0d\uc5b4 \ubc1c\ub790\uc5b4\uc694."
+  - _cut: 1
+    _text: "\uc9e0! \uc81c\ubaa9\uc740 '\uc6b0\ub9ac \uc655\uad6d'. \uad6c\uc11d\uc5d0 \uc791\uac8c \uadf8\ub9b0 \uac8c \uc800\uc608\uc694!"

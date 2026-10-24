@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c6068c2a1413a4a8202f923d676930, type: 3}
+  m_Name: Story_Entry_OtterToyBodeul
+  m_EditorClassIdentifier: OtterKingdom::CollectionStory
+  _cuts:
+  - {fileID: 21300000, guid: f58f470219424c2abd9641f2506daca6, type: 3}
+  - {fileID: 21300000, guid: 949ece873e8049c0801b73b1246609dd, type: 3}
+  _lines:
+  - _cut: 0
+    _text: "\uc0c8\uc2f9\uc740\uc694, \uc4f0\ub2e4\ub4ec\uc5b4 \uc8fc\uba74 \uc465\uc465 \uc790\ub77c\uc694. \uc9c4\uc9dc\uc608\uc694."
+  - _cut: 1
+    _text: "\ubcf4\ub4e4\ubcf4\ub4e4\u2026 \ucc29\ud558\uc9c0\u2026 {\uc774\ub984}\ub2d8\ub3c4 \ud574 \ubcfc\ub798\uc694?"
+  - _cut: 1
+    _text: "\ubd10\uc694, \ubc29\uae08 \uc870\uae08 \ucef8\uc8e0? \u2026\ubc14\ub78c \ub54c\ubb38 \uc544\ub2c8\uc5d0\uc694!"
