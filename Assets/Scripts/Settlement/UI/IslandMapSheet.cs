@@ -7,6 +7,16 @@ using UnityEngine.UI;
 /// <summary>회관의 섬 지도. 한 방향씩 넘겨 보고 정찰 주민을 고른다. 모든 결과는 기존 영토 개간으로 이어진다.</summary>
 public class IslandMapSheet : MonoBehaviour
 {
+    // 지도 그림: Tools/StoryCuts/worldmap.py --island (바탕 IslandMap, 칸마다 Fog_<칸> · Pick_<칸>, 칸 위치 regions.json)
+    private const string MapFolder = "UI/IslandMap";
+    private const float MapHeight = 600f;
+    // 발견했지만 아직 개간하지 않은 칸의 안개 진하기
+    private const float DiscoveredFogAlpha = 0.4f;
+
+    [Serializable] private class MapRegion { public string id; public string development; public float x, y, w, h; }
+    [Serializable] private class MapRegions { public List<MapRegion> regions = new List<MapRegion>(); }
+    private static MapRegions _mapRegions;
+
     private Canvas _canvas;
     private SettlementManager _manager;
     private readonly List<TerritoryDirection> _directions = new List<TerritoryDirection>();
@@ -68,6 +78,7 @@ public class IslandMapSheet : MonoBehaviour
         var panel = RuntimeUIScrollSheet.Create(_canvas.transform, Close);
         RuntimeUIKit.CreateLabel(panel, "섬 지도 · 정찰", 42, true);
         var scout = _manager.Settlement.Scouting;
+        DrawMap(panel, scout);
         _lastDestination = scout.Destination;
         _timer = null;
         if (!_manager.HasIslandMap)
@@ -161,6 +172,85 @@ public class IslandMapSheet : MonoBehaviour
             Draw(ok ? "정찰대가 출발했어요!" : "주민과 정찰 조건을 다시 확인해 주세요.");
         });
         start.interactable = _selected.Count > 0;
+    }
+
+    // 우리 땅 전체 지도: 못 가 본 칸은 안개(발견한 칸은 옅게, 개간을 시작했거나 연 칸은 걷힘),
+    // 지금 보는 방향(정찰 중이면 정찰 가는 곳)의 칸은 빨간 점선. 영토 칸을 누르면 그 방향으로 넘김
+    private void DrawMap(Transform panel, ScoutingProgress scout)
+    {
+        var map = Resources.Load<Sprite>(MapFolder + "/IslandMap");
+        if (map == null)
+            return;
+        if (_mapRegions == null)
+        {
+            var json = Resources.Load<TextAsset>(MapFolder + "/regions");
+            _mapRegions = json != null ? JsonUtility.FromJson<MapRegions>(json.text) : new MapRegions();
+        }
+
+        var holder = new GameObject("Map", typeof(RectTransform), typeof(LayoutElement));
+        holder.transform.SetParent(panel, false);
+        var element = holder.GetComponent<LayoutElement>();
+        element.preferredHeight = MapHeight;
+        element.minHeight = MapHeight;
+
+        var areaObject = new GameObject("Area", typeof(RectTransform), typeof(Image), typeof(AspectRatioFitter));
+        areaObject.transform.SetParent(holder.transform, false);
+        var area = (RectTransform)areaObject.transform;
+        var fitter = areaObject.GetComponent<AspectRatioFitter>();
+        fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
+        fitter.aspectRatio = map.rect.width / map.rect.height;
+        var image = areaObject.GetComponent<Image>();
+        image.sprite = map;
+        image.raycastTarget = false;
+
+        var viewed = scout.Destination == null && _directions.Count > 0 ? _manager.CurrentTerritory(_directions[_direction]) : null;
+        foreach (var region in _mapRegions.regions)
+        {
+            var territory = _manager.ScoutDestination(region.development);
+            bool open, discovered = false, picked = false;
+            if (territory != null)
+            {
+                open = _manager.GetTerritoryStage(territory) == TerritoryStage.Expanded || _manager.TerritoryClearingsDone(territory) > 0;
+                discovered = scout.HasDiscovered(territory.ExpansionId) || TerritoryRules.IsTutorial(territory, _manager.Settlement);
+                picked = scout.Destination != null ? scout.Destination == territory.ExpansionId : territory == viewed;
+            }
+            else
+                open = _manager.Settlement.HasDevelopment(region.development);
+
+            if (!open)
+                AddRegionImage(area, region, "Fog_", discovered ? DiscoveredFogAlpha : 1f);
+            if (picked)
+                AddRegionImage(area, region, "Pick_", 1f);
+
+            // 영토 칸을 누르면 그 방향 (정찰 중에는 바꾸지 않음)
+            int direction = territory != null ? _directions.IndexOf(territory.Direction) : -1;
+            if (direction >= 0 && scout.Destination == null && _manager.HasIslandMap)
+            {
+                var tap = AddRegionImage(area, region, null, 0f);
+                tap.raycastTarget = true;
+                tap.gameObject.AddComponent<Button>().onClick.AddListener(() =>
+                {
+                    _direction = direction;
+                    _picking = false;
+                    Draw();
+                });
+            }
+        }
+    }
+
+    private static Image AddRegionImage(RectTransform area, MapRegion region, string prefix, float alpha)
+    {
+        var go = new GameObject(prefix == null ? "Tap_" + region.id : prefix + region.id, typeof(RectTransform), typeof(Image));
+        go.transform.SetParent(area, false);
+        var rect = (RectTransform)go.transform;
+        rect.anchorMin = new Vector2(region.x, 1f - region.y - region.h);
+        rect.anchorMax = new Vector2(region.x + region.w, 1f - region.y);
+        rect.offsetMin = rect.offsetMax = Vector2.zero;
+        var image = go.GetComponent<Image>();
+        image.sprite = prefix != null ? Resources.Load<Sprite>($"{MapFolder}/{prefix}{region.id}") : null;
+        image.color = new Color(1f, 1f, 1f, alpha);
+        image.raycastTarget = false;
+        return image;
     }
 
     private void ChangeDirection(int delta)

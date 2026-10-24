@@ -4,6 +4,7 @@
 영토 밖은 작은 나무 그림(게임 숲 그림)으로 채운다. 광장 · 집 · 밭 · 광산 · 낚시터는 게임 그림을 작게.
 
     python Tools/StoryCuts/worldmap.py out.png      # 지도만 미리 보기
+    python Tools/StoryCuts/worldmap.py --island     # 게임 섬 지도 그림 (Assets/Resources/UI/IslandMap)
 """
 import json
 import math
@@ -97,14 +98,14 @@ def _label(d, xy, text, size, font=TITLE_FONT, fill=INK, stroke=PARCHMENT):
     d.text(xy, text, font=f, fill=fill + (255,), anchor="mm", stroke_width=max(2, size // 9), stroke_fill=stroke + (255,))
 
 
-def miniature_map(width=1200, height=900, seed=7):
-    """양피지 지도 한 장 (RGBA)"""
+def miniature_map(width=1200, height=900, seed=7, title=True, marker=True, geometry=None):
+    """양피지 지도 한 장 (RGBA). geometry(dict)를 주면 땅 배치(k · off · 섬 마스크)를 담아 돌려줌 (게임 섬 지도의 안개 칸용)"""
     rnd = random.Random(seed)
     m = LAYOUT["map"]
     gw, gh = m["x1"] - m["x0"], m["y1"] - m["y0"]
     margin = int(width * .06)
     # 바다 판: 제목 아래부터 테두리 안쪽까지
-    sea_box = (margin * .75, margin + height * .06, width - margin * .75, height - margin * .75)
+    sea_box = (margin * .75, margin + height * .06 if title else margin * .75, width - margin * .75, height - margin * .75)
     k = min((sea_box[2] - sea_box[0]) * .9 / gw, (sea_box[3] - sea_box[1]) * .92 / gh)
     off = ((sea_box[0] + sea_box[2] - gw * k) / 2, (sea_box[1] + sea_box[3] - gh * k) / 2)
 
@@ -215,9 +216,9 @@ def miniature_map(width=1200, height=900, seed=7):
     # 이름 붙은 곳: 광장(마을 회관) · 밭 · 광산 · 낚시터
     shore = next(r for r in LAYOUT["regions"] if r["id"] == "shore")["rect"]
     marks = [
-        ("Settlement/Prop_TownHall.png", plaza[0], plaza[1] + height * .03, .11, "광장"),
-        ("UI/Travel/ICON_Place_Farm.png", *_ground_to_map(-1900, 330, k, off), .075, "밭"),
-        ("UI/Travel/ICON_Place_Mine.png", *_ground_to_map(-2150, -1330, k, off), .08, "광산"),
+        ("Settlement/Prop_TownHall.png", plaza[0] + width * .012, plaza[1] + height * .03, .095, "광장"),
+        ("UI/Travel/ICON_Place_Farm.png", *_ground_to_map(-1520, -430, k, off), .06, "밭"),
+        ("UI/Travel/ICON_Place_Mine.png", *_ground_to_map(-970, -1330, k, off), .075, "광산"),
         ("UI/Travel/ICON_Place_FishingSpot.png", *_ground_to_map((shore["x0"] + shore["x1"]) / 2, shore["y0"] + 700, k, off), .08, "낚시터"),
     ]
     for path, x, y, h, name in marks:
@@ -226,15 +227,17 @@ def miniature_map(width=1200, height=900, seed=7):
         _label(d, (x, y + height * .03), name, int(height * .032))
 
     # 아직 못 가 본 곳: 빨간 X (두리번의 다음 목적지)
-    x, y = _ground_to_map(400, -1500, k, off)
-    d.line((x - 14, y - 14, x + 14, y + 14), fill=(196, 74, 58, 255), width=7)
-    d.line((x - 14, y + 14, x + 14, y - 14), fill=(196, 74, 58, 255), width=7)
-    _label(d, (x, y + height * .045), "?", int(height * .05), fill=(196, 74, 58))
+    if marker:
+        x, y = _ground_to_map(400, -1500, k, off)
+        d.line((x - 14, y - 14, x + 14, y + 14), fill=(196, 74, 58, 255), width=7)
+        d.line((x - 14, y + 14, x + 14, y - 14), fill=(196, 74, 58, 255), width=7)
+        _label(d, (x, y + height * .045), "?", int(height * .05), fill=(196, 74, 58))
 
     # 나침반 · 제목 · 테두리
     comp = _compass(int(height * .2))
     paper.alpha_composite(comp, (int(width - margin - comp.width * .9), int(height - margin - comp.height * .95)))
-    _label(d, (width / 2, margin * .9), "우리 왕국 지도", int(height * .065))
+    if title:
+        _label(d, (width / 2, margin * .9), "우리 왕국 지도", int(height * .065))
     d.rounded_rectangle((margin * .35, margin * .35, width - margin * .35, height - margin * .35), 18, outline=INK + (200,), width=4)
     d.rounded_rectangle((margin * .5, margin * .5, width - margin * .5, height - margin * .5), 14, outline=INK + (120,), width=2)
 
@@ -242,6 +245,8 @@ def miniature_map(width=1200, height=900, seed=7):
     shape = Image.new("L", (width, height), 0)
     ImageDraw.Draw(shape).rounded_rectangle((0, 0, width - 1, height - 1), 22, fill=255)
     paper.putalpha(shape)
+    if geometry is not None:
+        geometry.update(k=k, off=off, island=island)
     return paper
 
 
@@ -258,5 +263,86 @@ def held_map(width, height, angle=0.0):
     return im.rotate(angle, resample=Image.BICUBIC, expand=True) if angle else im
 
 
+# ---------------------------------------------------------------------------------------------
+# 게임 속 섬 지도 (회관 → 섬 지도 · 정찰, IslandMapSheet): 바탕 지도 + 칸마다 안개 · 고른 칸 표시 + 칸 표
+ISLAND_MAP_DIR = s.ROOT / "Assets/Resources/UI/IslandMap"
+FOG = (238, 224, 190)
+
+
+def _region_px(r, k, off):
+    a = _ground_to_map(r["rect"]["x0"], r["rect"]["y0"], k, off)
+    b = _ground_to_map(r["rect"]["x1"], r["rect"]["y1"], k, off)
+    return int(a[0]), int(a[1]), int(b[0]), int(b[1])
+
+
+def _clip_to_island(layer, box, geom):
+    """칸 그림(box 크기)을 섬 안쪽만 남김"""
+    island = Image.new("L", (box[2] - box[0], box[3] - box[1]), 0)
+    island.paste(geom["island"], (int(geom["off"][0]) - box[0], int(geom["off"][1]) - box[1]))
+    layer.putalpha(ImageChops.multiply(layer.getchannel("A"), island))
+    return layer
+
+
+def _fog(box, geom, rnd, question):
+    """못 가 본 칸: 구름 낀 양피지 + 물음표"""
+    w, h = box[2] - box[0], box[3] - box[1]
+    fog = Image.new("RGBA", (w, h), FOG + (0,))
+    a = Image.new("L", (w, h), 0)
+    ad = ImageDraw.Draw(a)
+    ad.rectangle((0, 0, w, h), fill=225)
+    for _ in range(int(w * h / 900)):
+        x, y, r = rnd.uniform(0, w), rnd.uniform(0, h), rnd.uniform(10, 26)
+        ad.ellipse((x - r, y - r, x + r, y + r), fill=rnd.randint(235, 255))
+    fog.putalpha(a.filter(ImageFilter.GaussianBlur(4)))
+    d = ImageDraw.Draw(fog)
+    # 구름 무늬 (잉크 곡선)
+    for _ in range(max(2, int(w * h / 9000))):
+        x, y = rnd.uniform(w * .12, w * .88), rnd.uniform(h * .15, h * .85)
+        rr = rnd.uniform(14, 22)
+        for i in range(3):
+            d.arc((x - rr + i * rr * .9, y - rr, x + rr + i * rr * .9, y + rr), 190, 350, fill=INK + (90,), width=3)
+    if question:
+        _label(d, (w / 2, h / 2), "?", int(min(w, h) * .42), fill=(150, 110, 80), stroke=FOG)
+    return _clip_to_island(fog, box, geom)
+
+
+def _pick(box, geom):
+    """고른 칸: 빨간 점선 테두리 + 옅은 빛"""
+    w, h = box[2] - box[0], box[3] - box[1]
+    im = Image.new("RGBA", (w, h))
+    glow = Image.new("RGBA", (w, h), (255, 236, 170, 0))
+    ga = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(ga).rectangle((0, 0, w, h), fill=70)
+    glow.putalpha(ga)
+    im.alpha_composite(glow)
+    _dashed_rect(ImageDraw.Draw(im), (4, 4, w - 5, h - 5), dash=14, gap=8, width=7, color=(196, 74, 58, 255))
+    return _clip_to_island(im, box, geom)
+
+
+def export_island_map(width=1200, height=900, seed=11):
+    """Resources/UI/IslandMap: IslandMap.png, Fog_<칸>.png, Pick_<칸>.png, regions.json (칸 위치는 0~1, 왼쪽 위 원점)"""
+    ISLAND_MAP_DIR.mkdir(parents=True, exist_ok=True)
+    geom = {}
+    base = miniature_map(width, height, seed=7, title=False, marker=False, geometry=geom)
+    base.save(ISLAND_MAP_DIR / "IslandMap.png")
+    rnd = random.Random(seed)
+    rows = []
+    for r in LAYOUT["regions"]:
+        if r["id"] == "start":
+            continue
+        box = _region_px(r, geom["k"], geom["off"])
+        _fog(box, geom, rnd, question=not r["id"].startswith("shore_path")).save(ISLAND_MAP_DIR / f"Fog_{r['id']}.png")
+        _pick(box, geom).save(ISLAND_MAP_DIR / f"Pick_{r['id']}.png")
+        rows.append({"id": r["id"], "development": r["development"],
+                     "x": round(box[0] / width, 5), "y": round(box[1] / height, 5),
+                     "w": round((box[2] - box[0]) / width, 5), "h": round((box[3] - box[1]) / height, 5)})
+    (ISLAND_MAP_DIR / "regions.json").write_text(json.dumps({"regions": rows}, ensure_ascii=False, indent=1), encoding="utf-8")
+    return rows
+
+
 if __name__ == "__main__":
-    miniature_map().save(sys.argv[1] if len(sys.argv) > 1 else "worldmap.png")
+    if len(sys.argv) > 1 and sys.argv[1] == "--island":
+        for row in export_island_map():
+            print(row["id"], row["development"])
+    else:
+        miniature_map().save(sys.argv[1] if len(sys.argv) > 1 else "worldmap.png")

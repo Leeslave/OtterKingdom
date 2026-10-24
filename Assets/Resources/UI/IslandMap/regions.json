@@ -1,0 +1,132 @@
+{
+ "regions": [
+  {
+   "id": "ne_1",
+   "development": "territory_ne_1",
+   "x": 0.55833,
+   "y": 0.29556,
+   "w": 0.11,
+   "h": 0.13
+  },
+  {
+   "id": "ne_2",
+   "development": "territory_ne_2",
+   "x": 0.66833,
+   "y": 0.29556,
+   "w": 0.10917,
+   "h": 0.13
+  },
+  {
+   "id": "ne_3",
+   "development": "territory_ne_3",
+   "x": 0.55833,
+   "y": 0.16444,
+   "w": 0.21917,
+   "h": 0.13111
+  },
+  {
+   "id": "s_1",
+   "development": "territory_s_1",
+   "x": 0.41167,
+   "y": 0.49,
+   "w": 0.11,
+   "h": 0.09778
+  },
+  {
+   "id": "s_2",
+   "development": "territory_s_2",
+   "x": 0.52167,
+   "y": 0.49,
+   "w": 0.11,
+   "h": 0.09778
+  },
+  {
+   "id": "s_3",
+   "development": "territory_s_3",
+   "x": 0.41167,
+   "y": 0.58778,
+   "w": 0.22,
+   "h": 0.11333
+  },
+  {
+   "id": "nw_1",
+   "development": "territory_nw_1",
+   "x": 0.33917,
+   "y": 0.21333,
+   "w": 0.10917,
+   "h": 0.11444
+  },
+  {
+   "id": "nw_2",
+   "development": "territory_nw_2",
+   "x": 0.22917,
+   "y": 0.21333,
+   "w": 0.11,
+   "h": 0.11444
+  },
+  {
+   "id": "nw_3",
+   "development": "territory_nw_3",
+   "x": 0.22917,
+   "y": 0.1,
+   "w": 0.21917,
+   "h": 0.11333
+  },
+  {
+   "id": "w_1",
+   "development": "territory_w_1",
+   "x": 0.3025,
+   "y": 0.39222,
+   "w": 0.0975,
+   "h": 0.13
+  },
+  {
+   "id": "w_2",
+   "development": "territory_w_2",
+   "x": 0.205,
+   "y": 0.39222,
+   "w": 0.0975,
+   "h": 0.13
+  },
+  {
+   "id": "w_3",
+   "development": "territory_w_3",
+   "x": 0.205,
+   "y": 0.52222,
+   "w": 0.195,
+   "h": 0.13
+  },
+  {
+   "id": "e_1",
+   "development": "territory_e_1",
+   "x": 0.55833,
+   "y": 0.42556,
+   "w": 0.11,
+   "h": 0.06444
+  },
+  {
+   "id": "shore",
+   "development": "fishing_found",
+   "x": 0.65,
+   "y": 0.53111,
+   "w": 0.15833,
+   "h": 0.3
+  },
+  {
+   "id": "shore_path_1",
+   "development": "fishing_found",
+   "x": 0.55833,
+   "y": 0.45,
+   "w": 0.085,
+   "h": 0.04
+  },
+  {
+   "id": "shore_path_2",
+   "development": "fishing_found",
+   "x": 0.63167,
+   "y": 0.45,
+   "w": 0.03,
+   "h": 0.09667
+  }
+ ]
+}

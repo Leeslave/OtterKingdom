@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
 
 public class ScoutingIntegrationTests
 {
@@ -97,5 +99,22 @@ public class ScoutingIntegrationTests
         Assert.IsTrue(loaded.HasDevelopment("old_building"));
         Assert.AreEqual(1, loaded.ResidentCount);
         Assert.AreEqual(1, loaded.Scouting.Reports.Count);
+    }
+
+    [Test]
+    public void IslandMap_HasRegionAndArtForEveryTerritory()
+    {
+        var json = Resources.Load<TextAsset>("UI/IslandMap/regions");
+        Assert.IsNotNull(json, "섬 지도 칸 표가 없음 (Tools/StoryCuts/worldmap.py --island)");
+        Assert.IsNotNull(Resources.Load<Sprite>("UI/IslandMap/IslandMap"), "섬 지도 바탕 그림이 없음");
+
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
+        foreach (var territory in config.Territories)
+        {
+            string id = territory.ExpansionId.Replace("territory_", "");
+            StringAssert.Contains($"\"development\": \"{territory.ExpansionId}\"", json.text, $"{territory.ExpansionId}: 지도 칸이 없음");
+            Assert.IsNotNull(Resources.Load<Sprite>($"UI/IslandMap/Fog_{id}"), $"{id}: 안개 그림이 없음");
+            Assert.IsNotNull(Resources.Load<Sprite>($"UI/IslandMap/Pick_{id}"), $"{id}: 고른 칸 그림이 없음");
+        }
     }
 }
