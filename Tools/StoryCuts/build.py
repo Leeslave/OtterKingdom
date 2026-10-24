@@ -14,6 +14,7 @@ import sys
 from PIL import Image, ImageDraw
 
 import scene as s
+import worldmap
 from scene import Cut, img, fit, map_bg, portrait_bg
 
 OUT = s.ROOT / "Assets/Art/Collection/Cutscenes"
@@ -306,8 +307,7 @@ def duribeon_a():
 def duribeon_b():
     c = Cut(map_bg(3200, 900, zoom=1.5))
     c.blur_back(1024, 6)
-    chart = s.world_map().resize((560, 548))
-    c.put(s.paper(600, 440, inner=chart.crop((0, 40, 560, 470))), 1020, 520, (.5, .5), angle=-4)
+    c.put(worldmap.held_map(720, 540, angle=-4), 1040, 500, (.5, .5))
     c.fx("Settlement/FX_Sparkle.png", [(1240, 300)], 60)
     c.otter("HoodieRigV1", 360, 1070, 640, head="smile", nearArm=-1.3)
     return c.vignette(.35)
@@ -591,12 +591,16 @@ def moment_lamp_map():
     c.prop("Plaza/Props/Prop_Lamp.png", 210, 900, 640)
     c.otter("HoodieRigV1", 500, 990, 500, head="smile", nearArm=-1.2, head_angle=.2)
     c.otter("KnitRigV1", 1260, 990, 500, head="smile", nearArm=-1.2, head_angle=.2, flip=True)
-    chart = s.world_map().resize((560, 548))
-    c.put(s.paper(360, 260, inner=chart.crop((40, 60, 600, 460))), 880, 600, (.5, .5), angle=3)
     c.night()
     c.prop("Settlement/Night_Lamp.png", 210, 900, 640)
-    c.light(300, 460, 360, strength=.5).light(880, 600, 340, strength=.35)
-    c.fx("Settlement/FX_Sparkle.png", [(880, 400), (1000, 440, .6), (760, 450, .6)], 70)
+    c.light(300, 460, 360, strength=.5).light(880, 600, 380, strength=.4)
+    # 지도는 등불 빛 아래라 밤 색을 덜 탐 (밤 색 위에 따로 붙이고 살짝만 어둡게)
+    held = worldmap.held_map(460, 345, angle=3)
+    dim = Image.new("RGBA", held.size, (40, 40, 90, 0))
+    dim.putalpha(held.getchannel("A").point(lambda a: int(a * .18)))
+    held.alpha_composite(dim)
+    c.put(held, 880, 600, (.5, .5))
+    c.fx("Settlement/FX_Sparkle.png", [(880, 365), (1010, 390, .6), (750, 395, .6)], 64)
     c.scatter("Settlement/FX_Firefly.png", (300, 100, 1500, 700), 8, 40, seed=34)
     return c.vignette(.45, (15, 15, 45))
 
