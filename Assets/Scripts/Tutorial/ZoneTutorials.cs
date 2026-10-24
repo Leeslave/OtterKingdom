@@ -201,24 +201,21 @@ public static class ZoneTutorials
         };
     }
 
+    // 낚시터 = 바다 (선착장 화면 없음): 조작 설명만
     private static List<TutorialStep> FishingSteps(GameUI gameUI)
     {
-        var spot = Object.FindAnyObjectByType<FishingSpotView>();
-        var otter = Object.FindAnyObjectByType<FishingOtterController>();
-
         return new List<TutorialStep>
         {
             TutorialStep.Info("여기는 낚시터예요",
-                "해달이 물고기를 낚아 오는 곳이에요."),
-            TutorialStep.At("낚시 해달",
-                "낚은 물고기는 가방에 들어가요.\n가끔 쓰레기가 걸리기도 해요!\n낚시 중인 해달을 누르면 낚시를 멈춰요.",
-                () => TutorialTargets.World(otter)),
-            TutorialStep.At("바다 낚시",
-                "직접 줄을 던져 원하는 물고기를 골라 낚아요.\n줄 · 찌 · 릴을 강화하면 더 멀고 깊은 곳의\n비싼 물고기를 낚고, 꺼 둔 동안에도 낚시해요.",
-                () => TutorialTargets.Ui(gameUI.SeaFishingButton)),
-            TutorialStep.TryIt("낚시 자리",
-                "동그라미를 누르면 해달이 걸어가서\n낚시를 시작해요. 눌러 봐요!",
-                () => TutorialTargets.World(spot), spot),
+                "바다에 줄을 던져 물고기를 낚는 곳이에요.\n가만히 두면 낚시꾼 해달이 알아서 낚아요."),
+            TutorialStep.Info("던지기",
+                "꾹 누르면 도넛 게이지가 차요.\n원하는 거리에서 떼면 그만큼 던져요.\n톡 누르면 지난번 거리로 던져요."),
+            TutorialStep.Info("감기",
+                "줄은 저절로 감겨 와요.\n누르고 있으면 바늘이 올라오고, 떼면 가라앉아요.\n물고기에 닿으면 걸려요!"),
+            TutorialStep.Info("빨간 핀",
+                "[핀]을 누르고 바다를 끌어 핀을 꽂으면\n게이지의 빨간 점에서 떼어 그 자리로 던질 수 있어요."),
+            TutorialStep.Info("강화",
+                "낚은 물고기를 재료로 줄 · 찌 · 릴을 강화하면\n더 멀고 깊은 곳의 비싼 물고기를 낚아요."),
         };
     }
 
