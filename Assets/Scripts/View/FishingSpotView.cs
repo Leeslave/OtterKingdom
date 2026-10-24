@@ -21,13 +21,6 @@ public class FishingSpotView : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    private void Start()
-    {
-        // The rod upgrade belongs to the fishing spot, so the button only
-        // exists in scenes that have one.
-        if (GameManager.Instance != null) GameManager.Instance.ShowSeaFishingButton();
-    }
-
     private void Update()
     {
         if (GameManager.Instance == null) return;
