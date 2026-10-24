@@ -11,7 +11,8 @@ using UnityEngine.SceneManagement;
 /// 바다는 코드로 깖 (하늘 · 먼 섬 · 물 · 물결 · 빛줄기 · 바닥 · 해초 · 부표). 1유닛 = 1m, 수면 = 0, 선착장 끝 = x 0.
 /// 저장: persistentDataPath/fishing_rework_test.json (본 게임 세이브와 따로)
 /// 본 게임(_hosted, 낚시터 씬 안): GameManager의 낚시 규칙(FishingService.Model) · 가방 · 골드를 쓰고, 바다는 _seaRoot 아래
-/// 선착장과 떨어진 곳에 있음. [바다 낚시]로 들어오면(Enter) 카메라가 바다로, [나가기]로 선착장으로. 저장은 GameManager.
+/// 선착장과 떨어진 곳에 있음. 낚시터 = 바다: 선착장 정리 · 낚시꾼 해달 배치가 끝났으면 늘 바다 (Enter, 나가는 버튼 없음).
+/// 선착장은 그 전과 꾸미기 모드에서만 보임. 저장은 GameManager.
 /// 안 만지고 두면 낚시꾼 해달이 알아서 던짐 (방치)
 /// </summary>
 // 본 게임: GameManager(0)가 낚시 규칙을 만든 뒤에
@@ -146,7 +147,7 @@ public class FishingReworkGame : MonoBehaviour
         }
         if (_hosted)
         {
-            // 선착장에서 [바다 낚시]를 누를 때까지 숨김. 효과(MineFx)는 카메라를 붙잡으므로 선착장에서는 꺼 둠
+            // 낚시꾼 해달이 일할 수 있게 될 때까지 숨김 (Update의 AutoEnter). 효과(MineFx)는 카메라를 붙잡으므로 선착장에서는 꺼 둠
             _active = false;
             _seaRoot.gameObject.SetActive(false);
             _hud.gameObject.SetActive(false);
@@ -176,6 +177,20 @@ public class FishingReworkGame : MonoBehaviour
         _model.Upgraded -= HandleUpgraded;
         if (_hosted && GameManager.Instance != null && GameManager.Instance.FishingService != null)
             GameManager.Instance.FishingService.HandFishing = false;
+    }
+
+    /// <summary>
+    /// 본 게임: 낚시터 = 바다. 낚시꾼 해달이 일할 수 있으면 바로 들어감 — 도착하자마자는 구름 뒤에서,
+    /// 그 뒤(그 자리에서 해달 배치 · 꾸미기 모드 끝)는 팝업 · 연출이 끝나고
+    /// </summary>
+    private void AutoEnter()
+    {
+        var game = GameManager.Instance;
+        if (game == null || DecorModePresenter.IsActive || !game.CanOpenSeaFishing)
+            return;
+        if (Time.timeSinceLevelLoad > 1f && PresentationGate.IsBusy)
+            return;
+        Enter();
     }
 
     /// <summary>본 게임: 선착장 → 바다</summary>
@@ -212,7 +227,7 @@ public class FishingReworkGame : MonoBehaviour
         _sfx.Play(MineSfx.Kind.Open);
     }
 
-    /// <summary>본 게임: 바다 → 선착장 (걸린 것 · 던진 줄은 거두고 나감)</summary>
+    /// <summary>본 게임: 바다 → 선착장 (꾸미기 모드 동안만. 걸린 것 · 던진 줄은 거두고 나감)</summary>
     public void Exit()
     {
         if (!_hosted || !_active)
@@ -663,6 +678,8 @@ public class FishingReworkGame : MonoBehaviour
             Exit();
             return;
         }
+        if (_hosted && !_active && _model != null)
+            AutoEnter();
         if (_model == null || !_active)
             return;
         float dt = Mathf.Min(Time.deltaTime, 0.1f);

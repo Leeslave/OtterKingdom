@@ -613,7 +613,7 @@ public class FishingHud : MonoBehaviour
         _pinPanel.gameObject.SetActive(show);
     }
 
-    // 본 게임: 골드 · 가방 · 도감은 전역 UI 것 → 숨기고, 강화 옆에 [나가기] (선착장으로)
+    // 본 게임: 골드 · 가방 · 도감은 전역 UI 것 → 숨김. 낚시터 = 바다라 나가는 버튼 없음 (다른 장소는 아래 이동 막대로)
     private const int HostedSortingOrder = 50;
     private const float HostedTopInset = 300f;
     private const float HostedBottomInset = 300f;
@@ -637,13 +637,11 @@ public class FishingHud : MonoBehaviour
         _requestReward.rectTransform.anchoredPosition = new Vector2(556f, -126f);
         _requestReward.rectTransform.sizeDelta = new Vector2(110f, 50f);
         _requestButtonImage.rectTransform.sizeDelta = new Vector2(170f, 108f);
-        // 바늘 거리 · 깊이는 의뢰 카드 아래 오른쪽 (왼쪽 선착장 해달을 가리지 않게)
+        // 바늘 거리 · 깊이는 의뢰 카드 아래 오른쪽 (왼쪽 낚시꾼 해달을 가리지 않게)
         _info.anchoredPosition = new Vector2(-24f, -236f);
         _toast.anchoredPosition = new Vector2(0f, -350f);
         var upgrade = (RectTransform)_upgradeBadge.transform.parent;
-        upgrade.anchoredPosition = new Vector2(-170f, 30f);
-        var exit = RoundButton("Exit", _art.IconPier, "나가기", new Vector2(170f, 30f), () => _game.Exit());
-        exit.SetActive(false);
+        upgrade.anchoredPosition = new Vector2(0f, 30f);
         _hint.rectTransform.anchoredPosition = new Vector2(0f, 270f);
     }
 
