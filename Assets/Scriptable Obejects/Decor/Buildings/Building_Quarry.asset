@@ -31,30 +31,28 @@ MonoBehaviour:
   _coziness: 0
   _buildingId: bld_quarry
   _buildingName: "\uCC44\uC11D \uC791\uC5C5\uC18C"
-  _description: "\uCC44\uAD74\uD558\uB294 \uD574\uB2EC\uB4E4\uC774 \uC77C\uD574 \uB3CC\uC744
-    \uAFB8\uC900\uD788 \uBAA8\uC544 \uAC00\uBC29\uC5D0 \uB123\uC5B4\uC694. (\uD55C
-    \uB9C8\uB9AC\uB2F9 1\uC2DC\uAC04\uC5D0 12\uAC1C)"
+  _description: "한가한 특성 주민이 한 마리당 1분에 1개씩 모아요. 정찰·개간에 나간 주민은 생산을 쉬어요. 최대 8시간 보관해요."
   _icon: {fileID: 21300000, guid: 8d83d0068bc99bf6ddc64e240c2598aa, type: 3}
   _kind: 1
-  _requiredLevel: 0
+  _requiredLevel: 8
   _requiredDevelopment: p4_miner_settled
   _traits:
   - _trait: 2
     _count: 2
   _maxCount: 1
-  _gold: 5000
+  _gold: 1200
   _items:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
-    _amount: 70
+    _amount: 20
   - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
-    _amount: 60
+    _amount: 12
   _costGrowth: 0
-  _buildSeconds: 480
+  _buildSeconds: 120
   _stageSprites: []
   _bonuses: []
   _hostsFairyShop: 0
   _productionItem: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
-  _productionPerHour: 12
+  _productionPerHour: 60
   _productionTrait: 2
   _district: 4
   _farmPart: 0

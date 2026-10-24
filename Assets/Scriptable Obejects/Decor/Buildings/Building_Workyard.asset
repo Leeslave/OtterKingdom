@@ -34,20 +34,20 @@ MonoBehaviour:
   _description: "\uACF5\uC0AC\uAC00 \uB354 \uBE68\uB9AC \uB05D\uB098\uC694."
   _icon: {fileID: 21300000, guid: 88b324fdc4be0c322470f112bb47fc7a, type: 3}
   _kind: 1
-  _requiredLevel: 0
+  _requiredLevel: 14
   _requiredDevelopment: p5_builder_settled
   _traits:
   - _trait: 5
     _count: 2
   _maxCount: 1
-  _gold: 7000
+  _gold: 4000
   _items:
   - _item: {fileID: 11400000, guid: 85e23656e2c6cec438f8f1c9f575518c, type: 2}
-    _amount: 100
-  - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
     _amount: 70
+  - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
+    _amount: 40
   _costGrowth: 0
-  _buildSeconds: 600
+  _buildSeconds: 240
   _stageSprites: []
   _bonuses:
   - _kind: 5

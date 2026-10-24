@@ -29,6 +29,7 @@ public class TownHallPresenter : MonoBehaviour
     private CommunityProjectDefinition _hallProject;
     // 광산 주민 건강 이야기: 메인 부탁 · 공동사업이 없을 때만 회관의 다음 목표 자리를 씀
     private bool _hallMine;
+    private bool _hallScouting;
     // 영토 확장 미션 (숲 개간을 다 끝낸 단계가 있을 때)
     private CommunityProjectDefinition _territoryMission;
     private float _refreshTimer;
@@ -44,6 +45,8 @@ public class TownHallPresenter : MonoBehaviour
         _hall.OnTerritoryClicked += HandleTerritory;
         _hall.OnDistrictClicked += HandleDistrict;
         _hall.OnRelocationClicked += HandleRelocation;
+        _hall.OnIslandMapClicked += HandleIslandMap;
+        _hall.OnProductionClicked += HandleProduction;
     }
 
     // SettlementManager가 같은 오브젝트에 붙어 있어 깨어나는 순서가 같을 수 있으므로 Start에서 연결
@@ -67,6 +70,8 @@ public class TownHallPresenter : MonoBehaviour
         _hall.OnTerritoryClicked -= HandleTerritory;
         _hall.OnDistrictClicked -= HandleDistrict;
         _hall.OnRelocationClicked -= HandleRelocation;
+        _hall.OnIslandMapClicked -= HandleIslandMap;
+        _hall.OnProductionClicked -= HandleProduction;
         if (_manager != null)
         {
             _manager.OnMilestoneRequested -= OpenMilestone;
@@ -162,7 +167,11 @@ public class TownHallPresenter : MonoBehaviour
         _hallProject = _hallTarget == null ? _manager.ActiveProject : null;
         _hallMine = _hallProject == null && _hallTarget == null
             && _manager.HasMineCommunityStory && !_manager.MineCommunity.exported;
-        if (_hallProject != null)
+        _hallScouting = _hallTarget == null && _manager.HasIslandMap && _manager.PlayerLevel >= 14
+            && !_manager.HasDevelopment("fishing_found");
+        if (_hallScouting)
+            _hall.ShowNext("발견한 바닷가로 길 내기", "섬 지도의 남쪽으로 정찰대를 보내요. 발견한 땅을 개간하고 영토 확장 미션을 마치면 선착장을 복구할 수 있어요.", true);
+        else if (_hallProject != null)
             _hall.ShowNext(_manager.ProjectTitle(_hallProject), ProjectNextText(_hallProject), true);
         else if (_hallMine)
             _hall.ShowNext(_manager.MineCommunityTitle, _manager.MineCommunityStatus, true);
@@ -284,6 +293,12 @@ public class TownHallPresenter : MonoBehaviour
             text.Append("· ").Append(task.Title).Append(" (").Append(WorkerNames(taskJob)).Append(")  ")
                 .Append(SettlementManager.FormatShort(taskJob.Remaining(now)));
         }
+        if (settlement.Scouting.Destination != null)
+        {
+            if (text.Length > 0) text.Append('\n');
+            text.Append("· 섬 정찰 ").Append(_manager.ScoutDestination(settlement.Scouting.Destination)?.DisplayName)
+                .Append(" · ").Append(settlement.Scouting.Workers.Count).Append("명");
+        }
         return text.Length > 0 ? text.ToString() : "지금 진행 중인 일이 없어요.";
     }
 
@@ -342,6 +357,8 @@ public class TownHallPresenter : MonoBehaviour
 
     private void HandleHallGo()
     {
+        if (_hallScouting)
+        { _hall.Hide(); _manager.OpenSouthernMap(); return; }
         if (_hallMine)
         { _hall.Hide(); _manager.OpenMineCommunity(); return; }
         if (_hallProject != null)
@@ -363,6 +380,18 @@ public class TownHallPresenter : MonoBehaviour
         _hall.Hide();
         if (_globalUI != null)
             _globalUI.OpenTravel();
+    }
+
+    private void HandleIslandMap()
+    {
+        _hall.Hide();
+        _manager.OpenIslandMap();
+    }
+
+    private void HandleProduction()
+    {
+        _hall.Hide();
+        _manager.OpenProduction();
     }
 
     private void HandleDecor()

@@ -85,6 +85,9 @@ public class TownHallPopupView : MonoBehaviour
     public event Action OnTerritoryClicked;
     public event Action OnDistrictClicked;
     public event Action OnRelocationClicked;
+    public event Action OnIslandMapClicked;
+    public event Action OnProductionClicked;
+    private Button _islandMapButton;
 
     private readonly List<TextMeshProUGUI> _chips = new List<TextMeshProUGUI>();
 
@@ -99,6 +102,11 @@ public class TownHallPopupView : MonoBehaviour
         _relocationButton.onClick.AddListener(() => OnRelocationClicked?.Invoke());
         _closeButton.onClick.AddListener(() => _animator.Hide());
         _completedChip.SetActive(false);
+        // 기존 프리팹에도 연결되도록 회관 카드 목록에 추가한다.
+        _islandMapButton = RuntimeUIKit.CreateButton(_scroll.content, "섬 지도 · 정찰", () => OnIslandMapClicked?.Invoke(), RuntimeUIKit.ButtonKind.Feature);
+        _islandMapButton.transform.SetSiblingIndex(1);
+        var production = RuntimeUIKit.CreateButton(_scroll.content, "일터 · 농장 설비", () => OnProductionClicked?.Invoke(), RuntimeUIKit.ButtonKind.Feature);
+        production.transform.SetSiblingIndex(2);
     }
 
     public void Show(string stage, int progressDone, int progressTotal, LaborSummary labor, string work, IReadOnlyList<string> completed)

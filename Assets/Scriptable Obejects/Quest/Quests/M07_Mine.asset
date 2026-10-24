@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: M07_Mine
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv7_mine
-  _title: "\uAD11\uC11D \uBAA8\uC73C\uAE30"
-  _description: "\uAD11\uC0B0\uC5D0\uC11C \uAD11\uC11D 50\uAC1C \uCE90\uAE30"
+  _title: "섬 지도를 그려요"
+  _description: "갱도에서 지도 해달을 만나 마을회관에 합류시키기"
   _sortOrder: 26
   _kind: 0
   _requiredLevel: 7
   _prerequisite: {fileID: 11400000, guid: 8fc5fbd5dc4ec0e41a68b4ec72cbe92e, type: 2}
-  _icon: {fileID: 21300000, guid: fcbb2374e547b94488a2a8d6e246f1d6, type: 3}
-  _goalType: 7
-  _goal: 50
-  _itemFilter: {fileID: 11400000, guid: c0aaf6ff75ccefa499fe320afcbcbb59, type: 2}
+  _icon: {fileID: 21300000, guid: 0182d271e22be944684a0ef5e89e65dc, type: 3}
+  _goalType: 11
+  _goal: 1
+  _itemFilter: {fileID: 0}
   _collectionTab: {fileID: 0}
   _item: {fileID: 0}
   _constructions: []
   _builderOnly: 0
-  _target: 
+  _target: island_map_joined
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 200
   _expReward: 160

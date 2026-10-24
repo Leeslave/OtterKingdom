@@ -162,6 +162,7 @@ public static partial class SettlementSetup
         foreach (var building in buildings)
             AddUnique(list, building);
         catalogSo.ApplyModifiedPropertiesWithoutUndo();
+        ApplyFlowBuildings();
     }
 
     private static BuildingDefinition LoadBuilding(string asset) =>

@@ -10,7 +10,6 @@ public partial class SettlementManager
 {
     // 돌아옴 팝업에 알릴, 이번 실행에서 다 지은 건물 (끝난 시각과 함께. 알리면 비움)
     private readonly List<(BuildingRecord record, long endTicks)> _finishedBuildings = new List<(BuildingRecord, long)>();
-    private readonly List<BuildingRecord> _dueBuildings = new List<BuildingRecord>();
 
     /// <summary>건물 공사가 시작됐을 때</summary>
     public event Action<BuildingRecord> OnBuildingStarted;
@@ -47,7 +46,7 @@ public partial class SettlementManager
         if (building.FarmPart == FarmPartKind.Field && FarmFieldsLeft <= 0)
             return BuildingBlock.MaxCount;
         var unlock = FarmPartUnlock(building);
-        if (unlock != null && !HasBuilt(unlock.RequiredBuilding))
+        if (unlock != null && !Unlocked(unlock))
             return BuildingBlock.Development;
         return block;
     }
@@ -90,7 +89,9 @@ public partial class SettlementManager
             case BuildingBlock.Development:
                 var unlock = FarmPartUnlock(building);
                 if (unlock != null)
-                    return $"{EulReul(unlock.Label)} 지으면 놓을 수 있어요";
+                    return building.FarmPart == FarmPartKind.Sprinkler && HasBuilt(unlock.RequiredBuilding)
+                        ? (EquipmentHint(false) ?? "회관의 일터 · 농장 설비에서 스프링클러 설비를 확장해요")
+                        : $"{EulReul(unlock.Label)} 지으면 놓을 수 있어요";
                 return "마을이 더 발전하면 지을 수 있어요";
             case BuildingBlock.Traits:
                 return $"특성 해달이 모자라요 ({TraitNeedText(building)})";
@@ -221,22 +222,20 @@ public partial class SettlementManager
     // 시간이 된 공사를 끝냄 (불러올 때는 알림 없이 — 돌아옴 팝업이 알림)
     private void FinishDueBuildings(bool notify = true)
     {
-        BuildingRules.FinishDue(Settlement, NowTicks, _dueBuildings);
-        if (_dueBuildings.Count == 0)
-            return;
+        FinishDueWork(notify);
+    }
 
+    private void CompleteBuildingRecord(BuildingRecord record, bool notify)
+    {
+        if (!Settlement.FinishBuilding(record.InstanceId)) return;
         BuildingRules.SyncHomes(Settlement, FindBuilding);
         BuildingRules.UnlockBuiltDevelopments(Settlement, FindBuilding);
-        foreach (var record in _dueBuildings)
-        {
-            _finishedBuildings.Add((record, record.EndUtcTicks));
-            OnBuildingFinished?.Invoke(record);
-            var building = FindBuilding(record.BuildingId);
-            if (notify && building != null)
-                GameNotices.Post(new GameNotice(building.Kind == BuildingKind.Home
-                    ? $"{building.DisplayName} 완성! 빈 집이 생겼어요"
-                    : $"{building.DisplayName} 완성!"));
-        }
+        _finishedBuildings.Add((record, record.EndUtcTicks));
+        OnBuildingFinished?.Invoke(record);
+        var building = FindBuilding(record.BuildingId);
+        if (notify && building != null)
+            GameNotices.Post(new GameNotice(building.Kind == BuildingKind.Home
+                ? $"{building.DisplayName} 완성! 빈 집이 생겼어요" : $"{building.DisplayName} 완성!"));
         SaveRequested?.Invoke();
     }
 

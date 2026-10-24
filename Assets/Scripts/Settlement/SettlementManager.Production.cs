@@ -38,13 +38,15 @@ public partial class SettlementManager
     }
 
     // 마지막으로 셈한 뒤 흐른 시간만큼 일함 (시계를 되돌려도 같은 시간을 두 번 세지 않게 앞으로만)
-    private void RunProduction()
+    private void RunProduction(long? untilTicks = null, long? referenceTicks = null)
     {
         var inventory = InventoryManager.Instance != null ? InventoryManager.Instance.Inventory : null;
         if (inventory == null)
             return;
         var data = Settlement.Production;
-        long now = NowTicks;
+        long now = untilTicks ?? NowTicks;
+        long earliest = (referenceTicks ?? NowTicks) - TimeSpan.FromHours(8).Ticks;
+        if (data.lastUtcTicks > 0) data.lastUtcTicks = Math.Max(data.lastUtcTicks, earliest);
         if (data.lastUtcTicks <= 0 || now <= data.lastUtcTicks)
         {
             data.lastUtcTicks = Math.Max(data.lastUtcTicks, now);

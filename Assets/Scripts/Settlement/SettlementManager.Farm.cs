@@ -74,7 +74,10 @@ public partial class SettlementManager
         return unlock != null && !string.IsNullOrEmpty(unlock.RequiredBuilding) ? unlock : null;
     }
 
-    private bool Unlocked(FarmUnlock unlock) => unlock != null && !string.IsNullOrEmpty(unlock.RequiredBuilding) && HasBuilt(unlock.RequiredBuilding);
+    private bool Unlocked(FarmUnlock unlock) => unlock != null && !string.IsNullOrEmpty(unlock.RequiredBuilding)
+        && HasBuilt(unlock.RequiredBuilding)
+        && (unlock != FarmConfig.SprinklerUnlock || HasDevelopment(SprinklerEquipment))
+        && (unlock != FarmConfig.StonePath || HasDevelopment(StonePathEquipment));
 
     public int CrateCapacity => FarmConfig == null ? 0 : FarmConfig.CrateCapacity * (Unlocked(FarmConfig.BigCrate) ? 2 : 1);
     public bool CartActive => FarmConfig != null && Unlocked(FarmConfig.Cart);

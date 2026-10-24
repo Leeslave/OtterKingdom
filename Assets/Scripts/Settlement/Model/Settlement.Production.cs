@@ -39,7 +39,17 @@ public static class ProductionRules
 
     /// <summary>지금 이 시설에서 일하는 해달 수 (그 특성의 주민 수)</summary>
     public static int Workers(SettlementConfig config, Settlement settlement, BuildingDefinition building) =>
-        building != null && building.Produces ? TraitRules.Count(config, settlement, building.ProductionTrait) : 0;
+        building != null && building.Produces ? TraitRules.Settled(config, settlement, building.ProductionTrait)
+            .FindAll(id => CanProduce(config, settlement, id)).Count : 0;
+
+    private static bool CanProduce(SettlementConfig config, Settlement settlement, string id)
+    {
+        if (settlement.GetWorkState(id) != ResidentWorkState.Idle || settlement.HasRole(id)) return false;
+        var otter = config.FindOtter(id);
+        if (otter == null || otter.IsBuilder || (otter.IsSpecialist && settlement.GetSpecialistState(id) >= SpecialistState.Assigned)) return false;
+        var request = settlement.Job != null ? config.FindRequest(settlement.Job.RequestId) : null;
+        return request == null || request.Construction == null || request.Construction.NeedsBuilder || request.Requester?.OtterId != id;
+    }
 
     /// <summary>1시간에 모으는 개수 (반올림)</summary>
     /// <param name="workerPercent">해달 ID → 그 해달 몫에 더하는 % (편성 · 장신구 얻는 양, 없으면 0)</param>
@@ -53,7 +63,10 @@ public static class ProductionRules
             return 0;
         double total = 0;
         foreach (var otterId in TraitRules.Settled(config, settlement, building.ProductionTrait))
+        {
+            if (!CanProduce(config, settlement, otterId)) continue;
             total += building.ProductionPerHour * (100 + Math.Max(0, workerPercent != null ? workerPercent(otterId) : 0)) / 100.0;
+        }
         return total;
     }
 
@@ -82,7 +95,7 @@ public static class ProductionRules
             if (perHour <= 0)
                 continue;
             var progress = ProgressOf(settlement.Production, building.BuildingId);
-            progress.amount = (float)Math.Min(progress.amount + perHour * seconds / 3600d, perHour * MaxStoredHours);
+            progress.amount = AccruedAmount(progress.amount, perHour, seconds);
             int whole = (int)Math.Floor(progress.amount);
             if (whole <= 0)
                 continue;
@@ -94,6 +107,16 @@ public static class ProductionRules
 
     /// <summary>이 시설이 처음 재료를 가방에 넣으면 열리는 발전 (메인 퀘스트 "목공소의 첫 목재" 등이 셈)</summary>
     public static string FirstProducedDevelopment(string buildingId) => "produced_" + buildingId;
+
+    /// <summary>8시간치까지 모으되 일손이 줄어도 이미 모은 재료는 보존한다.</summary>
+    public static float AccruedAmount(float stored, double perHour, double seconds)
+    {
+        if (float.IsNaN(stored) || float.IsInfinity(stored) || stored < 0) stored = 0;
+        if (perHour <= 0 || double.IsNaN(perHour) || double.IsInfinity(perHour)
+            || seconds <= 0 || double.IsNaN(seconds)) return stored;
+        double capacity = Math.Max(stored, perHour * MaxStoredHours);
+        return (float)Math.Min(stored + perHour * seconds / 3600d, capacity);
+    }
 
     /// <summary>가방이 차서 못 넣은 몫을 시설에 되돌림 (다음에 다시 넣어 봄)</summary>
     public static void Return(Settlement settlement, BuildingDefinition building, int amount)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p5_fisher_home
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p5_fisher_home
-  _order: 39
+  _order: 40
   _category: 0
   _contentVersion: 4
   _title: "\uD401\uB2F9\uC774\uAC00 \uC0B4 \uC9D1"
@@ -22,7 +22,7 @@ MonoBehaviour:
     \uD558\uACE0 \uC2F6\uB300\uC694."
   _icon: {fileID: 21300000, guid: c77630cccf31a5d4893fb43a6360ef96, type: 3}
   _requester: {fileID: 11400000, guid: b9c681d6bbf9435381dc3a1e349ef2e6, type: 2}
-  _requiredDevelopment: p4_quarry_built
+  _requiredDevelopment: fishing_working
   _minResidents: 0
   _construction: {fileID: 0}
   _clearZone: {fileID: 0}
@@ -38,5 +38,5 @@ MonoBehaviour:
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 9933a735dac55c642ac836941770b575, type: 2}
-  _completionMessage: "\uD401\uB2F9\uC774\uAC00 \uB9C8\uC744 \uC8FC\uBBFC\uC774 \uB418\uC5C8\uC5B4\uC694!"
+  _completionMessage: "퐁당이가 정착했어요. 어업 작업소를 마련해 바다 생활을 넓혀요."
   _kingdomLevel: 0

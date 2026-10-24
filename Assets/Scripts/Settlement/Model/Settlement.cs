@@ -194,7 +194,7 @@ public partial class Settlement
 
     /// <summary>이 해달이 지금 작업 중인지</summary>
     public ResidentWorkState GetWorkState(string otterId) =>
-        FindTaskJobOf(otterId) != null ? ResidentWorkState.Working : ResidentWorkState.Idle;
+        FindTaskJobOf(otterId) != null || Scouting.HasWorker(otterId) ? ResidentWorkState.Working : ResidentWorkState.Idle;
 
     /// <summary>이 해달이 하고 있는 작업 (없으면 null)</summary>
     public SettlementTaskJob FindTaskJobOf(string otterId)
@@ -539,6 +539,7 @@ public partial class Settlement
         if (saved == null)
             throw new ArgumentNullException(nameof(saved));
 
+        Scouting = new ScoutingProgress();
         _residents.Clear();
         _residentOrder.Clear();
         _completedRequests.Clear();
@@ -670,6 +671,15 @@ public partial class Settlement
         LoadRelocation(saved);
         LoadFarm(saved);
         LoadProduction(saved);
+        Scouting = new ScoutingProgress(saved.scouting);
+        // 주민 작업과 정찰에 동시에 저장된 손상 기록은 정찰을 취소해 주민을 돌려보낸다.
+        foreach (var id in Scouting.Workers)
+            if (FindTaskJobOf(id) != null || HasRole(id)
+                || !TryGetResidentState(id, out var workerState) || workerState != ResidentState.Resident)
+            {
+                Scouting.Cancel();
+                break;
+            }
 
         OnChanged?.Invoke();
     }
@@ -756,6 +766,7 @@ public partial class Settlement
         WriteRelocation(result);
         WriteFarm(result);
         WriteProduction(result);
+        result.scouting = Scouting.Save();
     }
 
     #endregion

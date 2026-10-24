@@ -35,6 +35,10 @@ public class BackButtonHandler : MonoBehaviour
         if ((navigator != null && navigator.IsTraveling) || TutorialOverlay.IsShowing)
             return;
 
+        var islandMap = FindAnyObjectByType<IslandMapSheet>();
+        if (islandMap != null && islandMap.IsOpen) { islandMap.Close(); return; }
+        var facilities = FindAnyObjectByType<ProductionSheet>();
+        if (facilities != null && facilities.IsOpen) { facilities.Close(); return; }
         var health = FindAnyObjectByType<MineCommunitySheet>();
         if (health != null && health.IsOpen) { health.Close(); return; }
         var portrait = FindAnyObjectByType<ProfilePortraitPicker>();

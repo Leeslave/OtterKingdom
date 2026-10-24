@@ -35,15 +35,8 @@ MonoBehaviour:
   _settleTargets: []
   _resultDevelopment: p4_granary_built
   _settles: []
-  _arrivals:
-  - _otter: {fileID: 11400000, guid: 82f6229b64b54a9fb0a98688d677f6c7, type: 2}
-    _state: 0
+  _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 67108e59a537a494287a18760c9ab698, type: 2}
-  _completionMessage: "\uB18D\uC5C5 \uCC3D\uACE0\uAC00 \uC0DD\uACBC\uC5B4\uC694!
-    \uBC2D\uACFC \uC0C1\uC790 \uC0AC\uC774\uC5D0 \uD759\uAE38\uC744 \uB193\uC544
-    \uBD10\uC694. \uB18D\uBD80\uAC00 \uAE38 \uC704\uC5D0\uC11C \uBE68\uB9AC \uAC78\uC5B4\uC694.\n\uC218\uD655
-    \uC0C1\uC790\uAC00 \uB450 \uBC30\uB85C \uCEE4\uC9C0\uACE0, \uAC70\uB450\uB294
-    \uC791\uBB3C\uB3C4 \uB298\uC5B4\uB098\uC694. (\uC218\uD655\uB7C9 +10%)\n\uB3D9\uAE00\uB3D9\uAE00\uD55C
-    \uB3CC\uC744 \uC88B\uC544\uD558\uB294 \uB370\uAD74\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
-  _kingdomLevel: 14
+  _completionMessage: "농업 창고가 생겼어요. 수확 상자가 커졌고 흙길을 놓을 수 있어요. 밭과 상자 사이에 길을 놓아 봐요!"
+  _kingdomLevel: 12

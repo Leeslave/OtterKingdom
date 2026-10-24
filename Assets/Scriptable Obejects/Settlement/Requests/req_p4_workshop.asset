@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p4_workshop
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p4_workshop
-  _order: 34
+  _order: 26
   _category: 0
   _contentVersion: 4
   _title: "\uB098\uBB34\uAC00 \uBAA8\uC790\uB77C\uC694"
@@ -35,13 +35,9 @@ MonoBehaviour:
   _resultDevelopment: p4_workshop_built
   _settles: []
   _arrivals:
-  - _otter: {fileID: 11400000, guid: f67334a72b334d8fb371a7a4fe78ff5f, type: 2}
+  - _otter: {fileID: 11400000, guid: 82f6229b64b54a9fb0a98688d677f6c7, type: 2}
     _state: 0
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 6bc7202617482a1478066568514651c9, type: 2}
-  _completionMessage: "\uBAA9\uACF5\uC18C\uAC00 \uC0DD\uACBC\uC5B4\uC694! \uAFB8\uBC85\uC774\uC640
-    \uCFF5\uCFF5\uC774\uAC00 \uBAA9\uC7AC\uB97C \uAFB8\uC900\uD788 \uBAA8\uC544 \uC640\uC694.
-    (\uD55C \uB9C8\uB9AC\uB2F9 1\uC2DC\uAC04\uC5D0 12\uAC1C)\n\uBC2D\uC5D0 \uC2A4\uD504\uB9C1\uD074\uB7EC\uB3C4
-    \uB193\uC744 \uC218 \uC788\uC5B4\uC694. \uC0C8\uC2F9\uC744 \uC88B\uC544\uD558\uB294
-    \uBCF4\uB4E4\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
-  _kingdomLevel: 13
+  _completionMessage: "목공소에서 한가한 나무 특성 주민이 목재를 모아요. 첫 목재를 받아 다음 집을 준비해요. 스프링클러는 농사를 시작한 뒤 설비를 확장하면 열려요."
+  _kingdomLevel: 7

@@ -191,5 +191,6 @@ public static partial class SettlementSetup
             EditorUtility.SetDirty(request);
             AddUnique(configSo.FindProperty("_requests"), request);
         }
+        ApplyFlowRequests(otters);
     }
 }

@@ -104,3 +104,10 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Local verification outputs
+/tmp/Temp/
+/tmp/Verification/
+/Tools/Verification/obj/
+!/Tools/Verification/ScoutingChecks.csproj
+!/Tools/Verification/RuntimeModelChecks.csproj

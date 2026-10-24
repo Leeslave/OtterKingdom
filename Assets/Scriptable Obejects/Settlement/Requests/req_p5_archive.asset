@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p5_archive
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p5_archive
-  _order: 44
+  _order: 43
   _category: 0
   _contentVersion: 4
   _title: "\uAE30\uB85D\uAD00"
@@ -37,7 +37,5 @@ MonoBehaviour:
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: b6d7cd3ff0912554e8ed42c8b01c3567, type: 2}
-  _completionMessage: "\uAE30\uB85D\uAD00\uC774 \uC0DD\uACBC\uC5B4\uC694! \uC8FC\uBBFC\uB4E4\uC758
-    \uBD80\uD0C1\uC744 \uCC59\uACA8 \uC0DD\uD65C \uC758\uB8B0 \uBCF4\uC0C1\uC774
-    \uB298\uC5B4\uB098\uC694. (\uC0DD\uD65C \uC758\uB8B0 \uBCF4\uC0C1 +10%)"
+  _completionMessage: "기록관이 생겼어요. 생활 의뢰 보상 +10%! 주민들의 부탁을 해결하며 왕국을 키워요."
   _kingdomLevel: 18

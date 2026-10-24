@@ -22,7 +22,7 @@ MonoBehaviour:
     \uB3CC\uBCF4\uACE0 \uC2F6\uB300\uC694."
   _icon: {fileID: 21300000, guid: 2164e715d52989742870bf600e3d5f8e, type: 3}
   _requester: {fileID: 11400000, guid: f67334a72b334d8fb371a7a4fe78ff5f, type: 2}
-  _requiredDevelopment: p4_workshop_built
+  _requiredDevelopment: farm_crate_collected
   _minResidents: 0
   _construction: {fileID: 0}
   _clearZone: {fileID: 0}
@@ -38,5 +38,5 @@ MonoBehaviour:
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: ef0412d9136a42f4388150eb3c2a9b57, type: 2}
-  _completionMessage: "\uBCF4\uB4E4\uC774\uAC00 \uB9C8\uC744 \uC8FC\uBBFC\uC774 \uB418\uC5C8\uC5B4\uC694!"
+  _completionMessage: "보들이가 정착했어요. 농업 창고로 수확 상자를 늘리고 흙길을 놓아 봐요."
   _kingdomLevel: 0

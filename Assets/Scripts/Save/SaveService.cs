@@ -84,6 +84,7 @@ public class SaveService
 
         WritesBlocked = false;
         warnedBlocked = false;
+        WebFileSync.Flush();
         Debug.Log($"[SaveService] Save files moved to snapshot {dir}");
         return name;
     }
@@ -106,6 +107,7 @@ public class SaveService
         {
             File.Copy(file, Path.Combine(Path.GetDirectoryName(savePath), Path.GetFileName(file)));
         }
+        WebFileSync.Flush();
         Debug.Log($"[SaveService] Restored save files from snapshot {dir}");
         return true;
     }
@@ -194,6 +196,7 @@ public class SaveService
         if (File.Exists(backupPath)) Quarantine(backupPath);
         WritesBlocked = false;
         warnedBlocked = false;
+        WebFileSync.Flush();
     }
 
     // stampTime: false keeps data.lastSaveUtc as is — only the dev tool that
@@ -241,6 +244,8 @@ public class SaveService
                 Quarantine(savePath);
                 File.Move(tempPath, savePath);
             }
+            // 웹: 메모리에만 쓴 파일을 브라우저 저장소로 (안 하면 새로 고칠 때 사라짐)
+            WebFileSync.Flush();
             return true;
         }
         catch (Exception e)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p4_shop
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p4_shop
-  _order: 32
+  _order: 37
   _category: 0
   _contentVersion: 4
   _title: "\uC9E4\uB791\uC774\uC758 \uAC00\uAC8C"
@@ -35,13 +35,9 @@ MonoBehaviour:
   _resultDevelopment: p4_shop_built
   _settles: []
   _arrivals:
-  - _otter: {fileID: 11400000, guid: a381a5f436d54189960988fc991d7215, type: 2}
+  - _otter: {fileID: 11400000, guid: ac2d28fc54a545e7ac154e16db67a844, type: 2}
     _state: 0
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 1977d380b10cfd249b7a08c620bc3363, type: 2}
-  _completionMessage: "\uD574\uB2EC \uC0C1\uC810\uC774 \uBB38\uC744 \uC5F4\uC5C8\uC5B4\uC694!
-    \uC774\uC81C \uBB3C\uAC74\uC744 \uB354 \uBE44\uC2F8\uAC8C \uD314 \uC218 \uC788\uC5B4\uC694.
-    (\uD310\uB9E4\uAC00 +10%)\n\uC694\uC815 \uC0C1\uC810\uB3C4 \uC774\uACF3\uC73C\uB85C
-    \uC774\uC0AC\uD588\uC5B4\uC694. \uC232\uC5D0\uC11C \uB098\uBB34\uB97C \uD558\uB294
-    \uCFF5\uCFF5\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
-  _kingdomLevel: 12
+  _completionMessage: "해달 상점이 문을 열었어요. 판매가 +10%! 작물을 팔아 설비 확장과 다음 공사를 준비해요. 콩콩이가 찾아왔어요."
+  _kingdomLevel: 13

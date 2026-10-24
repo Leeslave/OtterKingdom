@@ -79,7 +79,7 @@ public static class QuestSetup
         // Lv.7 → 8 갱도 한 바퀴 (80 + 첫 비축 560). 마을 길드는 가스 사건 뒤 (req_upgrade_town_hall ← mine_hospital)
         ("M07_TownHall", "main_lv7_town_hall", "갱도 한 바퀴", "지하 1층 돌을 모두 부수고 나오기", QuestGoalType.Milestone, 1, "", 300, "place:ICON_Place_Mine", QuestKind.Main, 7, "M06_Guild", 80, 0f, MineMazeRules.FirstTripDevelopment),
         ("M07_Supply", "main_lv7_supply", "우리 마을의 첫 비축", "공동사업: 비축 상자 만들기", QuestGoalType.Milestone, 1, "", 100, "settle:ICON_TownHall", QuestKind.Main, 7, "M07_TownHall", 0, 0f, "supply_ready"),
-        ("M07_Mine", "main_lv7_mine", "광석 모으기", "광산에서 광석 50개 캐기", QuestGoalType.Mine, 50, "Ore", 200, "item:Mining/다이아몬드", QuestKind.Main, 7, "M07_Supply", 160, 0f, ""),
+        ("M07_Mine", "main_lv7_mine", "섬 지도를 그려요", "갱도에서 지도 해달을 만나 마을회관에 합류시키기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_TownHall", QuestKind.Main, 7, "M07_Supply", 160, 0f, ScoutingRules.MapJoined),
         // Lv.8 → 9 영토 넓히기 (450 + 영토 미션 600)
         ("M08_Territory", "main_lv8_territory", "영토 넓히기", "숲을 개간해 첫 영토 열기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_Clearing", QuestKind.Main, 8, "M07_Mine", 0, 0f, "territory_first"),
         ("M08_District", "main_lv8_district", "넓어진 땅의 쓰임", "새로 넓힌 땅의 구역 정하기", QuestGoalType.Milestone, 1, "", 200, "settle:ICON_Clearing", QuestKind.Main, 8, "M08_Territory", 300, 0f, "district_second"),

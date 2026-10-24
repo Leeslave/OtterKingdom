@@ -192,4 +192,5 @@ public class SettlementSaveData
     public PlazaFarmSaveData farm = new PlazaFarmSaveData();
     // 시설 생산 (목공소 · 채석 작업소의 해달들이 모으는 재료. 옛 세이브는 없음 = 처음 셈할 때부터)
     public BuildingProductionSaveData production = new BuildingProductionSaveData();
+    public ScoutingSaveData scouting = new ScoutingSaveData();
 }

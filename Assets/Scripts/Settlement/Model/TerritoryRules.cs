@@ -19,6 +19,7 @@ public enum TerritoryBlock
     OtherDirection, // 다른 방향을 개간하다 멈춤 → 그 방향 3번을 먼저 (한 땅씩 차례로)
     Mission,       // 숲 개간은 다 끝남 → 영토 확장 미션 차례
     AllDone,       // 이 방향은 모두 넓힘
+    NeedsScouting,
 }
 
 /// <summary>
@@ -256,7 +257,18 @@ public static class TerritoryRules
     }
 
     public static int AvailableChances(SettlementConfig config, Settlement settlement, int playerLevel) =>
-        Math.Max(0, EarnedChances(config, playerLevel) - UsedChances(config, settlement));
+        ScoutingRules.UsesScouting(settlement) ? ScoutedClearings(config, settlement)
+            : Math.Max(0, EarnedChances(config, playerLevel) - UsedChances(config, settlement));
+
+    private static int ScoutedClearings(SettlementConfig config, Settlement settlement)
+    {
+        int count = 0;
+        foreach (var territory in config.Territories)
+            if (territory != null && !IsExpanded(territory, settlement)
+                && ScoutingRules.CanClear(config, settlement, territory))
+                count += Math.Max(0, territory.Clearings.Count - ClearingsDone(territory, settlement));
+        return count;
+    }
 
     /// <summary>지금 진행 중인 숲 개간 (없으면 null)</summary>
     public static TerritoryExpansionDefinition Working(SettlementConfig config, Settlement settlement, out int index)
@@ -316,6 +328,8 @@ public static class TerritoryRules
             return TerritoryBlock.OtherDirection;
         if (IsTutorial(current, settlement) && !settlement.HasDevelopment(TutorialDone))
             return TerritoryBlock.None;
+        if (!ScoutingRules.CanClear(config, settlement, current))
+            return TerritoryBlock.NeedsScouting;
         return AvailableChances(config, settlement, playerLevel) > 0 ? TerritoryBlock.None : TerritoryBlock.NoChance;
     }
 

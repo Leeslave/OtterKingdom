@@ -95,6 +95,9 @@ public partial class SettlementManager
             return $"Lv.{TerritoryRules.TutorialLevel}이 되면 오른쪽 숲에서 첫 개간을 할 수 있어요.";
         if (PlayerLevel < _config.TerritoryStartLevel)
             return $"Lv.{_config.TerritoryStartLevel}부터 공터 둘레의 숲을 개간할 수 있어요.";
+        if (ScoutingRules.UsesScouting(Settlement))
+            return HasIslandMap ? "회관의 섬 지도에서 정찰대를 보내요. 발견한 땅은 레벨별 개간 기회를 기다리지 않고 길을 낼 수 있어요."
+                : "오래된 갱도에서 지도 해달을 만나 회관으로 초대해요. 첫 개간은 먼저 할 수 있어요.";
         // 시작한 땅은 다 마칠 때까지 그 방향만 (TerritoryRules.Started)
         var started = TerritoryRules.Started(_config, Settlement);
         string progress = started != null
@@ -112,7 +115,7 @@ public partial class SettlementManager
         if (territory == null)
             return null;
         if (TerritoryRules.IsTutorial(territory, Settlement))
-            return $"첫 개간 완료! 오른쪽 땅이 넓어졌어요.\n이제 Lv.{_config.TerritoryStartLevel}부터 레벨마다 개간 기회를 얻어요.";
+            return "첫 개간 완료! 오른쪽 땅이 넓어졌어요.\n갱도에서 지도 해달을 만나면 회관에서 다른 방향도 정찰할 수 있어요.";
         int total = territory.Clearings.Count;
         var text = new StringBuilder();
         text.Append(index + 1 >= total

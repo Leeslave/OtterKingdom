@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p4_first_home
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p4_first_home
-  _order: 30
+  _order: 24
   _category: 0
   _contentVersion: 4
   _title: "\uB180\uB7EC \uC628 \uCE5C\uAD6C\uC758 \uC9D1"
@@ -22,7 +22,7 @@ MonoBehaviour:
     \uD558\uB098 \uC9C0\uC5B4 \uC904\uB798\uC694?"
   _icon: {fileID: 21300000, guid: f040e43efa04ee0b63e472b456a24b36, type: 3}
   _requester: {fileID: 11400000, guid: b93ad005e0c001b4da2eb2e220f88b21, type: 2}
-  _requiredDevelopment: first_gathering_complete
+  _requiredDevelopment: board_upgraded
   _minResidents: 0
   _construction: {fileID: 0}
   _clearZone: {fileID: 0}
@@ -39,6 +39,5 @@ MonoBehaviour:
     _state: 0
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 54e641592cac66644b5dc41fc9346b6c, type: 2}
-  _completionMessage: "\uC791\uC740 \uC9D1\uC774 \uC0DD\uACBC\uC5B4\uC694! \uC7A5\uC0AC\uB97C
-    \uD558\uACE0 \uC2F6\uB2E4\uB294 \uC9E4\uB791\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
-  _kingdomLevel: 11
+  _completionMessage: "새 친구가 머물 집이 생겼어요. 짤랑이가 찾아왔어요!"
+  _kingdomLevel: 0

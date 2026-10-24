@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p4_quarry
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p4_quarry
-  _order: 38
+  _order: 28
   _category: 0
   _contentVersion: 4
   _title: "\uB3CC \uAE68\uB294 \uC77C\uD130"
@@ -34,15 +34,8 @@ MonoBehaviour:
   _settleTargets: []
   _resultDevelopment: p4_quarry_built
   _settles: []
-  _arrivals:
-  - _otter: {fileID: 11400000, guid: b9c681d6bbf9435381dc3a1e349ef2e6, type: 2}
-    _state: 0
+  _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: ed3ea56d75504a641b269c37fb44cdac, type: 2}
-  _completionMessage: "\uCC44\uC11D \uC791\uC5C5\uC18C\uAC00 \uC0DD\uACBC\uC5B4\uC694!
-    \uB370\uAD74\uC774\uC640 \uAE61\uAE61\uC774\uAC00 \uB3CC\uC744 \uAFB8\uC900\uD788
-    \uBAA8\uC544 \uC640\uC694. (\uD55C \uB9C8\uB9AC\uB2F9 1\uC2DC\uAC04\uC5D0 12\uAC1C)\n\uD759\uAE38\uC774
-    \uB3CC\uAE38\uB85C \uBC14\uB00C\uC5B4 \uB18D\uBD80\uAC00 \uB354 \uBE68\uB9AC
-    \uAC78\uC5B4\uC694. \uBC14\uB2E4\uB97C \uC88B\uC544\uD558\uB294 \uD401\uB2F9\uC774\uAC00
-    \uCC3E\uC544\uC654\uC5B4\uC694."
-  _kingdomLevel: 15
+  _completionMessage: "채석 작업소에서 한가한 채굴 특성 주민이 건축용 돌을 모아요. 돌길 설비는 농업 창고에서 흙길을 쓴 뒤 확장해요."
+  _kingdomLevel: 9

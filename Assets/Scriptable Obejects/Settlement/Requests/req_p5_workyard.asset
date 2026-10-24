@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p5_workyard
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p5_workyard
-  _order: 42
+  _order: 39
   _category: 0
   _contentVersion: 4
   _title: "\uAC74\uC124\uC18C"
@@ -34,12 +34,8 @@ MonoBehaviour:
   _settleTargets: []
   _resultDevelopment: p5_workyard_built
   _settles: []
-  _arrivals:
-  - _otter: {fileID: 11400000, guid: 58898692c33347619cf75afe6c116c9a, type: 2}
-    _state: 0
+  _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: f24f9350cccbb864bb8e53753e72c0dd, type: 2}
-  _completionMessage: "\uAC74\uC124\uC18C\uAC00 \uC0DD\uACBC\uC5B4\uC694! \uACF5\uC0AC\uAC00
-    \uB354 \uBE68\uB9AC \uB05D\uB098\uC694. (\uACF5\uC0AC \uC2DC\uAC04 -15%)\n\uBA54\uBAA8\uC7C1\uC774
-    \uB044\uC801\uC774\uAC00 \uCC3E\uC544\uC654\uC5B4\uC694."
-  _kingdomLevel: 17
+  _completionMessage: "건설소가 생겼어요. 공사 시간 -15%! 수레가 수확물을 모으고 밭 칸 공사도 빨라져요. 남쪽 바닷가로 가는 길을 준비해요."
+  _kingdomLevel: 15

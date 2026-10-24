@@ -35,7 +35,7 @@ MonoBehaviour:
     \uCC59\uACA8\uC694. \uC0DD\uD65C \uC758\uB8B0 \uBCF4\uC0C1\uC774 \uB298\uC5B4\uB098\uC694."
   _icon: {fileID: 21300000, guid: 8c31a4b2f623cf14cb77357fc76b9a79, type: 3}
   _kind: 1
-  _requiredLevel: 0
+  _requiredLevel: 17
   _requiredDevelopment: p5_recorder_settled
   _traits:
   - _trait: 10
@@ -48,7 +48,7 @@ MonoBehaviour:
   - _item: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
     _amount: 80
   _costGrowth: 0
-  _buildSeconds: 660
+  _buildSeconds: 480
   _stageSprites: []
   _bonuses:
   - _kind: 11

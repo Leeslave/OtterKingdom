@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p5_recorder_home
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p5_recorder_home
-  _order: 43
+  _order: 42
   _category: 0
   _contentVersion: 4
   _title: "\uB044\uC801\uC774\uAC00 \uC0B4 \uC9D1"
@@ -22,7 +22,7 @@ MonoBehaviour:
     \uC774\uC57C\uAE30\uB97C \uC801\uC5B4 \uB450\uACE0 \uC2F6\uB300\uC694."
   _icon: {fileID: 21300000, guid: 819d74aa7dcb5a245a4500bf5b591d3d, type: 3}
   _requester: {fileID: 11400000, guid: 58898692c33347619cf75afe6c116c9a, type: 2}
-  _requiredDevelopment: p5_workyard_built
+  _requiredDevelopment: p5_fishery_built
   _minResidents: 0
   _construction: {fileID: 0}
   _clearZone: {fileID: 0}
@@ -38,5 +38,5 @@ MonoBehaviour:
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 15568479b0c70784f90a70c720e9a0f5, type: 2}
-  _completionMessage: "\uB044\uC801\uC774\uAC00 \uB9C8\uC744 \uC8FC\uBBFC\uC774 \uB418\uC5C8\uC5B4\uC694!"
+  _completionMessage: "끄적이가 정착했어요. 기록관에서 생활 의뢰를 챙겨요."
   _kingdomLevel: 0

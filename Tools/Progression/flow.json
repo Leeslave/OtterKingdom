@@ -1,0 +1,30 @@
+{
+  "quests": [
+    { "asset": "M07_Mine", "title": "섬 지도를 그려요", "description": "갱도에서 지도 해달을 만나 마을회관에 합류시키기", "goalType": 11, "goal": 1, "target": "island_map_joined", "iconFrom": "M07_Supply" }
+  ],
+  "requests": [
+    { "asset": "req_p4_first_home", "requires": "board_upgraded", "order": 24, "level": 0, "arrival": "otter_toy_jjalrang", "done": "새 친구가 머물 집이 생겼어요. 짤랑이가 찾아왔어요!" },
+    { "asset": "req_p4_lumber_home", "requires": "territory_first", "order": 25, "level": 0, "arrival": "", "done": "꾸벅이와 쿵쿵이가 정착했어요. 생산 구역에 목공소를 마련해요." },
+    { "asset": "req_p4_workshop", "requires": "p4_lumber_settled", "order": 26, "level": 7, "arrival": "otter_toy_degul", "done": "목공소에서 한가한 나무 특성 주민이 목재를 모아요. 첫 목재를 받아 다음 집을 준비해요. 스프링클러는 농사를 시작한 뒤 설비를 확장하면 열려요." },
+    { "asset": "req_p4_miner_home", "requires": "produced_bld_workshop", "order": 27, "level": 0, "arrival": "", "done": "데굴이가 정착했어요. 채석 작업소를 마련해 건축용 돌을 모아요." },
+    { "asset": "req_p4_quarry", "requires": "p4_miner_settled", "order": 28, "level": 9, "arrival": "", "done": "채석 작업소에서 한가한 채굴 특성 주민이 건축용 돌을 모아요. 돌길 설비는 농업 창고에서 흙길을 쓴 뒤 확장해요." },
+    { "asset": "req_p4_farmer_home", "requires": "farm_crate_collected", "order": 35, "level": 0, "arrival": "", "done": "보들이가 정착했어요. 농업 창고로 수확 상자를 늘리고 흙길을 놓아 봐요." },
+    { "asset": "req_p4_granary", "requires": "p4_farmer_settled", "order": 36, "level": 12, "arrival": "", "done": "농업 창고가 생겼어요. 수확 상자가 커졌고 흙길을 놓을 수 있어요. 밭과 상자 사이에 길을 놓아 봐요!" },
+    { "asset": "req_p4_shop", "requires": "p4_trader_settled", "order": 37, "level": 13, "arrival": "otter_toy_kongkong", "done": "해달 상점이 문을 열었어요. 판매가 +10%! 작물을 팔아 설비 확장과 다음 공사를 준비해요. 콩콩이가 찾아왔어요." },
+    { "asset": "req_p5_builder_home", "requires": "p4_shop_built", "order": 38, "level": 0, "arrival": "", "done": "콩콩이가 정착했어요. 건설소를 마련해 밭과 선착장 공사를 준비해요." },
+    { "asset": "req_p5_workyard", "requires": "p5_builder_settled", "order": 39, "level": 15, "arrival": "", "done": "건설소가 생겼어요. 공사 시간 -15%! 수레가 수확물을 모으고 밭 칸 공사도 빨라져요. 남쪽 바닷가로 가는 길을 준비해요." },
+    { "asset": "req_p5_fisher_home", "requires": "fishing_working", "order": 40, "level": 0, "arrival": "", "done": "퐁당이가 정착했어요. 어업 작업소를 마련해 바다 생활을 넓혀요." },
+    { "asset": "req_p5_fishery", "requires": "p5_fisher_settled", "order": 41, "level": 17, "arrival": "otter_toy_kkeujeok", "done": "어업 작업소가 생겼어요. 낚시 수확량 +20%! 물고기를 모으고 바다 의뢰를 해 봐요. 끄적이가 찾아왔어요." },
+    { "asset": "req_p5_recorder_home", "requires": "p5_fishery_built", "order": 42, "level": 0, "arrival": "", "done": "끄적이가 정착했어요. 기록관에서 생활 의뢰를 챙겨요." },
+    { "asset": "req_p5_archive", "requires": "p5_recorder_settled", "order": 43, "level": 18, "arrival": "", "done": "기록관이 생겼어요. 생활 의뢰 보상 +10%! 주민들의 부탁을 해결하며 왕국을 키워요." }
+  ],
+  "buildings": [
+    { "asset": "Building_Workshop", "level": 6, "gold": 700, "wood": 12, "stone": 8, "seconds": 90, "perHour": 60 },
+    { "asset": "Building_Quarry", "level": 8, "gold": 1200, "wood": 20, "stone": 12, "seconds": 120, "perHour": 60 },
+    { "asset": "Building_Granary", "level": 11, "gold": 2000, "wood": 40, "stone": 20, "seconds": 180, "perHour": 0 },
+    { "asset": "Building_Shop", "level": 12, "gold": 2000, "wood": 40, "stone": 20, "seconds": 180, "perHour": 0 },
+    { "asset": "Building_Workyard", "level": 14, "gold": 4000, "wood": 70, "stone": 40, "seconds": 240, "perHour": 0 },
+    { "asset": "Building_Fishery", "level": 16, "gold": 6000, "wood": 80, "stone": 60, "seconds": 360, "perHour": 0 },
+    { "asset": "Building_Archive", "level": 17, "gold": 8000, "wood": 100, "stone": 80, "seconds": 480, "perHour": 0 }
+  ]
+}

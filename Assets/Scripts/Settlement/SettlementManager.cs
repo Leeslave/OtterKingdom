@@ -173,7 +173,8 @@ public partial class SettlementManager : MonoBehaviour
         if (!IsLoaded)
             return;
         TickMineCommunity();
-        FinishDueTasks();
+        FinishDueWork();
+        TickScouting();
         // 레벨이 오르면 다음 사업·생활 의뢰가 열릴 수 있음
         int level = PlayerLevel;
         if (level != _seenLevel)
@@ -194,7 +195,6 @@ public partial class SettlementManager : MonoBehaviour
         }
         TickToyVisits();
         TickRelocation();
-        FinishDueBuildings();
         TickFarm(Time.deltaTime);
         TickProduction(Time.deltaTime);
         CompleteRecordRequests();
@@ -764,6 +764,7 @@ public partial class SettlementManager : MonoBehaviour
         if (!HasEnoughItems(task.RequiredItems))
             return TaskStartResult.NotEnoughItems;
 
+        RunProduction();
         PayCost(task.RequiredGold, task.RequiredItems);
         long now = NowTicks;
         // 생산 구역 효과: 주민 작업이 빨리 끝남
@@ -792,15 +793,7 @@ public partial class SettlementManager : MonoBehaviour
 
     private void FinishDueTasks()
     {
-        long now = NowTicks;
-        _dueTasks.Clear();
-        foreach (var job in Settlement.TaskJobs)
-        {
-            if (job.IsDue(now))
-                _dueTasks.Add(job);
-        }
-        foreach (var job in _dueTasks)
-            FinishTask(job);
+        FinishDueWork();
     }
 
     private void FinishTask(SettlementTaskJob job)
@@ -1335,15 +1328,29 @@ public partial class SettlementManager : MonoBehaviour
         ReconcileRecords();
         ReconcileBuildings();
         ReconcilePlots();
+        MigrateEquipment(saved.initialized);
+        ScoutingRules.Migrate(_config, Settlement);
+        // 저장된 정찰의 대상이 삭제되었거나 전문 역할과 겹치면 주민을 안전하게 복귀시킨다.
+        if (Settlement.Scouting.Destination != null)
+        {
+            bool invalidScout = ScoutDestination(Settlement.Scouting.Destination) == null;
+            foreach (var id in Settlement.Scouting.Workers)
+            {
+                var worker = _config.FindOtter(id);
+                invalidScout |= worker == null || worker.IsBuilder || worker.IsSpecialist || IsConstructionWorker(worker);
+            }
+            if (invalidScout) Settlement.Scouting.Cancel();
+        }
         SyncLevelDevelopments(false);
         IsLoaded = true;
         // 개발 메뉴 Fast Timers가 켜져 있으면 세이브에 남은 긴 건설·작업도 5초 안으로
         if (DevTimers.Fast)
+        {
             Settlement.ShortenTimers(NowTicks, TimeSpan.FromSeconds(DevTimers.FastSeconds));
-        if (Settlement.Job != null && Settlement.Job.IsDue(NowTicks))
-            FinishJob();
-        FinishDueTasks();
-        FinishDueBuildings(false);
+            Settlement.Scouting.Shorten(NowTicks, TimeSpan.FromSeconds(DevTimers.FastSeconds));
+        }
+        FinishDueWork(false);
+        TickScouting();
         SyncRegionDecor();
         // 공동사업: 기록에서 단계·완료를 다시 계산 (꺼진 사이 끝난 건설·정비, 주다 만 보상). 알림 없이
         UpdateProjects(true);
@@ -1440,7 +1447,10 @@ public partial class SettlementManager : MonoBehaviour
     /// <summary>진행 중인 건설·주민 작업이 길어도 DevTimers.FastSeconds 안에 끝나게 줄인다 (개발 메뉴 Fast Timers를 켤 때)</summary>
     public void DevShortenTimers()
     {
-        if (IsLoaded && Settlement.ShortenTimers(NowTicks, TimeSpan.FromSeconds(DevTimers.FastSeconds)))
+        if (!IsLoaded) return;
+        bool changed = Settlement.Scouting.Shorten(NowTicks, TimeSpan.FromSeconds(DevTimers.FastSeconds));
+        changed |= Settlement.ShortenTimers(NowTicks, TimeSpan.FromSeconds(DevTimers.FastSeconds));
+        if (changed)
             SaveRequested?.Invoke();
     }
 

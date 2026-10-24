@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p4_miner_home
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p4_miner_home
-  _order: 37
+  _order: 27
   _category: 0
   _contentVersion: 4
   _title: "\uB370\uAD74\uC774\uAC00 \uC0B4 \uC9D1"
@@ -22,7 +22,7 @@ MonoBehaviour:
     \uD568\uAED8 \uB3CC\uC744 \uCE90\uACE0 \uC2F6\uB300\uC694."
   _icon: {fileID: 21300000, guid: c257f18899339c643a95fda01099763f, type: 3}
   _requester: {fileID: 11400000, guid: 82f6229b64b54a9fb0a98688d677f6c7, type: 2}
-  _requiredDevelopment: p4_granary_built
+  _requiredDevelopment: produced_bld_workshop
   _minResidents: 0
   _construction: {fileID: 0}
   _clearZone: {fileID: 0}
@@ -38,5 +38,5 @@ MonoBehaviour:
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: d01177f74abd3274dac506982fb38342, type: 2}
-  _completionMessage: "\uB370\uAD74\uC774\uAC00 \uB9C8\uC744 \uC8FC\uBBFC\uC774 \uB418\uC5C8\uC5B4\uC694!"
+  _completionMessage: "데굴이가 정착했어요. 채석 작업소를 마련해 건축용 돌을 모아요."
   _kingdomLevel: 0

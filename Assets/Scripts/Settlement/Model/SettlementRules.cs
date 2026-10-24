@@ -211,6 +211,8 @@ public static class SettlementRules
         opened.Clear();
         foreach (var entry in config.LevelDevelopments)
         {
+            if (entry != null && entry.Development == "fishing_found" && ScoutingRules.UsesScouting(settlement))
+                continue;
             if (entry == null || string.IsNullOrEmpty(entry.Development) || level < entry.Level
                 || settlement.HasDevelopment(entry.Development))
                 continue;
@@ -233,6 +235,8 @@ public static class SettlementRules
                 || settlement.HasDevelopment(request.RequiredDevelopment))
                 continue;
             var gate = config.FindLevelDevelopment(request.RequiredDevelopment);
+            if (request.RequiredDevelopment == "fishing_found" && ScoutingRules.UsesScouting(settlement))
+                continue;
             if (gate != null && (best == null || request.Order < best.Order))
             {
                 best = request;

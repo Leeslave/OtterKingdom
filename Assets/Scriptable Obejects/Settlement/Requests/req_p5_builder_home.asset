@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p5_builder_home
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p5_builder_home
-  _order: 41
+  _order: 38
   _category: 0
   _contentVersion: 4
   _title: "\uCF69\uCF69\uC774\uAC00 \uC0B4 \uC9D1"
@@ -22,7 +22,7 @@ MonoBehaviour:
     \uC88B\uACA0\uC5B4\uC694."
   _icon: {fileID: 21300000, guid: d8dfe352c436ccc49aebf0689186bbb6, type: 3}
   _requester: {fileID: 11400000, guid: ac2d28fc54a545e7ac154e16db67a844, type: 2}
-  _requiredDevelopment: p5_fishery_built
+  _requiredDevelopment: p4_shop_built
   _minResidents: 0
   _construction: {fileID: 0}
   _clearZone: {fileID: 0}
@@ -38,5 +38,5 @@ MonoBehaviour:
   _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 1ebd41f8dca4b5d47ae106622ac252e0, type: 2}
-  _completionMessage: "\uCF69\uCF69\uC774\uAC00 \uB9C8\uC744 \uC8FC\uBBFC\uC774 \uB418\uC5C8\uC5B4\uC694!"
+  _completionMessage: "콩콩이가 정착했어요. 건설소를 마련해 밭과 선착장 공사를 준비해요."
   _kingdomLevel: 0
