@@ -52,6 +52,30 @@ public class TerritoryTests
         }
     }
 
+    [Test]
+    public void Scouting_SouthernRouteWaitsForFarmland_AndWestRemainsAvailable()
+    {
+        var village = new Settlement();
+        village.Scouting.MarkMigrated();
+        village.UnlockDevelopment(ScoutingRules.MapJoined);
+        Assert.IsFalse(ScoutingRules.CanScout(_config, village, _s1));
+        village.Scouting.Discover(_s1.ExpansionId);
+        Assert.IsFalse(ScoutingRules.CanClear(_config, village, _s1));
+        Assert.IsTrue(ScoutingRules.CanScout(_config, village, _ne1));
+        village.UnlockDevelopment(SettlementQuestGate.FarmDevelopment);
+        Assert.IsTrue(ScoutingRules.CanClear(_config, village, _s1));
+    }
+
+    [Test]
+    public void Scouting_PartlyClearedSouthernRouteCanFinishAfterMigration()
+    {
+        var village = new Settlement();
+        village.Scouting.MarkMigrated();
+        village.Scouting.Discover(_s1.ExpansionId);
+        village.UnlockDevelopment(_s1.ClearingDevelopment(1));
+        Assert.IsTrue(ScoutingRules.CanClear(_config, village, _s1));
+    }
+
     #region 만들기
 
     [SetUp]

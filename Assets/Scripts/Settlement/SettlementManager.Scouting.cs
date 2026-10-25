@@ -6,6 +6,28 @@ public partial class SettlementManager
 {
     private IslandMapSheet _islandMap;
 
+    public TerritoryExpansionDefinition AvailableClearing()
+    {
+        if (!IsLoaded) return null;
+        int workers = GetLaborSummary().Available;
+        foreach (var territory in _config.Territories)
+        {
+            if (territory == null || territory != CurrentTerritory(territory.Direction)
+                || GetTerritoryBlock(territory.Direction) != TerritoryBlock.None) continue;
+            var task = NextTerritoryClearing(territory);
+            if (task != null && GetTaskState(task) == SettlementTaskState.Available
+                && workers >= task.RequiredWorkers && TaskMissingText(task) == null) return territory;
+        }
+        return null;
+    }
+
+    public void OpenClearingMap()
+    {
+        var clearing = AvailableClearing();
+        OpenIslandMap();
+        if (clearing != null && _islandMap != null) _islandMap.Focus(clearing.Direction);
+    }
+
     public bool HasIslandMap => IsLoaded && HasDevelopment(ScoutingRules.MapJoined);
 
     public void OpenIslandMap()
@@ -56,7 +78,7 @@ public partial class SettlementManager
     private void TickScouting()
     {
         if (!IsLoaded) return;
-        bool changed = false;
+        bool changed = SettlementRules.UnlockFishingEvent(Settlement, PlayerLevel);
         if (!HasIslandMap && Settlement.IsCompleted("req_upgrade_board")
             && InventoryManager.Instance?.MineMazeState?.mapOtter == true)
         {
@@ -74,6 +96,7 @@ public partial class SettlementManager
                 _territoryVersion++;
                 var territory = ScoutDestination(discovered);
                 string report = territory?.Direction == TerritoryDirection.South && territory.Tier == 1
+                    && SettlementRules.CanStartFishingEvent(Settlement)
                     ? "남쪽 숲 너머에서 바닷가와 낡은 선착장을 찾았어요! 이제 그쪽 길을 개간해요."
                     : $"정찰대가 {territory?.DisplayName ?? discovered}을 발견하고 돌아왔어요. 주민들이 다시 일을 할 수 있어요.";
                 GameNotices.Post(new GameNotice(report, "발견 보고", OpenIslandMap));
@@ -81,7 +104,7 @@ public partial class SettlementManager
             }
         }
         // 발견 → 남쪽 경로 확보 → 기존 선착장 부탁. 이미 열린 낚시는 그대로 유지한다.
-        if (!HasDevelopment("fishing_found") && ScoutingRules.UsesScouting(Settlement))
+        if (!HasDevelopment("fishing_found") && SettlementRules.CanStartFishingEvent(Settlement) && ScoutingRules.UsesScouting(Settlement))
             foreach (var territory in _config.Territories)
                 if (territory != null && territory.Direction == TerritoryDirection.South && territory.Tier == 1
                     && Settlement.Scouting.HasDiscovered(territory.ExpansionId) && TerritoryRules.IsExpanded(territory, Settlement))

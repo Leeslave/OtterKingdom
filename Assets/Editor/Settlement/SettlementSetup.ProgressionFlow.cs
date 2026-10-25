@@ -13,7 +13,8 @@ public static partial class SettlementSetup
     }
     [Serializable] private class FlowBuilding
     {
-        public string asset;
+        public string asset, requires;
+        public bool noTraits;
         public int level, gold, wood, stone, seconds, perHour;
     }
     [Serializable] private class FlowConfig
@@ -41,6 +42,8 @@ public static partial class SettlementSetup
             if (building == null) continue;
             var so = new SerializedObject(building);
             so.FindProperty("_requiredLevel").intValue = row.level;
+            if (row.requires != null) so.FindProperty("_requiredDevelopment").stringValue = row.requires;
+            if (row.noTraits) so.FindProperty("_traits").arraySize = 0;
             so.FindProperty("_gold").intValue = row.gold;
             so.FindProperty("_buildSeconds").floatValue = row.seconds;
             var items = so.FindProperty("_items");
@@ -52,7 +55,7 @@ public static partial class SettlementSetup
             if (row.perHour > 0)
             {
                 so.FindProperty("_productionPerHour").intValue = row.perHour;
-                so.FindProperty("_description").stringValue = "한가한 특성 주민이 한 마리당 1분에 1개씩 모아요. 정찰·개간에 나간 주민은 생산을 쉬어요. 최대 8시간 보관해요.";
+                so.FindProperty("_description").stringValue = $"한가한 특성 주민이 한 마리당 {60 / row.perHour}분에 1개씩 모아요. 정찰·개간에 나간 주민은 생산을 쉬어요. 최대 8시간 보관해요.";
             }
             so.ApplyModifiedPropertiesWithoutUndo();
         }

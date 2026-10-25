@@ -74,6 +74,8 @@ for (const r of spec.requests) {
 for (const b of spec.buildings) {
   const s = read(path.join(root, `Assets/Scriptable Obejects/Decor/Buildings/${b.asset}.asset`));
   assert.equal(Number(value(s, '_requiredLevel')), b.level, b.asset);
+  if (b.requires !== undefined) assert.equal(value(s, '_requiredDevelopment'), b.requires, b.asset);
+  if (b.noTraits) assert.equal(value(s, '_traits'), '[]', b.asset);
   assert.equal(Number(value(s, '_gold')), b.gold, b.asset);
   const request = spec.requests.find(r => r.asset === ({Building_Workshop:'req_p4_workshop',Building_Quarry:'req_p4_quarry',Building_Granary:'req_p4_granary',Building_Shop:'req_p4_shop',Building_Workyard:'req_p5_workyard',Building_Fishery:'req_p5_fishery',Building_Archive:'req_p5_archive'}[b.asset]));
   assert(request.level > b.level, `${b.asset} must be buildable before its level reward`);
@@ -81,3 +83,41 @@ for (const b of spec.buildings) {
 const photo = read(path.join(root, 'Assets/Scriptable Obejects/Decor/Buildings/Building_PhotoStudio.asset'));
 assert.equal(Number(value(photo, '_requiredCollectionPercent')), 50);
 console.log(`Content checks: ${assets.length} data assets have valid references; ${quests.length} quests have unique IDs and acyclic prerequisites; Lv.16–49 coverage; ${spec.requests.length} story steps; ${spec.buildings.length} buildings; photo studio 50% passed`);
+
+// Resource prices must agree in the bag and in the mine's direct-sale model.
+for (const item of ['Inventory/Items/Mining/목재', 'Inventory/Items/Mining/돌', 'MineRework/Ores/Ore_ore_stone']) {
+  const asset = read(path.join(root, `Assets/Scriptable Obejects/${item}.asset`));
+  assert.equal(Number(value(asset, '_sellPrice')), 3, `${item}: resource sell price`);
+}
+const shop = spec.buildings.find(b => b.asset === 'Building_Shop');
+assert.equal(shop.level, 9);
+assert.equal(spec.requests.find(r => r.asset === 'req_p4_shop').level, shop.level + 1, 'Shop milestone must allow reaching its construction level');
+assert.equal(spec.buildings.find(b => b.asset === 'Building_Workshop').perHour, 30);
+for (const file of assets.filter(p => /Project_territory_.*_mission\.asset$/.test(p))) {
+  const tier = Number(file.match(/_(\d)_mission\.asset$/)[1]);
+  assert.equal(Number(value(byPath.get(file), '_gold')), [0, 980, 2450, 4900][tier], `${file}: clearing gold`);
+}
+assert.equal(Number(value(read(path.join(root, 'Assets/Scriptable Obejects/Settlement/Tasks/task_farm_till.asset')), '_requiredGold')), 140);
+console.log('Progression balance: resource sell prices, Lv.9 shop, workshop rate and 30% clearing discount passed');
+
+const requestOrder = id => Number(value(read(path.join(root, `Assets/Scriptable Obejects/Settlement/Requests/${id}.asset`)), '_order'));
+assert(requestOrder('req_p4_granary') < requestOrder('req_fishing_dock'), 'Granary must precede dock event');
+assert(requestOrder('req_fishing_dock') < requestOrder('req_assign_fisher'), 'Dock must precede fisher assignment');
+console.log('Dock progression: granary precedes dock and fisher assignment passed');
+
+const granaryRequest = spec.requests.find(r => r.asset === 'req_p4_granary');
+const granaryBuilding = spec.buildings.find(b => b.asset === 'Building_Granary');
+assert.equal(granaryRequest.requires, 'farmland', 'Granary event must unlock with farmland');
+assert.equal(granaryBuilding.requires, 'farmland', 'Granary construction must not depend on farmer settlement');
+assert.equal(granaryBuilding.level, 0, 'Granary construction must be immediately available');
+assert.equal(granaryBuilding.noTraits, true, 'Granary construction must not wait for extra farmers');
+for (const id of ['req_p5_builder_home', 'req_p5_workyard'])
+  assert(granaryRequest.order < requestOrder(id), `Granary must precede ${id}`);
+console.log('Granary progression: farmland unlocks event and construction before workyard; no extra level or trait gate passed');
+
+const granaryQuest = read(path.join(root, 'Assets/Scriptable Obejects/Quest/Quests/M13_Granary.asset'));
+assert.equal(Number(value(granaryQuest, '_requiredLevel')), 10, 'Granary quest must be available at the farm unlock level');
+const farmlandQuestPath = path.join(root, 'Assets/Scriptable Obejects/Quest/Quests/M04_Farmland.asset');
+const granaryPrevious = value(granaryQuest, '_prerequisite').match(/guid: ([a-f0-9]{32})/)[1];
+assert.equal(guids.get(granaryPrevious), farmlandQuestPath, 'Granary quest must immediately follow farmland');
+console.log('Granary main quest: Lv.10, immediately after farmland passed');

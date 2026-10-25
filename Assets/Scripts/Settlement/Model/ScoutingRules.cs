@@ -13,14 +13,22 @@ public static class ScoutingRules
 
     // 첫 개간은 지도 해달을 기다리지 않는다. 이관한 세이브의 진행 중인 땅도 다시 잠그지 않는다.
     public static bool CanClear(SettlementConfig config, Settlement settlement, TerritoryExpansionDefinition territory) =>
-        !UsesScouting(settlement) || TerritoryRules.IsTutorial(territory, settlement)
-        || settlement.Scouting.HasDiscovered(territory.ExpansionId);
+        territory != null && CanOpenRoute(settlement, territory)
+        && (!UsesScouting(settlement) || TerritoryRules.IsTutorial(territory, settlement)
+        || settlement.Scouting.HasDiscovered(territory.ExpansionId));
 
     public static bool CanScout(SettlementConfig config, Settlement settlement, TerritoryExpansionDefinition territory) =>
-        territory != null && settlement.HasDevelopment(MapJoined)
+        territory != null && CanOpenRoute(settlement, territory) && settlement.HasDevelopment(MapJoined)
         && !settlement.Scouting.HasDiscovered(territory.ExpansionId)
         && territory == TerritoryRules.Current(config, settlement, territory.Direction)
         && !TerritoryRules.IsTutorial(territory, settlement);
+
+    // 낚시로 가는 길은 밭 개간 뒤. 이미 열린 낚시터는 유지한다.
+    public static bool CanOpenRoute(Settlement settlement, TerritoryExpansionDefinition territory) =>
+        !UsesScouting(settlement) || territory.Direction != TerritoryDirection.South
+        || TerritoryRules.ClearingsDone(territory, settlement) > 0
+        || settlement.HasDevelopment(SettlementQuestGate.FarmDevelopment)
+        || settlement.HasDevelopment("fishing_working");
 
     public static void Migrate(SettlementConfig config, Settlement settlement)
     {

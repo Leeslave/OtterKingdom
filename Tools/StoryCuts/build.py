@@ -9,6 +9,7 @@ Moment photos (도감 순간 탭) go to Assets/Art/Collection/Moments/MOMENT_<na
 Otters are the plaza rigs (RiggedLookSetup) drawn by rig.py; places and props are game art (scene.py).
 """
 import argparse
+import re
 import sys
 
 from PIL import Image, ImageDraw
@@ -45,7 +46,7 @@ UP = dict(nearArm=-2.9, farArm=2.6, armOverHead=True)   # both arms up
 def first_a():
     c = Cut(map_bg(*BEACH, zoom=1.15))
     c.prop("Gacha/Shell_Common.png", 1060, 860, 90, shadow=.8)
-    c.otter("WalkerRigV1", 640, 820, 470)
+    c.otter("WalkerRigV1", 768, 820, 470)
     c.scatter("Settlement/FX_Twinkle.png", (900, 700, 1500, 1000), 7, 46, seed=4, alpha=.8)
     return c.grade((255, 226, 190), .25).vignette(.35)
 
@@ -60,8 +61,62 @@ def first_b():
     c.otter("FisherRigV1", 1210, 680, 300, flip=True)
     c.otter("MinerRigV1", 1020, 620, 280, flip=True)
     c.otter("BaseballRigV1", 470, 600, 270)
-    c.otter("WalkerRigV1", 760, 960, 450, nearArm=WAVE, armOverHead=True, head="smile")
+    c.otter("WalkerRigV1", 768, 950, 450, nearArm=WAVE, armOverHead=True, head="smile")
     return c.vignette(.3)
+
+
+# 새싹이 — farmer (the same QuarterRigV14 used by moment photos)
+@cut("otter_farmer_A")
+def farmer_a():
+    c = Cut(map_bg(1600, 2400, zoom=1.15))
+    sprout_rows(c, 550, rows=2, size=120)
+    c.prop("Farm/Plaza/FARM_Crate.png", 1220, 930, 200, shadow=.9)
+    c.otter("QuarterRigV14", 760, 940, 490, head="smile", nearArm=WAVE, armOverHead=True)
+    c.scatter("Settlement/FX_Leaf.png", (180, 140, 1380, 400), 5, 42, seed=41)
+    return c.vignette(.3)
+
+
+@cut("otter_farmer_B")
+def farmer_b():
+    c = Cut(map_bg(1600, 2400, zoom=1.5))
+    sprout_rows(c, 650, rows=2, size=150)
+    c.otter("QuarterRigV14", 740, 950, 580, head="smile", nearArm=-1.2,
+            held=[dict(img=img("Item/Vegetable/Carrot.png"), height=150, dy=-12)])
+    c.prop("Farm/Plaza/FARM_Crate.png", 1210, 930, 250, shadow=.8)
+    c.scatter("Settlement/FX_Twinkle.png", (850, 350, 1280, 650), 6, 48, seed=42)
+    return c.vignette(.3)
+
+
+# 첨벙이 — fisher (FisherRigV1, matching the plaza)
+def fisher_shore(sleep=False, close=False):
+    c = Cut(map_bg(*BEACH, zoom=1.5 if close else 1.1))
+    c.prop("Item/Ore/Stone.png", 350, 940, 260, shadow=.9)
+    c.prop("FishingRework/World/BUOY.png", 1250, 800, 160)
+    c.otter("FisherRigV1", 780, 950, 570 if close else 480, sit=1,
+            head="sleep" if sleep else "smile", droop=1 if sleep else 0,
+            head_angle=.18 if sleep else 0, nearArm=-1.1 if close else -.2,
+            held=[dict(img=img("Item/Ore/Stone.png"), height=100, dy=-10)] if close else [])
+    c.prop("Resources/FisherRigV1/rod.png", 1110, 950, 550, angle=-12)
+    if sleep:
+        c.zzz(800, 280, 60)
+    else:
+        c.scatter("Settlement/FX_Twinkle.png", (850, 350, 1400, 700), 7, 40, seed=43)
+    return c.vignette(.3)
+
+
+@cut("otter_fisher_A")
+def fisher_a():
+    return fisher_shore()
+
+
+@cut("otter_fisher_B")
+def fisher_b():
+    return fisher_shore(close=True)
+
+
+@cut("otter_fisher_C")
+def fisher_c():
+    return fisher_shore(sleep=True)
 
 
 # 물감이 — painter (Plaid)
@@ -72,7 +127,7 @@ def painter_a():
     c.prop("Plaza/Props/Prop_Tree.png", 260, 430, 380)
     painting = map_bg(1900, 1620, zoom=1.0).resize((420, 280))
     c.put(s.easel(400, 470, painting), 980, 930)
-    c.otter("PlaidRigV1", 520, 910, 440)
+    c.otter("PlaidRigV1", 768, 910, 440)
     c.fx("Settlement/FX_Butterfly_0.png", [(1300, 600)], 70)
     return c.vignette(.3)
 
@@ -87,7 +142,7 @@ def painter_b():
     t.otter("WalkerRigV1", 420, 900, 260)
     picture = t.canvas.resize((840, 560))
     c.put(s.easel(860, 1000, picture), 900, 1110)
-    c.otter("PlaidRigV1", 280, 1060, 620, head="smile", nearArm=-1.2)
+    c.otter("PlaidRigV1", 680, 950, 580, head="smile", nearArm=-1.2)
     c.scatter("Settlement/FX_Sparkle.png", (500, 100, 1400, 600), 6, 60, seed=9)
     return c.vignette(.35)
 
@@ -101,7 +156,7 @@ def sleepy_a():
     c.prop("Plaza/Territory/Forest_Oak_1.png", 900, 380, 360, shadow=.6)
     c.prop("Plaza/Props/Prop_Stump.png", 1040, 860, 200, shadow=.9)
     c.prop("Settlement/FX_Axe.png", 1040, 720, 120, angle=-25)
-    c.otter("BearPajamaRigV1", 620, 900, 450, head="smile")
+    c.otter("BearPajamaRigV1", 768, 900, 450, head="smile")
     c.scatter("Settlement/FX_WoodChip.png", (930, 650, 1180, 820), 6, 34, seed=2)
     return c.vignette(.3)
 
@@ -111,7 +166,7 @@ def sleepy_b():
     c = Cut(map_bg(*MEADOW, zoom=1.3))
     c.prop("Plaza/Territory/Forest_Oak_0.png", 1180, 560, 620, shadow=.6)
     c.prop("Plaza/Props/Prop_Bench.png", 720, 900, 380, shadow=.9)
-    c.otter("BearPajamaRigV1", 700, 790, 480, shadow=False, sit=1, droop=1, head="sleep")
+    c.otter("BearPajamaRigV1", 768, 790, 480, shadow=False, sit=1, droop=1, head="sleep")
     c.zzz(860, 300, 80)
     c.scatter("Settlement/FX_Leaf.png", (200, 80, 1400, 500), 5, 50, seed=5)
     return c.grade((255, 224, 170), .25).vignette(.35)
@@ -122,7 +177,7 @@ def sleepy_b():
 def clerk_a():
     c = Cut(map_bg(2100, 1500, zoom=1.1))
     c.prop("Settlement/Prop_Board_Upgraded.png", 900, 840, 560, shadow=.8)
-    c.otter("ReceptionRigV1", 450, 900, 450, nearArm=-1.0)
+    c.otter("ReceptionRigV1", 768, 900, 450, nearArm=-1.0)
     return c.vignette(.3)
 
 
@@ -134,7 +189,7 @@ def clerk_b():
     note = s.paper(300, 360, lines=0, pin=(230, 90, 80, 255))
     c.put(note, 980, 560, (.5, .5), angle=6)
     c.put(fit(img("Item/Vegetable/Carrot.png"), 210), 980, 570, (.5, .5), angle=6)
-    c.otter("ReceptionRigV1", 430, 1080, 640, head="sleep", nearArm=-.6)
+    c.otter("ReceptionRigV1", 680, 950, 580, head="sleep", nearArm=-.6)
     c.fx("Settlement/FX_Droplet.png", [(560, 300)], 70)
     return c.vignette(.35)
 
@@ -145,7 +200,7 @@ def neighbor_a():
     c = Cut(map_bg(2400, 1300, zoom=1.05))
     c.prop("Settlement/Stage_House_Red_3.png", 1050, 640, 520, shadow=.9)
     c.prop("Settlement/Prop_SupplyBox.png", 330, 900, 210, shadow=.9)
-    c.otter("FlowerRigV1", 640, 920, 440, held=[dict(img=img("Settlement/Prop_SupplyBox.png"), height=130, at=(30, -95), layer=30)])
+    c.otter("FlowerRigV1", 768, 920, 440, held=[dict(img=img("Settlement/Prop_SupplyBox.png"), height=130, at=(30, -95), layer=30)])
     return c.vignette(.3)
 
 
@@ -154,11 +209,12 @@ def neighbor_b():
     c = Cut(map_bg(2400, 1300, zoom=1.05))
     c.prop("Plaza/Props/Prop_House_Red_OtterStyle.png", 900, 700, 560, shadow=.9)
     c.prop("Plaza/Props/Prop_Lamp.png", 1380, 790, 330)
-    c.otter("FlowerRigV1", 520, 930, 430, head="sleep", nearArm=-.4)
+    c.otter("FlowerRigV1", 768, 930, 430, head="sleep", nearArm=-.4)
     c.night()
     c.prop("Settlement/Night_House_Red.png", 900, 700, 560)
     c.prop("Settlement/Night_Lamp.png", 1380, 790, 330)
     c.light(860, 560, 380, strength=.35).light(1310, 560, 200, strength=.5)
+    c.light(768, 690, 340, strength=.45)
     c.scatter("Settlement/FX_Firefly.png", (100, 100, 1500, 700), 9, 40, seed=7)
     c.scatter("Settlement/FX_Twinkle.png", (60, 30, 1500, 220), 8, 30, seed=11, alpha=.8)
     return c.vignette(.4, (20, 20, 50))
@@ -169,7 +225,7 @@ def neighbor_b():
 def miner_a():
     c = Cut(portrait_bg("MineRework/Backgrounds/BG_01_pebble.png", .55))
     c.prop("Resources/MinerRigV1/rock_0.png", 1000, 860, 300, shadow=.9)
-    c.otter("MinerRigV1", 600, 900, 450, nearArm=-2.6, armOverHead=True)
+    c.otter("MinerRigV1", 768, 900, 450, nearArm=-2.6, armOverHead=True)
     c.scatter("Resources/MinerRigV1/stone_chip.png", (880, 560, 1150, 760), 6, 40, seed=3)
     c.fx("Settlement/FX_Sparkle.png", [(1060, 640)], 90)
     return c.vignette(.4)
@@ -180,7 +236,7 @@ def miner_b():
     c = Cut(portrait_bg("MineRework/Backgrounds/BG_01_pebble.png", .7, zoom=1.3))
     c.blur_back(1024, 5)
     c.glow(900, 330, 520, alpha=.8)
-    c.otter("MinerRigV1", 760, 1080, 680, head="smile", nearArm=-2.9, armOverHead=True,
+    c.otter("MinerRigV1", 680, 950, 580, head="smile", nearArm=-2.9, armOverHead=True,
             held=[dict(img=img("Item/Ore/Stone.png"), height=95, at=(-120, -250), layer=30)])
     c.scatter("Settlement/FX_Sparkle.png", (650, 150, 1150, 500), 7, 70, seed=4)
     return c.vignette(.4)
@@ -192,7 +248,7 @@ def builder_a():
     c = Cut(map_bg(2600, 1800, zoom=1.05))
     c.prop("Settlement/Stage_House_Blue_1.png", 1000, 760, 560, shadow=.9)
     c.prop("Resources/BaseballRigV1/log.png", 560, 930, 110, shadow=.9)
-    c.otter("BaseballRigV1", 420, 900, 440, nearArm=-2.6, armOverHead=True,
+    c.otter("BaseballRigV1", 768, 900, 440, nearArm=-2.6, armOverHead=True,
             held=[dict(img=img("Resources/BaseballRigV1/hammer.png"), height=150, dy=-40, angle=-30)])
     c.scatter("Settlement/FX_WoodChip.png", (480, 760, 680, 900), 5, 34, seed=6)
     return c.vignette(.3)
@@ -202,7 +258,7 @@ def builder_a():
 def builder_b():
     c = Cut(map_bg(2600, 1800, zoom=1.05))
     c.prop("Settlement/Stage_House_Blue_3.png", 950, 780, 600, shadow=.9)
-    c.otter("BaseballRigV1", 420, 930, 450, head="smile", **UP)
+    c.otter("BaseballRigV1", 768, 930, 450, head="smile", **UP)
     c.scatter("Settlement/FX_Sparkle.png", (700, 160, 1300, 520), 7, 70, seed=8)
     return c.vignette(.3)
 
@@ -212,7 +268,7 @@ def builder_b():
 def photo_a():
     c = Cut(map_bg(*PLAZA, zoom=1.05))
     c.prop("Settlement/Building_PhotoStudio.png", 760, 520, 440, shadow=.9)
-    c.otter("HeroRigV1", 1150, 900, 420, flip=True)
+    c.otter("WalkerRigV1", 768, 900, 420, flip=True)
     c.otter("PhotographerRigV1", 400, 920, 450, nearArm=WAVE, armOverHead=True)
     return c.vignette(.3)
 
@@ -221,7 +277,7 @@ def photo_a():
 def photo_b():
     c = Cut(map_bg(*PLAZA, zoom=1.05))
     c.prop("Settlement/Building_PhotoStudio.png", 760, 520, 440, shadow=.9)
-    c.otter("HeroRigV1", 1150, 900, 420, flip=True, head="smile")
+    c.otter("WalkerRigV1", 768, 900, 420, flip=True, head="smile")
     c.otter("PhotographerRigV1", 400, 920, 450, nearArm=WAVE, armOverHead=True)
     c.glow(470, 420, 700, (255, 255, 230), .95)
     c.fx("Resources/PhotographerRigV1/flash_star.png", [(470, 420)], 260)
@@ -235,10 +291,10 @@ def photo_c():
     c.blur_back(1024, 6)
     shot = Cut(map_bg(*PLAZA, zoom=1.05))
     shot.prop("Settlement/Building_PhotoStudio.png", 560, 420, 400, shadow=.9)
-    shot.otter("HeroRigV1", 820, 960, 640, flip=True, head="sleep")
+    shot.otter("WalkerRigV1", 820, 960, 640, flip=True, head="sleep")
     photo = s.paper(560, 400, inner=shot.canvas.resize((560, 400)), color=(255, 255, 255, 255), radius=8)
     c.put(photo, 1030, 470, (.5, .5), angle=-6)
-    c.otter("PhotographerRigV1", 380, 1080, 640, head="smile", nearArm=-1.4)
+    c.otter("PhotographerRigV1", 680, 950, 580, head="smile", nearArm=-1.4)
     c.fx("Settlement/FX_Sparkle.png", [(1300, 220), (760, 260, .7)], 70)
     return c.vignette(.35)
 
@@ -257,7 +313,7 @@ def bodeul_a():
     c = Cut(map_bg(*MEADOW, zoom=1.1))
     c.prop("Settlement/Prop_FarmSign.png", 1360, 470, 220, shadow=.8)
     sprout_rows(c, 520)
-    c.otter("FlowerRigV1", 700, 960, 440, head="smile", nearArm=-.9)
+    c.otter("FlowerRigV1", 768, 950, 440, head="smile", nearArm=-.9)
     return c.vignette(.3)
 
 
@@ -268,7 +324,7 @@ def bodeul_b():
     c.prop("Farm/Plaza/FARM_Soil_1.png", 1000, 960, width=520)
     c.prop("Item/Vegetable/ICON_Seedling_Radish.png", 1000, 880, 380)
     c.scatter("Settlement/FX_Sparkle.png", (820, 380, 1240, 760), 6, 60, seed=12)
-    c.otter("FlowerRigV1", 470, 1060, 620, head="smile", nearArm=-1.25)
+    c.otter("FlowerRigV1", 680, 950, 580, head="smile", nearArm=-1.25)
     return c.grade((255, 230, 190), .2).vignette(.35)
 
 
@@ -278,7 +334,7 @@ def degul_a():
     c = Cut(map_bg(*SHORE, zoom=1.2))
     for x, y, k in ((980, 820, 140), (1180, 900, 110), (1300, 760, 90), (300, 880, 120)):
         c.prop("Settlement/Prop_Pebbles.png", x, y, k)
-    c.otter("StripeRigV1", 640, 900, 450, nearArm=-1.2, held=[dict(img=img("Item/Ore/Stone.png"), height=90, dy=-10)])
+    c.otter("StripeRigV1", 768, 900, 450, nearArm=-1.2, held=[dict(img=img("Item/Ore/Stone.png"), height=90, dy=-10)])
     return c.vignette(.3)
 
 
@@ -289,7 +345,7 @@ def degul_b():
     for x, k, path in ((780, 130, "Item/Ore/Stone.png"), (1020, 110, "Settlement/Prop_Rock_1.png"), (1260, 140, "MineRework/Ores/ORE_pearl.png")):
         c.prop(path, x, 900, k, shadow=.9)
     c.fx("Settlement/FX_Sparkle.png", [(1300, 740), (1210, 800, .6)], 70)
-    c.otter("StripeRigV1", 330, 1060, 620, head="smile", nearArm=WAVE, armOverHead=True)
+    c.otter("StripeRigV1", 680, 950, 580, head="smile", nearArm=WAVE, armOverHead=True)
     return c.vignette(.35)
 
 
@@ -299,7 +355,7 @@ def duribeon_a():
     c = Cut(map_bg(3200, 900, zoom=1.0))
     for x, y, h, p in ((140, 420, 430, "Pine_0"), (420, 330, 360, "Pine_1"), (1150, 360, 400, "Oak_1"), (1420, 450, 440, "Pine_0"), (820, 260, 300, "Oak_0")):
         c.prop(f"Plaza/Territory/Forest_{p}.png", x, y, h, shadow=.6)
-    c.otter("HoodieRigV1", 760, 920, 450, nearArm=WAVE, armOverHead=True)
+    c.otter("HoodieRigV1", 768, 920, 450, nearArm=WAVE, armOverHead=True)
     return c.vignette(.35)
 
 
@@ -309,7 +365,7 @@ def duribeon_b():
     c.blur_back(1024, 6)
     c.put(worldmap.held_map(720, 540, angle=-4), 1040, 500, (.5, .5))
     c.fx("Settlement/FX_Sparkle.png", [(1240, 300)], 60)
-    c.otter("HoodieRigV1", 360, 1070, 640, head="smile", nearArm=-1.3)
+    c.otter("HoodieRigV1", 680, 950, 580, head="smile", nearArm=-1.3)
     return c.vignette(.35)
 
 
@@ -318,7 +374,7 @@ def duribeon_b():
 def jaejal_a():
     c = Cut(map_bg(2200, 1900, zoom=1.05))
     c.prop("Settlement/Building_Shop.png", 1050, 600, 470, shadow=.9)
-    c.otter("StripeRigV1", 520, 920, 450, head="smile", nearArm=WAVE, armOverHead=True)
+    c.otter("StripeRigV1", 768, 920, 450, head="smile", nearArm=WAVE, armOverHead=True)
     c.bubble(700, 400, 280, icons=("Settlement/ICON_House_Red.png", "Settlement/Building_Shop.png"))
     return c.vignette(.3)
 
@@ -330,7 +386,7 @@ def jaejal_b():
     c.otter("QuarterRigV14", 330, 690, 330)
     c.otter("FisherRigV1", 1190, 700, 330, flip=True)
     c.otter("MerchantRigV1", 1000, 560, 290, flip=True)
-    c.otter("StripeRigV1", 560, 960, 430, head="smile", nearArm=WAVE, armOverHead=True)
+    c.otter("StripeRigV1", 768, 950, 430, head="smile", nearArm=WAVE, armOverHead=True)
     c.bubble(350, 300, 220, icons=("Item/Vegetable/Carrot.png",))
     c.bubble(1200, 300, 220, icons=("Item/Fish/Mackerel.png",))
     c.bubble(700, 480, 260, icons=("Settlement/FX_Sparkle.png", "Settlement/FX_Sparkle.png", "Settlement/FX_Sparkle.png"))
@@ -342,7 +398,7 @@ def jaejal_b():
 def jjalrang_a():
     c = Cut(map_bg(2200, 1900, zoom=1.05))
     c.prop("Settlement/Building_Shop.png", 1000, 640, 520, shadow=.9)
-    c.otter("MerchantRigV1", 480, 920, 450, head="smile", nearArm=WAVE, armOverHead=True)
+    c.otter("MerchantRigV1", 768, 920, 450, head="smile", nearArm=WAVE, armOverHead=True)
     c.fx("UI/Currency/Gold.png", [(720, 400), (790, 330, .8), (650, 300, .7)], 80, angle_range=20)
     return c.vignette(.3)
 
@@ -355,7 +411,7 @@ def jjalrang_b():
     c.prop("Settlement/Prop_SupplyBox.png", 1050, 900, 300, shadow=.9)
     c.prop("Item/Accessory/ICON_Accessory_LuckyNecklace.png", 1050, 640, 220)
     c.scatter("Settlement/FX_Sparkle.png", (850, 300, 1250, 700), 6, 60, seed=13)
-    c.otter("MerchantRigV1", 420, 1070, 640, head="smile", nearArm=-1.2,
+    c.otter("MerchantRigV1", 680, 950, 580, head="smile", nearArm=-1.2,
             held=[dict(img=img("UI/Currency/Gold.png"), height=90, dy=-6)])
     return c.vignette(.35)
 
@@ -367,11 +423,11 @@ def kkeujeok_a():
     c.prop("Plaza/Props/Prop_House_Blue_OtterStyle.png", 300, 500, 400, shadow=.8)
     c.prop("Settlement/Prop_Board_Upgraded.png", 900, 760, 460, shadow=.8)
     c.prop("Plaza/Props/Prop_Lamp.png", 1320, 840, 380)
-    c.otter("QuietRigV1", 620, 940, 440, nearArm=-1.0)
+    c.otter("QuietRigV1", 768, 940, 440, nearArm=-1.0)
     c.night()
     c.prop("Settlement/Night_House_Blue.png", 300, 500, 400)
     c.prop("Settlement/Night_Lamp.png", 1320, 840, 380)
-    c.light(1240, 580, 260, strength=.5).light(300, 380, 200, strength=.3).light(620, 760, 260, strength=.2)
+    c.light(1240, 580, 260, strength=.5).light(300, 380, 200, strength=.3).light(768, 710, 340, strength=.5)
     c.scatter("Settlement/FX_Twinkle.png", (40, 20, 1500, 200), 10, 30, seed=14, alpha=.85)
     c.scatter("Settlement/FX_Firefly.png", (200, 300, 1400, 800), 6, 40, seed=15)
     return c.vignette(.45, (15, 15, 45))
@@ -383,10 +439,10 @@ def kkeujeok_b():
     c.prop("Plaza/Props/Prop_Lamp.png", 1300, 960, 820)
     c.blur_back(1024, 4)
     c.put(s.notebook(460, 320), 900, 700, (.5, .5), angle=-8)
-    c.otter("QuietRigV1", 430, 1070, 640, head="smile", nearArm=-1.1)
+    c.otter("QuietRigV1", 680, 950, 580, head="smile", nearArm=-1.1)
     c.night()
     c.prop("Settlement/Night_Lamp.png", 1300, 960, 820)
-    c.light(1120, 420, 380, strength=.5).light(860, 680, 300, strength=.35)
+    c.light(1120, 420, 380, strength=.5).light(680, 650, 380, strength=.5)
     c.scatter("Settlement/FX_Firefly.png", (500, 100, 1500, 700), 7, 44, seed=16)
     return c.vignette(.45, (15, 15, 45))
 
@@ -397,7 +453,7 @@ def kkomkkom_a():
     c = Cut(map_bg(*MEADOW, zoom=1.1))
     sprout_rows(c, 330, rows=1, kinds=("Radish", "Beet"))
     c.prop("Farm/Plaza/FARM_Sprinkler.png", 1000, 860, 280, shadow=.8)
-    c.otter("KnitRigV1", 600, 940, 450, nearArm=-1.0, head_angle=.12)
+    c.otter("KnitRigV1", 768, 940, 450, nearArm=-1.0, head_angle=.12)
     return c.vignette(.3)
 
 
@@ -412,7 +468,7 @@ def kkomkkom_b():
         for r in (180, 300):
             pts.append((1000 + r * 1.3 * __import__("math").cos(a), 640 + r * .7 * __import__("math").sin(a), .9))
     c.fx("Settlement/FX_Droplet.png", pts, 40)
-    c.otter("KnitRigV1", 520, 940, 450, head="smile", **UP)
+    c.otter("KnitRigV1", 768, 940, 450, head="smile", **UP)
     c.scatter("Settlement/FX_Sparkle.png", (850, 250, 1300, 500), 3, 60, seed=17)
     return c.vignette(.3)
 
@@ -423,7 +479,7 @@ def kongkong_a():
     c = Cut(map_bg(2600, 1800, zoom=1.05))
     c.prop("Settlement/Building_Workyard.png", 1050, 560, 470, shadow=.9)
     c.prop("Resources/ArtisanRigV1/log.png", 690, 920, 120, shadow=.9)
-    c.otter("ArtisanRigV1", 460, 910, 450, nearArm=-2.9, farArm=2.4, armOverHead=True,
+    c.otter("ArtisanRigV1", 768, 910, 450, nearArm=-2.9, farArm=2.4, armOverHead=True,
             held=[dict(img=img("Resources/ArtisanRigV1/sledge.png"), height=300, dy=-130, angle=-160)])
     c.scatter("Settlement/FX_WoodChip.png", (600, 760, 820, 900), 6, 34, seed=18)
     return c.vignette(.3)
@@ -435,7 +491,7 @@ def kongkong_b():
     for i in range(4):
         c.prop("Plaza/Props/Prop_Fence_Rising.png", 700 + i * 200, 520 + i * 110, 230)
     c.scatter("Settlement/FX_Sparkle.png", (700, 300, 1400, 700), 6, 60, seed=19)
-    c.otter("ArtisanRigV1", 420, 950, 460, head="smile", nearArm=WAVE, armOverHead=True)
+    c.otter("ArtisanRigV1", 768, 950, 460, head="smile", nearArm=WAVE, armOverHead=True)
     return c.vignette(.3)
 
 
@@ -445,7 +501,7 @@ def kungkung_a():
     c = Cut(map_bg(3100, 1100, zoom=1.0))
     for x, y, h, p in ((150, 450, 440, "Oak_0"), (1380, 420, 460, "Pine_1"), (1080, 320, 360, "Oak_1")):
         c.prop(f"Plaza/Territory/Forest_{p}.png", x, y, h, shadow=.6)
-    c.otter("StripeRigV1", 680, 990, 640)
+    c.otter("StripeRigV1", 680, 950, 580)
     c.fx("Settlement/FX_Dust.png", [(500, 960), (880, 960, .8)], 90, alpha=.8)
     c.scatter("Settlement/FX_Leaf.png", (200, 100, 1400, 500), 6, 50, seed=20)
     return c.vignette(.3)
@@ -456,7 +512,7 @@ def kungkung_b():
     c = Cut(map_bg(3100, 1100, zoom=1.0))
     c.prop("Plaza/Territory/Forest_Pine_0.png", 1300, 440, 460, shadow=.6)
     c.prop("Plaza/Territory/Forest_Stump.png", 1150, 860, 200, shadow=.9)
-    c.otter("StripeRigV1", 640, 980, 600, head="smile", **UP,
+    c.otter("StripeRigV1", 680, 950, 580, head="smile", **UP,
             held=[dict(img=img("Plaza/Props/Prop_Log.png"), height=190, at=(0, -390), layer=30)])
     c.scatter("Settlement/FX_Leaf.png", (200, 100, 1400, 500), 6, 50, seed=21)
     return c.vignette(.3)
@@ -466,7 +522,7 @@ def kungkung_b():
 @cut("otter_toy_pongdang_A")
 def pongdang_a():
     c = Cut(map_bg(1900, 3530, zoom=1.15))
-    c.otter("DiverRigV1", 760, 780, 470, head="smile", shadow=False, **UP)
+    c.otter("DiverRigV1", 768, 780, 470, head="smile", shadow=False, **UP)
     # the sea covers the legs: re-paste the water band below the waist
     sea = map_bg(1900, 3530, zoom=1.15).convert("RGBA").crop((0, 680, 1536, 1024))
     c.canvas.alpha_composite(sea, (0, 680))
@@ -480,7 +536,7 @@ def pongdang_b():
     c = Cut(map_bg(*BEACH, zoom=1.6))
     c.blur_back(1024, 5)
     c.glow(980, 520, 460, (255, 250, 230))
-    c.otter("DiverRigV1", 520, 1070, 640, head="smile", nearArm=-1.25,
+    c.otter("DiverRigV1", 680, 950, 580, head="smile", nearArm=-1.25,
             held=[dict(img=img("MineRework/Ores/ORE_pearl.png"), height=120, dy=-4)])
     c.prop("Gacha/Shell_Rare.png", 1060, 860, 240, shadow=.8)
     c.scatter("Settlement/FX_Sparkle.png", (900, 380, 1260, 700), 6, 60, seed=23)
@@ -492,7 +548,7 @@ def pongdang_b():
 def sallang_a():
     c = Cut(map_bg(*PLAZA, zoom=1.0))
     c.prop("Settlement/Prop_AppleTree_0.png", 1230, 520, 460, shadow=.7)
-    c.otter("FlowerRigV1", 640, 920, 450, nearArm=WAVE, armOverHead=True,
+    c.otter("FlowerRigV1", 768, 920, 450, nearArm=WAVE, armOverHead=True,
             held=[dict(img=img("Item/Toy/ICON_Toy_CherryPinwheel.png"), height=170, dy=-60, layer=30)])
     c.scatter("Settlement/FX_Petal_0.png", (0, 0, 1536, 900), 18, 46, seed=24)
     c.scatter("Settlement/FX_Petal_1.png", (0, 0, 1536, 900), 14, 46, seed=25)
@@ -506,7 +562,7 @@ def sallang_b():
     c.glow(1000, 500, 520, (255, 220, 235))
     c.put(fit(img("Settlement/FX_Petal_0.png"), 260), 1000, 500, (.5, .5), angle=20)
     c.scatter("Settlement/FX_Sparkle.png", (840, 330, 1180, 680), 5, 50, seed=26)
-    c.otter("FlowerRigV1", 430, 1070, 640, head="smile", nearArm=-1.25)
+    c.otter("FlowerRigV1", 680, 950, 580, head="smile", nearArm=-1.25)
     c.scatter("Settlement/FX_Petal_0.png", (0, 0, 1536, 900), 14, 50, seed=27)
     c.scatter("Settlement/FX_Petal_1.png", (0, 0, 1536, 900), 10, 50, seed=28)
     return c.grade((255, 225, 235), .2).vignette(.35)
@@ -519,7 +575,7 @@ def yeongcha_a():
     sprout_rows(c, 280, rows=1, kinds=("Potato", "SweetPotato"))
     c.prop("Farm/Plaza/FARM_Crate.png", 1180, 860, 200, shadow=.9)
     c.prop("Farm/Plaza/FARM_Crate.png", 1330, 880, 180, shadow=.9)
-    c.otter("KnitRigV1", 620, 960, 460, **UP,
+    c.otter("KnitRigV1", 768, 950, 460, **UP,
             held=[dict(img=img("Farm/Plaza/FARM_Crate.png"), height=200, at=(0, -400), layer=30)])
     c.fx("Settlement/FX_Droplet.png", [(800, 420)], 50)
     return c.vignette(.3)
@@ -531,7 +587,7 @@ def yeongcha_b():
     c.prop("Plaza/Props/Prop_Tree.png", 200, 500, 420, shadow=.6)
     c.prop("Plaza/Props/Prop_Lamp.png", 1380, 600, 300)
     c.otter("KnitRigV1", 620, 900, 440, head="smile")
-    c.otter("HeroRigV1", 930, 900, 430, head="smile")
+    c.otter("WalkerRigV1", 930, 900, 430, head="smile")
     c.grade((255, 196, 140), .35)
     c.scatter("Settlement/FX_Leaf.png", (200, 80, 1400, 400), 4, 46, seed=29)
     return c.vignette(.4, (80, 30, 10))
@@ -617,12 +673,44 @@ def moment_silhouette(path):
     im.rotate(-6, resample=Image.BICUBIC).save(path)
 
 
+def story_portraits():
+    """Use plaza rig artwork in story details/profile icons, retaining the existing sprite GUIDs."""
+    root = s.ROOT
+    source = (root / "Assets/Editor/Settlement/RiggedLookSetup.cs").read_text(encoding="utf-8-sig")
+    assignments = dict(re.findall(r'\("(otter_[^"]+)",\s*"([^"]*)"\)', source))
+    assignments["otter_builder"] = "Baseball"
+    icons = {}
+    for meta in (root / "Assets/Art/Otter").glob("*.png.meta"):
+        guid = re.search(r"^guid: (.+)$", meta.read_text(encoding="utf-8-sig"), re.M)
+        if guid:
+            icons[guid[1]] = meta.with_suffix("")
+    for asset in sorted((root / "Assets/Scriptable Obejects/Settlement/Otters").glob("*.asset")):
+        text = asset.read_text(encoding="utf-8-sig")
+        otter = re.search(r"  _otterId: (.+)", text)
+        portrait = re.search(r"  _portrait: .*guid: (\w+)", text)
+        if not otter or otter[1] not in assignments or not portrait:
+            continue
+        target = icons[portrait[1]]
+        size = Image.open(target).size
+        name = assignments[otter[1]]
+        picture, _ = s.rig.render(f"{name}RigV1" if name else "QuarterRigV14", 2, dict(head="smile"))
+        k = min((size[0] - 16) / picture.width, (size[1] - 16) / picture.height)
+        picture = picture.resize((round(picture.width * k), round(picture.height * k)), Image.LANCZOS)
+        icon = Image.new("RGBA", size)
+        icon.alpha_composite(picture, ((size[0] - picture.width) // 2, size[1] - picture.height - 8))
+        icon.save(target)
+        print("portrait", otter[1], target)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("only", nargs="*")
     ap.add_argument("--sheet")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--portraits", action="store_true", help="Also refresh story/profile portraits from the plaza rigs")
     args = ap.parse_args()
+    if args.portraits:
+        story_portraits()
     names = [n for n in CUTS if not args.only or any(n.startswith(o) for o in args.only)]
     drawn = []
     for n in names:

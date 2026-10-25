@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -29,6 +29,8 @@ public class SettlementOtterView : MonoBehaviour
     private Vector3 _attentionBase;
     private float _hideSpeechAt;
     private int _lastLine = -1;
+
+    public bool IsMapGuide { get; set; }
 
     public SettlementOtterDefinition Otter => _otter;
 
@@ -121,8 +123,8 @@ public class SettlementOtterView : MonoBehaviour
             return;
         }
 
-        bool attention = !speaking && (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter) || manager.CanAssignRole(_otter)
-            || manager.CanMoveIn(_otter));
+        bool attention = !speaking && (IsMapGuide ? manager.AvailableClearing() != null : (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter) || manager.CanAssignRole(_otter)
+            || manager.CanMoveIn(_otter)));
         if (_attention.gameObject.activeSelf != attention)
             _attention.gameObject.SetActive(attention);
         if (attention)
@@ -137,7 +139,14 @@ public class SettlementOtterView : MonoBehaviour
     {
         string line;
         var assignedRole = manager.AssignedRoleOf(_otter);
-        if (manager.CanMoveIn(_otter))
+        if (IsMapGuide)
+        {
+            var clearing = manager.AvailableClearing();
+            line = clearing != null ? $"{clearing.DisplayName} 개간이 가능해요!\n섬 지도에서 길을 내 봐요."
+                : "지도 해달이에요!\n정찰로 땅을 찾고 개간해 봐요.";
+            manager.OpenClearingMap();
+        }
+        else if (manager.CanMoveIn(_otter))
         {
             line = string.IsNullOrEmpty(_otter.MoveInLine) ? PickLine() : _otter.MoveInLine;
             AskToMoveIn(manager);

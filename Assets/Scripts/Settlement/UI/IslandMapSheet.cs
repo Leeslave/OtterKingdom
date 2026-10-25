@@ -25,6 +25,7 @@ public class IslandMapSheet : MonoBehaviour
     private int _workerPage;
     private bool _picking;
     private string _lastDestination;
+    private string _focusedRegion;
     private TextMeshProUGUI _timer;
     public bool IsOpen => _canvas != null && _canvas.gameObject.activeSelf;
 
@@ -35,6 +36,7 @@ public class IslandMapSheet : MonoBehaviour
         foreach (var territory in manager.Config.Territories)
             if (territory != null && !_directions.Contains(territory.Direction)) _directions.Add(territory.Direction);
         _direction = 0;
+        _focusedRegion = null;
         _picking = false;
         _selected.Clear();
         if (_canvas == null)
@@ -53,6 +55,7 @@ public class IslandMapSheet : MonoBehaviour
         int index = _directions.IndexOf(direction);
         if (index < 0) return;
         _direction = index;
+        _focusedRegion = null;
         _picking = false;
         Draw();
     }
@@ -78,7 +81,11 @@ public class IslandMapSheet : MonoBehaviour
         var panel = RuntimeUIScrollSheet.Create(_canvas.transform, Close);
         RuntimeUIKit.CreateLabel(panel, "섬 지도 · 정찰", 42, true);
         var scout = _manager.Settlement.Scouting;
+        var available = _manager.AvailableClearing();
+        if (available != null)
+            RuntimeUIKit.CreateLabel(panel, $"! {available.DisplayName} 개간이 가능해요. 해당 방향을 선택해 길을 내요!", 28, true);
         DrawMap(panel, scout);
+        RuntimeUIKit.CreateLabel(panel, "지역을 누르면 이름과 해금 상태를 확인할 수 있어요.\n초록 표지: 열린 땅 · 붉은 테두리: 선택한 위치", 24);
         _lastDestination = scout.Destination;
         _timer = null;
         if (!_manager.HasIslandMap)
@@ -105,9 +112,11 @@ public class IslandMapSheet : MonoBehaviour
             {
                 bool discovered = scout.HasDiscovered(territory.ExpansionId);
                 bool tutorial = TerritoryRules.IsTutorial(territory, _manager.Settlement);
-                RuntimeUIKit.CreateLabel(panel, territory.DisplayName, 34, true);
+                RuntimeUIKit.CreateLabel(panel, $"다음 정찰·개간 · {territory.DisplayName}", 34, true);
                 RuntimeUIKit.CreateLabel(panel, discovered ? "발견한 땅 · 길을 개간하면 건물과 밭을 놓을 수 있어요." : ScoutingRules.Hint(territory), 27);
-                if (tutorial)
+                if (!ScoutingRules.CanOpenRoute(_manager.Settlement, territory))
+                    RuntimeUIKit.CreateLabel(panel, "먼저 농업 지역을 정하고 밭을 개간해요. 광산 → 밭 → 낚시터 순으로 열려요.", 28);
+                else if (tutorial)
                     RuntimeUIKit.CreateLabel(panel, "첫 개간은 정찰 없이 시작해요. 공터 오른쪽 숲의 점선 원을 눌러요.", 28);
                 else if (discovered)
                 {
@@ -212,30 +221,75 @@ public class IslandMapSheet : MonoBehaviour
             {
                 open = _manager.GetTerritoryStage(territory) == TerritoryStage.Expanded || _manager.TerritoryClearingsDone(territory) > 0;
                 discovered = scout.HasDiscovered(territory.ExpansionId) || TerritoryRules.IsTutorial(territory, _manager.Settlement);
-                picked = scout.Destination != null ? scout.Destination == territory.ExpansionId : territory == viewed;
+                picked = _focusedRegion != null ? _focusedRegion == region.id :
+                    (scout.Destination != null ? scout.Destination == territory.ExpansionId : territory == viewed);
             }
             else
-                open = _manager.Settlement.HasDevelopment(region.development);
+            {
+                open = region.id == "shore" ? _manager.FishingEntryOpen
+                    : _manager.Settlement.HasDevelopment(region.development);
+                picked = _focusedRegion == region.id;
+            }
 
             if (!open)
                 AddRegionImage(area, region, "Fog_", discovered ? DiscoveredFogAlpha : 1f);
             if (picked)
                 AddRegionImage(area, region, "Pick_", 1f);
 
-            // 영토 칸을 누르면 그 방향 (정찰 중에는 바꾸지 않음)
+            bool path = region.id.StartsWith("shore_path", StringComparison.Ordinal);
+            string name = territory != null ? territory.DisplayName : "바닷가 · 낚시터";
+            string status = open ? "열린 땅" : discovered ? "발견한 땅 · 개간 전" : "미발견 지역";
+            if (region.id == "shore" && _manager.PlayerLevel < SettlementRules.FishingEventLevel)
+                status = $"왕국 Lv.{SettlementRules.FishingEventLevel}에 열려요 · 기존 낚시 진행은 보존돼요";
+            if (territory != null && _manager.GetTerritoryStage(territory) != TerritoryStage.Expanded && open)
+                status = "개간 중";
+            if (scout.Destination == region.development) status = "정찰 중";
+            RuntimeUIKit.PrepareGlyphs(name + status + RegionLabel(region.id) + "선택한 위치 열린 땅 지역을 누르면 이름과 해금 상태를 확인할 수 있어요 초록 표지 붉은 테두리 다음 정찰 개간");
+            if (picked && !path)
+                RuntimeUIKit.CreateLabel(panel, $"선택한 위치 · {name}\n{status}", 28, true);
+
+            if (!path && (open || discovered))
+                AddRegionLabel(area, region, RegionLabel(region.id), open);
+
+            // 이미 연 칸과 낚시터도 위치 확인 가능. 정찰 중에는 목적지를 바꾸지 않음.
             int direction = territory != null ? _directions.IndexOf(territory.Direction) : -1;
-            if (direction >= 0 && scout.Destination == null && _manager.HasIslandMap)
+            if (!path)
             {
                 var tap = AddRegionImage(area, region, null, 0f);
                 tap.raycastTarget = true;
                 tap.gameObject.AddComponent<Button>().onClick.AddListener(() =>
                 {
-                    _direction = direction;
+                    _focusedRegion = region.id;
+                    if (direction >= 0 && scout.Destination == null) _direction = direction;
                     _picking = false;
                     Draw();
                 });
             }
         }
+    }
+
+    private static string RegionLabel(string id)
+    {
+        if (id == "shore") return "낚시터";
+        return id.Replace("ne_", "북동 ").Replace("nw_", "북서 ")
+            .Replace("s_", "남 ").Replace("w_", "서 ").Replace("e_", "동 ");
+    }
+
+    private static void AddRegionLabel(RectTransform area, MapRegion region, string text, bool open)
+    {
+        var badge = new GameObject("Place_" + region.id, typeof(RectTransform), typeof(Image));
+        badge.transform.SetParent(area, false);
+        var rect = (RectTransform)badge.transform;
+        rect.anchorMin = rect.anchorMax = new Vector2(region.x + region.w * .5f, 1f - region.y - region.h * .5f);
+        rect.sizeDelta = new Vector2(88, 32);
+        var background = badge.GetComponent<Image>();
+        background.color = open ? new Color32(55, 97, 70, 235) : new Color32(119, 87, 51, 235);
+        background.raycastTarget = false;
+        var label = RuntimeUIKit.CreateLabel(rect, text, 20, true);
+        label.color = new Color32(255, 248, 227, 255);
+        label.rectTransform.anchorMin = Vector2.zero;
+        label.rectTransform.anchorMax = Vector2.one;
+        label.rectTransform.offsetMin = label.rectTransform.offsetMax = Vector2.zero;
     }
 
     private static Image AddRegionImage(RectTransform area, MapRegion region, string prefix, float alpha)
@@ -255,6 +309,7 @@ public class IslandMapSheet : MonoBehaviour
 
     private void ChangeDirection(int delta)
     {
+        _focusedRegion = null;
         _direction = (_direction + delta + _directions.Count) % _directions.Count;
         _picking = false;
         Draw();

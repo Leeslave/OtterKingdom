@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -142,6 +142,33 @@ public class SettlementTests
         Assert.AreEqual(1, settlement.ResidentOrder.Count, "첫 해달은 한 마리만");
         Assert.AreEqual(0, settlement.ResidentCount, "첫 집 전에는 주민 수에 안 들어감");
         CollectionAssert.AreEqual(new[] { "gb_first" }, settlement.Guestbook);
+    }
+
+    [Test]
+    public void FishingEvent_UnlocksAt15_AndPrematureDiscoveryDoesNotBlockGranary()
+    {
+        var dock = Request("req_fishing_dock", 39, "fishing_found", 0,
+            Construction("dock", "fishing_dock", 180, true));
+        var granary = Request("req_p4_granary", 36, "p4_farmer_settled", 0, null);
+        var so = new SerializedObject(_config);
+        var requests = so.FindProperty("_requests");
+        requests.arraySize = 2;
+        requests.GetArrayElementAtIndex(0).objectReferenceValue = dock;
+        requests.GetArrayElementAtIndex(1).objectReferenceValue = granary;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        var settlement = new Settlement();
+        settlement.UnlockDevelopment("fishing_found"); // 이전 버전에서 일찍 발견한 세이브
+        settlement.UnlockDevelopment(SettlementQuestGate.FarmDevelopment);
+        settlement.UnlockDevelopment("p4_farmer_settled");
+        Assert.IsFalse(SettlementRules.UnlockFishingEvent(settlement, 14));
+        Assert.AreEqual(RequestStatus.Locked, SettlementRules.GetStatus(dock, settlement));
+        Assert.AreSame(granary, SettlementRules.FindCurrent(_config, settlement));
+        Assert.IsTrue(SettlementRules.UnlockFishingEvent(settlement, 15));
+        Assert.AreEqual(RequestStatus.Available, SettlementRules.GetStatus(dock, settlement));
+        Assert.AreSame(granary, SettlementRules.FindCurrent(_config, settlement));
+        Assert.IsFalse(SettlementRules.UnlockFishingEvent(settlement, 15));
+        settlement.CompleteRequest(granary.RequestId, "p4_granary_built");
+        Assert.AreSame(dock, SettlementRules.FindCurrent(_config, settlement));
     }
 
     [Test]

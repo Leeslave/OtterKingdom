@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -23,7 +23,7 @@ public static class MineReworkSetup
     // 광석: (id, 이름, 등급, 판매가, 아이콘, 광맥 그림, 색, 설명, 쓰임)
     private static readonly (string id, string name, MineOreRarity rarity, int price, string icon, string vein, Color color, string desc, string use)[] OreTable =
     {
-        ("ore_stone", "돌", MineOreRarity.Common, 1, "Assets/Art/Item/Ore/Stone.png", null, new Color(0.78f, 0.74f, 0.7f),
+        ("ore_stone", "돌", MineOreRarity.Common, 3, "Assets/Art/Item/Ore/Stone.png", null, new Color(0.78f, 0.74f, 0.7f),
             "어디서나 나오는 단단한 돌. 해달들이 집을 지을 때 가장 많이 써요.", "집 · 길 · 거의 모든 건물"),
         ("ore_shell_copper", "조개 구리", MineOreRarity.Common, 2, "Ores/ORE_copper", "Veins/VEIN_copper", new Color(0.91f, 0.55f, 0.32f),
             "조개껍데기 무늬가 새겨진 구리. 해달 대장장이가 제일 먼저 두드려 보는 금속이에요.", "조개 구리 곡괭이 · 마을회관 · 접수 창구"),

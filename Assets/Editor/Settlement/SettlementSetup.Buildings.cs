@@ -31,7 +31,7 @@ public static partial class SettlementSetup
         ("Building_Shop", "bld_shop", "해달 상점", "짤랑이의 가게. 요정 상점이 이곳으로 이사하고, 물건을 더 비싸게 팔아요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Shop.png", new string[0], null,
             0, P4TraderSettled, new[] { (OtterTrait.Trading, 1) }, 1, 2000, 40, 20, 0f, 300f),
-        ("Building_Workshop", "bld_workshop", "목공소", "나무 하는 해달들이 일해 목재를 꾸준히 모아 가방에 넣어요. (한 마리당 1시간에 12개)", BuildingKind.Facility,
+        ("Building_Workshop", "bld_workshop", "목공소", "나무 하는 해달들이 일해 목재를 꾸준히 모아 가방에 넣어요. (한 마리당 2분에 1개)", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Workshop.png", new string[0], null,
             0, P4LumberSettled, new[] { (OtterTrait.Woodcutting, 2) }, 1, 3000, 60, 30, 0f, 360f),
         ("Building_Quarry", "bld_quarry", "채석 작업소", "채굴하는 해달들이 일해 돌을 꾸준히 모아 가방에 넣어요. (한 마리당 1시간에 12개)", BuildingKind.Facility,
@@ -40,7 +40,7 @@ public static partial class SettlementSetup
         // 농업 창고는 채석 작업소보다 먼저 지음 (Lv.13 → 14, 채석은 14 → 15). 비용도 순서대로
         ("Building_Granary", "bld_granary", "농업 창고", "흙길을 놓을 수 있고, 수확 상자가 커지고, 밭에서 거두는 작물이 늘어나요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Granary.png", new string[0], null,
-            0, P4FarmerSettled, new[] { (OtterTrait.Farming, 2) }, 1, 4000, 80, 40, 0f, 420f),
+            0, SettlementQuestGate.FarmDevelopment, new (OtterTrait, int)[0], 1, 4000, 80, 40, 0f, 420f),
         // Lv.16~18 (SettlementSetup.P4Story.cs 표 39~44)
         ("Building_Fishery", "bld_fishery", "어업 작업소", "바다에서 낚는 물고기가 늘어나요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Fishery.png", new string[0], null,

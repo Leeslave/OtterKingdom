@@ -88,8 +88,13 @@ def _compass(size):
         right = (c - math.cos(side) * w, c - math.sin(side) * w)
         fill = (196, 74, 58, 255) if a == 0 else (INK + (255,) if long == 1 else (170, 130, 90, 255))
         d.polygon([tip, left, (c, c), right], fill=fill, outline=INK + (255,))
-    font = ImageFont.truetype(str(TITLE_FONT), int(size * .2))
-    d.text((c, c - r - size * .02), "N", font=font, fill=(196, 74, 58, 255), anchor="ms")
+    font = ImageFont.truetype(str(TITLE_FONT), int(size * .13))
+    # 글자가 캔버스 밖으로 잘리지 않도록 나침반 안쪽에 네 방향을 표시
+    for label, x, y in (("N", c, size * .12), ("S", c, size * .9),
+                        ("W", size * .1, c), ("E", size * .9, c)):
+        d.text((x, y), label, font=font,
+               fill=(196, 74, 58, 255) if label == "N" else INK + (255,),
+               anchor="mm", stroke_width=2, stroke_fill=PARCHMENT + (255,))
     return im
 
 

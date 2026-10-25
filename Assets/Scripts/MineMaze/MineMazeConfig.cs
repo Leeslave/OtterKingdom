@@ -60,9 +60,9 @@ public class MineMazeConfig : ScriptableObject
     [SerializeField] private List<MazeLoot> _chestLoot = new List<MazeLoot>();
 
     [Header("지도 해달")]
-    [Tooltip("지도 없이 이만큼 다녀오면 지도 해달이 옴 (그 층의 돌을 모두 한 번씩 부수고 나와야 1번)")]
+    [Tooltip("1층에서 돌 3개 이상을 캐고 나오기를 이만큼 달성하면 지도 해달이 옴")]
     [SerializeField] private int _mapOtterRuns = 2;
-    [Tooltip("첫 탐험에서 이만큼 칸을 돌아다녔으면 첫 번째로 나올 때 바로 옴")]
+    [Tooltip("이전 세이브 호환용 (현재 등장 조건에는 사용하지 않음)")]
     [SerializeField] private int _mapOtterEarlyCells = 40;
 
     [Header("다시 들어가기")]

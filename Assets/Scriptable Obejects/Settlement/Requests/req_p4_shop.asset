@@ -40,4 +40,4 @@ MonoBehaviour:
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 1977d380b10cfd249b7a08c620bc3363, type: 2}
   _completionMessage: "해달 상점이 문을 열었어요. 판매가 +10%! 작물을 팔아 설비 확장과 다음 공사를 준비해요. 콩콩이가 찾아왔어요."
-  _kingdomLevel: 13
+  _kingdomLevel: 10

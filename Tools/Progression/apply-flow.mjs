@@ -51,6 +51,8 @@ for (const r of spec.buildings) {
   const p = `Assets/Scriptable Obejects/Decor/Buildings/${r.asset}.asset`;
   const before = read(p);
   let s = set(before, '_requiredLevel', r.level);
+  if (r.requires !== undefined) s = set(s, '_requiredDevelopment', r.requires);
+  if (r.noTraits) s = set(s, '_traits', '[]');
   s = set(s, '_gold', r.gold);
   s = set(s, '_buildSeconds', r.seconds);
   let index = 0;
@@ -62,7 +64,7 @@ for (const r of spec.buildings) {
   s = s.replace(items, updated);
   if (r.perHour > 0) {
     s = set(s, '_productionPerHour', r.perHour);
-    s = set(s, '_description', JSON.stringify('한가한 특성 주민이 한 마리당 1분에 1개씩 모아요. 정찰·개간에 나간 주민은 생산을 쉬어요. 최대 8시간 보관해요.'));
+    s = set(s, '_description', JSON.stringify(`한가한 특성 주민이 한 마리당 ${60 / r.perHour}분에 1개씩 모아요. 정찰·개간에 나간 주민은 생산을 쉬어요. 최대 8시간 보관해요.`));
   }
   save(p, before, s);
 }

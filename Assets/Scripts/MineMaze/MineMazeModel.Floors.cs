@@ -68,7 +68,7 @@ public partial class MineMazeModel
         _config = FloorConfig(floor);
         _map = MazeMap.Parse(_config.MapRows);
         RestoreFloorState(now);
-        _runBroken.Clear(); // 다녀온 횟수는 나올 때 서 있는 층의 돌로 셈
+        _runBroken.Clear(); // 현재 층 채굴 표시만 초기화. 1층에서 캔 돌 수는 탐험이 끝날 때까지 유지
         if (Inside) { Community.Discover(CurrentFloor, _fishingAccess); Visit(Position); }
         // Caller rebuilds map UI before invoking its refresh (different floor dimensions).
         return true;

@@ -588,7 +588,7 @@ public partial class MineMazeHud : MonoBehaviour
         if (!has)
         {
             int left = Mathf.Max(0, _model.Config.MapOtterRuns - _model.Runs);
-            _mapEmptyText.text = $"지도가 없어요\n지도 해달이 오면 지나온 길을\n그려 줘요 (앞으로 {left}번 다녀오면)\n돌 {_model.FloorRockCount}개를 모두 부수고 나와야 1번";
+            _mapEmptyText.text = $"지도가 없어요\n지도 해달이 오면 지나온 길을\n그려 줘요 (앞으로 {left}번 다녀오면)\n1층에서 돌 {MineMazeModel.MapOtterRequiredRocks}개 이상 캐고 나오면 1번";
             return;
         }
 
@@ -746,7 +746,7 @@ public partial class MineMazeHud : MonoBehaviour
             : $"지도 해달은 아직 없어요 (앞으로 {Mathf.Max(0, _model.Config.MapOtterRuns - _model.Runs)}번 다녀오면 와요)";
         Line(panel, $"다녀온 횟수 {_model.Runs}번\n{otter}\n{_model.Pickaxe.DisplayName} · 힘 {_model.Pickaxe.Power}", 30, true, Cocoa);
         if (!_model.MapOtter)
-            Line(panel, $"이 층의 돌 {_model.FloorRockCount}개를 한 번씩 모두 부수고 나와야 다녀온 횟수 1번이에요", 26, false, RuntimeUIKit.Style.BodyColor);
+            Line(panel, $"1층에서 돌 {MineMazeModel.MapOtterRequiredRocks}개 이상 캐고 나오기를 2번 달성하면 지도 해달이 와요", 26, false, RuntimeUIKit.Style.BodyColor);
         RuntimeUIKit.CreateSpace(panel, 10f);
         Line(panel, _game.InGame ? $"골드 {_model.Gold} · 왕국 Lv.{_model.KingdomLevel}"
             : $"골드 {_model.Gold} · 테스트 왕국 Lv.{_model.KingdomLevel}", 28, true, Cocoa);
@@ -811,8 +811,8 @@ public partial class MineMazeHud : MonoBehaviour
         }
         Line(panel, $"부순 돌 {result.RocksBroken} · 연 상자 {result.ChestsOpened} · 새로 밟은 칸 {result.NewCells}", 28, false, RuntimeUIKit.Style.BodyColor);
         if (!_model.MapOtter || result.MapOtterArrived)
-            Line(panel, result.RunCounted ? $"이 층의 돌 {result.FloorRocks}개를 모두 부쉈어요! 다녀온 횟수 +1"
-                : $"이 층의 돌 {result.FloorRocks}개 중 {result.RocksCleared}개를 부쉈어요. 모두 부숴야 다녀온 횟수에 들어가요",
+            Line(panel, result.RunCounted ? "1층에서 돌 3개 이상을 캤어요! 지도 해달 조건 +1"
+                : $"이번 탐험의 1층 채굴 {result.FirstFloorRocks}/3개 · 3개 이상 캐고 나오면 지도 해달 조건을 1회 달성해요",
                 26, true, result.RunCounted ? Good : Cocoa);
         Line(panel, $"갱도는 {MineMazeGame.WaitText(TimeSpan.FromSeconds(_model.Config.ReenterCooldownSeconds))} 뒤에 다시 들어갈 수 있어요", 24, false, RuntimeUIKit.Style.BodyColor);
         if (result.MapOtterArrived)

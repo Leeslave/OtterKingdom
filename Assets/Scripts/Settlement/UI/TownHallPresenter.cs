@@ -167,8 +167,8 @@ public class TownHallPresenter : MonoBehaviour
         _hallProject = _hallTarget == null ? _manager.ActiveProject : null;
         _hallMine = _hallProject == null && _hallTarget == null
             && _manager.HasMineCommunityStory && !_manager.MineCommunity.exported;
-        _hallScouting = _hallTarget == null && _manager.HasIslandMap && _manager.PlayerLevel >= 14
-            && !_manager.HasDevelopment("fishing_found");
+        _hallScouting = _hallTarget == null && _manager.HasIslandMap && _manager.PlayerLevel >= SettlementRules.FishingEventLevel
+            && _manager.HasDevelopment(SettlementQuestGate.FarmDevelopment) && !_manager.HasDevelopment("fishing_found");
         if (_hallScouting)
             _hall.ShowNext("발견한 바닷가로 길 내기", "섬 지도의 남쪽으로 정찰대를 보내요. 발견한 땅을 개간하고 영토 확장 미션을 마치면 선착장을 복구할 수 있어요.", true);
         else if (_hallProject != null)

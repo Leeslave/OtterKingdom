@@ -35,6 +35,7 @@ public class MazeRunResult
     public double Seconds;
     public readonly List<MineGain> Gains = new List<MineGain>();
     public int RocksBroken;
+    public int FirstFloorRocks;
     public int ChestsOpened;
     public int NewCells;
     /// <summary>이번에 지도 해달이 옴</summary>
@@ -71,9 +72,10 @@ public partial class MineMazeModel
     private readonly List<MineOreDefinition> _runOrder = new List<MineOreDefinition>();
     private readonly HashSet<MineOreDefinition> _runNew = new HashSet<MineOreDefinition>();
     private int _runRocks;
+    private int _runFirstFloorRocks;
     private int _runChests;
     private int _runNewCells;
-    // 이번 탐험에서 한 번이라도 부순 이 층의 돌 (모두 부숴야 다녀온 횟수 1번)
+    // 이번 탐험에서 한 번이라도 부순 현재 층의 돌 (층별 채굴 진행 표시)
     private readonly HashSet<Vector2Int> _runBroken = new HashSet<Vector2Int>();
 
     /// <summary>광석 · 곡괭이가 바뀜</summary>
@@ -115,11 +117,12 @@ public partial class MineMazeModel
     public int PickaxeTier { get; private set; }
     public MinePickaxeDefinition Pickaxe => _rework.Pickaxes[PickaxeTier];
     public int Combo { get; private set; }
+    public const int MapOtterRequiredRocks = 3;
     public int Runs { get; private set; }
     public bool MapOtter { get; private set; }
     public int RocksBroken { get; private set; }
     public int VisitedCount => _visited.Count;
-    /// <summary>이 층의 돌 수 (다녀온 횟수 1번 = 이 돌을 모두 한 번씩 부수고 나오기)</summary>
+    /// <summary>이 층에 배치된 돌 수 (채굴 진행 표시)</summary>
     public int FloorRockCount => _map.Rocks.Count;
     /// <summary>이번 탐험에서 한 번이라도 부순 이 층의 돌 수</summary>
     public int RunRocksCleared => _runBroken.Count;
@@ -284,6 +287,7 @@ public partial class MineMazeModel
         _runOrder.Clear();
         _runNew.Clear();
         _runRocks = _runChests = _runNewCells = 0;
+        _runFirstFloorRocks = 0;
         _runBroken.Clear();
         Visit(Position);
         Tick(utcNow);
@@ -298,6 +302,7 @@ public partial class MineMazeModel
         {
             Seconds = RunSeconds(utcNow),
             RocksBroken = _runRocks,
+            FirstFloorRocks = _runFirstFloorRocks,
             ChestsOpened = _runChests,
             NewCells = _runNewCells,
             FloorRocks = FloorRockCount,
@@ -310,11 +315,11 @@ public partial class MineMazeModel
 
         Inside = false;
         NextEnterUtc = utcNow.AddSeconds(_config.ReenterCooldownSeconds);
-        // 들락날락만으로는 채우지 못하게: 이 층의 돌을 모두 한 번씩 부숴야 다녀온 횟수 1번
-        result.RunCounted = RunCleared;
+        // 한 번의 탐험에서 1층 돌을 3개 이상 캐고 나오면 조건을 한 번 달성한다.
+        result.RunCounted = _runFirstFloorRocks >= MapOtterRequiredRocks;
         if (result.RunCounted)
             Runs++;
-        if (!MapOtter && result.RunCounted && (Runs >= _config.MapOtterRuns || (Runs == 1 && _visited.Count >= _config.MapOtterEarlyCells)))
+        if (!MapOtter && result.RunCounted && Runs >= _rootConfig.MapOtterRuns)
         {
             MapOtter = true;
             result.MapOtterArrived = true;
@@ -393,6 +398,7 @@ public partial class MineMazeModel
         rock.RespawnUtc = utcNow.AddSeconds(_config.RockRespawnSeconds);
         RocksBroken++;
         _runRocks++;
+        if (CurrentFloor == 0) _runFirstFloorRocks++;
         Changed?.Invoke();
         return hit;
     }

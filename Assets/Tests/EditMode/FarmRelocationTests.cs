@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using UnityEditor;
@@ -38,6 +38,41 @@ public class FarmRelocationTests
     }
 
     [Test]
+    public void FarmlandImmediatelyUnlocksGranary_WithoutFarmerOrWorkyardProgress()
+    {
+        var granary = AssetDatabase.LoadAssetAtPath<BoardRequestDefinition>($"{RequestFolder}/req_p4_granary.asset");
+        var workyard = AssetDatabase.LoadAssetAtPath<BoardRequestDefinition>($"{RequestFolder}/req_p5_workyard.asset");
+        var builderHome = AssetDatabase.LoadAssetAtPath<BoardRequestDefinition>($"{RequestFolder}/req_p5_builder_home.asset");
+        var config = UnityEngine.ScriptableObject.CreateInstance<SettlementConfig>();
+        try
+        {
+            var so = new SerializedObject(config);
+            var requests = so.FindProperty("_requests");
+            requests.arraySize = 3;
+            requests.GetArrayElementAtIndex(0).objectReferenceValue = workyard;
+            requests.GetArrayElementAtIndex(1).objectReferenceValue = builderHome;
+            requests.GetArrayElementAtIndex(2).objectReferenceValue = granary;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            var settlement = new Settlement();
+            settlement.UnlockDevelopment("p5_builder_settled");
+            settlement.UnlockDevelopment("p4_shop_built");
+            Assert.AreEqual(RequestStatus.Locked, SettlementRules.GetStatus(granary, settlement));
+            settlement.UnlockDevelopment(SettlementQuestGate.FarmDevelopment);
+            Assert.AreEqual(RequestStatus.Available, SettlementRules.GetStatus(granary, settlement));
+            Assert.AreSame(granary, SettlementRules.FindCurrent(config, settlement), "건설소 이벤트가 이미 열렸어도 창고가 먼저");
+            Assert.AreEqual(BuildingBlock.None, BuildingRules.CheckUnlocked(config, settlement, granary.Building, 10));
+            Assert.AreEqual(11, SettlementRules.LevelCap(config, settlement, 11));
+            settlement.StartBuilding(1, granary.Building.BuildingId, 1, 1);
+            settlement.FinishBuilding(1);
+            Assert.IsTrue(SettlementRules.IsRecordComplete(granary, settlement));
+            SettlementRules.ApplyCompletion(granary, settlement);
+            Assert.IsTrue(settlement.HasDevelopment("p4_granary_built"));
+            Assert.AreEqual(14, SettlementRules.LevelCap(config, settlement, 11), "창고를 지으면 Lv.12 진행 제한이 풀림");
+        }
+        finally { UnityEngine.Object.DestroyImmediate(config); }
+    }
+
+    [Test]
     public void MainChain_IsSingleLine_WithNonDecreasingLevels()
     {
         var chain = MainChain();
@@ -69,7 +104,7 @@ public class FarmRelocationTests
         var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
         Assert.IsNull(config.FindDistrictTypeUnlock(DistrictType.Agricultural), "농업 지역은 처음부터 고를 수 있어야 밭이 열림");
         Assert.AreEqual(10, config.FarmDiscoverLevel, "농업 지역을 일찍 정해도 밭 발견은 Lv.10");
-        Assert.Greater(config.CastleLevel, 12, "성 → 길드 지부(상업 지역)는 짤랑이 가게(Lv.12) 뒤");
+        Assert.Greater(config.CastleLevel, 12, "성 → 길드 지부(상업 지역)는 짤랑이 가게(Lv.9) 뒤");
     }
 
     [Test]

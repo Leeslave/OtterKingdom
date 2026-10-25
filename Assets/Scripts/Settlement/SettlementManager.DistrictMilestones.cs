@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// 구역 진행 표시 (구역·이사 5막 · 밭 재배치): 퀘스트 · 부탁이 볼 수 있게 구역 상태를 발전으로 남긴다.
 /// - district_first / district_second: 용도를 정한 블록이 1 · 2곳 이상 (메인 Lv.7 · 8)
 /// - farm_discovered: 왕국 Lv.10(FarmDiscoverLevel) 이상 + 농업 지역이 생김 → 해달이가 밭 자리를 발견 (게시판 "먹거리를 길러요", 이동 지도 밭이 열림, 메인 Lv.10)
@@ -36,6 +36,7 @@ public partial class SettlementManager
         }
         // 밭은 Lv.10 (FarmDiscoverLevel): 농업 지역을 일찍 정했으면 그 레벨이 되는 순간 발견
         if (!Settlement.HasDevelopment(FarmDiscoveredDevelopment) && PlayerLevel >= _config.FarmDiscoverLevel
+            && Settlement.HasDevelopment(MineWorkingDevelopment)
             && DistrictRules.HasDistrict(_config, Settlement, DistrictType.Agricultural))
         {
             Settlement.UnlockDevelopment(FarmDiscoveredDevelopment);

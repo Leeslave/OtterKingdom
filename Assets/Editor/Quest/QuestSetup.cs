@@ -95,7 +95,8 @@ public static class QuestSetup
         // Lv.10 → 11 먹거리를 길러요 (1,700 = 첫 모임 425 + 1,275): 농업 지역을 정하면 밭 자리 발견 → 개간 → 새싹이 → 놀러 온 친구의 집
         ("M10_Agri", "main_lv10_agri", "농업 지역", "땅 하나를 농업 지역으로 정하기", QuestGoalType.Milestone, 1, "", 200, "place:ICON_Place_Farm", QuestKind.Main, 10, "M09_Mine", 250, 0f, "farm_discovered"),
         ("M04_Farmland", "main_lv4_farmland", "먹거리를 길러요", "밭을 개간하기", QuestGoalType.Milestone, 1, "", 100, "place:ICON_Place_Farm", QuestKind.Main, 10, "M10_Agri", 300, 0f, "req_farmland"),
-        ("M04_Farmer", "main_lv4_farmer", "농사를 지을 해달", "새싹이를 밭에 배치하기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Farmer", QuestKind.Main, 10, "M04_Farmland", 250, 0f, "req_assign_farmer"),
+        ("M13_Granary", "main_lv13_granary", "밭 옆 창고", "게시판 부탁: 농업 창고 짓기", QuestGoalType.Milestone, 1, "", 1000, "building:Granary", QuestKind.Main, 10, "M04_Farmland", 0, 0f, "req_p4_granary"),
+        ("M04_Farmer", "main_lv4_farmer", "농사를 지을 해달", "새싹이를 밭에 배치하기", QuestGoalType.Milestone, 1, "", 50, "otter:ICON_Otter_Farmer", QuestKind.Main, 10, "M13_Granary", 250, 0f, "req_assign_farmer"),
         ("Main_FirstCarrots", "quest_first_carrots", "첫 수확을 해봐요", "당근 3개 수확하기", QuestGoalType.Harvest, 3, "only:Farming/당근", 30, "item:Farming/당근", QuestKind.Main, 10, "M04_Farmer", 175, 0f, ""),
         ("M10_Gathering", "main_lv10_gathering", "우리 마을의 첫 모임", "공동사업: 첫 모임 열기", QuestGoalType.Milestone, 1, "", 300, "settle:ICON_CommonSpace", QuestKind.Main, 10, "Main_FirstCarrots", 0, 0f, "first_gathering_complete"),
         ("M10_CropSale", "main_lv10_crop_sale", "살림 밑천", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 200, "gold", QuestKind.Main, 10, "M10_Gathering", 300, 0f, ""),
@@ -124,7 +125,6 @@ public static class QuestSetup
         ("M11_Strawberry", "main_lv11_strawberry", "딸기 농사", "딸기 100개 수확하기", QuestGoalType.Harvest, 100, "only:Farming/딸기", 800, "item:Farming/딸기", QuestKind.Main, 13, "M11_Furrow", 900, 0f, ""),
         ("M13_Furrow", "main_lv13_furrow", "아홉째 밭 칸", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 13, "M11_Strawberry", 250, 0f, "6"),
         ("M13_FarmerHome", "main_lv13_farmer_home", "보들이가 살 집", "게시판 부탁: 보들이를 집에 입주시키기", QuestGoalType.Milestone, 1, "", 300, "otter:ICON_Otter_Toy_Bodeul", QuestKind.Main, 13, "M13_Furrow", 550, 0f, "req_p4_farmer_home"),
-        ("M13_Granary", "main_lv13_granary", "밭 옆 창고", "게시판 부탁: 농업 창고 짓기", QuestGoalType.Milestone, 1, "", 1000, "building:Granary", QuestKind.Main, 13, "M13_FarmerHome", 0, 0f, "req_p4_granary"),
         // 예전 메인 (밭을 Lv.10으로 옮기며 뺌): 도전으로 남김 (세이브의 진행 기록이 남아 있을 수 있음)
         ("M10_Harvest", "main_lv10_harvest", "넉넉한 수확", "작물 500개 수확하기", QuestGoalType.Harvest, 500, "Crops", 500, "item:Farming/감자", QuestKind.Challenge, 10, "Main_Harvest_5", 575, 0f, ""),
         ("M12_Harvest", "main_lv12_harvest", "곳간이 가득", "작물 800개 수확하기", QuestGoalType.Harvest, 800, "Crops", 1000, "item:Farming/딸기", QuestKind.Challenge, 12, "M10_Harvest", 1000, 0f, ""),
@@ -139,7 +139,7 @@ public static class QuestSetup
         ("M14_Harvest", "main_lv14_harvest", "전설의 농부", "작물 1,500개 수확하기", QuestGoalType.Harvest, 1500, "Crops", 2000, "item:Farming/고구마", QuestKind.Challenge, 14, "M09_Harvest", 1700, 0f, ""),
         ("M13_Decor", "main_lv13_decor", "해달 놀이공원", "가구 3개 놓기", QuestGoalType.PlaceDecor, 3, "", 800, "item:Decor/통나무 의자", QuestKind.Challenge, 13, "", 300, 0f, ""),
         // Lv.14 → 15 길을 놓아요 (3,900): 흙길 → 설비 · 수확 → 데굴이 입주 → 채석 작업소
-        ("M14_Path", "main_lv14_path", "밭으로 가는 길", "밭과 수확 상자 사이에 흙길 놓기", QuestGoalType.Milestone, 1, "", 500, "place:ICON_Place_Farm", QuestKind.Main, 14, "M13_Granary", 800, 0f, SettlementManager.FarmPathPlacedDevelopment),
+        ("M14_Path", "main_lv14_path", "밭으로 가는 길", "밭과 수확 상자 사이에 흙길 놓기", QuestGoalType.Milestone, 1, "", 500, "place:ICON_Place_Farm", QuestKind.Main, 14, "M13_FarmerHome", 800, 0f, SettlementManager.FarmPathPlacedDevelopment),
         ("M14_Upgrade", "main_lv14_upgrade", "완벽한 설비", "생산 업그레이드 2회", QuestGoalType.Upgrade, 2, "", 1500, "place:ICON_Place_Farm", QuestKind.Main, 14, "M14_Path", 900, 0f, ""),
         ("M14_BigHarvest", "main_lv14_big_harvest", "넉넉한 창고", "작물 300개 수확하기", QuestGoalType.Harvest, 300, "Crops", 1000, "item:Farming/고구마", QuestKind.Main, 14, "M14_Upgrade", 1200, 0f, ""),
         ("M14_MinerHome", "main_lv14_miner_home", "데굴이가 살 집", "게시판 부탁: 데굴이를 집에 입주시키기", QuestGoalType.Milestone, 1, "", 500, "otter:ICON_Otter_Toy_Degul", QuestKind.Main, 14, "M14_BigHarvest", 1000, 0f, "req_p4_miner_home"),

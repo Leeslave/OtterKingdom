@@ -4,6 +4,7 @@ Everything drawn here comes from the game's own art; the few things the game has
 (paper, notebook, easel) are plain shapes in the rig outline colour (#320a00) so they sit in the same style.
 """
 import math
+import os
 import pathlib
 import random
 
@@ -158,7 +159,11 @@ class Cut:
         return self
 
     def save(self, path):
-        self.canvas.convert("RGB").save(path, optimize=True)
+        # Unity can import the image as it changes; publish only a complete PNG.
+        path = pathlib.Path(path)
+        staging = path.with_name(path.name + ".tmp")
+        self.canvas.convert("RGB").save(staging, format="PNG", optimize=True)
+        os.replace(staging, path)
 
 
 # --- backgrounds ---------------------------------------------------------------------------------

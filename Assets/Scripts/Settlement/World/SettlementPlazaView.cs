@@ -107,6 +107,47 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     /// <summary>새 해달을 막 소개하는 중 (카메라가 비추는 동안 밭 안내가 겹쳐 뜨지 않게. 줄에서 기다리는 해달은 안내가 끝난 뒤에 옴)</summary>
     public bool IsIntroducingVisitor => _presenting.Count > 0 || Time.unscaledTime < _introducedAt + FocusHoldSeconds;
 
+    private GameObject _mapGuide;
+
+    private void RefreshMapGuide()
+    {
+        bool visible = _manager.HasIslandMap;
+        if (_mapGuide == null && visible)
+        {
+            var look = _manager.Config.FindOtter("otter_toy_kkeujeok");
+            if (look == null || look.PlazaPrefab == null) return;
+            Vector2 near = _gatherPoint != null ? (Vector2)_gatherPoint.position + Vector2.right * 2f : Vector2.zero;
+            var station = FindStation("station_board");
+            if (station != null) near = station.StandPoint + Vector2.right * 1.8f;
+            if (!_walkableArea.TryGetRandomPointNear(near, 1f, 40, out var position)) return;
+            _mapGuide = Instantiate(look.PlazaPrefab, position, Quaternion.identity, _otterRoot);
+            _mapGuide.name = "MapGuideOtter";
+            var agent = _mapGuide.GetComponent<OtterWanderAgent>();
+            if (agent != null)
+            {
+                agent.Initialize(_walkableArea, _plazaSettings);
+                agent.AssignTask(position, position + Vector2.down);
+                agent.WarpToTask();
+            }
+            var view = AttachView(_mapGuide, look);
+            view.IsMapGuide = true;
+            var labelObject = new GameObject("MapGuideName");
+            labelObject.transform.SetParent(_mapGuide.transform, false);
+            float inverse = 1f / Mathf.Max(0.01f, _mapGuide.transform.lossyScale.y);
+            labelObject.transform.localScale = Vector3.one * inverse;
+            labelObject.transform.localPosition = Vector3.down * 0.3f * inverse;
+            var label = labelObject.AddComponent<TextMeshPro>();
+            if (_speechFont != null) label.font = _speechFont;
+            label.text = "지도 해달";
+            label.fontSize = 2.4f;
+            label.alignment = TextAlignmentOptions.Center;
+            label.color = new Color32(0x4B, 0x2E, 0x22, 0xFF);
+            label.sortingOrder = 31999;
+            label.rectTransform.sizeDelta = new Vector2(3f, 0.5f);
+        }
+        if (_mapGuide != null && _mapGuide.activeSelf != visible) _mapGuide.SetActive(visible);
+    }
+
     private void Awake()
     {
         Active = this;
@@ -157,6 +198,7 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         // 요정은 새 해달이 다 들어온 다음 차례 (둘이 한꺼번에 화면을 차지하지 않게)
         else if (_visitQueue.Count == 0 && Time.unscaledTime >= _nextVisitorTime && _manager.IsFairyComing && IsSafeToPresent())
             _manager.TryMarkFairyArrived();
+        RefreshMapGuide();
         RemoveOttersAtWork();
         KeepManagersAtStation();
         var job = _manager.Settlement.Job;

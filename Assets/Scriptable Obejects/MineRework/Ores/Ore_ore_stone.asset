@@ -22,4 +22,4 @@ MonoBehaviour:
   _veinSprite: {fileID: 0}
   _color: {r: 0.78, g: 0.74, b: 0.7, a: 1}
   _rarity: 0
-  _sellPrice: 1
+  _sellPrice: 3

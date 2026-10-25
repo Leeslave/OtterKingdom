@@ -466,7 +466,7 @@ public static class CollectionSetup
             {
                 string file = $"CUT_{entry.EntryId}_{(char)('A' + i)}";
                 var element = cuts.GetArrayElementAtIndex(i);
-                if (element.objectReferenceValue == null && File.Exists($"{CutsceneFolder}/{file}.png"))
+                if (File.Exists($"{CutsceneFolder}/{file}.png"))
                     element.objectReferenceValue = ImportSprite(CutsceneFolder, file);
             }
             so.ApplyModifiedPropertiesWithoutUndo();
@@ -1009,8 +1009,8 @@ public static class CollectionSetup
     #region 이야기 재생 화면
 
     private const float CardWidth = 1000f;
-    private const float CardHeight = 680f; // 컷 960×640 (3:2, GPT 가로 이미지 1536×1024와 같은 비율) + 테두리
-    private const float CardCenterY = 120f;
+    private const float CardHeight = 940f; // 그림 960×640 + 간격 + 독립된 대사창
+    private const float CardCenterY = -10f;
     private const int MaxDots = 5;
 
     /// <summary>
@@ -1048,10 +1048,10 @@ public static class CollectionSetup
         var cutBack = BuildCutImage("CutBack", card.rectTransform);
         var cutFront = BuildCutImage("CutFront", card.rectTransform);
 
-        // 대사창: 컷 아래쪽 30%에 겹친 반투명 크림 상자
+        // 그림 아래에 별도 배치해 해달의 얼굴과 몸을 가리지 않음
         var box = CreateImage("LineBox", card.rectTransform, LoadSprite(CommonSpriteFolder, "UI_Button_Paper"), false);
         box.color = new Color(1, 1, 1, 0.94f);
-        BottomBand(box.rectTransform, 40, 210);
+        BottomBand(box.rectTransform, 32, 210);
         box.rectTransform.offsetMin = new Vector2(44, box.rectTransform.offsetMin.y);
         box.rectTransform.offsetMax = new Vector2(-44, box.rectTransform.offsetMax.y);
 
@@ -1121,6 +1121,7 @@ public static class CollectionSetup
     {
         var cut = CreateImage(name, card, null, false);
         Stretch(cut.rectTransform, 20);
+        cut.rectTransform.offsetMin = new Vector2(20, 280);
         cut.preserveAspect = true;
         return cut;
     }

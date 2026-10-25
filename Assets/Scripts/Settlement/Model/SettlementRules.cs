@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 /// <summary>게시판 부탁 하나의 상태</summary>
@@ -20,6 +20,24 @@ public static class SettlementRules
     /// 그 뒤에 들어온 부탁(P2 = 2)은 옛 세이브에서도 처음부터 진행한다
     /// </summary>
     public const int LegacyContentVersion = 1;
+    public const int FishingEventLevel = 15;
+    public const string FishingEventReady = "fishing_event_ready";
+
+    // 이미 fishing_found가 일찍 저장됐어도 Lv.15 도달 기록으로 이벤트를 따로 제한한다.
+    public static bool UnlockFishingEvent(Settlement settlement, int playerLevel)
+    {
+        if (playerLevel < FishingEventLevel || settlement.HasDevelopment(FishingEventReady)) return false;
+        settlement.UnlockDevelopment(FishingEventReady);
+        return true;
+    }
+
+    // 선착장 완료 기록은 보존하고 현재 레벨로 입장만 제한한다 (기존 세이브 포함).
+    public static bool CanEnterFishing(Settlement settlement, int playerLevel) =>
+        playerLevel >= FishingEventLevel && settlement.HasDevelopment(SettlementQuestGate.FishingDevelopment);
+
+    public static bool CanStartFishingEvent(Settlement settlement) =>
+        settlement.HasDevelopment(FishingEventReady)
+        && settlement.HasDevelopment(SettlementQuestGate.FarmDevelopment);
 
     public static RequestStatus GetStatus(BoardRequestDefinition request, Settlement settlement)
     {
@@ -35,6 +53,8 @@ public static class SettlementRules
         // 주민 작업 부탁: 그 작업을 하는 중이면 진행 중
         if (request.CompletionTask != null && settlement.TryGetTaskJob(request.CompletionTask.TaskId, out _))
             return RequestStatus.Building;
+        if (request.RequestId == "req_fishing_dock" && !CanStartFishingEvent(settlement))
+            return RequestStatus.Locked;
         if (!settlement.HasDevelopment(request.RequiredDevelopment) || settlement.ResidentCount < request.MinResidents)
             return RequestStatus.Locked;
         return RequestStatus.Available;
@@ -215,6 +235,8 @@ public static class SettlementRules
                 continue;
             if (entry == null || string.IsNullOrEmpty(entry.Development) || level < entry.Level
                 || settlement.HasDevelopment(entry.Development))
+                continue;
+            if (entry.Development == "fishing_found" && !settlement.HasDevelopment(SettlementQuestGate.FarmDevelopment))
                 continue;
             settlement.UnlockDevelopment(entry.Development);
             opened.Add(entry);

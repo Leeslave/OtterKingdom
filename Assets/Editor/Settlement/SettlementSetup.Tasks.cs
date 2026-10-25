@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -34,7 +34,7 @@ public static partial class SettlementSetup
             1, 30f, MinePlayerClearDevelopment, "mine_tidy", 0, 0, 0),
         // 비용은 예전 농경지 개간 건설과 같음 (골드 200, 목재 16, 돌 10)
         ("task_farm_till", "농경지 개간", "치운 자리의 흙을 갈아엎고\n고랑을 내서 밭을 만들어요.", "농경지 개간이 끝났어요!",
-            2, 45f, FarmPlayerClearDevelopment, "farm_tilled", 200, 16, 10),
+            2, 45f, FarmPlayerClearDevelopment, "farm_tilled", 140, 16, 10),
         // P2 광장 주민 작업 (지역이 없어 광장의 현장에서 일함). 비용·시간은 구현 지시서 6.1의 QA용 제안값
         ("task_common_space", "공동 공간 정비", "흩어진 통나무와 돌을 치우고\n다 같이 앉을 자리를 만들어요.", "다 같이 쉴 자리 정비가 끝났어요!",
             1, 30f, BoardManagedDevelopment, CommonSpaceDevelopment, 100, 0, 0),

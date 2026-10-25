@@ -21,6 +21,48 @@ public class ScoutingIntegrationTests
         Assert.AreEqual(0f, ProductionRules.AccruedAmount(float.NaN, 60, 0));
     }
 
+    [Test]
+    public void DockEvent_RequiresLevel15AndFarm_AndGateSurvivesSave()
+    {
+        var settlement = new Settlement();
+        settlement.UnlockDevelopment("fishing_found");
+        settlement.UnlockDevelopment(SettlementQuestGate.FarmDevelopment);
+        Assert.IsFalse(SettlementRules.UnlockFishingEvent(settlement, 14));
+        Assert.IsFalse(SettlementRules.CanStartFishingEvent(settlement));
+        Assert.IsTrue(SettlementRules.UnlockFishingEvent(settlement, 15));
+        Assert.IsTrue(SettlementRules.CanStartFishingEvent(settlement));
+        var saved = new SettlementSaveData();
+        settlement.Write(saved);
+        var loaded = new Settlement();
+        loaded.Load(saved);
+        Assert.IsTrue(SettlementRules.CanStartFishingEvent(loaded));
+        var withoutFarm = new Settlement();
+        SettlementRules.UnlockFishingEvent(withoutFarm, 15);
+        Assert.IsFalse(SettlementRules.CanStartFishingEvent(withoutFarm));
+    }
+
+    [Test]
+    public void ExistingFishingSave_LocksEntryUntil15_WithoutErasingProgress()
+    {
+        var saved = new SettlementSaveData { initialized = true };
+        saved.unlockedDevelopments.AddRange(new[] { "fishing_found", "fishing_dock", "fishing_working", SettlementRules.FishingEventReady });
+        saved.completedRequests.AddRange(new[] { "req_fishing_dock", "req_assign_fisher" });
+        var settlement = new Settlement();
+        settlement.Load(saved);
+        Assert.IsFalse(SettlementRules.CanEnterFishing(settlement, 14));
+        Assert.IsTrue(SettlementRules.CanEnterFishing(settlement, 15));
+        Assert.IsTrue(SettlementRules.CanEnterFishing(settlement, 16));
+        var written = new SettlementSaveData();
+        settlement.Write(written);
+        CollectionAssert.AreEquivalent(saved.unlockedDevelopments, written.unlockedDevelopments);
+        CollectionAssert.AreEquivalent(saved.completedRequests, written.completedRequests);
+        var reloaded = new Settlement();
+        reloaded.Load(written);
+        Assert.IsFalse(SettlementRules.CanEnterFishing(reloaded, 14));
+        Assert.IsTrue(SettlementRules.CanEnterFishing(reloaded, 15));
+        Assert.IsFalse(SettlementRules.CanEnterFishing(new Settlement(), 15), "새 세이브는 선착장을 먼저 지어야 함");
+    }
+
     private static SettlementSaveData Save()
     {
         long now = new DateTime(2026, 10, 24).Ticks;

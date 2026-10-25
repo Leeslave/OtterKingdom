@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -209,11 +209,11 @@ public static partial class SettlementSetup
             4, "gb_town_hall", "마을 길드가 완성됐어요!\n함께 이겨 낸 일을 앞으로도 이어 가요.", 0, "", ""),
         // 낚시터 (Lv.15): 레벨이 되면 해달이가 선착장을 발견(SettlementConfig 레벨 발전) → 고치면 낚시꾼 첨벙이 방문 → 배치
         // 콘텐츠 버전 0: 정착 진행 전 옛 세이브는 낚시터를 이미 쓰고 있었으므로 두 부탁 모두 끝낸 것으로 옮김
-        ("req_fishing_dock", 12, "바다로 나가는 선착장", "해달이가 바닷가에서 낡은 선착장을 찾았어요.\n건설 해달과 함께 고치면 낚시터에 갈 수 있어요.", "ICON_FishingDock",
+        ("req_fishing_dock", 39, "바다로 나가는 선착장", "해달이가 바닷가에서 낡은 선착장을 찾았어요.\n건설 해달과 함께 고치면 낚시터에 갈 수 있어요.", "ICON_FishingDock",
             "otter_first", FishingFoundDevelopment, 0, "con_fishing_dock", new string[0],
             new[] { ("otter_fisher", ResidentState.SpecialNpc) },
             -1, "gb_fishing_dock", "선착장을 다 고쳤어요!\n소식을 듣고 낚시꾼 해달이 광장에 찾아왔어요.", 0, "", ""),
-        ("req_assign_fisher", 13, "낚시를 할 해달이 필요해요", "광장에서 새로 찾아온 낚시꾼 해달 첨벙이를 만나 보세요.\n낚시터에 배치하면 낚시를 시작해요.", "ICON_Otter_Cast_Fisher",
+        ("req_assign_fisher", 40, "낚시를 할 해달이 필요해요", "광장에서 새로 찾아온 낚시꾼 해달 첨벙이를 만나 보세요.\n낚시터에 배치하면 낚시를 시작해요.", "ICON_Otter_Cast_Fisher",
             "otter_fisher", FishingDevelopment, 0, "", new string[0],
             new (string, ResidentState)[0],
             -1, "gb_fisher_assigned", "첨벙이가 낚시터에서 일하기 시작해요!\n낚시터에 가서 첫 낚시를 해 봐요.", 0, "", "otter_fisher"),
@@ -475,7 +475,7 @@ public static partial class SettlementSetup
         if (stone != null)
             woodSo.FindProperty("_rarity").objectReferenceValue = new SerializedObject(stone).FindProperty("_rarity").objectReferenceValue;
         woodSo.FindProperty("_isSellable").boolValue = true;
-        woodSo.FindProperty("_sellPrice").intValue = 1;
+        woodSo.FindProperty("_sellPrice").intValue = 3;
         woodSo.FindProperty("_maxStack").intValue = 999;
         woodSo.ApplyModifiedPropertiesWithoutUndo();
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_assign_fisher
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_assign_fisher
-  _order: 13
+  _order: 40
   _category: 0
   _contentVersion: 0
   _title: "\uB09A\uC2DC\uB97C \uD560 \uD574\uB2EC\uC774 \uD544\uC694\uD574\uC694"

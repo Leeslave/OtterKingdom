@@ -391,7 +391,7 @@ public partial class MineMazeTests
         Assert.AreEqual(1, result.Gains.Count);
         Assert.AreEqual(_copper, result.Gains[0].Ore);
         Assert.AreEqual(2, result.Gains[0].Amount);
-        Assert.AreEqual(1, model.Runs);
+        Assert.AreEqual(0, model.Runs);
 
         model.Enter(T0.AddSeconds(200));
         Assert.AreEqual(new Vector2Int(1, 3), model.Position);
@@ -401,13 +401,18 @@ public partial class MineMazeTests
         Assert.AreEqual(MazeMove.Blocked, model.Go(MazeTurn.Forward));
     }
 
-    // 입구에서 앞으로 한 칸 가서 그 층의 하나뿐인 돌(3,3)을 부수고 나옴 (돌이 다시 생긴 뒤에 들어가도록 2분씩)
+    // 1층에서 같은 돌의 재생성을 기다려 3개 채굴 후 나온다. 칸 탐색 수와 무관하다.
     private static MazeRunResult ClearingRun(MineMazeModel model, DateTime start)
     {
         Assert.IsTrue(model.Enter(start));
         model.Go(MazeTurn.Forward);
-        Assert.IsTrue(BreakAhead(model, start).Broken);
-        return model.Exit(start.AddSeconds(10));
+        for (int i = 0; i < 3; i++)
+        {
+            var now = start.AddSeconds(i * 61);
+            model.Tick(now);
+            Assert.IsTrue(BreakAhead(model, now).Broken);
+        }
+        return model.Exit(start.AddSeconds(123));
     }
 
     [Test]
@@ -416,13 +421,13 @@ public partial class MineMazeTests
         var model = Model();
         Assert.IsFalse(ClearingRun(model, T0).MapOtterArrived);
         Assert.IsFalse(model.MapOtter);
-        Assert.IsTrue(ClearingRun(model, T0.AddMinutes(2)).MapOtterArrived);
+        Assert.IsTrue(ClearingRun(model, T0.AddMinutes(4)).MapOtterArrived);
         Assert.IsTrue(model.MapOtter);
-        Assert.IsFalse(ClearingRun(model, T0.AddMinutes(4)).MapOtterArrived);
+        Assert.IsFalse(ClearingRun(model, T0.AddMinutes(8)).MapOtterArrived);
     }
 
     [Test]
-    public void Runs_CountOnlyWhenEveryRockOnTheFloorWasBroken()
+    public void Runs_CountOnlyWhenThreeFirstFloorRocksWereBroken()
     {
         var model = Model();
         Assert.AreEqual(1, model.FloorRockCount);
@@ -462,14 +467,49 @@ public partial class MineMazeTests
     }
 
     [Test]
-    public void MapOtter_ArrivesOnFirstExit_WhenExploredALot()
+    public void MapOtter_DoesNotArriveEarly_WhenExploredALot()
     {
         var model = Model(Config(SmallMap, 2, 3));
         model.Enter(T0);
         model.Go(MazeTurn.Forward);  // (2,3)
         BreakAhead(model, T0);
         model.Go(MazeTurn.Forward);  // (3,3) 부순 돌 자리
-        Assert.IsTrue(model.Exit(T0).MapOtterArrived);
+        Assert.IsFalse(model.Exit(T0).MapOtterArrived);
+    }
+
+    [Test]
+    public void MapOtter_TwoRocksPerVisitCannotAccumulateIntoAQualifiedRun()
+    {
+        var model = Model();
+        for (int run = 0; run < 3; run++)
+        {
+            var start = T0.AddMinutes(run * 4);
+            Assert.IsTrue(model.Enter(start));
+            model.Go(MazeTurn.Forward);
+            BreakAhead(model, start);
+            model.Tick(start.AddSeconds(61));
+            BreakAhead(model, start.AddSeconds(61));
+            var result = model.Exit(start.AddSeconds(62));
+            Assert.AreEqual(2, result.FirstFloorRocks);
+            Assert.IsFalse(result.RunCounted);
+            Assert.AreEqual(0, model.Runs);
+            Assert.IsFalse(model.MapOtter);
+        }
+    }
+
+    [Test]
+    public void MapOtter_SecondFloorRocksDoNotCount()
+    {
+        var config = ThreeFloors();
+        var saved = Stock(0);
+        saved.floorCleared = true;
+        var model = Model(config, saved);
+        Assert.IsTrue(model.SelectFloor(1, T0));
+        var result = ClearingRun(model, T0);
+        Assert.AreEqual(3, result.RocksBroken);
+        Assert.AreEqual(0, result.FirstFloorRocks);
+        Assert.IsFalse(result.RunCounted);
+        Assert.AreEqual(0, model.Runs);
     }
 
     [Test]
@@ -489,7 +529,7 @@ public partial class MineMazeTests
     #region 저장
 
     [Test]
-    public void Save_RoundTrips_RocksChestsVisitedOresOtter()
+    public void Save_RoundTrips_RocksChestsVisitedAndUnqualifiedRuns()
     {
         var config = Config(SmallMap);
         var model = Model(config);
@@ -500,7 +540,7 @@ public partial class MineMazeTests
         model.Go(MazeTurn.Forward);
         model.OpenChestAhead();
         model.Exit(T0.AddSeconds(10));
-        // 두 번째도 돌을 부숴야 다녀온 횟수에 들어감 (1분 지나 다시 생긴 돌)
+        // 각 탐험에서 돌을 하나씩만 캔 기록은 조건 달성에 들어가지 않는다.
         model.Enter(T0.AddSeconds(60));
         model.Go(MazeTurn.Forward);
         BreakAhead(model, T0.AddSeconds(60));
@@ -508,8 +548,8 @@ public partial class MineMazeTests
         var json = JsonUtility.ToJson(model.ToSave());
 
         var loaded = new MineMazeModel(config, JsonUtility.FromJson<MineMazeSave>(json), new System.Random(1), T0.AddSeconds(80));
-        Assert.AreEqual(2, loaded.Runs);
-        Assert.IsTrue(loaded.MapOtter);
+        Assert.AreEqual(0, loaded.Runs);
+        Assert.IsFalse(loaded.MapOtter);
         Assert.AreEqual(4, loaded.Count(_copper));
         Assert.AreEqual(3, loaded.Count(_iron));
         Assert.IsTrue(loaded.IsChestOpened(new Vector2Int(5, 3)));
@@ -519,6 +559,21 @@ public partial class MineMazeTests
         Assert.IsFalse(rock.Present, "아직 1분이 안 됨");
         loaded.Tick(T0.AddSeconds(120));
         Assert.IsTrue(rock.Present);
+    }
+
+    [Test]
+    public void Save_QualifiedRunProgressAndMapOtterSurviveReload()
+    {
+        var config = Config(SmallMap);
+        var model = Model(config);
+        ClearingRun(model, T0);
+        var loaded = Model(config, JsonUtility.FromJson<MineMazeSave>(JsonUtility.ToJson(model.ToSave())));
+        Assert.AreEqual(1, loaded.Runs);
+        Assert.IsFalse(loaded.MapOtter);
+        Assert.IsTrue(ClearingRun(loaded, T0.AddMinutes(4)).MapOtterArrived);
+        var joined = Model(config, JsonUtility.FromJson<MineMazeSave>(JsonUtility.ToJson(loaded.ToSave())));
+        Assert.AreEqual(2, joined.Runs);
+        Assert.IsTrue(joined.MapOtter);
     }
 
     [Test]
