@@ -1,0 +1,1241 @@
+{
+    "mineMaze": {
+        "community": {
+            "started": false,
+            "concernAccepted": false,
+            "supportReceived": false,
+            "treated": false,
+            "sourceRemoved": false,
+            "exported": false
+        },
+        "progressionVersion": 2,
+        "gold": 0,
+        "kingdomLevel": 5,
+        "gateDamage": 0,
+        "floorCleared": false,
+        "minerProgressSeconds": 0.0,
+        "savedUtcTicks": 639285926179430000,
+        "currentFloor": 0,
+        "floors": [
+            {
+                "floor": 0,
+                "gateDamage": 0,
+                "cleared": false,
+                "visited": [
+                    "1,13",
+                    "2,13",
+                    "3,13",
+                    "4,13",
+                    "5,13",
+                    "6,13",
+                    "7,13",
+                    "8,13",
+                    "9,13",
+                    "9,12",
+                    "9,11",
+                    "9,10",
+                    "9,9",
+                    "10,9",
+                    "11,9",
+                    "12,9",
+                    "13,9",
+                    "13,8",
+                    "13,7",
+                    "12,7",
+                    "11,7",
+                    "11,6",
+                    "11,5",
+                    "10,5",
+                    "9,5",
+                    "9,6",
+                    "9,7"
+                ],
+                "openedChests": [],
+                "rocks": [
+                    {
+                        "x": 10,
+                        "y": 1,
+                        "opened": false,
+                        "present": true,
+                        "vein": "ore_stone",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 4,
+                        "y": 5,
+                        "opened": false,
+                        "present": true,
+                        "vein": "ore_shell_copper",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 8,
+                        "y": 7,
+                        "opened": true,
+                        "present": true,
+                        "vein": "ore_shell_copper",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 10,
+                        "y": 9,
+                        "opened": true,
+                        "present": true,
+                        "vein": "ore_stone",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 14,
+                        "y": 11,
+                        "opened": false,
+                        "present": true,
+                        "vein": "ore_shell_copper",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 4,
+                        "y": 13,
+                        "opened": true,
+                        "present": false,
+                        "vein": "",
+                        "hp": 0,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    }
+                ]
+            }
+        ],
+        "ores": [],
+        "discovered": [
+            "ore_shell_copper",
+            "ore_stone",
+            "relic_shell_fossil"
+        ],
+        "pickaxeTier": 0,
+        "runs": 2,
+        "mapOtter": true,
+        "nextEnterUtcTicks": 0,
+        "visited": [
+            "1,13",
+            "2,13",
+            "3,13",
+            "4,13",
+            "5,13",
+            "6,13",
+            "7,13",
+            "8,13",
+            "9,13",
+            "9,12",
+            "9,11",
+            "9,10",
+            "9,9",
+            "10,9",
+            "11,9",
+            "12,9",
+            "13,9",
+            "13,8",
+            "13,7",
+            "12,7",
+            "11,7",
+            "11,6",
+            "11,5",
+            "10,5",
+            "9,5",
+            "9,6",
+            "9,7"
+        ],
+        "rocks": [
+            {
+                "x": 10,
+                "y": 1,
+                "opened": false,
+                "present": true,
+                "vein": "ore_stone",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 4,
+                "y": 5,
+                "opened": false,
+                "present": true,
+                "vein": "ore_shell_copper",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 8,
+                "y": 7,
+                "opened": true,
+                "present": true,
+                "vein": "ore_shell_copper",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 10,
+                "y": 9,
+                "opened": true,
+                "present": true,
+                "vein": "ore_stone",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 14,
+                "y": 11,
+                "opened": false,
+                "present": true,
+                "vein": "ore_shell_copper",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 4,
+                "y": 13,
+                "opened": true,
+                "present": false,
+                "vein": "",
+                "hp": 0,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            }
+        ],
+        "openedChests": [],
+        "rocksBroken": 9
+    },
+    "schemaVersion": 4,
+    "lifetimeSales": 4136,
+    "farmLevel": 1,
+    "rodLevel": 1,
+    "fishing": {
+        "version": 1,
+        "started": true,
+        "gold": 0,
+        "lineLevel": 0,
+        "sinkerLevel": 0,
+        "reelLevel": 0,
+        "totalCaught": 0,
+        "requestsDone": 0,
+        "lastCastDistance": 0.0,
+        "pinDistance": 0.0,
+        "book": [],
+        "bag": [],
+        "requestKind": 2,
+        "requestFishId": "",
+        "requestTarget": 0.699999988079071,
+        "requestProgress": 0.0,
+        "requestReward": 240,
+        "requestSkipCooldown": 0.0
+    },
+    "pickaxeLevel": 2,
+    "fishingActive": false,
+    "miningActive": true,
+    "firstPlantGuideDone": false,
+    "tutorialsDone": [
+        "Plaza",
+        "Build",
+        "FairyShop.Intro",
+        "FairyShop",
+        "Mine",
+        "District.Center.Intro",
+        "District.Center",
+        "Territory.FirstExpansion"
+    ],
+    "lastSaveUtc": "2026-10-26T22:38:29.7670000Z",
+    "plots": [
+        {
+            "plotId": "plot_1",
+            "unlocked": true,
+            "workerId": "otter_001",
+            "slots": [
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                }
+            ]
+        },
+        {
+            "plotId": "plot_2",
+            "unlocked": false,
+            "workerId": "",
+            "slots": [
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                }
+            ]
+        },
+        {
+            "plotId": "plot_3",
+            "unlocked": false,
+            "workerId": "",
+            "slots": [
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                }
+            ]
+        }
+    ],
+    "farmerWork": {
+        "active": false,
+        "plotIndex": 0,
+        "slotIndex": 0,
+        "remainingSec": 0.0
+    },
+    "farmNotice": {
+        "initialized": false,
+        "seedShortage": false,
+        "storageFull": false
+    },
+    "inventory": [
+        {
+            "itemId": "seed_potato",
+            "quantity": 5
+        },
+        {
+            "itemId": "seed_sweet_potato",
+            "quantity": 5
+        },
+        {
+            "itemId": "relic_shell_fossil",
+            "quantity": 1
+        },
+        {
+            "itemId": "ore_shell_copper",
+            "quantity": 9
+        },
+        {
+            "itemId": "fruit_apple",
+            "quantity": 4
+        },
+        {
+            "itemId": "material_wood",
+            "quantity": 57
+        },
+        {
+            "itemId": "ore_stone",
+            "quantity": 99
+        }
+    ],
+    "inventoryCapacity": 16,
+    "seeds": [],
+    "starterSeedsGranted": [
+        "crop_potato",
+        "crop_sweet_potato",
+        "crop_strawberry",
+        "crop_radish",
+        "crop_taro",
+        "crop_zucchini",
+        "crop_raspberry",
+        "crop_beet",
+        "crop_purple_potato",
+        "crop_white_strawberry",
+        "crop_blueberry",
+        "crop_golden_carrot",
+        "crop_golden_potato"
+    ],
+    "offlineFarmSlots": [],
+    "offlineFishingProgressSec": 0.0,
+    "offlineMiningProgressSec": 9.329999923706055,
+    "miningSecToNextFind": 16.213285446166993,
+    "offlineOtterVisitProgressSec": 9.329999923706055,
+    "otters": [
+        {
+            "instanceId": "otter_001",
+            "speciesId": "otter_base",
+            "unlocked": true
+        }
+    ],
+    "currencies": [
+        {
+            "currencyId": "1",
+            "amount": 596
+        },
+        {
+            "currencyId": "Gem",
+            "amount": 76
+        }
+    ],
+    "collection": [
+        {
+            "entryId": "ore_diamond",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "ore_shell_copper",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "ore_stone",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_builder",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_first",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_miner",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_painter",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_receptionist",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_sleepy",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_toy_jjalrang",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_toy_kungkung",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "relic_shell_fossil",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        }
+    ],
+    "quests": [
+        {
+            "questId": "challenge_lv5_gather",
+            "progress": 15,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "challenge_lv6_sales",
+            "progress": 500,
+            "claimed": true,
+            "claimedLevel": 7
+        },
+        {
+            "questId": "challenge_lv7_gather",
+            "progress": 14,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "challenge_maze_rocks_5",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_build_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 1
+        },
+        {
+            "questId": "main_build_2",
+            "progress": 2,
+            "claimed": true,
+            "claimedLevel": 2
+        },
+        {
+            "questId": "main_build_3",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 4
+        },
+        {
+            "questId": "main_collection_1",
+            "progress": 3,
+            "claimed": true,
+            "claimedLevel": 3
+        },
+        {
+            "questId": "main_collection_2",
+            "progress": 6,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_decor_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 4
+        },
+        {
+            "questId": "main_gather_1",
+            "progress": 10,
+            "claimed": true,
+            "claimedLevel": 1
+        },
+        {
+            "questId": "main_gather_2",
+            "progress": 36,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_lv1_chair",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 2
+        },
+        {
+            "questId": "main_lv1_house",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 1
+        },
+        {
+            "questId": "main_lv2_mine_path",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_lv2_visit_mine",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 3
+        },
+        {
+            "questId": "main_lv3_miner",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_mine_1",
+            "progress": 5,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_mine_2",
+            "progress": 20,
+            "claimed": true,
+            "claimedLevel": 7
+        },
+        {
+            "questId": "main_otter_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 3
+        },
+        {
+            "questId": "main_otter_2",
+            "progress": 2,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_rock_1",
+            "progress": 6,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_sales_1",
+            "progress": 10,
+            "claimed": true,
+            "claimedLevel": 2
+        },
+        {
+            "questId": "main_sales_2",
+            "progress": 1000,
+            "claimed": true,
+            "claimedLevel": 7
+        },
+        {
+            "questId": "main_sales_3",
+            "progress": 4000,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_shop_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 4
+        },
+        {
+            "questId": "main_upgrade_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 4
+        },
+        {
+            "questId": "__daily_day",
+            "progress": 739915,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__main_chain",
+            "progress": 5,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__visited:Mine",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__visited:MineMaze",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__visited:Plaza",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Challenge|EarnFromSales||||",
+            "progress": 726,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Challenge|Mine|||Ore|",
+            "progress": 306,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Main|Gather||||",
+            "progress": 9,
+            "claimed": false,
+            "claimedLevel": 0
+        }
+    ],
+    "profile": {
+        "name": "QA",
+        "nameChosen": true,
+        "level": 8,
+        "exp": 30,
+        "portraitOtterId": ""
+    },
+    "settlement": {
+        "version": 5,
+        "initialized": true,
+        "legacyComplete": false,
+        "boardVisited": true,
+        "kingdomStage": 1,
+        "completedRequests": [
+            "req_assign_miner",
+            "req_assign_receptionist",
+            "req_chair",
+            "req_first_house",
+            "req_lamp",
+            "req_mine_path",
+            "req_p4_first_home",
+            "req_p4_lumber_home",
+            "req_p4_trader_home",
+            "req_p4_workshop",
+            "req_prepare_common_space",
+            "req_upgrade_board"
+        ],
+        "unlockedDevelopments": [
+            "admin_otter_promoted",
+            "board_upgraded",
+            "chair",
+            "common_space_ready",
+            "district_first",
+            "district_second",
+            "fairy_arrived",
+            "fairy_invited",
+            "house_1",
+            "island_map_joined",
+            "lamp_built",
+            "maze_first_rock",
+            "maze_first_trip",
+            "maze_rocks_5",
+            "mine_cleared",
+            "mine_maze_found",
+            "mine_path_open",
+            "mine_tidy",
+            "mine_working",
+            "p4_first_home",
+            "p4_lumber_settled",
+            "p4_trader_settled",
+            "p4_workshop_built",
+            "produced_bld_workshop",
+            "receptionist_assigned",
+            "territory_first",
+            "territory_home_ne",
+            "territory_ne_1",
+            "territory_ne_1_c1",
+            "territory_ne_1_c2",
+            "territory_ne_1_c3",
+            "territory_ne_1_cleared",
+            "territory_nw_1",
+            "territory_nw_1_c1",
+            "territory_nw_1_c2",
+            "territory_nw_1_c3",
+            "territory_nw_1_cleared",
+            "territory_nw_1_mission_paid",
+            "territory_tutorial_done",
+            "territory_tutorial_ready"
+        ],
+        "residents": [
+            {
+                "otterId": "otter_first",
+                "state": 2
+            },
+            {
+                "otterId": "otter_sleepy",
+                "state": 2
+            },
+            {
+                "otterId": "otter_miner",
+                "state": 2
+            },
+            {
+                "otterId": "otter_painter",
+                "state": 1
+            },
+            {
+                "otterId": "otter_builder",
+                "state": 3
+            },
+            {
+                "otterId": "otter_receptionist",
+                "state": 3
+            },
+            {
+                "otterId": "otter_toy_jjalrang",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_kungkung",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_duribeon",
+                "state": 0
+            },
+            {
+                "otterId": "otter_toy_degul",
+                "state": 0
+            }
+        ],
+        "guestbookEntries": [
+            "gb_first_arrival",
+            "gb_sleepy_arrival",
+            "gb_first_settle",
+            "gb_chair",
+            "gb_miner_arrival",
+            "gb_mine_open",
+            "gb_painter_arrival",
+            "gb_builder_arrival",
+            "gb_miner_assigned",
+            "gb_receptionist_arrival",
+            "gb_board_upgrade",
+            "gb_receptionist_assigned",
+            "gb_common_space",
+            "gb_lamp",
+            "gb_otter_toy_jjalrang_arrival",
+            "gb_req_p4_first_home",
+            "gb_req_p4_trader_home",
+            "gb_p3_plaza",
+            "gb_otter_toy_kungkung_arrival",
+            "gb_otter_toy_duribeon_arrival",
+            "gb_req_p4_lumber_home",
+            "gb_otter_toy_degul_arrival",
+            "gb_req_p4_workshop"
+        ],
+        "construction": {
+            "requestId": "",
+            "constructionId": "",
+            "startUtcTicks": 0,
+            "endUtcTicks": 0,
+            "waitingForWorker": false
+        },
+        "gatherCooldowns": [],
+        "flags": [
+            "cleared_mine_rock_01",
+            "cleared_mine_rock_02",
+            "cleared_mine_tree_01",
+            "cleared_mine_tree_02",
+            "decor_prop_Bush_01",
+            "decor_prop_Bush_02",
+            "decor_prop_Bush_03",
+            "decor_prop_Bush_04",
+            "decor_prop_Bush_05",
+            "decor_prop_Log_01",
+            "decor_prop_Stump_01",
+            "hint_mine_workers",
+            "hint_obstacle",
+            "hint_rock",
+            "hint_territory_northeast",
+            "hint_tree",
+            "hint_weak_spot"
+        ],
+        "tasks": [],
+        "completedTasks": [
+            "task_common_space",
+            "task_mine_tidy",
+            "task_territory_ne_1_1",
+            "task_territory_nw_1_1",
+            "task_territory_nw_1_2",
+            "task_territory_nw_1_3"
+        ],
+        "specialists": [
+            {
+                "otterId": "otter_miner",
+                "state": 3,
+                "regionId": "region_mine",
+                "workingSinceUtcTicks": 639285906854830000
+            }
+        ],
+        "metOtters": [
+            "otter_builder",
+            "otter_first",
+            "otter_miner",
+            "otter_painter",
+            "otter_receptionist",
+            "otter_sleepy",
+            "otter_toy_degul",
+            "otter_toy_duribeon",
+            "otter_toy_jjalrang",
+            "otter_toy_kungkung"
+        ],
+        "roles": [
+            {
+                "roleId": "role_board_manager",
+                "otterId": "otter_receptionist",
+                "stationId": "station_board"
+            }
+        ],
+        "projects": [
+            {
+                "projectId": "territory_ne_1_mission",
+                "cycle": 0,
+                "gold": 0,
+                "items": [],
+                "choice": "",
+                "completed": true
+            },
+            {
+                "projectId": "territory_nw_1_mission",
+                "cycle": 0,
+                "gold": 980,
+                "items": [
+                    {
+                        "itemId": "material_wood",
+                        "quantity": 28
+                    },
+                    {
+                        "itemId": "ore_stone",
+                        "quantity": 11
+                    }
+                ],
+                "choice": "",
+                "completed": true
+            }
+        ],
+        "rewardKeys": [
+            "territory_ne_1_mission#0",
+            "territory_nw_1_mission#0"
+        ],
+        "houses": [
+            {
+                "instanceId": "house_bld_12",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_12",
+                "residentId": "otter_toy_jjalrang"
+            },
+            {
+                "instanceId": "house_bld_13",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_13",
+                "residentId": "otter_sleepy"
+            },
+            {
+                "instanceId": "house_bld_14",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_14",
+                "residentId": "otter_toy_kungkung"
+            }
+        ],
+        "lifeRequests": [],
+        "lifeRequestSerial": 0,
+        "lifeRequestsDone": 0,
+        "toyVisitDueUtcTicks": 0,
+        "toyVisitSerial": 0,
+        "buildings": [
+            {
+                "instanceId": 12,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639285910917600000,
+                "endUtcTicks": 639285912717600000,
+                "built": true
+            },
+            {
+                "instanceId": 13,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639286499059240000,
+                "endUtcTicks": 639286500859240000,
+                "built": true
+            },
+            {
+                "instanceId": 14,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639286502373420000,
+                "endUtcTicks": 639286504173420000,
+                "built": true
+            },
+            {
+                "instanceId": 15,
+                "buildingId": "bld_workshop",
+                "startUtcTicks": 639286507539080000,
+                "endUtcTicks": 639286508439080000,
+                "built": true
+            }
+        ],
+        "districts": [
+            {
+                "blockId": "district_center",
+                "type": 2
+            },
+            {
+                "blockId": "district_northeast",
+                "type": 4
+            }
+        ],
+        "relocation": {
+            "orderSerial": 0,
+            "orderType": 0,
+            "orderIds": [],
+            "ordersDone": 0,
+            "moves": []
+        },
+        "farm": {
+            "fields": [],
+            "crates": [],
+            "migrated": false,
+            "cartTimer": 0.0,
+            "lastUtcTicks": 0
+        },
+        "production": {
+            "lastUtcTicks": 639286511084020000,
+            "progress": [
+                {
+                    "buildingId": "bld_workshop",
+                    "amount": 0.40823283791542055
+                }
+            ]
+        },
+        "scouting": {
+            "version": 1,
+            "discovered": [
+                "territory_nw_1"
+            ],
+            "reports": [
+                "territory_nw_1"
+            ],
+            "job": {
+                "regionId": "",
+                "startUtcTicks": 0,
+                "endUtcTicks": 0,
+                "workers": []
+            }
+        }
+    },
+    "decor": {
+        "boards": [
+            {
+                "boardId": "farm",
+                "placedOutOfBag": true,
+                "placed": [],
+                "unlockedRegions": [
+                    "farm_base"
+                ]
+            },
+            {
+                "boardId": "fishing",
+                "placedOutOfBag": true,
+                "placed": [],
+                "unlockedRegions": [
+                    "fishing_base"
+                ]
+            },
+            {
+                "boardId": "mine",
+                "placedOutOfBag": true,
+                "placed": [],
+                "unlockedRegions": [
+                    "mine_base"
+                ]
+            },
+            {
+                "boardId": "plaza",
+                "placedOutOfBag": true,
+                "placed": [
+                    {
+                        "instanceId": 1,
+                        "itemId": "furniture_bush",
+                        "x": 10,
+                        "y": 32,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 2,
+                        "itemId": "furniture_stump",
+                        "x": 5,
+                        "y": 7,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 3,
+                        "itemId": "furniture_bush",
+                        "x": 0,
+                        "y": 4,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 4,
+                        "itemId": "furniture_log",
+                        "x": 4,
+                        "y": 9,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 5,
+                        "itemId": "furniture_bush",
+                        "x": 14,
+                        "y": 32,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 6,
+                        "itemId": "furniture_bush",
+                        "x": 23,
+                        "y": 14,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 7,
+                        "itemId": "furniture_bush",
+                        "x": 0,
+                        "y": 22,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 8,
+                        "itemId": "con_house_1",
+                        "x": -30,
+                        "y": 54,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 9,
+                        "itemId": "con_chair",
+                        "x": -33,
+                        "y": 56,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 10,
+                        "itemId": "furniture_bush",
+                        "x": -27,
+                        "y": 50,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 11,
+                        "itemId": "con_lamp",
+                        "x": -18,
+                        "y": 50,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 12,
+                        "itemId": "bld_small_house",
+                        "x": -21,
+                        "y": 52,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 13,
+                        "itemId": "bld_small_house",
+                        "x": -28,
+                        "y": 41,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 14,
+                        "itemId": "bld_small_house",
+                        "x": -20,
+                        "y": 46,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 15,
+                        "itemId": "bld_workshop",
+                        "x": -4,
+                        "y": 53,
+                        "rotation": 0
+                    }
+                ],
+                "unlockedRegions": [
+                    "plaza_base"
+                ]
+            }
+        ]
+    },
+    "gacha": {
+        "standardSinceEpic": 0,
+        "standardSinceRare": 0,
+        "pickupSinceEpic": 0,
+        "pickupSinceRare": 0,
+        "pickupGuaranteed": false,
+        "pointsBannerId": "",
+        "points": 0,
+        "goldPullDay": 0,
+        "goldSinceEpic": 0,
+        "goldSinceRare": 0,
+        "welcomeGiftGiven": false,
+        "starterOtterGiven": false,
+        "totalPulls": 0,
+        "seenBanners": [],
+        "specialOtters": [],
+        "formation": [],
+        "accessories": []
+    }
+}
