@@ -1,0 +1,2358 @@
+{
+    "mineMaze": {
+        "community": {
+            "started": false,
+            "concernAccepted": false,
+            "supportReceived": false,
+            "treated": false,
+            "sourceRemoved": false,
+            "exported": false
+        },
+        "progressionVersion": 2,
+        "gold": 0,
+        "kingdomLevel": 13,
+        "gateDamage": 0,
+        "floorCleared": false,
+        "minerProgressSeconds": 0.0,
+        "savedUtcTicks": 639291758774470000,
+        "currentFloor": 0,
+        "floors": [
+            {
+                "floor": 0,
+                "gateDamage": 0,
+                "cleared": false,
+                "visited": [
+                    "1,13",
+                    "2,13",
+                    "3,13",
+                    "4,13",
+                    "5,13",
+                    "6,13",
+                    "7,13",
+                    "8,13",
+                    "9,13",
+                    "9,12",
+                    "9,11",
+                    "9,10",
+                    "9,9",
+                    "10,9",
+                    "11,9",
+                    "12,9",
+                    "13,9",
+                    "13,8",
+                    "13,7",
+                    "12,7",
+                    "11,7",
+                    "11,6",
+                    "11,5",
+                    "10,5",
+                    "9,5",
+                    "9,6",
+                    "9,7"
+                ],
+                "openedChests": [],
+                "rocks": [
+                    {
+                        "x": 10,
+                        "y": 1,
+                        "opened": false,
+                        "present": true,
+                        "vein": "ore_stone",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 4,
+                        "y": 5,
+                        "opened": false,
+                        "present": true,
+                        "vein": "ore_shell_copper",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 8,
+                        "y": 7,
+                        "opened": true,
+                        "present": true,
+                        "vein": "ore_shell_copper",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 10,
+                        "y": 9,
+                        "opened": true,
+                        "present": true,
+                        "vein": "ore_stone",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 14,
+                        "y": 11,
+                        "opened": false,
+                        "present": true,
+                        "vein": "ore_shell_copper",
+                        "hp": 4,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 0
+                    },
+                    {
+                        "x": 4,
+                        "y": 13,
+                        "opened": true,
+                        "present": false,
+                        "vein": "",
+                        "hp": 0,
+                        "maxHp": 4,
+                        "shiny": false,
+                        "respawnUtcTicks": 639291759116530000
+                    }
+                ]
+            }
+        ],
+        "ores": [],
+        "discovered": [
+            "ore_shell_copper",
+            "ore_stone",
+            "relic_shell_fossil",
+            "ore_wave_iron"
+        ],
+        "pickaxeTier": 0,
+        "runs": 2,
+        "mapOtter": true,
+        "nextEnterUtcTicks": 639291760494190000,
+        "visited": [
+            "1,13",
+            "2,13",
+            "3,13",
+            "4,13",
+            "5,13",
+            "6,13",
+            "7,13",
+            "8,13",
+            "9,13",
+            "9,12",
+            "9,11",
+            "9,10",
+            "9,9",
+            "10,9",
+            "11,9",
+            "12,9",
+            "13,9",
+            "13,8",
+            "13,7",
+            "12,7",
+            "11,7",
+            "11,6",
+            "11,5",
+            "10,5",
+            "9,5",
+            "9,6",
+            "9,7"
+        ],
+        "rocks": [
+            {
+                "x": 10,
+                "y": 1,
+                "opened": false,
+                "present": true,
+                "vein": "ore_stone",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 4,
+                "y": 5,
+                "opened": false,
+                "present": true,
+                "vein": "ore_shell_copper",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 8,
+                "y": 7,
+                "opened": true,
+                "present": true,
+                "vein": "ore_shell_copper",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 10,
+                "y": 9,
+                "opened": true,
+                "present": true,
+                "vein": "ore_stone",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 14,
+                "y": 11,
+                "opened": false,
+                "present": true,
+                "vein": "ore_shell_copper",
+                "hp": 4,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 0
+            },
+            {
+                "x": 4,
+                "y": 13,
+                "opened": true,
+                "present": false,
+                "vein": "",
+                "hp": 0,
+                "maxHp": 4,
+                "shiny": false,
+                "respawnUtcTicks": 639291759116530000
+            }
+        ],
+        "openedChests": [],
+        "rocksBroken": 10
+    },
+    "schemaVersion": 4,
+    "lifetimeSales": 32879,
+    "farmLevel": 1,
+    "rodLevel": 1,
+    "fishing": {
+        "version": 1,
+        "started": true,
+        "gold": 0,
+        "lineLevel": 0,
+        "sinkerLevel": 0,
+        "reelLevel": 0,
+        "totalCaught": 4,
+        "requestsDone": 0,
+        "lastCastDistance": 10.744094848632813,
+        "pinDistance": 0.0,
+        "book": [
+            {
+                "fishId": "fish_sardine",
+                "count": 2,
+                "bestWeight": 0.18651247024536134
+            },
+            {
+                "fishId": "fish_clownfish",
+                "count": 1,
+                "bestWeight": 0.11169030517339707
+            },
+            {
+                "fishId": "fish_anchovy",
+                "count": 1,
+                "bestWeight": 0.03428464010357857
+            }
+        ],
+        "bag": [],
+        "requestKind": 2,
+        "requestFishId": "",
+        "requestTarget": 0.699999988079071,
+        "requestProgress": 0.0,
+        "requestReward": 240,
+        "requestSkipCooldown": 0.0
+    },
+    "pickaxeLevel": 2,
+    "fishingActive": false,
+    "miningActive": true,
+    "firstPlantGuideDone": false,
+    "tutorialsDone": [
+        "Plaza",
+        "Build",
+        "FairyShop.Intro",
+        "FairyShop",
+        "Mine",
+        "District.Center.Intro",
+        "District.Center",
+        "Territory.FirstExpansion",
+        "Farm.FirstFieldPlace",
+        "Farm.FirstFieldPlant",
+        "Fishing"
+    ],
+    "lastSaveUtc": "2026-11-02T04:30:25.5750000Z",
+    "plots": [
+        {
+            "plotId": "plot_1",
+            "unlocked": true,
+            "workerId": "otter_001",
+            "slots": [
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                }
+            ]
+        },
+        {
+            "plotId": "plot_2",
+            "unlocked": false,
+            "workerId": "",
+            "slots": [
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                }
+            ]
+        },
+        {
+            "plotId": "plot_3",
+            "unlocked": false,
+            "workerId": "",
+            "slots": [
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                },
+                {
+                    "cropId": "",
+                    "state": 0,
+                    "remainingSec": 0.0,
+                    "durationSec": 0.0,
+                    "waitingSeedCropId": "",
+                    "locked": false
+                }
+            ]
+        }
+    ],
+    "farmerWork": {
+        "active": false,
+        "plotIndex": 0,
+        "slotIndex": 0,
+        "remainingSec": 0.0
+    },
+    "farmNotice": {
+        "initialized": false,
+        "seedShortage": false,
+        "storageFull": false
+    },
+    "inventory": [
+        {
+            "itemId": "seed_sweet_potato",
+            "quantity": 5
+        },
+        {
+            "itemId": "relic_shell_fossil",
+            "quantity": 1
+        },
+        {
+            "itemId": "ore_shell_copper",
+            "quantity": 11
+        },
+        {
+            "itemId": "ore_wave_iron",
+            "quantity": 1
+        },
+        {
+            "itemId": "crop_potato",
+            "quantity": 119
+        },
+        {
+            "itemId": "fish_clownfish",
+            "quantity": 1
+        },
+        {
+            "itemId": "fish_sardine",
+            "quantity": 2
+        },
+        {
+            "itemId": "fish_anchovy",
+            "quantity": 1
+        },
+        {
+            "itemId": "ore_diamond",
+            "quantity": 12
+        },
+        {
+            "itemId": "crop_carrot",
+            "quantity": 329
+        },
+        {
+            "itemId": "material_wood",
+            "quantity": 401
+        },
+        {
+            "itemId": "ore_stone",
+            "quantity": 38
+        }
+    ],
+    "inventoryCapacity": 16,
+    "seeds": [],
+    "starterSeedsGranted": [
+        "crop_potato",
+        "crop_sweet_potato",
+        "crop_strawberry",
+        "crop_radish",
+        "crop_taro",
+        "crop_zucchini",
+        "crop_raspberry",
+        "crop_beet",
+        "crop_purple_potato",
+        "crop_white_strawberry",
+        "crop_blueberry",
+        "crop_golden_carrot",
+        "crop_golden_potato"
+    ],
+    "offlineFarmSlots": [],
+    "offlineFishingProgressSec": 0.0,
+    "offlineMiningProgressSec": 9.329999923706055,
+    "miningSecToNextFind": 15.685367584228516,
+    "offlineOtterVisitProgressSec": 9.329999923706055,
+    "otters": [
+        {
+            "instanceId": "otter_001",
+            "speciesId": "otter_base",
+            "unlocked": true
+        }
+    ],
+    "currencies": [
+        {
+            "currencyId": "1",
+            "amount": 4629
+        },
+        {
+            "currencyId": "Gem",
+            "amount": 251
+        }
+    ],
+    "collection": [
+        {
+            "entryId": "crop_carrot",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "crop_potato",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "fish_anchovy",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "fish_clownfish",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "fish_sardine",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "ore_diamond",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "ore_shell_copper",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "ore_stone",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "ore_wave_iron",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_builder",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_farmer",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_first",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_fisher",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_miner",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_p3_neighbor",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_painter",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_receptionist",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_sleepy",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_toy_bodeul",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_toy_degul",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_toy_jjalrang",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_toy_kongkong",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_toy_kungkung",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "otter_toy_yeongcha",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        },
+        {
+            "entryId": "relic_shell_fossil",
+            "state": 2,
+            "storyWatched": false,
+            "companion": "",
+            "date": ""
+        }
+    ],
+    "quests": [
+        {
+            "questId": "challenge_lv10_harvest",
+            "progress": 20,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "challenge_lv5_gather",
+            "progress": 15,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "challenge_lv6_sales",
+            "progress": 500,
+            "claimed": true,
+            "claimedLevel": 7
+        },
+        {
+            "questId": "challenge_lv7_gather",
+            "progress": 28,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "challenge_lv8_decor",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "challenge_lv9_sales",
+            "progress": 1500,
+            "claimed": true,
+            "claimedLevel": 10
+        },
+        {
+            "questId": "challenge_maze_rocks_5",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "daily_catch",
+            "progress": 3,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "daily_harvest",
+            "progress": 30,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "daily_sales",
+            "progress": 1000,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_build_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 1
+        },
+        {
+            "questId": "main_build_2",
+            "progress": 2,
+            "claimed": true,
+            "claimedLevel": 2
+        },
+        {
+            "questId": "main_build_3",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 4
+        },
+        {
+            "questId": "main_catch_1",
+            "progress": 2,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_collection_1",
+            "progress": 3,
+            "claimed": true,
+            "claimedLevel": 3
+        },
+        {
+            "questId": "main_collection_2",
+            "progress": 6,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_decor_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 4
+        },
+        {
+            "questId": "main_decor_2",
+            "progress": 3,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_decor_3",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_gather_1",
+            "progress": 10,
+            "claimed": true,
+            "claimedLevel": 1
+        },
+        {
+            "questId": "main_gather_2",
+            "progress": 40,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_harvest_1",
+            "progress": 5,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_harvest_2",
+            "progress": 20,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_harvest_3",
+            "progress": 60,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_harvest_4",
+            "progress": 150,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_harvest_5",
+            "progress": 186,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_lv10_agri",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 14
+        },
+        {
+            "questId": "main_lv10_crop_sale",
+            "progress": 1000,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_lv10_decor",
+            "progress": 2,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv10_friend_home",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_lv10_gathering",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_lv10_sales",
+            "progress": 10000,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv10_upgrade",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv11_mine",
+            "progress": 200,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv11_trader_home",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_lv12_sales",
+            "progress": 20123,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_lv13_decor",
+            "progress": 3,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv13_granary",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 14
+        },
+        {
+            "questId": "main_lv13_mine",
+            "progress": 400,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_lv14_harvest",
+            "progress": 278,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_lv1_chair",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 2
+        },
+        {
+            "questId": "main_lv1_house",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 1
+        },
+        {
+            "questId": "main_lv2_mine_path",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_lv2_visit_mine",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 3
+        },
+        {
+            "questId": "main_lv3_miner",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_lv3_neighbor",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 8
+        },
+        {
+            "questId": "main_lv4_fairy",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 8
+        },
+        {
+            "questId": "main_lv4_farmer",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 14
+        },
+        {
+            "questId": "main_lv4_farmland",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 14
+        },
+        {
+            "questId": "main_lv4_mine",
+            "progress": 20,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv4_sales",
+            "progress": 300,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv5_board",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv5_maze_enter",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv5_maze_found",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv5_mine",
+            "progress": 60,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_lv6_clerk",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv6_common",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv6_guild",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv6_shop",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv7_district",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_lv7_mine",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv7_supply",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv7_town_hall",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv8_district",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv8_sales",
+            "progress": 3000,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv8_territory",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv9_daily",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 14
+        },
+        {
+            "questId": "main_lv9_harvest",
+            "progress": 300,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_lv9_mine",
+            "progress": 150,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "main_lv9_neighbor",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_lv9_welcome",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 14
+        },
+        {
+            "questId": "main_mine_1",
+            "progress": 5,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_mine_2",
+            "progress": 20,
+            "claimed": true,
+            "claimedLevel": 7
+        },
+        {
+            "questId": "main_otter_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 3
+        },
+        {
+            "questId": "main_otter_2",
+            "progress": 2,
+            "claimed": true,
+            "claimedLevel": 8
+        },
+        {
+            "questId": "main_rock_1",
+            "progress": 6,
+            "claimed": true,
+            "claimedLevel": 5
+        },
+        {
+            "questId": "main_sales_1",
+            "progress": 10,
+            "claimed": true,
+            "claimedLevel": 2
+        },
+        {
+            "questId": "main_sales_2",
+            "progress": 1000,
+            "claimed": true,
+            "claimedLevel": 7
+        },
+        {
+            "questId": "main_sales_3",
+            "progress": 4000,
+            "claimed": true,
+            "claimedLevel": 8
+        },
+        {
+            "questId": "main_sales_4",
+            "progress": 15000,
+            "claimed": true,
+            "claimedLevel": 12
+        },
+        {
+            "questId": "main_sales_5",
+            "progress": 13921,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "main_shop_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 4
+        },
+        {
+            "questId": "main_shop_2",
+            "progress": 5,
+            "claimed": true,
+            "claimedLevel": 13
+        },
+        {
+            "questId": "main_upgrade_1",
+            "progress": 1,
+            "claimed": true,
+            "claimedLevel": 4
+        },
+        {
+            "questId": "quest_first_carrots",
+            "progress": 3,
+            "claimed": true,
+            "claimedLevel": 15
+        },
+        {
+            "questId": "__daily_day",
+            "progress": 739921,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__main_chain",
+            "progress": 5,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__visited:Fishing",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__visited:Mine",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__visited:MineMaze",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__visited:Plaza",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Challenge|Catch|||Fish|",
+            "progress": 2,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Challenge|Gather||||",
+            "progress": 1,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Challenge|Mine|||Ore|",
+            "progress": 336,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Challenge|ShopPurchase||||",
+            "progress": 7,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Main|EarnFromSales||||",
+            "progress": 1694,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Main|Gather||||",
+            "progress": 9,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Main|Harvest||당근||",
+            "progress": 89,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Main|Mine|||Ore|",
+            "progress": 799,
+            "claimed": false,
+            "claimedLevel": 0
+        },
+        {
+            "questId": "__carry:Main|ShopPurchase||||",
+            "progress": 9,
+            "claimed": false,
+            "claimedLevel": 0
+        }
+    ],
+    "profile": {
+        "name": "QA",
+        "nameChosen": true,
+        "level": 16,
+        "exp": 135,
+        "portraitOtterId": ""
+    },
+    "settlement": {
+        "version": 5,
+        "initialized": true,
+        "legacyComplete": false,
+        "boardVisited": true,
+        "kingdomStage": 3,
+        "completedRequests": [
+            "req_assign_farmer",
+            "req_assign_fisher",
+            "req_assign_miner",
+            "req_assign_receptionist",
+            "req_chair",
+            "req_farmland",
+            "req_first_house",
+            "req_fishing_dock",
+            "req_lamp",
+            "req_mine_path",
+            "req_neighbor_house",
+            "req_p3_flowerpot",
+            "req_p3_house",
+            "req_p3_supply_box",
+            "req_p3_table",
+            "req_p4_farmer_home",
+            "req_p4_first_home",
+            "req_p4_granary",
+            "req_p4_lumber_home",
+            "req_p4_miner_home",
+            "req_p4_quarry",
+            "req_p4_shop",
+            "req_p4_trader_home",
+            "req_p4_workshop",
+            "req_p5_builder_home",
+            "req_p5_workyard",
+            "req_prepare_common_space",
+            "req_upgrade_board"
+        ],
+        "unlockedDevelopments": [
+            "admin_otter_promoted",
+            "board_upgraded",
+            "chair",
+            "common_space_ready",
+            "district_first",
+            "district_second",
+            "equipment_sprinkler",
+            "fairy_arrived",
+            "fairy_invited",
+            "farm_crate_collected",
+            "farm_discovered",
+            "farm_path_open",
+            "farm_path_placed",
+            "farm_sprinkler_placed",
+            "farm_working",
+            "farmland",
+            "first_gathering_complete",
+            "fishing_dock",
+            "fishing_event_ready",
+            "fishing_found",
+            "fishing_working",
+            "house_1",
+            "house_2",
+            "island_map_joined",
+            "lamp_built",
+            "maze_first_rock",
+            "maze_first_trip",
+            "maze_rocks_5",
+            "met_painter",
+            "mine_cleared",
+            "mine_maze_found",
+            "mine_path_open",
+            "mine_tidy",
+            "mine_working",
+            "p3_flowerpot_built",
+            "p3_gathering_01_paid",
+            "p3_hall_decor_1",
+            "p3_house_built",
+            "p3_neighbor_01_paid",
+            "p3_neighbor_settled",
+            "p3_supply_01_paid",
+            "p3_supply_box_built",
+            "p3_table_built",
+            "p3_village_life_paid",
+            "p3_welcome_01_paid",
+            "p4_farmer_settled",
+            "p4_first_home",
+            "p4_granary_built",
+            "p4_lumber_settled",
+            "p4_miner_settled",
+            "p4_quarry_built",
+            "p4_shop_built",
+            "p4_trader_settled",
+            "p4_workshop_built",
+            "p5_builder_settled",
+            "p5_workyard_built",
+            "produced_bld_quarry",
+            "produced_bld_workshop",
+            "receptionist_assigned",
+            "relocation_before_taken",
+            "supply_ready",
+            "territory_first",
+            "territory_home_ne",
+            "territory_ne_1",
+            "territory_ne_1_c1",
+            "territory_ne_1_c2",
+            "territory_ne_1_c3",
+            "territory_ne_1_cleared",
+            "territory_nw_1",
+            "territory_nw_1_c1",
+            "territory_nw_1_c2",
+            "territory_nw_1_c3",
+            "territory_nw_1_cleared",
+            "territory_nw_1_mission_paid",
+            "territory_s_1",
+            "territory_s_1_c1",
+            "territory_s_1_c2",
+            "territory_s_1_c3",
+            "territory_s_1_cleared",
+            "territory_s_1_mission_paid",
+            "territory_tutorial_done",
+            "territory_tutorial_ready",
+            "territory_w_1",
+            "territory_w_1_c1",
+            "territory_w_1_c2",
+            "territory_w_1_c3",
+            "territory_w_1_cleared",
+            "territory_w_1_mission_paid",
+            "welcome_corner_ready"
+        ],
+        "residents": [
+            {
+                "otterId": "otter_first",
+                "state": 2
+            },
+            {
+                "otterId": "otter_sleepy",
+                "state": 2
+            },
+            {
+                "otterId": "otter_miner",
+                "state": 2
+            },
+            {
+                "otterId": "otter_painter",
+                "state": 2
+            },
+            {
+                "otterId": "otter_builder",
+                "state": 2
+            },
+            {
+                "otterId": "otter_receptionist",
+                "state": 3
+            },
+            {
+                "otterId": "otter_toy_jjalrang",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_kungkung",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_duribeon",
+                "state": 0
+            },
+            {
+                "otterId": "otter_toy_degul",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_kongkong",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_jaejal",
+                "state": 0
+            },
+            {
+                "otterId": "otter_farmer",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_bodeul",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_yeongcha",
+                "state": 2
+            },
+            {
+                "otterId": "otter_p3_neighbor",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_sallang",
+                "state": 0
+            },
+            {
+                "otterId": "otter_toy_kkomkkom",
+                "state": 0
+            },
+            {
+                "otterId": "otter_fisher",
+                "state": 2
+            },
+            {
+                "otterId": "otter_toy_pongdang",
+                "state": 0
+            }
+        ],
+        "guestbookEntries": [
+            "gb_first_arrival",
+            "gb_sleepy_arrival",
+            "gb_first_settle",
+            "gb_chair",
+            "gb_miner_arrival",
+            "gb_mine_open",
+            "gb_painter_arrival",
+            "gb_builder_arrival",
+            "gb_miner_assigned",
+            "gb_receptionist_arrival",
+            "gb_board_upgrade",
+            "gb_receptionist_assigned",
+            "gb_common_space",
+            "gb_lamp",
+            "gb_otter_toy_jjalrang_arrival",
+            "gb_req_p4_first_home",
+            "gb_req_p4_trader_home",
+            "gb_p3_plaza",
+            "gb_otter_toy_kungkung_arrival",
+            "gb_otter_toy_duribeon_arrival",
+            "gb_req_p4_lumber_home",
+            "gb_otter_toy_degul_arrival",
+            "gb_req_p4_workshop",
+            "gb_p3_supply",
+            "gb_req_p4_miner_home",
+            "gb_neighbor_settle",
+            "gb_req_p4_quarry",
+            "gb_otter_toy_kongkong_arrival",
+            "gb_req_p4_shop",
+            "gb_otter_toy_jaejal_arrival",
+            "gb_farmer_arrival",
+            "gb_farmland",
+            "gb_req_p4_granary",
+            "gb_farmer_assigned",
+            "gb_otter_toy_bodeul_arrival",
+            "gb_otter_toy_yeongcha_arrival",
+            "gb_req_p4_farmer_home",
+            "gb_req_p5_builder_home",
+            "gb_p3_neighbor_arrival",
+            "gb_p3_neighbor",
+            "gb_p3_welcome",
+            "gb_req_p5_workyard",
+            "gb_p3_gathering",
+            "gb_otter_toy_sallang_arrival",
+            "gb_otter_toy_kkomkkom_arrival",
+            "gb_fisher_arrival",
+            "gb_fishing_dock",
+            "gb_fisher_assigned",
+            "gb_otter_toy_pongdang_arrival"
+        ],
+        "construction": {
+            "requestId": "",
+            "constructionId": "",
+            "startUtcTicks": 0,
+            "endUtcTicks": 0,
+            "waitingForWorker": false
+        },
+        "gatherCooldowns": [
+            {
+                "pointId": "branch_01",
+                "readyUtcTicks": 639291890692840000
+            },
+            {
+                "pointId": "rock_02",
+                "readyUtcTicks": 639291899517880000
+            },
+            {
+                "pointId": "tree_01",
+                "readyUtcTicks": 639291890903840000
+            },
+            {
+                "pointId": "tree_02",
+                "readyUtcTicks": 639291890696330000
+            }
+        ],
+        "flags": [
+            "cleared_mine_rock_01",
+            "cleared_mine_rock_02",
+            "cleared_mine_tree_01",
+            "cleared_mine_tree_02",
+            "decor_prop_Bush_01",
+            "decor_prop_Bush_02",
+            "decor_prop_Bush_03",
+            "decor_prop_Bush_04",
+            "decor_prop_Bush_05",
+            "decor_prop_Log_01",
+            "decor_prop_Picnic_01",
+            "decor_prop_Stump_01",
+            "gathering_held_p3_gathering_01",
+            "gathering_viewed",
+            "hint_mine_workers",
+            "hint_obstacle",
+            "hint_rock",
+            "hint_territory_northeast",
+            "hint_tree",
+            "hint_weak_spot"
+        ],
+        "tasks": [],
+        "completedTasks": [
+            "task_common_space",
+            "task_mine_tidy",
+            "task_territory_ne_1_1",
+            "task_territory_nw_1_1",
+            "task_territory_nw_1_2",
+            "task_territory_nw_1_3",
+            "task_territory_s_1_1",
+            "task_territory_s_1_2",
+            "task_territory_s_1_3",
+            "task_territory_w_1_1",
+            "task_territory_w_1_2",
+            "task_territory_w_1_3"
+        ],
+        "specialists": [
+            {
+                "otterId": "otter_farmer",
+                "state": 3,
+                "regionId": "region_farm",
+                "workingSinceUtcTicks": 639291560369750000
+            },
+            {
+                "otterId": "otter_fisher",
+                "state": 3,
+                "regionId": "region_fishing",
+                "workingSinceUtcTicks": 639291902407810000
+            },
+            {
+                "otterId": "otter_miner",
+                "state": 3,
+                "regionId": "region_mine",
+                "workingSinceUtcTicks": 639285906854830000
+            }
+        ],
+        "metOtters": [
+            "otter_builder",
+            "otter_farmer",
+            "otter_first",
+            "otter_fisher",
+            "otter_miner",
+            "otter_p3_neighbor",
+            "otter_painter",
+            "otter_receptionist",
+            "otter_sleepy",
+            "otter_toy_bodeul",
+            "otter_toy_degul",
+            "otter_toy_duribeon",
+            "otter_toy_jaejal",
+            "otter_toy_jjalrang",
+            "otter_toy_kkomkkom",
+            "otter_toy_kongkong",
+            "otter_toy_kungkung",
+            "otter_toy_pongdang",
+            "otter_toy_sallang",
+            "otter_toy_yeongcha"
+        ],
+        "roles": [
+            {
+                "roleId": "role_board_manager",
+                "otterId": "otter_receptionist",
+                "stationId": "station_board"
+            }
+        ],
+        "projects": [
+            {
+                "projectId": "p3_gathering_01",
+                "cycle": 0,
+                "gold": 1200,
+                "items": [
+                    {
+                        "itemId": "crop_carrot",
+                        "quantity": 12
+                    },
+                    {
+                        "itemId": "material_wood",
+                        "quantity": 8
+                    }
+                ],
+                "choice": "",
+                "completed": true
+            },
+            {
+                "projectId": "p3_neighbor_01",
+                "cycle": 0,
+                "gold": 3200,
+                "items": [
+                    {
+                        "itemId": "material_wood",
+                        "quantity": 24
+                    },
+                    {
+                        "itemId": "ore_stone",
+                        "quantity": 16
+                    }
+                ],
+                "choice": "",
+                "completed": true
+            },
+            {
+                "projectId": "p3_supply_01",
+                "cycle": 0,
+                "gold": 1200,
+                "items": [
+                    {
+                        "itemId": "material_wood",
+                        "quantity": 12
+                    },
+                    {
+                        "itemId": "ore_stone",
+                        "quantity": 6
+                    }
+                ],
+                "choice": "",
+                "completed": true
+            },
+            {
+                "projectId": "p3_village_life",
+                "cycle": 5,
+                "gold": 2000,
+                "items": [
+                    {
+                        "itemId": "ore_stone",
+                        "quantity": 15
+                    }
+                ],
+                "choice": "",
+                "completed": false
+            },
+            {
+                "projectId": "p3_welcome_01",
+                "cycle": 0,
+                "gold": 600,
+                "items": [
+                    {
+                        "itemId": "material_wood",
+                        "quantity": 6
+                    }
+                ],
+                "choice": "req_p3_flowerpot",
+                "completed": true
+            },
+            {
+                "projectId": "territory_ne_1_mission",
+                "cycle": 0,
+                "gold": 0,
+                "items": [],
+                "choice": "",
+                "completed": true
+            },
+            {
+                "projectId": "territory_nw_1_mission",
+                "cycle": 0,
+                "gold": 980,
+                "items": [
+                    {
+                        "itemId": "material_wood",
+                        "quantity": 28
+                    },
+                    {
+                        "itemId": "ore_stone",
+                        "quantity": 11
+                    }
+                ],
+                "choice": "",
+                "completed": true
+            },
+            {
+                "projectId": "territory_s_1_mission",
+                "cycle": 0,
+                "gold": 980,
+                "items": [
+                    {
+                        "itemId": "material_wood",
+                        "quantity": 28
+                    },
+                    {
+                        "itemId": "ore_stone",
+                        "quantity": 11
+                    }
+                ],
+                "choice": "",
+                "completed": true
+            },
+            {
+                "projectId": "territory_w_1_mission",
+                "cycle": 0,
+                "gold": 980,
+                "items": [
+                    {
+                        "itemId": "material_wood",
+                        "quantity": 28
+                    },
+                    {
+                        "itemId": "ore_stone",
+                        "quantity": 11
+                    }
+                ],
+                "choice": "",
+                "completed": true
+            }
+        ],
+        "rewardKeys": [
+            "p3_gathering_01#0",
+            "p3_neighbor_01#0",
+            "p3_supply_01#0",
+            "p3_welcome_01#0",
+            "territory_ne_1_mission#0",
+            "territory_nw_1_mission#0",
+            "territory_s_1_mission#0",
+            "territory_w_1_mission#0"
+        ],
+        "houses": [
+            {
+                "instanceId": "house_bld_12",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_12",
+                "residentId": "otter_toy_jjalrang"
+            },
+            {
+                "instanceId": "house_bld_13",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_13",
+                "residentId": "otter_sleepy"
+            },
+            {
+                "instanceId": "house_bld_14",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_14",
+                "residentId": "otter_toy_kungkung"
+            },
+            {
+                "instanceId": "house_bld_16",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_16",
+                "residentId": "otter_toy_degul"
+            },
+            {
+                "instanceId": "house_bld_24",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_24",
+                "residentId": "otter_toy_bodeul"
+            },
+            {
+                "instanceId": "house_bld_27",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_27",
+                "residentId": "otter_toy_yeongcha"
+            },
+            {
+                "instanceId": "house_bld_28",
+                "definitionId": "bld_small_house",
+                "slotId": "bld_28",
+                "residentId": "otter_toy_kongkong"
+            },
+            {
+                "instanceId": "house_slot_plaza_expand_01_house",
+                "definitionId": "con_p3_house",
+                "slotId": "slot_plaza_expand_01_house",
+                "residentId": "otter_p3_neighbor"
+            }
+        ],
+        "lifeRequests": [],
+        "lifeRequestSerial": 0,
+        "lifeRequestsDone": 0,
+        "toyVisitDueUtcTicks": 0,
+        "toyVisitSerial": 0,
+        "buildings": [
+            {
+                "instanceId": 12,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639285910917600000,
+                "endUtcTicks": 639285912717600000,
+                "built": true
+            },
+            {
+                "instanceId": 13,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639286499059240000,
+                "endUtcTicks": 639286500859240000,
+                "built": true
+            },
+            {
+                "instanceId": 14,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639286502373420000,
+                "endUtcTicks": 639286504173420000,
+                "built": true
+            },
+            {
+                "instanceId": 15,
+                "buildingId": "bld_workshop",
+                "startUtcTicks": 639286507539080000,
+                "endUtcTicks": 639286508439080000,
+                "built": true
+            },
+            {
+                "instanceId": 16,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639286524422520000,
+                "endUtcTicks": 639286526222520000,
+                "built": true
+            },
+            {
+                "instanceId": 19,
+                "buildingId": "bld_quarry",
+                "startUtcTicks": 639286672715620000,
+                "endUtcTicks": 639286673915620000,
+                "built": true
+            },
+            {
+                "instanceId": 20,
+                "buildingId": "bld_shop",
+                "startUtcTicks": 639286675731910000,
+                "endUtcTicks": 639286677531910000,
+                "built": true
+            },
+            {
+                "instanceId": 21,
+                "buildingId": "bld_farm_field",
+                "startUtcTicks": 639291556199280000,
+                "endUtcTicks": 639291556199280000,
+                "built": true
+            },
+            {
+                "instanceId": 22,
+                "buildingId": "bld_granary",
+                "startUtcTicks": 639291557902260000,
+                "endUtcTicks": 639291559702260000,
+                "built": true
+            },
+            {
+                "instanceId": 23,
+                "buildingId": "bld_farm_crate",
+                "startUtcTicks": 639291750287450000,
+                "endUtcTicks": 639291750287450000,
+                "built": true
+            },
+            {
+                "instanceId": 24,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639291750896780000,
+                "endUtcTicks": 639291752696780000,
+                "built": true
+            },
+            {
+                "instanceId": 27,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639291753666930000,
+                "endUtcTicks": 639291755466930000,
+                "built": true
+            },
+            {
+                "instanceId": 28,
+                "buildingId": "bld_small_house",
+                "startUtcTicks": 639291757847770000,
+                "endUtcTicks": 639291759647770000,
+                "built": true
+            },
+            {
+                "instanceId": 33,
+                "buildingId": "bld_workyard",
+                "startUtcTicks": 639291768404570000,
+                "endUtcTicks": 639291770804570000,
+                "built": true
+            },
+            {
+                "instanceId": 35,
+                "buildingId": "bld_farm_path",
+                "startUtcTicks": 639291892393600000,
+                "endUtcTicks": 639291892393600000,
+                "built": true
+            },
+            {
+                "instanceId": 36,
+                "buildingId": "bld_farm_sprinkler",
+                "startUtcTicks": 639291893131320000,
+                "endUtcTicks": 639291893301320000,
+                "built": true
+            }
+        ],
+        "districts": [
+            {
+                "blockId": "district_center",
+                "type": 3
+            },
+            {
+                "blockId": "district_northeast",
+                "type": 4
+            },
+            {
+                "blockId": "district_northwest",
+                "type": 2
+            },
+            {
+                "blockId": "district_south",
+                "type": 2
+            },
+            {
+                "blockId": "district_west",
+                "type": 5
+            }
+        ],
+        "relocation": {
+            "orderSerial": 0,
+            "orderType": 0,
+            "orderIds": [],
+            "ordersDone": 2,
+            "moves": []
+        },
+        "farm": {
+            "fields": [
+                {
+                    "instanceId": 21,
+                    "cropId": "crop_carrot",
+                    "remainingSec": 18.562501907348634,
+                    "ready": false,
+                    "soil": 0,
+                    "waitingCropId": ""
+                }
+            ],
+            "crates": [
+                {
+                    "instanceId": 23,
+                    "items": [
+                        {
+                            "id": "crop_carrot",
+                            "count": 11
+                        }
+                    ]
+                }
+            ],
+            "migrated": true,
+            "cartTimer": 34.85014343261719,
+            "lastUtcTicks": 639291906255750000
+        },
+        "production": {
+            "lastUtcTicks": 639291906248580000,
+            "progress": [
+                {
+                    "buildingId": "bld_workshop",
+                    "amount": 0.2692837417125702
+                },
+                {
+                    "buildingId": "bld_quarry",
+                    "amount": 0.8943063616752625
+                }
+            ]
+        },
+        "scouting": {
+            "version": 1,
+            "discovered": [
+                "territory_nw_1",
+                "territory_s_1",
+                "territory_w_1"
+            ],
+            "reports": [
+                "territory_nw_1",
+                "territory_w_1",
+                "territory_s_1"
+            ],
+            "job": {
+                "regionId": "",
+                "startUtcTicks": 0,
+                "endUtcTicks": 0,
+                "workers": []
+            }
+        }
+    },
+    "decor": {
+        "boards": [
+            {
+                "boardId": "farm",
+                "placedOutOfBag": true,
+                "placed": [],
+                "unlockedRegions": [
+                    "farm_base"
+                ]
+            },
+            {
+                "boardId": "fishing",
+                "placedOutOfBag": true,
+                "placed": [],
+                "unlockedRegions": [
+                    "fishing_base"
+                ]
+            },
+            {
+                "boardId": "mine",
+                "placedOutOfBag": true,
+                "placed": [],
+                "unlockedRegions": [
+                    "mine_base"
+                ]
+            },
+            {
+                "boardId": "plaza",
+                "placedOutOfBag": true,
+                "placed": [
+                    {
+                        "instanceId": 1,
+                        "itemId": "furniture_bush",
+                        "x": 10,
+                        "y": 32,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 2,
+                        "itemId": "furniture_stump",
+                        "x": 5,
+                        "y": 7,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 3,
+                        "itemId": "furniture_bush",
+                        "x": 0,
+                        "y": 4,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 4,
+                        "itemId": "furniture_log",
+                        "x": 4,
+                        "y": 9,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 5,
+                        "itemId": "furniture_bush",
+                        "x": 14,
+                        "y": 32,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 6,
+                        "itemId": "furniture_bush",
+                        "x": 23,
+                        "y": 14,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 7,
+                        "itemId": "furniture_bush",
+                        "x": 0,
+                        "y": 22,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 8,
+                        "itemId": "con_house_1",
+                        "x": -50,
+                        "y": 67,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 9,
+                        "itemId": "con_chair",
+                        "x": -30,
+                        "y": 30,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 10,
+                        "itemId": "furniture_bush",
+                        "x": -27,
+                        "y": 50,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 11,
+                        "itemId": "con_lamp",
+                        "x": -18,
+                        "y": 50,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 12,
+                        "itemId": "bld_small_house",
+                        "x": -32,
+                        "y": 35,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 13,
+                        "itemId": "bld_small_house",
+                        "x": -38,
+                        "y": 26,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 14,
+                        "itemId": "bld_small_house",
+                        "x": -20,
+                        "y": 46,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 15,
+                        "itemId": "bld_workshop",
+                        "x": -4,
+                        "y": 53,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 16,
+                        "itemId": "bld_small_house",
+                        "x": -42,
+                        "y": 69,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 17,
+                        "itemId": "con_p3_supply_box",
+                        "x": -39,
+                        "y": 41,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 18,
+                        "itemId": "con_house_2",
+                        "x": -41,
+                        "y": 54,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 19,
+                        "itemId": "bld_quarry",
+                        "x": -9,
+                        "y": 49,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 20,
+                        "itemId": "bld_shop",
+                        "x": -35,
+                        "y": 41,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 21,
+                        "itemId": "bld_farm_field",
+                        "x": -57,
+                        "y": 39,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 22,
+                        "itemId": "bld_granary",
+                        "x": -13,
+                        "y": 57,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 23,
+                        "itemId": "bld_farm_crate",
+                        "x": -53,
+                        "y": 42,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 24,
+                        "itemId": "bld_small_house",
+                        "x": -52,
+                        "y": 61,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 25,
+                        "itemId": "furniture_bush",
+                        "x": -36,
+                        "y": 50,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 26,
+                        "itemId": "furniture_bush",
+                        "x": -33,
+                        "y": 50,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 27,
+                        "itemId": "bld_small_house",
+                        "x": -40,
+                        "y": 61,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 28,
+                        "itemId": "bld_small_house",
+                        "x": -42,
+                        "y": 65,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 29,
+                        "itemId": "furniture_picnic",
+                        "x": 1,
+                        "y": 8,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 30,
+                        "itemId": "furniture_bush",
+                        "x": -35,
+                        "y": 48,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 31,
+                        "itemId": "con_p3_house",
+                        "x": -15,
+                        "y": 47,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 32,
+                        "itemId": "con_p3_flowerpot",
+                        "x": -10,
+                        "y": 51,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 33,
+                        "itemId": "bld_workyard",
+                        "x": -4,
+                        "y": 57,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 34,
+                        "itemId": "con_p3_table",
+                        "x": -24,
+                        "y": 40,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 35,
+                        "itemId": "bld_farm_path",
+                        "x": -56,
+                        "y": 35,
+                        "rotation": 0
+                    },
+                    {
+                        "instanceId": 36,
+                        "itemId": "bld_farm_sprinkler",
+                        "x": -53,
+                        "y": 41,
+                        "rotation": 0
+                    }
+                ],
+                "unlockedRegions": [
+                    "plaza_base"
+                ]
+            }
+        ]
+    },
+    "gacha": {
+        "standardSinceEpic": 0,
+        "standardSinceRare": 0,
+        "pickupSinceEpic": 0,
+        "pickupSinceRare": 0,
+        "pickupGuaranteed": false,
+        "pointsBannerId": "",
+        "points": 0,
+        "goldPullDay": 0,
+        "goldSinceEpic": 0,
+        "goldSinceRare": 0,
+        "welcomeGiftGiven": false,
+        "starterOtterGiven": false,
+        "totalPulls": 0,
+        "seenBanners": [],
+        "specialOtters": [],
+        "formation": [],
+        "accessories": []
+    }
+}
