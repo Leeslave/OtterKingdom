@@ -21,4 +21,6 @@ public enum ItemChangeReason
     DecorPlace, // 꾸미기로 가구를 놓아 가방에서 빠짐 (옛 세이브의 놓인 물건을 가방에서 빼는 것 포함)
     DecorReturn, // 놓인 가구를 치워 가방으로 돌아옴 (새 아이템 표시 없음)
     Upgrade, // 낚시 도구 강화(줄 · 찌 · 릴)의 재료로 낸 물고기
+    Processing, // 번영의 시대 가공 (목공소 판재 등)에 가방의 원재료를 넣음
+    Crafting, // 마을 정비: 창고 자재로 꾸미기(왕국 표지판 · 가로등)를 만듦
 }

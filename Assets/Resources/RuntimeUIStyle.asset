@@ -20,6 +20,23 @@ MonoBehaviour:
   _secondaryButton: {fileID: 21300000, guid: e1a4fae1055404e41b7775abfefba23f, type: 3}
   _optionButton: {fileID: 21300000, guid: afaaf176f7331a442876ef91cdbeaaa4, type: 3}
   _featureButton: {fileID: 21300000, guid: a45e5373999ed664ca1f615b487a02d6, type: 3}
+  _ribbon: {fileID: 21300000, guid: d025815ccf952d64980018423e9355f5, type: 3}
+  _closeButton: {fileID: 21300000, guid: 9d2bb544d2d2a484a88e948492ed0b55, type: 3}
+  _tabNormal: {fileID: 21300000, guid: 13bcc85be8b6a1e4dbae7efd59ac1a0e, type: 3}
+  _tabSelected: {fileID: 21300000, guid: 958bf46ba17bfea4c9cb7c7967904393, type: 3}
+  _card: {fileID: 21300000, guid: d7118bbe9ef6c5849a78aa776412c3dc, type: 3}
+  _slot: {fileID: 21300000, guid: 846f8134f4d476c42ab10743c31ef6f3, type: 3}
+  _slotFilled: {fileID: 21300000, guid: fb6aa2be01579164c9a1d10f9816ea6c, type: 3}
+  _inset: {fileID: 21300000, guid: de19d46b361ba734b96e17a80db7bd33, type: 3}
+  _barTrack: {fileID: 21300000, guid: 34fd7c488db2c4245aad0627be466d2e, type: 3}
+  _barFill: {fileID: 21300000, guid: 3c66bd11cfaf48f46b1acb833e58c4d0, type: 3}
+  _knob: {fileID: 21300000, guid: 08bc33263f1a13742a32b925521f7d11, type: 3}
+  _plusButton: {fileID: 21300000, guid: d8889074ed8c7724db615e277576387f, type: 3}
+  _lockIcon: {fileID: 21300000, guid: 0bbf2e2f1f9b90449bb9d0664f2abbb3, type: 3}
+  _tag: {fileID: 21300000, guid: c70137dee98ab5347a252619e6b10697, type: 3}
+  _tagOn: {fileID: 21300000, guid: a3688abb4e24deb46bb13ad89ac34ac4, type: 3}
+  _tagWarn: {fileID: 21300000, guid: a2d950c2c71008141899b799fa53fbe8, type: 3}
+  _tagGold: {fileID: 21300000, guid: 35649c2b5c2d9e842ad4095c0f42f40f, type: 3}
   _textColor: {r: 0.29411766, g: 0.18039216, b: 0.13333334, a: 1}
   _bodyColor: {r: 0.41960785, g: 0.2901961, b: 0.22745098, a: 1}
   _primaryLabelColor: {r: 1, g: 1, b: 1, a: 1}

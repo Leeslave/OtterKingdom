@@ -37,6 +37,8 @@ public class BackButtonHandler : MonoBehaviour
 
         var islandMap = FindAnyObjectByType<IslandMapSheet>();
         if (islandMap != null && islandMap.IsOpen) { islandMap.Close(); return; }
+        var house = FindAnyObjectByType<HouseUpgradeSheet>();
+        if (house != null && house.IsOpen) { house.Close(); return; }
         var facilities = FindAnyObjectByType<ProductionSheet>();
         if (facilities != null && facilities.IsOpen) { facilities.Close(); return; }
         var health = FindAnyObjectByType<MineCommunitySheet>();

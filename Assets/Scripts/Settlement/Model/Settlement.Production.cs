@@ -38,9 +38,12 @@ public static class ProductionRules
     public const double MaxStoredHours = 8;
 
     /// <summary>지금 이 시설에서 일하는 해달 수 (그 특성의 주민 수)</summary>
-    public static int Workers(SettlementConfig config, Settlement settlement, BuildingDefinition building) =>
+    public static int Workers(SettlementConfig config, Settlement settlement, BuildingDefinition building) => WorkerIds(config, settlement, building).Count;
+
+    /// <summary>이 시설에서 지금 일하는 해달들 (광장 수레꾼을 고를 때도 씀)</summary>
+    public static List<string> WorkerIds(SettlementConfig config, Settlement settlement, BuildingDefinition building) =>
         building != null && building.Produces ? TraitRules.Settled(config, settlement, building.ProductionTrait)
-            .FindAll(id => CanProduce(config, settlement, id)).Count : 0;
+            .FindAll(id => CanProduce(config, settlement, id)) : new List<string>();
 
     private static bool CanProduce(SettlementConfig config, Settlement settlement, string id)
     {

@@ -192,5 +192,7 @@ public class SettlementSaveData
     public PlazaFarmSaveData farm = new PlazaFarmSaveData();
     // 시설 생산 (목공소 · 채석 작업소의 해달들이 모으는 재료. 옛 세이브는 없음 = 처음 셈할 때부터)
     public BuildingProductionSaveData production = new BuildingProductionSaveData();
+    // 번영의 시대 산업 · 물류: 왕국 창고 · 가공 · 수레 (옛 세이브는 없음 = 빈 창고)
+    public IndustrySaveData industry = new IndustrySaveData();
     public ScoutingSaveData scouting = new ScoutingSaveData();
 }

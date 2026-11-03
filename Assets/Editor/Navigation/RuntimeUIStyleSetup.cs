@@ -27,6 +27,23 @@ public static class RuntimeUIStyleSetup
         so.FindProperty("_secondaryButton").objectReferenceValue = LoadSprite(CommonSpriteFolder, "UI_Button_Secondary");
         so.FindProperty("_optionButton").objectReferenceValue = LoadSprite(CommonSpriteFolder, "UI_Button_Paper");
         so.FindProperty("_featureButton").objectReferenceValue = LoadSprite(CommonSpriteFolder, "UI_Button_Coin");
+        so.FindProperty("_ribbon").objectReferenceValue = LoadSprite("Assets/Art/UI/Common", "UI_Ribbon_Peach");
+        so.FindProperty("_closeButton").objectReferenceValue = LoadSprite("Assets/Art/UI/Inventory", "UI_Inventory_CloseButton");
+        so.FindProperty("_tabNormal").objectReferenceValue = LoadSprite("Assets/Art/UI/Inventory", "UI_Inventory_Tab_Normal");
+        so.FindProperty("_tabSelected").objectReferenceValue = LoadSprite("Assets/Art/UI/Inventory", "UI_Inventory_Tab_Selected");
+        so.FindProperty("_card").objectReferenceValue = LoadSprite("Assets/Art/UI/Inventory", "UI_Inventory_Box");
+        so.FindProperty("_slot").objectReferenceValue = LoadSprite("Assets/Art/UI/Inventory", "UI_Inventory_Slot_Empty");
+        so.FindProperty("_slotFilled").objectReferenceValue = LoadSprite("Assets/Art/UI/Inventory", "UI_Inventory_Slot_Filled");
+        so.FindProperty("_inset").objectReferenceValue = LoadSprite("Assets/Art/UI/Common", "UI_Box_Inset");
+        so.FindProperty("_barTrack").objectReferenceValue = LoadSprite("Assets/Art/UI/Common", "UI_Slider_Track");
+        so.FindProperty("_barFill").objectReferenceValue = LoadSprite("Assets/Art/UI/Common", "UI_Bar_Fill");
+        so.FindProperty("_knob").objectReferenceValue = LoadSprite("Assets/Art/UI/Common", "UI_Knob");
+        so.FindProperty("_plusButton").objectReferenceValue = LoadSprite("Assets/Art/UI/Common", "UI_Button_PlusSmall");
+        so.FindProperty("_lockIcon").objectReferenceValue = LoadSprite("Assets/Art/UI/Inventory", "LockIcon");
+        so.FindProperty("_tag").objectReferenceValue = LoadSprite("Assets/Art/UI/Common", "UI_Tag_Category");
+        so.FindProperty("_tagOn").objectReferenceValue = LoadSprite("Assets/Art/UI/Collection", "UI_Badge_Status");
+        so.FindProperty("_tagWarn").objectReferenceValue = LoadSprite("Assets/Art/UI/Common", "UI_Tag_Highlight");
+        so.FindProperty("_tagGold").objectReferenceValue = LoadSprite("Assets/Art/UI/Collection", "UI_Tab_Gold");
         so.ApplyModifiedPropertiesWithoutUndo();
         AssetDatabase.SaveAssets();
     }

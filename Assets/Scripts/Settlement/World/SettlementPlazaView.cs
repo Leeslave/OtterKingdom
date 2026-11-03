@@ -160,6 +160,8 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             }
         }
         _builder.gameObject.SetActive(false);
+        // 번영의 시대 광장: 작업대 · 가공품 더미 · 왕국 창고 자리 · 수레 (IndustryPlazaView)
+        gameObject.AddComponent<IndustryPlazaView>().Init(this);
     }
 
     private void Start()
@@ -799,8 +801,8 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
         {
             if (pair.Value == null)
                 continue;
-            // 광장 농부는 PlazaFarmView가 일을 줌
-            if (IsFarmWorker(pair.Key))
+            // 광장 농부는 PlazaFarmView가, 수레꾼은 IndustryPlazaView가 일을 줌
+            if (IsFarmWorker(pair.Key) || IndustryPlazaView.IsCarter(pair.Key))
                 continue;
             bool working = pair.Key == workerId;
             var otter = _manager.Config.FindOtter(pair.Key);
