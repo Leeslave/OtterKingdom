@@ -671,6 +671,7 @@ public partial class Settlement
         LoadRelocation(saved);
         LoadFarm(saved);
         LoadProduction(saved);
+        LoadIndustry(saved);
         Scouting = new ScoutingProgress(saved.scouting);
         // 주민 작업과 정찰에 동시에 저장된 손상 기록은 정찰을 취소해 주민을 돌려보낸다.
         foreach (var id in Scouting.Workers)
@@ -766,6 +767,7 @@ public partial class Settlement
         WriteRelocation(result);
         WriteFarm(result);
         WriteProduction(result);
+        WriteIndustry(result);
         result.scouting = Scouting.Save();
     }
 

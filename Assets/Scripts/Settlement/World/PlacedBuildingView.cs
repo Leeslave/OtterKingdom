@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 광장에 놓인 건물 하나의 모습 (DecorBoardView가 만들고 치움). 공사 중에는 진행 비율에 따라 공사 단계 그림을 바꿔 끼우고
 /// 머리 위에 진행 막대를 보이며, 다 지으면 완성 그림이 통 튀어나온다. 공사·완성은 SettlementManager의 기록을 본다.
-/// 해달이 가지고 놀지 않는다 (HasRoom = false)
+/// 해달이 가지고 놀지 않는다 (HasRoom = false). 개량한 작은 집(주택 개량 C02)은 같은 자리에서 개량 주택 그림으로 바뀐다
 /// </summary>
 public class PlacedBuildingView : PlacedDecorView
 {
@@ -26,6 +26,7 @@ public class PlacedBuildingView : PlacedDecorView
     private SpriteRenderer _barBack;
     private SpriteRenderer _barFill;
     private int _shownStage = int.MinValue; // -1 = 완성 그림
+    private bool _improved;
     private Coroutine _bounce;
     private FairyNpcView _fairy;
     private Vector2 _fairyPlacedAt = new Vector2(float.NaN, float.NaN);
@@ -79,6 +80,14 @@ public class PlacedBuildingView : PlacedDecorView
         float progress = built ? 1f : record.Progress(SettlementManager.NowTicks);
 
         int stage = built ? -1 : StageIndexFor(progress);
+        bool improved = built && manager != null && manager.IsImprovedHouse(Placed.InstanceId);
+        if (improved != _improved)
+        {
+            _improved = improved;
+            BuildingVisual.Fit(_body, _renderer, _building, SpriteFor(stage), Placed.Rotation, WorldRect);
+            if (animate && _shownStage != int.MinValue)
+                Bounce(0.3f);
+        }
         if (stage != _shownStage)
         {
             bool finishing = animate && stage == -1 && _shownStage != int.MinValue;
@@ -132,7 +141,9 @@ public class PlacedBuildingView : PlacedDecorView
             : Color.white;
         if (underConstruction && stage < stages.Count && stages[stage] != null)
             return stages[stage];
-        return _building.FinishedSprite(Placed.Rotation);
+        var manager = SettlementManager.Instance;
+        var improved = _improved && manager != null && manager.IndustryConfig != null ? manager.IndustryConfig.ImprovedHouseSprite(Placed.InstanceId) : null;
+        return improved != null ? improved : _building.FinishedSprite(Placed.Rotation);
     }
 
     private void Bounce(float strength)

@@ -56,9 +56,14 @@ public partial class SettlementManager
         data.lastUtcTicks = now;
         bool away = seconds > ProductionNewsGapSeconds;
 
-        foreach (var (building, amount) in ProductionRules.Produce(_config, Settlement, FindBuilding, OfflineProductionService.Credited(seconds), WorkerPercent))
+        double credited = OfflineProductionService.Credited(seconds);
+        foreach (var (building, produced) in ProductionRules.Produce(_config, Settlement, FindBuilding, credited, WorkerPercent))
         {
             var item = building.ProductionItem;
+            // 가공을 켠 시설은 모은 원재료를 먼저 가공에 넣고 남는 것만 가방으로 (SettlementManager.Industry)
+            int amount = produced - FeedProcessor(building, produced);
+            if (amount <= 0)
+                continue;
             int added = inventory.Add(item, amount, ItemChangeReason.Production);
             ProductionRules.Return(Settlement, building, amount - added);
             if (added > 0)
@@ -69,6 +74,7 @@ public partial class SettlementManager
                 _producedWhileAway[item] = sum + added;
             }
         }
+        RunIndustry(credited, away);
     }
 
     // 돌아옴 팝업: "목공소 해달들이 목재 120개를 모았어요" (CollectAbsenceNews가 부름. Update보다 먼저 불릴 수 있어 여기서도 셈)

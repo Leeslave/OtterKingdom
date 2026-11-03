@@ -7,11 +7,13 @@ public partial class SettlementManager
     public const string StonePathEquipment = "equipment_stone_path";
     private ProductionSheet _productionSheet;
 
-    public void OpenProduction()
+    public void OpenProduction() => OpenProduction(ProductionSheet.Tab.Production);
+
+    public void OpenProduction(ProductionSheet.Tab tab)
     {
         if (!IsLoaded) return;
         if (_productionSheet == null) _productionSheet = gameObject.AddComponent<ProductionSheet>();
-        _productionSheet.Open(this);
+        _productionSheet.Open(this, tab);
     }
 
     public string EquipmentHint(bool stonePath)

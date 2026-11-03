@@ -35,6 +35,58 @@ public class RuntimeUIStyle : ScriptableObject
     [Tooltip("화면 구석의 기능 버튼 (낚싯대·곡괭이 강화, 노란색)")]
     [SerializeField] private Sprite _featureButton;
 
+    [Header("창 · 카드 · 막대 · 꼬리표 (RuntimeUIWindow · RuntimeUICards)")]
+    [Tooltip("창 제목 리본")]
+    [SerializeField] private Sprite _ribbon;
+
+    [Tooltip("창 모서리 닫기 (빨간 X)")]
+    [SerializeField] private Sprite _closeButton;
+
+    [Tooltip("탭")]
+    [SerializeField] private Sprite _tabNormal;
+
+    [Tooltip("고른 탭")]
+    [SerializeField] private Sprite _tabSelected;
+
+    [Tooltip("목록 한 줄 카드")]
+    [SerializeField] private Sprite _card;
+
+    [Tooltip("아이콘 칸 · 빈 칸")]
+    [SerializeField] private Sprite _slot;
+
+    [Tooltip("찬 칸 (창고 · 가방 칸)")]
+    [SerializeField] private Sprite _slotFilled;
+
+    [Tooltip("카드 안 크림 칸")]
+    [SerializeField] private Sprite _inset;
+
+    [Tooltip("진행 막대 바탕 · 꺼진 스위치")]
+    [SerializeField] private Sprite _barTrack;
+
+    [Tooltip("진행 막대 채움 · 켜진 스위치 (초록)")]
+    [SerializeField] private Sprite _barFill;
+
+    [Tooltip("스위치 손잡이")]
+    [SerializeField] private Sprite _knob;
+
+    [Tooltip("작은 + 버튼")]
+    [SerializeField] private Sprite _plusButton;
+
+    [Tooltip("자물쇠")]
+    [SerializeField] private Sprite _lockIcon;
+
+    [Tooltip("꼬리표 (크림)")]
+    [SerializeField] private Sprite _tag;
+
+    [Tooltip("꼬리표: 완료 · 켜짐 (민트)")]
+    [SerializeField] private Sprite _tagOn;
+
+    [Tooltip("꼬리표: 꽉 참 (빨강)")]
+    [SerializeField] private Sprite _tagWarn;
+
+    [Tooltip("꼬리표: 개수 (노랑)")]
+    [SerializeField] private Sprite _tagGold;
+
     [Header("글자색")]
     [SerializeField] private Color _textColor = new Color32(0x4B, 0x2E, 0x22, 0xFF);    // 코코아
     [SerializeField] private Color _bodyColor = new Color32(0x6B, 0x4A, 0x3A, 0xFF);
@@ -49,6 +101,23 @@ public class RuntimeUIStyle : ScriptableObject
     public Sprite SecondaryButton => _secondaryButton;
     public Sprite OptionButton => _optionButton;
     public Sprite FeatureButton => _featureButton;
+    public Sprite Ribbon => _ribbon;
+    public Sprite CloseButton => _closeButton;
+    public Sprite TabNormal => _tabNormal;
+    public Sprite TabSelected => _tabSelected;
+    public Sprite Card => _card;
+    public Sprite Slot => _slot;
+    public Sprite SlotFilled => _slotFilled;
+    public Sprite Inset => _inset;
+    public Sprite BarTrack => _barTrack;
+    public Sprite BarFill => _barFill;
+    public Sprite Knob => _knob;
+    public Sprite PlusButton => _plusButton;
+    public Sprite LockIcon => _lockIcon;
+    public Sprite Tag => _tag;
+    public Sprite TagOn => _tagOn;
+    public Sprite TagWarn => _tagWarn;
+    public Sprite TagGold => _tagGold;
     public Color TextColor => _textColor;
     public Color BodyColor => _bodyColor;
     public Color PrimaryLabelColor => _primaryLabelColor;
