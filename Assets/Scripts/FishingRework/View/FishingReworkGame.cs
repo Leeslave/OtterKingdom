@@ -135,6 +135,7 @@ public class FishingReworkGame : MonoBehaviour
         _model.Missed += HandleMissed;
         _model.RequestDone += HandleRequestDone;
         _model.Upgraded += HandleUpgraded;
+        _model.Sparked += HandleSparked;
 
         _hud = new GameObject("Hud").AddComponent<FishingHud>();
         _hud.transform.SetParent(transform, false);
@@ -175,6 +176,7 @@ public class FishingReworkGame : MonoBehaviour
         _model.Missed -= HandleMissed;
         _model.RequestDone -= HandleRequestDone;
         _model.Upgraded -= HandleUpgraded;
+        _model.Sparked -= HandleSparked;
         if (_hosted && GameManager.Instance != null && GameManager.Instance.FishingService != null)
             GameManager.Instance.FishingService.HandFishing = false;
     }
@@ -545,6 +547,17 @@ public class FishingReworkGame : MonoBehaviour
             _otter.PlayLoop(QuarterRigView.Loop.Fish);
         _sfx.Play(MineSfx.Kind.Tap, 0.7f);
         _hud.ShowHint();
+    }
+
+    // 스파크: 바늘에서 노란 번쩍 + 퍼지는 고리 (쫓는 범위만큼)
+    private void HandleSparked(Vector2 at, int scared)
+    {
+        var yellow = new Color(1f, 0.9f, 0.35f);
+        _fx.Glow(W(at), new Color(1f, 0.95f, 0.6f, 0.9f), 2.6f, 0.3f);
+        _fx.Ring(W(at), yellow, _config.SparkRadius * 2f, 0.5f);
+        _fx.Sparks(W(at), yellow, 18, 1.2f, 0.45f);
+        _fx.Shake(0.12f);
+        _sfx.Play(MineSfx.Kind.Crit, 0.8f);
     }
 
     private void HandleSplash(Vector2 at)

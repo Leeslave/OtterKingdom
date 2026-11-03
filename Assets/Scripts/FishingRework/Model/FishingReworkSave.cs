@@ -17,6 +17,9 @@ public class FishingReworkSave
     public float lastCastDistance;
     // 빨간 핀: 바다를 끌어 직접 꽂은 거리 (m, 0 = 없음)
     public float pinDistance;
+    // 스파크 (소모 아이템): 가진 수, 처음 몇 개를 줬는지
+    public int sparks;
+    public bool sparkStarterGiven;
     public List<FishingBookSave> book = new List<FishingBookSave>();
     public List<FishingBagSave> bag = new List<FishingBagSave>();
 

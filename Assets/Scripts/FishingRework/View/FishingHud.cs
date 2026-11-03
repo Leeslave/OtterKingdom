@@ -58,6 +58,10 @@ public class FishingHud : MonoBehaviour
     // 핀 꽂기: [핀] 버튼 → 다른 UI는 숨기고, 화면 가운데 고정 핀 + 거리 · [취소] [핀 빼기] [여기에 꽂기]
     private static readonly Color PinRed = new Color32(235, 70, 60, 255);
     private RectTransform _pinButton;
+    // 스파크: 줄이 물속에 있을 때 [핀] 자리에 (가진 수, 0이면 흐리게)
+    private RectTransform _sparkButton;
+    private TextMeshProUGUI _sparkLabel;
+    private Image _sparkIcon;
     private RectTransform _pinCross;
     private RectTransform _pinPanel;
     private TextMeshProUGUI _pinCrossLabel;
@@ -549,6 +553,17 @@ public class FishingHud : MonoBehaviour
         var label = NewText(_pinButton, "핀", 32, true, Color.white, TextAlignmentOptions.Center, 0.25f);
         Place(label.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0.5f), new Vector2(0f, 4f), new Vector2(150f, 44f));
 
+        // [스파크] 버튼: [핀] 자리 (줄이 물속에 있을 때만)
+        var spark = NewImage(_safe, "SparkButton", _ui.RoundFeatured, Color.white, true);
+        _sparkButton = spark.rectTransform;
+        Place(_sparkButton, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-24f, 380f), new Vector2(150f, 150f));
+        MakeButton(_sparkButton, OnSpark, false);
+        _sparkIcon = NewImage(_sparkButton, "Bolt", Bolt(96), new Color32(255, 214, 70, 255), true);
+        Place(_sparkIcon.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 14f), new Vector2(70f, 70f));
+        _sparkLabel = NewText(_sparkButton, "", 30, true, Color.white, TextAlignmentOptions.Center, 0.25f);
+        Place(_sparkLabel.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0.5f), new Vector2(0f, 4f), new Vector2(150f, 44f));
+        _sparkButton.gameObject.SetActive(false);
+
         // 화면 가운데 고정 핀 (카메라 가운데 = 핀 자리): 세로 안내선 + 핀(끝이 가운데) + 거리
         _pinCross = NewRect(_root, "PinCross");
         RuntimeUIKit.Stretch(_pinCross);
@@ -585,6 +600,41 @@ public class FishingHud : MonoBehaviour
             ShowMessage("핀을 꽂았어요! 게이지가 빨간 점에 닿을 때 떼요", 2.4f);
         }, RuntimeUIKit.ButtonKind.Primary, 340f);
         _pinPanel.gameObject.SetActive(false);
+    }
+
+    private void OnSpark()
+    {
+        if (_model.TrySpark())
+            return;
+        _sfx.Play(MineSfx.Kind.Tap, 0.6f);
+        if (_model.Sparks <= 0)
+            ShowMessage($"스파크가 없어요! [강화]에서 {_model.Config.SparkPackSize}개 {Money(_model.Config.SparkPackPrice)}골드", 2.4f);
+    }
+
+    // 번개 모양 (스파크 아이콘)
+    private static Sprite Bolt(int size)
+    {
+        var points = new[]
+        {
+            new Vector2(0.62f, 0.98f), new Vector2(0.18f, 0.44f), new Vector2(0.46f, 0.44f),
+            new Vector2(0.34f, 0.02f), new Vector2(0.84f, 0.58f), new Vector2(0.55f, 0.58f),
+        };
+        var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        for (int y = 0; y < size; y++)
+        for (int x = 0; x < size; x++)
+        {
+            var at = new Vector2((x + 0.5f) / size, (y + 0.5f) / size);
+            bool inside = false;
+            for (int i = 0, j = points.Length - 1; i < points.Length; j = i++)
+            {
+                if ((points[i].y > at.y) != (points[j].y > at.y)
+                    && at.x < (points[j].x - points[i].x) * (at.y - points[i].y) / (points[j].y - points[i].y) + points[i].x)
+                    inside = !inside;
+            }
+            tex.SetPixel(x, y, new Color(1f, 1f, 1f, inside ? 1f : 0f));
+        }
+        tex.Apply();
+        return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 100f);
     }
 
     // 핀 꽂는 동안 다른 UI는 숨김 (끝나면 원래대로)
@@ -730,7 +780,20 @@ public class FishingHud : MonoBehaviour
             _pinCrossLabel.text = center >= _model.CastDistance - 0.05f ? $"{center:0}m 줄 끝" : $"{center:0}m";
         }
         else
+        {
             _pinButton.gameObject.SetActive(_model.Phase == FishingPhase.Ready && _reveal == null);
+            bool inWater = _model.Phase == FishingPhase.InWater && _reveal == null;
+            _sparkButton.gameObject.SetActive(inWater);
+            if (inWater)
+            {
+                int sparks = _model.Sparks;
+                _sparkLabel.text = $"스파크 {sparks}";
+                _sparkIcon.color = sparks > 0 ? new Color32(255, 214, 70, 255) : new Color32(190, 180, 170, 255);
+                // 낚을 수 있는 물고기가 바늘 앞에 오면 살짝 흔들어 알려 줌 (원하는 물고기가 아니면 쫓아내요)
+                bool nudge = sparks > 0 && _model.NearCatchableFish && !_game.AutoFishing;
+                _sparkButton.localRotation = Quaternion.Euler(0f, 0f, nudge ? 6f * Mathf.Sin(Time.unscaledTime * 14f) : 0f);
+            }
+        }
 
         UpdateGauge(dt);
         // 새 물고기 발견 화면이 떠 있으면 거리 · 깊이 글자는 숨김 (제목과 겹침)
@@ -823,6 +886,7 @@ public class FishingHud : MonoBehaviour
         var panel = OpenSheet("낚시 도구 강화");
         foreach (FishingUpgrade upgrade in Enum.GetValues(typeof(FishingUpgrade)))
             UpgradeRow(panel, upgrade);
+        SparkRow(panel);
         var note = RuntimeUIKit.CreateLabel(panel, "낚은 물고기를 재료로 강화해요 (가방에서 내요)\n줄이 길면 더 멀리 · 찌가 무거우면 더 깊이 · 릴이 튼튼하면 무거운 물고기", 28);
         note.color = Muted;
         note.textWrappingMode = TextWrappingModes.Normal;
@@ -867,6 +931,43 @@ public class FishingHud : MonoBehaviour
             button.GetComponentInChildren<TextMeshProUGUI>().color = Muted;
         if (!max)
             RecipeRow(panel, upgrade);
+    }
+
+    // 스파크 사기: 골드로 한 묶음
+    private void SparkRow(RectTransform panel)
+    {
+        var config = _model.Config;
+        var row = RuntimeUIKit.CreateRow(panel, 150f, 18f);
+        var icon = RuntimeUIKit.CreateIcon(row, Bolt(96), 110f);
+        icon.color = new Color32(255, 214, 70, 255);
+        icon.GetComponent<LayoutElement>().minHeight = 110f;
+
+        var texts = NewRect(row, "Texts");
+        texts.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1f;
+        var name = NewText(texts, $"스파크  {_model.Sparks}개", 38, true, Cocoa, TextAlignmentOptions.Left);
+        Place(name.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0f), new Vector2(0f, 4f), new Vector2(420f, 52f));
+        var line = NewText(texts, "줄이 물속일 때 써요 · 바늘 둘레 물고기를 쫓아내요", 26, false, RuntimeUIKit.Style.BodyColor, TextAlignmentOptions.Left);
+        Place(line.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 1f), new Vector2(0f, -4f), new Vector2(420f, 44f));
+        line.enableAutoSizing = true;
+        line.fontSizeMin = 18f;
+        line.fontSizeMax = 26f;
+
+        bool can = _model.Gold >= config.SparkPackPrice;
+        var button = RuntimeUIKit.CreateButton(row, $"{config.SparkPackSize}개 {Money(config.SparkPackPrice)}G", () =>
+        {
+            if (_model.TryBuySparks())
+            {
+                _sfx.Play(MineSfx.Kind.Sell);
+                OpenUpgrades();
+            }
+            else
+            {
+                _sfx.Play(MineSfx.Kind.Tap, 0.6f);
+                ShowMessage("골드가 모자라요", 1.6f);
+            }
+        }, can ? RuntimeUIKit.ButtonKind.Primary : RuntimeUIKit.ButtonKind.Option, 200f);
+        if (!can)
+            button.GetComponentInChildren<TextMeshProUGUI>().color = Muted;
     }
 
     // 강화 재료: 물고기 그림 · 가진 수/필요한 수 (다 모으면 초록) · 못 낚는 물고기면 먼저 올릴 강화, 낚을 수 있으면 사는 곳

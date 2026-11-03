@@ -23,6 +23,8 @@ public class FishingFish
     public bool Hooked;
     public float HeavyCooldown;
     public float FleeTime;
+    // 스파크에 놀람: 이 시간 동안 바늘을 안 물고 바늘 반대쪽(가로)으로 도망감 (깊이는 그대로)
+    public float ScaredTime;
     public float TurnTimer;
     public float BobPhase;
 
@@ -96,6 +98,8 @@ public class FishingReworkModel
     public event Action<FishingRequest> RequestDone;
     public event Action RequestChanged;
     public event Action<FishingUpgrade> Upgraded;
+    /// <summary>스파크를 씀 (바늘 위치, 쫓아낸 물고기 수)</summary>
+    public event Action<Vector2, int> Sparked;
 
     /// <param name="host">본 게임 골드 · 가방 (없으면 테스트 씬: 세이브 안의 골드 · 가방)</param>
     public FishingReworkModel(FishingReworkConfig config, FishingReworkSave save, System.Random rng, IFishingHost host = null)
@@ -107,6 +111,11 @@ public class FishingReworkModel
         _save.started = true;
         _save.bag ??= new List<FishingBagSave>();
         _save.book ??= new List<FishingBookSave>();
+        if (!_save.sparkStarterGiven)
+        {
+            _save.sparkStarterGiven = true;
+            _save.sparks += config.StarterSparks;
+        }
         foreach (FishingUpgrade upgrade in Enum.GetValues(typeof(FishingUpgrade)))
             SetLevel(upgrade, Mathf.Clamp(Level(upgrade), 0, config.Track(upgrade).MaxLevel));
         foreach (var entry in _save.book)
@@ -329,6 +338,59 @@ public class FishingReworkModel
         Changed?.Invoke();
     }
 
+    #region 스파크
+
+    public int Sparks => _save.sparks;
+
+    /// <summary>
+    /// 스파크: 줄이 물속에 있을 때, 바늘 둘레(SparkRadius) 물고기가 바늘 반대쪽으로 도망가고 SparkScareSeconds 동안 안 묾.
+    /// 위쪽 물고기(고등어 등)가 가로채지 않게 깊은 물고기까지 내려가는 용도
+    /// </summary>
+    public bool TrySpark()
+    {
+        if (Phase != FishingPhase.InWater || _save.sparks <= 0)
+            return false;
+        _save.sparks--;
+        float radius = _config.SparkRadius;
+        int scared = 0;
+        foreach (var fish in _fish)
+        {
+            if (fish.Hooked)
+                continue;
+            var away = fish.Position - Hook;
+            if (away.sqrMagnitude > radius * radius)
+                continue;
+            fish.ScaredTime = _config.SparkScareSeconds;
+            fish.Dir = Mathf.Abs(away.x) > 0.05f ? Mathf.Sign(away.x) : (_rng.NextDouble() < 0.5 ? -1f : 1f);
+            scared++;
+        }
+        Sparked?.Invoke(Hook, scared);
+        Changed?.Invoke();
+        return true;
+    }
+
+    /// <summary>스파크 한 묶음 사기 (골드). 모자라면 false</summary>
+    public bool TryBuySparks()
+    {
+        int price = _config.SparkPackPrice;
+        if (_host != null)
+        {
+            if (!_host.TrySpendGold(price))
+                return false;
+        }
+        else
+        {
+            if (_save.gold < price)
+                return false;
+            _save.gold -= price;
+        }
+        _save.sparks += _config.SparkPackSize;
+        Changed?.Invoke();
+        return true;
+    }
+
+    #endregion
+
     /// <summary>바늘 앞(선착장 쪽) 가까이에 지금 낚을 수 있는 물고기가 있음 → 천천히 감김</summary>
     public bool NearCatchableFish
     {
@@ -337,7 +399,7 @@ public class FishingReworkModel
             float ahead = _config.NearFishAhead;
             foreach (var fish in _fish)
             {
-                if (fish.Hooked || fish.Weight > ReelCapacity || -fish.Position.y > MaxDepth + 0.5f)
+                if (fish.Hooked || fish.ScaredTime > 0f || fish.Weight > ReelCapacity || -fish.Position.y > MaxDepth + 0.5f)
                     continue;
                 float dx = Hook.x - fish.Position.x;
                 if (dx >= -0.3f && dx <= ahead)
@@ -428,7 +490,7 @@ public class FishingReworkModel
 
         foreach (var fish in _fish)
         {
-            if (fish.Hooked)
+            if (fish.Hooked || fish.ScaredTime > 0f)
                 continue;
             float reach = _config.HookRadius + fish.HitRadius;
             if ((fish.Position - Hook).sqrMagnitude > reach * reach)
@@ -518,6 +580,16 @@ public class FishingReworkModel
         fish.FleeTime -= dt;
         fish.TurnTimer -= dt;
         fish.BobPhase += dt * (1.2f + fish.Def.SwimSpeed);
+
+        if (fish.ScaredTime > 0f)
+        {
+            // 스파크: 처음엔 휙, 점점 느려지며 바늘 반대쪽으로 (가로로만 — 물층은 그대로)
+            fish.ScaredTime -= dt;
+            float t = Mathf.Clamp01(fish.ScaredTime / Mathf.Max(0.1f, _config.SparkScareSeconds));
+            float speed = Mathf.Max(1f, fish.Def.SwimSpeed) * Mathf.Lerp(0.6f, 3.5f, t);
+            fish.Position = new Vector2(Mathf.Max(0.8f, fish.Position.x + fish.Dir * speed * dt), fish.BaseY + 0.06f * Mathf.Sin(fish.BobPhase * 3f));
+            return;
+        }
 
         bool attracted = false;
         if (_config.AttractRadius > 0f && Phase == FishingPhase.InWater && fish.Weight <= ReelCapacity)
