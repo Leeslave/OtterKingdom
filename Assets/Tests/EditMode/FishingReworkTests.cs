@@ -239,6 +239,46 @@ public class FishingReworkTests
     }
 
     [Test]
+    public void Spark_ScaresFishNearTheHook_ForAWhile_AndUsesOne()
+    {
+        var save = new FishingReworkSave();
+        var model = Model(save);
+        int starter = _config.StarterSparks;
+        Assert.AreEqual(starter, model.Sparks, "처음 몇 개는 줌");
+        Assert.IsFalse(model.TrySpark(), "줄이 물속일 때만");
+
+        model.TryCast();
+        RunUntilInWater(model);
+        var near = model.PlaceFish(_small, model.Hook + new Vector2(-0.6f, -0.8f), 0.5f);
+        var far = model.PlaceFish(_small, model.Hook + new Vector2(-9f, -2f), 0.5f);
+        Assert.IsTrue(model.TrySpark());
+        Assert.AreEqual(starter - 1, model.Sparks);
+        Assert.Greater(near.ScaredTime, 0f, "바늘 둘레 물고기는 놀람");
+        Assert.LessOrEqual(far.ScaredTime, 0f, "멀리 있는 물고기는 그대로");
+        float depth = near.Position.y;
+
+        for (int i = 0; i < 10; i++)
+            model.Tick(0.1f, false);
+        Assert.AreEqual(FishingPhase.InWater, model.Phase, "놀란 물고기는 안 묾 — 바늘이 지나감");
+        Assert.Greater(Mathf.Abs(near.Position.x - model.Hook.x), 2f, "바늘에서 멀리 도망감");
+        Assert.AreEqual(depth, near.Position.y, 0.2f, "깊이는 그대로 (가로로만 도망)");
+
+        Assert.AreEqual(starter - 1, Model(save).Sparks, "처음 주는 건 한 번만");
+    }
+
+    [Test]
+    public void Spark_BuyAPackWithGold()
+    {
+        var model = Model();
+        int before = model.Sparks;
+        Assert.IsFalse(model.TryBuySparks(), "골드가 모자라면 못 삼");
+        model.CheatGold(_config.SparkPackPrice);
+        Assert.IsTrue(model.TryBuySparks());
+        Assert.AreEqual(before + _config.SparkPackSize, model.Sparks);
+        Assert.AreEqual(0, model.Gold);
+    }
+
+    [Test]
     public void Fish_StayBelowTheSurface_SoNothingBitesAtTheSplash()
     {
         var model = Model();

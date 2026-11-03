@@ -110,6 +110,18 @@ public class FishingReworkConfig : ScriptableObject
     [Tooltip("이 안의 물고기는 바늘 쪽으로 다가옴 (0 = 안 다가옴)")]
     [SerializeField] private float _attractRadius = 0f;
 
+    [Header("스파크 (소모 아이템: 바늘 둘레 물고기를 쫓아 깊은 물고기를 노리게)")]
+    [Tooltip("바늘에서 이 안의 물고기가 도망감 (m)")]
+    [SerializeField] private float _sparkRadius = 3.5f;
+    [Tooltip("도망간 물고기가 바늘을 안 무는 시간 (초)")]
+    [SerializeField] private float _sparkScareSeconds = 5f;
+    [Tooltip("한 번에 사는 개수")]
+    [SerializeField] private int _sparkPackSize = 3;
+    [Tooltip("한 번에 사는 값 (골드)")]
+    [SerializeField] private int _sparkPackPrice = 60;
+    [Tooltip("처음 한 번 주는 개수")]
+    [SerializeField] private int _starterSparks = 3;
+
     [Header("물고기 수 (구역 = 거리 칸 × 물층)")]
     [Tooltip("바다를 이 길이로 나눠 칸마다 물층별로 물고기를 채움")]
     [SerializeField] private float _segmentLength = 8f;
@@ -156,6 +168,11 @@ public class FishingReworkConfig : ScriptableObject
     public float LandDistance => _landDistance;
     public float HookRadius => _hookRadius;
     public float AttractRadius => _attractRadius;
+    public float SparkRadius => _sparkRadius;
+    public float SparkScareSeconds => _sparkScareSeconds;
+    public int SparkPackSize => _sparkPackSize;
+    public int SparkPackPrice => _sparkPackPrice;
+    public int StarterSparks => _starterSparks;
     public float SegmentLength => Mathf.Max(1f, _segmentLength);
     public int LayerCap(FishLayer layer) => _layerCaps != null && (int)layer < _layerCaps.Length ? Mathf.Max(0, _layerCaps[(int)layer]) : 0;
     public float LayerRegenSeconds(FishLayer layer) =>
