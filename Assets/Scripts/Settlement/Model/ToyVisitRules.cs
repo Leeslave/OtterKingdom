@@ -280,19 +280,43 @@ public static class ToyVisitRules
     /// <summary>
     /// 장난감 해달이 들어갈 빈 집: 입주민이 없고, 공동사업이 특정 해달에게 정해 둔 자리(새 이웃의 집 등)가 아닌 집 (지은 순서대로 첫 집)
     /// </summary>
-    public static HouseRecord FindFreeHome(SettlementConfig config, Settlement settlement)
+    public static HouseRecord FindFreeHome(SettlementConfig config, Settlement settlement, SettlementOtterDefinition incoming = null)
     {
         if (config == null)
             throw new ArgumentNullException(nameof(config));
         if (settlement == null)
             throw new ArgumentNullException(nameof(settlement));
 
+        var homes = new List<HouseRecord>();
         foreach (var house in settlement.Houses)
+            if (house != null && string.IsNullOrEmpty(house.ResidentId) && !IsReservedSlot(config, house.SlotId)) homes.Add(house);
+        var waiting = new List<SettlementOtterDefinition>();
+        foreach (var request in config.Requests)
         {
-            if (house != null && string.IsNullOrEmpty(house.ResidentId) && !IsReservedSlot(config, house.SlotId))
-                return house;
+            if (request == null || SettlementRules.GetStatus(request, settlement) != RequestStatus.Available) continue;
+            foreach (var target in request.SettleTargets)
+                if (target != null && !waiting.Contains(target) && SettlementRules.IsAwaitedSettler(config, settlement, target)) waiting.Add(target);
         }
-        return null;
+        int index = incoming != null ? waiting.IndexOf(incoming) : -1;
+        // 먼저 지은 빈 집부터 열린 입주 부탁의 주인공 몫으로 예약한다. 남는 집은 자유롭게 쓴다.
+        if (index < 0) index = waiting.Count;
+        return index < homes.Count ? homes[index] : null;
+    }
+
+    /// <summary>다른 방문객이 입주하면 현재 입주 부탁에 쓸 집이 모자라지는지.</summary>
+    public static bool WouldDelayStoryMoveIn(SettlementConfig config, Settlement settlement, SettlementOtterDefinition otter)
+    {
+        if (otter == null || SettlementRules.IsAwaitedSettler(config, settlement, otter)) return false;
+        int waiting = 0, homes = 0;
+        var seen = new HashSet<string>();
+        foreach (var target in config.Otters)
+            if (target != null && seen.Add(target.OtterId) && SettlementRules.IsAwaitedSettler(config, settlement, target))
+                waiting++;
+        if (waiting == 0) return false;
+        foreach (var house in settlement.Houses)
+            if (house != null && string.IsNullOrEmpty(house.ResidentId) && !IsReservedSlot(config, house.SlotId))
+                homes++;
+        return homes > 0 && homes <= waiting;
     }
 
     /// <summary>공동사업의 입주 단계가 정해 둔 집 자리인지</summary>
@@ -315,7 +339,7 @@ public static class ToyVisitRules
 
     /// <summary>광장에서 말을 걸면 입주를 물을 수 있는 장난감 해달인지 (찾아와 만났고 아직 방문 중 + 빈 집이 있음)</summary>
     public static bool CanMoveIn(SettlementConfig config, Settlement settlement, SettlementOtterDefinition otter) =>
-        IsHomelessVisitor(settlement, otter) && FindFreeHome(config, settlement) != null;
+        IsHomelessVisitor(settlement, otter) && FindFreeHome(config, settlement, otter) != null;
 
     /// <summary>찾아와 만났지만 아직 집이 없는 장난감 해달인지</summary>
     public static bool IsHomelessVisitor(Settlement settlement, SettlementOtterDefinition otter) =>
@@ -335,7 +359,7 @@ public static class ToyVisitRules
     {
         if (otter == null || (settlement.TryGetResidentState(otter.OtterId, out var state) && state == ResidentState.Resident))
             return false;
-        var home = FindFreeHome(config, settlement);
+        var home = FindFreeHome(config, settlement, otter);
         if (home == null || !settlement.SetHouseResident(home.InstanceId, otter.OtterId))
             return false;
         settlement.SetResident(otter.OtterId, ResidentState.Resident);

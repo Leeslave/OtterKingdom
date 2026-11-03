@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4f9c1fbaf14fb58faa110cf64e5018, type: 3}
   m_Name: InventoryConfig
   m_EditorClassIdentifier: OtterKingdom::InventoryConfig
-  _initialCapacity: 16
-  _maxCapacity: 40
-  _expandStep: 4
+  _initialCapacity: 24
+  _maxCapacity: 56
+  _expandStep: 8
   _expandCost: 100
   _expandCurrency: {fileID: 11400000, guid: a8da1a2901de4c0b8cd169d719b225b2, type: 2}
   _sellCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}

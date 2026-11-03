@@ -535,7 +535,7 @@ public partial class MineMazeHud : MonoBehaviour
 
         _actionClick = null;
         // 아래층 길이 뚫린 뒤에만 내려가기 (막혀 있으면 앞의 큰 돌을 직접 침)
-        if (_model.OnStairs && !_game.GateAhead)
+        if (_model.OnStairs && !_game.GateAhead && !_model.AtContentEnd)
         {
             _actionLabel.text = "내려\n가기";
             _actionClick = _game.Descend;
@@ -547,6 +547,15 @@ public partial class MineMazeHud : MonoBehaviour
 
     private string PromptText()
     {
+        if (_model.OnStairs && _model.IsSourceFloor)
+        {
+            if (_model.FloorCleared) return "발생원을 제거했어요. 가장 깊은 층이에요";
+            return _model.CanHitGate(out string sourceReason)
+                ? $"가스가 새어 나오는 발생 돌이에요! 톡톡 쳐서 없애요 ({_model.GateDamage}/{_model.Config.GateHits})"
+                : $"가스가 새어 나오는 발생 돌이에요 · {sourceReason}";
+        }
+        if (_model.OnStairs && _model.AtContentEnd && _model.FloorCleared)
+            return "가장 깊은 층이에요";
         if (_model.OnStairs && _game.GateAhead)
             return _model.CanHitGate(out string reason)
                 ? $"큰 돌이 아래층 길을 막고 있어요! 톡톡 쳐서 뚫어요 ({_model.GateDamage}/{_model.Config.GateHits})"
@@ -709,16 +718,18 @@ public partial class MineMazeHud : MonoBehaviour
     private RectTransform OpenSheet(float width)
     {
         CloseSheet();
-        _sheet = RuntimeUIKit.CreateDim(_root, "Sheet");
-        _sheet.SetAsLastSibling();
-        var panel = RuntimeUIKit.CreatePanel(_sheet, width);
+        var panel = RuntimeUIScrollSheet.Create(_root, ReturnToPlay);
+        _sheet = (RectTransform)panel.GetComponentInParent<RuntimeSheetLayout>().transform.parent;
         return panel;
     }
 
     private void CloseSheet()
     {
         if (_sheet != null)
+        {
+            _sheet.gameObject.SetActive(false);
             Destroy(_sheet.gameObject);
+        }
         _sheet = null;
         _progressRefresh = null;
     }

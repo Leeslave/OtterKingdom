@@ -27,6 +27,7 @@ public class IslandMapSheet : MonoBehaviour
     private string _lastDestination;
     private string _focusedRegion;
     private TextMeshProUGUI _timer;
+    private ScrollRect _scroll;
     public bool IsOpen => _canvas != null && _canvas.gameObject.activeSelf;
 
     public void Open(SettlementManager manager)
@@ -35,7 +36,7 @@ public class IslandMapSheet : MonoBehaviour
         _directions.Clear();
         foreach (var territory in manager.Config.Territories)
             if (territory != null && !_directions.Contains(territory.Direction)) _directions.Add(territory.Direction);
-        _direction = 0;
+        _direction = Mathf.Clamp(_direction, 0, Mathf.Max(0, _directions.Count - 1));
         _focusedRegion = null;
         _picking = false;
         _selected.Clear();
@@ -48,7 +49,11 @@ public class IslandMapSheet : MonoBehaviour
         Draw();
     }
 
-    public void Close() { if (_canvas != null) _canvas.gameObject.SetActive(false); }
+    public void Close()
+    {
+        PlazaTapInput.BlockCurrentGesture();
+        if (_canvas != null) _canvas.gameObject.SetActive(false);
+    }
 
     public void Focus(TerritoryDirection direction)
     {
@@ -71,6 +76,7 @@ public class IslandMapSheet : MonoBehaviour
 
     private void Draw(string hint = "")
     {
+        float scrollPosition = _scroll != null ? _scroll.verticalNormalizedPosition : 1f;
         for (int i = _canvas.transform.childCount - 1; i >= 0; i--)
         {
             var child = _canvas.transform.GetChild(i).gameObject;
@@ -79,6 +85,7 @@ public class IslandMapSheet : MonoBehaviour
         }
         RuntimeUIKit.PrepareGlyphs("섬 지도 정찰 발견 보고 주민 귀환 회수 출발 재료 비용 없음 바닷가 낡은 선착장 농경지 생산 일터 다음 이전 방향 선택 한가한 작업 중 초 조건을 다시 확인해 주세요 " + hint);
         var panel = RuntimeUIScrollSheet.Create(_canvas.transform, Close);
+        _scroll = panel.GetComponentInParent<ScrollRect>();
         RuntimeUIKit.CreateLabel(panel, "섬 지도 · 정찰", 42, true);
         var scout = _manager.Settlement.Scouting;
         var available = _manager.AvailableClearing();
@@ -149,6 +156,8 @@ public class IslandMapSheet : MonoBehaviour
             });
         }
         if (!string.IsNullOrEmpty(hint)) RuntimeUIKit.CreateLabel(panel, hint, 26);
+        Canvas.ForceUpdateCanvases();
+        _scroll.verticalNormalizedPosition = scrollPosition;
     }
 
     private void DrawWorkers(Transform panel, TerritoryExpansionDefinition territory)

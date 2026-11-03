@@ -68,6 +68,28 @@ public static class RelocationRules
             slots.Sort((a, b) => (a.Area.width * a.Area.height).CompareTo(b.Area.width * b.Area.height));
             foreach (var slot in slots)
                 list.Add(new RelocationSlot(block, slot));
+            if (slots.Count > 0) continue;
+
+            // 큰 부지 하나를 작은 건물이 사용해도 남은 열린 땅은 계속 쓸 수 있다.
+            // 고정 슬롯이 전부 찼거나 없는 중앙·동쪽 블록도 실제 빈 칸으로 후보를 만든다.
+            var reserved = new List<RectInt>(taken);
+            foreach (var slot in slots) reserved.Add(slot.Area);
+            for (int stage = 0; stage < open; stage++)
+            {
+                foreach (var area in block.Stages[stage].Areas)
+                {
+                    for (int y = area.yMin; y <= area.yMax - footprint.y; y++)
+                    for (int x = area.xMin; x <= area.xMax - footprint.x; x++)
+                    {
+                        if (reserved.Count - taken.Count >= 8) break;
+                        var candidate = new RectInt(new Vector2Int(x, y), footprint);
+                        if (reserved.Exists(rect => rect.Overlaps(candidate)) || !block.Contains(candidate, open)) continue;
+                        var extra = new DistrictSlot($"{block.BlockId}_free_{x}_{y}_{footprint.x}_{footprint.y}", candidate, stage);
+                        list.Add(new RelocationSlot(block, extra));
+                        reserved.Add(candidate);
+                    }
+                }
+            }
         }
         return list;
     }

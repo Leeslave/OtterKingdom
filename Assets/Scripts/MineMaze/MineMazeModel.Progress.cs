@@ -12,17 +12,18 @@ public partial class MineMazeModel
     // 테스트 씬의 갱도 골드. 본 게임은 지갑(진짜 골드)을 씀
     private int _gold;
     private IMineWallet _wallet;
+    private bool _hasSavedGold;
     public int Gold => _wallet != null ? _wallet.Balance : _gold;
 
     /// <summary>본 게임: 작업대 · 판매가 진짜 골드를 씀. 예전 갱도 골드는 한 번 진짜 골드로 옮김</summary>
     public void UseWallet(IMineWallet wallet)
     {
         _wallet = wallet;
-        if (wallet != null && _gold > 0)
+        if (wallet != null && _gold > 0 && _hasSavedGold)
         {
             wallet.Earn(_gold);
-            _gold = 0;
         }
+        if (wallet != null) _gold = 0;
         Changed?.Invoke();
     }
     public int KingdomLevel { get; private set; }
@@ -47,6 +48,7 @@ public partial class MineMazeModel
     private void LoadProgress(MineMazeSave save)
     {
         Community = save.community ?? new MineCommunityState();
+        _hasSavedGold = save.progressionVersion > 0;
         _gold = save.progressionVersion > 0 ? Math.Max(0, save.gold) : Math.Max(0, _rework.StartGold);
         KingdomLevel = save.progressionVersion > 0 ? Math.Max(1, save.kingdomLevel) : _config.TestKingdomLevel;
         if (FloorCount > 1 && save.progressionVersion < 2)

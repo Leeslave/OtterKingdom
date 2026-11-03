@@ -369,6 +369,25 @@ public class DecorTests
     }
 
     [Test]
+    public void FindFreeNear_StaysInRequiredDistrictAndAvoidsBlockedCells()
+    {
+        var district = new RectInt(2, 0, 2, 4);
+        _layout.SetBlocked(new Vector2Int(2, 0), true);
+        Assert.IsTrue(DecorEditSession.TryFindFreeNear(_layout, _ball, Vector2Int.zero, DecorRotation.R0,
+            out var origin, area => district.Contains(area.position)));
+        Assert.IsTrue(district.Contains(origin));
+        Assert.AreNotEqual(new Vector2Int(2, 0), origin);
+        Assert.AreEqual(DecorPlacementResult.Ok, _layout.Check(_ball, origin, DecorRotation.R0));
+    }
+
+    [Test]
+    public void FindFreeNear_NoValidDistrict_DoesNotFallBackOutsideIt()
+    {
+        Assert.IsFalse(DecorEditSession.TryFindFreeNear(_layout, _ball, Vector2Int.zero, DecorRotation.R0,
+            out _, area => area.xMin >= 4)); // 오른쪽 구역은 잠김
+    }
+
+    [Test]
     public void EditPlaced_ChecksIgnoringItself_AndRotates()
     {
         _layout.TryPlace(_bench, new Vector2Int(0, 0), DecorRotation.R0, out var bench);

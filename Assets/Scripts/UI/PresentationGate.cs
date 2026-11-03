@@ -12,6 +12,8 @@ public static class PresentationGate
     {
         get
         {
+            if (UIPopupAnimator.AnyVisible || RuntimeModalSurface.AnyVisible || UITransitionShield.IsBlocking)
+                return true;
             if (_navigator == null)
                 _navigator = Object.FindAnyObjectByType<SceneNavigator>();
             if (_navigator != null && _navigator.IsTraveling)

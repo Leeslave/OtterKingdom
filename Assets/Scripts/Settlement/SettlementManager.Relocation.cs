@@ -87,7 +87,11 @@ public partial class SettlementManager
         var board = PlazaBoard;
         if (board == null || !DecorManager.Instance.GetLayout(board).TryGet(instanceId, out var placed) || !(placed.Decor is IDistrictBuilding building))
             return new List<RelocationSlot>();
-        return RelocationRules.FreeSlots(_config, Settlement, building.District, placed.Area.size, PlazaOccupied(instanceId));
+        var layout = DecorManager.Instance.GetLayout(board);
+        var slots = RelocationRules.FreeSlots(_config, Settlement, building.District, placed.Area.size, PlazaOccupied(instanceId));
+        slots.RemoveAll(slot => layout.Check(placed.Decor, DistrictRules.OriginIn(slot.Slot, placed.Area.size) + board.SaveOrigin,
+            placed.Rotation, instanceId) != DecorPlacementResult.Ok);
+        return slots;
     }
 
     public int RelocationDoneCount() =>

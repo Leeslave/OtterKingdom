@@ -18,6 +18,17 @@ public static class PlazaTapInput
     private static Vector2 _pressScreen;
     private static bool _tapped;
     private static Vector2 _tapWorld;
+    private static int _blockedThroughFrame = -1;
+
+    public static bool IsGestureBlocked => Time.frameCount <= _blockedThroughFrame;
+
+    /// <summary>창을 닫거나 바꾼 클릭을 뒤의 월드 입력이 다시 받지 않게 한다.</summary>
+    public static void BlockCurrentGesture()
+    {
+        _blockedThroughFrame = Time.frameCount + 1;
+        _pressing = false;
+        _tapped = false;
+    }
 
     /// <summary>이번 프레임에 탭이 끝났으면 그 월드 위치</summary>
     public static bool TryGetTap(out Vector2 world)
@@ -33,6 +44,12 @@ public static class PlazaTapInput
             return;
         _frame = Time.frameCount;
         _tapped = false;
+
+        if (IsGestureBlocked)
+        {
+            _pressing = false;
+            return;
+        }
 
         var pointer = Pointer.current;
         var camera = Camera.main;

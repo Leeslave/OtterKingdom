@@ -32,6 +32,7 @@ public class PlazaMomentDirector : MonoBehaviour
 
     private float _nextCheck;
     private float _cooldownUntil;
+    private float _lastUncapturedAttempt;
     private Coroutine _scene;
     private SpriteRenderer _camera;
     private bool _captured;
@@ -55,6 +56,7 @@ public class PlazaMomentDirector : MonoBehaviour
         _cameraSprite = Resources.Load<Sprite>(CameraSpritePath);
         _current = this;
         _nextCheck = Time.time + PlazaMomentRules.CheckSeconds;
+        _lastUncapturedAttempt = Time.time;
     }
 
     private void OnDestroy()
@@ -74,26 +76,34 @@ public class PlazaMomentDirector : MonoBehaviour
         if (PresentationGate.IsBusy || GatheringDirector.IsPlaying || DecorModePresenter.IsActive)
             return;
 
+        var collection = CollectionManager.Instance;
+        // 아직 못 찍은 순간을 먼저 시도한다. 1분 넘게 기다렸으면 자리 방문·시작 확률을 보완한다.
+        for (int pass = 0; pass < 2; pass++)
         foreach (var moment in PlazaMomentRules.All)
         {
+            bool collected = collection != null && collection.Database.TryGet(moment.EntryId, out var entry)
+                && collection.Collection.GetState(entry) == CollectionState.Collected;
+            if (collected != (pass == 1)) continue;
+            bool waited = !collected && Time.time - _lastUncapturedAttempt >= 60f;
             var hero = _plaza.FindAgent(moment.OtterId);
             if (hero == null || !hero.isActiveAndEnabled)
                 continue;
 
             var spot = hero.CurrentSpot;
-            if (spot == null)
+            if (spot == null || spot.Kind != moment.Spot)
             {
                 // 한가하면 가끔 좋아하는 자리로
-                if (Random.value < PlazaMomentRules.NudgeChance)
+                if (waited || Random.value < PlazaMomentRules.NudgeChance)
                     hero.TryVisitSpot(moment.Spot);
                 continue;
             }
 
             var companions = PickCompanions(moment, hero, spot);
             if (!PlazaMomentRules.CanStart(moment, spot.Kind, spot.FreeSeats, companions.Count)
-                || Random.value >= PlazaMomentRules.StartChance)
+                || (!waited && Random.value >= PlazaMomentRules.StartChance))
                 continue;
 
+            if (!collected) _lastUncapturedAttempt = Time.time;
             _scene = StartCoroutine(PlayScene(moment, hero, spot, companions));
             return;
         }
@@ -150,6 +160,8 @@ public class PlazaMomentDirector : MonoBehaviour
         foreach (var otter in cast)
             otter.KeepStaying(PlazaMomentRules.BeatSeconds * moment.Beats.Count + PlazaMomentRules.CaptureSeconds + 1f);
 
+        GameNotices.Post(new GameNotice("사진 찍기 좋은 순간이 시작됐어요! 대화가 끝나면 해달 머리 위 카메라를 눌러 보세요.", "보러 가기", () => FocusMoment(hero)));
+
         // 차례로 말풍선. 마지막 말과 함께 카메라 말풍선 (그때부터 누를 수 있음)
         for (int i = 0; i < moment.Beats.Count; i++)
         {
@@ -167,6 +179,12 @@ public class PlazaMomentDirector : MonoBehaviour
         float left = PlazaMomentRules.CaptureSeconds;
         while (left > 0f && !_captured)
         {
+            if (PresentationGate.IsBusy)
+            {
+                foreach (var otter in cast) if (otter != null) otter.KeepStaying(2f);
+                yield return null;
+                continue;
+            }
             left -= Time.deltaTime;
             BobCamera();
             if (PlazaTapInput.TryGetTap(out Vector2 world) && OwnsTap(world))
@@ -177,6 +195,12 @@ public class PlazaMomentDirector : MonoBehaviour
             yield return null;
         }
         Finish(true);
+    }
+
+    private static void FocusMoment(OtterWanderAgent hero)
+    {
+        var camera = Camera.main != null ? Camera.main.GetComponent<PlazaCameraController>() : null;
+        if (camera != null && hero != null) camera.PanTo(hero.Position + Vector2.up * 1.5f);
     }
 
     private static bool AllArrived(List<OtterWanderAgent> cast, PlazaSpotView spot)

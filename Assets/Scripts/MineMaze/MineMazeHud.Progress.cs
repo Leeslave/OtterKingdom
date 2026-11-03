@@ -54,6 +54,8 @@ public partial class MineMazeHud
         }
         if (_game.InGame && _model.WaitingForBag > 0)
             Line(panel, $"가방이 가득 차서 광석 {_model.WaitingForBag}개가 기다리는 중이에요. 가방에 자리가 나면 저절로 들어가요.", 24, false, Cocoa);
+        if (_game.InGame && InventoryManager.Instance != null)
+            RuntimeUIKit.CreateButton(panel, "가방 칸 늘리기", InventoryExpansionSheet.Open);
         RuntimeUIKit.CreateButton(panel, "남는 광석 판매", ShowOreSales);
         RuntimeUIKit.CreateButton(panel, "돌아가기", ReturnToPlay, RuntimeUIKit.ButtonKind.Secondary);
         _progressRefresh?.Invoke();
@@ -69,13 +71,42 @@ public partial class MineMazeHud
         {
             if (ore == null || !ore.CanSell || _model.Count(ore) == 0) continue;
             var captured = ore;
-            RuntimeUIKit.CreateButton(panel, $"{ore.DisplayName} {_model.Count(ore)}개 · 1개 판매 +{ore.SellPrice}G", () =>
-            {
-                _game.SellOre(captured);
-                ShowOreSales();
-            }, height: 74);
+            RuntimeUIKit.CreateButton(panel, $"{ore.DisplayName} {_model.Count(ore):N0}개 · 수량 고르기", () => ShowOreQuantity(captured), height: 90);
         }
         RuntimeUIKit.CreateButton(panel, "작업대로", ShowWorkshop, RuntimeUIKit.ButtonKind.Secondary);
+    }
+
+    private void ShowOreQuantity(MineOreDefinition ore)
+    {
+        var panel = OpenSheet(880);
+        Line(panel, $"{ore.DisplayName} 판매", 44, true, Cocoa);
+        Line(panel, "곡괭이 제작에 쓸 재료는 남겨 주세요.", 28, false, Cocoa);
+        int amount = 1;
+        var count = Line(panel, "", 32, true, Cocoa);
+        var row = RuntimeUIKit.CreateRow(panel, RuntimeUIKit.ButtonHeight);
+        RuntimeUIKit.CreateButton(row, "-1", () => { amount = Math.Max(1, amount - 1); _progressRefresh?.Invoke(); }, flexible: true);
+        RuntimeUIKit.CreateButton(row, "+1", () => { amount = Math.Min(_model.Count(ore), amount + 1); _progressRefresh?.Invoke(); }, flexible: true);
+        RuntimeUIKit.CreateButton(row, "+10", () => { amount = Math.Min(_model.Count(ore), amount + 10); _progressRefresh?.Invoke(); }, flexible: true);
+        RuntimeUIKit.CreateButton(row, "최대", () => { amount = _model.Count(ore); _progressRefresh?.Invoke(); }, flexible: true);
+        var result = Line(panel, "", 28, false, Good);
+        var sell = RuntimeUIKit.CreateButton(panel, "판매", () =>
+        {
+            int quantity = amount;
+            if (_game.SellOre(ore, quantity))
+                result.text = $"{ore.DisplayName} {quantity:N0}개를 팔았어요. +{(long)ore.SellPrice * quantity:N0}골드";
+            else result.text = "지금은 팔 수 없어요. 보유 수량과 골드를 확인해 주세요.";
+            // 선택한 광석 화면을 유지한다. 연타해도 다른 종류로 바뀌지 않는다.
+            _progressRefresh?.Invoke();
+        }, RuntimeUIKit.ButtonKind.Primary);
+        _progressRefresh = () =>
+        {
+            amount = Math.Min(Math.Max(1, amount), _model.Count(ore));
+            count.text = $"보유 {_model.Count(ore):N0}개 · 선택 {amount:N0}개";
+            sell.interactable = amount > 0;
+            RuntimeUIKit.SetButtonLabel(sell, $"{amount:N0}개 판매 · +{(long)ore.SellPrice * amount:N0}G");
+        };
+        RuntimeUIKit.CreateButton(panel, "다른 광석 고르기", ShowOreSales, RuntimeUIKit.ButtonKind.Secondary);
+        _progressRefresh();
     }
 
     private void ReturnToPlay()

@@ -662,6 +662,30 @@ public partial class MineMazeTests
     }
 
     [Test]
+    public void Wallet_NewGameDoesNotTransferStandaloneStartingGold()
+    {
+        var model = Model();
+        var wallet = new FakeWallet { Balance = 280 };
+        model.UseWallet(wallet);
+        Assert.AreEqual(280, wallet.Balance);
+        Assert.AreEqual(0, model.ToSave().gold);
+        model.UseWallet(wallet);
+        Assert.AreEqual(280, wallet.Balance);
+    }
+
+    [Test]
+    public void Wallet_LegacyGoldTransfersOnlyOnceAfterReload()
+    {
+        var wallet = new FakeWallet { Balance = 10 };
+        var model = Model(save: Stock(0, gold: 30));
+        model.UseWallet(wallet);
+        model.UseWallet(wallet);
+        var loaded = Model(save: model.ToSave());
+        loaded.UseWallet(wallet);
+        Assert.AreEqual(40, wallet.Balance);
+    }
+
+    [Test]
     public void Bag_SpendingUsesWorkshopFirstThenBag()
     {
         var save = new MineMazeSave();

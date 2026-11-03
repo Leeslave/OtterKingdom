@@ -197,6 +197,7 @@ public class CollectionStoryPlayerView : MonoBehaviour
             return;
 
         IsPlaying = false;
+        UITransitionShield.Block(0.65f);
         if (_typing != null)
             StopCoroutine(_typing);
         _typing = null;

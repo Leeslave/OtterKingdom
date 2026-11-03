@@ -169,6 +169,20 @@ public class QuestManager : MonoBehaviour
     /// <summary>받은 퀘스트 중 목록 아래 완료 칸에 남길지 (오늘 받은 일일, 이번 레벨에 받은 성장)</summary>
     public bool ShowsAsCompleted(QuestDefinition quest) => QuestProgressRules.ShowsAsCompleted(quest, PlayerLevel, Log);
 
+    /// <summary>이야기 진행보다 레벨이 앞서도 지금 이어야 할 메인을 보여 준다.</summary>
+    public QuestDefinition CurrentMainQuest
+    {
+        get
+        {
+            QuestDefinition next = null;
+            foreach (var quest in _database.Quests)
+                if (quest != null && quest.Kind == QuestKind.Main && IsAvailable(quest)
+                    && (Log.GetStatus(quest) == QuestStatus.InProgress || Log.GetStatus(quest) == QuestStatus.Claimable)
+                    && (next == null || quest.SortOrder < next.SortOrder)) next = quest;
+            return next;
+        }
+    }
+
     /// <summary>이 퀘스트를 지금 받으면 얻는 경험치</summary>
     public int ExpFor(QuestDefinition quest)
     {

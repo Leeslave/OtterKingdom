@@ -391,14 +391,17 @@ public class DecorModePresenter : MonoBehaviour
 
         CancelSession();
         var center = _board.WorldToCell(_camera.transform.position);
-        bool inDistrict = settlement.TryFindDistrictSpot(building, building.Footprint, out var origin);
-        bool found = inDistrict || DecorEditSession.TryFindFreeNear(_layout, building, center, DecorRotation.R0, out origin);
+        bool inDistrict = settlement.TryFindDistrictSpot(building, building.Footprint, out var origin)
+            && CanStartAt(building, new RectInt(origin, building.Footprint));
+        bool found = inDistrict || DecorEditSession.TryFindFreeNear(_layout, building, center, DecorRotation.R0, out origin,
+            area => CanStartAt(building, area));
         _session = DecorEditSession.ForNew(building, origin);
         string where = required != DistrictType.None ? $" · {Districts.DisplayName(required)} 안에" : "";
-        _view.ShowHint(found ? $"{HintBuildPlace} ({settlement.BuildingCostText(building)}{where})" : HintNoRoom, !found);
+        _view.ShowHint(found ? $"{HintBuildPlace} ({settlement.BuildingCostText(building)}{where})"
+            : required != DistrictType.None ? settlement.DistrictSpaceHint(required) : HintNoRoom, !found);
         ShowSession();
         RefreshStorage();
-        if (inDistrict && _cameraDrag is PlazaCameraController camera)
+        if (found && _cameraDrag is PlazaCameraController camera)
             camera.PanTo(_ghost.WorldRect.center + Vector2.up * 1f);
         BuildPlacementBegan?.Invoke(this);
     }
@@ -412,12 +415,12 @@ public class DecorModePresenter : MonoBehaviour
 
         CancelSession();
         var origin = _board.Board.SaveOrigin + plot.DefaultCellFor(settlement.HasDevelopment);
-        bool found = _layout.Check(plot, origin, DecorRotation.R0) == DecorPlacementResult.Ok
-            && !_board.WouldCutPath(new RectInt(origin, plot.Footprint));
+        bool found = CanStartAt(plot, new RectInt(origin, plot.Footprint));
         if (!found)
         {
             var center = origin + new Vector2Int(plot.Footprint.x / 2, plot.Footprint.y / 2);
-            found = DecorEditSession.TryFindFreeNear(_layout, plot, center, DecorRotation.R0, out var near);
+            found = DecorEditSession.TryFindFreeNear(_layout, plot, center, DecorRotation.R0, out var near,
+                area => CanStartAt(plot, area));
             if (found)
                 origin = near;
         }
@@ -717,8 +720,26 @@ public class DecorModePresenter : MonoBehaviour
     {
         var result = _session.Check(_layout);
         var rect = _board.AreaWorldRect(_session.Area);
-        bool ok = result == DecorPlacementResult.Ok && !OutsideRequiredDistrict();
+        bool ok = result == DecorPlacementResult.Ok && !OutsideRequiredDistrict()
+            && (!_session.Decor.IsBuilding || !_board.WouldCutPath(_session.Area))
+            && HasStandPoint(_session.Decor, _session.Area);
         _ghost.Show(_session.Decor, _session.Rotation, rect, ok, _board.Fill, _board.GhostItemSortingOrder(_session.Decor, rect));
+        _view.SetPlacementValid(ok);
+    }
+
+    private bool CanStartAt(DecorDefinition decor, RectInt area)
+    {
+        var settlement = SettlementManager.Instance;
+        return _layout.Check(decor, area.position, DecorRotation.R0) == DecorPlacementResult.Ok
+            && (settlement == null || settlement.FitsRequiredDistrict(decor, area))
+            && (!decor.IsBuilding || !_board.WouldCutPath(area)) && HasStandPoint(decor, area);
+    }
+
+    private bool HasStandPoint(DecorDefinition decor, RectInt area)
+    {
+        if (!(decor is ConstructionPlotDefinition plot)) return true;
+        var anchor = ConstructionPlotAnchor.Find(plot.SaveId);
+        return anchor == null || !anchor.TryGetStandPoint(_board.AreaWorldRect(area), out var stand) || _board.IsWalkable(stand);
     }
 
     // 새로 짓는 특성 건물이 들어가야 할 구역 밖에 있는지 (SettlementManager.DistrictBuildings)
@@ -776,6 +797,13 @@ public class DecorModePresenter : MonoBehaviour
 
     private void Update()
     {
+        if (PlazaTapInput.IsGestureBlocked)
+        {
+            _pressing = false;
+            _dragging = false;
+            SetCameraDrag(true);
+            return;
+        }
         var pointer = Pointer.current;
         if (pointer == null || _camera == null)
             return;
@@ -832,6 +860,8 @@ public class DecorModePresenter : MonoBehaviour
 
     private void EndPress(Vector2 screen)
     {
+        // 낮은 프레임에서도 마지막 마우스/손가락 위치를 반영한다.
+        ContinuePress(screen);
         _pressing = false;
         if (_dragging)
         {
@@ -852,7 +882,8 @@ public class DecorModePresenter : MonoBehaviour
     {
         var cell = _board.WorldToCell(world);
         var placed = _layout.GetAt(cell);
-        if (placed != null && (_session == null || placed.InstanceId != _session.InstanceId))
+        if (placed != null && (_session == null || placed.InstanceId != _session.InstanceId)
+            && !(_session != null && _session.IsNew && _session.Decor.IsBuilding))
         {
             BeginEditPlaced(placed);
             return;
@@ -887,6 +918,8 @@ public class DecorModePresenter : MonoBehaviour
             _view.ShowHint(OutsideDistrictText(), true);
         else if (result == DecorPlacementResult.Ok && _session.Decor.IsBuilding && _board.WouldCutPath(_session.Area))
             _view.ShowHint(HintCutsPath, true);
+        else if (result == DecorPlacementResult.Ok && !HasStandPoint(_session.Decor, _session.Area))
+            _view.ShowHint(HintNoStand, true);
         else
             _view.ShowHint(result == DecorPlacementResult.Ok ? HintPlace : ReasonText(result), result != DecorPlacementResult.Ok);
     }
@@ -902,7 +935,16 @@ public class DecorModePresenter : MonoBehaviour
         Vector2 screen = _camera.WorldToScreenPoint(top);
         var parent = (RectTransform)_view.Actions.parent;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screen, null, out var local))
-            _view.Actions.anchoredPosition = local + Vector2.up * ActionsGap;
+        {
+            var actions = _view.Actions;
+            var bounds = parent.rect;
+            local += Vector2.up * ActionsGap;
+            local.x = Mathf.Clamp(local.x, bounds.xMin + actions.rect.width * actions.pivot.x + 16f,
+                bounds.xMax - actions.rect.width * (1f - actions.pivot.x) - 16f);
+            local.y = Mathf.Clamp(local.y, bounds.yMin + bounds.height * 0.3f + actions.rect.height * actions.pivot.y,
+                bounds.yMax - actions.rect.height * (1f - actions.pivot.y) - 16f);
+            actions.anchoredPosition = local;
+        }
     }
 
     private Vector2 ScreenToWorld(Vector2 screen)

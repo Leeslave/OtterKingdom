@@ -17,10 +17,16 @@ public static class CollectionAutoCollector
         if (e.NewCount <= e.OldCount)
             return false;
 
-        if (!IsDiscovery(e.Reason))
-            return false;
+        return Discover(collection, database, e.Item, e.Reason);
+    }
 
-        var entry = database.FindByItem(e.Item);
+    /// <summary>가방 수량과 별개로 실제 생산·획득을 기록한다.</summary>
+    public static bool Discover(Collection collection, CollectionDatabase database, ItemDefinition item, ItemChangeReason reason)
+    {
+        if (collection == null) throw new ArgumentNullException(nameof(collection));
+        if (database == null) throw new ArgumentNullException(nameof(database));
+        if (item == null || !IsDiscovery(reason)) return false;
+        var entry = database.FindByItem(item);
         return entry != null && collection.Collect(entry);
     }
 

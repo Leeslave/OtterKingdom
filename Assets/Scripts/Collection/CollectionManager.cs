@@ -85,6 +85,12 @@ public class CollectionManager : MonoBehaviour
 
     #region 게임 쪽 연결 (해달)
 
+    /// <summary>실제 획득 순간 등록. 가방에 못 넣은 생산물도 발견은 남긴다.</summary>
+    public bool RegisterDiscovery(ItemDefinition item, ItemChangeReason reason)
+    {
+        return CollectionAutoCollector.Discover(Collection, _database, item, reason);
+    }
+
     /// <summary>등록 완료 (온라인 중 해달을 눌러 등록, 가챠 등)</summary>
     /// <returns>새로 등록됐으면 true. 이미 등록했거나 없는 ID면 false</returns>
     public bool Register(string entryId)

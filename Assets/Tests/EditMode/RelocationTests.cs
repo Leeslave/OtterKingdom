@@ -62,7 +62,7 @@ public class RelocationTests
 
         Assert.IsNotNull(order);
         Assert.AreEqual(DistrictType.Residential, order.Type);
-        CollectionAssert.AreEqual(new[] { 2 }, order.InstanceIds, "큰 칸은 home_02 하나만 비어 있음 (home_01은 1번 집, home_03은 작음)");
+        CollectionAssert.AreEqual(new[] { 2, 3, 4 }, order.InstanceIds, "고정 부지를 다 썼어도 열린 땅의 빈 칸으로 이어서 이사할 수 있음");
     }
 
     [Test]
@@ -80,6 +80,24 @@ public class RelocationTests
         var chair = RelocationRules.FreeSlots(_config, settlement, DistrictType.Residential, new Vector2Int(3, 2), new[] { new RectInt(1, 1, 8, 5) });
         CollectionAssert.AreEqual(new[] { "home_03", "home_02" }, chair.ConvertAll(s => s.Slot.SlotId));
         Assert.AreEqual(0, RelocationRules.FreeSlots(_config, settlement, DistrictType.Commercial, new Vector2Int(3, 2), null).Count, "닫힌 · 용도 없는 블록");
+    }
+
+    [Test]
+    public void FreeSlots_WhenFixedPlotsAreOccupied_UsesOnlyOpenUnoccupiedLand()
+    {
+        var settlement = HomeDistrict();
+        var taken = new[] { new RectInt(1, 1, 8, 5), new RectInt(11, 1, 8, 5) };
+        var slots = RelocationRules.FreeSlots(_config, settlement, DistrictType.Residential, new Vector2Int(6, 4), taken);
+        Assert.Greater(slots.Count, 0);
+        var reserved = new List<RectInt>(taken);
+        foreach (var slot in slots)
+        {
+            Assert.IsTrue(_home.Contains(slot.Slot.Area, 1));
+            Assert.IsFalse(reserved.Exists(area => area.Overlaps(slot.Slot.Area)));
+            reserved.Add(slot.Slot.Area);
+        }
+        Assert.AreEqual(0, RelocationRules.FreeSlots(_config, settlement, DistrictType.Residential,
+            new Vector2Int(6, 4), new[] { new RectInt(0, 0, 30, 20) }).Count);
     }
 
     [Test]

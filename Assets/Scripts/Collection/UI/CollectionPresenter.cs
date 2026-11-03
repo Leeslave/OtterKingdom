@@ -171,7 +171,13 @@ public class CollectionPresenter : MonoBehaviour
         if (_selectedTab.SupportsVisits)
             text += $" · 방문 흔적 {_collection.Count(_entries, CollectionState.Visited)}";
 
-        return text;
+        int total = _database.Entries.Count;
+        int all = _collection.Count(_database.Entries, CollectionState.Collected);
+        int percent = _collection.CollectedPercent(_database.Entries);
+        int left = Mathf.Max(0, Mathf.CeilToInt(total * .5f) - all);
+        _countText.enableAutoSizing = true;
+        _countText.fontSizeMin = 20f;
+        return $"{text}\n전체 {all}/{total} ({percent}%)" + (left > 0 ? $" · 사진관까지 {left}개" : "");
     }
 
     private void HandleStateChanged(CollectionEntry entry, CollectionState state)

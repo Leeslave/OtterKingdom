@@ -179,7 +179,9 @@ public class SettlementOtterView : MonoBehaviour
         else if (manager.TryHearIntro(_otter))
             line = _otter.IntroLine;
         else if (manager.IsHomelessVisitor(_otter))
-            line = string.IsNullOrEmpty(_otter.HomelessLine) ? HomelessFallbackLine : _otter.HomelessLine;
+            line = ToyVisitRules.WouldDelayStoryMoveIn(manager.Config, manager.Settlement, _otter)
+                ? "지금 빈 집은 입주 부탁을 기다리는 친구의 몫이에요.\n제 집도 생기면 알려 주세요!"
+                : string.IsNullOrEmpty(_otter.HomelessLine) ? HomelessFallbackLine : _otter.HomelessLine;
         else if (_otter.Lines.Count > 0)
             line = PickLine();
         else
@@ -234,8 +236,10 @@ public class SettlementOtterView : MonoBehaviour
             return;
         }
         string name = _otter.DisplayName;
+        string warning = ToyVisitRules.WouldDelayStoryMoveIn(manager.Config, manager.Settlement, _otter)
+            ? "\n다른 해달의 입주 부탁이 진행 중이에요. 먼저 입주시키면 작은 집을 더 지어야 해요." : "";
         game.ShowConfirm("새 이웃의 입주",
-            $"{name}{KoreanParticle.SubjectParticle(name)} 새 집에 입주할까요?\n입주하면 마을 주민이 되어 함께 일해요.",
+            $"{name}{KoreanParticle.SubjectParticle(name)} 새 집에 입주할까요?\n입주하면 마을 주민이 되어 함께 일해요.{warning}",
             () => manager.TryMoveIn(_otter));
     }
 

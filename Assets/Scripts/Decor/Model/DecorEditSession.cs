@@ -73,7 +73,8 @@ public class DecorEditSession
     /// center에서 가장 가까운(체스판 거리 기준 고리 순서로) 놓을 수 있는 자리. 격자 전체에 없으면 false.
     /// 보관함에서 꺼낼 때 화면 가운데 근처 빈자리에 미리보기를 두기 위함
     /// </summary>
-    public static bool TryFindFreeNear(DecorLayout layout, DecorDefinition decor, Vector2Int center, DecorRotation rotation, out Vector2Int origin)
+    public static bool TryFindFreeNear(DecorLayout layout, DecorDefinition decor, Vector2Int center, DecorRotation rotation, out Vector2Int origin,
+        Func<RectInt, bool> acceptsArea = null)
     {
         if (layout == null) throw new ArgumentNullException(nameof(layout));
         if (decor == null) throw new ArgumentNullException(nameof(decor));
@@ -93,7 +94,8 @@ public class DecorEditSession
                         continue;
 
                     var candidate = start + new Vector2Int(dx, dy);
-                    if (layout.Check(decor, candidate, rotation) == DecorPlacementResult.Ok)
+                    if (layout.Check(decor, candidate, rotation) == DecorPlacementResult.Ok
+                        && (acceptsArea == null || acceptsArea(new RectInt(candidate, size))))
                     {
                         origin = candidate;
                         return true;

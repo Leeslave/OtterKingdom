@@ -91,6 +91,16 @@ public class CollectionDetailView : MonoBehaviour
         // 못 만난 해달은 만나는 방법 힌트 (어떤 장난감 · 언제 · 어떤 가구가 있으면 찾아오는지).
         // 힌트는 여러 줄이라 한 줄짜리 소개 칸이 아니라 설명 상자에 넣음 (소개 칸은 "아직 만나지 못했어요")
         string hint = !collected && !string.IsNullOrEmpty(entry.Hint) ? entry.Hint : null;
+        if (!collected && entry.LinkedItem != null)
+        {
+            var itemId = entry.LinkedItem.ItemId;
+            if (itemId.StartsWith("crop_", StringComparison.Ordinal))
+                hint = "요정 상점에서 모종을 구해 밭에서 길러 보세요. 당근·오이는 씨앗이 무제한이에요.\n농부가 수확하면 도감에 등록돼요.";
+            else if (itemId.StartsWith("fish_", StringComparison.Ordinal))
+                hint = "낚시터에서 직접 낚거나 낚시꾼의 자동 낚시로 만날 수 있어요.\n낚싯대를 강화하면 새 물고기가 열려요.";
+            else if (itemId.StartsWith("ore_", StringComparison.Ordinal))
+                hint = "오래된 갱도의 광맥과 보물 상자를 찾아보세요. 층을 돌파하면 자동 채굴도 가능해요.";
+        }
         _taglineText.text = collected ? entry.Tagline : visited ? _visitedTagline : _unknownTagline;
         _descriptionText.text = collected ? entry.Description : hint ?? "";
         _extraText.text = collected && !string.IsNullOrEmpty(recordLine) ? recordLine

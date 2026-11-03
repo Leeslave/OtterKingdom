@@ -83,6 +83,43 @@ public class P4StoryTests
     }
 
     [Test]
+    public void LoadingCompletedProject_AppliesLevelCapBeforeGrantingOfflineExperience()
+    {
+        var table = Create<LevelTable>();
+        var tableData = new SerializedObject(table);
+        var levels = tableData.FindProperty("_levels");
+        levels.arraySize = 12;
+        for (int i = 0; i < levels.arraySize; i++)
+            levels.GetArrayElementAtIndex(i).FindPropertyRelative("_expToNext").intValue = 100;
+        tableData.ApplyModifiedPropertiesWithoutUndo();
+        var profileObject = new GameObject("QA Profile");
+        _created.Add(profileObject);
+        var profile = profileObject.AddComponent<ProfileManager>();
+        var profileData = new SerializedObject(profile);
+        profileData.FindProperty("_levelTable").objectReferenceValue = table;
+        profileData.ApplyModifiedPropertiesWithoutUndo();
+        typeof(ProfileManager).GetMethod("Awake", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            .Invoke(profile, null);
+        profile.LoadFromSave(new ProfileSaveData { level = 10, exp = 40 });
+        var project = Create<CommunityProjectDefinition>();
+        project.Setup("qa_completed_offline", 0, "꺼진 동안 끝난 사업", 10, "", 0, null, null, "qa_done", 600);
+        SetList(_config, "_projects", new Object[] { project });
+        var managerObject = new GameObject("QA Settlement");
+        _created.Add(managerObject);
+        var manager = managerObject.AddComponent<SettlementManager>();
+        var managerData = new SerializedObject(manager);
+        managerData.FindProperty("_config").objectReferenceValue = _config;
+        managerData.ApplyModifiedPropertiesWithoutUndo();
+        typeof(SettlementManager).GetMethod("Awake", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            .Invoke(manager, null);
+        manager.LoadFromSave(new SettlementSaveData { initialized = true, version = SettlementSaveData.CurrentVersion });
+
+        Assert.IsTrue(manager.HasDevelopment("qa_done"));
+        Assert.AreEqual(10, profile.Level, "Lv.11 부탁을 끝내기 전에 오프라인 보상으로 제한을 넘으면 안 됨");
+        Assert.AreEqual(640, profile.Progress.Exp, "제한 중 얻은 경험치는 버리지 않고 보존");
+    }
+
+    [Test]
     public void SettleRequest_NeedsEveryTarget()
     {
         var settlement = new Settlement();
@@ -101,6 +138,42 @@ public class P4StoryTests
         Assert.IsTrue(SettlementRules.IsRecordComplete(_lumberHome, settlement));
         Assert.AreEqual(_lumberHome, SettlementRules.FindRecordComplete(_config, settlement));
         Assert.IsFalse(ToyVisitRules.MoveIntoFreeHome(_config, settlement, _sleepy), "이미 주민");
+    }
+
+    [TestCase(1, true)]
+    [TestCase(2, false)]
+    public void MovingOtherVisitorIn_WarnsOnlyIfStoryHomesBecomeInsufficient(int homes, bool expected)
+    {
+        var settlement = new Settlement();
+        settlement.UnlockDevelopment("p4_first_home");
+        settlement.SetResident(_trader.OtterId, ResidentState.Visitor);
+        for (int i = 1; i <= homes; i++) settlement.AddHouse($"home_{i}", "bld_small_house", BuildingRules.HomeSlotId(i));
+        Assert.AreEqual(expected, ToyVisitRules.WouldDelayStoryMoveIn(_config, settlement, _lumber));
+        Assert.IsFalse(ToyVisitRules.WouldDelayStoryMoveIn(_config, settlement, _trader), "부탁의 주인공에게는 경고하지 않음");
+    }
+
+    [Test]
+    public void StoryHome_IsReservedAndCannotBeTakenByAnotherVisitor_AfterReload()
+    {
+        var settlement = new Settlement();
+        settlement.UnlockDevelopment("p4_first_home");
+        foreach (var otter in new[] { _trader, _lumber })
+        {
+            settlement.SetResident(otter.OtterId, ResidentState.Visitor);
+            settlement.MarkMet(otter.OtterId);
+        }
+        settlement.AddHouse("story_home", "bld_small_house", BuildingRules.HomeSlotId(1));
+        var saved = new SettlementSaveData();
+        settlement.Write(saved);
+        var loaded = new Settlement();
+        loaded.Load(saved);
+        Assert.IsFalse(ToyVisitRules.CanMoveIn(_config, loaded, _lumber));
+        Assert.IsFalse(ToyVisitRules.MoveIntoFreeHome(_config, loaded, _lumber));
+        Assert.IsTrue(ToyVisitRules.CanMoveIn(_config, loaded, _trader));
+        Assert.IsTrue(ToyVisitRules.MoveIn(_config, loaded, _trader));
+        Assert.AreEqual(_trader.OtterId, loaded.FindHouseBySlot(BuildingRules.HomeSlotId(1)).ResidentId);
+        loaded.AddHouse("spare_home", "bld_small_house", BuildingRules.HomeSlotId(2));
+        Assert.IsTrue(ToyVisitRules.MoveIn(_config, loaded, _lumber));
     }
 
     [Test]

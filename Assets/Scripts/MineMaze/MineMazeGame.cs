@@ -92,6 +92,13 @@ public class MineMazeGame : MonoBehaviour
             // 캔 광석 · 돌은 가방으로 바로 (못 들어간 것만 작업대에)
             if (InventoryManager.Instance != null)
                 _model.UseBag(new InventoryOreBag(InventoryManager.Instance));
+            // 가방 밖의 광석을 재료로 이미 쓴 옛 세이브도 발견 기록으로 도감을 복구한다.
+            if (InventoryManager.Instance != null && CollectionManager.Instance != null)
+            {
+                foreach (var ore in _config.Rework.Ores)
+                    if (_model.IsDiscovered(ore) && InventoryManager.Instance.Config.ItemDatabase.TryGet(ore.OreId, out var item))
+                        CollectionManager.Instance.RegisterDiscovery(item, ItemChangeReason.Mining);
+            }
             // 작업대 · 판매는 진짜 골드로 (예전 갱도 골드는 여기서 한 번 옮김)
             var gold = MineMazeLinkConfig.Instance.Gold;
             if (CurrencyManager.Instance != null && gold != null)
@@ -452,7 +459,8 @@ public class MineMazeGame : MonoBehaviour
             _rock.PlaySpawn(_model.RockAhead.ToRock(), RockColor);
         _busy = false;
         if (moved && _model.OnStairs)
-            _hud.ShowToast("아래층으로 내려가는 계단이에요");
+            _hud.ShowToast(_model.IsSourceFloor ? (_model.FloorCleared ? "발생원을 제거한 자리예요" : "가스가 새어 나오는 발생 돌이에요")
+                : "아래층으로 내려가는 계단이에요");
         Save();
     }
 
@@ -637,8 +645,13 @@ public class MineMazeGame : MonoBehaviour
 
         public int Count(MineOreDefinition ore) => TryItem(ore, out var item) ? _manager.Inventory.GetCount(item) : 0;
 
-        public int Add(MineOreDefinition ore, int amount) =>
-            amount > 0 && TryItem(ore, out var item) ? _manager.Inventory.Add(item, amount, ItemChangeReason.Mining) : 0;
+        public int Add(MineOreDefinition ore, int amount)
+        {
+            if (amount <= 0 || !TryItem(ore, out var item)) return 0;
+            if (CollectionManager.Instance != null)
+                CollectionManager.Instance.RegisterDiscovery(item, ItemChangeReason.Mining);
+            return _manager.Inventory.Add(item, amount, ItemChangeReason.Mining);
+        }
 
         public int Remove(MineOreDefinition ore, int amount)
         {
@@ -649,9 +662,11 @@ public class MineMazeGame : MonoBehaviour
         }
     }
 
-    public void SellOre(MineOreDefinition ore)
+    public bool SellOre(MineOreDefinition ore, int amount = 1)
     {
-        if (_model.Sell(ore, 1)) Save();
+        if (!_model.Sell(ore, amount)) return false;
+        Save();
+        return true;
     }
 
     public void HitGate()

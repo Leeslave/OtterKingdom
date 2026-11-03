@@ -404,6 +404,12 @@ public class DistrictMapView : MonoBehaviour
         foreach (var (block, root, land, half) in _labels)
         {
             if (root == null) continue;
+            // 배치할 물건과 확인 버튼을 가리지 않게 구역 색·테두리만 남긴다.
+            if (DecorModePresenter.IsActive || RelocationModePresenter.IsOpen)
+            {
+                root.gameObject.SetActive(false);
+                continue;
+            }
             if (focus != null)
             {
                 bool mine = block == focus;

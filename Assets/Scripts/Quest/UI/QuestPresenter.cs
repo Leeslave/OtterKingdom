@@ -157,9 +157,14 @@ public class QuestPresenter : MonoBehaviour
 
         var settlement = SettlementManager.Instance;
         var request = expFull && settlement != null ? settlement.LevelCapRequest : null;
+        var main = _manager.CurrentMainQuest;
+        _subtitleText.enableAutoSizing = true;
+        _subtitleText.fontSizeMin = 18f;
         _subtitleText.text = request != null
-            ? $"'{request.Title}'{KoreanParticle.ObjectParticle(request.Title)} 끝내면 다음 레벨(Lv.{request.KingdomLevel})로 올라가요!"
-            : _defaultSubtitle;
+            ? $"Lv.{request.KingdomLevel} 해금: {request.Title}" + (main != null ? $"\n다음 메인: {main.Title}" : "")
+            : main != null
+                ? $"다음 메인: {main.Title}\n{main.Description}"
+                : _defaultSubtitle;
     }
 
     // 처음 보는 한글을 폰트 아틀라스에 미리 넣는다 (동적 폰트).
@@ -167,7 +172,7 @@ public class QuestPresenter : MonoBehaviour
     // D3D12 에디터에서 GPU가 멈춰 크래시가 났다 (Unity 6000.3.8, 퀘스트 화면을 열 때 재현).
     private void PrepareGlyphs()
     {
-        var text = new StringBuilder("0123456789/ ,.보상 받기진행 중완료일일도전메인경험치LvMAX");
+        var text = new StringBuilder("0123456789/ ,.:다음 해금보상 받기진행 중완료일일도전메인경험치LvMAX");
         foreach (var quest in _manager.Database.Quests)
             text.Append(quest.Title).Append(quest.Description);
 

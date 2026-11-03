@@ -16,6 +16,7 @@ public static class RuntimeUIScrollSheet
         frame.anchorMin = new Vector2(safe.xMin / screenWidth + .04f, safe.yMin / screenHeight + .04f);
         frame.anchorMax = new Vector2(safe.xMax / screenWidth - .04f, safe.yMax / screenHeight - .04f);
         frame.offsetMin = frame.offsetMax = Vector2.zero;
+        frameObject.AddComponent<RuntimeSheetLayout>().Refresh();
         var image = frameObject.GetComponent<Image>();
         image.sprite = RuntimeUIKit.Style.Panel;
         image.type = Image.Type.Sliced;

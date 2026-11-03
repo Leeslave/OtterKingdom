@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// 광산 씬의 오래된 갱도 입구: 광산 카트 뒤의 숨 쉬는 빛 + "오래된 갱도" 글자. 갱도를 찾은 뒤에만 보이고(MineMazeRules.FoundDevelopment),
@@ -21,6 +22,7 @@ public class MineMazeEntranceView : MonoBehaviour
     private Camera _camera;
     private float _age;
     private bool _shown;
+    private Canvas _entryCanvas;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
@@ -79,6 +81,14 @@ public class MineMazeEntranceView : MonoBehaviour
         _label.color = new Color(1f, 0.95f, 0.75f);
         _label.sortingOrder = LabelOrder;
         _label.rectTransform.sizeDelta = new Vector2(6f, 2f);
+        // 좁은 화면에서 월드 카트가 잘려도 입장할 수 있는 고정 버튼.
+        _entryCanvas = RuntimeUIKit.CreateCanvas("OldTunnelEntry", 90, false);
+        _entryCanvas.transform.SetParent(transform, false);
+        var button = RuntimeUIKit.CreateButton(_entryCanvas.transform, "오래된 갱도", AskToEnter, RuntimeUIKit.ButtonKind.Feature);
+        var rect = (RectTransform)button.transform;
+        rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.zero;
+        rect.anchoredPosition = new Vector2(24f, 250f);
+        rect.sizeDelta = new Vector2(340f, 100f);
         SetShown(false);
     }
 
@@ -93,6 +103,7 @@ public class MineMazeEntranceView : MonoBehaviour
         _collider.enabled = shown;
         _glow.enabled = shown && _glow.sprite != null;
         _label.enabled = shown;
+        if (_entryCanvas != null) _entryCanvas.gameObject.SetActive(shown);
     }
 
     private void Update()
@@ -135,9 +146,17 @@ public class MineMazeEntranceView : MonoBehaviour
         if (game.IsScreenPointOverUI(screen))
             return;
         Vector2 world = _camera.ScreenToWorldPoint(screen);
-        if (!_collider.OverlapPoint(world))
+        var labelArea = new Rect((Vector2)_label.transform.position - _label.rectTransform.sizeDelta * .5f, _label.rectTransform.sizeDelta);
+        if (!_collider.OverlapPoint(world) && !labelArea.Contains(world))
             return;
 
+        AskToEnter();
+    }
+
+    private void AskToEnter()
+    {
+        var game = GameManager.Instance;
+        if (game == null || game.IsModalOpen) return;
         game.ShowConfirm("오래된 갱도", "깡깡이가 찾은 오래된 갱도에 들어가 볼까요?", () =>
         {
             var navigator = FindAnyObjectByType<SceneNavigator>();

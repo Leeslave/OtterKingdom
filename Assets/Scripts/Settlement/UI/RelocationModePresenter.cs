@@ -201,7 +201,7 @@ public class RelocationModePresenter : MonoBehaviour
         }
         _hint.text = slots.Count > 0
             ? $"반짝이는 빈 자리를 눌러 {placed.Decor.DisplayName}의 새 자리를 골라요"
-            : $"{kind}에 {placed.Decor.DisplayName}{KoreanParticle.SubjectParticle(placed.Decor.DisplayName)} 들어갈 빈 자리가 없어요. 영토를 넓히거나 물건을 치워 주세요";
+            : _manager.DistrictSpaceHint(order.Type);
         if (pan && changed)
             PanToSlots();
     }

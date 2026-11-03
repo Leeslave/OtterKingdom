@@ -26,6 +26,7 @@ public class GameNoticeToast : MonoBehaviour
     private bool _showing;
 
     public static bool IsShowing => _instance != null && _instance._showing;
+    public static bool Contains(string message) => IsShowing && _instance._current.Message == message;
 
     public static void EnsureExists()
     {
@@ -60,6 +61,10 @@ public class GameNoticeToast : MonoBehaviour
     {
         if (_showing)
         {
+            // 알림이 먼저 떠 있더라도 다른 창이 열리면 잠시 숨기고 시간을 멈춘다.
+            bool busy = PresentationGate.IsBusy;
+            _panel.gameObject.SetActive(!busy);
+            if (busy) return;
             _timer -= Time.unscaledDeltaTime;
             _group.alpha = Mathf.Clamp01(Mathf.Min(ShowSeconds - _timer, _timer) / FadeSeconds);
             if (_timer <= 0f)
@@ -95,6 +100,7 @@ public class GameNoticeToast : MonoBehaviour
 
     private void Close()
     {
+        PlazaTapInput.BlockCurrentGesture();
         _showing = false;
         _panel.gameObject.SetActive(false);
     }

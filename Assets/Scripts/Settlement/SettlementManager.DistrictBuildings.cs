@@ -39,9 +39,54 @@ public partial class SettlementManager
         if (type == DistrictType.None || board == null)
             return false;
         var slots = RelocationRules.FreeSlots(_config, Settlement, type, footprint, PlazaOccupied());
-        if (slots.Count == 0)
-            return false;
-        gridOrigin = DistrictRules.OriginIn(slots[0].Slot, footprint) + board.SaveOrigin;
-        return true;
+        var layout = DecorManager.Instance.GetLayout(board);
+        foreach (var slot in slots)
+        {
+            var candidate = DistrictRules.OriginIn(slot.Slot, footprint) + board.SaveOrigin;
+            if (layout.Check(decor, candidate, DecorRotation.R0) != DecorPlacementResult.Ok) continue;
+            gridOrigin = candidate;
+            return true;
+        }
+        return false;
+    }
+
+    public TerritoryExpansionDefinition NextDistrictExpansion(DistrictType type)
+    {
+        TerritoryExpansionDefinition best = null;
+        int bestScore = int.MaxValue;
+        foreach (var block in _config.DistrictBlocks)
+        {
+            if (block == null) continue;
+            var current = DistrictRules.TypeOf(block, Settlement);
+            if (current != DistrictType.None && current != type) continue;
+            int open = DistrictRules.OpenStages(block, Settlement);
+            if (open >= block.Stages.Count) continue;
+            foreach (var territory in _config.Territories)
+            {
+                if (territory == null || territory.ExpansionId != block.Stages[open].Development
+                    || HasDevelopment(territory.ExpansionId) || !ScoutingRules.CanOpenRoute(Settlement, territory)) continue;
+                int score = open * 10 + (block.SuggestedType == type ? 0 : 5);
+                if (score >= bestScore) continue;
+                best = territory; bestScore = score;
+            }
+        }
+        return best;
+    }
+
+    public string DistrictSpaceHint(DistrictType type)
+    {
+        foreach (var block in DistrictRules.PendingBlocks(_config, Settlement))
+            return $"마을회관 → 구역 정하기에서 {block.DisplayName}을 {Districts.DisplayName(type)}으로 정해 주세요.";
+        var territory = NextDistrictExpansion(type);
+        return territory != null
+            ? $"{territory.DisplayName}을 정찰·개간하면 {Districts.DisplayName(type)}에 쓸 땅이 넓어져요. 마을회관 → 섬 지도를 열어 보세요."
+            : $"{Districts.DisplayName(type)}에 빈자리가 부족해요. 물건을 옮기거나 섬 지도에서 새 땅을 열어 주세요.";
+    }
+
+    public void OpenDistrictExpansionMap(DistrictType type)
+    {
+        var territory = NextDistrictExpansion(type);
+        OpenIslandMap();
+        if (territory != null && _islandMap != null) _islandMap.Focus(territory.Direction);
     }
 }

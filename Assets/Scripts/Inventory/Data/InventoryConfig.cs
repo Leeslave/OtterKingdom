@@ -6,16 +6,16 @@ public class InventoryConfig : ScriptableObject
     [Header("슬롯 용량")]
     [Tooltip("처음 해금된 칸 수 (1 이상)")]
     [SerializeField]
-    private int _initialCapacity = 16;
+    private int _initialCapacity = 24;
 
     [Tooltip("확장 가능한 최대 칸 수 (초기 칸 수 이상), 여기까지 잠긴 칸으로 표시")]
     [SerializeField]
-    private int _maxCapacity = 40;
+    private int _maxCapacity = 56;
 
     [Header("확장")]
     [Tooltip("한 번 구매 시 늘어나는 칸 수 (1 이상)")]
     [SerializeField]
-    private int _expandStep = 4;
+    private int _expandStep = 8;
 
     [Tooltip("한 번 확장할 때의 가격 (0 이상)")]
     [SerializeField]

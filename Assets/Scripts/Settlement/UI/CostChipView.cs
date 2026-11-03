@@ -7,6 +7,14 @@ using UnityEngine.UI;
 /// </summary>
 public class CostChipView : MonoBehaviour
 {
+    private void FitAmount()
+    {
+        _amountText.enableAutoSizing = true;
+        _amountText.fontSizeMax = Mathf.Max(28f, _amountText.fontSizeMax);
+        _amountText.fontSizeMin = 16f;
+        _amountText.textWrappingMode = TextWrappingModes.NoWrap;
+        _amountText.overflowMode = TextOverflowModes.Overflow;
+    }
     [Header("구성 요소")]
     [SerializeField] private Image _icon;
     [SerializeField] private TextMeshProUGUI _amountText;
@@ -21,6 +29,7 @@ public class CostChipView : MonoBehaviour
     /// <summary>필요한 개수만 (가진 개수와 비교해 모자라면 빨강)</summary>
     public void BindCost(Sprite icon, int need, int have)
     {
+        FitAmount();
         gameObject.SetActive(true);
         _icon.sprite = icon;
         _icon.enabled = icon != null;
@@ -33,6 +42,7 @@ public class CostChipView : MonoBehaviour
     /// <summary>가진 개수 / 필요한 개수 + 체크</summary>
     public void BindProgress(Sprite icon, int have, int need)
     {
+        FitAmount();
         gameObject.SetActive(true);
         _icon.sprite = icon;
         _icon.enabled = icon != null;

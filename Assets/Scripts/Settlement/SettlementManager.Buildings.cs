@@ -96,7 +96,7 @@ public partial class SettlementManager
             case BuildingBlock.Traits:
                 return $"특성 해달이 모자라요 ({TraitNeedText(building)})";
             case BuildingBlock.Collection:
-                return $"도감을 {building.RequiredCollectionPercent}% 채우면 지을 수 있어요 (지금 {CollectionPercent}%)";
+                return $"도감을 {building.RequiredCollectionPercent}% 채우면 지을 수 있어요 (지금 {CollectionPercent}%). 요정 상점의 여러 모종을 길러 보고 낚시로 새 물고기를 모아 보세요.";
             case BuildingBlock.MaxCount:
                 if (building.FarmPart == FarmPartKind.Field)
                     return "왕국 레벨이 오르면 밭 칸을 더 지을 수 있어요";

@@ -980,10 +980,10 @@ public partial class SettlementManager : MonoBehaviour
         SaveRequested?.Invoke();
     }
 
-    // 만나면 바로 도감에 오르는 해달 (이야기로 찾아오는 해달: 해달이 · 꾸벅이 · 물감이 · 뚝딱이 · 포근이).
-    // 전문 해달은 배치, 관리 해달은 역할, 장난감 해달은 입주할 때 오름
+    // 방문객도 만났으면 도감에 등록한다. 집이 없어도 수집·이야기는 이어진다.
+    // 전문 해달은 배치, 관리 해달은 역할을 맡을 때 등록한다.
     private bool RegistersOnMeet(SettlementOtterDefinition otter) =>
-        otter.CollectionEntry != null && !otter.IsSpecialist && !otter.IsToyVisitor && FindRole(otter) == null;
+        otter.CollectionEntry != null && !otter.IsSpecialist && FindRole(otter) == null;
 
     /// <summary>새 해달 만나기 퀘스트가 세는 수: 광장에서 만난 해달 (처음부터 함께한 첫 해달은 뺌)</summary>
     public int MetOtterCount
@@ -1059,7 +1059,7 @@ public partial class SettlementManager : MonoBehaviour
         {
             if (otter == null || otter.CollectionEntry == null || collection.Collection.GetState(otter.CollectionEntry) == CollectionState.Collected)
                 continue;
-            // 전문 해달은 배치된 뒤, 이야기로 찾아온 해달은 만난 뒤, 장난감 해달은 입주한 뒤 (도감 항목이 생기기 전 세이브)
+            // 이전 세이브의 방문객도 만난 기록으로 복구한다. 입주 기록만 있는 옛 세이브도 유지한다.
             bool toyResident = otter.IsToyVisitor && Settlement.TryGetResidentState(otter.OtterId, out var state) && state == ResidentState.Resident;
             if (GetSpecialistState(otter) >= SpecialistState.Assigned || (RegistersOnMeet(otter) && Settlement.HasMet(otter.OtterId)) || toyResident)
                 collection.Register(otter.CollectionEntry.EntryId);
@@ -1347,6 +1347,8 @@ public partial class SettlementManager : MonoBehaviour
         }
         SyncLevelDevelopments(false);
         IsLoaded = true;
+        // 오프라인 건설·공동사업 보상을 주기 전에 제한부터 복구한다.
+        ApplyLevelCap();
         // 개발 메뉴 Fast Timers가 켜져 있으면 세이브에 남은 긴 건설·작업도 5초 안으로
         if (DevTimers.Fast)
         {

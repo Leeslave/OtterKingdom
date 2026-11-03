@@ -31,7 +31,7 @@ public static class GameNotices
 
     public static void Post(GameNotice notice)
     {
-        if (string.IsNullOrEmpty(notice.Message))
+        if (string.IsNullOrEmpty(notice.Message) || GameNoticeToast.Contains(notice.Message))
             return;
         foreach (var pending in Pending)
         {

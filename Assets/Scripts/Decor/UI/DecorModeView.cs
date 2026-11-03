@@ -80,6 +80,8 @@ public class DecorModeView : MonoBehaviour
 
     public void HideActions() => _actions.gameObject.SetActive(false);
 
+    public void SetPlacementValid(bool valid) => _confirmButton.interactable = valid;
+
     private IEnumerator ShakeHint()
     {
         var box = (RectTransform)_hintText.transform.parent;

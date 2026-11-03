@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,19 @@ using UnityEngine.UI;
 /// </summary>
 public class UIPopupAnimator : MonoBehaviour
 {
+    private static readonly HashSet<UIPopupAnimator> Visible = new HashSet<UIPopupAnimator>();
+    public static bool AnyVisible
+    {
+        get
+        {
+            Visible.RemoveWhere(popup => popup == null);
+            foreach (var popup in Visible)
+                if (popup.isActiveAndEnabled) return true;
+            return false;
+        }
+    }
+    private void OnEnable() => Visible.Add(this);
+    private void OnDisable() => Visible.Remove(this);
     [Header("구성 요소")]
     [Tooltip("뒤에 깔리는 반투명 검정 배경")]
     [SerializeField] private CanvasGroup _dim;
@@ -71,6 +85,8 @@ public class UIPopupAnimator : MonoBehaviour
     {
         if (!IsOpen) return;
 
+        PlazaTapInput.BlockCurrentGesture();
+        UITransitionShield.Block();
         IsOpen = false;
         Play(HideRoutine(onHidden));
     }
@@ -91,7 +107,8 @@ public class UIPopupAnimator : MonoBehaviour
     private void SetInteractable(bool value)
     {
         _panelGroup.interactable = value;
-        _panelGroup.blocksRaycasts = value;
+        // 연출 중에도 뒤 창으로 클릭이 통과하지 않게 한다.
+        _panelGroup.blocksRaycasts = true;
     }
 
     private IEnumerator ShowRoutine()

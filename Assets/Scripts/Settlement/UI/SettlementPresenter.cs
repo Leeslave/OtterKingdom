@@ -196,6 +196,12 @@ public class SettlementPresenter : MonoBehaviour
         var current = _manager.CurrentRequest;
         if (current != null)
         {
+            if (NeedsFarmExpansion(current))
+            {
+                var expansion = _manager.NextDistrictExpansion(DistrictType.Agricultural);
+                _guide.Show(expansion != null ? $"밭 준비: {expansion.DisplayName} 정찰·개간" : "밭 준비: 농업 지역을 정해요", "섬 지도");
+                return;
+            }
             if (!settlement.BoardVisited)
                 _guide.Show("게시판을 확인해요", "확인하기");
             else if (!TryShowPreparationGuide(current))
@@ -299,8 +305,17 @@ public class SettlementPresenter : MonoBehaviour
 
     private bool IsIn(ZoneDefinition zone) => _navigator != null && zone != null && _navigator.CurrentZone == zone;
 
+    private bool NeedsFarmExpansion(BoardRequestDefinition request) => _manager.PlayerLevel >= 10
+        && request.Building != null && request.Building.RequiredLevel > _manager.PlayerLevel
+        && !_manager.HasDevelopment("farmland") && !_manager.HasDistrictFor(DistrictType.Agricultural);
+
     private void HandleGuideClicked()
     {
+        if (_manager.CurrentRequest != null && NeedsFarmExpansion(_manager.CurrentRequest))
+        {
+            _manager.OpenDistrictExpansionMap(DistrictType.Agricultural);
+            return;
+        }
         var assigned = _manager.AssignedNotWorking;
         if (assigned != null && assigned.WorkRegion.Zone != null && !IsIn(assigned.WorkRegion.Zone))
         {

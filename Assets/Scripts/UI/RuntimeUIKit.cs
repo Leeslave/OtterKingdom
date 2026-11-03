@@ -69,6 +69,7 @@ public static class RuntimeUIKit
         var rect = (RectTransform)go.transform;
         Stretch(rect);
         go.GetComponent<Image>().color = DimColor;
+        go.AddComponent<RuntimeModalSurface>();
         return rect;
     }
 
@@ -142,7 +143,11 @@ public static class RuntimeUIKit
         var button = go.GetComponent<Button>();
         button.targetGraphic = image;
         if (onClick != null)
-            button.onClick.AddListener(() => onClick());
+            button.onClick.AddListener(() =>
+            {
+                PlazaTapInput.BlockCurrentGesture();
+                onClick();
+            });
         return button;
     }
 

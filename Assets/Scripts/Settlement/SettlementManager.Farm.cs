@@ -307,7 +307,7 @@ public partial class SettlementManager
         Settlement.UnlockDevelopment(FarmPathDevelopment);
         Settlement.UnlockDevelopment(FarmlandDevelopment);
         CompletePlazaFarmOpening();
-        GameNotices.Post(new GameNotice("농업 지역에 밭을 지을 수 있어요! (꾸미기 → 밭 칸)"));
+        GameNotices.Post(new GameNotice("농업 지역에 밭을 지을 수 있어요! 농부가 작물을 거두려면 수확 상자도 하나 지어 주세요. (꾸미기 → 건물)"));
         SaveRequested?.Invoke();
     }
 

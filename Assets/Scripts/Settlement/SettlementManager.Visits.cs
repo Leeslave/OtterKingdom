@@ -21,7 +21,7 @@ public partial class SettlementManager
 
     /// <summary>찾아와 만났지만 빈 집이 없어 광장에 머무는 장난감 해달인지 (말을 걸면 "빈 집이 생기면…")</summary>
     public bool IsHomelessVisitor(SettlementOtterDefinition otter) =>
-        (ToyVisitRules.IsHomelessVisitor(Settlement, otter) || IsWaitingSettler(otter)) && ToyVisitRules.FindFreeHome(_config, Settlement) == null;
+        (ToyVisitRules.IsHomelessVisitor(Settlement, otter) || IsWaitingSettler(otter)) && ToyVisitRules.FindFreeHome(_config, Settlement, otter) == null;
 
     // 입주 부탁(P4)이 기다리는 해달: 광장에서 만났고 아직 주민이 아님 (장난감 해달이 아니어도 — 꾸벅이)
     private bool IsWaitingSettler(SettlementOtterDefinition otter) =>
@@ -29,7 +29,7 @@ public partial class SettlementManager
 
     /// <summary>입주 부탁이 기다리는 해달이 빈 집에 들어갈 수 있는지</summary>
     public bool CanMoveInAsSettler(SettlementOtterDefinition otter) =>
-        IsWaitingSettler(otter) && ToyVisitRules.FindFreeHome(_config, Settlement) != null;
+        IsWaitingSettler(otter) && ToyVisitRules.FindFreeHome(_config, Settlement, otter) != null;
 
     /// <summary>
     /// 광장 꾸미기 격자에 놓인 장난감 중 가장 높은 등급 (ItemRarity.Tier). 장난감이 없거나 꾸미기를 아직 모르면 -1

@@ -711,6 +711,7 @@ public class GameUI : MonoBehaviour
 
     private void CloseModal(GameObject modal)
     {
+        PlazaTapInput.BlockCurrentGesture();
         modals.Remove(modal);
         modalRefreshers.Remove(modal);
         if (alertModals.TryGetValue(modal, out var message))
@@ -718,6 +719,7 @@ public class GameUI : MonoBehaviour
             alertModals.Remove(modal);
             openAlertMessages.Remove(message);
         }
+        modal.SetActive(false);
         Destroy(modal);
     }
 
@@ -780,7 +782,11 @@ public class GameUI : MonoBehaviour
 
         var button = go.GetComponent<Button>();
         button.targetGraphic = image;
-        if (onClick != null) button.onClick.AddListener(() => onClick());
+        if (onClick != null) button.onClick.AddListener(() =>
+        {
+            PlazaTapInput.BlockCurrentGesture();
+            onClick();
+        });
         return button;
     }
 

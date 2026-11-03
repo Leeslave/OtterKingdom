@@ -198,6 +198,75 @@ public class CollectionTests
         Assert.AreEqual(CollectionState.Unknown, _collection.GetState(_carrot));
     }
 
+    [TestCase(ItemChangeReason.Mining)]
+    [TestCase(ItemChangeReason.Fishing)]
+    [TestCase(ItemChangeReason.Harvest)]
+    public void Discovery_WithFullBag_IsRegisteredOnceAndSurvivesSave(ItemChangeReason reason)
+    {
+        var inventory = new Inventory(capacity: 1, maxCapacity: 1);
+        inventory.LoadItem(_trashItem, 1);
+        Assert.AreEqual(0, inventory.Add(_carrotItem, 1, reason));
+        Assert.IsTrue(CollectionAutoCollector.Discover(_collection, _database, _carrotItem, reason));
+        Assert.IsFalse(CollectionAutoCollector.Discover(_collection, _database, _carrotItem, reason));
+        var saved = new List<CollectionSaveEntry>();
+        CollectionSaveConverter.Write(_collection, saved);
+        var restored = new Collection();
+        CollectionSaveConverter.Read(saved, restored);
+        Assert.AreEqual(CollectionState.Collected, restored.GetState(_carrot));
+    }
+
+    [TestCase(ItemChangeReason.Purchase)]
+    public void Discovery_PurchasedItemDoesNotUnlockCollection(ItemChangeReason reason)
+    {
+        Assert.IsFalse(CollectionAutoCollector.Discover(_collection, _database, _carrotItem, reason));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void VisitorWithoutHome_RegistersOnMeetAndRestoresFromOldSave(bool alreadyMet)
+    {
+        var visitor = Track(ScriptableObject.CreateInstance<SettlementOtterDefinition>());
+        var otterData = new SerializedObject(visitor);
+        otterData.FindProperty("_otterId").stringValue = "visitor";
+        otterData.FindProperty("_toyVisitor").boolValue = true;
+        otterData.FindProperty("_collectionEntry").objectReferenceValue = _farmer;
+        otterData.ApplyModifiedPropertiesWithoutUndo();
+        var config = Track(ScriptableObject.CreateInstance<SettlementConfig>());
+        var configData = new SerializedObject(config);
+        var otters = configData.FindProperty("_otters");
+        otters.arraySize = 1;
+        otters.GetArrayElementAtIndex(0).objectReferenceValue = visitor;
+        configData.ApplyModifiedPropertiesWithoutUndo();
+
+        var collectionObject = Track(new GameObject("QA Collection"));
+        collectionObject.SetActive(false);
+        var collector = collectionObject.AddComponent<CollectionManager>();
+        var collectorData = new SerializedObject(collector);
+        collectorData.FindProperty("_database").objectReferenceValue = _database;
+        collectorData.ApplyModifiedPropertiesWithoutUndo();
+        typeof(CollectionManager).GetMethod("Awake", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            .Invoke(collector, null); // EditMode에서는 MonoBehaviour 생명주기를 직접 시작
+        collectionObject.SetActive(true);
+        var managerObject = Track(new GameObject("QA Settlement"));
+        var manager = managerObject.AddComponent<SettlementManager>();
+        var managerData = new SerializedObject(manager);
+        managerData.FindProperty("_config").objectReferenceValue = config;
+        managerData.ApplyModifiedPropertiesWithoutUndo();
+        typeof(SettlementManager).GetMethod("Awake", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            .Invoke(manager, null);
+        var saved = new SettlementSaveData { initialized = true, version = SettlementSaveData.CurrentVersion };
+        saved.residents.Add(new ResidentSaveData { otterId = "visitor", state = ResidentState.Visitor });
+        if (alreadyMet) saved.metOtters.Add("visitor");
+        manager.LoadFromSave(saved);
+        collector.LoadFromSave(new List<CollectionSaveEntry>());
+        if (alreadyMet) manager.SyncSpecialistCollection();
+        else manager.Meet(visitor);
+
+        Assert.AreEqual(CollectionState.Collected, collector.Collection.GetState(_farmer));
+        Assert.IsTrue(manager.Settlement.TryGetResidentState("visitor", out var state));
+        Assert.AreEqual(ResidentState.Visitor, state, "도감 등록을 위해 입주할 필요가 없어야 함");
+    }
+
     [Test]
     public void AutoCollect_ItemWithoutEntry_IsIgnored()
     {

@@ -1334,6 +1334,9 @@ public partial class GameManager : MonoBehaviour
     {
         if (!TryFindItem(itemId, out var item)) return;
 
+        bool discovered = CollectionManager.Instance != null
+            && CollectionManager.Instance.RegisterDiscovery(item, ItemChangeReason.Fishing);
+
         if (Bag.GetAddableAmount(item) > 0)
         {
             // 어업 작업소 + 낚시 해달 장신구 "얻는 양": 가끔 한 마리 더 (가방에 들어가는 만큼)
@@ -1348,8 +1351,12 @@ public partial class GameManager : MonoBehaviour
         if (!fullBagCatchAlertShown)
         {
             fullBagCatchAlertShown = true;
-            gameUI.ShowAlert("가방이 가득 차서\n잡은 것을 놓아줬어요.");
+            if (Bag.FreeSlots <= 0)
+                GameNotices.Post(new GameNotice("가방 칸이 가득 차서 잡은 것을 놓아줬어요. 남는 것을 팔거나 칸을 늘려 주세요.", "칸 늘리기", InventoryExpansionSheet.Open));
+            else
+                GameNotices.Post(new GameNotice($"{item.DisplayName} 보관 한도에 도달했어요. 가방에서 판매하면 다시 보관할 수 있어요."));
         }
+        if (discovered) SaveNow();
     }
 
     // -------------------------------------------------------------- mining
