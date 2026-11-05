@@ -12,6 +12,13 @@ public static class ZoneAccess
         return settlement == null || settlement.IsZoneOpen(zone);
     }
 
+    /// <summary>
+    /// 이동 지도에 카드를 보일지. 밭은 광장 농업 지역으로 옮겨 와 장소로 열리지 않으므로,
+    /// 농업 지역을 아직 안 정한 옛 세이브처럼 밭 씬에 실제로 갈 수 있을 때만 보인다 (잠긴 밭 카드를 남기지 않음)
+    /// </summary>
+    public static bool ShowsOnTravelMap(ZoneDefinition zone) =>
+        zone != null && (zone.ZoneId != GameManager.FarmZoneId || IsOpen(zone));
+
     /// <summary>왕국 레벨 조건만</summary>
     public static bool IsLevelReached(ZoneDefinition zone)
     {
