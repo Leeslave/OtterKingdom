@@ -86,8 +86,9 @@ public class MineMazeEntranceView : MonoBehaviour
         _entryCanvas.transform.SetParent(transform, false);
         var button = RuntimeUIKit.CreateButton(_entryCanvas.transform, "오래된 갱도", AskToEnter, RuntimeUIKit.ButtonKind.Feature);
         var rect = (RectTransform)button.transform;
-        rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.zero;
-        rect.anchoredPosition = new Vector2(24f, 250f);
+        rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(1f, 0f);
+        // Match the pickaxe upgrade button's height from the bottom and margin from the side.
+        rect.anchoredPosition = new Vector2(-40f, 270f);
         rect.sizeDelta = new Vector2(340f, 100f);
         SetShown(false);
     }
