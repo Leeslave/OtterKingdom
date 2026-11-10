@@ -112,9 +112,12 @@ public class SaveData
     // 3: tutorialsDone exists (older saves skip every zone tutorial).
     // 4: settlement exists (older saves get every board request completed,
     //    so a farm they already use isn't locked again).
+    // 5: prosperity research and one-time RP grant records (industry stays in settlement).
     // The upgrade steps live in SaveMigrations — raise this and add a step there.
-    public const int CurrentSchemaVersion = 4;
+    // 6: reconnect old gas/castle completion records to prosperity onboarding.
+    public const int CurrentSchemaVersion = 6;
     public int schemaVersion = CurrentSchemaVersion;
+    public ProsperitySaveData prosperity = new ProsperitySaveData();
     public int lifetimeSales;
     public int farmLevel = 1;
     // 옛 낚싯대 레벨 (1~20). 낚시 개편 뒤에는 fishing의 줄 · 찌 · 릴 단계로 옮겨 씀 (FishingService.Migrate)

@@ -14,6 +14,7 @@ public enum ProjectActionKind
     SettleResident = 3,       // 새 이웃을 만나 그 집에 입주시킴
     PlaceWelcomeProp = 4,     // 생활 소품 하나를 골라 설치 (선택지 = 건설 부탁 여러 개)
     HoldGathering = 5,        // 플레이어가 [모임 열기]를 누름
+    ConfirmPlan = 6,          // 납품 뒤 계획을 확정 (첫 마을 모임·연출과 별도 기록)
 }
 
 /// <summary>공동사업의 단계 하나 (재료 납품 뒤에 차례로)</summary>

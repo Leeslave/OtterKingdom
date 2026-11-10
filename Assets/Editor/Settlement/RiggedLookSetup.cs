@@ -18,7 +18,7 @@ public static class RiggedLookSetup
     /// <summary>정착 해달 → 리그 (PlazaOtter_&lt;rig&gt;Rigged). 농부는 V14 농부 리그(PlazaOtter_Rigged)</summary>
     private static readonly (string otterId, string rig)[] Assignments =
     {
-        ("otter_first", "Walker"),          // 해달이: 산책하는
+        ("otter_first", "Hero"),            // 해달이: 실제 광장 주인공 리그
         ("otter_painter", "Plaid"),       // 물감이: 꾸미는
         ("otter_sleepy", "BearPajama"),         // 꾸벅이: 잠꾸러기
         ("otter_receptionist", "Reception"),// 또박이: 안내원
@@ -61,6 +61,9 @@ public static class RiggedLookSetup
             return;
         }
         plaza.objectReferenceValue = prefab;
+        if (otterId == "otter_first")
+            otterSo.FindProperty("_portrait").objectReferenceValue =
+                AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Otter/ICON_Otter_Hero.png");
         otterSo.FindProperty("_plazaTint").colorValue = Color.white;
     }
 

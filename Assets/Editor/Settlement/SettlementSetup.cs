@@ -45,7 +45,7 @@ public static partial class SettlementSetup
     // 광부·농부: 광장 그림은 광산·밭에서 쓰는 그림 그대로 (광부 = SpecialistOtterSetup이 만드는 PlazaOtter_Miner, 농부 = 농부 모습의 PlazaOtter)
     private static readonly (string asset, string id, string name, string portrait, string prefab, bool builder, string arrival)[] Otters =
     {
-        ("Otter_First", "otter_first", "해달이", "ICON_Otter_Cast_Explorer", "PlazaOtter_Cast_Explorer", false, "gb_first_arrival"),
+        ("Otter_First", "otter_first", "해달이", "ICON_Otter_Hero", "PlazaOtter_Cast_Explorer", false, "gb_first_arrival"),
         ("Otter_Painter", "otter_painter", "물감이", "ICON_Otter_Cast_Berry", "PlazaOtter_Cast_Berry", false, "gb_painter_arrival"),
         ("Otter_Sleepy", "otter_sleepy", "꾸벅이", "ICON_Otter_Cast_Night", "PlazaOtter_Cast_Night", false, "gb_sleepy_arrival"),
         ("Otter_Builder", "otter_builder", "뚝딱이", "ICON_Otter_Cast_Sunny", null, true, "gb_builder_arrival"),

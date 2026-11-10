@@ -174,6 +174,18 @@ public class QuestLog
         return true;
     }
 
+    /// <summary>현재 보유량 목표 전용. 달성 전에는 소비한 만큼 표시도 줄이며, 달성/수령 기록은 보존한다.</summary>
+    public bool SetObservedProgress(QuestDefinition quest, int value)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+        if (GetStatus(quest) != QuestStatus.InProgress) return false;
+        int progress = Math.Min(Math.Max(0, value), quest.Goal);
+        if (GetRecord(quest).Progress == progress) return false;
+        _records[quest.QuestId] = new QuestRecord(progress, false);
+        OnChanged?.Invoke(quest);
+        return true;
+    }
+
     /// <summary>보상 받음으로 표시. 목표를 달성했고 아직 받지 않았을 때만.</summary>
     /// <param name="level">받는 순간의 왕국 레벨 (목록에서 "이번 레벨에 받은 퀘스트"를 가려내는 데 씀)</param>
     /// <returns>받음으로 바뀌었으면 true (보상 지급은 호출한 쪽이 한다)</returns>

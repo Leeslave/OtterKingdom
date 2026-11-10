@@ -71,6 +71,7 @@ public static class CommunityProjectRules
 
     /// <summary>모임을 연 기록</summary>
     public static string GatheringFlag(CommunityProjectDefinition project) => "gathering_held_" + project.ProjectId;
+    public static string PlanConfirmationFlag(CommunityProjectDefinition project) => "plan_confirmed_" + project.ProjectId;
 
     /// <summary>사업 보상 기록 키 (사업 ID#회차)</summary>
     public static string RewardKey(CommunityProjectDefinition project, int cycle) => $"{project.ProjectId}#{cycle}";
@@ -227,6 +228,8 @@ public static class CommunityProjectRules
 
             case ProjectActionKind.HoldGathering:
                 return settlement.HasFlag(GatheringFlag(project)) ? ProjectStageState.Done : ProjectStageState.Ready;
+            case ProjectActionKind.ConfirmPlan:
+                return settlement.HasFlag(PlanConfirmationFlag(project)) ? ProjectStageState.Done : ProjectStageState.Ready;
 
             default:
                 return ProjectStageState.Done;

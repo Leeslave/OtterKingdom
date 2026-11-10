@@ -14,6 +14,9 @@ public static class SaveDataSanitizer
             throw new System.ArgumentNullException(nameof(save));
 
         var fixes = new List<string>();
+        if (save.prosperity == null) { save.prosperity = new ProsperitySaveData(); fixes.Add("prosperity"); }
+        if (ProsperityResearch.Sanitize(save.prosperity)) fixes.Add("prosperity: repaired");
+        if (ProsperityMigration.Reconcile(save)) fixes.Add("prosperity: progress records");
 
         // JsonUtility는 빠진 필드를 기본값으로 채우지만, 손으로 고친 파일 등에서 null이 들어올 수 있음
         if (save.tutorialsDone == null) { save.tutorialsDone = new List<string>(); fixes.Add("tutorialsDone"); }

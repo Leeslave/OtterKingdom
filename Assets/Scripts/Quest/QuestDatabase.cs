@@ -15,6 +15,13 @@ public class QuestDatabase : ScriptableObject
     private Dictionary<string, QuestDefinition> _byId;
     private List<QuestDefinition> _valid;
 
+    internal void AppendRuntime(IEnumerable<QuestDefinition> quests)
+    {
+        _quests = new List<QuestDefinition>(_quests);
+        _quests.AddRange(quests);
+        _byId = null;
+    }
+
     /// <summary>ID가 겹치거나 빈 칸을 뺀 퀘스트 (SortOrder → ID 순)</summary>
     public IReadOnlyList<QuestDefinition> Quests
     {

@@ -59,7 +59,28 @@ def main():
             cuts += 1
         for index in re.findall(r"  - _cut: (\d+)", story_text):
             assert int(index) < len(refs), entry_id
+    # Compare the displayed hero to the actual configured plaza prefab, not a legacy assignment.
+    hero = (DATA / "Settlement/Otters/Otter_First.asset").read_text(encoding="utf-8-sig")
+    prefab_id = reference(hero, "plazaPrefab")
+    prefab = next(p for p in (ROOT / "Assets/Prefabs/Plaza").glob("*.prefab") if guid(p) == prefab_id)
+    rig_folder = re.search(r"^  resourceFolder: (.+)$", prefab.read_text(encoding="utf-8-sig"), re.M)[1]
+    assert rig_folder == "HeroRigV1", "The configured hero and portrait generator must use the same rig"
+    hero_guid = reference(hero, "portrait")
+    for path in (portraits[hero_guid], ROOT / "Assets/Art/Otter/ICON_Otter_Cast_Explorer.png",
+                 ROOT / "Assets/Art/Settlement/ICON_Otter_Snack.png"):
+        with Image.open(path) as image:
+            expected = build.rig_portrait(rig_folder, image.size)
+            assert image.convert("RGBA").tobytes() == expected.tobytes(), f"Legacy hero image: {path}"
+    ui = (ROOT / "Assets/Resources/GlobalUI.prefab").read_text(encoding="utf-8-sig")
+    blocks = re.split(r"(?=^--- !u!)", ui, flags=re.M)
+    topbar = next(b for b in blocks if "guid: f4f52034c887ee248bf8042f66d8364f," in b)
+    portrait_id = re.search(r"  _portrait: \{fileID: (\d+)\}", topbar)[1]
+    portrait_image = next(b for b in blocks if re.match(r"--- !u!\d+ &" + portrait_id + r"\b", b))
+    assert re.search(r"  m_Sprite: .*guid: (\w+)", portrait_image)[1] == hero_guid
+    tutorial = (ROOT / "Assets/Resources/TutorialStyle.asset").read_text(encoding="utf-8-sig")
+    assert reference(tutorial, "guidePortrait") == hero_guid
     print(f"Otter art: {entries} stories, {cuts} rig-rendered cuts, matching transparent detail/profile portraits passed")
+    print("Hero UI: actual plaza rig, initial profile icon, tutorial portrait and legacy image aliases passed")
 
 
 if __name__ == "__main__":

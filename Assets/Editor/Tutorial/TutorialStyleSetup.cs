@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using static CollectionSetup;
@@ -26,7 +26,7 @@ public static class TutorialStyleSetup
         so.FindProperty("_bodyFont").objectReferenceValue = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BodyFontPath);
         so.FindProperty("_panel").objectReferenceValue = LoadPanelSprite();
         so.FindProperty("_divider").objectReferenceValue = ImportSprite(CollectionSpriteFolder, "UI_Deco_Leaf");
-        so.FindProperty("_guidePortrait").objectReferenceValue = ImportSprite("Assets/Art/Otter", "ICON_Otter_Cast_Explorer");
+        so.FindProperty("_guidePortrait").objectReferenceValue = ImportSprite("Assets/Art/Otter", "ICON_Otter_Hero");
         so.FindProperty("_portraitFrame").objectReferenceValue = LoadSprite(CommonSpriteFolder, "UI_RoundButton_Cream");
         so.FindProperty("_nextButton").objectReferenceValue = LoadSprite(CommonSpriteFolder, "UI_Button_Primary");
         so.FindProperty("_skipButton").objectReferenceValue = LoadSprite(CommonSpriteFolder, "UI_Button_Secondary");

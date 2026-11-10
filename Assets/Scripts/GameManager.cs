@@ -382,6 +382,7 @@ public partial class GameManager : MonoBehaviour
         DecorManager.SaveRequested += SaveNow;
         GachaManager.SaveRequested += SaveNow;
         ProfileManager.SaveRequested += SaveNow;
+        ProsperityManager.SaveRequested += SaveNow;
         FairyShopPresenter.Opened += HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan += HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted += HandleBuildStarted;
@@ -397,6 +398,7 @@ public partial class GameManager : MonoBehaviour
         DecorManager.SaveRequested -= SaveNow;
         GachaManager.SaveRequested -= SaveNow;
         ProfileManager.SaveRequested -= SaveNow;
+        ProsperityManager.SaveRequested -= SaveNow;
         FairyShopPresenter.Opened -= HandleFairyShopOpened;
         DecorModePresenter.BuildPlacementBegan -= HandleBuildPlacementBegan;
         DecorModePresenter.BuildStarted -= HandleBuildStarted;
@@ -535,6 +537,7 @@ public partial class GameManager : MonoBehaviour
         }
 
         var collection = CollectionManager.Instance;
+        ProsperityManager.EnsureLoaded(save.prosperity, profile);
         if (collection != null && loadedCollection != collection)
         {
             loadedCollection = collection;
@@ -813,6 +816,7 @@ public partial class GameManager : MonoBehaviour
 
     private void SaveNow()
     {
+        if (_prosperitySaves.TryDefer()) return;
         // Before the bag is written: loading decor may take an old save's
         // placed toys out of the bag.
         LoadGlobalProgressOnce();
@@ -823,6 +827,7 @@ public partial class GameManager : MonoBehaviour
         if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(save.collection);
         if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(save.quests);
         if (ProfileManager.Instance != null) ProfileManager.Instance.WriteToSave(save.profile ??= new ProfileSaveData());
+        if (ProsperityManager.Instance != null) save.prosperity = ProsperityManager.Instance.Research.Data;
         if (SettlementManager.Instance != null) SettlementManager.Instance.WriteToSave(save.settlement ??= new SettlementSaveData());
         if (DecorManager.Instance != null) DecorManager.Instance.WriteToSave(save.decor ??= new DecorSaveData());
         if (GachaManager.Instance != null && GachaManager.Instance.IsLoaded) GachaManager.Instance.WriteToSave(save.gacha ??= new GachaSaveData());

@@ -416,6 +416,94 @@ public class P3ProjectTests
 
     #region 납품
 
+    private void ProsperityProfile()
+    {
+        // 기존 P3 테스트 표는 Lv.12까지만 있으므로 이 두 사례에서만 확장한다.
+        var so = new SerializedObject(_levelTable);
+        var levels = so.FindProperty("_levels");
+        int previousCount = levels.arraySize;
+        levels.arraySize = 49;
+        for (int i = previousCount; i < levels.arraySize; i++)
+            levels.GetArrayElementAtIndex(i).FindPropertyRelative("_expToNext").intValue = 10000;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        Profile(25);
+    }
+
+    [Test]
+    public void ProsperityPlan_PartialDeliveryRestores_ConfirmsOnce_WithoutFirstGathering()
+    {
+        ProsperityProfile();
+        var plan = Project(ProsperityResearch.PlanProjectId, 0, 20, ProsperityResearch.EraDevelopment, 0,
+            new[] { (_wood, 12), (_stone, 12) },
+            new[] { new ProjectStageDefinition("confirm", ProjectActionKind.ConfirmPlan, "계획 확정") },
+            ProsperityResearch.PlanDevelopment, 0);
+        var wallet = new FakeWallet();
+        wallet.Items[_wood] = 5;
+        var manager = Manager(Saved(HallDone()), wallet);
+        manager.RegisterProsperityPlan(plan);
+        Assert.AreEqual(ProjectPhase.Locked, manager.GetProjectStatus(plan).Phase);
+        Assert.AreEqual(0, manager.TryDeliver(plan, 0));
+        manager.BeginProsperity();
+        Assert.AreEqual(ProjectPhase.Delivering, manager.GetProjectStatus(plan).Phase);
+        Assert.AreEqual(ProjectActionResult.NotNow, manager.TryAdvanceProject(plan));
+        Assert.IsTrue(manager.TryDeliverAll(plan));
+        Assert.AreEqual(5, manager.Settlement.GetProject(plan.ProjectId).Delivered(_wood.ItemId));
+        Assert.IsFalse(manager.TryDeliverAll(plan));
+
+        var wallet2 = new FakeWallet();
+        wallet2.Items[_wood] = 7;
+        wallet2.Items[_stone] = 12;
+        var restored = Manager(Saved(manager.Settlement), wallet2);
+        restored.RegisterProsperityPlan(plan);
+        Assert.IsTrue(restored.TryDeliverAll(plan));
+        Assert.AreEqual(0, wallet2.Count(_wood));
+        Assert.AreEqual(0, wallet2.Count(_stone));
+        Assert.IsFalse(CommunityProjectRules.IsCompleted(plan, restored.Settlement), "납품만으로 완료하지 않음");
+        Assert.AreEqual(ProjectPhase.Stage, restored.GetProjectStatus(plan).Phase);
+        int gatheringEvents = 0, completions = 0;
+        restored.OnGatheringHeld += _ => gatheringEvents++;
+        restored.OnProjectCompleted += (project, xp) => { if (project == plan) completions++; };
+        Assert.AreEqual(ProjectActionResult.Done, restored.TryAdvanceProject(plan));
+        Assert.AreEqual(ProjectActionResult.NotNow, restored.TryAdvanceProject(plan));
+        Assert.IsTrue(CommunityProjectRules.IsCompleted(plan, restored.Settlement));
+        Assert.IsTrue(restored.HasDevelopment(ProsperityResearch.PlanDevelopment));
+        Assert.IsFalse(restored.HasHeldGathering);
+        Assert.AreEqual(0, gatheringEvents);
+        Assert.AreEqual(1, completions);
+
+        var reloaded = Manager(Saved(restored.Settlement));
+        reloaded.RegisterProsperityPlan(plan);
+        Assert.AreEqual(ProjectPhase.Completed, reloaded.GetProjectStatus(plan).Phase);
+        Assert.IsFalse(reloaded.TryDeliverAll(plan));
+        var research = new ProsperityResearch(new ProsperitySaveData());
+        research.CompleteIntro(25, true, true);
+        Assert.IsTrue(research.SyncPlanReward(CommunityProjectRules.IsCompleted(plan, reloaded.Settlement)));
+        Assert.IsFalse(research.SyncPlanReward(true));
+        Assert.AreEqual(10, research.Data.rp);
+    }
+
+    [Test]
+    public void ProsperityPlan_IsNotBlockedByLegacyRepeatingProject()
+    {
+        ProsperityProfile();
+        var settlement = HallDone();
+        settlement.UnlockDevelopment("first_gathering_complete");
+        foreach (var id in new[] { "p3_supply_01", "p3_plaza_01", "p3_neighbor_01", "p3_welcome_01", "p3_gathering_01" })
+            settlement.MarkProjectCompleted(id);
+        var manager = Manager(Saved(settlement), RichWithItems());
+        var plan = Project(ProsperityResearch.PlanProjectId, 0, 20, ProsperityResearch.EraDevelopment, 0,
+            new[] { (_wood, 12), (_stone, 12) },
+            new[] { new ProjectStageDefinition("confirm", ProjectActionKind.ConfirmPlan, "계획 확정") },
+            ProsperityResearch.PlanDevelopment, 0);
+        manager.RegisterProsperityPlan(plan);
+        manager.BeginProsperity();
+        Assert.AreEqual(_repeat, manager.ActiveProject);
+        Assert.IsTrue(manager.TryDeliverAll(plan));
+        Assert.AreEqual(ProjectActionResult.Done, manager.TryAdvanceProject(plan));
+        Assert.AreEqual(_repeat, manager.ActiveProject);
+        Assert.AreEqual(0, manager.Settlement.ProjectCycle(_repeat.ProjectId));
+    }
+
     [Test]
     public void Deliver_PartialThenRest_NoOverpay_SurvivesReload()
     {

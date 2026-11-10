@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -76,7 +76,7 @@ public static class TopBarSetup
         Place(avatar.rectTransform, new Vector2(0, 1), new Vector2(22, -70), new Vector2(128, 128));
         var avatarButton = avatar.gameObject.AddComponent<Button>();
         avatarButton.targetGraphic = avatar;
-        var portrait = CreateImage("Portrait", avatar.rectTransform, ImportSprite(OtterFolder, "ICON_Otter_Farmer"), false);
+        var portrait = CreateImage("Portrait", avatar.rectTransform, ImportSprite(OtterFolder, "ICON_Otter_Hero"), false);
         Place(portrait.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0, 5), new Vector2(92, 92));
         portrait.rectTransform.pivot = new Vector2(0.5f, 0.5f);
         portrait.preserveAspect = true;

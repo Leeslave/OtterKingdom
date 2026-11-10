@@ -6,6 +6,7 @@
 & Tools/Verification/build-check.ps1
 dotnet run --project Tools/Verification/ScoutingChecks.csproj --no-restore
 dotnet run --project Tools/Verification/RuntimeModelChecks.csproj --no-restore
+dotnet run --project Tools/Verification/ProsperityChecks.csproj
 node Tools/Verification/check-web-sync.mjs
 node Tools/Verification/check-content.mjs
 node Tools/Verification/economy-report.mjs

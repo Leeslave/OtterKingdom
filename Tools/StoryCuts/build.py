@@ -41,12 +41,12 @@ UP = dict(nearArm=-2.9, farArm=2.6, armOverHead=True)   # both arms up
 
 
 # ---------------------------------------------------------------------------------------------
-# 해달이 — the first otter, explorer (Walker)
+# 해달이 — the first otter (actual plaza HeroRigV1)
 @cut("otter_first_A")
 def first_a():
     c = Cut(map_bg(*BEACH, zoom=1.15))
     c.prop("Gacha/Shell_Common.png", 1060, 860, 90, shadow=.8)
-    c.otter("WalkerRigV1", 768, 820, 470)
+    c.otter("HeroRigV1", 768, 820, 470)
     c.scatter("Settlement/FX_Twinkle.png", (900, 700, 1500, 1000), 7, 46, seed=4, alpha=.8)
     return c.grade((255, 226, 190), .25).vignette(.35)
 
@@ -61,7 +61,7 @@ def first_b():
     c.otter("FisherRigV1", 1210, 680, 300, flip=True)
     c.otter("MinerRigV1", 1020, 620, 280, flip=True)
     c.otter("BaseballRigV1", 470, 600, 270)
-    c.otter("WalkerRigV1", 768, 950, 450, nearArm=WAVE, armOverHead=True, head="smile")
+    c.otter("HeroRigV1", 768, 950, 450, nearArm=WAVE, armOverHead=True, head="smile")
     return c.vignette(.3)
 
 
@@ -139,7 +139,7 @@ def painter_b():
     t = Cut(map_bg(1900, 1620, zoom=1.0))
     t.prop("Settlement/Prop_TownHall.png", 768, 560, 520)
     t.otter("PlaidRigV1", 1140, 900, 260)
-    t.otter("WalkerRigV1", 420, 900, 260)
+    t.otter("HeroRigV1", 420, 900, 260)
     picture = t.canvas.resize((840, 560))
     c.put(s.easel(860, 1000, picture), 900, 1110)
     c.otter("PlaidRigV1", 680, 950, 580, head="smile", nearArm=-1.2)
@@ -268,7 +268,7 @@ def builder_b():
 def photo_a():
     c = Cut(map_bg(*PLAZA, zoom=1.05))
     c.prop("Settlement/Building_PhotoStudio.png", 760, 520, 440, shadow=.9)
-    c.otter("WalkerRigV1", 768, 900, 420, flip=True)
+    c.otter("HeroRigV1", 768, 900, 420, flip=True)
     c.otter("PhotographerRigV1", 400, 920, 450, nearArm=WAVE, armOverHead=True)
     return c.vignette(.3)
 
@@ -277,7 +277,7 @@ def photo_a():
 def photo_b():
     c = Cut(map_bg(*PLAZA, zoom=1.05))
     c.prop("Settlement/Building_PhotoStudio.png", 760, 520, 440, shadow=.9)
-    c.otter("WalkerRigV1", 768, 900, 420, flip=True, head="smile")
+    c.otter("HeroRigV1", 768, 900, 420, flip=True, head="smile")
     c.otter("PhotographerRigV1", 400, 920, 450, nearArm=WAVE, armOverHead=True)
     c.glow(470, 420, 700, (255, 255, 230), .95)
     c.fx("Resources/PhotographerRigV1/flash_star.png", [(470, 420)], 260)
@@ -291,7 +291,7 @@ def photo_c():
     c.blur_back(1024, 6)
     shot = Cut(map_bg(*PLAZA, zoom=1.05))
     shot.prop("Settlement/Building_PhotoStudio.png", 560, 420, 400, shadow=.9)
-    shot.otter("WalkerRigV1", 820, 960, 640, flip=True, head="sleep")
+    shot.otter("HeroRigV1", 820, 960, 640, flip=True, head="sleep")
     photo = s.paper(560, 400, inner=shot.canvas.resize((560, 400)), color=(255, 255, 255, 255), radius=8)
     c.put(photo, 1030, 470, (.5, .5), angle=-6)
     c.otter("PhotographerRigV1", 680, 950, 580, head="smile", nearArm=-1.4)
@@ -587,7 +587,7 @@ def yeongcha_b():
     c.prop("Plaza/Props/Prop_Tree.png", 200, 500, 420, shadow=.6)
     c.prop("Plaza/Props/Prop_Lamp.png", 1380, 600, 300)
     c.otter("KnitRigV1", 620, 900, 440, head="smile")
-    c.otter("WalkerRigV1", 930, 900, 430, head="smile")
+    c.otter("HeroRigV1", 930, 900, 430, head="smile")
     c.grade((255, 196, 140), .35)
     c.scatter("Settlement/FX_Leaf.png", (200, 80, 1400, 400), 4, 46, seed=29)
     return c.vignette(.4, (80, 30, 10))
@@ -673,6 +673,45 @@ def moment_silhouette(path):
     im.rotate(-6, resample=Image.BICUBIC).save(path)
 
 
+def rig_portrait(rig_name, size):
+    picture, _ = s.rig.render(rig_name, 2, dict(head="smile"))
+    k = min((size[0] - 16) / picture.width, (size[1] - 16) / picture.height)
+    picture = picture.resize((round(picture.width * k), round(picture.height * k)), Image.LANCZOS)
+    icon = Image.new("RGBA", size)
+    icon.alpha_composite(picture, ((size[0] - picture.width) // 2, size[1] - picture.height - 8))
+    return icon
+
+
+def hero_portraits():
+    # Retain legacy sprite GUIDs so existing prefab/request references show the current rig too.
+    for name in ("Otter/ICON_Otter_Hero.png", "Otter/ICON_Otter_Cast_Explorer.png", "Settlement/ICON_Otter_Snack.png"):
+        target = s.ART / name
+        with Image.open(target) as previous:
+            size = previous.size
+        rig_portrait("HeroRigV1", size).save(target)
+        print("hero portrait", target)
+
+
+def title_otters():
+    """Rebuild the title character layer from the same three rigs used in the game."""
+    target = s.ART / "Title/Title_Otters.png"
+    with Image.open(target) as previous:
+        size = previous.size
+    canvas = Image.new("RGBA", size)
+    for name, x, y, height, pose in (
+        ("QuarterRigV14", 185, 1020, 350, dict(head="smile", nearArm=-1.1,
+            held=[dict(img=img("Item/Vegetable/Carrot.png"), height=140, dy=-10)])),
+        ("FisherRigV1", 750, 1020, 350, dict(head="smile", sit=1)),
+        ("HeroRigV1", 480, 1070, 400, dict(head="smile", nearArm=WAVE, armOverHead=True)),
+    ):
+        picture, feet = s.rig.render(name, 2, pose)
+        k = height / picture.height
+        picture = picture.resize((round(picture.width * k), height), Image.LANCZOS)
+        canvas.alpha_composite(picture, (round(x - feet[0] * k), round(y - feet[1] * k)))
+    canvas.save(target)
+    print("title rigs", target)
+
+
 def story_portraits():
     """Use plaza rig artwork in story details/profile icons, retaining the existing sprite GUIDs."""
     root = s.ROOT
@@ -693,13 +732,10 @@ def story_portraits():
         target = icons[portrait[1]]
         size = Image.open(target).size
         name = assignments[otter[1]]
-        picture, _ = s.rig.render(f"{name}RigV1" if name else "QuarterRigV14", 2, dict(head="smile"))
-        k = min((size[0] - 16) / picture.width, (size[1] - 16) / picture.height)
-        picture = picture.resize((round(picture.width * k), round(picture.height * k)), Image.LANCZOS)
-        icon = Image.new("RGBA", size)
-        icon.alpha_composite(picture, ((size[0] - picture.width) // 2, size[1] - picture.height - 8))
+        icon = rig_portrait(f"{name}RigV1" if name else "QuarterRigV14", size)
         icon.save(target)
         print("portrait", otter[1], target)
+    hero_portraits()
 
 
 def main():
@@ -708,9 +744,15 @@ def main():
     ap.add_argument("--sheet")
     ap.add_argument("--out", default=str(OUT))
     ap.add_argument("--portraits", action="store_true", help="Also refresh story/profile portraits from the plaza rigs")
+    ap.add_argument("--hero-portraits", action="store_true", help="Refresh the hero and legacy guide icons from HeroRigV1")
+    ap.add_argument("--title-rigs", action="store_true", help="Refresh the title character layer from current game rigs")
     args = ap.parse_args()
     if args.portraits:
         story_portraits()
+    elif args.hero_portraits:
+        hero_portraits()
+    if args.title_rigs:
+        title_otters()
     names = [n for n in CUTS if not args.only or any(n.startswith(o) for o in args.only)]
     drawn = []
     for n in names:

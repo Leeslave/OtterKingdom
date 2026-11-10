@@ -13,7 +13,7 @@ using UnityEngine;
 /// </summary>
 // 매니저들(-100)과 도감(-90)이 준비된 뒤, 게임 쪽(GameManager)이 세이브를 불러오기 전에 준비
 [DefaultExecutionOrder(-80)]
-public class QuestManager : MonoBehaviour
+public partial class QuestManager : MonoBehaviour
 {
     // 일일 퀘스트가 바뀌는 시각 (새벽 4시: 자정 직후 플레이 중에 초기화되지 않게)
     private const int DailyResetHour = 4;
@@ -159,19 +159,25 @@ public class QuestManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        DisposeProsperityQuests();
         if (Instance == this)
             Instance = null;
     }
 
     // 켜 둔 채로 새벽 4시를 넘겨도 바뀌도록 (비교 한 번이라 매 프레임 부담 없음)
-    private void Update() => CheckDailyReset();
+    private void Update()
+    {
+        CheckDailyReset();
+        TickProsperityQuests();
+    }
 
     /// <summary>지금 목록에 나타나고 진행이 쌓이는지 (레벨·앞 단계 충족)</summary>
     public bool IsAvailable(QuestDefinition quest) =>
-        QuestProgressRules.IsAvailable(quest, PlayerLevel, Log) && SettlementQuestGate.IsReachable(quest);
+        IsProsperityAvailable(quest) && SettlementQuestGate.IsReachable(quest);
 
     /// <summary>받은 퀘스트 중 목록 아래 완료 칸에 남길지 (오늘 받은 일일, 이번 레벨에 받은 성장)</summary>
-    public bool ShowsAsCompleted(QuestDefinition quest) => QuestProgressRules.ShowsAsCompleted(quest, PlayerLevel, Log);
+    public bool ShowsAsCompleted(QuestDefinition quest) => IsSelectedProsperityChain(quest)
+        && QuestProgressRules.ShowsAsCompleted(quest, PlayerLevel, Log);
 
     /// <summary>이야기 진행보다 레벨이 앞서도 지금 이어야 할 메인을 보여 준다.</summary>
     public QuestDefinition CurrentMainQuest
@@ -317,6 +323,8 @@ public class QuestManager : MonoBehaviour
         if (Log == null)
             return;
 
+        RefreshProsperityGoals();
+
         // 넘친 진행: 앞 퀘스트에서 목표를 넘겨 센 것(보상 받기 전에 더 한 것 포함)을 새로 열린 같은 종류 퀘스트에
         foreach (var quest in _database.Quests)
         {
@@ -390,6 +398,10 @@ public class QuestManager : MonoBehaviour
             else if (quest.GoalType == QuestGoalType.ImproveHouse)
             {
                 value = settlement.Settlement.Industry.improvedHouses.Count;
+            }
+            else if (quest.GoalType == QuestGoalType.ProsperityRecord)
+            {
+                continue; // 별도 실제 연구/산업 기록에서 계산한다.
             }
             else
             {
@@ -512,6 +524,7 @@ public class QuestManager : MonoBehaviour
     public void LoadFromSave(IEnumerable<QuestSaveEntry> saved)
     {
         QuestSaveConverter.Read(saved, Log);
+        InitializeProsperityQuests();
         // 데이터에 레벨별 메인 체인이 있을 때만 (Tools/Quest/Create Quest Data 전의 옛 데이터로 표시만 남지 않게).
         // 표의 판이 오르면(밭을 Lv.10으로 옮김 → 2) 지나온 레벨에 새로 생긴 메인을 보상 없이 넘김 (경험치가 다시 쏟아지지 않게)
         if (Log.MainChainVersion < MainChainVersion && QuestProgressRules.HasMainChain(_database.Quests))

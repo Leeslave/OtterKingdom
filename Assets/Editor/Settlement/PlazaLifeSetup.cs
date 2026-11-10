@@ -94,7 +94,7 @@ public static class PlazaLifeSetup
     // 도감 해달 항목: (에셋, 해달 ID, 그림(폴더, 이름), 한 줄 소개, 설명, 좋아하는 것, 못 만났을 때 힌트(장난감 해달은 비우면 자동))
     private static readonly (string asset, string otter, string folder, string portrait, string tagline, string description, string extra, string hint)[] Entries =
     {
-        ("Entry_OtterFirst", "otter_first", SettlementArtFolder, "ICON_Otter_Snack", "왕국에 처음 온 탐험가 해달",
+        ("Entry_OtterFirst", "otter_first", "Assets/Art/Otter", "ICON_Otter_Hero", "왕국에 처음 온 탐험가 해달",
             "광산과 밭과 선착장을 처음 찾아낸 호기심 많은 해달이에요.", "새로운 길", ""),
         ("Entry_OtterSleepy", "otter_sleepy", SettlementArtFolder, "ICON_Otter_Sleepy", "늘 졸린 나무꾼 해달",
             "느긋하게 나무를 베다가도 벤치에만 앉으면 꾸벅꾸벅 졸아요.", "그늘진 벤치", "첫 집을 지으면 놀러 와요"),

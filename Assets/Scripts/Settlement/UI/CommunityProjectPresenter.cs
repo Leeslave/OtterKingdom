@@ -244,6 +244,10 @@ public class CommunityProjectPresenter : MonoBehaviour
     {
         if (project == null)
             return;
+        var glyphs = new StringBuilder(project.Title).Append(project.Line).Append(project.ResultPreview).Append(project.CompletionMessage)
+            .Append("계획 확정하기");
+        foreach (var stage in project.Stages) glyphs.Append(stage.Label).Append(stage.Hint);
+        RuntimeUIKit.PrepareGlyphs(glyphs.ToString());
         _project = project;
         _confirmRoot.SetActive(false);
         _lifeRoot.SetActive(false);
@@ -264,7 +268,8 @@ public class CommunityProjectPresenter : MonoBehaviour
         if (project == null)
             return;
         var status = _manager.GetProjectStatus(project);
-        if ((status.Phase == ProjectPhase.Completed || status.Phase == ProjectPhase.Locked) && _manager.IsTerritoryMission(project))
+        if ((status.Phase == ProjectPhase.Completed || status.Phase == ProjectPhase.Locked)
+            && (_manager.IsTerritoryMission(project) || project.ProjectId == ProsperityResearch.PlanProjectId))
         {
             // 영토 확장 미션은 공동사업 순서와 따로: 끝났으면 닫음
             CloseProject();
@@ -289,7 +294,7 @@ public class CommunityProjectPresenter : MonoBehaviour
         _projectStages.text = StagesText(project, status);
         FillMaterials(project, status);
         _projectResult.text = ResultText(project);
-        _replayButton.gameObject.SetActive(_manager.HasHeldGathering);
+        _replayButton.gameObject.SetActive(project.ProjectId != ProsperityResearch.PlanProjectId && _manager.HasHeldGathering);
 
         _action = null;
         _choiceRow.gameObject.SetActive(false);
@@ -528,6 +533,10 @@ public class CommunityProjectPresenter : MonoBehaviour
                     _manager.TryHoldGathering(project);
                 });
                 break;
+            case ProjectActionKind.ConfirmPlan:
+                _projectNote.text = hint;
+                SetAction("계획 확정하기", true, () => Advance(project));
+                break;
         }
     }
 
@@ -669,7 +678,7 @@ public class CommunityProjectPresenter : MonoBehaviour
         if (xp > 0)
             message += $"\n경험치 +{xp:N0}";
         // 영토 확장: 새 땅은 광장이 비춰 줌 (다음 사업 버튼 없음)
-        if (_manager.IsTerritoryMission(project))
+        if (_manager.IsTerritoryMission(project) || project.ProjectId == ProsperityResearch.PlanProjectId)
         {
             GameNotices.Post(new GameNotice(message));
             return;

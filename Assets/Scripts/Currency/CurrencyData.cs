@@ -31,7 +31,7 @@ public class Currency : ScriptableObject
 /// </summary>
 public enum TransactionSource{TestGet, TestUse, GotchaUse, ShopPurchase, BlacksmithUpgrade, InventoryExpand,
     CropSale, FarmUpgrade, PlotUnlock, FishingSale, RodUpgrade, ItemSale, QuestReward, DecorExpand, PickaxeUpgrade, LevelReward, Construction, StartingGrant, PlazaFind,
-    CommunityProject, RequestReward, GachaReward}
+    CommunityProject, RequestReward, GachaReward, MarketOrderReward}
 public struct CurrencyTransaction
 {
     [Header("Data")]

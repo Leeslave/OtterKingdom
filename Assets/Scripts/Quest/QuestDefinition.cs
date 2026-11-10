@@ -113,7 +113,20 @@ public class QuestDefinition : ScriptableObject
 
     /// <summary>진행이 알림으로 쌓이지 않고 저장된 기록(만난 해달, 다 지은 건물, 정착 단계)으로 매번 다시 세는지</summary>
     public bool CountsFromRecords => _goalType == QuestGoalType.CompleteConstruction || _goalType == QuestGoalType.MeetOtter
-        || _goalType == QuestGoalType.Milestone || _goalType == QuestGoalType.ImproveHouse;
+        || _goalType == QuestGoalType.Milestone || _goalType == QuestGoalType.ImproveHouse
+        || _goalType == QuestGoalType.ProsperityRecord;
+
+    // 런타임 복사본에만 사용. 기존 데이터 에셋과 프리팹을 수정하지 않는다.
+    internal void SetupProsperity(ProsperityQuestPlan.Row row, QuestDefinition previous, int xp, int gold,
+        Currency currency, Sprite icon, ItemCategory filter)
+    {
+        _questId = row.Id; _title = row.Title; _description = row.Description;
+        _kind = QuestKind.Main; _requiredLevel = row.Level; _sortOrder = 176 + (row.Level - 23) * 5 + row.Step - 1;
+        _goalType = row.Type; _goal = row.Goal; _target = row.Target; _prerequisite = previous;
+        _expReward = xp; _expPercentOfLevel = 0; _rewardCurrency = currency; _rewardAmount = gold;
+        _icon = icon; _itemFilter = filter;
+    }
+
     public Currency RewardCurrency => _rewardCurrency;
     public int RewardAmount => _rewardAmount;
     public QuestKind Kind => _kind;

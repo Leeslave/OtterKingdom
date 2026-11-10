@@ -17,7 +17,7 @@ public class SaveMigrationTests
 
         var applied = SaveMigrations.Run(save);
 
-        Assert.AreEqual(3, applied.Count);
+        Assert.AreEqual(5, applied.Count);
         Assert.IsTrue(save.firstPlantGuideDone, "이미 심은 세이브는 첫 심기 안내 없음");
         CollectionAssert.IsSubsetOf(ZoneTutorials.AllIds, save.tutorialsDone);
         CollectionAssert.IsSubsetOf(ZoneTutorials.FeatureIds, save.tutorialsDone);
@@ -42,7 +42,7 @@ public class SaveMigrationTests
 
         var applied = SaveMigrations.Run(save);
 
-        CollectionAssert.AreEqual(new[] { "legacy settlement" }, applied);
+        CollectionAssert.AreEqual(new[] { "legacy settlement", "prosperity research", "prosperity onboarding" }, applied);
         Assert.IsEmpty(save.tutorialsDone, "3 이상은 튜토리얼 단계를 건너뜀");
         Assert.IsTrue(save.settlement.legacyComplete);
     }

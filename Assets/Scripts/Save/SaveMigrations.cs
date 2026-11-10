@@ -43,6 +43,13 @@ public static class SaveMigrations
             if (!save.settlement.initialized)
                 save.settlement.legacyComplete = true;
         }),
+        // 5: 산업 데이터는 settlement.industry에 유지. RP는 실제 시대 진입 시 소급한다.
+        new Step(5, "prosperity research", save =>
+        {
+            save.prosperity ??= new ProsperitySaveData();
+            ProsperityResearch.Sanitize(save.prosperity);
+        }),
+        new Step(6, "prosperity onboarding", save => ProsperityMigration.Reconcile(save)),
     };
 
     /// <summary>적용한 단계 이름 목록 (이미 지금 버전이면 비어 있음)</summary>

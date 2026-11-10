@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <BaseOutputPath>../../tmp/Verification/prosperity/</BaseOutputPath>
+    <RuntimeAssembly Condition="'$(RuntimeAssembly)' == ''">../../tmp/Temp/bin/Debug/OtterKingdom.dll</RuntimeAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Assets/Tests/EditMode/ProsperityTests.cs" />
+    <Compile Include="../../Assets/Tests/EditMode/ProsperityProgressTests.cs" />
+    <Compile Include="../../Assets/Tests/EditMode/ProsperityMarketTests.cs" />
+    <Compile Include="../../Assets/Tests/EditMode/ProsperityOnboardingTests.cs" />
+    <Compile Include="../../Assets/Tests/EditMode/ProsperityQuestPlanTests.cs" />
+    <Compile Include="../../Assets/Tests/EditMode/SaveMigrationTests.cs" />
+    <Compile Include="ProsperityRunner.cs" />
+    <NunitAssembly Include="../../Library/PackageCache/com.unity.ext.nunit@*/net40/unity-custom/nunit.framework.dll" />
+    <Reference Include="@(NunitAssembly)" />
+    <Reference Include="$(RuntimeAssembly)" />
+    <Reference Include="$(ProgramFiles)/Unity/Hub/Editor/6000.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll" />
+  </ItemGroup>
+</Project>

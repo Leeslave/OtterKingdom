@@ -23,6 +23,7 @@ public enum QuestGoalType
     StoreInWarehouse,   // 번영의 시대: 왕국 창고에 들어온 가공품 수 ([받기] · 더미 · 수레. 아이템을 정하면 그것만)
     ImproveHouse,       // 번영의 시대: 개량한 집 수 (주택 개량 C02). 기록으로 다시 셈 → 앞서 개량한 집도 들어감
     CraftTown,          // 번영의 시대: 창고 자재로 만든 꾸미기 수 (마을 정비 C01: 왕국 표지판 · 가로등. 아이템을 정하면 그것만)
+    ProsperityRecord,   // 연구·장터·창고·수레의 실제 기록 (기존 enum 번호 보존)
 }
 
 /// <summary>퀘스트 종류</summary>

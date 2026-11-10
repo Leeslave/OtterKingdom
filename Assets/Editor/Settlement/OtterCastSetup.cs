@@ -103,6 +103,8 @@ public static class OtterCastSetup
 
     internal static Sprite Portrait(string otterId)
     {
+        if (otterId == "otter_first")
+            return AssetDatabase.LoadAssetAtPath<Sprite>($"{IconDir}/ICON_Otter_Hero.png");
         string look = LookOf(otterId);
         return look == null ? null : AssetDatabase.LoadAssetAtPath<Sprite>($"{IconDir}/ICON_Otter_Cast_{look}.png");
     }
