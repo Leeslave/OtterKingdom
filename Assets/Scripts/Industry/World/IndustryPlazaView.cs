@@ -9,6 +9,8 @@ using UnityEngine;
 /// - 수레: 그 시설에서 일하는 해달 하나가 수레를 밀고 시설 ↔ 창고 자리를 오감.
 ///   연출일 뿐 장부는 SettlementManager가 2초마다 옮김 (길이 막혀도 자재는 그대로)
 /// - 건물 누르기: 작은 집 → 주택 개량 창, 목공소 · 채석 작업소 → 일터 창 가공 탭
+/// - 광장 돌길 (마을 정비 공사): 광장 지도(WorldMap) 위에 돌길 그림. 이번에 깔았으면 창을 닫은 뒤 퍼지듯 나타남
+/// - 마을 주택 (주택 개량 2단계): 집 앞 현관 등불 · 꽃 화분
 /// SettlementPlazaView가 붙인다
 /// </summary>
 public class IndustryPlazaView : MonoBehaviour
@@ -19,6 +21,8 @@ public class IndustryPlazaView : MonoBehaviour
     private const float CartWidth = 1.9f;     // 월드 단위 (광장 해달 키 ≈ 1.8)
     private const float CrateWidth = 2.6f;
     private const float CartGap = 1.05f;      // 해달 발 → 수레 가운데
+    private const float PorchLampWidth = 0.13f;   // 집 폭 대비
+    private const float PorchFlowersWidth = 0.12f;
     private const float LoadSeconds = 1.2f;
     private const float WalkLimitSeconds = 25f;
     private static readonly Color GoodText = new Color(0.98f, 0.86f, 0.45f);
@@ -36,6 +40,7 @@ public class IndustryPlazaView : MonoBehaviour
         public string OtterId;
         public OtterWanderAgent Agent;
         public SpriteRenderer Renderer;
+        public SpriteRenderer Pennant;
         public CartPhase Phase;
         public float Timer;
         public int Load;
@@ -63,6 +68,12 @@ public class IndustryPlazaView : MonoBehaviour
     private bool _hasWarehouse;
     private float _scan;
     private HouseUpgradeSheet _houseSheet;
+    // 마을 주택 현관 (놓인 건물 번호 → 등불 · 화분)
+    private readonly Dictionary<int, (SpriteRenderer lamp, SpriteRenderer flowers)> _porches = new Dictionary<int, (SpriteRenderer, SpriteRenderer)>();
+    // 광장 돌길
+    private SpriteRenderer _map;
+    private readonly Dictionary<string, List<SpriteRenderer>> _pavings = new Dictionary<string, List<SpriteRenderer>>();
+    private bool _pavingsShown;
 
     public void Init(SettlementPlazaView plaza) => _plaza = plaza;
 
@@ -115,6 +126,7 @@ public class IndustryPlazaView : MonoBehaviour
 
     private void Scan()
     {
+        ScanPavings();
         _buildings.Clear();
         _buildings.AddRange(FindObjectsByType<PlacedBuildingView>(FindObjectsSortMode.None));
         bool visible = IndustrySection.IsVisible(_manager);
@@ -125,8 +137,8 @@ public class IndustryPlazaView : MonoBehaviour
         {
             if (recipe == null || !recipe.IsValid)
                 continue;
-            string id = recipe.Building.BuildingId;
-            var view = visible ? FindBuilt(id) : null;
+            string id = recipe.ProcessorId;
+            var view = visible ? FindBuilt(recipe.Building.BuildingId) : null;
             if (view == null)
                 continue;
             seen.Add(id);
@@ -141,6 +153,42 @@ public class IndustryPlazaView : MonoBehaviour
                 continue;
             RemoveSite(_sites[id]);
             _sites.Remove(id);
+        }
+        PlacePorches();
+    }
+
+    // 마을 주택: 현관 왼쪽 등불 · 오른쪽 화분 (집을 옮기면 따라감, 없어지면 치움)
+    private void PlacePorches()
+    {
+        var config = _manager.IndustryConfig;
+        var seen = new HashSet<int>();
+        foreach (var view in _buildings)
+        {
+            if (view == null || view.Placed == null || !_manager.IsTownHouse(view.Placed.InstanceId))
+                continue;
+            int id = view.Placed.InstanceId;
+            seen.Add(id);
+            if (!_porches.TryGetValue(id, out var porch))
+            {
+                porch = (CreateRenderer("PorchLamp_" + id), CreateRenderer("PorchFlowers_" + id));
+                porch.lamp.sprite = config.PorchLamp;
+                porch.flowers.sprite = config.PorchFlowers;
+                _porches[id] = porch;
+            }
+            var rect = view.WorldRect;
+            PlaceOnGround(porch.lamp, new Vector2(rect.xMin + rect.width * 0.12f, rect.yMin - 0.06f), rect.width * PorchLampWidth);
+            PlaceOnGround(porch.flowers, new Vector2(rect.xMax - rect.width * 0.14f, rect.yMin - 0.1f), rect.width * PorchFlowersWidth);
+        }
+        foreach (var id in new List<int>(_porches.Keys))
+        {
+            if (seen.Contains(id))
+                continue;
+            var porch = _porches[id];
+            if (porch.lamp != null)
+                Destroy(porch.lamp.gameObject);
+            if (porch.flowers != null)
+                Destroy(porch.flowers.gameObject);
+            _porches.Remove(id);
         }
     }
 
@@ -201,24 +249,29 @@ public class IndustryPlazaView : MonoBehaviour
         bool learned = TechGate.Has(recipe.TechId);
 
         if (site.Bench == null)
-            site.Bench = CreateRenderer("Bench_" + recipe.Building.BuildingId);
+            site.Bench = CreateRenderer("Bench_" + recipe.ProcessorId);
         site.Bench.gameObject.SetActive(learned && recipe.BenchSprite != null);
         site.Bench.sprite = recipe.BenchSprite;
         PlaceOnGround(site.Bench, new Vector2(rect.xMin + rect.width * 0.16f, rect.yMin - 0.08f), rect.width * BenchWidth);
 
-        var processor = _manager.ProcessorOf(recipe.Building);
+        var processor = _manager.ProcessorOf(recipe);
         var pile = learned ? recipe.PileSprite(processor.tray, recipe.ToRecipe().TrayCapacity) : null;
         if (site.Pile == null)
-            site.Pile = CreateRenderer("Pile_" + recipe.Building.BuildingId);
+            site.Pile = CreateRenderer("Pile_" + recipe.ProcessorId);
         bool grew = pile != null && site.Pile.sprite != pile && site.Pile.gameObject.activeSelf;
         site.Pile.gameObject.SetActive(pile != null);
         site.Pile.sprite = pile;
-        PlaceOnGround(site.Pile, new Vector2(rect.xMax - rect.width * 0.16f, rect.yMin - 0.12f), rect.width * PileWidth);
+        PlaceOnGround(site.Pile, PileFoot(recipe, rect), rect.width * PileWidth);
         if (grew)
             Fx().Puff(site.Pile.bounds.center, 0.5f, Vector2.up * 0.2f);
 
         UpdateCartAssignment(site);
     }
+
+    // 소품 자리: 첫 줄은 오른쪽 앞, 둘째 줄(정밀 공방)은 가운데 앞
+    private static Vector2 PileFoot(ProcessingRecipeDefinition recipe, Rect rect) => recipe.PropSlot == 1
+        ? new Vector2(rect.center.x, rect.yMin - 0.22f)
+        : new Vector2(rect.xMax - rect.width * 0.16f, rect.yMin - 0.12f);
 
     private void RemoveSite(Site site)
     {
@@ -253,6 +306,99 @@ public class IndustryPlazaView : MonoBehaviour
         if (_fx == null)
             _fx = FindAnyObjectByType<PlazaNodeFx>();
         return _fx;
+    }
+
+    #endregion
+
+    #region 광장 돌길
+
+    private const float PavingRevealSeconds = 1.8f;
+    private const int PavingOrderAboveMap = 2;
+
+    // 깐 돌길을 지도 위에 (처음 열 때 이미 깐 것은 바로, 이번에 깐 것은 창이 닫힌 뒤 연출과 함께)
+    private void ScanPavings()
+    {
+        var pavings = _manager.IndustryConfig.Pavings;
+        if (pavings.Count == 0)
+            return;
+        if (_map == null)
+        {
+            var mapObject = GameObject.Find("WorldMap");
+            _map = mapObject != null ? mapObject.GetComponent<SpriteRenderer>() : null;
+            if (_map == null || _map.sprite == null)
+                return;
+        }
+        foreach (var paving in pavings)
+        {
+            if (paving == null || paving.Pieces.Count == 0 || _pavings.ContainsKey(paving.Id) || !_manager.IsPaved(paving))
+                continue;
+            bool reveal = _pavingsShown;
+            if (reveal && RuntimeModalSurface.AnyVisible)
+                continue;
+            _pavings[paving.Id] = CreatePaving(paving, reveal);
+        }
+        _pavingsShown = true;
+    }
+
+    // 조각마다 지도 비율 자리에 (지도 Sprite 범위 기준, HD 조각과 같은 방식)
+    private List<SpriteRenderer> CreatePaving(PavingProject paving, bool reveal)
+    {
+        var renderers = new List<SpriteRenderer>();
+        Vector2 total = _map.sprite.bounds.size;
+        for (int i = 0; i < paving.Pieces.Count; i++)
+        {
+            var piece = paving.Pieces[i];
+            if (piece == null || piece.Sprite == null)
+                continue;
+            var renderer = new GameObject($"Paving_{paving.Id}_{i}").AddComponent<SpriteRenderer>();
+            renderer.transform.SetParent(_map.transform, false);
+            renderer.sprite = piece.Sprite;
+            renderer.sortingLayerID = _map.sortingLayerID;
+            renderer.sortingOrder = _map.sortingOrder + PavingOrderAboveMap;
+            renderer.sharedMaterial = _map.sharedMaterial;
+            renderer.transform.localPosition = new Vector3(-total.x * 0.5f + piece.MapCenter.x * total.x, total.y * 0.5f - piece.MapCenter.y * total.y, 0f);
+            Vector2 native = piece.Sprite.bounds.size;
+            renderer.transform.localScale = new Vector3(piece.MapSize.x * total.x / native.x, piece.MapSize.y * total.y / native.y, 1f);
+            renderers.Add(renderer);
+        }
+        if (reveal && renderers.Count > 0)
+            StartCoroutine(RevealPaving(renderers, paving));
+        return renderers;
+    }
+
+    private System.Collections.IEnumerator RevealPaving(List<SpriteRenderer> renderers, PavingProject paving)
+    {
+        var bounds = renderers[0].bounds;
+        foreach (var renderer in renderers)
+            bounds.Encapsulate(renderer.bounds);
+        // 카메라는 가장 가까운 조각 가운데 (큰길은 넓어서 전체를 다 비추지 않음)
+        var focus = renderers[0].bounds.center;
+        var camera = FindAnyObjectByType<PlazaCameraController>();
+        if (camera != null)
+            camera.Celebrate(focus, 1f, PavingRevealSeconds + 1.2f);
+        foreach (var renderer in renderers)
+            renderer.color = new Color(1f, 1f, 1f, 0f);
+        for (int i = 0; i < 12; i++)
+        {
+            var at = focus + new Vector3(Random.Range(-0.3f, 0.3f) * renderers[0].bounds.size.x, Random.Range(-0.3f, 0.3f) * renderers[0].bounds.size.y, 0f);
+            Fx().Puff(at, 1.4f, Vector2.up * 0.2f);
+        }
+        for (float t = 0f; t < PavingRevealSeconds; t += Time.deltaTime)
+        {
+            float alpha = Mathf.SmoothStep(0f, 1f, t / PavingRevealSeconds);
+            foreach (var renderer in renderers)
+            {
+                if (renderer != null)
+                    renderer.color = new Color(1f, 1f, 1f, alpha);
+            }
+            yield return null;
+        }
+        foreach (var renderer in renderers)
+        {
+            if (renderer != null)
+                renderer.color = Color.white;
+        }
+        Fx().ShowText($"{paving.DisplayName} 완성!", focus + Vector3.up * 1.5f, GoodText);
     }
 
     #endregion
@@ -325,9 +471,8 @@ public class IndustryPlazaView : MonoBehaviour
     private void Collect(Site site)
     {
         PlazaTapInput.BlockCurrentGesture();
-        var building = site.Recipe.Building;
-        int before = _manager.ProcessorOf(building).tray;
-        int moved = _manager.CollectProcessed(building);
+        int before = _manager.ProcessorOf(site.Recipe).tray;
+        int moved = _manager.CollectProcessed(site.Recipe);
         Vector3 at = site.Pile.bounds.center + Vector3.up * 0.3f;
         if (moved > 0)
         {
@@ -363,7 +508,7 @@ public class IndustryPlazaView : MonoBehaviour
     private void UpdateCartAssignment(Site site)
     {
         var building = site.Recipe.Building;
-        bool wants = _hasWarehouse && _manager.HasCartRoute(building) && TechGate.Has(site.Recipe.TechId);
+        bool wants = _hasWarehouse && _manager.HasCartRoute(site.Recipe) && TechGate.Has(site.Recipe.TechId);
         var workers = wants ? ProductionRules.WorkerIds(_manager.Config, _manager.Settlement, building) : null;
         if (site.Cart != null)
         {
@@ -381,9 +526,16 @@ public class IndustryPlazaView : MonoBehaviour
             if (agent == null || !agent.isActiveAndEnabled || IsCarter(workers[i]))
                 continue;
             Carters.Add(workers[i]);
-            var renderer = CreateRenderer("Cart_" + building.BuildingId);
+            var renderer = CreateRenderer("Cart_" + site.Recipe.ProcessorId);
             renderer.sprite = _manager.IndustryConfig.EmptyCartSprite;
             site.Cart = new Cart { OtterId = workers[i], Agent = agent, Renderer = renderer };
+            // 개량 수레 (L06): 손잡이 쪽에 깃발
+            if (TechGate.Has(TechIds.BetterCart) && _manager.IndustryConfig.CartPennant != null)
+            {
+                site.Cart.Pennant = CreateRenderer("CartPennant");
+                site.Cart.Pennant.transform.SetParent(renderer.transform, false);
+                site.Cart.Pennant.sprite = _manager.IndustryConfig.CartPennant;
+            }
             GoToSource(site);
             return;
         }
@@ -407,7 +559,8 @@ public class IndustryPlazaView : MonoBehaviour
         var rect = site.View.WorldRect;
         site.Cart.Phase = CartPhase.ToSource;
         site.Cart.Timer = WalkLimitSeconds;
-        var stand = new Vector2(rect.xMax - rect.width * 0.16f - CartGap, rect.yMin - 0.55f);
+        var foot = PileFoot(site.Recipe, rect);
+        var stand = new Vector2(foot.x - CartGap, rect.yMin - 0.55f);
         site.Cart.Agent.AssignTask(stand, stand + Vector2.right);
     }
 
@@ -488,6 +641,16 @@ public class IndustryPlazaView : MonoBehaviour
         if (walking)
             foot.y += Mathf.Abs(Mathf.Sin(Time.time * 14f)) * 0.03f;
         PlaceOnGround(cart.Renderer, foot, CartWidth);
+        if (cart.Pennant != null)
+        {
+            // 수레 그림 안 좌표: 손잡이 쪽(뒤) 위. 수레 크기에 맞춰 둠
+            var bounds = cart.Renderer.sprite.bounds;
+            float side = cart.Facing < 0f ? 1f : -1f;
+            cart.Pennant.flipX = cart.Facing < 0f;
+            cart.Pennant.transform.localPosition = new Vector3(side * bounds.extents.x * 0.45f, bounds.max.y * 0.9f, 0f);
+            cart.Pennant.transform.localScale = Vector3.one * 1.1f;
+            cart.Pennant.sortingOrder = cart.Renderer.sortingOrder - 1;
+        }
     }
 
     #endregion

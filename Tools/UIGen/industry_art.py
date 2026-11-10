@@ -8,6 +8,12 @@ python Tools/UIGen/industry_art.py → Assets/Art/Industry/
   Cart_Empty / Cart_Plank / Cart_StoneBlock   수레 (오른쪽으로 감, 손잡이는 왼쪽)
   Prop_WarehouseCrates   왕국 창고 자리 (상자 더미 + 표지)
   Prop_KingdomSign       왕국 표지판 (C01 꾸미기)
+  Prop_Kiln              건설소 제련 가마 (I03)
+  Pile_Ingot_0..2 · Cart_Ingot   금속 주괴 더미 · 수레
+  Prop_Fountain · Prop_Flowerbed 공공 시설 꾸미기 (C04)
+  TownHouse_Red · TownHouse_Blue  마을 주택 미리보기 (개량 주택 + 현관 등불 · 화분, C05)
+  Pile_Precision_0..2 · Cart_Precision  정밀 부품 상자 더미 · 수레 (I06)
+  Cart_Pennant           개량 수레(L06) 깃발 (수레 뒤 손잡이 쪽 위)
 """
 import math
 import os
@@ -178,6 +184,12 @@ def cart(load):
     elif load == 'StoneBlock':
         for x, y in [(170, 90), (290, 90), (230, 22)]:
             block(d, x, y, 112)
+    elif load == 'Ingot':
+        for x, y in [(160, 128), (300, 128), (230, 84)]:
+            ingot_bar(d, x, y, 140)
+    elif load == 'Precision':
+        for x, y in [(150, 80), (300, 80)]:
+            part_crate(d, x, y, 130)
     # 짐칸
     rrect(d, (120, 170, 470, 270), 18, WOOD)
     for x in (210, 300, 390):
@@ -247,8 +259,189 @@ def kingdom_sign():
     finish(im, 'Prop_KingdomSign')
 
 
+INGOT_TOP = (246, 196, 128, 255)
+INGOT_FRONT = (214, 150, 92, 255)
+FIRE = (255, 160, 70, 255)
+FIRE_CORE = (255, 228, 140, 255)
+WATER = (150, 214, 236, 255)
+WATER_DEEP = (112, 186, 220, 255)
+
+
+def ingot_bar(d, x, y, w):
+    """옆에서 본 금속 주괴 하나 (윗면 · 앞면)"""
+    h = w * 0.36
+    top = [(x + w * 0.14, y), (x + w * 0.86, y), (x + w, y + h * 0.42), (x, y + h * 0.42)]
+    front = [(x, y + h * 0.42), (x + w, y + h * 0.42), (x + w * 0.92, y + h), (x + w * 0.08, y + h)]
+    d.polygon([s(*q) for q in front], fill=INGOT_FRONT)
+    d.polygon([s(*q) for q in top], fill=INGOT_TOP)
+    for face in (top, front):
+        pts = [s(*q) for q in face]
+        d.line(pts + [pts[0]], fill=COCOA, width=10, joint='curve')
+    d.line(s(x + w * 0.22, y + h * 0.62, x + w * 0.5, y + h * 0.62), fill=(250, 226, 180, 255), width=4 * S)
+
+
+def kiln():
+    im, d = canvas(420, 420)
+    shadow(d, 210, 392, 180, 24)
+    # 굴뚝
+    rrect(d, (250, 30, 320, 170), 14, STONE_FRONT)
+    rrect(d, (240, 18, 330, 50), 12, STONE_TOP)
+    # 가마 몸통 (돌 반원)
+    d.pieslice(s(50, 110, 370, 430), 180, 360, fill=STONE_TOP, outline=COCOA, width=LINE)
+    rrect(d, (50, 260, 370, 380), 20, STONE_FRONT)
+    for y in (290, 330):
+        d.line(s(64, y, 356, y), fill=STONE_SIDE, width=5 * S)
+    for x, y in ((110, 290), (230, 290), (170, 330), (290, 330)):
+        d.line(s(x, y, x, y + 40), fill=STONE_SIDE, width=5 * S)
+    # 불구멍
+    d.pieslice(s(140, 190, 280, 330), 180, 360, fill=(90, 50, 40, 255), outline=COCOA, width=LINE)
+    d.rectangle(s(140, 260, 280, 300), fill=(90, 50, 40, 255))
+    d.line(s(140, 260, 140, 300), fill=COCOA, width=LINE)
+    d.line(s(280, 260, 280, 300), fill=COCOA, width=LINE)
+    ellipse(d, (160, 228, 260, 300), FIRE, 0)
+    ellipse(d, (186, 250, 236, 298), FIRE_CORE, 0)
+    # 모루 (앞 오른쪽)
+    poly(d, [(300, 330), (400, 330), (390, 352), (310, 352)], (120, 120, 128, 255), 10)
+    poly(d, [(330, 352), (370, 352), (380, 388), (320, 388)], (96, 96, 104, 255), 10)
+    finish(im, 'Prop_Kiln')
+
+
+def ingot_pile(level):
+    spots = [[(120, 120)], [(60, 150), (200, 150), (130, 96)], [(30, 170), (170, 170), (310, 170), (100, 116), (240, 116), (170, 62)]][level]
+    im, d = canvas(480, 280)
+    shadow(d, 240, 252, 200, 22)
+    for x, y in spots:
+        ingot_bar(d, x, y, 150)
+    finish(im, f'Pile_Ingot_{level}')
+
+
+def small_gear(d, cx, cy, r, fill):
+    pts = []
+    for i in range(16):
+        a = math.pi * i / 8
+        rr = r if i % 2 == 0 else r * 0.76
+        for k in (-0.22, 0.22):
+            b = a + k * math.pi / 8
+            pts.append(s(cx + rr * math.cos(b), cy + rr * math.sin(b)))
+    d.polygon(pts, fill=fill)
+    d.line(pts + [pts[0]], fill=COCOA, width=9, joint='curve')
+    d.ellipse(s(cx - r * 0.3, cy - r * 0.3, cx + r * 0.3, cy + r * 0.3), fill=(120, 120, 128, 255), outline=COCOA, width=8)
+
+
+def part_crate(d, x, y, w):
+    """정밀 부품 상자: 나무 상자 + 위에 톱니 둘"""
+    h = w * 0.62
+    small_gear(d, x + w * 0.34, y + h * 0.18, w * 0.2, (206, 214, 224, 255))
+    small_gear(d, x + w * 0.68, y + h * 0.26, w * 0.15, (240, 196, 128, 255))
+    rrect(d, (x, y + h * 0.3, x + w, y + h * 1.3), 12, WOOD, 10)
+    d.line(s(x + 8, y + h * 0.8, x + w - 8, y + h * 0.8), fill=WOOD_DARK, width=5 * S)
+    rrect(d, (x + w * 0.36, y + h * 0.62, x + w * 0.64, y + h * 0.98), 6, (236, 228, 214, 255), 7)
+
+
+def precision_pile(level):
+    spots = [[(120, 150)], [(40, 150), (200, 150)], [(0, 150), (160, 150), (320, 150), (80, 40), (240, 40)]][level]
+    im, d = canvas(500, 330)
+    shadow(d, 250, 300, 220, 22)
+    for x, y in spots:
+        part_crate(d, x + 20, y, 150)
+    finish(im, f'Pile_Precision_{level}')
+
+
+def cart_pennant():
+    im, d = canvas(160, 220)
+    d.line(s(40, 210, 40, 20), fill=COCOA, width=16 * S // 2 * 2)
+    d.line(s(40, 210, 40, 20), fill=WOOD_DARK, width=8 * S // 2 * 2)
+    poly(d, [(44, 26), (150, 52), (44, 90)], (230, 92, 86, 255), 10)
+    poly(d, [(44, 52), (100, 60), (44, 74)], (255, 214, 110, 255), 6)
+    ellipse(d, (28, 6, 52, 30), (255, 214, 110, 255), 8)
+    finish(im, 'Cart_Pennant')
+
+
+def fountain():
+    im, d = canvas(560, 460)
+    shadow(d, 280, 420, 240, 34)
+    # 아래 둥근 돌 수반 (앞면 · 물 · 테두리)
+    d.ellipse(s(40, 250, 520, 410), fill=STONE_FRONT, outline=COCOA, width=LINE)
+    d.rectangle(s(40, 300, 520, 330), fill=STONE_FRONT)
+    d.line(s(40, 300, 40, 330), fill=COCOA, width=LINE)
+    d.line(s(520, 300, 520, 330), fill=COCOA, width=LINE)
+    ellipse(d, (40, 220, 520, 360), STONE_TOP)
+    ellipse(d, (76, 240, 484, 342), WATER)
+    for x0 in (130, 300):
+        d.arc(s(x0, 276, x0 + 110, 310), 200, 340, fill=(230, 248, 255, 255), width=5 * S)
+    # 가운데 기둥 · 작은 수반
+    rrect(d, (250, 150, 310, 300), 16, STONE_FRONT)
+    ellipse(d, (180, 120, 380, 186), STONE_TOP)
+    ellipse(d, (204, 132, 356, 172), WATER_DEEP)
+    # 물줄기 (위로 솟아 양쪽으로)
+    for side in (-1, 1):
+        d.arc(s(280 - 10 + min(0, side * 120), 40, 280 + 10 + max(0, side * 120), 200), 200 if side < 0 else 270, 270 if side < 0 else 340,
+              fill=WATER, width=10 * S)
+    d.line(s(280, 150, 280, 50), fill=WATER, width=12 * S)
+    ellipse(d, (262, 30, 298, 66), (230, 248, 255, 255), 6)
+    # 물방울
+    for x, y in ((150, 210), (410, 214), (196, 196), (366, 198)):
+        ellipse(d, (x - 10, y - 10, x + 10, y + 10), WATER, 6)
+    finish(im, 'Prop_Fountain')
+
+
+def flowerbed():
+    im, d = canvas(560, 300)
+    shadow(d, 280, 262, 250, 26)
+    # 돌 테두리 화단
+    rrect(d, (30, 150, 530, 250), 40, STONE_FRONT)
+    rrect(d, (30, 110, 530, 200), 40, STONE_TOP)
+    rrect(d, (58, 124, 502, 186), 30, (150, 104, 70, 255), 8)
+    # 꽃 (잎 + 꽃잎)
+    colors = [(247, 160, 170, 255), (255, 214, 110, 255), (196, 160, 236, 255), (255, 255, 255, 255)]
+    for i, x in enumerate(range(90, 500, 52)):
+        y = 120 - (i % 2) * 24
+        d.line(s(x, y + 50, x, y + 10), fill=(110, 170, 80, 255), width=6 * S)
+        ellipse(d, (x - 30, y + 26, x - 4, y + 46), LEAF, 6)
+        ellipse(d, (x + 4, y + 22, x + 30, y + 42), LEAF, 6)
+        c = colors[i % len(colors)]
+        for a in range(0, 360, 72):
+            r = math.radians(a)
+            ellipse(d, (x + 16 * math.cos(r) - 13, y + 16 * math.sin(r) - 13, x + 16 * math.cos(r) + 13, y + 16 * math.sin(r) + 13), c, 6)
+        ellipse(d, (x - 9, y - 9, x + 9, y + 9), (255, 220, 120, 255), 5)
+    finish(im, 'Prop_Flowerbed')
+
+
+def town_house_previews():
+    """개량 주택 + 현관 등불(왼쪽) · 꽃 화분(오른쪽) — 창 미리보기용"""
+    lamp = Image.open(os.path.join(SETTLEMENT, 'ICON_Lamp.png')).convert('RGBA')
+    pot = Image.open(os.path.join(SETTLEMENT, 'Prop_FlowerPot.png')).convert('RGBA')
+    for color in ('Red', 'Blue'):
+        house = Image.open(os.path.join(ROOT, 'Assets', 'Art', 'Buildings', 'Detail4', f'House{color}.png')).convert('RGBA')
+        house = house.crop(house.getbbox())
+        w, h = house.size
+        out = Image.new('RGBA', (w + 120, h + 40), (0, 0, 0, 0))
+        out.alpha_composite(house, (60, 0))
+        l = lamp.crop(lamp.getbbox())
+        l = l.resize((int(w * 0.22), int(w * 0.22 * l.height / l.width)), Image.LANCZOS)
+        out.alpha_composite(l, (8, h + 40 - l.height - 6))
+        f = pot.crop(pot.getbbox())
+        f = f.resize((int(w * 0.24), int(w * 0.24 * f.height / f.width)), Image.LANCZOS)
+        out.alpha_composite(f, (w + 120 - f.width - 4, h + 40 - f.height - 2))
+        out = out.crop(out.getbbox())
+        path = os.path.join(OUT, f'TownHouse_{color}.png')
+        out.thumbnail((512, 512), Image.LANCZOS)
+        out.save(path)
+        print(path, out.size)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
+    kiln()
+    for level in range(3):
+        ingot_pile(level)
+        precision_pile(level)
+    cart('Ingot')
+    cart('Precision')
+    cart_pennant()
+    fountain()
+    flowerbed()
+    town_house_previews()
     sawhorse()
     stone_bench()
     for level in range(3):

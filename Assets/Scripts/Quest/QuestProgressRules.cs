@@ -21,7 +21,8 @@ public static class QuestProgressRules
             (quest.GoalType == QuestGoalType.Harvest && e.Reason == ItemChangeReason.Harvest)
             || (quest.GoalType == QuestGoalType.Catch && e.Reason == ItemChangeReason.Fishing)
             || (quest.GoalType == QuestGoalType.Mine && e.Reason == ItemChangeReason.Mining)
-            || (quest.GoalType == QuestGoalType.Gather && e.Reason == ItemChangeReason.Gather);
+            || (quest.GoalType == QuestGoalType.Gather && e.Reason == ItemChangeReason.Gather)
+            || (quest.GoalType == QuestGoalType.CraftTown && e.Reason == ItemChangeReason.Crafting);
         if (!matchesReason)
             return 0;
         if (quest.Item != null && quest.Item != e.Item)
@@ -186,7 +187,30 @@ public static class QuestProgressRules
     {
         if (quest == null) throw new ArgumentNullException(nameof(quest));
 
-        return quest.GoalType == QuestGoalType.PlaceDecor && placed != null ? 1 : 0;
+        if (quest.GoalType != QuestGoalType.PlaceDecor || placed == null)
+            return 0;
+        // 아이템을 정한 퀘스트는 그것만 (예: 왕국 표지판 세우기)
+        return quest.Item == null || (placed.Decor != null && placed.Decor.Item == quest.Item) ? 1 : 0;
+    }
+
+    /// <summary>번영의 시대 가공: 시설이 가공품을 만든 수 (아이템을 정한 퀘스트는 그 가공품만)</summary>
+    public static int FromProcessed(QuestDefinition quest, ItemDefinition output, int count)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+
+        if (quest.GoalType != QuestGoalType.Process || count <= 0)
+            return 0;
+        return quest.Item == null || quest.Item == output ? count : 0;
+    }
+
+    /// <summary>번영의 시대 왕국 창고: 가공품이 들어온 수 (받기 · 수레만. 예약 풀기 · 시험 지급 등은 세지 않음)</summary>
+    public static int FromWarehouse(QuestDefinition quest, string itemId, int delta, string reason)
+    {
+        if (quest == null) throw new ArgumentNullException(nameof(quest));
+
+        if (quest.GoalType != QuestGoalType.StoreInWarehouse || delta <= 0 || (reason != "collect" && reason != "cart"))
+            return 0;
+        return quest.Item == null || quest.Item.ItemId == itemId ? delta : 0;
     }
 
     /// <summary>

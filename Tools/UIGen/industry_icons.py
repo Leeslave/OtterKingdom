@@ -1,6 +1,6 @@
 """번영의 시대 산업 자재 임시 아이콘 (스티커 스타일: 코코아 외곽선 · 파스텔). 정식 그림을 받으면 바꿈.
 
-python Tools/UIGen/industry_icons.py → Assets/Art/Item/Industry/ICON_Item_Plank.png · ICON_Item_StoneBlock.png
+python Tools/UIGen/industry_icons.py → Assets/Art/Item/Industry/ICON_Item_Plank.png · ICON_Item_StoneBlock.png · ICON_Item_Ingot.png
 """
 import os
 
@@ -51,9 +51,54 @@ def stone_block():
     return im
 
 
+def ingot():
+    im = Image.new('RGBA', (SIZE, SIZE), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    # 주괴 두 개 (뒤 → 앞): 사다리꼴 윗면 · 앞면 · 옆면 + 반짝
+    for dx, dy in ((70, -40), (-10, 70)):
+        top = [(150 + dx, 170 + dy), (330 + dx, 170 + dy), (380 + dx, 210 + dy), (100 + dx, 210 + dy)]
+        front = [(100 + dx, 210 + dy), (380 + dx, 210 + dy), (360 + dx, 290 + dy), (120 + dx, 290 + dy)]
+        d.polygon(front, fill=(214, 150, 92, 255))
+        d.polygon(top, fill=(246, 196, 128, 255))
+        for face in (top, front):
+            d.line(face + [face[0]], fill=COCOA, width=LINE, joint='curve')
+        d.line((150 + dx, 232 + dy, 250 + dx, 232 + dy), fill=(250, 226, 180, 255), width=10)
+    # 반짝
+    d.polygon([(400, 92), (412, 120), (440, 132), (412, 144), (400, 172), (388, 144), (360, 132), (388, 120)], fill=(255, 250, 220, 255))
+    return im
+
+
+def gear(d, cx, cy, r, teeth, fill):
+    import math
+    pts = []
+    for i in range(teeth * 2):
+        a = math.pi * i / teeth
+        rr = r if i % 2 == 0 else r * 0.78
+        for k in (-0.22, 0.22):
+            b = a + k * math.pi / teeth
+            pts.append((cx + rr * math.cos(b), cy + rr * math.sin(b)))
+    d.polygon(pts, fill=fill)
+    d.line(pts + [pts[0]], fill=COCOA, width=LINE, joint='curve')
+    d.ellipse((cx - r * 0.32, cy - r * 0.32, cx + r * 0.32, cy + r * 0.32), fill=(120, 120, 128, 255), outline=COCOA, width=LINE)
+
+
+def precision():
+    im = Image.new('RGBA', (SIZE, SIZE), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    gear(d, 300, 220, 150, 9, (206, 214, 224, 255))
+    gear(d, 150, 360, 95, 7, (240, 196, 128, 255))
+    # 나사
+    d.rounded_rectangle((330, 330, 380, 470), radius=10, fill=(190, 196, 206, 255), outline=COCOA, width=LINE)
+    for y in (360, 390, 420, 450):
+        d.line((330, y, 380, y - 12), fill=COCOA, width=6)
+    d.rounded_rectangle((300, 300, 410, 345), radius=12, fill=(214, 220, 230, 255), outline=COCOA, width=LINE)
+    return im
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
-    for name, make in (('ICON_Item_Plank', plank), ('ICON_Item_StoneBlock', stone_block)):
+    for name, make in (('ICON_Item_Plank', plank), ('ICON_Item_StoneBlock', stone_block), ('ICON_Item_Ingot', ingot),
+                       ('ICON_Item_Precision', precision)):
         path = os.path.join(OUT, name + '.png')
         make().resize((256, 256), Image.LANCZOS).save(path)
         print(path)

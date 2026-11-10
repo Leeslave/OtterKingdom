@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a412c96f04c32584fab81052490c4bea, type: 3}
+  m_Name: Decor_Furniture_Fountain
+  m_EditorClassIdentifier: OtterKingdom::DecorDefinition
+  _item: {fileID: 11400000, guid: ad65e23225500f5479a7647c9879128f, type: 2}
+  _footprint: {x: 2, y: 2}
+  _canRotate: 0
+  _playStyle: 0
+  _playSeconds: {x: 4, y: 7}
+  _maxPlayers: 1
+  _worldSprite: {fileID: 21300000, guid: 69962a9f492356844bfe5f4c941c3322, type: 3}
+  _rotationSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _furniture: 1
+  _hasSpot: 1
+  _spotKind: 2
+  _spotPoints:
+  - {x: -0.2, y: 0.3}
+  - {x: 1.2, y: 0.3}
+  - {x: 0.5, y: -0.35}
+  _coziness: 10

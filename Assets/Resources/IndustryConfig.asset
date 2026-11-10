@@ -15,10 +15,14 @@ MonoBehaviour:
   _recipes:
   - {fileID: 11400000, guid: 3ec59c4ac5beed045b3dfe6bb7a3da05, type: 2}
   - {fileID: 11400000, guid: 36c651ef528680247adce497c41855cd, type: 2}
+  - {fileID: 11400000, guid: 78d0b421b2eeb7d4b8adbabf033bc28e, type: 2}
+  - {fileID: 11400000, guid: 54639dcb803f13742a80dbfe877345b4, type: 2}
   _baseCapacity: 60
   _warehouseCapacity: 200
+  _depotCapacity: 400
   _cartSeconds: 30
   _emptyCartSprite: {fileID: 21300000, guid: 89dbb54cb9108a2469d7dd5716a75907, type: 3}
+  _cartPennant: {fileID: 21300000, guid: ef91bf1026a44d541a3a64def5241907, type: 3}
   _warehouseSprite: {fileID: 21300000, guid: 518903a532f672949b442abcc8a13148, type: 3}
   _houseBuildingId: bld_small_house
   _improvedHouseSprites:
@@ -26,14 +30,74 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 813714915df2c31849e5c465e3696b72, type: 3}
   _housePlanks: 6
   _houseGold: 800
+  _townHouseIcons:
+  - {fileID: 21300000, guid: 05f49a954bf6fc44ea498c84afc06202, type: 3}
+  - {fileID: 21300000, guid: f2616209a4ec4d041b1329427d24eeb7, type: 3}
+  _porchLamp: {fileID: 21300000, guid: 311299cc5a864170ad810d5eac937051, type: 3}
+  _porchFlowers: {fileID: 21300000, guid: 1b55f183315411443bbadae62b562a72, type: 3}
+  _townHouseStoneBlocks: 4
+  _townHouseIngots: 2
+  _townHouseGold: 2000
   _crafts:
   - _item: {fileID: 11400000, guid: 36f3e996f2d47e347938dd289cddfd71, type: 2}
     _techId: C01
     _planks: 2
     _stoneBlocks: 0
+    _ingots: 0
     _gold: 200
   - _item: {fileID: 11400000, guid: 793afa907c5f3034cb9a7420f3f7668d, type: 2}
     _techId: C01
     _planks: 1
     _stoneBlocks: 1
+    _ingots: 0
     _gold: 100
+  - _item: {fileID: 11400000, guid: 0b2599d2ef77d8748a8a93a9f3c0338b, type: 2}
+    _techId: C04
+    _planks: 0
+    _stoneBlocks: 3
+    _ingots: 0
+    _gold: 400
+  - _item: {fileID: 11400000, guid: ad65e23225500f5479a7647c9879128f, type: 2}
+    _techId: C04
+    _planks: 0
+    _stoneBlocks: 8
+    _ingots: 2
+    _gold: 1500
+  _pavings:
+  - _id: town_paving_plaza_center
+    _displayName: "\uC911\uC559 \uAD11\uC7A5 \uB3CC\uAE38"
+    _description: "\uAD11\uC7A5 \uAC00\uC6B4\uB370 \uD759 \uB9C8\uB2F9\uC5D0 \uB3CC\uC744
+      \uAE54\uC544\uC694"
+    _techId: C01
+    _stoneBlocks: 12
+    _planks: 0
+    _gold: 1500
+    _requires: 
+    _icon: {fileID: 21300000, guid: b33eb6e7e2bd72b43aa085a3db1887be, type: 3}
+    _pieces:
+    - _sprite: {fileID: 21300000, guid: 6291e975111471b4c9171bec358e3d0a, type: 3}
+      _mapCenter: {x: 0.4616896, y: 0.3865462}
+      _mapSize: {x: 0.3231827, y: 0.33032128}
+  - _id: town_paving_roads
+    _displayName: "\uC655\uAD6D \uD070\uAE38"
+    _description: "\uAD11\uC7A5\uC5D0\uC11C \uBED7\uC740 \uD759\uAE38\uC744 \uB530\uB77C
+      \uB3CC\uC744 \uAE54\uC544\uC694"
+    _techId: C03
+    _stoneBlocks: 20
+    _planks: 0
+    _gold: 3000
+    _requires: town_paving_plaza_center
+    _icon: {fileID: 21300000, guid: 6a126fe011c9b9d419b0c41f816935a5, type: 3}
+    _pieces:
+    - _sprite: {fileID: 21300000, guid: e468c0e9f79e9864da1b0dd6557e2d72, type: 3}
+      _mapCenter: {x: 0.25865668, y: 0.20795682}
+      _mapSize: {x: 0.40704814, y: 0.41390562}
+    - _sprite: {fileID: 21300000, guid: 2885df0c7cdf12a4e820535c98f831e3, type: 3}
+      _mapCenter: {x: 0.661223, y: 0.24836847}
+      _mapSize: {x: 0.3980845, y: 0.33308232}
+    - _sprite: {fileID: 21300000, guid: 917d48a682acc3b42ba8173b861dfe64, type: 3}
+      _mapCenter: {x: 0.34553045, y: 0.48675954}
+      _mapSize: {x: 0.2333006, y: 0.1436998}
+    - _sprite: {fileID: 21300000, guid: c3d983d7b6b78644483fa5469487dc5a, type: 3}
+      _mapCenter: {x: 0.6454445, y: 0.592997}
+      _mapSize: {x: 0.3665275, y: 0.3561747}

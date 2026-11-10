@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7adc0a4481d184d4fb82ea7628c51eb3, type: 3}
+  m_Name: Recipe_Precision
+  m_EditorClassIdentifier: OtterKingdom::ProcessingRecipeDefinition
+  _building: {fileID: 11400000, guid: 4e15b5eb7cd015b44ab19f7b39aad7d3, type: 2}
+  _techId: I06
+  _processorId: bld_workshop_precision
+  _input: {fileID: 11400000, guid: 9b61dd3f2cb24a84fb92d6bb182e937d, type: 2}
+  _inputCount: 2
+  _fromWarehouse: 1
+  _extraInput: {fileID: 11400000, guid: bccbe747ac3818f47a912a20f86eb380, type: 2}
+  _extraInputCount: 2
+  _output: {fileID: 11400000, guid: 7ebb86bc31ad57d479eff76a7438ebf7, type: 2}
+  _cycleSeconds: 720
+  _firstDevelopment: first_precision_part
+  _benchSprite: {fileID: 0}
+  _pileSprites:
+  - {fileID: 21300000, guid: 6b7d192d74d857344b44395595c09535, type: 3}
+  - {fileID: 21300000, guid: ffc0e9385517cb74abbce57b430aa5d4, type: 3}
+  - {fileID: 21300000, guid: 78b651909c43d5b409c10bdc3a6fd3a8, type: 3}
+  _cartSprite: {fileID: 21300000, guid: 282d4cdef141d9743bdd1478a663ddf7, type: 3}
+  _propSlot: 1

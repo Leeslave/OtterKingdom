@@ -118,6 +118,7 @@ public class ProductionSheet : MonoBehaviour
                 _refreshes.Add(IndustrySection.DrawProcessing(content, _manager, () => Draw(), () => SwitchTo(Tab.Warehouse)));
                 break;
             case Tab.Warehouse:
+                _manager.MarkWarehouseViewed();
                 _refreshes.Add(IndustrySection.DrawWarehouse(content, _manager, (message, ok) =>
                 {
                     _hint = message;

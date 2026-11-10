@@ -11,6 +11,7 @@ public partial class Settlement
         Industry.processors ??= new System.Collections.Generic.List<ProcessorSaveData>();
         Industry.cartRoutes ??= new System.Collections.Generic.List<string>();
         Industry.improvedHouses ??= new System.Collections.Generic.List<int>();
+        Industry.townHouses ??= new System.Collections.Generic.List<int>();
     }
 
     private void WriteIndustry(SettlementSaveData result) => result.industry = Industry;

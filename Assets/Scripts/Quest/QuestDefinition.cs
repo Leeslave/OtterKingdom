@@ -60,7 +60,7 @@ public class QuestDefinition : ScriptableObject
     [SerializeField]
     private CollectionTab _collectionTab;
 
-    [Tooltip("수확·낚시·채굴만: 이 아이템만 센다 (예: 당근). 비우면 분류 필터만 봄")]
+    [Tooltip("수확·낚시·채굴 · 가공 · 창고 · 마을 정비 · 꾸미기 놓기: 이 아이템만 센다 (예: 당근, 판재, 왕국 표지판). 비우면 분류 필터만 봄")]
     [SerializeField]
     private ItemDefinition _item;
 
@@ -113,7 +113,7 @@ public class QuestDefinition : ScriptableObject
 
     /// <summary>진행이 알림으로 쌓이지 않고 저장된 기록(만난 해달, 다 지은 건물, 정착 단계)으로 매번 다시 세는지</summary>
     public bool CountsFromRecords => _goalType == QuestGoalType.CompleteConstruction || _goalType == QuestGoalType.MeetOtter
-        || _goalType == QuestGoalType.Milestone;
+        || _goalType == QuestGoalType.Milestone || _goalType == QuestGoalType.ImproveHouse;
     public Currency RewardCurrency => _rewardCurrency;
     public int RewardAmount => _rewardAmount;
     public QuestKind Kind => _kind;
