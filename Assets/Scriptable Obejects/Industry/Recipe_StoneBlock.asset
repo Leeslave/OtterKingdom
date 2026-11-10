@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::ProcessingRecipeDefinition
   _building: {fileID: 11400000, guid: 15ea4d6bf71774e4c8c38eabff7e72c6, type: 2}
   _techId: I02
+  _processorId: 
   _input: {fileID: 11400000, guid: 37a40ac1ebe97a04f8eb9aee16c12fed, type: 2}
   _inputCount: 6
+  _fromWarehouse: 0
+  _extraInput: {fileID: 0}
+  _extraInputCount: 0
   _output: {fileID: 11400000, guid: 6018d2469128da942b4f6256477ce260, type: 2}
   _cycleSeconds: 360
   _firstDevelopment: first_stone_block
@@ -25,3 +29,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3494471ac180b2946997a5ed48aa4c9a, type: 3}
   - {fileID: 21300000, guid: 7decb4773ee9a68429883b55e9ed4333, type: 3}
   _cartSprite: {fileID: 21300000, guid: 70afc918476f5704db4e37871f574802, type: 3}
+  _propSlot: 0

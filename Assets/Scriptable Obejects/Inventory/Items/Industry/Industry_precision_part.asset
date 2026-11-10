@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f08fb9bd4b0a2c4a8f6be6ee47c832e, type: 3}
+  m_Name: Industry_precision_part
+  m_EditorClassIdentifier: OtterKingdom::ItemDefinition
+  _itemId: precision_part
+  _displayName: "\uC815\uBC00 \uBD80\uD488"
+  _description: "\uBAA9\uACF5\uC18C \uC815\uBC00 \uACF5\uBC29\uC5D0\uC11C \uD310\uC7AC\uC640
+    \uC8FC\uAD34\uB85C \uAE4E\uC544 \uB9CC\uB4E0 \uD1B1\uB2C8 \xB7 \uB098\uC0AC.
+    \uD559\uC220\uC6D0 \xB7 \uC655\uAD81 \uAC19\uC740 \uD070 \uC0AC\uC5C5\uC5D0 \uC4F0\uC5EC\uC694."
+  _icon: {fileID: 21300000, guid: 5558f54ad22f59848b5a4079362148ed, type: 3}
+  _category: {fileID: 11400000, guid: 78afe668cfdecd144b7cada48fea485c, type: 2}
+  _rarity: {fileID: 11400000, guid: 5353717662614df4f9fb686e152a6660, type: 2}
+  _isSellable: 0
+  _sellPrice: 0
+  _maxStack: 999

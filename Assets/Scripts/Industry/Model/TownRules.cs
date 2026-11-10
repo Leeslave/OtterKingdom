@@ -14,6 +14,18 @@ public static class TownRules
         return true;
     }
 
+    public static bool IsTownHouse(IndustrySaveData data, int instanceId) => data.townHouses.Contains(instanceId);
+
+    /// <summary>마을 주택으로 (2단계). 먼저 개량 주택이어야 함</summary>
+    /// <returns>이번에 바뀌었나</returns>
+    public static bool MakeTownHouse(IndustrySaveData data, int instanceId)
+    {
+        if (!IsImproved(data, instanceId) || data.townHouses.Contains(instanceId))
+            return false;
+        data.townHouses.Add(instanceId);
+        return true;
+    }
+
     /// <summary>창고에서 낼 자재 (0개는 뺌)</summary>
     public static List<(string itemId, int amount)> Costs(string firstId, int first, string secondId, int second)
     {

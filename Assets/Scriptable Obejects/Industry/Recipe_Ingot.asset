@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7adc0a4481d184d4fb82ea7628c51eb3, type: 3}
+  m_Name: Recipe_Ingot
+  m_EditorClassIdentifier: OtterKingdom::ProcessingRecipeDefinition
+  _building: {fileID: 11400000, guid: 1607a7396d13ff140a6315c611b5af35, type: 2}
+  _techId: I03
+  _processorId: 
+  _input: {fileID: 11400000, guid: beea3b26626245fcb0941677f14022c5, type: 2}
+  _inputCount: 3
+  _fromWarehouse: 0
+  _extraInput: {fileID: 0}
+  _extraInputCount: 0
+  _output: {fileID: 11400000, guid: bccbe747ac3818f47a912a20f86eb380, type: 2}
+  _cycleSeconds: 480
+  _firstDevelopment: first_ingot
+  _benchSprite: {fileID: 21300000, guid: aa52c8b5011ff914295a3275d53cce6b, type: 3}
+  _pileSprites:
+  - {fileID: 21300000, guid: 3d3a13fecb3c38644b9cb1b629959400, type: 3}
+  - {fileID: 21300000, guid: 2deb6ca7512307245937d16c410afcea, type: 3}
+  - {fileID: 21300000, guid: 9628dac66f2ceb843bcf70ab137e6cc6, type: 3}
+  _cartSprite: {fileID: 21300000, guid: cb628c0fbddd7cf468707c19f675fc8d, type: 3}
+  _propSlot: 0

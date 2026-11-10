@@ -102,6 +102,7 @@ public class QuestManager : MonoBehaviour
 
         FairyShopPresenter.Purchased += HandleShopPurchased;
         SceneNavigator.Arrived += HandleArrived;
+        SettlementManager.WarehouseChanged += HandleWarehouseChanged;
     }
 
     // 꾸미기·레벨 매니저는 같은 실행 순서(-80)라 OnEnable 시점에 아직 없을 수 있어 Start에서 연결
@@ -124,6 +125,7 @@ public class QuestManager : MonoBehaviour
         {
             _settlementManager.OnDevelopmentUnlocked += HandleDevelopmentUnlocked;
             _settlementManager.OnChanged += RefreshRecordGoals;
+            _settlementManager.OnProcessed += HandleProcessed;
         }
 
         CheckDailyReset();
@@ -142,6 +144,7 @@ public class QuestManager : MonoBehaviour
             _collection.OnStateChanged -= HandleCollectionChanged;
         FairyShopPresenter.Purchased -= HandleShopPurchased;
         SceneNavigator.Arrived -= HandleArrived;
+        SettlementManager.WarehouseChanged -= HandleWarehouseChanged;
         if (_decorManager != null)
             _decorManager.OnDecorPlaced -= HandleDecorPlaced;
         if (_profileManager != null)
@@ -150,6 +153,7 @@ public class QuestManager : MonoBehaviour
         {
             _settlementManager.OnDevelopmentUnlocked -= HandleDevelopmentUnlocked;
             _settlementManager.OnChanged -= RefreshRecordGoals;
+            _settlementManager.OnProcessed -= HandleProcessed;
         }
     }
 
@@ -256,6 +260,19 @@ public class QuestManager : MonoBehaviour
     }
 
     private void HandleDevelopmentUnlocked(string developmentId) => OnChanged?.Invoke();
+
+    // 번영의 시대: 시설 가공 · 왕국 창고 (SettlementManager.Industry)
+    private void HandleProcessed(ItemDefinition output, int count)
+    {
+        foreach (var quest in _database.Quests)
+            AddProgress(quest, QuestProgressRules.FromProcessed(quest, output, count));
+    }
+
+    private void HandleWarehouseChanged(string itemId, int delta, string reason)
+    {
+        foreach (var quest in _database.Quests)
+            AddProgress(quest, QuestProgressRules.FromWarehouse(quest, itemId, delta, reason));
+    }
 
     private void AddProgress(QuestDefinition quest, int amount)
     {
@@ -369,6 +386,10 @@ public class QuestManager : MonoBehaviour
             else if (quest.GoalType == QuestGoalType.Milestone)
             {
                 value = IsMilestoneReached(settlement, quest.Target) ? 1 : 0;
+            }
+            else if (quest.GoalType == QuestGoalType.ImproveHouse)
+            {
+                value = settlement.Settlement.Industry.improvedHouses.Count;
             }
             else
             {

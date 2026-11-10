@@ -115,6 +115,76 @@ public class IndustryTests
     }
 
     [Test]
+    public void Speed_StandardToolsDoubles_WaterPowerAdds15Percent()
+    {
+        Assert.AreEqual(1f, ProcessingRules.Speed(_ => false), 0.001f);
+        Assert.AreEqual(2f, ProcessingRules.Speed(id => id == TechIds.StandardTools), 0.001f, "슬롯 +1");
+        Assert.AreEqual(1.15f, ProcessingRules.Speed(id => id == TechIds.WaterPower), 0.001f);
+        Assert.AreEqual(2.3f, ProcessingRules.Speed(id => id == TechIds.StandardTools || id == TechIds.WaterPower), 0.001f);
+    }
+
+    [Test]
+    public void Processing_Speed2_MakesTwiceAsFast_StillLimitedByInput()
+    {
+        var processor = new ProcessorSaveData { buildingId = "bld_workshop", on = true, trialGiven = true };
+        ProcessingRules.Feed(processor, Plank, 40);
+        Assert.AreEqual(2, ProcessingRules.Run(processor, Plank, 360f, 2f), "6분에 둘");
+        Assert.AreEqual(8, ProcessingRules.Run(processor, Plank, 3600f, 2f), "재료(32개 = 8개 몫)까지만");
+        Assert.AreEqual(20f, ProcessingRules.ActualPerHour(Plank, 999, 2f), 0.001f);
+    }
+
+    [Test]
+    public void AutoSupply_FillsRoom_KeepsSomeInBag()
+    {
+        var processor = new ProcessorSaveData { buildingId = "bld_workshop", input = 30 };
+        Assert.AreEqual(10, ProcessingRules.AutoSupplyAmount(processor, Plank, 25, 10), "넣을 자리 10개");
+        Assert.AreEqual(2, ProcessingRules.AutoSupplyAmount(processor, Plank, 12, 10), "가방에 10개는 남김");
+        Assert.AreEqual(0, ProcessingRules.AutoSupplyAmount(processor, Plank, 5, 10));
+        Assert.AreEqual(ProcessingRules.DefaultKeep, new ProcessorSaveData().keep, "옛 세이브 · 새 시설은 기본으로 남김");
+    }
+
+    [Test]
+    public void TownHouse_NeedsImprovedFirst_AndOnlyOnce()
+    {
+        var data = new IndustrySaveData();
+        Assert.IsFalse(TownRules.MakeTownHouse(data, 12), "개량 주택이 먼저");
+        TownRules.Improve(data, 12);
+        Assert.IsTrue(TownRules.MakeTownHouse(data, 12));
+        Assert.IsFalse(TownRules.MakeTownHouse(data, 12), "한 번만");
+        Assert.IsTrue(TownRules.IsTownHouse(data, 12));
+        Assert.IsTrue(TownRules.IsImproved(data, 12), "1단계 기록은 그대로");
+    }
+
+    [Test]
+    public void WarehouseRecipe_TakesBothMaterialsPerItem_WaitsWhenShort()
+    {
+        // 정밀 공방: 판재 2 + 주괴 2 → 정밀 부품 1, 12분 (창고에서 바로)
+        var precision = new ProcessingRecipe("bld_workshop_precision", "plank", 2, "precision_part", 720f, "ingot", 2, true);
+        var data = new IndustrySaveData();
+        var warehouse = Warehouse(data);
+        warehouse.Add("plank", 5, "test");
+        warehouse.Add("ingot", 9, "test");
+        var processor = ProcessingRules.Processor(data, precision.ProcessorId);
+        processor.on = true;
+        processor.trialGiven = true;
+        Assert.AreEqual(2, ProcessingRules.RunFromWarehouse(processor, precision, 3600f, 1f, warehouse), "판재가 두 개 몫뿐");
+        Assert.AreEqual(1, warehouse.Count("plank"));
+        Assert.AreEqual(5, warehouse.Count("ingot"));
+        Assert.AreEqual(2, processor.tray);
+        Assert.AreEqual(720f, processor.progress, 0.01f, "기다리는 동안 한 개 몫까지만");
+        warehouse.Add("plank", 1, "test");
+        Assert.AreEqual(1, ProcessingRules.RunFromWarehouse(processor, precision, 0.1f, 1f, warehouse), "재료가 오면 바로 하나");
+        Assert.AreEqual(ProcessingRules.Processor(data, "bld_workshop"), ProcessingRules.Processor(data, "bld_workshop"));
+        Assert.AreNotSame(processor, ProcessingRules.Processor(data, "bld_workshop"), "같은 시설의 다른 줄은 따로");
+    }
+
+    [Test]
+    public void BetterCart_ServesFiveLines()
+    {
+        Assert.AreEqual(5, CartRules.RouteLimit(id => id == TechIds.Cart || id == TechIds.Dispatch || id == TechIds.BetterCart));
+    }
+
+    [Test]
     public void ActualPerHour_IsLimitedByIncomingWood()
     {
         Assert.AreEqual(7.5f, ProcessingRules.ActualPerHour(Plank, 30), 0.001f, "해달 1명(목재 30/h) → 판재 7.5/h");
@@ -143,8 +213,10 @@ public class IndustryTests
         var settlement = new Settlement();
         var saved = new SettlementSaveData();
         saved.industry.improvedHouses = null;
+        saved.industry.townHouses = null;
         settlement.Load(saved);
         Assert.IsNotNull(settlement.Industry.improvedHouses);
+        Assert.IsNotNull(settlement.Industry.townHouses);
         Assert.IsFalse(TownRules.IsImproved(settlement.Industry, 12));
     }
 

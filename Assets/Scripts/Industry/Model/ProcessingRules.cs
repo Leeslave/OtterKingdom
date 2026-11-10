@@ -4,23 +4,42 @@ using System.Collections.Generic;
 /// <summary>가공 레시피 (순수 값). 데이터는 ProcessingRecipeDefinition</summary>
 public readonly struct ProcessingRecipe
 {
-    public readonly string BuildingId;
+    /// <summary>가공 줄 ID — 세이브 · 수레가 이것으로 찾음 (시설의 첫 줄은 시설 ID, 정밀 공방처럼 둘째 줄은 따로)</summary>
+    public readonly string ProcessorId;
     public readonly string InputId;
     public readonly int InputCount;
     public readonly string OutputId;
     public readonly float CycleSeconds;
+    /// <summary>창고에서 바로 쓰는 둘째 재료 (없으면 null)</summary>
+    public readonly string ExtraInputId;
+    public readonly int ExtraInputCount;
+    /// <summary>재료를 넣어 두지 않고 만들 때마다 왕국 창고에서 꺼냄 (정밀 공방: 판재 + 주괴)</summary>
+    public readonly bool FromWarehouse;
 
-    public ProcessingRecipe(string buildingId, string inputId, int inputCount, string outputId, float cycleSeconds)
+    public ProcessingRecipe(string processorId, string inputId, int inputCount, string outputId, float cycleSeconds,
+        string extraInputId = null, int extraInputCount = 0, bool fromWarehouse = false)
     {
-        if (string.IsNullOrEmpty(buildingId) || string.IsNullOrEmpty(inputId) || string.IsNullOrEmpty(outputId))
-            throw new ArgumentException("레시피의 시설 · 재료 ID가 비었어요");
-        if (inputCount <= 0 || cycleSeconds <= 0f)
+        if (string.IsNullOrEmpty(processorId) || string.IsNullOrEmpty(inputId) || string.IsNullOrEmpty(outputId))
+            throw new ArgumentException("레시피의 가공 줄 · 재료 ID가 비었어요");
+        if (inputCount <= 0 || cycleSeconds <= 0f || extraInputCount < 0)
             throw new ArgumentOutOfRangeException(nameof(inputCount), "재료 수 · 시간은 0보다 커야 해요");
-        BuildingId = buildingId;
+        ProcessorId = processorId;
         InputId = inputId;
         InputCount = inputCount;
         OutputId = outputId;
         CycleSeconds = cycleSeconds;
+        ExtraInputId = string.IsNullOrEmpty(extraInputId) || extraInputCount <= 0 ? null : extraInputId;
+        ExtraInputCount = ExtraInputId != null ? extraInputCount : 0;
+        FromWarehouse = fromWarehouse;
+    }
+
+    /// <summary>창고에서 꺼내는 한 번 몫 (창고 재료 레시피)</summary>
+    public List<(string itemId, int amount)> WarehouseCosts()
+    {
+        var costs = new List<(string, int)> { (InputId, InputCount) };
+        if (ExtraInputId != null)
+            costs.Add((ExtraInputId, ExtraInputCount));
+        return costs;
     }
 
     /// <summary>1시간에 최대 몇 개 (재료가 충분할 때)</summary>
@@ -44,6 +63,32 @@ public static class ProcessingRules
 {
     /// <summary>재료를 미리 넣어 둘 수 있는 몫 (만들 횟수)</summary>
     public const int BufferCycles = 10;
+
+    /// <summary>표준 공구(I04): 가공 슬롯 +1 → 두 개씩 나란히</summary>
+    public const float StandardToolsSlots = 2f;
+
+    /// <summary>수력 기계(I05): 가공 속도 +15%</summary>
+    public const float WaterPowerBonus = 0.15f;
+
+    /// <summary>자동 공급(L04)이 가방에 남겨 두는 기본 수 (희귀 광석을 다 쓰지 않게)</summary>
+    public const int DefaultKeep = 10;
+
+    /// <summary>가공 속도 배수 (기술에 따라: 표준 공구 ×2 · 수력 기계 ×1.15)</summary>
+    public static float Speed(Func<string, bool> hasTech)
+    {
+        if (hasTech == null)
+            throw new ArgumentNullException(nameof(hasTech));
+        float speed = hasTech(TechIds.StandardTools) ? StandardToolsSlots : 1f;
+        return hasTech(TechIds.WaterPower) ? speed * (1f + WaterPowerBonus) : speed;
+    }
+
+    /// <summary>자동 공급(L04): 가방에서 넣을 수 — 넣을 자리만큼, 가방에 keep개는 남김</summary>
+    public static int AutoSupplyAmount(ProcessorSaveData processor, ProcessingRecipe recipe, int inBag, int keep)
+    {
+        if (inBag < 0 || keep < 0)
+            throw new ArgumentOutOfRangeException(nameof(inBag));
+        return Math.Max(0, Math.Min(recipe.InputCapacity - processor.input, inBag - keep));
+    }
 
     public static ProcessorSaveData Processor(IndustrySaveData data, string buildingId)
     {
@@ -78,13 +123,15 @@ public static class ProcessingRules
         return taken;
     }
 
-    /// <summary>seconds 동안 만듦 (꺼져 있으면 안 만듦)</summary>
+    /// <summary>seconds 동안 만듦 (꺼져 있으면 안 만듦). speed = 가공 속도 배수 (Speed)</summary>
     /// <returns>새로 만든 수</returns>
-    public static int Run(ProcessorSaveData processor, ProcessingRecipe recipe, double seconds)
+    public static int Run(ProcessorSaveData processor, ProcessingRecipe recipe, double seconds, float speed = 1f)
     {
         if (!processor.on || seconds <= 0 || double.IsNaN(seconds))
             return 0;
-        double progress = Math.Max(0, processor.progress) + seconds;
+        if (speed <= 0f)
+            throw new ArgumentOutOfRangeException(nameof(speed));
+        double progress = Math.Max(0, processor.progress) + seconds * speed;
         int byTime = (int)Math.Floor(progress / recipe.CycleSeconds);
         int byInput = processor.input / recipe.InputCount;
         int byTray = Math.Max(0, recipe.TrayCapacity - processor.tray);
@@ -93,6 +140,32 @@ public static class ProcessingRules
         processor.tray += made;
         progress -= made * recipe.CycleSeconds;
         // 재료가 없거나 가득 차서 멈춘 동안은 한 개 몫까지만 쌓임 (재료가 오면 바로 하나)
+        processor.progress = (float)Math.Min(progress, recipe.CycleSeconds);
+        return made;
+    }
+
+    /// <summary>
+    /// 창고 재료 레시피: seconds 동안 만들 때마다 왕국 창고에서 한 번 몫을 꺼냄 (모자라면 기다림 · 진행은 한 개 몫까지).
+    /// 시설이 가득 차면 멈춤 (꺼내지 않음)
+    /// </summary>
+    /// <returns>새로 만든 수</returns>
+    public static int RunFromWarehouse(ProcessorSaveData processor, ProcessingRecipe recipe, double seconds, float speed, KingdomWarehouse warehouse)
+    {
+        if (!recipe.FromWarehouse)
+            throw new ArgumentException("창고 재료 레시피가 아니에요", nameof(recipe));
+        if (!processor.on || seconds <= 0 || double.IsNaN(seconds))
+            return 0;
+        if (speed <= 0f)
+            throw new ArgumentOutOfRangeException(nameof(speed));
+        double progress = Math.Max(0, processor.progress) + seconds * speed;
+        int byTime = (int)Math.Floor(progress / recipe.CycleSeconds);
+        int limit = Math.Min(byTime, Math.Max(0, recipe.TrayCapacity - processor.tray));
+        var costs = recipe.WarehouseCosts();
+        int made = 0;
+        while (made < limit && warehouse.TryConsume(costs, "processing"))
+            made++;
+        processor.tray += made;
+        progress -= made * recipe.CycleSeconds;
         processor.progress = (float)Math.Min(progress, recipe.CycleSeconds);
         return made;
     }
@@ -108,9 +181,9 @@ public static class ProcessingRules
         return moved;
     }
 
-    /// <summary>지금 1시간에 실제로 만드는 양: 들어오는 재료(시간당)로 만들 수 있는 만큼 (레시피 최대를 넘지 않음)</summary>
-    public static float ActualPerHour(ProcessingRecipe recipe, double inputPerHour) =>
-        (float)Math.Min(recipe.OutputPerHour, Math.Max(0, inputPerHour) / recipe.InputCount);
+    /// <summary>지금 1시간에 실제로 만드는 양: 들어오는 재료(시간당)로 만들 수 있는 만큼 (레시피 최대 × 속도를 넘지 않음)</summary>
+    public static float ActualPerHour(ProcessingRecipe recipe, double inputPerHour, float speed = 1f) =>
+        (float)Math.Min(recipe.OutputPerHour * speed, Math.Max(0, inputPerHour) / recipe.InputCount);
 }
 
 /// <summary>
@@ -119,8 +192,11 @@ public static class ProcessingRules
 /// </summary>
 public static class CartRules
 {
+    /// <summary>개량 수레(L06)는 더 많이 실어 다섯 곳까지</summary>
+    public const int BetterCartRoutes = 5;
+
     public static int RouteLimit(Func<string, bool> hasTech) =>
-        hasTech(TechIds.Dispatch) ? 3 : hasTech(TechIds.Cart) ? 1 : 0;
+        hasTech(TechIds.BetterCart) ? BetterCartRoutes : hasTech(TechIds.Dispatch) ? 3 : hasTech(TechIds.Cart) ? 1 : 0;
 
     public static bool HasRoute(IndustrySaveData data, string buildingId) => data.cartRoutes.Contains(buildingId);
 
@@ -137,22 +213,22 @@ public static class CartRules
         return true;
     }
 
-    /// <summary>수레가 다니는 시설의 가공품을 창고로 (수레 수보다 많이 저장돼 있으면 앞에서부터 그 수만큼만)</summary>
-    /// <returns>(시설 ID, 옮긴 수)</returns>
-    public static List<(string buildingId, int moved)> Deliver(IndustrySaveData data, IReadOnlyList<ProcessingRecipe> recipes,
+    /// <summary>수레가 다니는 가공 줄의 가공품을 창고로 (수레 수보다 많이 저장돼 있으면 앞에서부터 그 수만큼만)</summary>
+    /// <returns>(가공 줄 ID, 옮긴 수)</returns>
+    public static List<(string processorId, int moved)> Deliver(IndustrySaveData data, IReadOnlyList<ProcessingRecipe> recipes,
         KingdomWarehouse warehouse, int limit)
     {
         var result = new List<(string, int)>();
         for (int i = 0; i < data.cartRoutes.Count && i < limit; i++)
         {
-            string buildingId = data.cartRoutes[i];
+            string processorId = data.cartRoutes[i];
             foreach (var recipe in recipes)
             {
-                if (recipe.BuildingId != buildingId)
+                if (recipe.ProcessorId != processorId)
                     continue;
-                int moved = ProcessingRules.Collect(ProcessingRules.Processor(data, buildingId), recipe, warehouse, "cart");
+                int moved = ProcessingRules.Collect(ProcessingRules.Processor(data, processorId), recipe, warehouse, "cart");
                 if (moved > 0)
-                    result.Add((buildingId, moved));
+                    result.Add((processorId, moved));
             }
         }
         return result;
