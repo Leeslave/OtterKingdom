@@ -61,8 +61,34 @@ public partial class SettlementManager
         return TechGate.Has(TechIds.Warehouse) ? config.WarehouseCapacity : config.BaseCapacity;
     }
 
-    /// <summary>가공 속도 배수 (표준 공구 I04 ×2 · 수력 기계 I05 ×1.15)</summary>
-    public float ProcessingSpeed => ProcessingRules.Speed(TechGate.Has);
+    /// <summary>가공 속도 배수 (표준 공구 I04 ×2 · 수력 기계 I05 ×1.15 · 협업 생산 I07 최대 +20% · 왕립 산업단지 +15%)</summary>
+    public float ProcessingSpeed
+    {
+        get
+        {
+            float speed = ProcessingRules.Speed(TechGate.Has);
+            if (TechGate.Has(TechIds.CoProduction))
+                speed *= 1f + ProcessingRules.CooperationBonus(ActiveProcessingLines());
+            if (IsProjectDone(TownProjectKind.IndustrialPark))
+                speed *= 1f + ProcessingRules.IndustrialParkBonus;
+            return speed;
+        }
+    }
+
+    /// <summary>지금 켜 둔 가공 줄 수 (협업 생산)</summary>
+    public int ActiveProcessingLines()
+    {
+        int count = 0;
+        var config = IndustryConfig;
+        if (config == null)
+            return 0;
+        foreach (var recipe in config.Recipes)
+        {
+            if (recipe != null && IsProcessing(recipe))
+                count++;
+        }
+        return count;
+    }
 
     /// <summary>창고를 봤음 (퀘스트 "왕국 자재 장부 확인")</summary>
     public void MarkWarehouseViewed()

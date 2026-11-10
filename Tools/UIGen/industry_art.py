@@ -14,6 +14,10 @@ python Tools/UIGen/industry_art.py → Assets/Art/Industry/
   TownHouse_Red · TownHouse_Blue  마을 주택 미리보기 (개량 주택 + 현관 등불 · 화분, C05)
   Pile_Precision_0..2 · Cart_Precision  정밀 부품 상자 더미 · 수레 (I06)
   Cart_Pennant           개량 수레(L06) 깃발 (수레 뒤 손잡이 쪽 위)
+  Prop_RoyalBanner       왕립 산업단지(I08) 시설 깃발
+  Prop_CapitalFlag       수도 광장(C07) 깃대
+  Academy                왕립 학술원(C06) = 기록관 그림의 지붕을 남색으로 + 별 문장
+  Palace                 왕궁(C08) = 성 그림의 파란 지붕 · 깃발을 금빛으로
 """
 import math
 import os
@@ -357,6 +361,79 @@ def cart_pennant():
     finish(im, 'Cart_Pennant')
 
 
+def banner_pole(name, cloth, emblem):
+    im, d = canvas(220, 520)
+    shadow(d, 70, 500, 50, 12)
+    d.line(s(70, 505, 70, 40), fill=COCOA, width=22)
+    d.line(s(70, 505, 70, 40), fill=WOOD_DARK, width=10)
+    ellipse(d, (52, 18, 88, 54), (255, 214, 110, 255), 8)
+    # 늘어진 깃발 (아래 제비꼬리)
+    poly(d, [(76, 70), (200, 70), (200, 300), (138, 262), (76, 300)], cloth, 12)
+    d.line(s(76, 92, 200, 92), fill=(255, 214, 110, 255), width=6 * S)
+    emblem(d, 138, 170)
+    rrect(d, (52, 486, 88, 506), 6, STONE_FRONT, 8)
+    finish(im, name)
+
+
+def crown(d, cx, cy, k=1.0, color=(255, 214, 110, 255)):
+    pts = [(-40, 24), (-40, -16), (-20, 4), (0, -30), (20, 4), (40, -16), (40, 24)]
+    poly(d, [(cx + x * k, cy + y * k) for x, y in pts], color, 9)
+    for x, y in ((-40, -16), (0, -30), (40, -16)):
+        ellipse(d, (cx + x * k - 7, cy + y * k - 7, cx + x * k + 7, cy + y * k + 7), (247, 160, 170, 255), 5)
+
+
+def shell(d, cx, cy):
+    pts = []
+    for i in range(0, 181, 15):
+        r = math.radians(180 + i)
+        pts.append((cx + 36 * math.cos(r), cy + 6 + 34 * math.sin(r)))
+    pts += [(cx + 10, cy + 30), (cx - 10, cy + 30)]
+    poly(d, pts, (247, 196, 168, 255), 8)
+    for a in (-50, -25, 0, 25, 50):
+        r = math.radians(270 + a)
+        d.line(s(cx, cy + 26, cx + 30 * math.cos(r), cy + 8 + 30 * math.sin(r)), fill=(214, 140, 120, 255), width=4 * S)
+
+
+def recolor(path, out, hue_from, hue_to, target_hue, sat_mul=1.0, val_mul=1.0, overlay=None):
+    """그림에서 색상(hue) 범위의 칸만 다른 색으로 (모양 · 외곽선은 그대로)"""
+    import numpy as np
+    im = Image.open(path).convert('RGBA')
+    rgb = np.asarray(im.convert('RGB')).astype(np.float32) / 255
+    hsv = np.asarray(im.convert('RGB').convert('HSV')).astype(np.float32)
+    h, sat, val = hsv[..., 0] * 360 / 255, hsv[..., 1] / 255, hsv[..., 2] / 255
+    mask = (h >= hue_from) & (h <= hue_to) & (sat > 0.25) & (val > 0.25)
+    h2 = np.where(mask, target_hue, h)
+    s2 = np.where(mask, np.clip(sat * sat_mul, 0, 1), sat)
+    v2 = np.where(mask, np.clip(val * val_mul, 0, 1), val)
+    hsv2 = np.stack([h2 * 255 / 360, s2 * 255, v2 * 255], -1).astype(np.uint8)
+    rgb2 = Image.fromarray(hsv2, 'HSV').convert('RGB')
+    result = Image.merge('RGBA', (*rgb2.split(), im.split()[3]))
+    if overlay:
+        overlay(result)
+    result.save(os.path.join(OUT, out + '.png'))
+    print(out, result.size, int(mask.sum()))
+
+
+def academy():
+    def emblem(im):
+        d = ImageDraw.Draw(im)
+        w, h = im.size
+        cx, cy, r = w * 0.5, h * 0.2, w * 0.07
+        # 별 문장 (지붕 위 둥근 판)
+        d.ellipse((cx - r * 1.4, cy - r * 1.4, cx + r * 1.4, cy + r * 1.4), fill=(255, 246, 226, 255), outline=COCOA, width=max(4, int(w * 0.012)))
+        pts = []
+        for i in range(10):
+            a = math.radians(-90 + i * 36)
+            rr = r if i % 2 == 0 else r * 0.45
+            pts.append((cx + rr * math.cos(a), cy + rr * math.sin(a)))
+        d.polygon(pts, fill=(255, 214, 110, 255), outline=COCOA)
+    recolor(os.path.join(SETTLEMENT, 'Building_Archive.png'), 'Academy', 300, 360, 236, 0.9, 0.9, emblem)
+
+
+def palace():
+    recolor(os.path.join(SETTLEMENT, 'Prop_Castle.png'), 'Palace', 190, 250, 44, 1.05, 1.1)
+
+
 def fountain():
     im, d = canvas(560, 460)
     shadow(d, 280, 420, 240, 34)
@@ -439,6 +516,10 @@ def main():
     cart('Ingot')
     cart('Precision')
     cart_pennant()
+    banner_pole('Prop_RoyalBanner', (124, 92, 196, 255), lambda d, x, y: crown(d, x, y, 1.0))
+    banner_pole('Prop_CapitalFlag', (92, 140, 214, 255), shell)
+    academy()
+    palace()
     fountain()
     flowerbed()
     town_house_previews()

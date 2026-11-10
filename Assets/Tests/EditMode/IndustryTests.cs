@@ -179,6 +179,15 @@ public class IndustryTests
     }
 
     [Test]
+    public void Cooperation_FivePercentPerExtraLine_UpTo20()
+    {
+        Assert.AreEqual(0f, ProcessingRules.CooperationBonus(0), 0.001f);
+        Assert.AreEqual(0f, ProcessingRules.CooperationBonus(1), 0.001f, "한 줄은 협업 없음");
+        Assert.AreEqual(0.1f, ProcessingRules.CooperationBonus(3), 0.001f);
+        Assert.AreEqual(0.2f, ProcessingRules.CooperationBonus(9), 0.001f, "최대 +20%");
+    }
+
+    [Test]
     public void BetterCart_ServesFiveLines()
     {
         Assert.AreEqual(5, CartRules.RouteLimit(id => id == TechIds.Cart || id == TechIds.Dispatch || id == TechIds.BetterCart));
