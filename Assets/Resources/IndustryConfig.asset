@@ -63,30 +63,40 @@ MonoBehaviour:
     _stoneBlocks: 8
     _ingots: 2
     _gold: 1500
-  _pavings:
+  _projects:
   - _id: town_paving_plaza_center
     _displayName: "\uC911\uC559 \uAD11\uC7A5 \uB3CC\uAE38"
     _description: "\uAD11\uC7A5 \uAC00\uC6B4\uB370 \uD759 \uB9C8\uB2F9\uC5D0 \uB3CC\uC744
       \uAE54\uC544\uC694"
+    _kind: 0
     _techId: C01
+    _requires: 
+    _requiresHint: 
     _stoneBlocks: 12
     _planks: 0
+    _ingots: 0
+    _precisionParts: 0
     _gold: 1500
-    _requires: 
     _icon: {fileID: 21300000, guid: b33eb6e7e2bd72b43aa085a3db1887be, type: 3}
     _pieces:
     - _sprite: {fileID: 21300000, guid: 6291e975111471b4c9171bec358e3d0a, type: 3}
       _mapCenter: {x: 0.4616896, y: 0.3865462}
       _mapSize: {x: 0.3231827, y: 0.33032128}
+    _sprite: {fileID: 0}
+    _target: 
   - _id: town_paving_roads
     _displayName: "\uC655\uAD6D \uD070\uAE38"
     _description: "\uAD11\uC7A5\uC5D0\uC11C \uBED7\uC740 \uD759\uAE38\uC744 \uB530\uB77C
       \uB3CC\uC744 \uAE54\uC544\uC694"
+    _kind: 0
     _techId: C03
+    _requires: town_paving_plaza_center
+    _requiresHint: "\uBA3C\uC800 \uC911\uC559 \uAD11\uC7A5 \uB3CC\uAE38\uC744 \uAE54\uC544\uC694"
     _stoneBlocks: 20
     _planks: 0
+    _ingots: 0
+    _precisionParts: 0
     _gold: 3000
-    _requires: town_paving_plaza_center
     _icon: {fileID: 21300000, guid: 6a126fe011c9b9d419b0c41f816935a5, type: 3}
     _pieces:
     - _sprite: {fileID: 21300000, guid: e468c0e9f79e9864da1b0dd6557e2d72, type: 3}
@@ -101,3 +111,72 @@ MonoBehaviour:
     - _sprite: {fileID: 21300000, guid: c3d983d7b6b78644483fa5469487dc5a, type: 3}
       _mapCenter: {x: 0.6454445, y: 0.592997}
       _mapSize: {x: 0.3665275, y: 0.3561747}
+    _sprite: {fileID: 0}
+    _target: 
+  - _id: town_royal_industrial_park
+    _displayName: "\uC655\uB9BD \uC0B0\uC5C5\uB2E8\uC9C0"
+    _description: "\uAC00\uACF5 \uC2DC\uC124\uC5D0 \uC655\uC2E4 \uAE43\uBC1C \xB7
+      \uAC00\uACF5 \uC18D\uB3C4 +15%"
+    _kind: 1
+    _techId: I08
+    _requires: 
+    _requiresHint: 
+    _stoneBlocks: 30
+    _planks: 30
+    _ingots: 0
+    _precisionParts: 10
+    _gold: 20000
+    _icon: {fileID: 21300000, guid: 8a971a7b6a56e784d83bb8fe534e7086, type: 3}
+    _pieces: []
+    _sprite: {fileID: 21300000, guid: 8a971a7b6a56e784d83bb8fe534e7086, type: 3}
+    _target: 
+  - _id: town_royal_academy
+    _displayName: "\uC655\uB9BD \uD559\uC220\uC6D0"
+    _description: "\uAE30\uB85D\uAD00\uC744 \uD559\uC220\uC6D0\uC73C\uB85C \uC99D\uCD95\uD574\uC694"
+    _kind: 2
+    _techId: C06
+    _requires: 
+    _requiresHint: 
+    _stoneBlocks: 0
+    _planks: 20
+    _ingots: 0
+    _precisionParts: 8
+    _gold: 15000
+    _icon: {fileID: 21300000, guid: 61268e64f043c2f498faf14af4e164c2, type: 3}
+    _pieces: []
+    _sprite: {fileID: 21300000, guid: 61268e64f043c2f498faf14af4e164c2, type: 3}
+    _target: bld_archive
+  - _id: town_capital_plaza
+    _displayName: "\uC218\uB3C4 \uAD11\uC7A5"
+    _description: "\uC911\uC559 \uAD11\uC7A5 \uB458\uB808\uC5D0 \uC655\uAD6D \uAE43\uB300\uB97C
+      \uC138\uC6CC\uC694"
+    _kind: 3
+    _techId: C07
+    _requires: town_paving_plaza_center
+    _requiresHint: "\uBA3C\uC800 \uC911\uC559 \uAD11\uC7A5 \uB3CC\uAE38\uC744 \uAE54\uC544\uC694"
+    _stoneBlocks: 40
+    _planks: 0
+    _ingots: 10
+    _precisionParts: 0
+    _gold: 25000
+    _icon: {fileID: 21300000, guid: 44efd9031635db74697ff247674f358e, type: 3}
+    _pieces: []
+    _sprite: {fileID: 21300000, guid: 44efd9031635db74697ff247674f358e, type: 3}
+    _target: 
+  - _id: town_royal_palace
+    _displayName: "\uC655\uAD81 \uC99D\uCD95"
+    _description: "\uC131\uC744 \uAE08\uBE5B \uC9C0\uBD95\uC758 \uC655\uAD81\uC73C\uB85C
+      \uC99D\uCD95\uD574\uC694"
+    _kind: 4
+    _techId: C08
+    _requires: castle_built
+    _requiresHint: "\uBA3C\uC800 \uC131\uC744 \uC9C0\uC5B4\uC694"
+    _stoneBlocks: 40
+    _planks: 0
+    _ingots: 20
+    _precisionParts: 20
+    _gold: 50000
+    _icon: {fileID: 21300000, guid: fedc4b7ff222ef0478f906b9048f4090, type: 3}
+    _pieces: []
+    _sprite: {fileID: 21300000, guid: fedc4b7ff222ef0478f906b9048f4090, type: 3}
+    _target: Castle

@@ -70,6 +70,13 @@ public static class ProcessingRules
     /// <summary>수력 기계(I05): 가공 속도 +15%</summary>
     public const float WaterPowerBonus = 0.15f;
 
+    /// <summary>협업 생산(I07): 켜 둔 가공 줄이 하나 늘 때마다 +5%, 최대 +20%</summary>
+    public const float CooperationPerLine = 0.05f;
+    public const float CooperationMax = 0.2f;
+
+    /// <summary>왕립 산업단지(I08 공사)를 마치면 가공 속도 +15%</summary>
+    public const float IndustrialParkBonus = 0.15f;
+
     /// <summary>자동 공급(L04)이 가방에 남겨 두는 기본 수 (희귀 광석을 다 쓰지 않게)</summary>
     public const int DefaultKeep = 10;
 
@@ -81,6 +88,10 @@ public static class ProcessingRules
         float speed = hasTech(TechIds.StandardTools) ? StandardToolsSlots : 1f;
         return hasTech(TechIds.WaterPower) ? speed * (1f + WaterPowerBonus) : speed;
     }
+
+    /// <summary>협업 생산(I07) 보너스: 켜 둔 가공 줄 수 → 더하는 비율 (한 줄이면 0)</summary>
+    public static float CooperationBonus(int activeLines) =>
+        activeLines <= 1 ? 0f : Math.Min(CooperationMax, CooperationPerLine * (activeLines - 1));
 
     /// <summary>자동 공급(L04): 가방에서 넣을 수 — 넣을 자리만큼, 가방에 keep개는 남김</summary>
     public static int AutoSupplyAmount(ProcessorSaveData processor, ProcessingRecipe recipe, int inBag, int keep)

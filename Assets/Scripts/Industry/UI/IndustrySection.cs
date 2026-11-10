@@ -35,12 +35,17 @@ public static class IndustrySection
         { TechIds.Paving, "도로 포장" },
         { TechIds.PublicSpaces, "공공 시설" },
         { TechIds.Administration, "왕국 행정" },
+        { TechIds.CoProduction, "협업 생산" },
+        { TechIds.RoyalIndustry, "왕립 산업단지" },
+        { TechIds.Academy, "왕립 학술원" },
+        { TechIds.Capital, "수도 계획" },
+        { TechIds.Palace, "왕궁 증축" },
     };
 
     public const string Glyphs = "가공 판재 석재 블록 제재 기술 규격화 공동 창고 운송 수레 연구 켜짐 꺼짐 받기 재료 완성 다음 까지 분 초 꽉 찼어요 " +
                                  "처음 켜면 바로 줘요 배우면 열려요 누르면 넣어요 있어요 칸 임시 보관 왕국 가방 대신 해달이 모은 목재 돌 로 와요 개가 모이면 만들어요 " +
                                  "창고로 저절로 옮겨요 대 비어 있어요 가공품은 이 아니라 여기에 모여요 집 개량 길 공공시설에 쓰여요 예약 " +
-                                 "깔기 공사 완료 마쳤어요 닫으면 보여요 중앙 돌길 흙 마당 돌을 깔아요 산업 현황 꺼짐 꽉 참 가공 중 재료 대기 쌓인 창고 재료 바로 꺼내요 왕국 정밀 부품 모이면 자동 넣기 남겨요 속도 가방의 으로 로 이 금속 주괴 조개 구리 정밀 부품 만들기 만들면 가방으로 꾸미기에서 광장에 놓아요 놓아 보세요 만들었어요 자재로 왕국 표지판 가로등 필요 " +
+                                 "깔기 공사 완료 마쳤어요 닫으면 보여요 중앙 돌길 흙 마당 돌을 깔아요 광장 연출 줄이기 수레 해달 먼지를 꺼서 휴대폰이 덜 느려져요 옮기기 그대로 왕국 공사 짓기 꾸미기 만들기 왕립 산업단지 학술원 수도 광장 왕궁 증축 성 산업 현황 꺼짐 꽉 참 가공 중 재료 대기 쌓인 창고 재료 바로 꺼내요 왕국 정밀 부품 모이면 자동 넣기 남겨요 속도 가방의 으로 로 이 금속 주괴 조개 구리 정밀 부품 만들기 만들면 가방으로 꾸미기에서 광장에 놓아요 놓아 보세요 만들었어요 자재로 왕국 표지판 가로등 필요 " +
                                  "0123456789/()·%'→:!";
 
     public static string TechName(string techId) => TechNames.TryGetValue(techId, out var name) ? name : techId;
@@ -75,6 +80,7 @@ public static class IndustrySection
             if (recipe != null && recipe.IsValid && manager.HasBuilt(recipe.Building.BuildingId))
                 refreshes.Add(Recipe(content, manager, recipe, redraw));
         }
+        ReducedFx(content, redraw);
         return () =>
         {
             foreach (var refresh in refreshes)
@@ -101,6 +107,21 @@ public static class IndustrySection
             count.color = warehouse.Free <= 0 ? RuntimeUIKit.Style.WarningColor : RuntimeUIKit.Style.TextColor;
             RuntimeUICards.SetBar(fill, warehouse.Capacity > 0 ? warehouse.Total / (float)warehouse.Capacity : 0f);
         };
+    }
+
+    // 광장 연출 줄이기 (저사양): 수레 해달 · 먼지를 끔 (옮기기 · 가공은 그대로)
+    private static void ReducedFx(Transform content, Action redraw)
+    {
+        var card = RuntimeUICards.Card(content, false);
+        var text = RuntimeUICards.Column(card, 6f);
+        RuntimeUICards.Text(text, "광장 연출 줄이기", 32, true);
+        RuntimeUICards.Text(text, "수레 해달 · 먼지를 꺼서 휴대폰이 덜 느려져요 (옮기기 · 가공은 그대로)", 23, muted: true);
+        bool reduced = IndustryFx.Reduced;
+        RuntimeUICards.Switch(card, reduced, () =>
+        {
+            IndustryFx.Reduced = !reduced;
+            redraw();
+        });
     }
 
     // 산업 현황 (X01 산업 물류 체계): 가공 줄마다 상태 · 시간당 · 쌓인 수를 한눈에
@@ -402,20 +423,24 @@ public static class IndustrySection
         RuntimeUICards.Text(gridCard, shown > 0 ? "가공품은 가방이 아니라 여기에 모여요 · 집 개량 · 길 · 공공시설에 쓰여요" : "비어 있어요 · 가공 탭에서 만든 가공품이 여기에 모여요",
             24, muted: true, alignment: TextAlignmentOptions.Center);
 
-        // 창고 자재로 만들기 (마을 정비 C01): 광장 공사 → 꾸미기
-        if (config.Crafts.Count > 0 || config.Pavings.Count > 0)
+        // 창고 자재 쓰기: 왕국 공사 (한 번) → 꾸미기 만들기
+        if (!string.IsNullOrEmpty(hint) && (config.Crafts.Count > 0 || config.Projects.Count > 0))
         {
-            RuntimeUICards.Text(content, "창고 자재로 만들기", 34, true);
-            if (!string.IsNullOrEmpty(hint))
+            var note = RuntimeUICards.Text(content, hint, 27, true, alignment: TextAlignmentOptions.Center);
+            note.color = hintFailed ? RuntimeUIKit.Style.WarningColor : new Color32(0x5E, 0x8C, 0x55, 0xFF);
+        }
+        if (config.Projects.Count > 0)
+        {
+            RuntimeUICards.Text(content, "왕국 공사", 34, true);
+            foreach (var project in config.Projects)
             {
-                var note = RuntimeUICards.Text(content, hint, 27, true, alignment: TextAlignmentOptions.Center);
-                note.color = hintFailed ? RuntimeUIKit.Style.WarningColor : new Color32(0x5E, 0x8C, 0x55, 0xFF);
+                if (project != null && !string.IsNullOrEmpty(project.Id))
+                    Project(content, manager, project, notify);
             }
-            foreach (var paving in config.Pavings)
-            {
-                if (paving != null && !string.IsNullOrEmpty(paving.Id))
-                    Paving(content, manager, paving, notify);
-            }
+        }
+        if (config.Crafts.Count > 0)
+        {
+            RuntimeUICards.Text(content, "꾸미기 만들기", 34, true);
             foreach (var craft in config.Crafts)
             {
                 if (craft != null && craft.Item != null)
@@ -431,42 +456,40 @@ public static class IndustrySection
         };
     }
 
-    // [돌길] 이름 · 설명 · 비용 / [깔기] (한 번만)
-    private static void Paving(Transform content, SettlementManager manager, PavingProject paving, Action<string, bool> notify)
+    // [그림] 이름 · 설명 · 비용 / [하기] (한 번만)
+    private static void Project(Transform content, SettlementManager manager, TownProject project, Action<string, bool> notify)
     {
-        bool learned = string.IsNullOrEmpty(paving.TechId) || TechGate.Has(paving.TechId);
-        bool done = manager.IsPaved(paving);
+        bool learned = string.IsNullOrEmpty(project.TechId) || TechGate.Has(project.TechId);
+        bool done = manager.IsProjectDone(project);
+        bool waiting = !string.IsNullOrEmpty(project.Requires) && !manager.HasDevelopment(project.Requires);
         var card = RuntimeUICards.Card(content, false, !learned);
-        RuntimeUICards.IconTile(card, paving.Icon, TileSize, !learned, done);
+        RuntimeUICards.IconTile(card, project.Icon, TileSize, !learned, done);
         var text = RuntimeUICards.Column(card, 8f);
-        RuntimeUICards.Text(text, paving.DisplayName, 36, true);
-        bool waiting = !string.IsNullOrEmpty(paving.Requires) && !manager.HasDevelopment(paving.Requires);
-        string subtitle = !learned ? $"연구에서 '{TechName(paving.TechId)}'을 배우면 열려요"
-            : waiting && !done ? "먼저 중앙 광장 돌길을 깔아요" : paving.Description;
-        RuntimeUICards.Text(text, subtitle, 24, muted: !waiting || done).color = waiting && !done && learned ? RuntimeUIKit.Style.WarningColor : RuntimeUICards.Muted;
+        RuntimeUICards.Text(text, project.DisplayName, 36, true);
+        string subtitle = !learned ? $"연구에서 '{TechName(project.TechId)}'을 배우면 열려요"
+            : waiting && !done ? (string.IsNullOrEmpty(project.RequiresHint) ? "먼저 앞 공사를 마쳐요" : project.RequiresHint)
+            : project.Description;
+        var sub = RuntimeUICards.Text(text, subtitle, 24, muted: true);
+        if (learned && waiting && !done)
+            sub.color = RuntimeUIKit.Style.WarningColor;
         var right = RuntimeUICards.Column(card, 6f, 170f, TextAnchor.MiddleCenter);
         if (done)
         {
             RuntimeUICards.Tag(right, "공사 완료", RuntimeUICards.TagKind.On, 26);
             return;
         }
-        var costs = RuntimeUICards.Row(text, 18f);
+        var costs = RuntimeUICards.Row(text, 14f);
         var config = manager.IndustryConfig;
         var warehouse = manager.Warehouse;
-        if (paving.StoneBlocks > 0)
+        foreach (var (itemId, amount) in SettlementManager.ProjectCosts(project))
         {
-            var stone = config.FindOutput(SettlementManager.StoneBlockItemId);
-            RuntimeUICards.Cost(costs, stone != null ? stone.Icon : null, paving.StoneBlocks.ToString(), warehouse.Available(SettlementManager.StoneBlockItemId) >= paving.StoneBlocks);
+            var item = config.FindOutput(itemId);
+            RuntimeUICards.Cost(costs, item != null ? item.Icon : null, amount.ToString(), warehouse.Available(itemId) >= amount);
         }
-        if (paving.Planks > 0)
-        {
-            var plank = config.FindOutput(SettlementManager.PlankItemId);
-            RuntimeUICards.Cost(costs, plank != null ? plank.Icon : null, paving.Planks.ToString(), warehouse.Available(SettlementManager.PlankItemId) >= paving.Planks);
-        }
-        if (paving.Gold > 0)
+        if (project.Gold > 0)
         {
             var gold = manager.Config.GoldCurrency;
-            RuntimeUICards.Cost(costs, gold != null ? gold.Icon : null, paving.Gold.ToString("N0"), manager.HasEnoughGold(paving.Gold));
+            RuntimeUICards.Cost(costs, gold != null ? gold.Icon : null, project.Gold.ToString("N0"), manager.HasEnoughGold(project.Gold));
         }
         RuntimeUICards.Flexible(costs);
         if (!learned)
@@ -474,13 +497,13 @@ public static class IndustrySection
             RuntimeUICards.Tag(right, "연구 필요", RuntimeUICards.TagKind.Plain, 26);
             return;
         }
-        var button = RuntimeUICards.Button(right, "깔기", () =>
+        var button = RuntimeUICards.Button(right, "짓기", () =>
         {
-            string why = manager.PavingHint(paving);
-            bool ok = manager.TryPave(paving);
-            notify(ok ? $"{paving.DisplayName} 공사를 마쳤어요! 창을 닫으면 광장에서 보여요" : why ?? "깔 수 없어요", ok);
+            string why = manager.ProjectHint(project);
+            bool ok = manager.TryBuildProject(project);
+            notify(ok ? $"{project.DisplayName} 공사를 마쳤어요! 창을 닫으면 광장에서 보여요" : why ?? "할 수 없어요", ok);
         }, RuntimeUIKit.ButtonKind.Feature, 160f, 92f, 32);
-        button.interactable = manager.PavingHint(paving) == null;
+        button.interactable = manager.ProjectHint(project) == null;
     }
 
     // [아이콘] 이름 · 설명 · 비용 / [만들기]

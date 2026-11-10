@@ -9,7 +9,8 @@ using UnityEngine;
 /// - 수레: 그 시설에서 일하는 해달 하나가 수레를 밀고 시설 ↔ 창고 자리를 오감.
 ///   연출일 뿐 장부는 SettlementManager가 2초마다 옮김 (길이 막혀도 자재는 그대로)
 /// - 건물 누르기: 작은 집 → 주택 개량 창, 목공소 · 채석 작업소 → 일터 창 가공 탭
-/// - 광장 돌길 (마을 정비 공사): 광장 지도(WorldMap) 위에 돌길 그림. 이번에 깔았으면 창을 닫은 뒤 퍼지듯 나타남
+/// - 왕국 공사: 돌길 · 큰길(지도 위 그림) · 왕립 산업단지(가공 시설 깃발) · 학술원(기록관 그림, PlacedBuildingView) ·
+///   수도 광장(중앙 광장 둘레 깃대) · 왕궁(성 그림). 이번에 마쳤으면 창을 닫은 뒤 카메라 · 먼지와 함께 나타남
 /// - 마을 주택 (주택 개량 2단계): 집 앞 현관 등불 · 꽃 화분
 /// SettlementPlazaView가 붙인다
 /// </summary>
@@ -72,8 +73,9 @@ public class IndustryPlazaView : MonoBehaviour
     private readonly Dictionary<int, (SpriteRenderer lamp, SpriteRenderer flowers)> _porches = new Dictionary<int, (SpriteRenderer, SpriteRenderer)>();
     // 광장 돌길
     private SpriteRenderer _map;
-    private readonly Dictionary<string, List<SpriteRenderer>> _pavings = new Dictionary<string, List<SpriteRenderer>>();
-    private bool _pavingsShown;
+    // 왕국 공사 (공사 ID → 광장에 놓은 그림들)
+    private readonly Dictionary<string, List<SpriteRenderer>> _projects = new Dictionary<string, List<SpriteRenderer>>();
+    private bool _projectsShown;
 
     public void Init(SettlementPlazaView plaza) => _plaza = plaza;
 
@@ -126,7 +128,7 @@ public class IndustryPlazaView : MonoBehaviour
 
     private void Scan()
     {
-        ScanPavings();
+        ScanProjects();
         _buildings.Clear();
         _buildings.AddRange(FindObjectsByType<PlacedBuildingView>(FindObjectsSortMode.None));
         bool visible = IndustrySection.IsVisible(_manager);
@@ -262,7 +264,7 @@ public class IndustryPlazaView : MonoBehaviour
         site.Pile.gameObject.SetActive(pile != null);
         site.Pile.sprite = pile;
         PlaceOnGround(site.Pile, PileFoot(recipe, rect), rect.width * PileWidth);
-        if (grew)
+        if (grew && !IndustryFx.Reduced)
             Fx().Puff(site.Pile.bounds.center, 0.5f, Vector2.up * 0.2f);
 
         UpdateCartAssignment(site);
@@ -310,16 +312,23 @@ public class IndustryPlazaView : MonoBehaviour
 
     #endregion
 
-    #region 광장 돌길
+    #region 왕국 공사
 
     private const float PavingRevealSeconds = 1.8f;
     private const int PavingOrderAboveMap = 2;
-
-    // 깐 돌길을 지도 위에 (처음 열 때 이미 깐 것은 바로, 이번에 깐 것은 창이 닫힌 뒤 연출과 함께)
-    private void ScanPavings()
+    private const float ParkBannerWidth = 0.16f;   // 시설 폭 대비
+    private const float CapitalFlagWidth = 0.9f;   // 월드 단위
+    // 수도 광장 깃대: 중앙 광장 그림 가운데에서 (각도 °, 반지름 = 그림 폭 비율) — 북쪽 성 자리는 비움
+    private static readonly (float angle, float radius)[] CapitalFlags =
     {
-        var pavings = _manager.IndustryConfig.Pavings;
-        if (pavings.Count == 0)
+        (-20f, 0.3f), (20f, 0.3f), (160f, 0.3f), (200f, 0.3f), (240f, 0.27f), (300f, 0.27f),
+    };
+
+    // 마친 공사를 광장에 (처음 열 때 이미 마친 것은 바로, 이번에 마친 것은 창이 닫힌 뒤 연출과 함께)
+    private void ScanProjects()
+    {
+        var projects = _manager.IndustryConfig.Projects;
+        if (projects.Count == 0)
             return;
         if (_map == null)
         {
@@ -328,20 +337,46 @@ public class IndustryPlazaView : MonoBehaviour
             if (_map == null || _map.sprite == null)
                 return;
         }
-        foreach (var paving in pavings)
+        foreach (var project in projects)
         {
-            if (paving == null || paving.Pieces.Count == 0 || _pavings.ContainsKey(paving.Id) || !_manager.IsPaved(paving))
+            if (project == null || _projects.ContainsKey(project.Id) || !_manager.IsProjectDone(project))
                 continue;
-            bool reveal = _pavingsShown;
+            bool reveal = _projectsShown;
             if (reveal && RuntimeModalSurface.AnyVisible)
                 continue;
-            _pavings[paving.Id] = CreatePaving(paving, reveal);
+            var renderers = CreateProject(project);
+            if (renderers == null)
+                continue;
+            _projects[project.Id] = renderers;
+            if (reveal)
+                StartCoroutine(RevealProject(renderers, project));
         }
-        _pavingsShown = true;
+        _projectsShown = true;
+        PlaceParkBanners();
     }
 
-    // 조각마다 지도 비율 자리에 (지도 Sprite 범위 기준, HD 조각과 같은 방식)
-    private List<SpriteRenderer> CreatePaving(PavingProject paving, bool reveal)
+    // 공사 종류마다 광장에 놓는 것 (학술원은 PlacedBuildingView가 그림을 바꿈 → 여기서는 연출 자리만)
+    private List<SpriteRenderer> CreateProject(TownProject project)
+    {
+        switch (project.Kind)
+        {
+            case TownProjectKind.Paving:
+                return CreatePaving(project);
+            case TownProjectKind.CapitalPlaza:
+                return CreateCapitalFlags(project);
+            case TownProjectKind.Palace:
+                return SwapSceneSprite(project);
+            case TownProjectKind.Academy:
+                var academy = FindBuilt(project.Target);
+                return academy != null ? new List<SpriteRenderer> { academy.GetComponentInChildren<SpriteRenderer>() } : null;
+            default:
+                // 산업단지: 깃발은 PlaceParkBanners가 시설을 따라 놓음
+                return new List<SpriteRenderer>();
+        }
+    }
+
+    // 돌길 · 큰길: 조각마다 지도 비율 자리에 (지도 Sprite 범위 기준, HD 조각과 같은 방식)
+    private List<SpriteRenderer> CreatePaving(TownProject paving)
     {
         var renderers = new List<SpriteRenderer>();
         Vector2 total = _map.sprite.bounds.size;
@@ -356,49 +391,136 @@ public class IndustryPlazaView : MonoBehaviour
             renderer.sortingLayerID = _map.sortingLayerID;
             renderer.sortingOrder = _map.sortingOrder + PavingOrderAboveMap;
             renderer.sharedMaterial = _map.sharedMaterial;
-            renderer.transform.localPosition = new Vector3(-total.x * 0.5f + piece.MapCenter.x * total.x, total.y * 0.5f - piece.MapCenter.y * total.y, 0f);
+            renderer.transform.localPosition = MapLocal(piece.MapCenter);
             Vector2 native = piece.Sprite.bounds.size;
             renderer.transform.localScale = new Vector3(piece.MapSize.x * total.x / native.x, piece.MapSize.y * total.y / native.y, 1f);
             renderers.Add(renderer);
         }
-        if (reveal && renderers.Count > 0)
-            StartCoroutine(RevealPaving(renderers, paving));
         return renderers;
     }
 
-    private System.Collections.IEnumerator RevealPaving(List<SpriteRenderer> renderers, PavingProject paving)
+    private Vector3 MapLocal(Vector2 mapCenter)
     {
-        var bounds = renderers[0].bounds;
-        foreach (var renderer in renderers)
-            bounds.Encapsulate(renderer.bounds);
-        // 카메라는 가장 가까운 조각 가운데 (큰길은 넓어서 전체를 다 비추지 않음)
-        var focus = renderers[0].bounds.center;
+        Vector2 total = _map.sprite.bounds.size;
+        return new Vector3(-total.x * 0.5f + mapCenter.x * total.x, total.y * 0.5f - mapCenter.y * total.y, 0f);
+    }
+
+    // 수도 광장: 중앙 광장(첫 돌길 공사의 첫 조각) 둘레에 깃대
+    private List<SpriteRenderer> CreateCapitalFlags(TownProject project)
+    {
+        var center = _manager.IndustryConfig.FindProject(TownProjectKind.Paving);
+        if (center == null || center.Pieces.Count == 0 || project.Sprite == null)
+            return null;
+        var piece = center.Pieces[0];
+        Vector2 middle = _map.transform.TransformPoint(MapLocal(piece.MapCenter));
+        float width = piece.MapSize.x * _map.sprite.bounds.size.x * _map.transform.lossyScale.x;
+        var renderers = new List<SpriteRenderer>();
+        foreach (var (angle, radius) in CapitalFlags)
+        {
+            float rad = angle * Mathf.Deg2Rad;
+            var flag = CreateRenderer("CapitalFlag");
+            flag.sprite = project.Sprite;
+            PlaceOnGround(flag, middle + new Vector2(Mathf.Cos(rad), Mathf.Sin(rad) * 0.8f) * width * radius, CapitalFlagWidth);
+            renderers.Add(flag);
+        }
+        return renderers;
+    }
+
+    // 왕궁: 광장 씬의 성 그림을 바꿈
+    private List<SpriteRenderer> SwapSceneSprite(TownProject project)
+    {
+        var target = string.IsNullOrEmpty(project.Target) ? null : GameObject.Find(project.Target);
+        var renderer = target != null ? target.GetComponent<SpriteRenderer>() : null;
+        if (renderer == null || project.Sprite == null || !renderer.gameObject.activeInHierarchy)
+            return null;
+        renderer.sprite = project.Sprite;
+        return new List<SpriteRenderer> { renderer };
+    }
+
+    // 왕립 산업단지: 가공 시설마다 왼쪽 앞에 왕실 깃발 (시설을 옮기면 따라감)
+    private readonly Dictionary<string, SpriteRenderer> _parkBanners = new Dictionary<string, SpriteRenderer>();
+
+    private void PlaceParkBanners()
+    {
+        var park = _manager.IndustryConfig.FindProject(TownProjectKind.IndustrialPark);
+        bool show = park != null && park.Sprite != null && _projects.ContainsKey(park.Id);
+        var seen = new HashSet<string>();
+        if (show)
+        {
+            foreach (var site in _sites.Values)
+            {
+                string buildingId = site.Recipe.Building.BuildingId;
+                if (site.View == null || !seen.Add(buildingId))
+                    continue;
+                if (!_parkBanners.TryGetValue(buildingId, out var banner))
+                    _parkBanners[buildingId] = banner = CreateRenderer("ParkBanner_" + buildingId);
+                banner.sprite = park.Sprite;
+                var rect = site.View.WorldRect;
+                PlaceOnGround(banner, new Vector2(rect.xMin + rect.width * 0.04f, rect.yMin + rect.height * 0.25f), rect.width * ParkBannerWidth);
+            }
+        }
+        foreach (var id in new List<string>(_parkBanners.Keys))
+        {
+            if (seen.Contains(id))
+                continue;
+            Destroy(_parkBanners[id].gameObject);
+            _parkBanners.Remove(id);
+        }
+    }
+
+    private System.Collections.IEnumerator RevealProject(List<SpriteRenderer> renderers, TownProject project)
+    {
+        PlaceParkBanners();
+        var shown = new List<SpriteRenderer>(renderers);
+        if (project.Kind == TownProjectKind.IndustrialPark)
+            shown.AddRange(_parkBanners.Values);
+        if (shown.Count == 0)
+            yield break;
+        var focus = shown[0].bounds.center;
         var camera = FindAnyObjectByType<PlazaCameraController>();
         if (camera != null)
             camera.Celebrate(focus, 1f, PavingRevealSeconds + 1.2f);
-        foreach (var renderer in renderers)
-            renderer.color = new Color(1f, 1f, 1f, 0f);
-        for (int i = 0; i < 12; i++)
+        // 돌길 · 깃발은 서서히, 그림이 바뀌는 학술원 · 왕궁은 통 튀어오르듯
+        bool fade = project.Kind == TownProjectKind.Paving || project.Kind == TownProjectKind.CapitalPlaza || project.Kind == TownProjectKind.IndustrialPark;
+        var size = shown[0].bounds.size;
+        if (!IndustryFx.Reduced)
         {
-            var at = focus + new Vector3(Random.Range(-0.3f, 0.3f) * renderers[0].bounds.size.x, Random.Range(-0.3f, 0.3f) * renderers[0].bounds.size.y, 0f);
-            Fx().Puff(at, 1.4f, Vector2.up * 0.2f);
+            for (int i = 0; i < 12; i++)
+            {
+                var at = focus + new Vector3(Random.Range(-0.3f, 0.3f) * size.x, Random.Range(-0.3f, 0.3f) * size.y, 0f);
+                Fx().Puff(at, 1.4f, Vector2.up * 0.2f);
+            }
+        }
+        var scales = new List<Vector3>();
+        foreach (var renderer in shown)
+        {
+            scales.Add(renderer.transform.localScale);
+            if (fade)
+                renderer.color = new Color(1f, 1f, 1f, 0f);
         }
         for (float t = 0f; t < PavingRevealSeconds; t += Time.deltaTime)
         {
-            float alpha = Mathf.SmoothStep(0f, 1f, t / PavingRevealSeconds);
-            foreach (var renderer in renderers)
+            float k = t / PavingRevealSeconds;
+            for (int i = 0; i < shown.Count; i++)
             {
-                if (renderer != null)
-                    renderer.color = new Color(1f, 1f, 1f, alpha);
+                var renderer = shown[i];
+                if (renderer == null)
+                    continue;
+                if (fade)
+                    renderer.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(0f, 1f, k));
+                else
+                    renderer.transform.localScale = scales[i] * (1f + Mathf.Sin(Mathf.Clamp01(k * 2f) * Mathf.PI) * 0.12f);
             }
             yield return null;
         }
-        foreach (var renderer in renderers)
+        for (int i = 0; i < shown.Count; i++)
         {
-            if (renderer != null)
-                renderer.color = Color.white;
+            if (shown[i] == null)
+                continue;
+            shown[i].color = Color.white;
+            shown[i].transform.localScale = scales[i];
         }
-        Fx().ShowText($"{paving.DisplayName} 완성!", focus + Vector3.up * 1.5f, GoodText);
+        Fx().ShowText($"{project.DisplayName} 완성!", focus + Vector3.up * 1.5f, GoodText);
     }
 
     #endregion
@@ -508,7 +630,7 @@ public class IndustryPlazaView : MonoBehaviour
     private void UpdateCartAssignment(Site site)
     {
         var building = site.Recipe.Building;
-        bool wants = _hasWarehouse && _manager.HasCartRoute(site.Recipe) && TechGate.Has(site.Recipe.TechId);
+        bool wants = _hasWarehouse && !IndustryFx.Reduced && _manager.HasCartRoute(site.Recipe) && TechGate.Has(site.Recipe.TechId);
         var workers = wants ? ProductionRules.WorkerIds(_manager.Config, _manager.Settlement, building) : null;
         if (site.Cart != null)
         {

@@ -6,7 +6,8 @@ using UnityEngine;
 /// <summary>
 /// 번영의 시대 산업 데이터 만들기 (개발자 A, Docs/번영의시대_개발분담.md):
 /// 판재 · 석재 블록 · 금속 주괴 · 정밀 부품 + 목공소(판재 · 정밀 공방) · 채석 작업소 · 건설소(제련) 가공 레시피(광장 소품 그림 포함)
-/// + 주택 개량 1 · 2단계 그림 · 비용 + 마을 정비 만들기(왕국 표지판 · 가로등 · 분수 · 꽃밭) + 광장 돌길 · 큰길 공사
+/// + 주택 개량 1 · 2단계 그림 · 비용 + 마을 정비 만들기(왕국 표지판 · 가로등 · 분수 · 꽃밭)
+/// + 왕국 공사(돌길 · 큰길 · 왕립 산업단지 · 왕립 학술원 · 수도 광장 · 왕궁 증축)
 /// + Resources/IndustryConfig. 여러 번 돌려도 같음.
 /// 그림: python Tools/UIGen/industry_icons.py · industry_art.py · plaza_paving.py (임시 그림, 돌길 자리는 paving_placement.json)
 /// </summary>
@@ -76,12 +77,22 @@ public static class IndustrySetup
             "Prop_Flowerbed", new Vector2Int(2, 1), false, 4),
     };
 
-    // 광장 바닥 공사: (ID, 이름, 설명, 기술, 먼저 깔 공사, 석재, 판재, 골드, 아이콘, 조각 이름 앞부분)
-    private static readonly (string id, string name, string desc, string tech, string requires, int stone, int plank, int gold, string icon, string prefix)[] Pavings =
+    // 왕국 공사: (ID, 종류, 이름, 설명, 기술, 먼저 있어야 하는 발전, 그 글, 석재, 판재, 주괴, 정밀 부품, 골드, 아이콘, 그림, 대상, 돌길 조각 앞부분)
+    private static readonly (string id, TownProjectKind kind, string name, string desc, string tech, string requires, string requiresHint,
+        int stone, int plank, int ingot, int precision, int gold, string icon, string sprite, string target, string prefix)[] Projects =
     {
-        ("town_paving_plaza_center", "중앙 광장 돌길", "광장 가운데 흙 마당에 돌을 깔아요", TechIds.TownPlanning, "", 12, 0, 1500, "ICON_Paving", "PlazaCenter"),
-        ("town_paving_roads", "왕국 큰길", "광장에서 뻗은 흙길을 따라 돌을 깔아요", TechIds.Paving, "town_paving_plaza_center", 20, 0, 3000,
-            "ICON_PavingRoad", "Road_"),
+        ("town_paving_plaza_center", TownProjectKind.Paving, "중앙 광장 돌길", "광장 가운데 흙 마당에 돌을 깔아요", TechIds.TownPlanning,
+            "", "", 12, 0, 0, 0, 1500, "ICON_Paving", "", "", "PlazaCenter"),
+        ("town_paving_roads", TownProjectKind.Paving, "왕국 큰길", "광장에서 뻗은 흙길을 따라 돌을 깔아요", TechIds.Paving,
+            "town_paving_plaza_center", "먼저 중앙 광장 돌길을 깔아요", 20, 0, 0, 0, 3000, "ICON_PavingRoad", "", "", "Road_"),
+        ("town_royal_industrial_park", TownProjectKind.IndustrialPark, "왕립 산업단지", "가공 시설에 왕실 깃발 · 가공 속도 +15%",
+            TechIds.RoyalIndustry, "", "", 30, 30, 0, 10, 20000, "Prop_RoyalBanner", "Prop_RoyalBanner", "", ""),
+        ("town_royal_academy", TownProjectKind.Academy, "왕립 학술원", "기록관을 학술원으로 증축해요", TechIds.Academy,
+            "", "", 0, 20, 0, 8, 15000, "Academy", "Academy", "bld_archive", ""),
+        ("town_capital_plaza", TownProjectKind.CapitalPlaza, "수도 광장", "중앙 광장 둘레에 왕국 깃대를 세워요", TechIds.Capital,
+            "town_paving_plaza_center", "먼저 중앙 광장 돌길을 깔아요", 40, 0, 10, 0, 25000, "Prop_CapitalFlag", "Prop_CapitalFlag", "", ""),
+        ("town_royal_palace", TownProjectKind.Palace, "왕궁 증축", "성을 금빛 지붕의 왕궁으로 증축해요", TechIds.Palace,
+            CastleRules.Built, "먼저 성을 지어요", 40, 0, 20, 20, 50000, "Palace", "Palace", "Castle", ""),
     };
 
     [MenuItem("Tools/Industry/Create Data")]
@@ -134,10 +145,10 @@ public static class IndustrySetup
             new CraftRecipe(furniture["furniture_flowerbed"], TechIds.PublicSpaces, 0, 3, 400),
             new CraftRecipe(furniture["furniture_fountain"], TechIds.PublicSpaces, 0, 8, 1500, 2),
         });
-        SetPavings(config);
+        SetProjects(config);
         EditorUtility.SetDirty(config);
         AssetDatabase.SaveAssets();
-        Debug.Log($"[IndustrySetup] 아이템 {items.Count} · 레시피 {recipes.Count} · 꾸미기 {furniture.Count} · 돌길 {Pavings.Length} · {ConfigPath}");
+        Debug.Log($"[IndustrySetup] 아이템 {items.Count} · 레시피 {recipes.Count} · 꾸미기 {furniture.Count} · 왕국 공사 {Projects.Length} · {ConfigPath}");
     }
 
     private static Sprite Prop(string name) => CollectionSetup.ImportSprite(PropFolder, name);
@@ -278,8 +289,8 @@ public static class IndustrySetup
         EditorUtility.SetDirty(catalog);
     }
 
-    // 광장 바닥 공사: 조각 그림 · 자리는 plaza_paving.py가 쓴 paving_placement.json
-    private static void SetPavings(IndustryConfig config)
+    // 왕국 공사: 돌길 조각 그림 · 자리는 plaza_paving.py가 쓴 paving_placement.json
+    private static void SetProjects(IndustryConfig config)
     {
         if (!File.Exists(PavingPlacementPath))
         {
@@ -288,27 +299,36 @@ public static class IndustrySetup
         }
         var placements = ParsePlacements(File.ReadAllText(PavingPlacementPath));
         var so = new SerializedObject(config);
-        var list = so.FindProperty("_pavings");
-        list.arraySize = Pavings.Length;
-        for (int p = 0; p < Pavings.Length; p++)
+        var list = so.FindProperty("_projects");
+        list.arraySize = Projects.Length;
+        for (int p = 0; p < Projects.Length; p++)
         {
-            var info = Pavings[p];
+            var info = Projects[p];
             var row = list.GetArrayElementAtIndex(p);
             row.FindPropertyRelative("_id").stringValue = info.id;
+            row.FindPropertyRelative("_kind").enumValueIndex = (int)info.kind;
             row.FindPropertyRelative("_displayName").stringValue = info.name;
             row.FindPropertyRelative("_description").stringValue = info.desc;
             row.FindPropertyRelative("_techId").stringValue = info.tech;
             row.FindPropertyRelative("_requires").stringValue = info.requires;
+            row.FindPropertyRelative("_requiresHint").stringValue = info.requiresHint;
             row.FindPropertyRelative("_stoneBlocks").intValue = info.stone;
             row.FindPropertyRelative("_planks").intValue = info.plank;
+            row.FindPropertyRelative("_ingots").intValue = info.ingot;
+            row.FindPropertyRelative("_precisionParts").intValue = info.precision;
             row.FindPropertyRelative("_gold").intValue = info.gold;
             row.FindPropertyRelative("_icon").objectReferenceValue = Prop(info.icon);
+            row.FindPropertyRelative("_sprite").objectReferenceValue = string.IsNullOrEmpty(info.sprite) ? null : Prop(info.sprite);
+            row.FindPropertyRelative("_target").stringValue = info.target;
             var pieces = row.FindPropertyRelative("_pieces");
             var names = new List<string>();
-            foreach (var key in placements.Keys)
+            if (!string.IsNullOrEmpty(info.prefix))
             {
-                if (key == info.prefix || (info.prefix.EndsWith("_") && key.StartsWith(info.prefix)))
-                    names.Add(key);
+                foreach (var key in placements.Keys)
+                {
+                    if (key == info.prefix || (info.prefix.EndsWith("_") && key.StartsWith(info.prefix)))
+                        names.Add(key);
+                }
             }
             names.Sort(System.StringComparer.Ordinal);
             pieces.arraySize = names.Count;
@@ -389,6 +409,11 @@ public static class IndustrySetup
         TechIds.Depot, TechIds.BetterCart, TechIds.Paving, TechIds.PublicSpaces, TechIds.Administration, TechIds.IndustrialLogistics,
     };
 
+    private static readonly string[] P2Techs =
+    {
+        TechIds.CoProduction, TechIds.RoyalIndustry, TechIds.Academy, TechIds.Capital, TechIds.Palace,
+    };
+
     [MenuItem("Tools/Industry/Dev — Learn P0 Techs (Play)")]
     public static void DevLearnP0() => DevLearn(P0Techs);
 
@@ -397,6 +422,14 @@ public static class IndustrySetup
     {
         DevLearn(P0Techs);
         DevLearn(P1Techs);
+    }
+
+    [MenuItem("Tools/Industry/Dev — Learn All A Techs (Play)")]
+    public static void DevLearnAll()
+    {
+        DevLearn(P0Techs);
+        DevLearn(P1Techs);
+        DevLearn(P2Techs);
     }
 
     private static void DevLearn(string[] techs)
@@ -408,5 +441,6 @@ public static class IndustrySetup
 
     [MenuItem("Tools/Industry/Dev — Learn P0 Techs (Play)", true)]
     [MenuItem("Tools/Industry/Dev — Learn P0 + P1 Techs (Play)", true)]
+    [MenuItem("Tools/Industry/Dev — Learn All A Techs (Play)", true)]
     private static bool DevLearnValid() => Application.isPlaying;
 }

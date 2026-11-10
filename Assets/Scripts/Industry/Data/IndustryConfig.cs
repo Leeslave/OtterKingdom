@@ -101,9 +101,10 @@ public class IndustryConfig : ScriptableObject
     [SerializeField]
     private List<CraftRecipe> _crafts = new List<CraftRecipe>();
 
-    [Tooltip("광장 바닥 공사 (흙 마당 → 돌길). 한 번 하면 광장 지도 위에 돌길 그림이 깔림")]
+    [Tooltip("왕국 공사 (돌길 · 큰길 · 왕립 산업단지 · 학술원 · 수도 광장 · 왕궁). 창고 자재 + 골드로 한 번")]
+    [UnityEngine.Serialization.FormerlySerializedAs("_pavings")]
     [SerializeField]
-    private List<PavingProject> _pavings = new List<PavingProject>();
+    private List<TownProject> _projects = new List<TownProject>();
 
     public IReadOnlyList<ProcessingRecipeDefinition> Recipes => _recipes;
     public int BaseCapacity => _baseCapacity;
@@ -130,7 +131,18 @@ public class IndustryConfig : ScriptableObject
         return _townHouseIcons[Mathf.Abs(instanceId) % _townHouseIcons.Length];
     }
     public IReadOnlyList<CraftRecipe> Crafts => _crafts;
-    public IReadOnlyList<PavingProject> Pavings => _pavings;
+    public IReadOnlyList<TownProject> Projects => _projects;
+
+    /// <summary>이 종류의 공사를 다 했나 (예: 왕립 산업단지 → 가공 속도)</summary>
+    public TownProject FindProject(TownProjectKind kind)
+    {
+        foreach (var project in _projects)
+        {
+            if (project != null && project.Kind == kind)
+                return project;
+        }
+        return null;
+    }
 
     /// <summary>이 집의 개량 그림 (집마다 번갈아, 없으면 null)</summary>
     public Sprite ImprovedHouseSprite(int instanceId)
@@ -193,14 +205,24 @@ public class PavingPiece
     public Vector2 MapSize => _mapSize;
 }
 
+/// <summary>왕국 공사가 광장에 남기는 것</summary>
+public enum TownProjectKind
+{
+    Paving,         // 돌길 · 큰길: 광장 지도 위 그림 조각
+    IndustrialPark, // 왕립 산업단지 (I08): 가공 시설에 왕실 깃발 + 가공 속도
+    Academy,        // 왕립 학술원 (C06): 기록관(Target 건물)이 학술원 그림으로
+    CapitalPlaza,   // 수도 광장 (C07): 중앙 광장 둘레에 깃대
+    Palace,         // 왕궁 증축 (C08): 성(Target 씬 오브젝트)이 왕궁 그림으로
+}
+
 /// <summary>
-/// 광장 바닥 공사 하나 (마을 정비: 가운데 흙 마당 C01 · 큰길 C03). 한 번 하면 발전 기록(Id)이 남고,
-/// 광장 지도(WorldMap) 위 지도 비율 자리에 돌길 그림 조각들이 깔림 (그림 · 자리는 Tools/UIGen/plaza_paving.py)
+/// 왕국 공사 하나 (번영의 시대 도시 · 산업): 창고 자재 + 골드로 한 번. 하면 발전 기록(Id)이 남고 종류에 따라 광장이 바뀜.
+/// 돌길 그림 · 자리는 Tools/UIGen/plaza_paving.py, 나머지 그림은 industry_art.py
 /// </summary>
 [System.Serializable]
-public class PavingProject
+public class TownProject
 {
-    [Tooltip("발전 기록 ID (깔면 남음, 예: town_paving_plaza_center)")]
+    [Tooltip("발전 기록 ID (하면 남음, 예: town_paving_plaza_center)")]
     [SerializeField]
     private string _id;
 
@@ -211,47 +233,76 @@ public class PavingProject
     [SerializeField]
     private string _description;
 
-    [Tooltip("이 기술을 배워야 깔 수 있음 (TechIds)")]
+    [Tooltip("광장에 남기는 것")]
+    [SerializeField]
+    private TownProjectKind _kind;
+
+    [Tooltip("이 기술을 배워야 할 수 있음 (TechIds)")]
     [SerializeField]
     private string _techId;
 
-    [Tooltip("드는 석재 블록 (창고)")]
+    [Tooltip("먼저 있어야 하는 발전 ID (없으면 비움, 예: 중앙 광장 돌길 · 성 완성)")]
+    [SerializeField]
+    private string _requires;
+
+    [Tooltip("먼저 있어야 하는 게 없을 때 보일 글")]
+    [SerializeField]
+    private string _requiresHint;
+
+    [Header("드는 것 (창고 · 골드)")]
     [Min(0)]
     [SerializeField]
     private int _stoneBlocks;
 
-    [Tooltip("드는 판재 (창고)")]
     [Min(0)]
     [SerializeField]
     private int _planks;
 
-    [Tooltip("드는 골드")]
+    [Min(0)]
+    [SerializeField]
+    private int _ingots;
+
+    [Min(0)]
+    [SerializeField]
+    private int _precisionParts;
+
     [Min(0)]
     [SerializeField]
     private int _gold;
 
-    [Tooltip("먼저 깔아야 하는 공사 ID (없으면 비움)")]
-    [SerializeField]
-    private string _requires;
-
+    [Header("광장")]
     [Tooltip("창 카드 아이콘")]
     [SerializeField]
     private Sprite _icon;
 
-    [Tooltip("광장 지도 위에 까는 그림 조각들")]
+    [Tooltip("돌길: 광장 지도 위에 까는 그림 조각들")]
     [SerializeField]
     private List<PavingPiece> _pieces = new List<PavingPiece>();
+
+    [Tooltip("학술원 · 왕궁: 바뀐 모습 그림 / 산업단지 · 수도 광장: 세우는 깃발 그림")]
+    [SerializeField]
+    private Sprite _sprite;
+
+    [Tooltip("학술원: 바꿀 건물 ID (예: bld_archive) / 왕궁: 바꿀 광장 씬 오브젝트 이름 (예: Castle)")]
+    [SerializeField]
+    private string _target;
 
     public string Id => _id;
     public string DisplayName => _displayName;
     public string Description => _description;
+    public TownProjectKind Kind => _kind;
     public string TechId => _techId;
+    public string Requires => _requires;
+    public string RequiresHint => _requiresHint;
     public int StoneBlocks => _stoneBlocks;
     public int Planks => _planks;
+    public int Ingots => _ingots;
+    public int PrecisionParts => _precisionParts;
     public int Gold => _gold;
-    public string Requires => _requires;
     public Sprite Icon => _icon;
     public IReadOnlyList<PavingPiece> Pieces => _pieces;
+    public Sprite Sprite => _sprite;
+    public string Target => _target;
 }
 
 /// <summary>창고 자재로 만드는 꾸미기 하나 (마을 정비 C01: 왕국 표지판 · 가로등)</summary>

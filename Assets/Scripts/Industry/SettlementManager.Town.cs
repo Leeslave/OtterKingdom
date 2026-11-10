@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 번영의 시대 도시 (개발자 A): 주택 개량 1단계(C02) · 마을 정비 만들기(C01).
@@ -28,6 +29,23 @@ public partial class SettlementManager
     }
 
     public bool IsImprovedHouse(int instanceId) => IsLoaded && TownRules.IsImproved(Settlement.Industry, instanceId);
+
+    /// <summary>광장에 놓인 건물의 바뀐 모습 (개량 주택 · 왕립 학술원, 없으면 null = 원래 그림)</summary>
+    public Sprite BuildingLook(PlacedDecor placed)
+    {
+        var config = IndustryConfig;
+        if (config == null || placed == null || !IsLoaded || !(placed.Decor is BuildingDefinition building))
+            return null;
+        if (IsImprovedHouse(placed.InstanceId))
+            return config.ImprovedHouseSprite(placed.InstanceId);
+        foreach (var project in config.Projects)
+        {
+            if (project != null && project.Kind == TownProjectKind.Academy && project.Target == building.BuildingId && project.Sprite != null
+                && IsProjectDone(project))
+                return project.Sprite;
+        }
+        return null;
+    }
 
     /// <summary>이 집을 개량할 수 없는 까닭 (할 수 있으면 null)</summary>
     public string HouseUpgradeHint(int instanceId)
@@ -143,34 +161,50 @@ public partial class SettlementManager
 
     #endregion
 
-    #region 광장 돌길 (바닥 공사)
+    #region 왕국 공사 (돌길 · 큰길 · 산업단지 · 학술원 · 수도 광장 · 왕궁)
 
-    public bool IsPaved(PavingProject project) => project != null && IsLoaded && HasDevelopment(project.Id);
+    public const string PrecisionPartItemId = "precision_part";
 
-    /// <summary>깔 수 없는 까닭 (깔 수 있으면 null)</summary>
-    public string PavingHint(PavingProject project)
+    public bool IsProjectDone(TownProject project) => project != null && IsLoaded && HasDevelopment(project.Id);
+
+    /// <summary>이 종류의 공사를 다 했나</summary>
+    public bool IsProjectDone(TownProjectKind kind) => IndustryConfig != null && IsProjectDone(IndustryConfig.FindProject(kind));
+
+    /// <summary>할 수 없는 까닭 (할 수 있으면 null)</summary>
+    public string ProjectHint(TownProject project)
     {
         if (project == null || string.IsNullOrEmpty(project.Id) || !IsLoaded || Warehouse == null)
-            return "깔 수 없어요";
-        if (IsPaved(project))
-            return "이미 깔았어요";
+            return "할 수 없어요";
+        if (IsProjectDone(project))
+            return "이미 마친 공사예요";
         if (!string.IsNullOrEmpty(project.TechId) && !TechGate.Has(project.TechId))
             return $"연구에서 '{TechName(project.TechId)}'을 배우면 열려요";
         if (!string.IsNullOrEmpty(project.Requires) && !HasDevelopment(project.Requires))
-            return "먼저 중앙 광장 돌길을 깔아요";
-        if (Warehouse.Available(StoneBlockItemId) < project.StoneBlocks || Warehouse.Available(PlankItemId) < project.Planks)
-            return "왕국 창고 자재가 모자라요";
+            return string.IsNullOrEmpty(project.RequiresHint) ? "먼저 앞 공사를 마쳐요" : project.RequiresHint;
+        foreach (var (itemId, amount) in ProjectCosts(project))
+        {
+            if (Warehouse.Available(itemId) < amount)
+                return "왕국 창고 자재가 모자라요";
+        }
         if (!HasEnoughGold(project.Gold))
             return "골드가 모자라요";
         return null;
     }
 
-    /// <returns>깔았나 (광장에 돌길이 깔림 — IndustryPlazaView)</returns>
-    public bool TryPave(PavingProject project)
+    /// <summary>창고에서 낼 자재 (0개는 뺌)</summary>
+    public static List<(string itemId, int amount)> ProjectCosts(TownProject project)
     {
-        if (PavingHint(project) != null)
+        var costs = TownRules.Costs(StoneBlockItemId, project.StoneBlocks, PlankItemId, project.Planks);
+        costs.AddRange(TownRules.Costs(IngotItemId, project.Ingots, PrecisionPartItemId, project.PrecisionParts));
+        return costs;
+    }
+
+    /// <returns>했나 (광장이 바뀜 — IndustryPlazaView)</returns>
+    public bool TryBuildProject(TownProject project)
+    {
+        if (ProjectHint(project) != null)
             return false;
-        if (!Warehouse.TryConsume(TownRules.Costs(StoneBlockItemId, project.StoneBlocks, PlankItemId, project.Planks), "paving"))
+        if (!Warehouse.TryConsume(ProjectCosts(project), "project"))
             return false;
         PayCost(project.Gold, new List<ItemAmount>());
         Settlement.UnlockDevelopment(project.Id);
