@@ -43,7 +43,7 @@ public class IslandMapSheet : MonoBehaviour
         if (_canvas == null)
         {
             _canvas = RuntimeUIKit.CreateCanvas("섬 지도", 235, false);
-            _canvas.transform.SetParent(transform, false);
+            RuntimeUIKit.AttachCanvas(_canvas, transform);
         }
         _canvas.gameObject.SetActive(true);
         Draw();

@@ -30,7 +30,7 @@ public class CompanionScreen : MonoBehaviour
         if (_canvas == null)
         {
             _canvas = RuntimeUIKit.CreateCanvas("해달 명부", SortingOrder, false);
-            _canvas.transform.SetParent(transform, false);
+            RuntimeUIKit.AttachCanvas(_canvas, transform);
         }
         _canvas.gameObject.SetActive(true);
         _pickSlot = -1;

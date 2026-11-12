@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-/// <summary>회관에서 여는 왕국 발전과 연구 화면.</summary>
+/// <summary>회관에서 여는 왕국 발전과 연구 화면. [연구] 탭은 기술 트리 (ResearchTreePanel).</summary>
 public sealed class ProsperityScreen : MonoBehaviour
 {
     private Canvas _canvas;
@@ -10,6 +11,10 @@ public sealed class ProsperityScreen : MonoBehaviour
     private Inventory _observedBag;
     private CurrencyManager _observedCurrency;
     private string _marketMessage;
+    // [연구] 탭 기술 트리 (분야 · 고른 기술 · 시트 펼침을 기억). 다시 그릴 때 스크롤 자리 유지
+    private ResearchTreePanel _tree;
+    private RuntimeUIWindow _window;
+    private int _drawnTab = -1;
     public bool IsOpen => _canvas != null && _canvas.gameObject.activeSelf;
 
     public void Open(ProsperityManager manager)
@@ -52,6 +57,8 @@ public sealed class ProsperityScreen : MonoBehaviour
     private void Draw()
     {
         RuntimeUIKit.PrepareGlyphs("왕국 발전 연구 공동사업 물류 기록 새 시대 시작 2 RP 연구 완료 연구하기 준비 중 선행 연구가 필요해요 연구 포인트가 부족해요 Lv.0123456789에 열려요 공동사업 열기 일터 열기 창고 열기 선지급 받기 의뢰 취소 진행 초기화 수확 의뢰 받기 판매 의뢰 받기 주문 받기 납품하고 보상 받기 주문 취소 주문 완료");
+        // 같은 탭을 다시 그리면 스크롤 자리 유지 (옛 창을 지우기 전에 읽음)
+        float keepScroll = _window != null && _drawnTab == _tab ? _window.Scroll.verticalNormalizedPosition : 1f;
         for (int i = _canvas.transform.childCount - 1; i >= 0; i--)
         {
             var child = _canvas.transform.GetChild(i).gameObject;
@@ -60,10 +67,14 @@ public sealed class ProsperityScreen : MonoBehaviour
         }
         var window = RuntimeUIWindow.Create(_canvas.transform, "왕국 발전", null,
             new[] { "연구", "공동사업", "물류", "기록" }, _tab, tab => { _tab = tab; Draw(); }, Close);
+        _window = window;
+        _drawnTab = _tab;
         var content = window.Content;
         var research = _manager.Research;
         int level = GameManager.KingdomLevel;
-        RuntimeUICards.Text(content, $"연구 포인트 {research.Data.rp} RP", 38, true);
+        bool tree = _tab == 0 && research.Data.introCompleted;
+        if (!tree)
+            RuntimeUICards.Text(content, $"연구 포인트 {research.Data.rp} RP", 38, true);
         if (!research.Data.introCompleted)
         {
             if (_manager.NextStep == ProsperityFlowStep.Castle)
@@ -106,30 +117,39 @@ public sealed class ProsperityScreen : MonoBehaviour
                 if (research.Data.marketCompleted.Contains(order.Id)) RuntimeUICards.Text(content, order.Title + " · 납품 완료", 28);
             return;
         }
-        RuntimeUICards.Text(content, "연구를 마치면 일터와 마을의 새 기능을 사용할 수 있어요.", 28);
-        DrawMarket(content, research, level);
-        RuntimeUICards.Text(content, "왕국 기술 연구", 36, true);
-        foreach (var tech in ProsperityResearch.Techs)
+        DrawTree(window, content, research, level, keepScroll);
+    }
+
+    // [연구] 탭: 위 고정(연구 포인트 · 분야 탭) · 기술 트리 · 아래 고정 시트 (ResearchTreePanel). 경제 분야는 트리 아래 장터 주문
+    private void DrawTree(RuntimeUIWindow window, Transform content, ProsperityResearch research, int level, float keepScroll)
+    {
+        if (_tree == null) _tree = new ResearchTreePanel(ResearchTreeIcons.For);
+        _tree.DrawHeader(window.AddHeader(ResearchTreePanel.HeaderHeight), research, level, Draw);
+        _tree.DrawSheet(window.AddFooter(_tree.FooterHeight), research, level, Draw, id =>
         {
-            var card = RuntimeUICards.Card(content, true);
-            RuntimeUICards.Text(card, tech.Name, 34, true);
-            RuntimeUICards.Text(card, tech.Effect, 28);
-            string prerequisites = "";
-            foreach (string id in tech.Prerequisites)
-            {
-                if (prerequisites.Length > 0) prerequisites += ", ";
-                prerequisites += ProsperityResearch.Find(id).Name;
-            }
-            RuntimeUICards.Text(card, $"Lv.{tech.Level} · {tech.Cost} RP" + (prerequisites.Length > 0 ? $" · 선행: {prerequisites}" : ""), 24);
-            var result = research.Check(tech.Id, level);
-            string label = result == ResearchResult.AlreadyLearned ? "연구 완료" :
-                result == ResearchResult.NeedsLevel ? $"Lv.{tech.Level}에 열려요" :
-                result == ResearchResult.NeedsPrerequisite ? "선행 연구가 필요해요" :
-                result == ResearchResult.NotEnoughRp ? "연구 포인트가 부족해요" :
-                result == ResearchResult.NotImplemented ? "준비 중" : "연구하기";
-            RuntimeUIKit.CreateButton(card, label, () => research.TryLearn(tech.Id, GameManager.KingdomLevel),
-                RuntimeUIKit.ButtonKind.Primary).interactable = result == ResearchResult.Success;
-        }
+            var tech = ProsperityResearch.Find(id);
+            if (tech != null) GameNotices.Post(new GameNotice($"{tech.Name} 연구 완료!\n{tech.Effect}"));
+        });
+        _tree.DrawTree(content, research, level, Draw);
+        if (_tree.Branch == TechBranch.Economy)
+            DrawMarket(content, research, level);
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(window.Content);
+        var target = _tree.ScrollTarget;
+        window.Scroll.verticalNormalizedPosition = target != null ? ScrollFor(window, target) : keepScroll;
+    }
+
+    // 그 노드가 화면 가운데쯤 오게
+    private static float ScrollFor(RuntimeUIWindow window, RectTransform target)
+    {
+        var content = window.Content;
+        float viewport = window.Scroll.viewport.rect.height;
+        float height = content.rect.height;
+        if (height <= viewport)
+            return 1f;
+        float y = -content.InverseTransformPoint(target.position).y;
+        return 1f - Mathf.Clamp01((y - viewport * 0.45f) / (height - viewport));
     }
 
     private void DrawNextStep(Transform content, ProsperityResearch research, int level)

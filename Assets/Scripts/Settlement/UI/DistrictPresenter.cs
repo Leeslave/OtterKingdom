@@ -42,7 +42,7 @@ public class DistrictPresenter : MonoBehaviour
 
     private void PrepareGlyphs()
     {
-        var characters = new StringBuilder("0123456789 /()·!?이 땅을 뭘로 쓸까요?추천아직 쓸 곳이 없어요.아래 안내에 따라 필요한 시설을 열어 주세요.용도를 정하면 이 땅이 왕국의 구역이 돼요.용도는 나중에 다시 바꿀 수 있어요.현재 용도다른 용도를 눌러 바꿀 수 있어요.건물은 그대로 남아요.");
+        var characters = new StringBuilder("0123456789 /()·!?+-%→맞지 않게 되는 건물채이사로 옮길 수 있어요맞는 구역이 되는왕국 질서도보너스에서 빠져요건물마다최대판매가생산 속도밭 자라는 시간해달 방문 빨라짐이 땅을 뭘로 쓸까요?추천아직 쓸 곳이 없어요.아래 안내에 따라 필요한 시설을 열어 주세요.용도를 정하면 이 땅이 왕국의 구역이 돼요.용도는 나중에 다시 바꿀 수 있어요.현재 용도다른 용도를 눌러 바꿀 수 있어요.건물은 그대로 남아요.");
         foreach (var block in _manager.DistrictBlocks)
             if (block != null) characters.Append(block.DisplayName);
         foreach (var type in Districts.Assignable)
@@ -87,13 +87,30 @@ public class DistrictPresenter : MonoBehaviour
         Draw(pending);
     }
 
+    // 확인 글: 무엇으로 정하는지 + 바뀌는 것 (맞지 않게 되는 건물 · 보너스 · 질서도). 건물은 그대로 남음
+    private string ConfirmText(DistrictBlockDefinition target, DistrictType type)
+    {
+        var text = new StringBuilder($"{target.DisplayName}{KoreanParticle.ObjectParticle(target.DisplayName)} {Districts.DisplayName(type)}으로 정할까요?");
+        var lines = DistrictEffects.PreviewLines(_manager.PreviewDistrict(target, type));
+        if (lines.Count == 0)
+        {
+            text.Append("\n기존 건물은 그대로 두고 용도만 바꿔요.");
+            return text.ToString();
+        }
+        text.Append('\n');
+        foreach (var line in lines)
+            text.Append('\n').Append(line);
+        text.Append("\n\n건물은 그대로 남아요. 맞지 않는 건물은 보너스 · 질서도에서 빠져요.");
+        return text.ToString();
+    }
+
     private void Choose(DistrictType type)
     {
         var target = _block;
         var game = GameManager.Instance;
         if (game == null || target == null) return;
         if (_manager.Settlement.GetDistrict(target.BlockId) == type) return; // 현재 용도 칸 (강조만)
-        game.ShowConfirm("구역 정하기", $"{target.DisplayName}{KoreanParticle.ObjectParticle(target.DisplayName)} {Districts.DisplayName(type)}으로 정할까요?\n기존 건물은 그대로 두고 용도만 바꿔요.", () =>
+        game.ShowConfirm("구역 정하기", ConfirmText(target, type), () =>
         {
             var result = _manager.TryDesignateDistrict(target, type);
             if (result != DistrictDesignateBlock.None)

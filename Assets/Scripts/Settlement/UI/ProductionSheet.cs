@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 일터 창: 시설 생산 · 가공 · 왕국 창고 · 농장 설비 확장을 탭으로 (RuntimeUIWindow, 뽑기 · 퀘스트 화면과 같은 모양).
-/// 한가한 특성 주민의 자동 생산을 그대로 활용한다. 가공 · 창고 탭은 가공을 배웠거나 창고에 무언가 있을 때만 보임
+/// 일터 내용: 시설 생산 · 가공 · 왕국 창고 · 농장 설비 확장 (왕국 화면 [일터] 탭이 칩 4개 아래에 그린다).
+/// 한가한 특성 주민의 자동 생산을 그대로 활용한다. 가공 · 창고는 가공을 배웠거나 창고에 무언가 있을 때만 보임
 /// </summary>
-public class ProductionSheet : MonoBehaviour
+public class ProductionSheet
 {
     public enum Tab { Production, Processing, Warehouse, Equipment }
 
@@ -15,51 +15,22 @@ public class ProductionSheet : MonoBehaviour
     private const float TileSize = 140f;
     private const float RightWidth = 190f;
 
-    private Canvas _canvas;
-    private SettlementManager _manager;
-    private RuntimeUIWindow _window;
-    private Tab _tab;
+    private readonly SettlementManager _manager;
+    // 다시 그리기 (true = 스크롤 자리 유지)
+    private readonly Action<bool> _redraw;
     private string _hint = "";
     private bool _hintFailed;
-    private readonly List<Action> _refreshes = new List<Action>();
-    private float _refresh;
-    public bool IsOpen => _canvas != null && _canvas.gameObject.activeSelf;
+    private List<Action> _refreshes;
 
-    public void Open(SettlementManager manager) => Open(manager, Tab.Production);
+    public Tab Current { get; private set; }
 
-    public void Open(SettlementManager manager, Tab tab)
+    public ProductionSheet(SettlementManager manager, Action<bool> redraw)
     {
         _manager = manager;
-        if (_canvas == null)
-        {
-            _canvas = RuntimeUIKit.CreateCanvas("일터와 설비", 235, false);
-            _canvas.transform.SetParent(transform, false);
-        }
-        _canvas.gameObject.SetActive(true);
-        _tab = tab;
-        _hint = "";
-        Draw(false);
-        _window.PopIn(this);
+        _redraw = redraw;
     }
 
-    public void Close() { if (_canvas != null) _canvas.gameObject.SetActive(false); }
-
-    private void Update()
-    {
-        if (!IsOpen) return;
-        _refresh -= Time.unscaledDeltaTime;
-        if (_refresh > 0) return;
-        _refresh = 1;
-        Refresh();
-    }
-
-    private void Refresh()
-    {
-        foreach (var refresh in _refreshes)
-            refresh?.Invoke();
-    }
-
-    private List<Tab> VisibleTabs()
+    public List<Tab> VisibleTabs()
     {
         var tabs = new List<Tab> { Tab.Production };
         if (IndustrySection.IsVisible(_manager))
@@ -71,7 +42,7 @@ public class ProductionSheet : MonoBehaviour
         return tabs;
     }
 
-    private static string TabName(Tab tab)
+    public static string TabName(Tab tab)
     {
         switch (tab)
         {
@@ -82,40 +53,26 @@ public class ProductionSheet : MonoBehaviour
         }
     }
 
-    /// <param name="keepScroll">같은 탭을 다시 그릴 때 스크롤 자리 유지 (버튼을 누른 뒤)</param>
-    private void Draw(bool keepScroll = true)
+    public void Select(Tab tab)
     {
-        float scroll = keepScroll && _window != null ? _window.Scroll.verticalNormalizedPosition : 1f;
-        for (int i = _canvas.transform.childCount - 1; i >= 0; i--)
-        {
-            var child = _canvas.transform.GetChild(i).gameObject;
-            child.SetActive(false);
-            Destroy(child);
-        }
-        _refreshes.Clear();
+        Current = tab;
+        _hint = "";
+    }
+
+    /// <summary>고른 칸의 내용을 content에 그린다. 매초 부를 갱신은 refreshes에 넣음</summary>
+    public void Draw(Transform content, List<Action> refreshes)
+    {
+        _refreshes = refreshes;
         RuntimeUIKit.PrepareGlyphs("일터와 설비 생산 가공 창고 설비 목공소 채석 작업소 주민 명이 일하는 중 쉬는 건설하면 시작해요 가방으로 먼저 1시간에 개 " +
                                    "정찰 개간 작업에 나간 해달은 생산을 쉬어요 가방이 차면 최대 8시간치까지 일터에 보관해요 " +
                                    "스프링클러 돌길 확장 완료 농부가 더 빨리 걷도록 흙길을 개선해요 밭에 놓을 수 있어요 했어요 조건과 비용을 확인해 주세요 " +
                                    IndustrySection.Glyphs);
-
-        var tabs = VisibleTabs();
-        if (!tabs.Contains(_tab))
-            _tab = Tab.Production;
-        var names = tabs.ConvertAll(TabName);
-        var workshop = _manager.FindBuilding("bld_workshop");
-        _window = RuntimeUIWindow.Create(_canvas.transform, "일터와 설비", workshop != null ? workshop.Icon : null, names, tabs.IndexOf(_tab),
-            index =>
-            {
-                _tab = tabs[index];
-                _hint = "";
-                Draw(false);
-            }, Close);
-
-        var content = _window.Content;
-        switch (_tab)
+        if (!VisibleTabs().Contains(Current))
+            Current = Tab.Production;
+        switch (Current)
         {
             case Tab.Processing:
-                _refreshes.Add(IndustrySection.DrawProcessing(content, _manager, () => Draw(), () => SwitchTo(Tab.Warehouse)));
+                _refreshes.Add(IndustrySection.DrawProcessing(content, _manager, () => _redraw(true), () => SwitchTo(Tab.Warehouse)));
                 break;
             case Tab.Warehouse:
                 _manager.MarkWarehouseViewed();
@@ -123,7 +80,7 @@ public class ProductionSheet : MonoBehaviour
                 {
                     _hint = message;
                     _hintFailed = !ok;
-                    Draw();
+                    _redraw(true);
                 }, _hint, _hintFailed));
                 break;
             case Tab.Equipment:
@@ -133,18 +90,12 @@ public class ProductionSheet : MonoBehaviour
                 DrawProduction(content);
                 break;
         }
-
-        Canvas.ForceUpdateCanvases();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(content);
-        _window.Scroll.verticalNormalizedPosition = scroll;
-        Refresh();
     }
 
     private void SwitchTo(Tab tab)
     {
-        _tab = tab;
-        _hint = "";
-        Draw(false);
+        Select(tab);
+        _redraw(false);
     }
 
     #region 생산
@@ -256,7 +207,7 @@ public class ProductionSheet : MonoBehaviour
             bool ok = _manager.TryUpgradeEquipment(stonePath);
             _hint = ok ? name + "를 확장했어요!" : "조건과 비용을 확인해 주세요.";
             _hintFailed = !ok;
-            Draw();
+            _redraw(true);
         }, RuntimeUIKit.ButtonKind.Feature, 170f, 96f, 36);
     }
 
