@@ -17,6 +17,19 @@ public enum DistrictDesignateBlock
 }
 
 /// <summary>구역이 있는 건물 하나가 놓인 자리 (질서도 · 보너스 계산용)</summary>
+/// <summary>미리보기: "이 블록을 이 용도로 바꾼다면" (세이브는 바꾸지 않음). 용도 바꾸기 확인 · 왕국 화면이 쓴다</summary>
+public readonly struct DistrictOverride
+{
+    public string BlockId { get; }
+    public DistrictType Type { get; }
+
+    public DistrictOverride(string blockId, DistrictType type)
+    {
+        BlockId = blockId;
+        Type = type;
+    }
+}
+
 public readonly struct DistrictPlacement
 {
     public DistrictType Type { get; }
@@ -79,13 +92,19 @@ public static class DistrictRules
     #region 블록
 
     /// <summary>블록의 지금 용도 (정해진 용도 또는 고른 용도, 안 골랐으면 None)</summary>
-    public static DistrictType TypeOf(DistrictBlockDefinition block, Settlement settlement)
+    public static DistrictType TypeOf(DistrictBlockDefinition block, Settlement settlement) => TypeOf(block, settlement, null);
+
+    /// <param name="change">미리보기 (그 블록만 이 용도라고 보고 계산)</param>
+    public static DistrictType TypeOf(DistrictBlockDefinition block, Settlement settlement, DistrictOverride? change)
     {
         if (block == null)
             return DistrictType.None;
-        var chosen = settlement.GetDistrict(block.BlockId);
+        var chosen = Chosen(block, settlement, change);
         return IsEditable(block) && chosen != DistrictType.None ? chosen : block.IsFixed ? block.FixedType : chosen;
     }
+
+    private static DistrictType Chosen(DistrictBlockDefinition block, Settlement settlement, DistrictOverride? change) =>
+        change.HasValue && IsEditable(block) && block.BlockId == change.Value.BlockId ? change.Value.Type : settlement.GetDistrict(block.BlockId);
 
     public const string CenterBlockId = "district_center";
 
@@ -115,25 +134,25 @@ public static class DistrictRules
     }
 
     /// <summary>용도를 정한 변경 가능한 블록 수 (기본 용도만 있는 고정 블록은 제외)</summary>
-    public static int DesignatedCount(SettlementConfig config, Settlement settlement)
+    public static int DesignatedCount(SettlementConfig config, Settlement settlement, DistrictOverride? change = null)
     {
         int count = 0;
         foreach (var block in config.DistrictBlocks)
         {
-            if (IsEditable(block) && settlement.GetDistrict(block.BlockId) != DistrictType.None)
+            if (IsEditable(block) && Chosen(block, settlement, change) != DistrictType.None)
                 count++;
         }
         return count;
     }
 
     /// <summary>그 용도의 구역이 있는지 (정해진 블록 포함)</summary>
-    public static bool HasDistrict(SettlementConfig config, Settlement settlement, DistrictType type)
+    public static bool HasDistrict(SettlementConfig config, Settlement settlement, DistrictType type, DistrictOverride? change = null)
     {
         if (type == DistrictType.None)
             return false;
         foreach (var block in config.DistrictBlocks)
         {
-            if (TypeOf(block, settlement) == type)
+            if (TypeOf(block, settlement, change) == type)
                 return true;
         }
         return false;
@@ -213,9 +232,10 @@ public static class DistrictRules
     #region 질서도 · 보너스
 
     /// <summary>놓인 구역 건물들로 질서도를 계산 (구역이 None인 건물은 빼고 줌)</summary>
-    public static DistrictOrder Evaluate(SettlementConfig config, Settlement settlement, IEnumerable<DistrictPlacement> placements)
+    public static DistrictOrder Evaluate(SettlementConfig config, Settlement settlement, IEnumerable<DistrictPlacement> placements,
+        DistrictOverride? change = null)
     {
-        var order = new DistrictOrder { Designated = DesignatedCount(config, settlement) };
+        var order = new DistrictOrder { Designated = DesignatedCount(config, settlement, change) };
         if (placements != null)
         {
             foreach (var placement in placements)
@@ -224,7 +244,7 @@ public static class DistrictRules
                     continue;
                 order.Buildings++;
                 var block = BlockAt(config, settlement, placement.Area);
-                if (!placement.Moving && block != null && TypeOf(block, settlement) == placement.Type)
+                if (!placement.Moving && block != null && TypeOf(block, settlement, change) == placement.Type)
                     order.AddMatching(placement.Type);
             }
         }
@@ -241,19 +261,24 @@ public static class DistrictRules
     public static bool CanBecomeCastle(SettlementConfig config, DistrictOrder order) => order != null && order.Score >= config.CastleOrder;
 
     /// <summary>구역 보너스 합계 (%) — 그 용도의 구역이 있으면 기본 % + 맞게 들어선 건물마다 % (최대 %)</summary>
-    public static int BonusPercent(SettlementConfig config, Settlement settlement, DistrictOrder order, KingdomBonusKind kind)
+    public static int BonusPercent(SettlementConfig config, Settlement settlement, DistrictOrder order, KingdomBonusKind kind,
+        DistrictOverride? change = null)
     {
         int total = 0;
         foreach (var entry in config.DistrictBonuses)
         {
-            if (entry == null || entry.Kind != kind || !HasDistrict(config, settlement, entry.District))
+            if (entry == null || entry.Kind != kind || !HasDistrict(config, settlement, entry.District, change))
                 continue;
-            int percent = entry.FlatPercent + entry.PerBuildingPercent * (order != null ? order.MatchingOf(entry.District) : 0);
-            if (entry.MaxPercent > 0)
-                percent = Math.Min(percent, entry.MaxPercent);
-            total += percent;
+            total += EntryPercent(entry, order != null ? order.MatchingOf(entry.District) : 0);
         }
         return total;
+    }
+
+    /// <summary>보너스 한 줄의 % (기본 % + 맞는 건물마다 %, 최대에서 멈춤). 그 구역이 있을 때만 부름</summary>
+    public static int EntryPercent(DistrictBonusEntry entry, int matching)
+    {
+        int percent = entry.FlatPercent + entry.PerBuildingPercent * Math.Max(0, matching);
+        return entry.MaxPercent > 0 ? Math.Min(percent, entry.MaxPercent) : percent;
     }
 
     #endregion

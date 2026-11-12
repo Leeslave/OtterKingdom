@@ -5,16 +5,10 @@ public partial class SettlementManager
 {
     public const string SprinklerEquipment = "equipment_sprinkler";
     public const string StonePathEquipment = "equipment_stone_path";
-    private ProductionSheet _productionSheet;
-
     public void OpenProduction() => OpenProduction(ProductionSheet.Tab.Production);
 
-    public void OpenProduction(ProductionSheet.Tab tab)
-    {
-        if (!IsLoaded) return;
-        if (_productionSheet == null) _productionSheet = gameObject.AddComponent<ProductionSheet>();
-        _productionSheet.Open(this, tab);
-    }
+    /// <summary>일터와 설비 = 왕국 화면 [일터] 탭</summary>
+    public void OpenProduction(ProductionSheet.Tab tab) => OpenKingdom(KingdomSheet.Tab.Work, tab);
 
     public string EquipmentHint(bool stonePath)
     {

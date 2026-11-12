@@ -41,7 +41,7 @@ public class DecorModePresenter : MonoBehaviour
     private const string HintRelocating = "건설 해달이 건물을 들고 이사를 시작했어요!";
     private const string HintStillRelocating = "이사가 끝나면 다시 옮길 수 있어요";
     private const string HintUnderConstruction = "공사가 끝나면 옮길 수 있어요";
-    private const string HintNeedDistrict = "{0}부터 정해 주세요 (마을회관 → 구역 정하기)";
+    private const string HintNeedDistrict = "{0}부터 정해 주세요 (왕국 화면 → 구역)";
     private const string HintOutsideDistrict = "{0} 안에만 지을 수 있어요";
     private const string HintCutsPath = "해달이 지나갈 길이 막혀요. 다른 자리를 골라 주세요";
     private const string HintNoStand = "공사할 해달이 설 자리가 막혀요. 다른 자리를 골라 주세요";
@@ -93,6 +93,11 @@ public class DecorModePresenter : MonoBehaviour
 
     /// <summary>꾸미기 모드 중인지 (월드의 다른 탭 입력 — 요정 NPC 등 — 이 무시하도록)</summary>
     public static bool IsActive { get; private set; }
+
+    /// <summary>물건을 들고 자리를 고르는 중 (광장 구역 이름표는 이때만 숨김 — 미리보기 · 확인 버튼을 가리지 않게)</summary>
+    public static bool IsPlacing => _current != null && _current._session != null;
+
+    private static DecorModePresenter _current;
 
     /// <summary>지금 장소에 꾸미기 격자가 있어 모드에 들어갈 수 있는지</summary>
     public bool CanEnter => DecorBoardView.Active != null && DecorBoardView.Active.Layout != null && DecorManager.Instance != null;
@@ -184,6 +189,7 @@ public class DecorModePresenter : MonoBehaviour
         _hud.SetActive(false);
         gameObject.SetActive(true);
         IsActive = true;
+        _current = this;
 
         _manager.OnStorageChanged += RefreshStorage;
         _session = null;
@@ -246,6 +252,8 @@ public class DecorModePresenter : MonoBehaviour
     {
         // 장소를 옮기는 등으로 꺼질 때도 들고 있던 물건과 카메라를 원래대로
         IsActive = false;
+        if (_current == this)
+            _current = null;
         CancelSession();
         SetCameraDrag(true);
         _pressing = false;
@@ -386,6 +394,7 @@ public class DecorModePresenter : MonoBehaviour
         if (!settlement.HasDistrictFor(required))
         {
             _view.ShowHint(string.Format(HintNeedDistrict, Districts.DisplayName(required)), true);
+            AskDistrictFirst(building, required);
             return;
         }
 
@@ -397,7 +406,8 @@ public class DecorModePresenter : MonoBehaviour
             area => CanStartAt(building, area));
         _session = DecorEditSession.ForNew(building, origin);
         string where = required != DistrictType.None ? $" · {Districts.DisplayName(required)} 안에" : "";
-        _view.ShowHint(found ? $"{HintBuildPlace} ({settlement.BuildingCostText(building)}{where})"
+        string bonus = DistrictBonusLine(building);
+        _view.ShowHint(found ? $"{HintBuildPlace} ({settlement.BuildingCostText(building)}{where})" + (bonus != null ? "\n" + bonus : "")
             : required != DistrictType.None ? settlement.DistrictSpaceHint(required) : HintNoRoom, !found);
         ShowSession();
         RefreshStorage();
@@ -920,8 +930,38 @@ public class DecorModePresenter : MonoBehaviour
             _view.ShowHint(HintCutsPath, true);
         else if (result == DecorPlacementResult.Ok && !HasStandPoint(_session.Decor, _session.Area))
             _view.ShowHint(HintNoStand, true);
+        else if (result == DecorPlacementResult.Ok && _session.IsNew && DistrictBonusLine(_session.Decor) is string bonus)
+            _view.ShowHint($"{HintPlace}\n{bonus}");
         else
             _view.ShowHint(result == DecorPlacementResult.Ok ? HintPlace : ReasonText(result), result != DecorPlacementResult.Ok);
+    }
+
+    // 새 특성 건물을 맞는 구역에 지으면 커지는 보너스: "생산 지역 · 생산 속도 +15% → +20%" (구역 제한이 없거나 효과가 없으면 null)
+    private static string DistrictBonusLine(DecorDefinition decor)
+    {
+        var settlement = SettlementManager.Instance;
+        if (settlement == null || !settlement.IsLoaded)
+            return null;
+        var required = settlement.RequiredDistrictFor(decor);
+        if (required == DistrictType.None)
+            return null;
+        string effect = DistrictEffects.NextBuildingText(settlement.Config, settlement.Settlement, settlement.DistrictOrder, required);
+        return effect != null ? $"{Districts.DisplayName(required)} · {effect}" : null;
+    }
+
+    // 그 용도의 구역이 아직 없음: 정할 땅이 있으면 꾸미기를 닫고 구역 고르기를 열지 묻는다
+    private void AskDistrictFirst(BuildingDefinition building, DistrictType required)
+    {
+        var settlement = SettlementManager.Instance;
+        var game = GameManager.Instance;
+        if (settlement == null || game == null || settlement.EditableDistrictBlocks().Count == 0)
+            return;
+        string name = Districts.DisplayName(required);
+        game.ShowConfirm("구역 정하기", $"{building.DisplayName}{KoreanParticle.SubjectParticle(building.DisplayName)} 들어갈 {name}이 아직 없어요.\n지금 땅의 용도를 정할까요?", () =>
+        {
+            Exit();
+            settlement.RequestDistrict();
+        });
     }
 
     private void LateUpdate()

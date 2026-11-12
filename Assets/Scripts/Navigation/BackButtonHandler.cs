@@ -39,8 +39,8 @@ public class BackButtonHandler : MonoBehaviour
         if (islandMap != null && islandMap.IsOpen) { islandMap.Close(); return; }
         var house = FindAnyObjectByType<HouseUpgradeSheet>();
         if (house != null && house.IsOpen) { house.Close(); return; }
-        var facilities = FindAnyObjectByType<ProductionSheet>();
-        if (facilities != null && facilities.IsOpen) { facilities.Close(); return; }
+        var kingdom = FindAnyObjectByType<KingdomSheet>();
+        if (kingdom != null && kingdom.IsOpen) { kingdom.Close(); return; }
         var health = FindAnyObjectByType<MineCommunitySheet>();
         if (health != null && health.IsOpen) { health.Close(); return; }
         var portrait = FindAnyObjectByType<ProfilePortraitPicker>();

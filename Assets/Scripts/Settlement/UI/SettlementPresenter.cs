@@ -74,6 +74,7 @@ public class SettlementPresenter : MonoBehaviour
         _board.OnTabChanged += HandleTabChanged;
         _construction.OnStartClicked += HandleStartClicked;
         _complete.OnClosed += ShowNextCompleted;
+        _status.OnClicked += HandleStatusClicked;
         SceneNavigator.Arrived += HandleArrived;
     }
 
@@ -107,6 +108,7 @@ public class SettlementPresenter : MonoBehaviour
         _board.OnTabChanged -= HandleTabChanged;
         _construction.OnStartClicked -= HandleStartClicked;
         _complete.OnClosed -= ShowNextCompleted;
+        _status.OnClicked -= HandleStatusClicked;
         SceneNavigator.Arrived -= HandleArrived;
         if (_manager != null)
         {
@@ -520,7 +522,7 @@ public class SettlementPresenter : MonoBehaviour
                 $"{done} / {group.Steps.Count} 단계 · 다음: {step.Title}", "보기"));
         }
         if (hall)
-            _rows.Add(BoardRow.Entry(TownHallEntry, _townHallIcon, "마을 발전 현황", "발전 · 주민 · 지금 하는 일을 한눈에 봐요.", "보기"));
+            _rows.Add(BoardRow.Entry(TownHallEntry, _townHallIcon, "왕국 화면", "발전 · 주민 · 구역 · 일터를 한눈에 봐요.", "보기"));
         if (group != null && step == null)
             _rows.Add(BoardRow.DoneEntry(MilestoneEntryPrefix + group.GroupId, group.Icon, group.Title,
                 $"{group.Steps.Count} / {group.Steps.Count} 단계 · 모두 마쳤어요!", "완료"));
@@ -536,6 +538,13 @@ public class SettlementPresenter : MonoBehaviour
             case BoardSection.Completed: return CompletedSectionTitle;
             default: return MainSectionTitle;
         }
+    }
+
+    // 상단바 왕국 단계 칩 → 왕국 화면 (마을회관 전에는 안내)
+    private void HandleStatusClicked()
+    {
+        if (_manager != null)
+            _manager.OpenKingdomOrHint();
     }
 
     private void HandleEntryClicked(string key)
@@ -1230,7 +1239,7 @@ public class SettlementPresenter : MonoBehaviour
         }
         // 게시판 성장: 구역 제목, 화면 카드, 역할·주민 작업·큰 부탁 문구
         text.Append(MainSectionTitle).Append(ResidentSectionTitle).Append(CompletedSectionTitle).Append(TownSectionTitle)
-            .Append("마을 발전 현황 · 지금 하는 일을 한눈에 봐요 단계 다음: 모두 마쳤어요 광장의 망치 표지판에서 명을 맡겨 주세요 광장으로 오고");
+            .Append("왕국 화면 발전 · 주민 · 구역 · 일터를 한눈에 봐요 마을 발전 현황 · 지금 하는 일을 한눈에 봐요 단계 다음: 모두 마쳤어요 광장의 망치 표지판에서 명을 맡겨 주세요 광장으로 오고");
         foreach (var task in config.Tasks)
         {
             if (task != null)

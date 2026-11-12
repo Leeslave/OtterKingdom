@@ -232,6 +232,29 @@ public static class RuntimeUIKit
     }
 
     /// <summary>
+    /// CreateCanvas로 만든 캔버스를 owner 쪽에 둔다.
+    /// owner가 다른 캔버스(전역 UI) 안이면 이 캔버스는 중첩 캔버스가 되어 화면 크기를 따라가지 않으므로
+    /// (만든 순간의 크기 · 위치가 남아 창이 한쪽으로 밀림) 화면 전체인 맨 위 캔버스 아래에 붙여 꽉 채우고 정렬 순서를 직접 쓰게 한다.
+    /// owner 자리(예: 상단바 띠)에 늘리면 창이 그 띠 기준으로 놓이므로 owner가 아니라 맨 위 캔버스에 붙인다.
+    /// </summary>
+    public static void AttachCanvas(Canvas canvas, Transform owner)
+    {
+        var outer = owner.GetComponentInParent<Canvas>(true);
+        if (outer == null)
+        {
+            canvas.transform.SetParent(owner, false);
+            return;
+        }
+        canvas.transform.SetParent(outer.rootCanvas.transform, false);
+        var rect = (RectTransform)canvas.transform;
+        Stretch(rect);
+        rect.anchoredPosition3D = Vector3.zero;
+        rect.localRotation = Quaternion.identity;
+        rect.localScale = Vector3.one;
+        canvas.overrideSorting = true;
+    }
+
+    /// <summary>
     /// 처음 보는 한글을 폰트 아틀라스에 미리 넣는다 (목록 갱신 중 글자가 추가되면 D3D12 에디터가 멈춤 — SettlementPresenter와 같은 이유)
     /// </summary>
     public static void PrepareGlyphs(string characters)

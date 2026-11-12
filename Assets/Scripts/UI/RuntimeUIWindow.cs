@@ -22,6 +22,12 @@ public class RuntimeUIWindow
     public ScrollRect Scroll { get; private set; }
 
     private readonly List<(Image image, TextMeshProUGUI label)> _tabs = new List<(Image, TextMeshProUGUI)>();
+    private RectTransform _viewport;
+    // 스크롤 목록 위 · 아래 끝 (패널 기준). 고정 머리말 · 바닥을 붙이면 목록이 그만큼 줄어듦
+    private float _top;
+    private float _bottom = ViewportBottom;
+    private const float ViewportBottom = 44f;
+    private const float FixedGap = 12f;
 
     /// <param name="tabs">탭 이름 (없으면 탭 줄 없음)</param>
     public static RuntimeUIWindow Create(Transform canvas, string title, Sprite titleIcon, IReadOnlyList<string> tabs, int selectedTab,
@@ -44,50 +50,9 @@ public class RuntimeUIWindow
         window.Panel.offsetMax = new Vector2(-40f, -(90f + RibbonHeight * 0.5f));
         RuntimeUIKit.ApplySprite(panelGo.GetComponent<Image>(), style.Panel, new Color(0.99f, 0.96f, 0.9f));
 
-        // 리본 제목
-        var ribbonGo = new GameObject("Ribbon", typeof(RectTransform), typeof(Image), typeof(HorizontalLayoutGroup), typeof(ContentSizeFitter));
-        ribbonGo.transform.SetParent(window.Panel, false);
-        var ribbon = (RectTransform)ribbonGo.transform;
-        ribbon.anchorMin = ribbon.anchorMax = new Vector2(0.5f, 1f);
-        ribbon.pivot = new Vector2(0.5f, 0.5f);
-        ribbon.anchoredPosition = Vector2.zero;
-        RuntimeUIKit.ApplySprite(ribbonGo.GetComponent<Image>(), style.Ribbon, new Color(0.96f, 0.78f, 0.68f));
-        var ribbonLayout = ribbonGo.GetComponent<HorizontalLayoutGroup>();
-        ribbonLayout.padding = new RectOffset(64, 64, 6, 18);
-        ribbonLayout.spacing = 12f;
-        ribbonLayout.childAlignment = TextAnchor.MiddleCenter;
-        ribbonLayout.childControlWidth = true;
-        ribbonLayout.childControlHeight = true;
-        ribbonLayout.childForceExpandWidth = false;
-        ribbonLayout.childForceExpandHeight = false;
-        var fitter = ribbonGo.GetComponent<ContentSizeFitter>();
-        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-        ribbonGo.AddComponent<LayoutElement>().minHeight = RibbonHeight;
-        ribbon.sizeDelta = new Vector2(0f, RibbonHeight);
-        if (titleIcon != null)
-            RuntimeUICards.Icon(ribbon, titleIcon, 76f);
-        var titleLabel = RuntimeUICards.Text(ribbon, title, 44, true);
-        titleLabel.textWrappingMode = TextWrappingModes.NoWrap;
-        titleLabel.color = style.TextColor;
-        // 높이는 고정 (가로만 글자에 맞춤)
-        fitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-
-        // 모서리 닫기
-        var closeGo = new GameObject("Close", typeof(RectTransform), typeof(Image), typeof(Button));
-        closeGo.transform.SetParent(window.Panel, false);
-        var closeRect = (RectTransform)closeGo.transform;
-        closeRect.anchorMin = closeRect.anchorMax = new Vector2(1f, 1f);
-        closeRect.pivot = new Vector2(1f, 1f);
-        closeRect.anchoredPosition = new Vector2(20f, 34f);
-        closeRect.sizeDelta = new Vector2(96f, 96f);
-        var closeImage = closeGo.GetComponent<Image>();
-        RuntimeUIKit.ApplySprite(closeImage, style.CloseButton, style.WarningColor);
-        closeImage.raycastPadding = new Vector4(-16f, -16f, -16f, -16f);
-        closeGo.GetComponent<Button>().onClick.AddListener(() =>
-        {
-            PlazaTapInput.BlockCurrentGesture();
-            close();
-        });
+        // 리본 제목 · 모서리 닫기
+        AddRibbon(window.Panel, title, titleIcon);
+        AddClose(window.Panel, close);
 
         // 탭 줄
         float top = RibbonHeight * 0.5f + 28f;
@@ -116,8 +81,10 @@ public class RuntimeUIWindow
         viewportGo.transform.SetParent(window.Panel, false);
         var viewport = (RectTransform)viewportGo.transform;
         RuntimeUIKit.Stretch(viewport);
-        viewport.offsetMin = new Vector2(30f, 44f);
+        viewport.offsetMin = new Vector2(30f, ViewportBottom);
         viewport.offsetMax = new Vector2(-30f, -top);
+        window._viewport = viewport;
+        window._top = top;
         viewportGo.GetComponent<Image>().color = Color.clear; // 빈 곳을 끌어도 스크롤
 
         var contentGo = new GameObject("Content", typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
@@ -173,6 +140,121 @@ public class RuntimeUIWindow
             RuntimeUIKit.ApplySprite(_tabs[i].image, selected ? style.TabSelected : style.TabNormal, Color.white);
             _tabs[i].label.color = selected ? style.TextColor : new Color32(0x9A, 0x7F, 0x6E, 0xFF);
         }
+    }
+
+    /// <summary>패널 위 모서리에 반쯤 걸친 복숭아 리본 제목 (글자에 맞춰 가로만 늘어남). 레이아웃 패널에 붙여도 줄에 끼지 않음</summary>
+    /// <returns>제목 글 (나중에 바꿀 때)</returns>
+    public static TextMeshProUGUI AddRibbon(RectTransform panel, string title, Sprite titleIcon = null)
+    {
+        var style = RuntimeUIKit.Style;
+        var ribbonGo = new GameObject("Ribbon", typeof(RectTransform), typeof(Image), typeof(HorizontalLayoutGroup), typeof(ContentSizeFitter));
+        ribbonGo.transform.SetParent(panel, false);
+        var ribbon = (RectTransform)ribbonGo.transform;
+        ribbon.anchorMin = ribbon.anchorMax = new Vector2(0.5f, 1f);
+        ribbon.pivot = new Vector2(0.5f, 0.5f);
+        ribbon.anchoredPosition = Vector2.zero;
+        RuntimeUIKit.ApplySprite(ribbonGo.GetComponent<Image>(), style.Ribbon, new Color(0.96f, 0.78f, 0.68f));
+        var ribbonLayout = ribbonGo.GetComponent<HorizontalLayoutGroup>();
+        ribbonLayout.padding = new RectOffset(64, 64, 6, 18);
+        ribbonLayout.spacing = 12f;
+        ribbonLayout.childAlignment = TextAnchor.MiddleCenter;
+        ribbonLayout.childControlWidth = true;
+        ribbonLayout.childControlHeight = true;
+        ribbonLayout.childForceExpandWidth = false;
+        ribbonLayout.childForceExpandHeight = false;
+        var fitter = ribbonGo.GetComponent<ContentSizeFitter>();
+        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        var element = ribbonGo.AddComponent<LayoutElement>();
+        element.minHeight = RibbonHeight;
+        element.ignoreLayout = true;
+        ribbon.sizeDelta = new Vector2(0f, RibbonHeight);
+        if (titleIcon != null)
+            RuntimeUICards.Icon(ribbon, titleIcon, 76f);
+        var titleLabel = RuntimeUICards.Text(ribbon, title, 44, true);
+        titleLabel.textWrappingMode = TextWrappingModes.NoWrap;
+        titleLabel.color = style.TextColor;
+        // 높이는 고정 (가로만 글자에 맞춤)
+        fitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        return titleLabel;
+    }
+
+    /// <summary>패널 오른쪽 위 모서리에 걸친 빨간 X</summary>
+    public static Button AddClose(RectTransform panel, Action close)
+    {
+        var style = RuntimeUIKit.Style;
+        var closeGo = new GameObject("Close", typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
+        closeGo.transform.SetParent(panel, false);
+        closeGo.GetComponent<LayoutElement>().ignoreLayout = true;
+        var closeRect = (RectTransform)closeGo.transform;
+        closeRect.anchorMin = closeRect.anchorMax = new Vector2(1f, 1f);
+        closeRect.pivot = new Vector2(1f, 1f);
+        closeRect.anchoredPosition = new Vector2(20f, 34f);
+        closeRect.sizeDelta = new Vector2(96f, 96f);
+        var closeImage = closeGo.GetComponent<Image>();
+        RuntimeUIKit.ApplySprite(closeImage, style.CloseButton, style.WarningColor);
+        closeImage.raycastPadding = new Vector4(-16f, -16f, -16f, -16f);
+        var button = closeGo.GetComponent<Button>();
+        button.onClick.AddListener(() =>
+        {
+            PlazaTapInput.BlockCurrentGesture();
+            close();
+        });
+        return button;
+    }
+
+    /// <summary>탭 줄 아래 고정 칸 (스크롤되지 않음, 예: 연구 포인트 · 분야 탭). 목록은 그만큼 아래로</summary>
+    public RectTransform AddHeader(float height)
+    {
+        var header = Rect("Header", Panel);
+        header.anchorMin = new Vector2(0f, 1f);
+        header.anchorMax = new Vector2(1f, 1f);
+        header.pivot = new Vector2(0.5f, 1f);
+        header.offsetMin = new Vector2(36f, -(_top + height));
+        header.offsetMax = new Vector2(-36f, -_top);
+        _top += height + FixedGap;
+        _viewport.offsetMax = new Vector2(-30f, -_top);
+        return header;
+    }
+
+    /// <summary>패널 아래 고정 칸 (스크롤되지 않음, 예: 고른 기술 시트). 목록은 그만큼 위로</summary>
+    public RectTransform AddFooter(float height)
+    {
+        var footer = Rect("Footer", Panel);
+        footer.anchorMin = new Vector2(0f, 0f);
+        footer.anchorMax = new Vector2(1f, 0f);
+        footer.pivot = new Vector2(0.5f, 0f);
+        footer.offsetMin = new Vector2(24f, ViewportBottom - 20f);
+        footer.offsetMax = new Vector2(-24f, ViewportBottom - 20f + height);
+        _bottom = ViewportBottom - 20f + height + FixedGap;
+        _viewport.offsetMin = new Vector2(30f, _bottom);
+        return footer;
+    }
+
+    /// <summary>탭 오른쪽 위 빨간 점 (그 탭에 할 일이 있을 때)</summary>
+    public void SetTabDot(int index, bool on)
+    {
+        if (index < 0 || index >= _tabs.Count)
+            return;
+        var tab = _tabs[index].image.transform;
+        var dot = tab.Find("Dot");
+        if (dot == null)
+        {
+            if (!on)
+                return;
+            var go = new GameObject("Dot", typeof(RectTransform), typeof(Image));
+            go.transform.SetParent(tab, false);
+            var rect = (RectTransform)go.transform;
+            rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(1f, 1f);
+            rect.sizeDelta = new Vector2(30f, 30f);
+            rect.anchoredPosition = new Vector2(-4f, 0f);
+            var image = go.GetComponent<Image>();
+            var red = new Color(0.9f, 0.32f, 0.27f);
+            RuntimeUIKit.ApplySprite(image, RuntimeUIKit.Style.Knob, red);
+            image.color = red; // ApplySprite는 그림이 있으면 흰색으로 둠
+            image.raycastTarget = false;
+            dot = go.transform;
+        }
+        dot.gameObject.SetActive(on);
     }
 
     /// <summary>열 때 살짝 튀어나옴</summary>

@@ -48,7 +48,7 @@ public partial class SettlementManager
             && !Settlement.HasDevelopment(FarmDiscoveredDevelopment) && !DistrictRules.HasDistrict(_config, Settlement, DistrictType.Agricultural))
         {
             _agriHintShown = true;
-            GameNotices.Post(new GameNotice("해달이: 밭을 만들 땅이 필요해요!\n마을회관 → 구역 정하기에서 땅 하나를 농업 지역으로 정해 줘요. 이미 정한 땅도 바꿀 수 있어요"));
+            GameNotices.Post(new GameNotice("해달이: 밭을 만들 땅이 필요해요!\n왕국 화면(상단 레벨)의 구역 탭에서 땅 하나를 농업 지역으로 정해 줘요. 이미 정한 땅도 바꿀 수 있어요"));
         }
         string invited = _config.FairyInvitedDevelopment;
         if (!string.IsNullOrEmpty(invited) && Settlement.HasDevelopment(MineWorkingDevelopment) && !Settlement.HasDevelopment(invited) && !IsFairyArrived)

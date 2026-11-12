@@ -31,7 +31,7 @@ public class ProfilePortraitPicker : MonoBehaviour
         if (_canvas == null)
         {
             _canvas = RuntimeUIKit.CreateCanvas("대표 해달 고르기", 240, false);
-            _canvas.transform.SetParent(transform, false);
+            RuntimeUIKit.AttachCanvas(_canvas, transform);
         }
         _canvas.gameObject.SetActive(true);
         _selected = ProfilePortraitRules.Resolve(settlement.Config, profile.Profile.PortraitOtterId)?.OtterId;

@@ -96,7 +96,7 @@ public partial class SettlementManager
         if (PlayerLevel < _config.TerritoryStartLevel)
             return $"Lv.{_config.TerritoryStartLevel}부터 공터 둘레의 숲을 개간할 수 있어요.";
         if (ScoutingRules.UsesScouting(Settlement))
-            return HasIslandMap ? "회관의 섬 지도에서 정찰대를 보내요. 발견한 땅은 레벨별 개간 기회를 기다리지 않고 길을 낼 수 있어요."
+            return HasIslandMap ? "왕국 화면의 섬 지도에서 정찰대를 보내요. 발견한 땅은 레벨별 개간 기회를 기다리지 않고 길을 낼 수 있어요."
                 : "오래된 갱도에서 지도 해달을 만나 회관으로 초대해요. 첫 개간은 먼저 할 수 있어요.";
         // 시작한 땅은 다 마칠 때까지 그 방향만 (TerritoryRules.Started)
         var started = TerritoryRules.Started(_config, Settlement);

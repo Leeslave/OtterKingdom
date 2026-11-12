@@ -398,7 +398,6 @@ public static class GlobalUISetup
         Set(presenter, "_quest", quest.presenter);
         Set(presenter, "_questScreen", quest.screen);
         Set(presenter, "_decorMode", decorMode);
-        SettlementSetup.LinkGlobalUI(root, presenter);
 
         PrefabUtility.SaveAsPrefabAsset(root, GlobalUIPrefabPath);
         Object.DestroyImmediate(root);

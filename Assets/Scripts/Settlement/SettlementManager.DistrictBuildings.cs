@@ -76,10 +76,10 @@ public partial class SettlementManager
     public string DistrictSpaceHint(DistrictType type)
     {
         foreach (var block in DistrictRules.PendingBlocks(_config, Settlement))
-            return $"마을회관 → 구역 정하기에서 {block.DisplayName}을 {Districts.DisplayName(type)}으로 정해 주세요.";
+            return $"왕국 화면의 구역 탭에서 {block.DisplayName}을 {Districts.DisplayName(type)}으로 정해 주세요.";
         var territory = NextDistrictExpansion(type);
         return territory != null
-            ? $"{territory.DisplayName}을 정찰·개간하면 {Districts.DisplayName(type)}에 쓸 땅이 넓어져요. 마을회관 → 섬 지도를 열어 보세요."
+            ? $"{territory.DisplayName}을 정찰·개간하면 {Districts.DisplayName(type)}에 쓸 땅이 넓어져요. 왕국 화면의 섬 지도를 열어 보세요."
             : $"{Districts.DisplayName(type)}에 빈자리가 부족해요. 물건을 옮기거나 섬 지도에서 새 땅을 열어 주세요.";
     }
 

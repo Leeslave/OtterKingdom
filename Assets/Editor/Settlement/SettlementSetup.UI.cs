@@ -672,19 +672,11 @@ public static partial class SettlementSetup
         var tasks = root.AddComponent<SettlementTaskPresenter>();
         Set(tasks, "_popup", screens.task);
 
-        // 큰 부탁 · 마을회관 (전역 UI 연결은 GlobalUIPresenter를 만든 뒤 LinkGlobalUI)
+        // 큰 부탁 · 마을회관 (회관은 왕국 화면 KingdomSheet를 엶 — "모두 마쳤어요"의 이동 · 꾸미기 · 도감은 KingdomSheet가 GlobalUIPresenter를 찾아 씀)
         var districts = root.AddComponent<DistrictPresenter>();
         Set(districts, "_popup", screens.district);
         var town = root.AddComponent<TownHallPresenter>();
         Set(town, "_milestone", screens.milestone);
         Set(town, "_hall", screens.hall);
-    }
-
-    /// <summary>마을회관의 "모두 마쳤어요" 버튼이 이동·꾸미기·도감을 열도록 전역 UI를 연결 (GlobalUISetup이 GlobalUIPresenter를 만든 뒤 부름)</summary>
-    public static void LinkGlobalUI(GameObject root, GlobalUIPresenter presenter)
-    {
-        var town = root.GetComponent<TownHallPresenter>();
-        if (town != null)
-            Set(town, "_globalUI", presenter);
     }
 }

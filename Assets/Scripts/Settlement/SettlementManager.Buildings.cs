@@ -90,7 +90,7 @@ public partial class SettlementManager
                 var unlock = FarmPartUnlock(building);
                 if (unlock != null)
                     return building.FarmPart == FarmPartKind.Sprinkler && HasBuilt(unlock.RequiredBuilding)
-                        ? (EquipmentHint(false) ?? "회관의 일터 · 농장 설비에서 스프링클러 설비를 확장해요")
+                        ? (EquipmentHint(false) ?? "왕국 화면의 일터 탭 · 설비에서 스프링클러 설비를 확장해요")
                         : $"{EulReul(unlock.Label)} 지으면 놓을 수 있어요";
                 return "마을이 더 발전하면 지을 수 있어요";
             case BuildingBlock.Traits:
