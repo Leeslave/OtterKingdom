@@ -404,8 +404,9 @@ public class DistrictMapView : MonoBehaviour
         foreach (var (block, root, land, half) in _labels)
         {
             if (root == null) continue;
-            // 배치할 물건과 확인 버튼을 가리지 않게 구역 색·테두리만 남긴다.
-            if (DecorModePresenter.IsActive || RelocationModePresenter.IsOpen)
+            // 배치할 물건과 확인 버튼을 가리지 않게 (물건을 들고 있을 때 · 이사 중) 구역 색·테두리만 남긴다.
+            // 꾸미기 모드에서 둘러볼 때는 이름표도 보임 (어느 땅이 어느 구역인지)
+            if (DecorModePresenter.IsPlacing || RelocationModePresenter.IsOpen)
             {
                 root.gameObject.SetActive(false);
                 continue;

@@ -59,7 +59,9 @@ public class DistrictPopupView : MonoBehaviour
             bool first = current == DistrictType.None && (block.BlockId == DistrictRules.CenterBlockId || DistrictRules.DesignatedCount(manager.Config, manager.Settlement) == 0);
             bool recommended = first ? type == manager.Config.FirstDistrict : type == block.SuggestedType;
             _titles[i].text = Districts.DisplayName(type) + (current == type ? " · 현재" : recommended ? " · 추천" : "");
-            _reasons[i].text = DistrictGuideRules.LockedReason(manager.Config, type, reason);
+            // 고를 수 있으면 그 용도의 효과 ("맞는 건물마다 판매가 +5% (최대 10%)"), 못 고르면 이유
+            string effect = reason == DistrictDesignateBlock.None ? DistrictEffects.Describe(manager.Config, type) : null;
+            _reasons[i].text = string.IsNullOrEmpty(effect) ? DistrictGuideRules.LockedReason(manager.Config, type, reason) : effect;
             // 현재 용도는 잠긴 칸처럼 회색으로 두지 않고 그 용도 색으로 진하게 (누르면 아무 일 없음)
             bool isCurrent = current == type;
             _choices[i].interactable = isCurrent || reason == DistrictDesignateBlock.None;

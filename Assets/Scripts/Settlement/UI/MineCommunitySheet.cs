@@ -11,7 +11,7 @@ public class MineCommunitySheet : MonoBehaviour
         if (_canvas == null)
         {
             _canvas = RuntimeUIKit.CreateCanvas("주민 건강 부탁", 230, false);
-            _canvas.transform.SetParent(transform, false);
+            RuntimeUIKit.AttachCanvas(_canvas, transform);
         }
         _canvas.gameObject.SetActive(true);
         Draw();
