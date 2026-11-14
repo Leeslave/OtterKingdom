@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: OtterKingdom::MineMazeLinkConfig
   _mazeZone: {fileID: 11400000, guid: eb5b5b301ae233049ad4a8e0d29b38fe, type: 2}
   _mineZone: {fileID: 11400000, guid: 897a2ebd5e2af3948a55b391e6f66476, type: 2}
+  _floors: {fileID: 11400000, guid: f9ca56706d29527409b8dc2b5278ebec, type: 2}
   _entrancePixel: {x: 756, y: 480}
   _entranceSizePixel: {x: 190, y: 140}
   _backgroundPixels: {x: 1024, y: 1536}

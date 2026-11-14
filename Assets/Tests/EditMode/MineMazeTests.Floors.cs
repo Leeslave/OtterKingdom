@@ -93,7 +93,7 @@ public partial class MineMazeTests
         var save = JsonUtility.FromJson<MineMazeSave>(JsonUtility.ToJson(model.ToSave()));
         model = Model(config, save);
         Assert.AreEqual(1, model.CurrentFloor);
-        Assert.AreEqual(1, model.GateDamage);
+        Assert.AreEqual(model.Pickaxe.Power, model.GateDamage);
         Assert.AreEqual(secondVisited, model.VisitedCount);
         Assert.IsTrue(model.OnEntrance);
         Assert.IsTrue(model.SelectFloor(0, T0));

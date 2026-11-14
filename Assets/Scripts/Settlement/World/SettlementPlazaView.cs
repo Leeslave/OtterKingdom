@@ -309,6 +309,18 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
             return;
         site.PlayCompleteBurst(CameraArriveSeconds);
         _camera.Celebrate((Vector2)site.transform.position + Vector2.up * 1.2f);
+        if (request.RequestId == SettlementManager.FirstChairRequestId)
+            StartCoroutine(ShowFirstChairUse(site));
+    }
+
+    private System.Collections.IEnumerator ShowFirstChairUse(ConstructionSiteView site)
+    {
+        yield return new WaitForSeconds(DevelopmentGate.PopSeconds + 0.1f);
+        while (SettlementPresenter.IsCelebrating || LevelUpPresenter.IsBusy || GameManager.Instance?.IsModalOpen == true)
+            yield return null;
+        var first = _manager.Config.FirstOtter;
+        if (site != null && first != null && _spawned.TryGetValue(first.OtterId, out var otter) && otter != null)
+            otter.TryVisitSpot(PlazaSpotView.FindNearestOpen(PlazaSpotKind.Sit, site.transform.position), 5f);
     }
 
     /// <summary>이 부탁의 완성 순간을 광장에서 보여 주는지 (완료 팝업을 조금 늦게 띄우려고)</summary>

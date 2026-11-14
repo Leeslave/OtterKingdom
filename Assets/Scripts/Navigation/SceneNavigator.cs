@@ -25,7 +25,7 @@ public class SceneNavigator : MonoBehaviour
     public ZoneDefinition CurrentZone => ZoneLookup.FindByScene(_root.Zones, SceneManager.GetActiveScene().name);
 
     /// <returns>이동을 시작했으면 true. 이동 중이거나, 잠긴 장소이거나, 이미 그 장소면 false</returns>
-    public bool TryGo(ZoneDefinition zone)
+    public bool TryGo(ZoneDefinition zone, Action onArrived = null)
     {
         if (zone == null)
             throw new ArgumentNullException(nameof(zone));
@@ -39,11 +39,11 @@ public class SceneNavigator : MonoBehaviour
             return false;
         }
 
-        StartCoroutine(TravelRoutine(zone));
+        StartCoroutine(TravelRoutine(zone, onArrived));
         return true;
     }
 
-    private IEnumerator TravelRoutine(ZoneDefinition zone)
+    private IEnumerator TravelRoutine(ZoneDefinition zone, Action onArrived)
     {
         IsTraveling = true;
         yield return _fader.FadeOut();
@@ -61,5 +61,6 @@ public class SceneNavigator : MonoBehaviour
 
         yield return _fader.FadeIn();
         IsTraveling = false;
+        onArrived?.Invoke();
     }
 }

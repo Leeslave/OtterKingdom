@@ -203,6 +203,12 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
+        if (NeedsMineTreatment)
+        {
+            _guide.Show("또박이의 걱정 · 주민들을 위한 약초", "부탁 보기");
+            return;
+        }
+
         var current = _manager.CurrentRequest;
         if (current != null)
         {
@@ -212,7 +218,9 @@ public class SettlementPresenter : MonoBehaviour
                 _guide.Show(expansion != null ? $"밭 준비: {expansion.DisplayName} 정찰·개간" : "밭 준비: 농업 지역을 정해요", "섬 지도");
                 return;
             }
-            if (!settlement.BoardVisited)
+            if (current.RequestId == SettlementManager.FirstHouseRequestId)
+                _guide.Show("몽실이가 살 첫 집", "집 지어주기");
+            else if (!settlement.BoardVisited)
                 _guide.Show("게시판을 확인해요", "확인하기");
             else if (!TryShowPreparationGuide(current))
                 _guide.Show(current.Title, "보기");
@@ -245,6 +253,9 @@ public class SettlementPresenter : MonoBehaviour
 
         _guide.Hide();
     }
+
+    private bool NeedsMineTreatment => SettlementPlazaView.Active != null
+        && _manager.HasMineCommunityStory && !_manager.MineCommunity.treated;
 
     // "우리 마을의 첫 비축: 재료 모으기" / "광장 첫 확장: 주민 정비 01:20"
     private string ProjectGuideText(CommunityProjectDefinition project) => $"{project.Title}: {ProjectStepText(project)}";
@@ -334,9 +345,21 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
+        if (NeedsMineTreatment)
+        {
+            _manager.OpenMineCommunity();
+            return;
+        }
+
         var current = _manager.CurrentRequest;
         if (current != null)
         {
+            if (current.RequestId == SettlementManager.FirstHouseRequestId)
+            {
+                _manager.Settlement.MarkBoardVisited();
+                OpenConstruction(current);
+                return;
+            }
             if (!_manager.Settlement.BoardVisited)
             {
                 _manager.RequestBoard(false);
@@ -653,7 +676,9 @@ public class SettlementPresenter : MonoBehaviour
         var builder = _manager.Config.FindBuilder();
         bool byBuilder = construction.NeedsBuilder && builder != null;
         var speaker = byBuilder ? builder : request.Requester;
-        string line = byBuilder ? "집을 짓고 길을 열어요." : request.Description;
+        string line = request.RequestId == SettlementManager.FirstHouseRequestId
+            ? "여기에 살고 싶어요. 작은 집을 지어 줄래요?"
+            : byBuilder ? "집을 짓고 길을 열어요." : request.Description;
 
         _costs.Clear();
         var gold = _manager.Config.GoldCurrency;
@@ -701,9 +726,9 @@ public class SettlementPresenter : MonoBehaviour
         var plot = _manager.PlotOf(request);
         if (plot != null && status == RequestStatus.Available && !_manager.IsPlotPlaced(plot))
         {
-            startLabel = "자리 고르기";
+            startLabel = request.RequestId == SettlementManager.FirstHouseRequestId ? "집 지어주기" : "자리 고르기";
             if (canStart)
-                note = $"건설 모드에서 지을 자리를 골라요 · {FormatDuration(construction.DurationSeconds)} 걸려요";
+                note = $"지을 자리를 골라요 · {FormatDuration(construction.DurationSeconds)} 걸려요";
             if (canStart && SettlementPlazaView.Active == null)
             {
                 startLabel = "광장으로";
@@ -1222,6 +1247,7 @@ public class SettlementPresenter : MonoBehaviour
     {
         var config = _manager.Config;
         var text = new StringBuilder("0123456789:/ ,.!?%·가는 중시간분초 보기진행중완료확인하기짓기건설개간시작해달게시판방명록의부탁방문기록새로운이도착했어요골드가모자라요개더필요해요아직할수없어요다른공사끝나면있어요바로지을걸려요주민가열렸어요집을짓고길을열어요광장으로돌아가찾아온만나보세요에게말을걸어배치해주세요오고있어요러가기을를서일의망치표지판눌러보내요하고");
+        text.Append("몽실이가 살 첫 집 집 지어주기 여기에 살고 싶어요 작은 집을 지어 줄래요 또박이의 걱정 주민들을 위한 약초");
         if (!_manager.Settlement.PostCastleContentEnabled)
             text.Append(CastleRelease.UpdateMessage);
         foreach (var request in config.Requests)

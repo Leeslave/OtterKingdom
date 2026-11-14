@@ -14,6 +14,7 @@ public class MineMazeLinkConfig : ScriptableObject
     [SerializeField] private ZoneDefinition _mazeZone;
     [Tooltip("미로에서 나가면 돌아갈 광산 장소")]
     [SerializeField] private ZoneDefinition _mineZone;
+    [SerializeField] private MineMazeConfig _floors;
 
     [Header("광산 씬 입구 (광산 카트)")]
     [Tooltip("입구 가운데 (광산 배경 그림 픽셀, 왼쪽 위 원점)")]
@@ -47,6 +48,7 @@ public class MineMazeLinkConfig : ScriptableObject
 
     public ZoneDefinition MazeZone => _mazeZone;
     public ZoneDefinition MineZone => _mineZone;
+    public MineMazeConfig Floors => _floors;
     public Sprite Glow => _glow;
     public Currency Gold => _gold;
 

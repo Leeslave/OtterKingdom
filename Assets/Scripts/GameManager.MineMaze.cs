@@ -8,6 +8,7 @@ public partial class GameManager
 {
     private const float MineMazeCheckSeconds = 1f;
     private float mineMazeCheckTimer;
+    public bool HasMineMazePickaxe => miningService.PickaxeLevel >= Mathf.Max(2, miningBalance.offlineUnlockPickaxeLevel);
 
     private void TickMineMazeDiscovery(float dt)
     {

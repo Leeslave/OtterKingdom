@@ -26,22 +26,27 @@ public readonly struct KingdomGoal
     }
 }
 
-/// <summary>다음 레벨을 막고 있는 큰 부탁 (경험치가 다 차도 이 부탁을 끝내야 오름)</summary>
+/// <summary>다음 레벨에 필요한 마을 부탁과 갱도 돌파 조건</summary>
 public readonly struct LevelGate
 {
     public int NextLevel { get; }
     public int Exp { get; }
     public int Need { get; }
     public BoardRequestDefinition Request { get; }
-    /// <summary>경험치는 다 찼는데 부탁 때문에 멈춘 상태</summary>
+    public int MineFloor { get; }
+    public string MineObjective => $"갱도 지하 {MineFloor}층 돌파하기";
+    public string Objectives => Request == null ? MineObjective
+        : MineFloor == 0 ? $"‘{Request.Title}’ 완료하기" : $"{MineObjective}\n‘{Request.Title}’ 완료하기";
+    /// <summary>경험치는 다 찼는데 레벨업 조건이 남은 상태</summary>
     public bool Blocked => Exp >= Need;
 
-    public LevelGate(int nextLevel, int exp, int need, BoardRequestDefinition request)
+    public LevelGate(int nextLevel, int exp, int need, BoardRequestDefinition request, int mineFloor)
     {
         NextLevel = nextLevel;
         Exp = exp;
         Need = need;
         Request = request;
+        MineFloor = mineFloor;
     }
 }
 
@@ -99,7 +104,7 @@ public partial class SettlementManager
         if (game == null)
             return;
         game.ShowAlert(TryGetLevelGate(out var gate)
-            ? $"Lv.{gate.NextLevel} 조건\n경험치 {gate.Need:N0} · 부탁 \"{gate.Request.Title}\" 끝내기"
+            ? $"Lv.{gate.NextLevel} 조건\n{gate.Objectives}"
             : "마을회관을 지으면 왕국 화면에서 발전 · 주민 · 구역을 볼 수 있어요.");
     }
 
@@ -203,7 +208,7 @@ public partial class SettlementManager
 
     #region 레벨 조건
 
-    /// <summary>다음 레벨이 큰 부탁에 묶여 있으면 그 조건 (경험치가 덜 찼어도 알려 줌). 묶여 있지 않으면 false</summary>
+    /// <summary>다음 레벨이 마을 부탁이나 갱도에 묶여 있으면 그 조건 (경험치가 덜 찼어도 알려 줌)</summary>
     public bool TryGetLevelGate(out LevelGate gate)
     {
         gate = default;
@@ -211,12 +216,20 @@ public partial class SettlementManager
         if (!IsLoaded || profile == null || profile.LevelTable == null)
             return false;
         var progress = profile.Progress;
-        if (progress.Level >= profile.LevelTable.MaxLevel || progress.Level < progress.Cap)
+        if (progress.Level >= profile.LevelTable.MaxLevel || progress.Level < progress.Cap
+            || progress.Level >= CastleReleaseLevelCap(progress.Level))
             return false;
+        int nextLevel = progress.Level + 1;
         var request = LevelCapRequest;
-        if (request == null)
+        if (request != null && request.KingdomLevel != nextLevel)
+            request = null;
+        var floors = MineMazeLinkConfig.Instance?.Floors;
+        int mineFloor = MineMazeRules.FindBlockingFloor(floors, Settlement, progress.Level);
+        if (mineFloor != 0 && floors.FloorConfig(mineFloor - 1).GateKingdomLevel != progress.Level)
+            mineFloor = 0;
+        if (request == null && mineFloor == 0)
             return false;
-        gate = new LevelGate(progress.Level + 1, progress.Exp, profile.LevelTable.ExpToNext(progress.Level), request);
+        gate = new LevelGate(nextLevel, progress.Exp, profile.LevelTable.ExpToNext(progress.Level), request, mineFloor);
         return true;
     }
 

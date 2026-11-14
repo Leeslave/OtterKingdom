@@ -7,9 +7,9 @@ public partial class MineMazeModel
     private MineMazeConfig _rootConfig;
     private readonly Dictionary<int, MazeFloorSave> _floorStates = new Dictionary<int, MazeFloorSave>();
     public int CurrentFloor { get; private set; }
-    public int FloorCount => 1 + _rootConfig.AdditionalFloors.Count;
+    public int FloorCount => _rootConfig.FloorCount;
     public bool AtContentEnd => FloorCount > 1 && CurrentFloor == FloorCount - 1;
-    public MineMazeConfig FloorConfig(int index) => index == 0 ? _rootConfig : _rootConfig.AdditionalFloors[index - 1];
+    public MineMazeConfig FloorConfig(int index) => _rootConfig.FloorConfig(index);
     public int UnlockedFloor
     {
         get

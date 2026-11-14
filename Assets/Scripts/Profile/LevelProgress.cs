@@ -67,18 +67,23 @@ public class LevelProgress
     }
 
     /// <summary>큰 발전을 끝냄: 모자란 경험치를 채워 level까지 바로 올린다 (이미 넘었으면 그대로)</summary>
-    public void ReachLevel(int level, ILevelCurve curve, List<int> reached)
+    public void ReachLevel(int level, ILevelCurve curve, List<int> reached, int maximumLevel = int.MaxValue)
     {
         if (curve == null) throw new ArgumentNullException(nameof(curve));
         if (reached == null) throw new ArgumentNullException(nameof(reached));
 
         int target = Math.Min(level, curve.MaxLevel);
-        while (Level < target)
+        while (Level < target && Level < maximumLevel)
         {
             Exp = Math.Max(0, Exp - curve.ExpToNext(Level));
             Level++;
             reached.Add(Level);
         }
+        // 마을 부탁의 레벨 보상 중 광산 조건에 막힌 몫은 경험치로 보관한다.
+        long deferredExp = 0;
+        for (int deferredLevel = Level; deferredLevel < target; deferredLevel++)
+            deferredExp += curve.ExpToNext(deferredLevel);
+        Exp = (int)Math.Min(int.MaxValue, Math.Max(Exp, deferredExp));
         if (Level >= curve.MaxLevel)
             Exp = 0;
     }

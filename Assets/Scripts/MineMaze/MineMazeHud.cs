@@ -590,10 +590,12 @@ public partial class MineMazeHud : MonoBehaviour
     {
         if (_mapCells == null)
             return;
-        bool has = _model.MapOtter;
+        bool stairsFound = _model.IsVisited(_model.Map.Stairs);
+        bool has = _model.MapOtter || stairsFound;
         _mapGrid.gameObject.SetActive(has);
         _mapEmpty.gameObject.SetActive(!has);
-        _mapTitle.text = has ? "지도 · 지도 해달이 그리는 중" : "지도";
+        _mapTitle.text = _model.MapOtter ? "지도 · 지도 해달이 그리는 중"
+            : stairsFound ? (_model.IsSourceFloor ? "지도 · 발견한 발생 돌" : "지도 · 발견한 계단") : "지도";
         if (!has)
         {
             int left = Mathf.Max(0, _model.Config.MapOtterRuns - _model.Runs);
@@ -621,6 +623,12 @@ public partial class MineMazeHud : MonoBehaviour
     private Color MapColor(Vector2Int cell)
     {
         var map = _model.Map;
+        if (!_model.MapOtter)
+        {
+            if (cell == map.Stairs) return MapStairs;
+            if (cell == map.Start) return MapStart;
+            return _model.IsVisited(cell) ? MapFloor : Color.clear;
+        }
         if (map.IsWall(cell))
         {
             // 밟은 칸 옆의 벽만
@@ -783,6 +791,9 @@ public partial class MineMazeHud : MonoBehaviour
         _progressRefresh();
         if (_game.InGame)
         {
+            if (_model.Community.started && !_model.Community.treated)
+                RuntimeUIKit.CreateButton(panel, "마을의 약초 부탁 보기", _game.ReturnToPlazaForMineStory,
+                    RuntimeUIKit.ButtonKind.Feature);
             RuntimeUIKit.CreateButton(panel, "광산으로 돌아가기", () =>
             {
                 _sfx.Play(MineSfx.Kind.Tap);

@@ -153,7 +153,10 @@ public partial class MineMazeHud
         var panel = OpenSheet(880);
         Line(panel, _model.IsSourceFloor ? "발생원을 제거했어요!" : $"지하 {_model.CurrentFloor + 2}층 입구", 48, true, Cocoa);
         RuntimeUIKit.CreateIcon(panel, _mazeArt.Stairs, 180);
-        Line(panel, $"{_model.CurrentFloor + 1}층 돌파 완료! 깡깡이의 자동 채굴이 넓어졌어요.", 30, true, Good);
+        string reward = _model.IsSourceFloor ? "발생원을 없애 마을 주민들이 회복해요."
+            : _model.CurrentFloor == 2 ? "심층 갱도가 열렸어요. 지하 4층에서 마을에 영향을 주는 단서를 찾을 수 있어요."
+            : "새 광맥이 열렸어요. 깡깡이의 자동 채굴 광석도 늘어났어요.";
+        Line(panel, reward, 30, true, Good);
         var timer = Line(panel, "", 28, false, Cocoa);
         _progressRefresh = () => timer.text = $"자동 채굴: {_model.MinerInterval:0.#}초마다 1개\n다음 채굴까지 {_model.MinerRemaining:0}초 · 작업대에서 보유량 확인";
         _progressRefresh();
@@ -165,7 +168,8 @@ public partial class MineMazeHud
                 if (!_model.Inside) _game.Enter();
                 else ShowFloorTitle();
             }, RuntimeUIKit.ButtonKind.Primary);
-        else Line(panel, "주민들의 증상이 회복돼요. 마을 게시판에서 또박이에게 소식을 전해 주세요.", 27, false, Cocoa);
+        else if (_game.InGame && _model.IsSourceFloor)
+            RuntimeUIKit.CreateButton(panel, "또박이에게 소식 전하기", _game.ReturnToPlazaForMineStory, RuntimeUIKit.ButtonKind.Primary);
         RuntimeUIKit.CreateButton(panel, "작업대 · 보유 광석", ShowWorkshop);
         RuntimeUIKit.CreateButton(panel, "돌아가기", ReturnToPlay, RuntimeUIKit.ButtonKind.Secondary);
     }

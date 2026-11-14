@@ -140,8 +140,8 @@ public class TopBarView : MonoBehaviour
         }
         bool blocked = settlement.TryGetLevelGate(out var gate) && gate.Blocked;
         _levelLock.SetActive(blocked);
-        if (blocked && _blockKnown && !_blocked && settlement.TryGetLevelGate(out var now))
-            GameNotices.Post(new GameNotice($"경험치가 가득 찼어요!\n부탁 \"{now.Request.Title}\"을(를) 끝내면 Lv.{now.NextLevel}"));
+        if (blocked && _blockKnown && !_blocked)
+            GameNotices.Post(new GameNotice($"경험치가 가득 찼어요! Lv.{gate.NextLevel} 조건\n{gate.Objectives}"));
         _blocked = blocked;
         _blockKnown = true;
     }

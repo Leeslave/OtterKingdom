@@ -218,15 +218,16 @@ public class KingdomSheet : MonoBehaviour
             RuntimeUICards.Slot(grid, icon != null ? icon : fallback, "", name, 150f);
     }
 
-    // 다음 레벨이 큰 부탁에 묶여 있으면 맨 위에: 경험치 · 큰 부탁 두 줄 (경험치가 다 찼으면 "레벨 멈춤")
+    // 다음 레벨에 필요한 경험치와 남은 진행 조건을 맨 위에 표시한다.
     private void LevelGateCard(Transform content, LevelGate gate, KingdomGoal goal)
     {
         var card = RuntimeUICards.Card(content, true);
         var title = RuntimeUICards.Row(card, 12f);
         RuntimeUICards.Text(title, $"Lv.{gate.NextLevel} 레벨업 조건", 38, true);
         RuntimeUICards.Flexible(title);
-        RuntimeUICards.Tag(title, gate.Blocked ? "1개 남음" : "2개 남음", gate.Blocked ? RuntimeUICards.TagKind.Warn : RuntimeUICards.TagKind.Plain, 26);
-        RuntimeUICards.Text(card, "두 가지를 다 채우면 바로 올라요. 경험치는 넘쳐도 모아 둬요.", 25, muted: true);
+        int remaining = (gate.Blocked ? 0 : 1) + (gate.Request != null ? 1 : 0) + (gate.MineFloor != 0 ? 1 : 0);
+        RuntimeUICards.Tag(title, $"{remaining}개 남음", gate.Blocked ? RuntimeUICards.TagKind.Warn : RuntimeUICards.TagKind.Plain, 26);
+        RuntimeUICards.Text(card, "경험치는 넘쳐도 모아 둬요.", 25, muted: true);
 
         var inset = RuntimeUICards.Inset(card, 14f);
         var expRow = RuntimeUICards.Row(inset, 14f);
@@ -235,6 +236,11 @@ public class KingdomSheet : MonoBehaviour
         var bar = RuntimeUICards.Bar(expRow, 24f);
         RuntimeUICards.Text(expRow, $"{Mathf.Min(gate.Exp, gate.Need):N0} / {gate.Need:N0}", 26);
         _refreshes.Add(() => RuntimeUICards.SetBar(bar, gate.Need > 0 ? (float)gate.Exp / gate.Need : 1f));
+
+        if (gate.MineFloor != 0)
+            RuntimeUICards.Text(inset, gate.MineObjective, 30, true);
+        if (gate.Request == null)
+            return;
 
         var requestRow = RuntimeUICards.Row(inset, 14f);
         RuntimeUICards.Tag(requestRow, "남음", RuntimeUICards.TagKind.Warn, 24);

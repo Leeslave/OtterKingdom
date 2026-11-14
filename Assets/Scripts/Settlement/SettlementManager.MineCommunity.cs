@@ -2,6 +2,23 @@ using UnityEngine;
 
 public partial class SettlementManager
 {
+    private int MineLevelCap(int level)
+    {
+        var floors = MineMazeLinkConfig.Instance?.Floors;
+        int floor = MineMazeRules.FindBlockingFloor(floors, Settlement, level);
+        return floor == 0 ? int.MaxValue : floors.FloorConfig(floor - 1).GateKingdomLevel;
+    }
+
+    public void RecordMineFloorCleared(int floor)
+    {
+        string development = MineMazeRules.FloorClearedDevelopment(floor);
+        if (HasDevelopment(development))
+            return;
+        Settlement.UnlockDevelopment(development);
+        ApplyLevelCap();
+        AnalyticsLog.Track("mine_maze_floor_cleared", ("floor", floor));
+    }
+
     public MineCommunityState MineCommunity => InventoryManager.Instance?.MineMazeState?.community;
     public float MineHealthMultiplier => MineCommunity?.ProductionMultiplier ?? 1f;
     public bool HasMineCommunityStory => MineCommunity != null && MineCommunity.started;

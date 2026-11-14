@@ -118,11 +118,9 @@ public class DecorModePresenter : MonoBehaviour
     /// <summary>새 건물·건설 자리의 자리를 고르는 중인지 (건설 튜토리얼)</summary>
     public bool IsPlacingBuilding => IsOpen && _session != null && _session.IsNew && _session.Decor.IsBuilding;
 
-    /// <summary>미리보기 (건설 튜토리얼 강조. 들고 있는 것이 없으면 null)</summary>
-    public Component GhostTarget => _session != null && _ghost != null && _ghost.gameObject.activeInHierarchy ? _ghost : null;
-
     /// <summary>[확인] 버튼 (건설 튜토리얼 강조)</summary>
     public RectTransform ConfirmButton => _view.ConfirmButton;
+    public bool CanConfirmBuildingPlacement => IsPlacingBuilding && _view.CanConfirmPlacement;
 
     // 입력
     private bool _pressing;
@@ -437,10 +435,11 @@ public class DecorModePresenter : MonoBehaviour
         _session = DecorEditSession.ForNew(plot, origin);
         _plotRequest = request;
         string cost = settlement.ConstructionCostText(plot.Construction);
-        _view.ShowHint(found ? $"{HintBuildPlace} ({cost})" : HintNoRoom, !found);
+        bool firstHouse = request.RequestId == SettlementManager.FirstHouseRequestId;
+        _view.ShowHint(found ? (firstHouse ? "추천 자리예요. 빈 땅을 누르면 옮길 수 있어요." : $"{HintBuildPlace} ({cost})") : HintNoRoom, !found);
         ShowSession();
         RefreshStorage();
-        if (_cameraDrag is PlazaCameraController camera)
+        if (found && _cameraDrag is PlazaCameraController camera)
             camera.PanTo(_ghost.WorldRect.center + Vector2.up * 1f);
         BuildPlacementBegan?.Invoke(this);
     }
@@ -653,7 +652,7 @@ public class DecorModePresenter : MonoBehaviour
         var origin = _session.Origin;
         string cost = settlement.ConstructionCostText(plot.Construction);
         var game = GameManager.Instance;
-        if (game == null)
+        if (game == null || request.RequestId == SettlementManager.FirstHouseRequestId)
         {
             StartPlot(request, origin);
             return;

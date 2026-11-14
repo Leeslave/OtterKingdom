@@ -107,10 +107,10 @@ public class ProfileManager : MonoBehaviour
     }
 
     /// <summary>큰 발전을 끝내 그 레벨까지 바로 오름 (모자란 경험치를 채워 줌)</summary>
-    public void ReachLevel(int level)
+    public void ReachLevel(int level, int maximumLevel = int.MaxValue)
     {
         _reached.Clear();
-        Progress.ReachLevel(level, _levelTable, _reached);
+        Progress.ReachLevel(level, _levelTable, _reached, maximumLevel);
         AnnounceReached();
     }
 

@@ -146,6 +146,28 @@ public class ProgressionTests
         Assert.AreEqual(1, reached.Count, "이미 넘은 레벨이면 그대로");
     }
 
+    [TestCase(40, 500, 0)]
+    [TestCase(800, 700, 200)]
+    public void ReachLevel_DefersRewardUntilMineGateOpens(int exp, int banked, int unused)
+    {
+        var progress = new LevelProgress();
+        var reached = new List<int>();
+        progress.SetCap(2, _curve, reached);
+        progress.Load(1, exp, _curve);
+
+        progress.ReachLevel(4, _curve, reached, maximumLevel: 2);
+        Assert.AreEqual(2, progress.Level);
+        Assert.AreEqual(banked, progress.Exp);
+        CollectionAssert.AreEqual(new[] { 2 }, reached);
+
+        progress.SetCap(3, _curve, reached);
+        Assert.AreEqual(3, progress.Level);
+        Assert.AreEqual(300 + unused, progress.Exp);
+        progress.SetCap(4, _curve, reached);
+        Assert.AreEqual(4, progress.Level);
+        CollectionAssert.AreEqual(new[] { 2, 3, 4 }, reached);
+    }
+
     #endregion
 
     #region 퀘스트 열림

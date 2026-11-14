@@ -144,8 +144,15 @@ public partial class MineMazeModel
 
     public bool HitGate(out string reason)
     {
+        return HitGate(out reason, out _);
+    }
+
+    public bool HitGate(out string reason, out bool critical)
+    {
+        critical = false;
         if (!CanHitGate(out reason)) return false;
-        GateDamage = Math.Min(_config.GateHits, GateDamage + (_rng.NextDouble() < _rework.BaseCritChance ? 2 : 1));
+        critical = _rng.NextDouble() < _rework.BaseCritChance;
+        GateDamage = Math.Min(_config.GateHits, GateDamage + Pickaxe.Power * (critical ? 2 : 1));
         if (GateRemaining == 0)
         {
             FloorCleared = true;

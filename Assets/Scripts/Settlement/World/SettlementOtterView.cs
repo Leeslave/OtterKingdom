@@ -123,7 +123,8 @@ public class SettlementOtterView : MonoBehaviour
             return;
         }
 
-        bool attention = !speaking && (IsMapGuide ? manager.AvailableClearing() != null : (manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter) || manager.CanAssignRole(_otter)
+        bool firstHouse = _otter == manager.Config.FirstOtter && manager.CanOfferFirstHouse;
+        bool attention = !speaking && (IsMapGuide ? manager.AvailableClearing() != null : (firstHouse || manager.HasPendingIntro(_otter) || manager.CanAssignSpecialist(_otter) || manager.CanAssignRole(_otter)
             || manager.CanMoveIn(_otter)));
         if (_attention.gameObject.activeSelf != attention)
             _attention.gameObject.SetActive(attention);
@@ -131,12 +132,22 @@ public class SettlementOtterView : MonoBehaviour
             _attention.transform.localPosition = _attentionBase + Vector3.up * (Mathf.Abs(Mathf.Sin(Time.time * 4f)) * BobHeight);
 
         // 순간포착 카메라 말풍선을 누른 탭은 사진 찍기 (한마디 하지 않음)
-        if (PlazaTapInput.TryGetTap(out Vector2 world) && _tapArea.OverlapPoint(world) && !PlazaMomentDirector.OwnsTap(world))
+        if (PlazaTapInput.TryGetTap(out Vector2 world) && (_tapArea.OverlapPoint(world)
+            || (firstHouse && attention && _attention.bounds.Contains(new Vector3(world.x, world.y, _attention.bounds.center.z))))
+            && !PlazaMomentDirector.OwnsTap(world))
             Speak(manager);
     }
 
     private void Speak(SettlementManager manager)
     {
+        if (_otter == manager.Config.FirstOtter && manager.CanOfferFirstHouse)
+        {
+            PlazaTapInput.BlockCurrentGesture();
+            manager.Settlement.MarkBoardVisited();
+            manager.RequestOpen(manager.FirstHouseRequest);
+            return;
+        }
+
         string line;
         var assignedRole = manager.AssignedRoleOf(_otter);
         if (IsMapGuide)

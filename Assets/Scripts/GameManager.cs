@@ -277,7 +277,11 @@ public partial class GameManager : MonoBehaviour
             pendingAbsenceSec = 0;
         }
 
-        ShowPlayerNameSetup();
+        if (CurrentZoneId == ZoneTutorials.Plaza && ProfileManager.Instance?.HasChosenName == false
+            && SettlementManager.Instance?.CanOfferFirstHouse == true)
+            StartCoroutine(ShowNameAfterFirstHouse());
+        else
+            ShowPlayerNameSetup();
         if (zoneTutorialPending) StartCoroutine(PlayZoneTutorialWhenReady());
         // This zone's guide was already seen (e.g. reset by the dev tool): a
         // specialist placed here starts working right away.
@@ -303,6 +307,16 @@ public partial class GameManager : MonoBehaviour
             profile.ChooseName(name);
             SaveNow();
         });
+    }
+
+    private IEnumerator ShowNameAfterFirstHouse()
+    {
+        var settlement = SettlementManager.Instance;
+        yield return null;
+        while (settlement != null && (!settlement.Settlement.IsCompleted(SettlementManager.FirstHouseRequestId)
+            || SettlementPresenter.IsCelebrating || SettlementPresenter.IsPopupOpen || gameUI.IsModalOpen))
+            yield return null;
+        ShowPlayerNameSetup();
     }
 
     // 광장 농장(농장 설계형)이 열리면 옛 밭(밭 씬)은 멈춤 — 밭은 SettlementManager.Farm이 돌림 (Docs/농장_설계형_기획.md)
@@ -1124,13 +1138,7 @@ public partial class GameManager : MonoBehaviour
         SaveNow();
     }
 
-    // The build mode guide: the first time the player picks a spot for a
-    // building (the first house, from its board request), a short overlay
-    // explains the ghost (green/red cells, drag to move) and [확인], then a
-    // highlight on [확인] that doesn't block dragging stays until the build
-    // actually starts = done (BuildStarted). Leaving build mode without
-    // building hides it; the next placement shows the highlight again (the
-    // explanation only once: BuildIntro).
+    // 첫 공사 전까지 유효한 자리를 골랐을 때만 확인 버튼을 강조한다.
     private DecorModePresenter buildTutorialMode;
     private TutorialPointer buildPointer;
 
@@ -1151,30 +1159,13 @@ public partial class GameManager : MonoBehaviour
             yield break;
         }
 
-        if (!save.tutorialsDone.Contains(ZoneTutorials.BuildIntro))
-        {
-            bool finished = false;
-            bool skipped = false;
-            TutorialOverlay.Play(ZoneTutorials.BuildSteps(decorMode), wasSkipped =>
-            {
-                finished = true;
-                skipped = wasSkipped;
-            });
-            while (!finished) yield return null;
-            if (!skipped && !save.tutorialsDone.Contains(ZoneTutorials.Build))
-            {
-                save.tutorialsDone.Add(ZoneTutorials.BuildIntro);
-                SaveNow();
-            }
-        }
-
         if (save.tutorialsDone.Contains(ZoneTutorials.Build) || !decorMode.IsPlacingBuilding)
         {
             buildTutorialMode = null;
             yield break;
         }
         buildPointer = TutorialPointer.Show(
-            () => decorMode != null && decorMode.IsPlacingBuilding && !gameUI.IsModalOpen && !TutorialOverlay.IsShowing
+            () => decorMode != null && decorMode.CanConfirmBuildingPlacement && !gameUI.IsModalOpen && !TutorialOverlay.IsShowing
                 ? TutorialTargets.Ui(decorMode.ConfirmButton) : null,
             ZoneTutorials.BuildPointerMessage, TutorialPointer.AboveGlobalUI);
         // Gone with build mode (left without building): ask again next time.
@@ -1426,6 +1417,8 @@ public partial class GameManager : MonoBehaviour
     {
         gameUI.ShowPickaxeUpgradeButton();
     }
+
+    public void OpenPickaxeUpgrade() => gameUI.ShowPickaxeUpgradePrompt();
 
     public bool TryUpgradePickaxe()
     {

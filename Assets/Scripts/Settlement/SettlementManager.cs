@@ -62,6 +62,12 @@ public readonly struct LaborSummary
 [DefaultExecutionOrder(-80)]
 public partial class SettlementManager : MonoBehaviour
 {
+    public const string FirstHouseRequestId = "req_first_house";
+    public const string FirstChairRequestId = "req_chair";
+
+    public BoardRequestDefinition FirstHouseRequest => _config.FindRequest(FirstHouseRequestId);
+    public bool CanOfferFirstHouse => IsLoaded && FirstHouseRequest is BoardRequestDefinition request
+        && GetStatus(request) == RequestStatus.Available;
     public static SettlementManager Instance { get; private set; }
 
     /// <summary>바로 저장해 달라는 부탁 (부탁 완료·건설 시작·나뭇가지 줍기). GameManager가 듣는다</summary>
@@ -454,7 +460,7 @@ public partial class SettlementManager : MonoBehaviour
         // 큰 발전: 왕국 레벨이 바로 오르고, 다음 발전까지의 제한이 풀림
         var profile = ProfileManager.Instance;
         if (profile != null && request.KingdomLevel > 0)
-            profile.ReachLevel(request.KingdomLevel);
+            profile.ReachLevel(request.KingdomLevel, MineLevelCap(profile.Level));
         ApplyLevelCap();
         SaveRequested?.Invoke();
     }
@@ -465,13 +471,15 @@ public partial class SettlementManager : MonoBehaviour
         var profile = ProfileManager.Instance;
         if (profile != null)
         {
-            int cap = SettlementRules.LevelCap(_config, Settlement, profile.Level);
-            if (!Settlement.PostCastleContentEnabled
-                && QuestManager.Instance?.Database?.TryGet(CastleRelease.FinalQuestId, out var finalQuest) == true)
-                cap = Math.Min(cap, Math.Max(profile.Level, finalQuest.RequiredLevel));
+            int cap = Math.Min(SettlementRules.LevelCap(_config, Settlement, profile.Level), MineLevelCap(profile.Level));
+            cap = Math.Min(cap, CastleReleaseLevelCap(profile.Level));
             profile.SetLevelCap(cap);
         }
     }
+
+    private int CastleReleaseLevelCap(int level) => !Settlement.PostCastleContentEnabled
+        && QuestManager.Instance?.Database?.TryGet(CastleRelease.FinalQuestId, out var finalQuest) == true
+            ? Math.Max(level, finalQuest.RequiredLevel) : int.MaxValue;
 
     /// <summary>왕국 레벨을 묶고 있는 부탁 (끝내면 레벨이 오름). 묶여 있지 않으면 null</summary>
     public BoardRequestDefinition LevelCapRequest
@@ -1321,6 +1329,7 @@ public partial class SettlementManager : MonoBehaviour
             throw new ArgumentNullException(nameof(saved));
 
         Settlement.Load(saved);
+        MineMazeRules.RestoreClearedFloors(MineMazeLinkConfig.Instance?.Floors, InventoryManager.Instance?.MineMazeState, Settlement);
 
         if (Settlement.LegacyComplete)
         {

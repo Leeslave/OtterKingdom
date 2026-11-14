@@ -530,7 +530,7 @@ public class GameUI : MonoBehaviour
         rect.anchoredPosition = new Vector2(40f, FeatureButtonBottom);
     }
 
-    private void ShowPickaxeUpgradePrompt()
+    public void ShowPickaxeUpgradePrompt()
     {
         CloseAllModals();
         var mining = game.MiningService;

@@ -81,6 +81,7 @@ public class DecorModeView : MonoBehaviour
     public void HideActions() => _actions.gameObject.SetActive(false);
 
     public void SetPlacementValid(bool valid) => _confirmButton.interactable = valid;
+    public bool CanConfirmPlacement => _confirmButton.interactable;
 
     private IEnumerator ShakeHint()
     {

@@ -36,8 +36,6 @@ public static class ZoneTutorials
         };
     }
 
-    // 건설 모드 설명을 끝까지 봤음 (완료가 아님). 다음에 자리를 고를 때는 설명 없이 [확인] 강조만
-    public const string BuildIntro = "Build.Intro";
     public const string BuildPointerMessage = "자리를 정했으면 [확인]을 눌러 공사를 시작해요!";
 
     // 요정 상점 소개 설명을 끝까지 봤음 (완료가 아님). 다음 광장 방문부터는 설명 없이 요정 강조만 다시 보여 줌.
@@ -67,52 +65,18 @@ public static class ZoneTutorials
 
     private static List<TutorialStep> PlazaSteps()
     {
-        var topBar = Object.FindAnyObjectByType<TopBarView>();
-        var navBar = Object.FindAnyObjectByType<NavBarView>();
-        var board =Object.FindAnyObjectByType<SettlementBoardPropView>();
-        var otter = NearestToScreenCenter(Object.FindObjectsByType<OtterWanderAgent>(FindObjectsSortMode.None));
-        // Gold의 CurrencyID는 "Gold"가 아니라서 GameManager가 쓰는 에셋과 직접 비교
-        var gold = GameManager.Instance.GoldCurrency;
-        var goldPill = FindPill(c => c == gold);
-        var gemPill = FindPill(c => c.CurrencyID == "Gem");
+        var manager = SettlementManager.Instance;
+        var first = manager != null ? manager.Config.FirstOtter : null;
+        var plaza = SettlementPlazaView.Active;
+        if (first == null || plaza == null || !manager.CanOfferFirstHouse)
+            return new List<TutorialStep>();
 
+        var otter = plaza.FindOtter(first.OtterId);
+        plaza.FocusOtter(first.OtterId);
         return new List<TutorialStep>
         {
-            TutorialStep.Info("해달 왕국에 온 걸 환영해요!",
-                "여기는 왕국의 한가운데, 광장이에요.\n해달들이 모여 쉬고 노는 곳이에요.\n하나씩 둘러볼까요?"),
-            TutorialStep.At("왕국 정보",
-                "왕국의 이름과 레벨이에요.\n퀘스트를 끝내고 경험치를 모으면\n왕국 레벨이 올라가요.",
-                () => TutorialTargets.Ui(topBar != null ? topBar.ProfileArea : null)),
-            TutorialStep.At("골드",
-                "작물, 물고기, 광석을 팔면 골드를 벌어요.\n밭을 늘리거나 도구를 강화할 때 써요.",
-                () => TutorialTargets.Ui(goldPill)),
-            TutorialStep.At("조개",
-                "귀한 재화예요.\n[+]를 누르면 재화 상점이 열려요.",
-                () => TutorialTargets.Ui(gemPill)),
-            TutorialStep.At("도감",
-                "지금까지 모은 작물, 물고기, 해달을 볼 수 있어요.\n처음 얻은 것은 여기 새로 등록돼요.",
-                () => TutorialTargets.Ui(navBar != null ? navBar.CodexButton : null)),
-            TutorialStep.At("퀘스트",
-                "해 볼 만한 일들이 적혀 있어요.\n다 하면 여기서 보상을 받아요!",
-                () => TutorialTargets.Ui(navBar != null ? navBar.QuestButton : null)),
-            TutorialStep.At("꾸미기",
-                "장난감과 소품을 놓아 장소를 꾸며요.\n놓아 둔 장난감은 해달들이 가지고 놀아요.",
-                () => TutorialTargets.Ui(navBar != null ? navBar.DecorateButton : null)),
-            TutorialStep.At("가방",
-                "모은 물건이 전부 여기 들어가요.\n가방에서 물건을 팔아 골드로 바꿀 수 있어요.",
-                () => TutorialTargets.Ui(navBar != null ? navBar.BagButton : null)),
-            TutorialStep.At("이동",
-                "밭, 낚시터, 광산 같은\n다른 장소로 갈 수 있어요.\n잠긴 곳은 왕국이 커지면 열려요.",
-                () => TutorialTargets.Ui(navBar != null ? navBar.TravelButton : null)),
-            // 요정 상점은 밭이 열린 뒤에 나타나므로 따로 안내 (FairyShopSteps)
-            TutorialStep.AtWorld("해달 친구들",
-                "광장을 돌아다니는 해달들이에요.\n가끔은 처음 보는 해달이 놀러 오기도 해요!",
-                otter),
-            TutorialStep.Info("광장 둘러보기",
-                "화면을 끌면 광장 여기저기를 볼 수 있어요.\n두 손가락을 벌리거나 모으면\n크게, 작게 볼 수 있어요."),
-            TutorialStep.TryIt("해달 게시판",
-                "해달들의 부탁과 방명록이 붙어 있어요.\n게시판을 눌러 첫 부탁을 확인해 봐요!",
-                () => TutorialTargets.World(board), board),
+            TutorialStep.TryIt("몽실이의 첫 집", "몽실이를 눌러 집을 지어 주세요.",
+                () => TutorialTargets.World(otter), otter),
         };
     }
 
@@ -138,26 +102,6 @@ public static class ZoneTutorials
             TutorialStep.At("요정이 찾아왔어요!",
                 "밭이 열리자 모종을 파는 요정이\n광장에 찾아왔어요.\n모종과 왕국에 필요한 물건을 살 수 있어요.",
                 () => TutorialTargets.World(fairy)),
-        };
-    }
-
-    /// <summary>
-    /// 건설 모드 설명 (첫 건물 자리 고르기). 설명이 끝나면 화면을 막지 않는 [확인] 강조(TutorialPointer)로 넘어가고,
-    /// 실제로 공사를 시작해야 완료된다
-    /// </summary>
-    public static List<TutorialStep> BuildSteps(DecorModePresenter decorMode)
-    {
-        return new List<TutorialStep>
-        {
-            TutorialStep.At("건설 모드",
-                "건물을 지을 자리를 직접 골라요.\n초록 칸이면 지을 수 있고,\n빨간 칸이면 지을 수 없어요.",
-                () => TutorialTargets.World(decorMode.GhostTarget)),
-            TutorialStep.At("자리 옮기기",
-                "건물을 꾹 누른 채 끌면 옮겨져요.\n빈 땅을 눌러도 그 자리로 와요.\n화면을 끌면 광장을 둘러볼 수 있어요.",
-                () => TutorialTargets.World(decorMode.GhostTarget)),
-            TutorialStep.At("공사 시작",
-                "자리를 정했으면 [확인]을 눌러요.\n재료를 내면 그 자리에 공사가 시작돼요!\n다 지은 건물은 꾸미기에서 옮길 수 있어요.",
-                () => TutorialTargets.Ui(decorMode.ConfirmButton)),
         };
     }
 
@@ -244,37 +188,4 @@ public static class ZoneTutorials
 
     #endregion
 
-    #region 대상 찾기
-
-    private static RectTransform FindPill(System.Func<Currency, bool> match)
-    {
-        foreach (var pill in Object.FindObjectsByType<CurrencyPillView>(FindObjectsSortMode.None))
-        {
-            if (pill.Currency != null && match(pill.Currency)) return (RectTransform)pill.transform;
-        }
-        return null;
-    }
-
-    // 튜토리얼을 시작할 때 화면 가운데에 가장 가까운 해달 (돌아다녀도 강조는 따라감)
-    private static T NearestToScreenCenter<T>(T[] candidates) where T : Component
-    {
-        var cam = Camera.main;
-        if (cam == null) return candidates.Length > 0 ? candidates[0] : null;
-
-        var center = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-        T best = null;
-        float bestDistance = float.MaxValue;
-        foreach (var candidate in candidates)
-        {
-            float distance = ((Vector2)cam.WorldToScreenPoint(candidate.transform.position) - center).sqrMagnitude;
-            if (distance < bestDistance)
-            {
-                best = candidate;
-                bestDistance = distance;
-            }
-        }
-        return best;
-    }
-
-    #endregion
 }

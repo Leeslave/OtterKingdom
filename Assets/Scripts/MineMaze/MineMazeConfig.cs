@@ -73,6 +73,8 @@ public class MineMazeConfig : ScriptableObject
     [Tooltip("1층 설정에서만 지정: 지하 2층부터 순서대로")]
     [SerializeField] private List<MineMazeConfig> _additionalFloors = new List<MineMazeConfig>();
     public IReadOnlyList<MineMazeConfig> AdditionalFloors => _additionalFloors;
+    public int FloorCount => 1 + _additionalFloors.Count;
+    public MineMazeConfig FloorConfig(int index) => index == 0 ? this : _additionalFloors[index - 1];
     [Header("성장 순환 테스트")]
     [SerializeField, Min(1)] private int _testKingdomLevel = 9;
     [SerializeField, Min(1)] private int _gateKingdomLevel = 9;

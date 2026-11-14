@@ -55,6 +55,7 @@ public static partial class MineMazeSetup
         var lso = new SerializedObject(link);
         lso.FindProperty("_mazeZone").objectReferenceValue = zone;
         lso.FindProperty("_mineZone").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ZoneDefinition>(MineZonePath);
+        lso.FindProperty("_floors").objectReferenceValue = AssetDatabase.LoadAssetAtPath<MineMazeConfig>($"{DataFolder}/MineMazeConfig.asset");
         if (lso.FindProperty("_glow").objectReferenceValue == null)
             lso.FindProperty("_glow").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Sprite>(GlowSprite);
         lso.ApplyModifiedPropertiesWithoutUndo();

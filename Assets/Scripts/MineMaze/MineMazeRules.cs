@@ -18,6 +18,46 @@ public static class MineMazeRules
     public static string PickaxeDevelopment(int tier) => "maze_pickaxe_" + tier;
     /// <summary>지하 N층(1부터)의 돌을 모두 부숴 다음 층이 열림 (메인 Lv.18 · 21 · 22)</summary>
     public static string FloorClearedDevelopment(int floor) => $"maze_floor_{floor}_cleared";
+
+    // 기존 층 돌파 가능 레벨부터 다음 왕국 레벨을 잠근다. 이미 지난 레벨은 유지한다.
+    public static int FindBlockingFloor(MineMazeConfig floors, Settlement settlement, int kingdomLevel)
+    {
+        int blockingFloor = 0;
+        int cap = int.MaxValue;
+        if (floors == null)
+            return blockingFloor;
+        for (int i = 0; i < floors.FloorCount; i++)
+        {
+            var floor = floors.FloorConfig(i);
+            if (floor == null || (i == floors.FloorCount - 1 && !floor.GasSource)
+                || floor.GateKingdomLevel < kingdomLevel || floor.GateKingdomLevel >= cap
+                || settlement.HasDevelopment(FloorClearedDevelopment(i + 1)))
+                continue;
+            blockingFloor = i + 1;
+            cap = floor.GateKingdomLevel;
+        }
+        return blockingFloor;
+    }
+
+    public static void RestoreClearedFloors(MineMazeConfig floors, MineMazeSave save, Settlement settlement)
+    {
+        if (floors == null || save == null || save.IsEmpty)
+            return;
+        if (save.floors == null || save.floors.Count == 0)
+        {
+            if (save.floorCleared || save.gateDamage >= floors.GateHits)
+                settlement.UnlockDevelopment(FloorClearedDevelopment(1));
+            return;
+        }
+        foreach (var state in save.floors)
+        {
+            if (state == null || state.floor < 0 || state.floor >= floors.FloorCount)
+                continue;
+            var floor = floors.FloorConfig(state.floor);
+            if (floor != null && (state.cleared || state.gateDamage >= floor.GateHits))
+                settlement.UnlockDevelopment(FloorClearedDevelopment(state.floor + 1));
+        }
+    }
     /// <summary>미로 씬 이름 (메인 퀘스트 "갱도에 들어가 보기" 대상)</summary>
     public const string SceneName = "MineMaze";
     public const int FoundLevel = 5;

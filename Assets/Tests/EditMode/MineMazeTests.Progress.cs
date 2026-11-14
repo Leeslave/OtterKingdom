@@ -87,7 +87,7 @@ public partial class MineMazeTests
         for (int i = 0; i < 7; i++) Assert.IsTrue(model.HitGate(out _));
         model.Exit(T0.AddMinutes(1));
         model = Model(save: model.ToSave());
-        Assert.AreEqual(7, model.GateDamage);
+        Assert.AreEqual(7 * model.Pickaxe.Power, model.GateDamage);
         WalkToStairs(model);
         while (!model.FloorCleared) Assert.IsTrue(model.HitGate(out _));
         Assert.IsFalse(model.HitGate(out _));

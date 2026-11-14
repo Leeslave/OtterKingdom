@@ -160,6 +160,8 @@ public class MineMazeGame : MonoBehaviour
             return false;
         _saveTimer = 0f;
         RecordMilestones();
+        if (InGame)
+            _model.UseKingdomLevel(ProfileManager.Instance.Level);
         var saved = _model.ToSave();
         saved.savedUtcTicks = (_pausedUtc ?? DateTime.UtcNow).Ticks;
         if (InGame && InventoryManager.Instance != null)
@@ -182,6 +184,7 @@ public class MineMazeGame : MonoBehaviour
             // Item acquisition can also advance collections and quests.
             if (CollectionManager.Instance != null) CollectionManager.Instance.WriteToSave(main.collection);
             if (QuestManager.Instance != null) QuestManager.Instance.WriteToSave(main.quests);
+            ProfileManager.Instance.WriteToSave(main.profile ??= new ProfileSaveData());
             // Keep the kingdom offline-production clock anchored to its last simulation.
             if (!service.Save(main, stampTime: false)) return false;
         }
@@ -230,7 +233,8 @@ public class MineMazeGame : MonoBehaviour
     // 처음 보는 한글을 폰트에 미리 (도중에 추가되면 에디터가 멈춤)
     private void PrepareGlyphs()
     {
-        var sb = new System.Text.StringBuilder(MazeGlyphs.Ui).Append(MazeGlyphs.Trips).Append(MineGlyphs.Ui).Append(_config.FloorName);
+        var sb = new System.Text.StringBuilder(MazeGlyphs.Ui).Append(MazeGlyphs.Trips).Append(MineGlyphs.Ui).Append(_config.FloorName)
+            .Append("발견한 계단 발생 돌 심층 갱도가 열렸어요 마을에 영향을 주는 단서 주민들이 회복해요 마을의 약초 부탁 보기 새 광맥");
         foreach (var ore in _config.Rework.Ores)
         {
             if (ore != null)
@@ -309,6 +313,17 @@ public class MineMazeGame : MonoBehaviour
             return;
         Save();
         navigator.TryGo(link.MineZone);
+    }
+
+    public void ReturnToPlazaForMineStory()
+    {
+        var root = GlobalUIRoot.Instance;
+        var navigator = FindAnyObjectByType<SceneNavigator>();
+        if (root == null || navigator == null)
+            return;
+        var plaza = ZoneLookup.FindByScene(root.Zones, ZoneTutorials.Plaza);
+        if (plaza != null && Save())
+            navigator.TryGo(plaza, () => SettlementManager.Instance?.OpenMineCommunity());
     }
 
     #endregion
@@ -399,6 +414,8 @@ public class MineMazeGame : MonoBehaviour
         _hud.Flash(new Color(0f, 0f, 0f, 0.9f));
         _sfx.Play(MineSfx.Kind.Open, 0.8f);
         _hud.ShowFloorTitle();
+        if (InGame)
+            AnalyticsLog.Track("mine_maze_entered", ("floor", _model.CurrentFloor + 1));
         Save();
     }
 
@@ -409,6 +426,21 @@ public class MineMazeGame : MonoBehaviour
         _hud.RebuildFloor();
         ShowView();
         Save();
+    }
+
+    public void ShowLevelGoal(int floor)
+    {
+        int index = floor - 1;
+        if (index < 0 || index >= _model.FloorCount || _model.Inside)
+            return;
+        if (index != _model.CurrentFloor)
+            SelectFloor(index);
+        if (_model.CurrentFloor != index)
+            return;
+        if (_model.PickaxeTier < _model.Config.GatePickaxeTier)
+            _hud.ShowWorkshop();
+        else
+            _hud.ShowEntrance();
     }
 
     public void Go(MazeTurn turn)
@@ -515,10 +547,8 @@ public class MineMazeGame : MonoBehaviour
             _hud.ShowToast(reason);
             return;
         }
-        int before = _model.GateDamage;
-        if (!_model.HitGate(out reason))
+        if (!_model.HitGate(out reason, out bool crit))
             return;
-        bool crit = _model.GateDamage - before >= 2;
         _idle = 0f;
         var tint = RockColor;
         var center = _rock.Center;
@@ -571,6 +601,8 @@ public class MineMazeGame : MonoBehaviour
         if (!_model.TryCraft(out string reason)) { _hud.ShowToast(reason); return false; }
         _sfx.Play(MineSfx.Kind.Discover);
         _hud.ShowToast($"{_model.Pickaxe.DisplayName} 완성!");
+        if (InGame)
+            AnalyticsLog.Track("mine_maze_pickaxe_crafted", ("tier", _model.PickaxeTier));
         Save();
         return true;
     }
@@ -597,7 +629,7 @@ public class MineMazeGame : MonoBehaviour
             settlement.Settlement.UnlockDevelopment(MineMazeRules.PickaxeDevelopment(tier));
         for (int floor = 0; floor < _model.FloorCount; floor++)
             if (_model.IsFloorCleared(floor))
-                settlement.Settlement.UnlockDevelopment(MineMazeRules.FloorClearedDevelopment(floor + 1));
+                settlement.RecordMineFloorCleared(floor + 1);
     }
 
     /// <summary>"2분 05초" (다시 들어가기까지)</summary>
