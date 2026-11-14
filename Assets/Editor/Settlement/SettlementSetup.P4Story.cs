@@ -4,9 +4,7 @@ using UnityEngine;
 using static CollectionSetup;
 
 /// <summary>
-/// Lv.10~15 해달의 부탁 (P4, Docs/특성사회성장_P4_기획반영.md 9장): 새 해달이 찾아옴 → 살 집(입주 부탁) → 그 해달의 일터(건물 부탁).
-/// 건물 부탁은 왕국 레벨 잠금(끝내야 다음 레벨) — 첫 모임(Lv.10) 뒤 작은 집 11 · 상점 12 · 목공소 13 · 농업 창고 14 · 채석 작업소 15,
-/// 이어서 16 · 17 · 18 (어업 작업소 · 건설소 · 기록관). 같은 부탁이 그 레벨 메인 퀘스트의 마지막 단계 (QuestSetup).
+/// 새 해달의 입주와 일터 부탁을 만든다. 방문 순서는 StoryArrivalRules에서, 현재 부탁·건물 조건은 진행표에서 적용한다.
 /// 부탁 · 방명록을 만들고 정착 설정의 부탁 목록에 넣는다. 여러 번 실행해도 결과가 같다
 /// </summary>
 public static partial class SettlementSetup
@@ -30,7 +28,6 @@ public static partial class SettlementSetup
     private const string P5WorkyardBuilt = "p5_workyard_built";
     private const string P5RecorderSettled = "p5_recorder_settled";
     private const string P5ArchiveBuilt = "p5_archive_built";
-    private const string FirstGatheringDevelopment = "first_gathering_complete";
 
     // 순서, ID, 제목, 설명(부탁 화면에서 해달이 하는 말), 부탁하는 해달, 필요 발전,
     // 지을 건물 에셋(입주 부탁이면 null), 입주할 해달들, 결과 발전, 왕국 레벨(0 = 잠금 없음), 찾아오는 해달, 완료 문구, 방명록(해달, 꼬리표, 글)
@@ -39,24 +36,24 @@ public static partial class SettlementSetup
         (string otter, string tag, string message) entry)[] P4StoryTable =
     {
         (30, "req_p4_first_home", "놀러 온 친구의 집", "광장에 놀러 오는 해달들이 늘었어요.\n머물 수 있는 작은 집을 하나 지어 줄래요?",
-            "otter_p3_neighbor", FirstGatheringDevelopment, "Building_SmallHouse", null, P4FirstHome, 11, "otter_toy_jjalrang",
-            "작은 집이 생겼어요! 장사를 하고 싶다는 짤랑이가 찾아왔어요.",
+            "otter_p3_neighbor", BoardUpgradeDevelopment, "Building_SmallHouse", null, P4FirstHome, 0, null,
+            "새 친구가 머물 집이 생겼어요.",
             ("otter_p3_neighbor", "새 집", "놀러 온 친구가 머물 작은 집이 생겼어요.")),
         (31, "req_p4_trader_home", "짤랑이가 살 집", "짤랑짤랑! 이 마을에서 장사를 하고 싶어요.\n우선 지낼 집이 있으면 좋겠어요.",
-            "otter_toy_jjalrang", P4FirstHome, null, new[] { "otter_toy_jjalrang" }, P4TraderSettled, 0, null,
+            StoryArrivalRules.JjalrangOtterId, StoryArrivalRules.JjalrangArrivalDevelopment, null, new[] { StoryArrivalRules.JjalrangOtterId }, P4TraderSettled, 0, null,
             "짤랑이가 마을 주민이 되었어요!",
             ("otter_toy_jjalrang", "입주", "오늘부터 저도 이 마을 해달이에요. 짤랑!")),
-        (32, "req_p4_shop", "짤랑이의 가게", "좋은 물건은 제값에! 광장에 가게를 차리면\n요정도 함께 장사하고 싶대요.",
-            "otter_toy_jjalrang", P4TraderSettled, "Building_Shop", null, P4ShopBuilt, 12, "otter_toy_kungkung",
-            "해달 상점이 문을 열었어요! 이제 물건을 더 비싸게 팔 수 있어요. (판매가 +10%)\n요정 상점도 이곳으로 이사했어요. 숲에서 나무를 하는 쿵쿵이가 찾아왔어요.",
-            ("otter_toy_jjalrang", "개업", "해달 상점 개업! 요정이랑 같이 장사해요.")),
+        (32, "req_p4_shop", "해달 상점", "광장에 가게를 차리면 요정이 이곳에서 물건을 팔고 싶대요.\n상업 지역에 상점을 지어 볼까요?",
+            "otter_receptionist", P4FirstHome, "Building_Shop", null, P4ShopBuilt, 10, null,
+            "해달 상점이 문을 열었어요! 판매가가 10% 오르고 요정 상점도 이곳으로 이사했어요.",
+            ("otter_receptionist", "개업", "해달 상점이 문을 열었어요. 요정이 이곳에서 손님을 맞이해요.")),
         (33, "req_p4_lumber_home", "꾸벅이와 쿵쿵이의 집", "숲에서 나무를 하는 쿵쿵이가 찾아왔어요.\n늘 낮잠만 자던 꾸벅이도 같이 나무를 하겠대요. 둘이 살 집이 필요해요.",
-            "otter_toy_kungkung", P4ShopBuilt, null, new[] { "otter_sleepy", "otter_toy_kungkung" }, P4LumberSettled, 0, null,
+            "otter_toy_kungkung", P4FirstHome, null, new[] { "otter_sleepy", "otter_toy_kungkung" }, P4LumberSettled, 0, null,
             "꾸벅이와 쿵쿵이가 마을 주민이 되었어요!",
             ("otter_sleepy", "입주", "하암… 이제 여기가 우리 집이에요. 나무도 열심히 할게요.")),
         (34, "req_p4_workshop", "나무가 모자라요", "집을 짓다 보니 목재가 늘 모자라요.\n목공소가 있으면 우리가 나무를 꾸준히 해 올 수 있어요.",
-            "otter_toy_kungkung", P4LumberSettled, "Building_Workshop", null, P4WorkshopBuilt, 13, "otter_toy_bodeul",
-            "목공소가 생겼어요! 꾸벅이와 쿵쿵이가 목재를 꾸준히 모아 와요. (한 마리당 1시간에 12개)\n밭에 스프링클러도 놓을 수 있어요. 새싹을 좋아하는 보들이가 찾아왔어요.",
+            "otter_toy_kungkung", P4LumberSettled, "Building_Workshop", null, P4WorkshopBuilt, 13, null,
+            "목공소가 생겼어요! 꾸벅이와 쿵쿵이가 목재를 꾸준히 모아 와요. (한 마리당 1시간에 12개)\n밭에 스프링클러도 놓을 수 있어요.",
             ("otter_toy_kungkung", "목공소", "쿵쿵! 목공소에서 나무를 척척 다듬어요.")),
         // 농업 창고(흙길)를 채석 작업소(돌길)보다 먼저 (Docs/콘텐츠_진행흐름_재설계_제안.md 8장 1차)
         (35, "req_p4_farmer_home", "보들이가 살 집", "새싹을 좋아하는 보들이가 찾아왔어요.\n새싹이와 함께 밭을 돌보고 싶대요.",
@@ -64,16 +61,16 @@ public static partial class SettlementSetup
             "보들이가 마을 주민이 되었어요!",
             ("otter_toy_bodeul", "입주", "흙냄새 나는 마을이에요. 오늘부터 잘 부탁해요!")),
         (15, "req_p4_granary", "밭 옆 창고", "밭이 넓어지니 수확 상자가 금방 차고 길도 멀어요.\n밭 옆에 창고가 있으면 보관도 넉넉하고 흙길도 놓을 수 있어요.",
-            "otter_toy_bodeul", SettlementQuestGate.FarmDevelopment, "Building_Granary", null, P4GranaryBuilt, 12, "otter_toy_degul",
-            "농업 창고가 생겼어요! 밭과 상자 사이에 흙길을 놓아 봐요. 농부가 길 위에서 빨리 걸어요.\n수확 상자가 두 배로 커지고, 거두는 작물도 늘어나요. (수확량 +10%)\n동글동글한 돌을 좋아하는 데굴이가 찾아왔어요.",
+            "otter_toy_bodeul", SettlementQuestGate.FarmDevelopment, "Building_Granary", null, P4GranaryBuilt, 12, null,
+            "농업 창고가 생겼어요! 밭과 상자 사이에 흙길을 놓아 봐요. 농부가 길 위에서 빨리 걸어요.\n수확 상자가 두 배로 커지고, 거두는 작물도 늘어나요. (수확량 +10%)",
             ("otter_farmer", "창고", "보들이랑 같이 거두니 창고가 가득해요!")),
         (37, "req_p4_miner_home", "데굴이가 살 집", "동글동글한 돌을 좋아하는 데굴이가 찾아왔어요.\n깡깡이와 함께 돌을 캐고 싶대요.",
             "otter_toy_degul", P4GranaryBuilt, null, new[] { "otter_toy_degul" }, P4MinerSettled, 0, null,
             "데굴이가 마을 주민이 되었어요!",
             ("otter_toy_degul", "입주", "데굴데굴~ 돌이 많은 마을이라 좋아요.")),
         (38, "req_p4_quarry", "돌 깨는 일터", "집도 창고도 돌이 많이 들어요.\n채석 작업소가 있으면 깡깡이랑 같이 돌을 꾸준히 캐 올 수 있어요.",
-            "otter_toy_degul", P4MinerSettled, "Building_Quarry", null, P4QuarryBuilt, 15, "otter_toy_pongdang",
-            "채석 작업소가 생겼어요! 데굴이와 깡깡이가 돌을 꾸준히 모아 와요. (한 마리당 1시간에 12개)\n흙길이 돌길로 바뀌어 농부가 더 빨리 걸어요. 바다를 좋아하는 퐁당이가 찾아왔어요.",
+            "otter_toy_degul", P4MinerSettled, "Building_Quarry", null, P4QuarryBuilt, 15, null,
+            "채석 작업소가 생겼어요! 데굴이와 깡깡이가 돌을 꾸준히 모아 와요. (한 마리당 1시간에 12개)\n흙길이 돌길로 바뀌어 농부가 더 빨리 걸어요.",
             ("otter_miner", "채석", "데굴이랑 같이 캐니까 돌이 쑥쑥 나와요. 깡깡!")),
         // Lv.15 뒤: 새 해달이 찾아옴 → 살 집 → 그 해달의 일터 (Lv.16 · 17 · 18)
         (39, "req_p5_fisher_home", "퐁당이가 살 집", "바다에서 헤엄치던 퐁당이가 찾아왔어요.\n첨벙이와 함께 낚시를 하고 싶대요.",
@@ -81,16 +78,16 @@ public static partial class SettlementSetup
             "퐁당이가 마을 주민이 되었어요!",
             ("otter_toy_pongdang", "입주", "퐁당! 바다가 가까운 마을이라 좋아요.")),
         (40, "req_p5_fishery", "바다 일터", "첨벙이랑 같이 그물을 손질할 작업소가 있으면\n물고기를 더 많이 낚을 수 있어요.",
-            "otter_toy_pongdang", P5FisherSettled, "Building_Fishery", null, P5FisheryBuilt, 16, "otter_toy_kongkong",
-            "어업 작업소가 생겼어요! 물고기를 더 많이 낚아요. (낚시 +20%)\n망치를 든 콩콩이가 찾아왔어요.",
+            "otter_toy_pongdang", P5FisherSettled, "Building_Fishery", null, P5FisheryBuilt, 16, null,
+            "어업 작업소가 생겼어요! 물고기를 더 많이 낚아요. (낚시 +20%)",
             ("otter_fisher", "작업소", "그물을 손질하니 고등어가 줄줄이 올라와요! 첨벙!")),
         (41, "req_p5_builder_home", "콩콩이가 살 집", "콩콩! 뚝딱이처럼 집을 짓고 싶어요.\n우선 지낼 집이 있으면 좋겠어요.",
-            "otter_toy_kongkong", P5FisheryBuilt, null, new[] { "otter_toy_kongkong" }, P5BuilderSettled, 0, null,
+            "otter_toy_kongkong", P4WorkshopBuilt, null, new[] { "otter_toy_kongkong" }, P5BuilderSettled, 0, null,
             "콩콩이가 마을 주민이 되었어요!",
             ("otter_toy_kongkong", "입주", "콩콩! 오늘부터 이 마을 건설 해달이에요.")),
         (42, "req_p5_workyard", "건설소", "뚝딱이랑 같이 쓸 건설소가 있으면\n공사를 훨씬 빨리 끝낼 수 있어요.",
-            "otter_toy_kongkong", P5BuilderSettled, "Building_Workyard", null, P5WorkyardBuilt, 17, "otter_toy_kkeujeok",
-            "건설소가 생겼어요! 공사가 더 빨리 끝나요. (공사 시간 -15%)\n메모쟁이 끄적이가 찾아왔어요.",
+            "otter_toy_kongkong", P5BuilderSettled, "Building_Workyard", null, P5WorkyardBuilt, 17, null,
+            "건설소가 생겼어요! 공사가 더 빨리 끝나요. (공사 시간 -15%)",
             ("otter_builder", "건설소", "콩콩이랑 같이 지으니 하루면 뚝딱이에요!")),
         (43, "req_p5_recorder_home", "끄적이가 살 집", "밤마다 무언가를 적던 끄적이가 찾아왔어요.\n또박이와 함께 마을 이야기를 적어 두고 싶대요.",
             "otter_toy_kkeujeok", P5WorkyardBuilt, null, new[] { "otter_toy_kkeujeok" }, P5RecorderSettled, 0, null,

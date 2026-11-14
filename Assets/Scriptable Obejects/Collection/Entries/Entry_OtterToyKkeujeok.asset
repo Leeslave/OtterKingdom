@@ -22,7 +22,7 @@ MonoBehaviour:
   _description: "\uBAA8\uB450 \uC7A0\uB4E0 \uBC24\uC5D0 \uCC3E\uC544\uC640 \uC774\uAC83\uC800\uAC83
     \uC801\uC5B4 \uB450\uB294 \uAE30\uB85D \uD574\uB2EC\uC774\uC5D0\uC694."
   _extraValue: "\uAC8C\uC2DC\uD310"
-  _hint: "\uAC74\uC124\uC18C\uB97C \uC9C0\uC73C\uBA74 \uCC3E\uC544\uC640\uC694"
+  _hint: "첨벙이를 낚시터에 배치하면 찾아와요"
   _linkedItem: {fileID: 0}
   _unlockLevel: 0
   _story: {fileID: 11400000, guid: cfbb1a4c378d4a44835ec1cee4c3f123, type: 2}

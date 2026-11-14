@@ -172,6 +172,14 @@ public class SettlementPresenter : MonoBehaviour
             return;
         }
 
+        if (!_manager.Settlement.PostCastleContentEnabled && _manager.IsCastleBuilt)
+        {
+            if (!_glyphsReady)
+                PrepareGlyphs();
+            _guide.Show(CastleRelease.UpdateMessage, null);
+            return;
+        }
+
         var settlement = _manager.Settlement;
         var job = settlement.Job;
         if (job != null)
@@ -1139,7 +1147,10 @@ public class SettlementPresenter : MonoBehaviour
             : otter != null && otter.Portrait != null ? otter.Portrait
             : request.Icon;
         int stage = _manager.Settlement.Stage;
-        _complete.Show($"{stage + 1:00} · {_manager.StageName}", title, _paid, request.CompletionMessage, icon);
+        string message = !_manager.Settlement.PostCastleContentEnabled && request.RequestId == CastleRules.RequestId
+            ? $"왕국의 성이 완성됐어요!\n{CastleRelease.UpdateMessage}"
+            : request.CompletionMessage;
+        _complete.Show($"{stage + 1:00} · {_manager.StageName}", title, _paid, message, icon);
     }
 
     #endregion
@@ -1202,6 +1213,8 @@ public class SettlementPresenter : MonoBehaviour
     {
         var config = _manager.Config;
         var text = new StringBuilder("0123456789:/ ,.!?%·가는 중시간분초 보기진행중완료확인하기짓기건설개간시작해달게시판방명록의부탁방문기록새로운이도착했어요골드가모자라요개더필요해요아직할수없어요다른공사끝나면있어요바로지을걸려요주민가열렸어요집을짓고길을열어요광장으로돌아가찾아온만나보세요에게말을걸어배치해주세요오고있어요러가기을를서일의망치표지판눌러보내요하고");
+        if (!_manager.Settlement.PostCastleContentEnabled)
+            text.Append(CastleRelease.UpdateMessage);
         foreach (var request in config.Requests)
         {
             if (request == null)

@@ -22,7 +22,7 @@ MonoBehaviour:
   _description: "\uC0C8\uC2F9\uC744 \uC4F0\uB2E4\uB4EC\uC73C\uBA74 \uC465\uC465 \uC790\uB780\uB2E4\uACE0
     \uBBFF\uB294 \uB18D\uC0AC \uD574\uB2EC\uC774\uC5D0\uC694."
   _extraValue: "\uC0C8\uC2F9"
-  _hint: "\uBAA9\uACF5\uC18C\uB97C \uC9C0\uC73C\uBA74 \uCC3E\uC544\uC640\uC694"
+  _hint: "해달 상점을 지으면 찾아와요"
   _linkedItem: {fileID: 0}
   _unlockLevel: 0
   _story: {fileID: 11400000, guid: 2f3f121a9ffa4e17a0c2d2f4a280b038, type: 2}

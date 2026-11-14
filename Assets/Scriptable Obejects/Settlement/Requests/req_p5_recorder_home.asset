@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p5_recorder_home
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p5_recorder_home
-  _order: 42
+  _order: 43
   _category: 0
   _contentVersion: 4
   _title: "\uB044\uC801\uC774\uAC00 \uC0B4 \uC9D1"

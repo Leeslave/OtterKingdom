@@ -23,6 +23,7 @@ public static class IndustrySetup
     private const string SettlementArtFolder = "Assets/Art/Settlement";
     private const string HouseArtFolder = "Assets/Art/Buildings/Detail4";
     private const string ConfigPath = "Assets/Resources/IndustryConfig.asset";
+    private const string PavingArtPath = PropFolder + "/PlazaPavingArt.asset";
     private const string PavingPlacementPath = "Tools/UIGen/paving_placement.json";
     private const string WoodPath = "Assets/Scriptable Obejects/Inventory/Items/Mining/목재.asset";
     private const string StonePath = "Assets/Scriptable Obejects/Inventory/Items/Mining/돌.asset";
@@ -77,22 +78,22 @@ public static class IndustrySetup
             "Prop_Flowerbed", new Vector2Int(2, 1), false, 4),
     };
 
-    // 왕국 공사: (ID, 종류, 이름, 설명, 기술, 먼저 있어야 하는 발전, 그 글, 석재, 판재, 주괴, 정밀 부품, 골드, 아이콘, 그림, 대상, 돌길 조각 앞부분)
+    // 왕국 공사: (ID, 종류, 이름, 설명, 기술, 먼저 있어야 하는 발전, 그 글, 석재, 판재, 주괴, 정밀 부품, 골드, 아이콘, 그림, 대상)
     private static readonly (string id, TownProjectKind kind, string name, string desc, string tech, string requires, string requiresHint,
-        int stone, int plank, int ingot, int precision, int gold, string icon, string sprite, string target, string prefix)[] Projects =
+        int stone, int plank, int ingot, int precision, int gold, string icon, string sprite, string target)[] Projects =
     {
-        ("town_paving_plaza_center", TownProjectKind.Paving, "중앙 광장 돌길", "광장 가운데 흙 마당에 돌을 깔아요", TechIds.TownPlanning,
-            "", "", 12, 0, 0, 0, 1500, "ICON_Paving", "", "", "PlazaCenter"),
-        ("town_paving_roads", TownProjectKind.Paving, "왕국 큰길", "광장에서 뻗은 흙길을 따라 돌을 깔아요", TechIds.Paving,
-            "town_paving_plaza_center", "먼저 중앙 광장 돌길을 깔아요", 20, 0, 0, 0, 3000, "ICON_PavingRoad", "", "", "Road_"),
+        (PlazaPavingArt.CenterProjectId, TownProjectKind.Paving, "중앙 광장 돌길", "광장 가운데 흙 마당에 돌을 깔아요", TechIds.TownPlanning,
+            "", "", 12, 0, 0, 0, 1500, "ICON_Paving", "", ""),
+        (PlazaPavingArt.RoadsProjectId, TownProjectKind.Paving, "왕국 큰길", "광장에서 뻗은 흙길을 따라 돌을 깔아요", TechIds.Paving,
+            PlazaPavingArt.CenterProjectId, "먼저 중앙 광장 돌길을 깔아요", 20, 0, 0, 0, 3000, "ICON_PavingRoad", "", ""),
         ("town_royal_industrial_park", TownProjectKind.IndustrialPark, "왕립 산업단지", "가공 시설에 왕실 깃발 · 가공 속도 +15%",
-            TechIds.RoyalIndustry, "", "", 30, 30, 0, 10, 20000, "Prop_RoyalBanner", "Prop_RoyalBanner", "", ""),
+            TechIds.RoyalIndustry, "", "", 30, 30, 0, 10, 20000, "Prop_RoyalBanner", "Prop_RoyalBanner", ""),
         ("town_royal_academy", TownProjectKind.Academy, "왕립 학술원", "기록관을 학술원으로 증축해요", TechIds.Academy,
-            "", "", 0, 20, 0, 8, 15000, "Academy", "Academy", "bld_archive", ""),
+            "", "", 0, 20, 0, 8, 15000, "Academy", "Academy", "bld_archive"),
         ("town_capital_plaza", TownProjectKind.CapitalPlaza, "수도 광장", "중앙 광장 둘레에 왕국 깃대를 세워요", TechIds.Capital,
-            "town_paving_plaza_center", "먼저 중앙 광장 돌길을 깔아요", 40, 0, 10, 0, 25000, "Prop_CapitalFlag", "Prop_CapitalFlag", "", ""),
+            PlazaPavingArt.CenterProjectId, "먼저 중앙 광장 돌길을 깔아요", 40, 0, 10, 0, 25000, "Prop_CapitalFlag", "Prop_CapitalFlag", ""),
         ("town_royal_palace", TownProjectKind.Palace, "왕궁 증축", "성을 금빛 지붕의 왕궁으로 증축해요", TechIds.Palace,
-            CastleRules.Built, "먼저 성을 지어요", 40, 0, 20, 20, 50000, "Palace", "Palace", "Castle", ""),
+            CastleRules.Built, "먼저 성을 지어요", 40, 0, 20, 20, 50000, "Palace", "Palace", "Castle"),
     };
 
     [MenuItem("Tools/Industry/Create Data")]
@@ -146,6 +147,7 @@ public static class IndustrySetup
             new CraftRecipe(furniture["furniture_fountain"], TechIds.PublicSpaces, 0, 8, 1500, 2),
         });
         SetProjects(config);
+        SetPavingArt();
         EditorUtility.SetDirty(config);
         AssetDatabase.SaveAssets();
         Debug.Log($"[IndustrySetup] 아이템 {items.Count} · 레시피 {recipes.Count} · 꾸미기 {furniture.Count} · 왕국 공사 {Projects.Length} · {ConfigPath}");
@@ -289,15 +291,8 @@ public static class IndustrySetup
         EditorUtility.SetDirty(catalog);
     }
 
-    // 왕국 공사: 돌길 조각 그림 · 자리는 plaza_paving.py가 쓴 paving_placement.json
     private static void SetProjects(IndustryConfig config)
     {
-        if (!File.Exists(PavingPlacementPath))
-        {
-            Debug.LogError($"[IndustrySetup] 돌길 자리가 없습니다: {PavingPlacementPath} (python Tools/UIGen/plaza_paving.py)");
-            return;
-        }
-        var placements = ParsePlacements(File.ReadAllText(PavingPlacementPath));
         var so = new SerializedObject(config);
         var list = so.FindProperty("_projects");
         list.arraySize = Projects.Length;
@@ -320,28 +315,50 @@ public static class IndustrySetup
             row.FindPropertyRelative("_icon").objectReferenceValue = Prop(info.icon);
             row.FindPropertyRelative("_sprite").objectReferenceValue = string.IsNullOrEmpty(info.sprite) ? null : Prop(info.sprite);
             row.FindPropertyRelative("_target").stringValue = info.target;
-            var pieces = row.FindPropertyRelative("_pieces");
-            var names = new List<string>();
-            if (!string.IsNullOrEmpty(info.prefix))
-            {
-                foreach (var key in placements.Keys)
-                {
-                    if (key == info.prefix || (info.prefix.EndsWith("_") && key.StartsWith(info.prefix)))
-                        names.Add(key);
-                }
-            }
-            names.Sort(System.StringComparer.Ordinal);
-            pieces.arraySize = names.Count;
-            for (int i = 0; i < names.Count; i++)
-            {
-                var (center, size) = placements[names[i]];
-                var piece = pieces.GetArrayElementAtIndex(i);
-                piece.FindPropertyRelative("_sprite").objectReferenceValue = ImportLarge($"{PropFolder}/Paving_{names[i]}.png");
-                piece.FindPropertyRelative("_mapCenter").vector2Value = center;
-                piece.FindPropertyRelative("_mapSize").vector2Value = size;
-            }
         }
         so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    // 광장 씬에서 참조하는 돌길 그림과 위치. 왕성 공개판 씬에는 이 에셋을 연결하지 않는다.
+    private static void SetPavingArt()
+    {
+        if (!File.Exists(PavingPlacementPath))
+        {
+            Debug.LogError($"[IndustrySetup] 돌길 자리가 없습니다: {PavingPlacementPath} (python Tools/UIGen/plaza_paving.py)");
+            return;
+        }
+        var art = AssetDatabase.LoadAssetAtPath<PlazaPavingArt>(PavingArtPath);
+        if (art == null)
+        {
+            art = ScriptableObject.CreateInstance<PlazaPavingArt>();
+            AssetDatabase.CreateAsset(art, PavingArtPath);
+        }
+        var placements = ParsePlacements(File.ReadAllText(PavingPlacementPath));
+        var serializedArt = new SerializedObject(art);
+        SetPavingPieces(serializedArt.FindProperty("_center"), placements, "PlazaCenter");
+        SetPavingPieces(serializedArt.FindProperty("_roads"), placements, "Road_");
+        serializedArt.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetPavingPieces(SerializedProperty pieces,
+        Dictionary<string, (Vector2 center, Vector2 size)> placements, string prefix)
+    {
+        var names = new List<string>();
+        foreach (var key in placements.Keys)
+        {
+            if (key.StartsWith(prefix, System.StringComparison.Ordinal))
+                names.Add(key);
+        }
+        names.Sort(System.StringComparer.Ordinal);
+        pieces.arraySize = names.Count;
+        for (int i = 0; i < names.Count; i++)
+        {
+            var (center, size) = placements[names[i]];
+            var piece = pieces.GetArrayElementAtIndex(i);
+            piece.FindPropertyRelative("_sprite").objectReferenceValue = ImportLarge($"{PropFolder}/Paving_{names[i]}.png");
+            piece.FindPropertyRelative("_mapCenter").vector2Value = center;
+            piece.FindPropertyRelative("_mapSize").vector2Value = size;
+        }
     }
 
     [System.Serializable]

@@ -107,6 +107,8 @@ public class TownHallPopupView : MonoBehaviour
         _islandMapButton.transform.SetSiblingIndex(1);
         var production = RuntimeUIKit.CreateButton(_scroll.content, "일터 · 농장 설비", () => OnProductionClicked?.Invoke(), RuntimeUIKit.ButtonKind.Feature);
         production.transform.SetSiblingIndex(2);
+        if (CastleRelease.IsActive) return;
+
         RuntimeUIKit.PrepareGlyphs("왕국 발전 · 연구");
         var research = RuntimeUIKit.CreateButton(_scroll.content, "왕국 발전 · 연구", () =>
         {

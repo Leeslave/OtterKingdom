@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: gb_req_p4_shop
   m_EditorClassIdentifier: OtterKingdom::GuestbookEntryDefinition
   _entryId: gb_req_p4_shop
-  _otter: {fileID: 11400000, guid: f512e8597221436c98717a186cbe28c0, type: 2}
+  _otter: {fileID: 11400000, guid: fd22d712505f2e043a0cb986b4cd47ba, type: 2}
   _tag: "\uAC1C\uC5C5"
-  _message: "\uD574\uB2EC \uC0C1\uC810 \uAC1C\uC5C5! \uC694\uC815\uC774\uB791 \uAC19\uC774
-    \uC7A5\uC0AC\uD574\uC694."
+  _message: "해달 상점이 문을 열었어요. 요정이 이곳에서 손님을 맞이해요."

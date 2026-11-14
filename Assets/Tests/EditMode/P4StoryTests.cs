@@ -83,6 +83,64 @@ public class P4StoryTests
     }
 
     [Test]
+    public void StoryVisitors_UseEarlierMilestonesAndJjalrangUnlocksAtLevel16()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
+        var settlement = new Settlement();
+        settlement.UnlockDevelopment(EarlyOtterRules.OpenDevelopment);
+        SettlementRules.ApplyCompletion(config.FindRequest("req_p4_first_home"), settlement);
+        Assert.IsFalse(settlement.TryGetResidentState(StoryArrivalRules.JjalrangOtterId, out _));
+
+        var earlierArrivals = new[]
+        {
+            ("p4_first_home", "otter_toy_kungkung"),
+            (TerritoryRules.FirstDevelopment, "otter_toy_degul"),
+            ("p4_workshop_built", "otter_toy_kongkong"),
+            ("p4_shop_built", "otter_toy_bodeul"),
+            ("farm_working", "otter_toy_pongdang"),
+            ("fishing_working", "otter_toy_kkeujeok"),
+        };
+        foreach (var (development, otterId) in earlierArrivals)
+        {
+            settlement.UnlockDevelopment(development);
+            Assert.AreEqual(otterId, StoryArrivalRules.ArriveNext(config, settlement)?.OtterId, development);
+        }
+        while (StoryArrivalRules.ArriveNext(config, settlement) != null) { }
+
+        var opened = new List<LevelDevelopment>();
+        var traderHome = config.FindRequest("req_p4_trader_home");
+        SettlementRules.UnlockLevelDevelopments(config, settlement, 15, opened);
+        Assert.AreEqual(RequestStatus.Locked, SettlementRules.GetStatus(traderHome, settlement));
+        Assert.IsNull(StoryArrivalRules.ArriveNext(config, settlement));
+
+        SettlementRules.UnlockLevelDevelopments(config, settlement, 16, opened);
+        Assert.AreEqual(StoryArrivalRules.JjalrangOtterId, StoryArrivalRules.ArriveNext(config, settlement)?.OtterId);
+        Assert.AreEqual(RequestStatus.Available, SettlementRules.GetStatus(traderHome, settlement));
+        Assert.IsNull(StoryArrivalRules.ArriveNext(config, settlement));
+    }
+
+    [Test]
+    public void EarlyShopAndCommercialDistrict_DoNotNeedJjalrang()
+    {
+        var config = AssetDatabase.LoadAssetAtPath<SettlementConfig>("Assets/Scriptable Obejects/Settlement/SettlementConfig.asset");
+        var settlement = new Settlement();
+        settlement.UnlockDevelopment(EarlyOtterRules.OpenDevelopment);
+        SettlementRules.ApplyCompletion(config.FindRequest("req_p4_first_home"), settlement);
+
+        var shop = config.FindRequest("req_p4_shop");
+        Assert.AreEqual(10, shop.KingdomLevel);
+        Assert.AreEqual(RequestStatus.Available, SettlementRules.GetStatus(shop, settlement));
+        Assert.AreEqual(BuildingBlock.None, BuildingRules.CheckUnlocked(config, settlement, shop.Building, 9));
+        Assert.IsTrue(settlement.HasDevelopment(config.FindDistrictTypeUnlock(DistrictType.Commercial).Development));
+
+        string jjalrang = StoryArrivalRules.JjalrangOtterId;
+        settlement.SetResident(jjalrang, ResidentState.Visitor);
+        Assert.IsFalse(EarlyOtterRules.CanAppear(jjalrang, settlement));
+        settlement.SetResident(jjalrang, ResidentState.Resident);
+        Assert.IsTrue(EarlyOtterRules.CanAppear(jjalrang, settlement));
+    }
+
+    [Test]
     public void LoadingCompletedProject_AppliesLevelCapBeforeGrantingOfflineExperience()
     {
         var table = Create<LevelTable>();

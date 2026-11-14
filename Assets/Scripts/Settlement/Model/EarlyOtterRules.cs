@@ -20,6 +20,16 @@ public static class EarlyOtterRules
     public static bool IsVillageOpen(Settlement settlement) =>
         settlement != null && settlement.HasDevelopment(OpenDevelopment);
 
-    public static bool CanAppear(string otterId, Settlement settlement) =>
-        IsEarly(otterId) || IsVillageOpen(settlement);
+    public static bool CanAppear(string otterId, Settlement settlement)
+    {
+        if (IsEarly(otterId))
+            return true;
+        if (!IsVillageOpen(settlement))
+            return false;
+
+        // 옛 세이브의 미입주 짤랑이도 새 등장 시점까지 기다린다.
+        return otterId != StoryArrivalRules.JjalrangOtterId
+            || settlement.HasDevelopment(StoryArrivalRules.JjalrangArrivalDevelopment)
+            || (settlement.TryGetResidentState(otterId, out var state) && state == ResidentState.Resident);
+    }
 }

@@ -406,11 +406,15 @@ public static partial class SettlementSetup
         configSo.FindProperty("_gatherAmount").intValue = 2;
         configSo.FindProperty("_gatherCooldownSeconds").floatValue = 60f;
         var levelDevelopments = configSo.FindProperty("_levelDevelopments");
-        levelDevelopments.arraySize = 1;
+        levelDevelopments.arraySize = 2;
         var fishingFound = levelDevelopments.GetArrayElementAtIndex(0);
         fishingFound.FindPropertyRelative("_level").intValue = FishingLevel;
         fishingFound.FindPropertyRelative("_development").stringValue = FishingFoundDevelopment;
         fishingFound.FindPropertyRelative("_notice").stringValue = FishingFoundNotice;
+        var jjalrangReady = levelDevelopments.GetArrayElementAtIndex(1);
+        jjalrangReady.FindPropertyRelative("_level").intValue = StoryArrivalRules.JjalrangArrivalLevel;
+        jjalrangReady.FindPropertyRelative("_development").stringValue = StoryArrivalRules.JjalrangArrivalDevelopment;
+        jjalrangReady.FindPropertyRelative("_notice").stringValue = "";
         CreateRegionData(configSo);
         CreateP2Data(configSo, otters, requests);
         CreateP3Data(configSo, otters);

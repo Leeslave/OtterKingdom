@@ -30,7 +30,7 @@ public static partial class SettlementSetup
     // 용도가 열리는 시설 (그 시설이 생겨야 쓸모 있는 구역은 그때 함께 열림). 주거는 처음부터. 수치 · 조건은 임시
     private static readonly DistrictTypeUnlock[] DistrictTypeUnlockTable =
     {
-        new DistrictTypeUnlock(DistrictType.Commercial, "p4_trader_settled", "장사하는 해달이 마을에 살게 되면 상업 지역을 정할 수 있어요"),
+        new DistrictTypeUnlock(DistrictType.Commercial, P4FirstHome, "놀러 온 친구의 집 부탁을 끝내면 상업 지역을 정할 수 있어요"),
         new DistrictTypeUnlock(DistrictType.Production, "p4_lumber_settled", "나무 하는 해달이 마을에 살게 되면 생산 지역을 정할 수 있어요"),
     };
 

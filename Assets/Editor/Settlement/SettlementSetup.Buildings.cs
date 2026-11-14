@@ -28,9 +28,9 @@ public static partial class SettlementSetup
             new[] { "Stage_House_Blue_0", "Stage_House_Blue_1", "Stage_House_Blue_2", "Stage_House_Blue_3" }, "ICON_House_Blue",
             0, BoardUpgradeDevelopment, new (OtterTrait, int)[0], 0, 600, 20, 10, 0.3f, 180f),
         // Lv.10~15 해달의 부탁 (SettlementSetup.P4Story.cs) — 그 부탁이 열려야 지을 수 있음 (필요 발전 = 입주 부탁의 결과)
-        ("Building_Shop", "bld_shop", "해달 상점", "짤랑이의 가게. 요정 상점이 이곳으로 이사하고, 물건을 더 비싸게 팔아요.", BuildingKind.Facility,
+        ("Building_Shop", "bld_shop", "해달 상점", "요정 상점이 이곳으로 이사하고, 물건을 더 비싸게 팔아요.", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Shop.png", new string[0], null,
-            0, P4TraderSettled, new[] { (OtterTrait.Trading, 1) }, 1, 2000, 40, 20, 0f, 300f),
+            0, P4FirstHome, new (OtterTrait, int)[0], 1, 2000, 40, 20, 0f, 300f),
         ("Building_Workshop", "bld_workshop", "목공소", "나무 하는 해달들이 일해 목재를 꾸준히 모아 가방에 넣어요. (한 마리당 2분에 1개)", BuildingKind.Facility,
             new Vector2Int(4, 3), 0.95f, BuildingArtPrefix + "Workshop.png", new string[0], null,
             0, P4LumberSettled, new[] { (OtterTrait.Woodcutting, 2) }, 1, 3000, 60, 30, 0f, 360f),

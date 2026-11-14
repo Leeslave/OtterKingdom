@@ -53,6 +53,8 @@ public static class SettlementRules
         // 주민 작업 부탁: 그 작업을 하는 중이면 진행 중
         if (request.CompletionTask != null && settlement.TryGetTaskJob(request.CompletionTask.TaskId, out _))
             return RequestStatus.Building;
+        if (!settlement.PostCastleContentEnabled && request.RequiredDevelopment == CastleRules.Built)
+            return RequestStatus.Locked;
         if (request.RequestId == "req_fishing_dock" && !CanStartFishingEvent(settlement))
             return RequestStatus.Locked;
         if (!settlement.HasDevelopment(request.RequiredDevelopment) || settlement.ResidentCount < request.MinResidents)

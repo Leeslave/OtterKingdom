@@ -411,13 +411,13 @@ public static class PlazaLifeSetup
     // 못 만났을 때 힌트: 이야기 · 생활 진행으로 찾아오는 조건 (장난감은 가챠 개편 4단계에서 없앰)
     internal static readonly Dictionary<string, string> ArrivalHints = new Dictionary<string, string>
     {
-        { "otter_toy_jjalrang", "첫 모임 뒤 놀러 온 친구의 집을 지으면 찾아와요" },
-        { "otter_toy_kungkung", "해달 상점을 지으면 찾아와요" },
-        { "otter_toy_bodeul", "목공소를 지으면 찾아와요" },
-        { "otter_toy_degul", "농업 창고를 지으면 찾아와요" },
-        { "otter_toy_pongdang", "채석 작업소를 지으면 찾아와요" },
-        { "otter_toy_kongkong", "어업 작업소를 지으면 찾아와요" },
-        { "otter_toy_kkeujeok", "건설소를 지으면 찾아와요" },
+        { StoryArrivalRules.JjalrangOtterId, $"왕국 Lv.{StoryArrivalRules.JjalrangArrivalLevel}에 찾아와요" },
+        { "otter_toy_kungkung", "놀러 온 친구의 집을 지으면 찾아와요" },
+        { "otter_toy_bodeul", "해달 상점을 지으면 찾아와요" },
+        { "otter_toy_degul", "첫 영토를 넓히면 찾아와요" },
+        { "otter_toy_pongdang", "새싹이를 밭에 배치하면 찾아와요" },
+        { "otter_toy_kongkong", "목공소를 지으면 찾아와요" },
+        { "otter_toy_kkeujeok", "첨벙이를 낚시터에 배치하면 찾아와요" },
         { "otter_toy_duribeon", "숲을 개간해 첫 영토를 넓히면 찾아와요" },
         { "otter_toy_sallang", "마을의 첫 모임을 열면 찾아와요" },
         { "otter_toy_yeongcha", "광장 농장 수확 상자에서 처음 거두면 찾아와요" },

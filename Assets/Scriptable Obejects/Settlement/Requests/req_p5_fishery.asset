@@ -34,10 +34,8 @@ MonoBehaviour:
   _settleTargets: []
   _resultDevelopment: p5_fishery_built
   _settles: []
-  _arrivals:
-  - _otter: {fileID: 11400000, guid: 58898692c33347619cf75afe6c116c9a, type: 2}
-    _state: 0
+  _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 1ce14ab8ebd2d0f46939437eb8064c67, type: 2}
-  _completionMessage: "어업 작업소가 생겼어요. 낚시 수확량 +20%! 물고기를 모으고 바다 의뢰를 해 봐요. 끄적이가 찾아왔어요."
+  _completionMessage: "어업 작업소가 생겼어요. 낚시 수확량 +20%! 물고기를 모으고 바다 의뢰를 해 봐요."
   _kingdomLevel: 17

@@ -102,13 +102,14 @@ public static class QuestSetup
         ("M10_CropSale", "main_lv10_crop_sale", "살림 밑천", "판매로 1,000골드 벌기", QuestGoalType.EarnFromSales, 1000, "", 200, "gold", QuestKind.Main, 10, "M10_Gathering", 300, 0f, ""),
         ("M10_FriendHome", "main_lv10_friend_home", "놀러 온 친구의 집", "게시판 부탁: 놀러 온 친구가 머물 작은 집 짓기", QuestGoalType.Milestone, 1, "", 300, "building:SmallHouse", QuestKind.Main, 10, "M10_CropSale", 0, 0f, "req_p4_first_home"),
         // Lv.11 → 12 장사를 하고 싶어요 (2,100): 짤랑이 입주 → 고랑 · 감자 → 짤랑이의 가게
-        ("M11_TraderHome", "main_lv11_trader_home", "짤랑이가 살 집", "게시판 부탁: 짤랑이를 작은 집에 입주시키기", QuestGoalType.Milestone, 1, "", 200, "otter:ICON_Otter_Toy_Jjalrang", QuestKind.Main, 11, "M10_FriendHome", 300, 0f, "req_p4_trader_home"),
+        // 세이브의 수령 기록을 보존하도록 기존 퀘스트 ID와 보상은 유지한다.
+        ("M11_TraderHome", "main_lv11_trader_home", "콩콩이가 살 집", "게시판 부탁: 콩콩이를 작은 집에 입주시키기", QuestGoalType.Milestone, 1, "", 200, "otter:ICON_Otter_Cast_Cocoa", QuestKind.Main, 11, "M10_FriendHome", 300, 0f, "req_p5_builder_home"),
         ("M05_Seed", "main_lv5_seed", "요정과 첫 거래", "요정 상점에서 감자 모종 사기", QuestGoalType.ShopPurchase, 1, "only:Farming/감자 모종", 50, "npc:Fairy", QuestKind.Main, 11, "M11_TraderHome", 200, 0f, ""),
         ("M05_Furrow", "main_lv5_furrow", "밭 넓히기", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 11, "M05_Seed", 200, 0f, "1"),
         ("M06_Furrow", "main_lv6_furrow", "밭 칸 하나 더", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 11, "M05_Furrow", 200, 0f, "2"),
         ("M05_Harvest", "main_lv5_harvest", "부지런한 농부", "작물 60개 수확하기", QuestGoalType.Harvest, 60, "Crops", 100, "item:Farming/감자", QuestKind.Main, 11, "M06_Furrow", 700, 0f, ""),
         ("M06_Potato", "main_lv6_potato", "감자 농사", "감자 20개 수확하기", QuestGoalType.Harvest, 20, "only:Farming/감자", 100, "item:Farming/감자", QuestKind.Main, 11, "M05_Harvest", 500, 0f, ""),
-        ("M11_Shop", "main_lv11_shop", "짤랑이의 가게", "게시판 부탁: 해달 상점 짓기", QuestGoalType.Milestone, 1, "", 500, "building:Shop", QuestKind.Main, 11, "M06_Potato", 0, 0f, "req_p4_shop"),
+        ("M11_Shop", "main_lv11_shop", "해달 상점", "게시판 부탁: 해달 상점 짓기", QuestGoalType.Milestone, 1, "", 500, "building:Shop", QuestKind.Main, 11, "M06_Potato", 0, 0f, "req_p4_shop"),
         // Lv.12 → 13 나무가 모자라요 (2,600): 상점에서 팔아 보기 → 고랑 · 고구마 → 꾸벅이 · 쿵쿵이 입주 → 목공소
         ("M12_ShopSale", "main_lv12_shop_sale", "해달 상점 첫 장사", "판매로 2,000골드 벌기 (해달 상점 판매가 +10%)", QuestGoalType.EarnFromSales, 2000, "", 300, "gold", QuestKind.Main, 12, "M11_Shop", 400, 0f, ""),
         ("M08_Furrow", "main_lv8_furrow", "여섯째 밭 칸", "농업 지역에 밭 칸 하나 더 짓기", QuestGoalType.UnlockFurrow, 1, "", 0, "place:ICON_Place_Farm", QuestKind.Main, 12, "M12_ShopSale", 250, 0f, "3"),
@@ -154,7 +155,7 @@ public static class QuestSetup
         ("M15_FisherHome", "main_lv15_fisher_home", "퐁당이가 살 집", "게시판 부탁: 퐁당이를 집에 입주시키기", QuestGoalType.Milestone, 1, "", 500, "otter:ICON_Otter_Toy_Pongdang", QuestKind.Main, 15, "M15_Catch", 700, 0f, "req_p5_fisher_home"),
         ("M15_Fishery", "main_lv15_fishery", "바다 일터", "게시판 부탁: 어업 작업소 짓기", QuestGoalType.Milestone, 1, "", 2000, "building:Fishery", QuestKind.Main, 15, "M15_FisherHome", 0, 0f, "req_p5_fishery"),
         // Lv.16 → 17 바다 마을 (5,600): 다음 레벨은 건설소 (해달의 부탁 42)
-        ("M16_Builder", "main_lv16_builder", "망치 소리", "게시판 부탁: 콩콩이가 살 집", QuestGoalType.Milestone, 1, "", 1000, "otter:ICON_Otter_Cast_Cocoa", QuestKind.Main, 16, "M15_Fishery", 1200, 0f, "req_p5_builder_home"),
+        ("M16_Builder", "main_lv16_builder", "짤랑이가 살 집", "게시판 부탁: 짤랑이를 작은 집에 입주시키기", QuestGoalType.Milestone, 1, "", 1000, "otter:ICON_Otter_Cast_Honey", QuestKind.Main, 16, "M15_Fishery", 1200, 0f, "req_p4_trader_home"),
         ("M16_Catch", "main_lv16_catch", "그물 가득", "물고기 100마리 낚기", QuestGoalType.Catch, 100, "Fish", 2500, "item:Fishing/고등어", QuestKind.Main, 16, "M16_Builder", 2000, 0f, ""),
         ("M16_Decor", "main_lv16_decor", "아늑한 광장", "가구 4개 놓기", QuestGoalType.PlaceDecor, 4, "", 1500, "item:Decor/나무 벤치", QuestKind.Main, 16, "M16_Catch", 1000, 0f, ""),
         ("M16_Workyard", "main_lv16_workyard", "공사를 빠르게", "게시판 부탁: 건설소 짓기", QuestGoalType.Milestone, 1, "", 2000, "settle:ICON_GuildOffice", QuestKind.Main, 16, "M16_Decor", 1400, 0f, "req_p5_workyard"),

@@ -31,16 +31,12 @@ MonoBehaviour:
   _coziness: 0
   _buildingId: bld_shop
   _buildingName: "\uD574\uB2EC \uC0C1\uC810"
-  _description: "\uC9E4\uB791\uC774\uC758 \uAC00\uAC8C. \uC694\uC815 \uC0C1\uC810\uC774
-    \uC774\uACF3\uC73C\uB85C \uC774\uC0AC\uD558\uACE0, \uBB3C\uAC74\uC744 \uB354
-    \uBE44\uC2F8\uAC8C \uD314\uC544\uC694."
+  _description: "요정 상점이 이곳으로 이사하고, 물건을 더 비싸게 팔아요."
   _icon: {fileID: 21300000, guid: 1945c40a937f996a507ddf0d3331d89f, type: 3}
   _kind: 1
   _requiredLevel: 9
-  _requiredDevelopment: p4_trader_settled
-  _traits:
-  - _trait: 8
-    _count: 1
+  _requiredDevelopment: p4_first_home
+  _traits: []
   _maxCount: 1
   _gold: 2000
   _items:

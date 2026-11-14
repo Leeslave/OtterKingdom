@@ -11,7 +11,7 @@ public partial class QuestManager
 
     private void InitializeProsperityQuests()
     {
-        if (_originalQuestDatabase != null) return;
+        if (CastleRelease.IsActive || _originalQuestDatabase != null) return;
         var curve = ProfileManager.Instance != null ? ProfileManager.Instance.LevelTable : null;
         if (_database == null || curve == null) return;
         if (Log.Records.TryGetValue(ProsperityQuestPlan.TransitionId, out var transition))
@@ -56,6 +56,9 @@ public partial class QuestManager
     private bool IsSelectedProsperityChain(QuestDefinition quest)
     {
         if (quest == null) return false;
+        if (quest.Kind == QuestKind.Main && CastleRelease.IsActive
+            && _database.TryGet(CastleRelease.FinalQuestId, out var finalQuest)
+            && quest.SortOrder > finalQuest.SortOrder) return false;
         if (ProsperityQuestPlan.IsNew(quest.QuestId))
             return _prosperityMainStart > 0 && quest.RequiredLevel >= _prosperityMainStart;
         int legacy = ProsperityQuestPlan.LegacyLevel(quest.QuestId);

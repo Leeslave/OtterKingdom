@@ -40,6 +40,8 @@ public class SettlementPlazaView : MonoBehaviour, IDecorBlocker
     [Tooltip("새 집·공사 현장을 비출 카메라")]
     [SerializeField] private PlazaCameraController _camera;
     [SerializeField] private PlazaSettings _plazaSettings;
+    [SerializeField] private PlazaPavingArt _pavingArt;
+    public PlazaPavingArt PavingArt => _pavingArt;
     [Tooltip("내보낸 해달을 넣을 곳")]
     [SerializeField] private Transform _otterRoot;
     [Tooltip("처음 들어올 때 해달들이 모여 있을 곳 (카메라 첫 화면)")]

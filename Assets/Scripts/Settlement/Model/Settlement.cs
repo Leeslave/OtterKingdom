@@ -82,6 +82,8 @@ public readonly struct RoleAssignment
 /// </summary>
 public partial class Settlement
 {
+    public bool PostCastleContentEnabled { get; set; } = true;
+
     private readonly Dictionary<string, ResidentState> _residents = new Dictionary<string, ResidentState>();
     // 온 순서대로 (광장에 나오는 순서, 세이브 순서를 지키기 위해)
     private readonly List<string> _residentOrder = new List<string>();

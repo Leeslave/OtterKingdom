@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: req_p5_archive
   m_EditorClassIdentifier: OtterKingdom::BoardRequestDefinition
   _requestId: req_p5_archive
-  _order: 43
+  _order: 44
   _category: 0
   _contentVersion: 4
   _title: "\uAE30\uB85D\uAD00"

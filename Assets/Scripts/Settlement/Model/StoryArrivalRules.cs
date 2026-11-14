@@ -7,13 +7,20 @@ using System;
 /// </summary>
 public static class StoryArrivalRules
 {
+    public const string JjalrangOtterId = "otter_toy_jjalrang";
+    public const int JjalrangArrivalLevel = 16;
+    public const string JjalrangArrivalDevelopment = "story_jjalrang_ready";
+
     /// <summary>(해달 ID, 찾아오는 조건 발전, 오는 이유 한 줄)</summary>
     public static readonly (string otterId, string development, string reason)[] Arrivals =
     {
-        ("otter_toy_kungkung", TerritoryRules.FirstDevelopment, "새 집과 일터를 지을 나무를 모으러 왔어요"),
-        ("otter_toy_degul", "p4_workshop_built", "새 마을에 건축용 돌이 필요하다는 소식을 듣고 왔어요"),
-        ("otter_toy_bodeul", "farm_working", "새 밭에서 수확물을 나르는 일을 돕고 싶어 왔어요"),
-        ("otter_toy_pongdang", "fishing_working", "선착장이 열렸다는 소식을 듣고 왔어요"),
+        ("otter_toy_kungkung", "p4_first_home", "새 집과 일터를 지을 나무를 모으러 왔어요"),
+        ("otter_toy_degul", TerritoryRules.FirstDevelopment, "새 마을에 건축용 돌이 필요하다는 소식을 듣고 왔어요"),
+        ("otter_toy_kongkong", "p4_workshop_built", "목공소가 생겼다는 소식을 듣고 공사를 도우러 왔어요"),
+        ("otter_toy_bodeul", "p4_shop_built", "새 가게에 내놓을 작물을 기르고 싶어 왔어요"),
+        ("otter_toy_pongdang", "farm_working", "밭 너머 바닷가까지 둘러보고 싶어 왔어요"),
+        ("otter_toy_kkeujeok", "fishing_working", "마을의 첫 낚시 이야기를 적으러 왔어요"),
+        (JjalrangOtterId, JjalrangArrivalDevelopment, "왕국에서 장사를 해 보고 싶어 왔어요"),
         ("otter_toy_duribeon", TerritoryRules.FirstDevelopment, "넓어진 땅을 구경하러 왔어요"),
         ("otter_toy_sallang", "first_gathering_complete", "첫 모임 소식을 듣고 봄바람을 타고 왔어요"),
         ("otter_toy_yeongcha", FarmCrateCollectedDevelopment, "수확 상자를 나르는 모습에 반해서 왔어요"),

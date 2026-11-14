@@ -44,6 +44,8 @@ public static class BuildingRules
 
         if (building.RequiredLevel > 0 && level < building.RequiredLevel)
             return BuildingBlock.Level;
+        if (!settlement.PostCastleContentEnabled && building.RequiredDevelopment == CastleRules.Built)
+            return BuildingBlock.Development;
         if (!string.IsNullOrEmpty(building.RequiredDevelopment) && !settlement.HasDevelopment(building.RequiredDevelopment))
             return BuildingBlock.Development;
         foreach (var requirement in building.Traits)

@@ -34,10 +34,8 @@ MonoBehaviour:
   _settleTargets: []
   _resultDevelopment: p4_first_home
   _settles: []
-  _arrivals:
-  - _otter: {fileID: 11400000, guid: f512e8597221436c98717a186cbe28c0, type: 2}
-    _state: 0
+  _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 54e641592cac66644b5dc41fc9346b6c, type: 2}
-  _completionMessage: "새 친구가 머물 집이 생겼어요. 짤랑이가 찾아왔어요!"
+  _completionMessage: "새 친구가 머물 집이 생겼어요."
   _kingdomLevel: 0

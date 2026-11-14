@@ -145,7 +145,7 @@ public partial class SettlementManager : MonoBehaviour
             return;
 
         Instance = this;
-        Settlement = new Settlement();
+        Settlement = new Settlement { PostCastleContentEnabled = !CastleRelease.IsActive };
         Settlement.OnChanged += () =>
         {
             // 공동사업의 단계·완료는 기록에서 계산하므로, 무엇이 바뀌든 다음 프레임에 다시 봄 (바꾸는 도중에 다시 바꾸지 않게)
@@ -464,7 +464,13 @@ public partial class SettlementManager : MonoBehaviour
     {
         var profile = ProfileManager.Instance;
         if (profile != null)
-            profile.SetLevelCap(SettlementRules.LevelCap(_config, Settlement, profile.Level));
+        {
+            int cap = SettlementRules.LevelCap(_config, Settlement, profile.Level);
+            if (!Settlement.PostCastleContentEnabled
+                && QuestManager.Instance?.Database?.TryGet(CastleRelease.FinalQuestId, out var finalQuest) == true)
+                cap = Math.Min(cap, Math.Max(profile.Level, finalQuest.RequiredLevel));
+            profile.SetLevelCap(cap);
+        }
     }
 
     /// <summary>왕국 레벨을 묶고 있는 부탁 (끝내면 레벨이 오름). 묶여 있지 않으면 null</summary>

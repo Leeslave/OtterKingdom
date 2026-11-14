@@ -530,6 +530,8 @@ public partial class SettlementManager
         if (field == null || soils == null || field.soil + 1 >= soils.Count)
             return null;
         var next = soils[field.soil + 1];
+        if (!Settlement.PostCastleContentEnabled && next.RequiredDevelopment == CastleRules.Built)
+            return null;
         unlocked = HasBuilt(next.RequiredBuilding) && (string.IsNullOrEmpty(next.RequiredDevelopment) || HasDevelopment(next.RequiredDevelopment));
         return next;
     }

@@ -34,9 +34,7 @@ MonoBehaviour:
   _settleTargets: []
   _resultDevelopment: p4_workshop_built
   _settles: []
-  _arrivals:
-  - _otter: {fileID: 11400000, guid: 82f6229b64b54a9fb0a98688d677f6c7, type: 2}
-    _state: 0
+  _arrivals: []
   _stageOnComplete: -1
   _completionEntry: {fileID: 11400000, guid: 6bc7202617482a1478066568514651c9, type: 2}
   _completionMessage: "목공소에서 한가한 나무 특성 주민이 목재를 모아요. 첫 목재를 받아 다음 집을 준비해요. 스프링클러는 농사를 시작한 뒤 설비를 확장하면 열려요."

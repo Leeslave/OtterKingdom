@@ -537,7 +537,8 @@ public partial class GameManager : MonoBehaviour
         }
 
         var collection = CollectionManager.Instance;
-        ProsperityManager.EnsureLoaded(save.prosperity, profile);
+        if (!CastleRelease.IsActive)
+            ProsperityManager.EnsureLoaded(save.prosperity, profile);
         if (collection != null && loadedCollection != collection)
         {
             loadedCollection = collection;

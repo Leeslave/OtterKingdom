@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: M16_Builder
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv16_builder
-  _title: "\uB9DD\uCE58 \uC18C\uB9AC"
-  _description: "\uAC8C\uC2DC\uD310 \uBD80\uD0C1: \uCF69\uCF69\uC774\uAC00 \uC0B4
-    \uC9D1"
+  _title: "짤랑이가 살 집"
+  _description: "게시판 부탁: 짤랑이를 작은 집에 입주시키기"
   _sortOrder: 87
   _kind: 0
   _requiredLevel: 16
   _prerequisite: {fileID: 11400000, guid: 3c15b9e837b48fc4ab6d91ac13587b74, type: 2}
-  _icon: {fileID: 21300000, guid: d8dfe352c436ccc49aebf0689186bbb6, type: 3}
+  _icon: {fileID: 21300000, guid: ca17e17751fe3bc4097e20519c08adb1, type: 3}
   _goalType: 11
   _goal: 1
   _itemFilter: {fileID: 0}
@@ -28,7 +27,7 @@ MonoBehaviour:
   _item: {fileID: 0}
   _constructions: []
   _builderOnly: 0
-  _target: req_p5_builder_home
+  _target: req_p4_trader_home
   _rewardCurrency: {fileID: 11400000, guid: 96c1ee75e9b561b478885c619b9de1be, type: 2}
   _rewardAmount: 1000
   _expReward: 1200

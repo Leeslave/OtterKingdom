@@ -378,11 +378,14 @@ public class IndustryPlazaView : MonoBehaviour
     // 돌길 · 큰길: 조각마다 지도 비율 자리에 (지도 Sprite 범위 기준, HD 조각과 같은 방식)
     private List<SpriteRenderer> CreatePaving(TownProject paving)
     {
+        var pieces = _plaza.PavingArt?.GetPieces(paving.Id);
+        if (pieces == null || pieces.Count == 0)
+            return null;
         var renderers = new List<SpriteRenderer>();
         Vector2 total = _map.sprite.bounds.size;
-        for (int i = 0; i < paving.Pieces.Count; i++)
+        for (int i = 0; i < pieces.Count; i++)
         {
-            var piece = paving.Pieces[i];
+            var piece = pieces[i];
             if (piece == null || piece.Sprite == null)
                 continue;
             var renderer = new GameObject($"Paving_{paving.Id}_{i}").AddComponent<SpriteRenderer>();
@@ -408,10 +411,10 @@ public class IndustryPlazaView : MonoBehaviour
     // 수도 광장: 중앙 광장(첫 돌길 공사의 첫 조각) 둘레에 깃대
     private List<SpriteRenderer> CreateCapitalFlags(TownProject project)
     {
-        var center = _manager.IndustryConfig.FindProject(TownProjectKind.Paving);
-        if (center == null || center.Pieces.Count == 0 || project.Sprite == null)
+        var center = _plaza.PavingArt?.Center;
+        if (center == null || center.Count == 0 || project.Sprite == null)
             return null;
-        var piece = center.Pieces[0];
+        var piece = center[0];
         Vector2 middle = _map.transform.TransformPoint(MapLocal(piece.MapCenter));
         float width = piece.MapSize.x * _map.sprite.bounds.size.x * _map.transform.lossyScale.x;
         var renderers = new List<SpriteRenderer>();

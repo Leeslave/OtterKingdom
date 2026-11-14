@@ -275,10 +275,6 @@ public class TownProject
     [SerializeField]
     private Sprite _icon;
 
-    [Tooltip("돌길: 광장 지도 위에 까는 그림 조각들")]
-    [SerializeField]
-    private List<PavingPiece> _pieces = new List<PavingPiece>();
-
     [Tooltip("학술원 · 왕궁: 바뀐 모습 그림 / 산업단지 · 수도 광장: 세우는 깃발 그림")]
     [SerializeField]
     private Sprite _sprite;
@@ -300,7 +296,6 @@ public class TownProject
     public int PrecisionParts => _precisionParts;
     public int Gold => _gold;
     public Sprite Icon => _icon;
-    public IReadOnlyList<PavingPiece> Pieces => _pieces;
     public Sprite Sprite => _sprite;
     public string Target => _target;
 }

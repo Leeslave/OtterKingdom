@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: M11_Shop
   m_EditorClassIdentifier: OtterKingdom::QuestDefinition
   _questId: main_lv11_shop
-  _title: "\uC9E4\uB791\uC774\uC758 \uAC00\uAC8C"
+  _title: "해달 상점"
   _description: "\uAC8C\uC2DC\uD310 \uBD80\uD0C1: \uD574\uB2EC \uC0C1\uC810 \uC9D3\uAE30"
   _sortOrder: 47
   _kind: 0

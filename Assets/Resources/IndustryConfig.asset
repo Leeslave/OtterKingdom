@@ -78,10 +78,6 @@ MonoBehaviour:
     _precisionParts: 0
     _gold: 1500
     _icon: {fileID: 21300000, guid: b33eb6e7e2bd72b43aa085a3db1887be, type: 3}
-    _pieces:
-    - _sprite: {fileID: 21300000, guid: 6291e975111471b4c9171bec358e3d0a, type: 3}
-      _mapCenter: {x: 0.4616896, y: 0.3865462}
-      _mapSize: {x: 0.3231827, y: 0.33032128}
     _sprite: {fileID: 0}
     _target: 
   - _id: town_paving_roads
@@ -98,19 +94,6 @@ MonoBehaviour:
     _precisionParts: 0
     _gold: 3000
     _icon: {fileID: 21300000, guid: 6a126fe011c9b9d419b0c41f816935a5, type: 3}
-    _pieces:
-    - _sprite: {fileID: 21300000, guid: e468c0e9f79e9864da1b0dd6557e2d72, type: 3}
-      _mapCenter: {x: 0.25865668, y: 0.20795682}
-      _mapSize: {x: 0.40704814, y: 0.41390562}
-    - _sprite: {fileID: 21300000, guid: 2885df0c7cdf12a4e820535c98f831e3, type: 3}
-      _mapCenter: {x: 0.661223, y: 0.24836847}
-      _mapSize: {x: 0.3980845, y: 0.33308232}
-    - _sprite: {fileID: 21300000, guid: 917d48a682acc3b42ba8173b861dfe64, type: 3}
-      _mapCenter: {x: 0.34553045, y: 0.48675954}
-      _mapSize: {x: 0.2333006, y: 0.1436998}
-    - _sprite: {fileID: 21300000, guid: c3d983d7b6b78644483fa5469487dc5a, type: 3}
-      _mapCenter: {x: 0.6454445, y: 0.592997}
-      _mapSize: {x: 0.3665275, y: 0.3561747}
     _sprite: {fileID: 0}
     _target: 
   - _id: town_royal_industrial_park
@@ -127,7 +110,6 @@ MonoBehaviour:
     _precisionParts: 10
     _gold: 20000
     _icon: {fileID: 21300000, guid: 8a971a7b6a56e784d83bb8fe534e7086, type: 3}
-    _pieces: []
     _sprite: {fileID: 21300000, guid: 8a971a7b6a56e784d83bb8fe534e7086, type: 3}
     _target: 
   - _id: town_royal_academy
@@ -143,7 +125,6 @@ MonoBehaviour:
     _precisionParts: 8
     _gold: 15000
     _icon: {fileID: 21300000, guid: 61268e64f043c2f498faf14af4e164c2, type: 3}
-    _pieces: []
     _sprite: {fileID: 21300000, guid: 61268e64f043c2f498faf14af4e164c2, type: 3}
     _target: bld_archive
   - _id: town_capital_plaza
@@ -160,7 +141,6 @@ MonoBehaviour:
     _precisionParts: 0
     _gold: 25000
     _icon: {fileID: 21300000, guid: 44efd9031635db74697ff247674f358e, type: 3}
-    _pieces: []
     _sprite: {fileID: 21300000, guid: 44efd9031635db74697ff247674f358e, type: 3}
     _target: 
   - _id: town_royal_palace
@@ -177,6 +157,5 @@ MonoBehaviour:
     _precisionParts: 20
     _gold: 50000
     _icon: {fileID: 21300000, guid: fedc4b7ff222ef0478f906b9048f4090, type: 3}
-    _pieces: []
     _sprite: {fileID: 21300000, guid: fedc4b7ff222ef0478f906b9048f4090, type: 3}
     _target: Castle
